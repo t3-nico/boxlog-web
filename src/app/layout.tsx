@@ -10,7 +10,6 @@ import {
   Settings,
   CheckSquare,
 } from "lucide-react";
-import "./globals.css";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -26,10 +25,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body className={`${notoSans.variable} antialiased bg-[var(--background)] text-[var(--foreground)]`}>
+      <body className={`${notoSans.variable} antialiased bg-surface text-white`}>
         <div className="flex h-screen">
           {/* サイドバー */}
-          <aside className="w-64 bg-zinc-900 text-white flex flex-col p-4 space-y-6">
+          <aside className="w-64 bg-surface text-white flex flex-col p-4 space-y-6">
             {/* 上部アイコンエリア */}
             <div className="flex items-center justify-between">
               <Link href="/settings" className="hover:text-brand-400">
@@ -48,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 className="flex items-center gap-2 px-2 py-1 rounded bg-semantic-todayBand/20 hover:bg-semantic-todayBand"
               >
                 <CalendarDays size={16} />
-                <span className="text-white">Calendar</span>
+                <span className="text-xs text-gray-400 uppercase mb-1">Calendar</span>
               </Link>
               <Link
                 href="/box"
