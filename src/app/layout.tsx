@@ -1,121 +1,38 @@
-import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
-import Link from "next/link";
-import {
-  Search,
-  Pencil,
-  CalendarDays,
-  Box,
-  NotebookText,
-  Settings,
-  CheckSquare,
-} from "lucide-react";
+// src/app/layout.tsx
+import { CalendarDays, Box, NotebookText, Settings, Search, Pencil } from "lucide-react";
+import "./globals.css";
 
-const notoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-export const metadata: Metadata = {
-  title: "BoxLog",
-  description: "王国を作る",
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="ja">
-      <body className={`${notoSans.variable} antialiased bg-surface text-white`}>
-        <div className="flex h-screen">
-          {/* サイドバー */}
-          <aside className="w-64 bg-surface text-white flex flex-col p-4 space-y-6">
-            {/* 上部アイコンエリア */}
-            <div className="flex items-center justify-between">
-              <Link href="/settings" className="hover:text-brand-400">
-                <Settings size={24} aria-label="Settings" />
-              </Link>
-              <div className="flex gap-3">
-                <Search size={20} className="hover:text-brand-400 cursor-pointer" aria-label="Search" />
-                <Pencil size={20} className="hover:text-brand-400 cursor-pointer" aria-label="Edit" />
-              </div>
+      <body className="flex h-screen">
+        {/* 静的サイドバー */}
+        <aside className="w-64 bg-zinc-900 text-white p-4 flex flex-col space-y-6">
+          <div className="flex items-center justify-between">
+            <Settings size={24} className="cursor-pointer hover:text-green-500" />
+            <div className="flex gap-2">
+              <Search size={20} className="cursor-pointer hover:text-green-500" />
+              <Pencil size={20} className="cursor-pointer hover:text-green-500" />
             </div>
+          </div>
+          <nav className="space-y-2">
+            <a href="/calendar" className="flex items-center gap-2 hover:text-green-400">
+              <CalendarDays size={16} /> Calendar
+            </a>
+            <a href="/box" className="flex items-center gap-2 hover:text-green-400">
+              <Box size={16} /> Box
+            </a>
+            <a href="/review" className="flex items-center gap-2 hover:text-green-400">
+              <NotebookText size={16} /> Review
+            </a>
+          </nav>
+          {/* …以下、Reflect/Act/My Compass セクション */}
+        </aside>
 
-            {/* メインナビ */}
-            <nav className="space-y-2 text-sm">
-              <Link
-                href="/calendar"
-                className="flex items-center gap-2 px-2 py-1 rounded bg-semantic-todayBand/20 hover:bg-semantic-todayBand"
-              >
-                <CalendarDays size={16} />
-                <span className="text-xs text-gray-400 uppercase mb-1">Calendar</span>
-              </Link>
-              <Link
-                href="/box"
-                className="flex items-center gap-2 px-2 py-1 rounded hover:bg-zinc-800"
-              >
-                <Box size={16} />
-                <span className="text-white">Box</span>
-              </Link>
-              <Link
-                href="/review"
-                className="flex items-center gap-2 px-2 py-1 rounded hover:bg-zinc-800"
-              >
-                <NotebookText size={16} />
-                <span className="text-white">Review</span>
-              </Link>
-            </nav>
-
-            {/* Calendar セクション */}
-            <div>
-              <h2 className="text-xs text-gray-400 uppercase mb-1">Calendar</h2>
-              <ul className="space-y-1 pl-4">
-                <li className="flex items-center gap-2 text-sm">
-                  <CheckSquare size={14} className="text-brand-400" /> Plan
-                </li>
-                <li className="flex items-center gap-2 text-sm">
-                  <CheckSquare size={14} className="text-brand-400" /> Log
-                </li>
-              </ul>
-            </div>
-
-            {/* Reflect セクション */}
-            <div>
-              <h2 className="text-xs text-gray-400 uppercase mb-1">Reflect</h2>
-              <ul className="space-y-1 pl-4 text-sm">
-                <li>Time Balance Check</li>
-                <li>Find Your Happy Tags</li>
-                <li>Small Wins</li>
-                <li>Contribution</li>
-                <li>Journal</li>
-              </ul>
-            </div>
-
-            {/* Act セクション */}
-            <div>
-              <h2 className="text-xs text-gray-400 uppercase mb-1">Act</h2>
-              <ul className="space-y-1 pl-4 text-sm">
-                <li>New Try</li>
-                <li>If Then</li>
-                <li>Log</li>
-                <li>Micro Success</li>
-              </ul>
-            </div>
-
-            {/* My Compass セクション */}
-            <div>
-              <h2 className="text-xs text-gray-400 uppercase mb-1">My Compass</h2>
-              <ul className="space-y-1 pl-4 text-sm">
-                <li>Purpose</li>
-                <li>Value</li>
-                <li>Principles</li>
-                <li>Goals</li>
-              </ul>
-            </div>
-          </aside>
-
-          {/* メインコンテンツ */}
-          <main className="flex-1 p-8 overflow-y-auto">{children}</main>
-        </div>
+        {/* メインコンテンツ */}
+        <main className="flex-1 p-8 overflow-auto">
+          {children}
+        </main>
       </body>
     </html>
   );
