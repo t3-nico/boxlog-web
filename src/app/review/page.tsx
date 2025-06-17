@@ -1,3 +1,4 @@
+import { Button } from "@/components/typescript/button";
 
 export default function ReviewPage() {
     return (
@@ -7,4 +8,4 @@ export default function ReviewPage() {
         </h1>
       </main>
     );
-  }
+  }　

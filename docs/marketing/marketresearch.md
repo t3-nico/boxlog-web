@@ -7,3 +7,5 @@
 ## Blog系
 - SUNTORIAN VOICE | サントリーの人と、働くリアルを伝える blogの構成に良さそう:https://www.suntory.co.jp/recruit/media/
 
+## ブランドロゴ作成ツール
+- Namelix:https://namelix.com/
