@@ -1,4 +1,3 @@
-import { Button } from "@/components/typescript/button";
 
 export default function ReviewPage() {
     return (

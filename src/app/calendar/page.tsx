@@ -1,4 +1,4 @@
-
+import { AppSidebar } from "@/components/catalyst/app-sidebar";
 
 export default function CalenderPage() {
     return (
