@@ -14,9 +14,15 @@ import {
   SidebarClose,
   ChevronDown,
   Plus,
-  Search
+  Search,
+  LogOut,
+  Rocket,
+  HelpCircle,
+  ArrowUpCircle,
+  Keyboard
 } from "lucide-react"
 import { Menu as HeadlessMenu } from "@headlessui/react"
+import { Dialog } from "@headlessui/react"
 
 const topMenu = [
   { name: "Create", icon: Plus, href: "/create" },
@@ -30,6 +36,7 @@ const mainMenu = [
 
 export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDesktopOpen: boolean, setIsDesktopOpen: (open: boolean) => void, theme: string }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState(false)
   const pathname = usePathname()
 
   // メニューリストの共通部分
@@ -92,7 +99,7 @@ export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDeskt
         />
         {/* サイドバー本体 */}
         <div className={`relative flex w-full max-w-xs flex-1 transform transition-transform duration-300 ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-zinc-950 px-6 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-zinc-950">
             <div className="flex h-16 shrink-0 items-center justify-between">
               <div className="flex items-center gap-x-3">
                 <img
@@ -117,14 +124,14 @@ export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDeskt
       </div>
 
       {/* デスクトップ用サイドバー */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col transition-all duration-300 ease-in-out"
+      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-[260px] lg:flex-col transition-all duration-300 ease-in-out"
         style={{
           opacity: isDesktopOpen ? 1 : 0,
           pointerEvents: isDesktopOpen ? 'auto' : 'none',
           transition: 'opacity 0.3s ease-in-out',
         }}
       >
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-zinc-950 px-6 pb-4">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-zinc-950 p-4">
           <div className="flex h-12 shrink-0 items-center justify-between" style={{overflow: 'visible', zIndex: 60}}>
             <HeadlessMenu as="div" className="relative z-50">
               <HeadlessMenu.Button as="button" className="flex items-center gap-x-2 focus:outline-none cursor-pointer group">
@@ -136,27 +143,49 @@ export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDeskt
                 <span className="text-base font-bold text-white group-hover:text-zinc-300 transition">tomoya</span>
                 <ChevronDown className="size-4 text-zinc-400 group-hover:text-zinc-200 transition" />
               </HeadlessMenu.Button>
-              <HeadlessMenu.Items className="absolute left-0 mt-2 w-64 origin-top-left rounded-md bg-zinc-950 shadow-lg ring-1 ring-black/10 focus:outline-none z-50 border border-zinc-800">
-                <div className="py-1">
+              <HeadlessMenu.Items className="absolute left-0 mt-2 w-[232px] origin-top-left rounded-md bg-zinc-950 shadow-lg ring-1 ring-black/10 focus:outline-none z-50 border border-zinc-800">
+                <div className="py-1 p-2">
                   <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
                     <Link 
                       href="/settings"
                       className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}
                     >
+                      <Settings className="size-4 mr-2" />
                       Settings <span className="ml-auto text-xs text-zinc-400"></span>
                     </Link>
                   )}</HeadlessMenu.Item>
                   <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                    <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>Invite and manage members</button>
+                    <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>
+                      <Rocket className="size-4 mr-2" />
+                      Release
+                    </button>
                   )}</HeadlessMenu.Item>
                   <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                    <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>Download desktop app</button>
+                    <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>
+                      <HelpCircle className="size-4 mr-2" />
+                      Help
+                    </button>
                   )}</HeadlessMenu.Item>
                   <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                    <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>Switch workspace <span className="ml-auto text-xs text-zinc-400"></span></button>
+                    <button
+                      className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}
+                      onClick={() => setIsShortcutsOpen(true)}
+                    >
+                      <Keyboard className="size-4 mr-2" />
+                      Keyboard Shortcuts
+                    </button>
                   )}</HeadlessMenu.Item>
                   <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                    <button className={`w-full flex items-center px-4 py-2 text-sm text-red-400 transition ${active ? 'bg-zinc-800 text-red-300' : ''}`}>Log out <span className="ml-auto text-xs text-zinc-400"></span></button>
+                    <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>
+                      <ArrowUpCircle className="size-4 mr-2 text-yellow-400" />
+                      Upgrade
+                    </button>
+                  )}</HeadlessMenu.Item>
+                  <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
+                    <button className={`w-full flex items-center px-4 py-2 text-sm text-red-400 transition ${active ? 'bg-zinc-800 text-red-300' : ''}`}>
+                      <LogOut className="size-4 mr-2" />
+                      Log out <span className="ml-auto text-xs text-zinc-400"></span>
+                    </button>
                   )}</HeadlessMenu.Item>
                 </div>
               </HeadlessMenu.Items>
@@ -176,8 +205,8 @@ export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDeskt
 
       {/* サイドバーが閉じているときのアイコン表示 */}
       {!isDesktopOpen && (
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-16 lg:flex-col">
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-zinc-950 px-2 pb-4">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-16 lg:flex-col py-4 px-2">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-zinc-950">
             <div className="flex h-12 shrink-0 items-center justify-center">
               <button 
                 type="button" 
@@ -260,33 +289,82 @@ export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDeskt
               <span className="text-base font-bold text-white group-hover:text-zinc-300 transition">tomoya</span>
               <ChevronDown className="size-4 text-zinc-400 group-hover:text-zinc-200 transition" />
             </HeadlessMenu.Button>
-            <HeadlessMenu.Items className="absolute left-0 mt-2 w-64 origin-top-left rounded-md bg-zinc-950 shadow-lg ring-1 ring-black/10 focus:outline-none z-50 border border-zinc-800">
-              <div className="py-1">
+            <HeadlessMenu.Items className="absolute left-0 mt-2 w-[232px] origin-top-left rounded-md bg-zinc-950 shadow-lg ring-1 ring-black/10 focus:outline-none z-50 border border-zinc-800">
+              <div className="py-1 p-2">
                 <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
                   <Link 
                     href="/settings"
                     className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}
                   >
+                    <Settings className="size-4 mr-2" />
                     Settings <span className="ml-auto text-xs text-zinc-400">G then S</span>
                   </Link>
                 )}</HeadlessMenu.Item>
                 <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                  <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>Invite and manage members</button>
+                  <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>
+                    <Rocket className="size-4 mr-2" />
+                    Release
+                  </button>
                 )}</HeadlessMenu.Item>
                 <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                  <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>Download desktop app</button>
+                  <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>
+                    <HelpCircle className="size-4 mr-2" />
+                    Help
+                  </button>
                 )}</HeadlessMenu.Item>
                 <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                  <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>Switch workspace <span className="ml-auto text-xs text-zinc-400">O then W</span></button>
+                  <button
+                    className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}
+                    onClick={() => setIsShortcutsOpen(true)}
+                  >
+                    <Keyboard className="size-4 mr-2" />
+                    Keyboard Shortcuts
+                  </button>
                 )}</HeadlessMenu.Item>
                 <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
-                  <button className={`w-full flex items-center px-4 py-2 text-sm text-red-400 transition ${active ? 'bg-zinc-800 text-red-300' : ''}`}>Log out <span className="ml-auto text-xs text-zinc-400">⌥ Q</span></button>
+                  <button className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}>
+                    <ArrowUpCircle className="size-4 mr-2 text-yellow-400" />
+                    Upgrade
+                  </button>
+                )}</HeadlessMenu.Item>
+                <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
+                  <button className={`w-full flex items-center px-4 py-2 text-sm text-red-400 transition ${active ? 'bg-zinc-800 text-red-300' : ''}`}>
+                    <LogOut className="size-4 mr-2" />
+                    Log out <span className="ml-auto text-xs text-zinc-400">⌥ Q</span>
+                  </button>
                 )}</HeadlessMenu.Item>
               </div>
             </HeadlessMenu.Items>
           </HeadlessMenu>
         </div>
       </div>
+
+      {/* Keyboard Shortcuts モーダル */}
+      <Dialog open={isShortcutsOpen} onClose={() => setIsShortcutsOpen(false)} className="fixed z-[100] inset-0 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+        <div className="relative bg-zinc-950 text-white rounded-lg shadow-xl w-full max-w-md mx-auto p-6">
+          <Dialog.Title className="text-lg font-bold mb-4 flex items-center gap-2">
+            <Keyboard className="size-5" /> Keyboard Shortcuts
+          </Dialog.Title>
+          <div className="mb-4">
+            <table className="w-full text-sm">
+              <tbody>
+                <tr><td className="py-1 pr-4 text-zinc-400">Open Settings</td><td className="font-mono">G then S</td></tr>
+                <tr><td className="py-1 pr-4 text-zinc-400">Switch Workspace</td><td className="font-mono">O then W</td></tr>
+                <tr><td className="py-1 pr-4 text-zinc-400">Log out</td><td className="font-mono">⌥ Q</td></tr>
+                <tr><td className="py-1 pr-4 text-zinc-400">Open Keyboard Shortcuts</td><td className="font-mono">?</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <button
+            className="absolute top-3 right-3 p-2 rounded hover:bg-zinc-800 focus:outline-none"
+            onClick={() => setIsShortcutsOpen(false)}
+            aria-label="Close"
+          >
+            <X className="size-5" />
+          </button>
+        </div>
+      </Dialog>
     </>
   )
 } 

@@ -11,9 +11,11 @@ interface SidebarLayoutProps {
 
 export function SidebarLayout({ sidebar, children, className }: SidebarLayoutProps) {
   return (
-    <div className="flex h-screen overflow-hidden bg-zinc-950 p-2">
-      {sidebar}
-      <main className="flex-1 flex flex-col h-full min-h-0">
+    <div className="flex flex-row h-screen w-screen bg-zinc-950">
+      <aside className="w-[260px] bg-zinc-950 border-r border-zinc-800">
+        {sidebar}
+      </aside>
+      <main className="flex-1 bg-zinc-800">
         {children}
       </main>
     </div>

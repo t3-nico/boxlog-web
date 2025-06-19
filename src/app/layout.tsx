@@ -2,6 +2,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import "./globals.css"
 import { Inter } from "next/font/google"
 import { AppSidebar } from "@/components/catalyst/app-sidebar"
@@ -33,20 +34,30 @@ export default function RootLayout({
   return (
     <html lang="ja" className="bg-zinc-950">
       <body className={inter.className}>
-        <SidebarLayout
-          sidebar={
-            <div className={
-              (isDesktopOpen ? "w-72 flex-shrink-0" : "w-16") +
-              " transition-all duration-300 ease-in-out overflow-hidden bg-zinc-950 h-full"
-            }>
-              <AppSidebar isDesktopOpen={isDesktopOpen} setIsDesktopOpen={setIsDesktopOpen} theme={theme} />
-            </div>
+        {(() => {
+          const pathname = usePathname();
+          if (pathname && pathname.startsWith("/settings")) {
+            // settings配下はサイドバーなし
+            return <MainContainer className="w-full">{children}</MainContainer>;
+          } else {
+            return (
+              <SidebarLayout
+                sidebar={
+                  <div className={
+                    (isDesktopOpen ? "w-[260px] flex-shrink-0" : "w-16") +
+                    " transition-all duration-300 ease-in-out overflow-hidden bg-zinc-950 h-full"
+                  }>
+                    <AppSidebar isDesktopOpen={isDesktopOpen} setIsDesktopOpen={setIsDesktopOpen} theme={theme} />
+                  </div>
+                }
+              >
+                <MainContainer className="w-full">
+                  {children}
+                </MainContainer>
+              </SidebarLayout>
+            );
           }
-        >
-          <MainContainer className="w-full">
-            {children}
-          </MainContainer>
-        </SidebarLayout>
+        })()}
       </body>
     </html>
   )
