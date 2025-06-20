@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug } from '../../../../lib/api'
 import markdownToHtml from '../../../../lib/markdownToHtml'
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
+// @ts-ignore
+export default async function PostPage({ params }) {
   const post = getPostBySlug(params.slug, [
     'title',
     'date',

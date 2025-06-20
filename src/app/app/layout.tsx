@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import "../globals.css" // パスを修正
-import { Inter } from "next/font/google"
 import { AppSidebar } from "@/components/catalyst/app-sidebar"
 import { SidebarLayout } from "@/components/catalyst/sidebar-layout";
 import { MainContainer } from "@/components/catalyst/main-container";
@@ -42,7 +41,7 @@ export default function AppLayout({ // 関数名を変更
           (isDesktopOpen ? "w-[260px] flex-shrink-0" : "w-16") +
           " transition-all duration-300 ease-in-out overflow-hidden bg-zinc-950 h-full"
         }>
-          <AppSidebar isDesktopOpen={isDesktopOpen} setIsDesktopOpen={setIsDesktopOpen} theme={theme} />
+          <AppSidebar isDesktopOpen={isDesktopOpen} setIsDesktopOpen={setIsDesktopOpen} />
         </div>
       }
     >

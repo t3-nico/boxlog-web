@@ -33,7 +33,7 @@ const mainMenu = [
   { name: "Review", icon: MessagesSquare, href: "/app/review" },
 ]
 
-export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDesktopOpen: boolean, setIsDesktopOpen: (open: boolean) => void, theme: string }) {
+export function AppSidebar({ isDesktopOpen, setIsDesktopOpen }: { isDesktopOpen: boolean, setIsDesktopOpen: (open: boolean) => void }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false)
   const pathname = usePathname()
