@@ -25,13 +25,13 @@ import { Menu as HeadlessMenu } from "@headlessui/react"
 import { Dialog } from "@headlessui/react"
 
 const topMenu = [
-  { name: "Create", icon: Plus, href: "/create" },
-  { name: "Search", icon: Search, href: "/search" },
+  { name: "Create", icon: Plus, href: "/app/create" },
+  { name: "Search", icon: Search, href: "/app/search" },
 ]
 const mainMenu = [
-  { name: "Calendar", icon: Calendar, href: "/calendar" },
-  { name: "Box", icon: Briefcase, href: "/box" },
-  { name: "Review", icon: MessagesSquare, href: "/review" },
+  { name: "Calendar", icon: Calendar, href: "/app/calendar" },
+  { name: "Box", icon: Briefcase, href: "/app/box" },
+  { name: "Review", icon: MessagesSquare, href: "/app/review" },
 ]
 
 export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDesktopOpen: boolean, setIsDesktopOpen: (open: boolean) => void, theme: string }) {
@@ -147,7 +147,7 @@ export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDeskt
                 <div className="py-1 p-2">
                   <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
                     <Link 
-                      href="/settings"
+                      href="/app/settings"
                       className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}
                     >
                       <Settings className="size-4 mr-2" />
@@ -293,7 +293,7 @@ export function AppSidebar({ isDesktopOpen, setIsDesktopOpen, theme }: { isDeskt
               <div className="py-1 p-2">
                 <HeadlessMenu.Item>{({ active }: { active: boolean }) => (
                   <Link 
-                    href="/settings"
+                    href="/app/settings"
                     className={`w-full flex items-center px-4 py-2 text-sm text-zinc-200 transition ${active ? 'bg-zinc-800 text-white' : ''}`}
                   >
                     <Settings className="size-4 mr-2" />
