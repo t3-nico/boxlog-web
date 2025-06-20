@@ -10,7 +10,6 @@ import {
   Settings,
   Menu,
   X,
-  UserCircle,
   SidebarClose,
   ChevronDown,
   Plus,

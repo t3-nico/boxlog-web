@@ -8,8 +8,6 @@ import { AppSidebar } from "@/components/catalyst/app-sidebar"
 import { SidebarLayout } from "@/components/catalyst/sidebar-layout";
 import { MainContainer } from "@/components/catalyst/main-container";
 
-const inter = Inter({ subsets: ["latin"] })
-
 export default function AppLayout({ // 関数名を変更
   children,
 }: {

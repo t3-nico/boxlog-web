@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getAllPosts, getPostBySlug, Post } from '../../../../lib/api'
+import { getAllPosts, getPostBySlug } from '../../../../lib/api'
 import markdownToHtml from '../../../../lib/markdownToHtml'
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
