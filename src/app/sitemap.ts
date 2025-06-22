@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts(['slug', 'date'])
   const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `https://boxlog.vercel.app/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.date || new Date()),
   }))
 
   return [

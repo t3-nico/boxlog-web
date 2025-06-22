@@ -5,13 +5,14 @@ import type { Metadata } from 'next'
 import type { JSX } from 'react'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = getPostBySlug(params.slug, ['title', 'content'])
+  const { slug } = await params
+  const post = getPostBySlug(slug, ['title', 'content'])
 
   if (!post) {
     return {
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function PostPage({ params }: PageProps): Promise<JSX.Element> {
-  const post = getPostBySlug(params.slug, [
+  const { slug } = await params
+  const post = getPostBySlug(slug, [
     'title',
     'date',
     'slug',
