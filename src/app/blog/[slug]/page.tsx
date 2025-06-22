@@ -3,13 +3,9 @@ import { getAllPosts, getPostBySlug } from '../../../../lib/api'
 import markdownToHtml from '../../../../lib/markdownToHtml'
 import type { Metadata } from 'next'
 
-type PageProps = {
-  params: {
-    slug: string
-  }
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
   const post = getPostBySlug(params.slug, ['title', 'content'])
 
   if (!post) {
@@ -39,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default async function PostPage({ params }: PageProps) {
+export default async function PostPage({ params }: { params: { slug: string } }) {
   const post = getPostBySlug(params.slug, [
     'title',
     'date',
