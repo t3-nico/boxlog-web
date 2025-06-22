@@ -1,3 +1,10 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'リリースノート',
+  description: 'BoxLogのリリースノートページです。',
+}
+
 export default function ReleasePage() {
   const releases = [
     {

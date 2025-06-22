@@ -1,6 +1,12 @@
 "use client"
 
 import { useState } from 'react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'ログイン',
+  description: 'BoxLogのログインページです。',
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')

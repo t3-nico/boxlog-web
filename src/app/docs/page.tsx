@@ -1,3 +1,10 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'ドキュメント',
+  description: 'BoxLogのドキュメントページです。',
+}
+
 export default function DocsPage() {
   const categories = [
     {

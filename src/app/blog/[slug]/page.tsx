@@ -1,6 +1,44 @@
 import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug } from '../../../../lib/api'
 import markdownToHtml from '../../../../lib/markdownToHtml'
+import type { Metadata } from 'next'
+
+type Props = {
+  params: { slug: string }
+}
+
+export async function generateMetadata(
+  { params }: Props,
+): Promise<Metadata> {
+  const post = getPostBySlug(params.slug, [
+    'title',
+    'content',
+  ])
+
+  if (!post) {
+    return {
+      title: 'Not Found',
+      description: 'The page you are looking for does not exist.',
+    }
+  }
+
+  const description = post.content ? post.content.substring(0, 120) : 'BoxLogのブログ記事'
+
+  return {
+    title: post.title,
+    description: description,
+    openGraph: {
+      title: post.title,
+      description: description,
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: description,
+    },
+  }
+}
 
 // @ts-ignore
 export default async function PostPage({ params }) {

@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  description: 'BoxLog - Your modern task management solution.',
+  title: 'BoxLog - シンプルでモダンなタスク管理アプリ',
+  description: 'BoxLogは、あなたのタスク管理をシンプルで直感的にする最新のソリューションです。トップページです。',
 }
 
 export default function Home() {
