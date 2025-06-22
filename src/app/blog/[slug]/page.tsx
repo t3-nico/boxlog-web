@@ -2,10 +2,15 @@ import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug } from '../../../../lib/api'
 import markdownToHtml from '../../../../lib/markdownToHtml'
 import type { Metadata } from 'next'
+import type { JSX } from 'react'
 
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-): Promise<Metadata> {
+interface PageProps {
+  params: {
+    slug: string
+  }
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const post = getPostBySlug(params.slug, ['title', 'content'])
 
   if (!post) {
@@ -35,7 +40,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
+export default async function PostPage({ params }: PageProps): Promise<JSX.Element> {
   const post = getPostBySlug(params.slug, [
     'title',
     'date',
