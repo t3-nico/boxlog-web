@@ -5,14 +5,15 @@ import type { Metadata } from 'next'
 import type { JSX } from 'react'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string[]
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const slug = params.slug.join('/')
-  const doc = getDocBySlug(slug, ['title', 'excerpt'])
+  const { slug } = await params
+  const slugPath = slug.join('/')
+  const doc = getDocBySlug(slugPath, ['title', 'excerpt'])
 
   if (!doc) {
     return {
@@ -28,8 +29,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function DocPage({ params }: PageProps): Promise<JSX.Element> {
-  const slug = params.slug.join('/')
-  const doc = getDocBySlug(slug, ['title', 'content'])
+  const { slug } = await params
+  const slugPath = slug.join('/')
+  const doc = getDocBySlug(slugPath, ['title', 'content'])
 
   if (!doc || !doc.title) {
     return notFound()
