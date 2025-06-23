@@ -12,6 +12,7 @@ export interface Post {
   excerpt: string;
   coverImage: string;
   content: string;
+  tags?: string[];
 }
 
 export function getPostSlugs() {
@@ -47,4 +48,18 @@ export function getAllPosts(fields: (keyof Post)[] = []): Partial<Post>[] {
     .map((slug) => getPostBySlug(slug, fields))
     .sort((post1, post2) => ((post1.date || '') > (post2.date || '') ? -1 : 1))
   return posts
-} 
+}
+
+export function getPostsByTag(tag: string, fields: (keyof Post)[] = []): Partial<Post>[] {
+  const posts = getAllPosts([...fields, 'tags'])
+  return posts.filter((post) => Array.isArray(post.tags) && post.tags.includes(tag))
+}
+
+export function getAllPostTags(): string[] {
+  const posts = getAllPosts(['tags'])
+  const tags = new Set<string>()
+  posts.forEach((post) => {
+    post.tags?.forEach((t) => tags.add(t))
+  })
+  return Array.from(tags)
+}
