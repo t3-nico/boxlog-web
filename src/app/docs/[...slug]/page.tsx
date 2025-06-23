@@ -31,13 +31,7 @@ async function getNavigationInfo(slug: string) {
   return { sectionTitle: 'ドキュメント', docTitle: typeof doc.title === 'string' ? doc.title : 'ページ' };
 }
 
-export async function generateMetadata({ params }: { params: { slug?: string[] } }): Promise<{ title: string; description: string }> {
-  if (!params.slug) {
-    return {
-      title: 'Not Found',
-      description: 'The page you are looking for does not exist.',
-    };
-  }
+export async function generateMetadata({ params }: { params: { slug: string[] } }) {
   const slugPath = params.slug.join('/')
   const doc = await getDocBySlug(slugPath, ['title', 'excerpt'])
 
@@ -54,11 +48,8 @@ export async function generateMetadata({ params }: { params: { slug?: string[] }
   }
 }
 
-export default async function Page({ params }: { params: { slug?: string[] } }): Promise<React.JSX.Element> {
-  if (!params.slug) {
-    notFound();
-  }
-  const slug = params.slug!.join('/');
+export default async function Page({ params }: { params: { slug: string[] } }) {
+  const slug = params.slug.join('/');
   const doc = await getDocBySlug(slug, ['title', 'content']);
 
   if (!doc || typeof doc.title !== 'string' || typeof doc.content !== 'string') {
