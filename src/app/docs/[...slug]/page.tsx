@@ -9,17 +9,15 @@ import { TableOfContents } from '@/components/docs/TableOfContents';
 
 type PageProps = {
   params: { slug: string[] }
-}
+};
 
-export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
+export async function generateStaticParams() {
   const docs = await getAllDocs(['slug']);
-  const params: { slug: string[] }[] = [];
-  for (const doc of docs) {
-    if (doc.slug) {
-      params.push({ slug: doc.slug.split('/') });
-    }
-  }
-  return params;
+  return docs
+    .filter((doc) => typeof doc.slug === 'string' && doc.slug.length > 0)
+    .map((doc) => ({
+      slug: doc.slug!.split('/'),
+    }));
 }
 
 async function getNavigationInfo(slug: string) {
@@ -55,7 +53,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }: PageProps): Promise<React.JSX.Element> {
-  const slug: string = params.slug.join('/');
+  const slug = params.slug.join('/');
   const doc = await getDocBySlug(slug, ['title', 'content']);
 
   if (!doc || typeof doc.title !== 'string' || typeof doc.content !== 'string') {
