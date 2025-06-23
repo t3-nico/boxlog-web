@@ -8,7 +8,7 @@ import { extractHeadings } from '@/lib/parseHeadings';
 import { TableOfContents } from '@/components/docs/TableOfContents';
 
 type PageProps = {
-  params: { slug: string[] }
+  params: Promise<{ slug: string[] }>
 };
 
 export async function generateStaticParams() {
@@ -35,8 +35,9 @@ async function getNavigationInfo(slug: string) {
   return { sectionTitle: 'ドキュメント', docTitle: typeof doc.title === 'string' ? doc.title : 'ページ' };
 }
 
-export async function generateMetadata({ params }) {
-  const slugPath = params.slug.join('/')
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params
+  const slugPath = slug.join('/')
   const doc = await getDocBySlug(slugPath, ['title', 'excerpt'])
 
   if (!doc || typeof doc.title !== 'string' || typeof doc.excerpt !== 'string') {
@@ -53,18 +54,19 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }: PageProps): Promise<React.JSX.Element> {
-  const slug = params.slug.join('/');
-  const doc = await getDocBySlug(slug, ['title', 'content']);
+  const { slug } = await params
+  const slugPath = slug.join('/');
+  const doc = await getDocBySlug(slugPath, ['title', 'content']);
 
   if (!doc || typeof doc.title !== 'string' || typeof doc.content !== 'string') {
     notFound();
   }
 
-  const { sectionTitle, docTitle } = await getNavigationInfo(slug);
+  const { sectionTitle, docTitle } = await getNavigationInfo(slugPath);
 
   const breadcrumbItems = [
     { name: sectionTitle },
-    { name: docTitle, href: `/docs/${slug}` },
+    { name: docTitle, href: `/docs/${slugPath}` },
   ];
 
   const headings = extractHeadings(doc.content);
