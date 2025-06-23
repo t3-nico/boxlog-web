@@ -7,10 +7,6 @@ import { docsNavigation } from '@/lib/docsNavigation';
 import { extractHeadings } from '@/lib/parseHeadings';
 import { TableOfContents } from '@/components/docs/TableOfContents';
 
-type PageProps = {
-  params: { slug: string[] }
-}
-
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   const docs = await getAllDocs(['slug']);
   return docs
@@ -35,7 +31,13 @@ async function getNavigationInfo(slug: string) {
   return { sectionTitle: 'ドキュメント', docTitle: typeof doc.title === 'string' ? doc.title : 'ページ' };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<{ title: string; description: string }> {
+export async function generateMetadata({ params }: { params: { slug?: string[] } }): Promise<{ title: string; description: string }> {
+  if (!params.slug) {
+    return {
+      title: 'Not Found',
+      description: 'The page you are looking for does not exist.',
+    };
+  }
   const slugPath = params.slug.join('/')
   const doc = await getDocBySlug(slugPath, ['title', 'excerpt'])
 
@@ -52,8 +54,11 @@ export async function generateMetadata({ params }: PageProps): Promise<{ title: 
   }
 }
 
-export default async function Page({ params }: PageProps): Promise<React.JSX.Element> {
-  const slug = params.slug.join('/');
+export default async function Page({ params }: { params: { slug?: string[] } }): Promise<React.JSX.Element> {
+  if (!params.slug) {
+    notFound();
+  }
+  const slug = params.slug!.join('/');
   const doc = await getDocBySlug(slug, ['title', 'content']);
 
   if (!doc || typeof doc.title !== 'string' || typeof doc.content !== 'string') {
