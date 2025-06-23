@@ -18,7 +18,7 @@ export function generateStaticParams() {
     .filter((doc) => doc.slug);
 }
 
-function getNavigationInfo(slug) {
+function getNavigationInfo(slug: string) {
   const currentPath = `/docs/${slug}`;
   for (const section of docsNavigation) {
     const foundLink = section.links.find((link) => link.href === currentPath);
@@ -34,7 +34,7 @@ function getNavigationInfo(slug) {
   return { sectionTitle: 'ドキュメント', docTitle: doc.title ?? 'ページ' };
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: { params: { slug: string[] } }) {
   const slugPath = params.slug.join('/')
   const doc = getDocBySlug(slugPath, ['title', 'excerpt'])
 
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default async function Page({ params }) {
+export default async function Page({ params }: { params: { slug: string[] } }) {
   const slug = params.slug.join('/');
   // content と title はこのページで必須
   const doc = getDocBySlug(slug, ['title', 'content']);
