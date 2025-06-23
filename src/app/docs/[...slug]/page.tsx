@@ -1,3 +1,4 @@
+import React from 'react';
 import { getAllDocs, getDocBySlug } from '@/lib/docsApi';
 import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/docs/Breadcrumbs';
@@ -5,21 +6,18 @@ import { Mdx } from '@/components/mdx';
 import { docsNavigation } from '@/lib/docsNavigation';
 import { extractHeadings } from '@/lib/parseHeadings';
 import { TableOfContents } from '@/components/docs/TableOfContents';
-import type { Doc } from '@/lib/docsApi';
-import type { Metadata } from 'next'
-import type { JSX } from 'react'
 
-interface PageProps {
+type PageProps = {
   params: { slug: string[] }
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   const docs = getAllDocs(['slug']);
   return docs
     .map((doc) => ({
       slug: doc.slug?.split('/'),
     }))
-    .filter((doc) => doc.slug);
+    .filter((doc) => doc.slug) as { slug: string[] }[];
 }
 
 function getNavigationInfo(slug: string) {
@@ -38,11 +36,11 @@ function getNavigationInfo(slug: string) {
   return { sectionTitle: 'ドキュメント', docTitle: doc.title ?? 'ページ' };
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<{ title: string; description: string }> {
   const slugPath = params.slug.join('/')
   const doc = getDocBySlug(slugPath, ['title', 'excerpt'])
 
-  if (!doc) {
+  if (!doc || typeof doc.title !== 'string' || typeof doc.excerpt !== 'string') {
     return {
       title: 'Not Found',
       description: 'The page you are looking for does not exist.',
@@ -55,12 +53,11 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps): Promise<React.JSX.Element> {
   const slug = params.slug.join('/');
-  // content と title はこのページで必須
   const doc = getDocBySlug(slug, ['title', 'content']);
 
-  if (!doc || !doc.content || !doc.title) {
+  if (!doc || typeof doc.title !== 'string' || typeof doc.content !== 'string') {
     notFound();
   }
 
@@ -71,12 +68,10 @@ export default async function Page({ params }: PageProps) {
     { name: docTitle, href: `/docs/${slug}` },
   ];
 
-  // h2/h3見出しを抽出
   const headings = extractHeadings(doc.content);
 
   return (
     <div className="flex gap-8 p-6">
-      {/* サイドバーは親レイアウトで表示されている想定 */}
       <div className="flex-1 min-w-0">
         <Breadcrumbs items={breadcrumbItems} />
         <div className="prose prose-invert mt-6 max-w-none">
