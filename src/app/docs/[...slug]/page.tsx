@@ -13,11 +13,13 @@ type PageProps = {
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   const docs = await getAllDocs(['slug']);
-  return docs
-    .map((doc) => ({
-      slug: doc.slug?.split('/'),
-    }))
-    .filter((doc) => doc.slug) as { slug: string[] }[];
+  const params: { slug: string[] }[] = [];
+  for (const doc of docs) {
+    if (doc.slug) {
+      params.push({ slug: doc.slug.split('/') });
+    }
+  }
+  return params;
 }
 
 async function getNavigationInfo(slug: string) {
