@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/docs/Breadcrumbs';
 import { Mdx } from '@/components/mdx';
 import { docsNavigation } from '@/lib/docsNavigation';
+import { extractHeadings } from '@/lib/parseHeadings';
+import { TableOfContents } from '@/components/docs/TableOfContents';
 import type { Doc } from '@/lib/docsApi';
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
@@ -72,12 +74,21 @@ export default async function Page({ params }: PageProps) {
     { name: docTitle, href: `/docs/${slug}` },
   ];
 
+  // h2/h3見出しを抽出
+  const headings = extractHeadings(doc.content);
+
   return (
-    <div className="p-6">
-      <Breadcrumbs items={breadcrumbItems} />
-      <div className="prose prose-invert mt-6 max-w-none">
-        <Mdx source={doc.content} />
+    <div className="flex gap-8 p-6">
+      {/* サイドバーは親レイアウトで表示されている想定 */}
+      <div className="flex-1 min-w-0">
+        <Breadcrumbs items={breadcrumbItems} />
+        <div className="prose prose-invert mt-6 max-w-none">
+          <Mdx source={doc.content} />
+        </div>
       </div>
+      <aside className="w-64 shrink-0 hidden xl:block">
+        <TableOfContents headings={headings} />
+      </aside>
     </div>
   );
 } 

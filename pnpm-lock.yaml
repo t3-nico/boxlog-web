@@ -41,6 +41,9 @@ importers:
       framer-motion:
         specifier: ^12.18.1
         version: 12.18.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -65,9 +68,18 @@ importers:
       remark-html:
         specifier: ^16.0.1
         version: 16.0.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
       tailwind-merge:
         specifier: ^3.3.0
         version: 3.3.1
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -1709,6 +1721,9 @@ packages:
 
   get-tsconfig@4.10.1:
     resolution: {integrity: sha512-auHyJ4AgMz7vgS8Hp3N6HXSmlMdUyhSUrfBF16w153rxtLIEOE+HGqaBppczZvnHLqQJfiHotCYpNhl0lUROFQ==}
+
+  github-slugger@2.0.0:
+    resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -4622,6 +4637,8 @@ snapshots:
   get-tsconfig@4.10.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
+
+  github-slugger@2.0.0: {}
 
   glob-parent@5.1.2:
     dependencies:
