@@ -12,7 +12,7 @@ type PageProps = {
 }
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
-  const docs = getAllDocs(['slug']);
+  const docs = await getAllDocs(['slug']);
   return docs
     .map((doc) => ({
       slug: doc.slug?.split('/'),
@@ -20,7 +20,7 @@ export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
     .filter((doc) => doc.slug) as { slug: string[] }[];
 }
 
-function getNavigationInfo(slug: string) {
+async function getNavigationInfo(slug: string) {
   const currentPath = `/docs/${slug}`;
   for (const section of docsNavigation) {
     const foundLink = section.links.find((link) => link.href === currentPath);
@@ -31,14 +31,13 @@ function getNavigationInfo(slug: string) {
       };
     }
   }
-  // fallback for /docs root page or any other case
-  const doc = getDocBySlug(slug, ['title']);
-  return { sectionTitle: 'ドキュメント', docTitle: doc.title ?? 'ページ' };
+  const doc = await getDocBySlug(slug, ['title']);
+  return { sectionTitle: 'ドキュメント', docTitle: typeof doc.title === 'string' ? doc.title : 'ページ' };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<{ title: string; description: string }> {
   const slugPath = params.slug.join('/')
-  const doc = getDocBySlug(slugPath, ['title', 'excerpt'])
+  const doc = await getDocBySlug(slugPath, ['title', 'excerpt'])
 
   if (!doc || typeof doc.title !== 'string' || typeof doc.excerpt !== 'string') {
     return {
@@ -55,13 +54,13 @@ export async function generateMetadata({ params }: PageProps): Promise<{ title: 
 
 export default async function Page({ params }: PageProps): Promise<React.JSX.Element> {
   const slug = params.slug.join('/');
-  const doc = getDocBySlug(slug, ['title', 'content']);
+  const doc = await getDocBySlug(slug, ['title', 'content']);
 
   if (!doc || typeof doc.title !== 'string' || typeof doc.content !== 'string') {
     notFound();
   }
 
-  const { sectionTitle, docTitle } = getNavigationInfo(slug);
+  const { sectionTitle, docTitle } = await getNavigationInfo(slug);
 
   const breadcrumbItems = [
     { name: sectionTitle },
