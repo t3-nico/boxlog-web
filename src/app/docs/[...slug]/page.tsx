@@ -10,9 +10,7 @@ import type { Metadata } from 'next'
 import type { JSX } from 'react'
 
 type PageProps = {
-  params: {
-    slug: string[];
-  };
+  params: { slug: string[] };
 };
 
 export function generateStaticParams() {
@@ -41,8 +39,7 @@ function getNavigationInfo(slug: string) {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = params
-  const slugPath = slug.join('/')
+  const slugPath = params.slug.join('/')
   const doc = getDocBySlug(slugPath, ['title', 'excerpt'])
 
   if (!doc) {
