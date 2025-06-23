@@ -7,13 +7,14 @@ import { docsNavigation } from '@/lib/docsNavigation';
 import { extractHeadings } from '@/lib/parseHeadings';
 import { TableOfContents } from '@/components/docs/TableOfContents';
 
-export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
+export async function generateStaticParams() {
   const docs = await getAllDocs(['slug']);
   return docs
-    .map((doc) => ({
-      slug: doc.slug?.split('/'),
-    }))
-    .filter((doc) => doc.slug) as { slug: string[] }[];
+    .map((doc) => {
+      const slugArr = doc.slug ? doc.slug.split('/') : null;
+      return slugArr ? { slug: slugArr } : null;
+    })
+    .filter((doc): doc is { slug: string[] } => !!doc);
 }
 
 async function getNavigationInfo(slug: string) {
