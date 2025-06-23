@@ -13,7 +13,7 @@ export function SidebarLayout({ sidebar, children }: SidebarLayoutProps) {
       <aside className="w-[260px] bg-zinc-950 border-r border-zinc-800">
         {sidebar}
       </aside>
-      <main className="flex-1 bg-zinc-800">
+      <main className="flex-1 bg-zinc-800 overflow-y-auto">
         {children}
       </main>
     </div>
