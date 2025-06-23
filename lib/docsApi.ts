@@ -10,6 +10,7 @@ export interface Doc {
   title: string;
   excerpt: string;
   content: string;
+  tags?: string[];
 }
 
 export async function getDocSlugs(): Promise<string[]> {
@@ -57,4 +58,18 @@ export async function getAllDocs(fields: (keyof Doc)[] = []): Promise<Partial<Do
   const slugs = await getDocSlugs()
   const docs = await Promise.all(slugs.map((slug) => getDocBySlug(slug, fields)))
   return docs
-} 
+}
+
+export async function getDocsByTag(tag: string, fields: (keyof Doc)[] = []): Promise<Partial<Doc>[]> {
+  const docs = await getAllDocs([...fields, 'tags'])
+  return docs.filter((doc) => Array.isArray(doc.tags) && doc.tags.includes(tag))
+}
+
+export async function getAllDocTags(): Promise<string[]> {
+  const docs = await getAllDocs(['tags'])
+  const tags = new Set<string>()
+  docs.forEach((doc) => {
+    doc.tags?.forEach((t) => tags.add(t))
+  })
+  return Array.from(tags)
+}
