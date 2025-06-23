@@ -9,10 +9,6 @@ import type { Doc } from '@/lib/docsApi';
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
 
-type PageProps = {
-  params: { slug: string[] };
-};
-
 export function generateStaticParams() {
   const docs = getAllDocs(['slug']);
   return docs
@@ -38,7 +34,7 @@ function getNavigationInfo(slug: string) {
   return { sectionTitle: 'ドキュメント', docTitle: doc.title ?? 'ページ' };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string[] } }): Promise<Metadata> {
   const slugPath = params.slug.join('/')
   const doc = getDocBySlug(slugPath, ['title', 'excerpt'])
 
@@ -55,7 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: { slug: string[] } }) {
   const slug = params.slug.join('/');
   // content と title はこのページで必須
   const doc = getDocBySlug(slug, ['title', 'content']);
