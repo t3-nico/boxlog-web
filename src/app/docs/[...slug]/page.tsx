@@ -17,7 +17,7 @@ export async function generateStaticParams() {
     .filter((doc): doc is { slug: string[] } => !!doc);
 }
 
-async function getNavigationInfo(slug: string) {
+async function getNavigationInfo(slug) {
   const currentPath = `/docs/${slug}`;
   for (const section of docsNavigation) {
     const foundLink = section.links.find((link) => link.href === currentPath);
@@ -32,7 +32,7 @@ async function getNavigationInfo(slug: string) {
   return { sectionTitle: 'ドキュメント', docTitle: typeof doc.title === 'string' ? doc.title : 'ページ' };
 }
 
-export async function generateMetadata({ params }: { params: { slug: string[] } }) {
+export async function generateMetadata({ params }) {
   const slugPath = params.slug.join('/')
   const doc = await getDocBySlug(slugPath, ['title', 'excerpt'])
 
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: { params: { slug: string[] } 
   }
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
+export default async function Page({ params }) {
   const slug = params.slug.join('/');
   const doc = await getDocBySlug(slug, ['title', 'content']);
 
