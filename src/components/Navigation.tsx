@@ -81,14 +81,23 @@ function NavLink({
       href={href}
       aria-current={active ? 'page' : undefined}
       className={clsx(
-        'flex items-center justify-between gap-2 py-1 pr-3 text-sm transition',
+        'group flex items-center gap-3 py-1 pr-3 text-sm transition',
         isAnchorLink ? 'pl-7' : 'pl-4',
         active
           ? 'text-zinc-900 dark:text-white'
           : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white',
       )}
     >
-      {Icon && <Icon className="h-4 w-4 flex-none" />}
+      {Icon && (
+        <Icon
+          className={clsx(
+            'h-5 w-5 flex-none',
+            active
+              ? 'stroke-emerald-500'
+              : 'stroke-zinc-400 group-hover:stroke-zinc-600 dark:stroke-zinc-500 dark:group-hover:stroke-zinc-300',
+          )}
+        />
+      )}
       <span className="truncate">{children}</span>
       {tag && (
         <Tag variant="small" color="zinc">
