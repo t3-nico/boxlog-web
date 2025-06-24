@@ -11,13 +11,28 @@ import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
 import { Tag } from '@/components/Tag'
 import { remToPx } from '@/lib/remToPx'
 import { CloseButton } from '@headlessui/react'
+import { BookIcon } from '@/components/icons/BookIcon'
+import { BoltIcon } from '@/components/icons/BoltIcon'
+import { SquaresPlusIcon } from '@/components/icons/SquaresPlusIcon'
+import { CheckIcon } from '@/components/icons/CheckIcon'
+import { ListIcon } from '@/components/icons/ListIcon'
+import { BellIcon } from '@/components/icons/BellIcon'
+import { LinkIcon } from '@/components/icons/LinkIcon'
+import { UserIcon } from '@/components/icons/UserIcon'
+import { ChatBubbleIcon } from '@/components/icons/ChatBubbleIcon'
+import { EnvelopeIcon } from '@/components/icons/EnvelopeIcon'
+import { UsersIcon } from '@/components/icons/UsersIcon'
+import { PaperClipIcon } from '@/components/icons/PaperClipIcon'
+
+interface NavItem {
+  title: string
+  href: string
+  icon: React.ComponentType<{ className?: string }>
+}
 
 interface NavGroup {
   title: string
-  links: Array<{
-    title: string
-    href: string
-  }>
+  links: Array<NavItem>
 }
 
 function useInitialValue<T>(value: T, condition = true) {
@@ -48,12 +63,14 @@ function TopLevelNavItem({
 function NavLink({
   href,
   children,
+  icon: Icon,
   tag,
   active = false,
   isAnchorLink = false,
 }: {
   href: string
   children: React.ReactNode
+  icon?: React.ComponentType<{ className?: string }>
   tag?: string
   active?: boolean
   isAnchorLink?: boolean
@@ -64,13 +81,14 @@ function NavLink({
       href={href}
       aria-current={active ? 'page' : undefined}
       className={clsx(
-        'flex justify-between gap-2 py-1 pr-3 text-sm transition',
+        'flex items-center justify-between gap-2 py-1 pr-3 text-sm transition',
         isAnchorLink ? 'pl-7' : 'pl-4',
         active
           ? 'text-zinc-900 dark:text-white'
           : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white',
       )}
     >
+      {Icon && <Icon className="h-4 w-4 flex-none" />}
       <span className="truncate">{children}</span>
       {tag && (
         <Tag variant="small" color="zinc">
@@ -134,19 +152,19 @@ function NavigationGroup({
         {group.title}
       </motion.h2>
       <div className="relative mt-3 pl-2">
-        <motion.div
-          layout
-          className="absolute inset-y-0 left-2 w-px bg-zinc-900/10 dark:bg-white/5"
-        />
         <AnimatePresence initial={false}>
           {isActiveGroup && (
             <ActivePageMarker group={group} pathname={pathname} />
           )}
         </AnimatePresence>
-        <ul role="list" className="border-l border-transparent">
+        <ul role="list">
           {group.links.map((link) => (
             <motion.li key={link.href} layout="position" className="relative">
-              <NavLink href={link.href} active={link.href === pathname}>
+              <NavLink
+                href={link.href}
+                icon={link.icon}
+                active={link.href === pathname}
+              >
                 {link.title}
               </NavLink>
               {/* Anchor links are omitted in the sidebar */}
@@ -162,23 +180,23 @@ export const navigation: Array<NavGroup> = [
   {
     title: 'Guides',
     links: [
-      { title: 'Introduction', href: '/' },
-      { title: 'Quickstart', href: '/quickstart' },
-      { title: 'SDKs', href: '/sdks' },
-      { title: 'Authentication', href: '/authentication' },
-      { title: 'Pagination', href: '/pagination' },
-      { title: 'Errors', href: '/errors' },
-      { title: 'Webhooks', href: '/webhooks' },
+      { title: 'Introduction', href: '/', icon: BookIcon },
+      { title: 'Quickstart', href: '/quickstart', icon: BoltIcon },
+      { title: 'SDKs', href: '/sdks', icon: SquaresPlusIcon },
+      { title: 'Authentication', href: '/authentication', icon: CheckIcon },
+      { title: 'Pagination', href: '/pagination', icon: ListIcon },
+      { title: 'Errors', href: '/errors', icon: BellIcon },
+      { title: 'Webhooks', href: '/webhooks', icon: LinkIcon },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { title: 'Contacts', href: '/contacts' },
-      { title: 'Conversations', href: '/conversations' },
-      { title: 'Messages', href: '/messages' },
-      { title: 'Groups', href: '/groups' },
-      { title: 'Attachments', href: '/attachments' },
+      { title: 'Contacts', href: '/contacts', icon: UserIcon },
+      { title: 'Conversations', href: '/conversations', icon: ChatBubbleIcon },
+      { title: 'Messages', href: '/messages', icon: EnvelopeIcon },
+      { title: 'Groups', href: '/groups', icon: UsersIcon },
+      { title: 'Attachments', href: '/attachments', icon: PaperClipIcon },
     ],
   },
 ]
