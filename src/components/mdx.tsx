@@ -20,7 +20,7 @@ export function wrapper({ children }: { children: React.ReactNode }) {
         </footer>
       </div>
       <div className="hidden lg:block lg:w-56 xl:w-64 flex-none">
-        <TableOfContents className="sticky top-24" />
+        <TableOfContents className="sticky top-14" />
       </div>
     </article>
   )
