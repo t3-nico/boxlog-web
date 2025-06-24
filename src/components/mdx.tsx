@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Feedback } from '@/components/Feedback'
 import { Heading } from '@/components/Heading'
 import { Prose } from '@/components/Prose'
+import { TableOfContents } from '@/components/TableOfContents'
 
 export const a = Link
 export { Button } from '@/components/Button'
@@ -11,11 +12,16 @@ export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 
 export function wrapper({ children }: { children: React.ReactNode }) {
   return (
-    <article className="flex h-full flex-col pt-16 pb-10">
-      <Prose className="flex-auto">{children}</Prose>
-      <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
-        <Feedback />
-      </footer>
+    <article className="relative flex h-full flex-col pt-16 pb-10">
+      <div className="min-w-0 flex-auto lg:pr-64 xl:pr-80">
+        <Prose className="flex-auto">{children}</Prose>
+        <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
+          <Feedback />
+        </footer>
+      </div>
+      <TableOfContents
+        className="fixed right-20 top-14 hidden w-56 overflow-y-auto lg:block xl:right-24 xl:w-64 max-h-[calc(100vh-3.5rem)]"
+      />
     </article>
   )
 }

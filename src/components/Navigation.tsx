@@ -1,24 +1,38 @@
 'use client'
 
 import clsx from 'clsx'
-import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 
 import { Button } from '@/components/Button'
 import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
-import { useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
 import { remToPx } from '@/lib/remToPx'
 import { CloseButton } from '@headlessui/react'
+import { BookIcon } from '@/components/icons/BookIcon'
+import { BoltIcon } from '@/components/icons/BoltIcon'
+import { SquaresPlusIcon } from '@/components/icons/SquaresPlusIcon'
+import { CheckIcon } from '@/components/icons/CheckIcon'
+import { ListIcon } from '@/components/icons/ListIcon'
+import { BellIcon } from '@/components/icons/BellIcon'
+import { LinkIcon } from '@/components/icons/LinkIcon'
+import { UserIcon } from '@/components/icons/UserIcon'
+import { ChatBubbleIcon } from '@/components/icons/ChatBubbleIcon'
+import { EnvelopeIcon } from '@/components/icons/EnvelopeIcon'
+import { UsersIcon } from '@/components/icons/UsersIcon'
+import { PaperClipIcon } from '@/components/icons/PaperClipIcon'
+
+interface NavItem {
+  title: string
+  href: string
+  icon: React.ComponentType<{ className?: string }>
+}
 
 interface NavGroup {
   title: string
-  links: Array<{
-    title: string
-    href: string
-  }>
+  links: Array<NavItem>
 }
 
 function useInitialValue<T>(value: T, condition = true) {
@@ -49,12 +63,14 @@ function TopLevelNavItem({
 function NavLink({
   href,
   children,
+  icon: Icon,
   tag,
   active = false,
   isAnchorLink = false,
 }: {
   href: string
   children: React.ReactNode
+  icon?: React.ComponentType<{ className?: string }>
   tag?: string
   active?: boolean
   isAnchorLink?: boolean
@@ -65,13 +81,23 @@ function NavLink({
       href={href}
       aria-current={active ? 'page' : undefined}
       className={clsx(
-        'flex justify-between gap-2 py-1 pr-3 text-sm transition',
+        'group flex items-center gap-3 py-1 pr-3 text-sm transition',
         isAnchorLink ? 'pl-7' : 'pl-4',
         active
           ? 'text-zinc-900 dark:text-white'
           : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white',
       )}
     >
+      {Icon && (
+        <Icon
+          className={clsx(
+            'h-5 w-5 flex-none',
+            active
+              ? 'stroke-emerald-500'
+              : 'stroke-zinc-400 group-hover:stroke-zinc-600 dark:stroke-zinc-500 dark:group-hover:stroke-zinc-300',
+          )}
+        />
+      )}
       <span className="truncate">{children}</span>
       {tag && (
         <Tag variant="small" color="zinc">
@@ -82,47 +108,6 @@ function NavLink({
   )
 }
 
-function VisibleSectionHighlight({
-  group,
-  pathname,
-}: {
-  group: NavGroup
-  pathname: string
-}) {
-  let [sections, visibleSections] = useInitialValue(
-    [
-      useSectionStore((s) => s.sections),
-      useSectionStore((s) => s.visibleSections),
-    ],
-    useIsInsideMobileNavigation(),
-  )
-
-  let isPresent = useIsPresent()
-  let firstVisibleSectionIndex = Math.max(
-    0,
-    [{ id: '_top' }, ...sections].findIndex(
-      (section) => section.id === visibleSections[0],
-    ),
-  )
-  let itemHeight = remToPx(2)
-  let height = isPresent
-    ? Math.max(1, visibleSections.length) * itemHeight
-    : itemHeight
-  let top =
-    group.links.findIndex((link) => link.href === pathname) * itemHeight +
-    firstVisibleSectionIndex * itemHeight
-
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { delay: 0.2 } }}
-      exit={{ opacity: 0 }}
-      className="absolute inset-x-0 top-0 bg-zinc-800/2.5 will-change-transform dark:bg-white/2.5"
-      style={{ borderRadius: 8, height, top }}
-    />
-  )
-}
 
 function ActivePageMarker({
   group,
@@ -159,8 +144,8 @@ function NavigationGroup({
   // state, so that the state does not change during the close animation.
   // The state will still update when we re-open (re-render) the navigation.
   let isInsideMobileNavigation = useIsInsideMobileNavigation()
-  let [pathname, sections] = useInitialValue(
-    [usePathname(), useSectionStore((s) => s.sections)],
+  let pathname = useInitialValue(
+    usePathname(),
     isInsideMobileNavigation,
   )
 
@@ -176,54 +161,22 @@ function NavigationGroup({
         {group.title}
       </motion.h2>
       <div className="relative mt-3 pl-2">
-        <AnimatePresence initial={!isInsideMobileNavigation}>
-          {isActiveGroup && (
-            <VisibleSectionHighlight group={group} pathname={pathname} />
-          )}
-        </AnimatePresence>
-        <motion.div
-          layout
-          className="absolute inset-y-0 left-2 w-px bg-zinc-900/10 dark:bg-white/5"
-        />
         <AnimatePresence initial={false}>
           {isActiveGroup && (
             <ActivePageMarker group={group} pathname={pathname} />
           )}
         </AnimatePresence>
-        <ul role="list" className="border-l border-transparent">
+        <ul role="list">
           {group.links.map((link) => (
             <motion.li key={link.href} layout="position" className="relative">
-              <NavLink href={link.href} active={link.href === pathname}>
+              <NavLink
+                href={link.href}
+                icon={link.icon}
+                active={link.href === pathname}
+              >
                 {link.title}
               </NavLink>
-              <AnimatePresence mode="popLayout" initial={false}>
-                {link.href === pathname && sections.length > 0 && (
-                  <motion.ul
-                    role="list"
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: 1,
-                      transition: { delay: 0.1 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      transition: { duration: 0.15 },
-                    }}
-                  >
-                    {sections.map((section) => (
-                      <li key={section.id}>
-                        <NavLink
-                          href={`${link.href}#${section.id}`}
-                          tag={section.tag}
-                          isAnchorLink
-                        >
-                          {section.title}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
+              {/* Anchor links are omitted in the sidebar */}
             </motion.li>
           ))}
         </ul>
@@ -236,23 +189,23 @@ export const navigation: Array<NavGroup> = [
   {
     title: 'Guides',
     links: [
-      { title: 'Introduction', href: '/' },
-      { title: 'Quickstart', href: '/quickstart' },
-      { title: 'SDKs', href: '/sdks' },
-      { title: 'Authentication', href: '/authentication' },
-      { title: 'Pagination', href: '/pagination' },
-      { title: 'Errors', href: '/errors' },
-      { title: 'Webhooks', href: '/webhooks' },
+      { title: 'Introduction', href: '/', icon: BookIcon },
+      { title: 'Quickstart', href: '/quickstart', icon: BoltIcon },
+      { title: 'SDKs', href: '/sdks', icon: SquaresPlusIcon },
+      { title: 'Authentication', href: '/authentication', icon: CheckIcon },
+      { title: 'Pagination', href: '/pagination', icon: ListIcon },
+      { title: 'Errors', href: '/errors', icon: BellIcon },
+      { title: 'Webhooks', href: '/webhooks', icon: LinkIcon },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { title: 'Contacts', href: '/contacts' },
-      { title: 'Conversations', href: '/conversations' },
-      { title: 'Messages', href: '/messages' },
-      { title: 'Groups', href: '/groups' },
-      { title: 'Attachments', href: '/attachments' },
+      { title: 'Contacts', href: '/contacts', icon: UserIcon },
+      { title: 'Conversations', href: '/conversations', icon: ChatBubbleIcon },
+      { title: 'Messages', href: '/messages', icon: EnvelopeIcon },
+      { title: 'Groups', href: '/groups', icon: UsersIcon },
+      { title: 'Attachments', href: '/attachments', icon: PaperClipIcon },
     ],
   },
 ]
