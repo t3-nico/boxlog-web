@@ -20,7 +20,7 @@ export function wrapper({ children }: { children: React.ReactNode }) {
         </footer>
       </div>
       <TableOfContents
-        className="fixed right-12 top-14 hidden w-56 overflow-y-auto lg:block xl:right-16 xl:w-64 max-h-[calc(100vh-3.5rem)]"
+        className="fixed right-16 top-14 hidden w-56 overflow-y-auto lg:block xl:right-20 xl:w-64 max-h-[calc(100vh-3.5rem)]"
       />
     </article>
   )

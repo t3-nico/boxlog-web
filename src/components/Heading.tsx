@@ -3,6 +3,7 @@
 import { useInView } from 'framer-motion'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
+import clsx from 'clsx'
 
 import { useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
@@ -84,6 +85,7 @@ export function Heading<Level extends 2 | 3>({
   let Component = `h${level}` as 'h2' | 'h3'
   let ref = useRef<HTMLHeadingElement>(null)
   let registerHeading = useSectionStore((s) => s.registerHeading)
+  let current = useSectionStore((s) => s.visibleSections[0])
 
   let inView = useInView(ref, {
     margin: `${remToPx(-3.5)}px 0px 0px 0px`,
@@ -101,7 +103,10 @@ export function Heading<Level extends 2 | 3>({
       <Eyebrow tag={tag} label={label} />
       <Component
         ref={ref}
-        className={tag || label ? 'mt-2 scroll-mt-32' : 'scroll-mt-24'}
+        className={clsx(
+          tag || label ? 'mt-2 scroll-mt-32' : 'scroll-mt-24',
+          current === props.id && 'text-emerald-500',
+        )}
         {...props}
       >
         {anchor ? (
