@@ -12,16 +12,16 @@ export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 
 export function wrapper({ children }: { children: React.ReactNode }) {
   return (
-    <article className="flex h-full flex-col pt-16 pb-10 lg:flex-row lg:items-start lg:gap-10">
-      <div className="min-w-0 flex-auto">
+    <article className="relative flex h-full flex-col pt-16 pb-10">
+      <div className="min-w-0 flex-auto lg:pr-56 xl:pr-64">
         <Prose className="flex-auto">{children}</Prose>
         <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
           <Feedback />
         </footer>
       </div>
-      <div className="hidden lg:block lg:w-56 xl:w-64 flex-none">
-        <TableOfContents className="sticky top-14" />
-      </div>
+      <TableOfContents
+        className="fixed right-8 top-14 hidden w-56 overflow-y-auto lg:block xl:right-12 xl:w-64 max-h-[calc(100vh-3.5rem)]"
+      />
     </article>
   )
 }
