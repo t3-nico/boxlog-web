@@ -56,7 +56,7 @@ export default function Search(nextConfig = {}) {
             let appDir = path.resolve('./src/app')
             this.addContextDependency(appDir)
 
-            let files = glob.sync('**/*.mdx', { cwd: appDir })
+            let files = glob.sync('docs/**/*.mdx', { cwd: appDir })
             let data = files.map((file) => {
               let url = '/' + file.replace(/(^|\/)page\.mdx$/, '')
               let mdx = fs.readFileSync(path.join(appDir, file), 'utf8')

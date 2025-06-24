@@ -189,23 +189,23 @@ export const navigation: Array<NavGroup> = [
   {
     title: 'Guides',
     links: [
-      { title: 'Introduction', href: '/', icon: BookIcon },
-      { title: 'Quickstart', href: '/quickstart', icon: BoltIcon },
-      { title: 'SDKs', href: '/sdks', icon: SquaresPlusIcon },
-      { title: 'Authentication', href: '/authentication', icon: CheckIcon },
-      { title: 'Pagination', href: '/pagination', icon: ListIcon },
-      { title: 'Errors', href: '/errors', icon: BellIcon },
-      { title: 'Webhooks', href: '/webhooks', icon: LinkIcon },
+      { title: 'Introduction', href: '/docs', icon: BookIcon },
+      { title: 'Quickstart', href: '/docs/quickstart', icon: BoltIcon },
+      { title: 'SDKs', href: '/docs/sdks', icon: SquaresPlusIcon },
+      { title: 'Authentication', href: '/docs/authentication', icon: CheckIcon },
+      { title: 'Pagination', href: '/docs/pagination', icon: ListIcon },
+      { title: 'Errors', href: '/docs/errors', icon: BellIcon },
+      { title: 'Webhooks', href: '/docs/webhooks', icon: LinkIcon },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { title: 'Contacts', href: '/contacts', icon: UserIcon },
-      { title: 'Conversations', href: '/conversations', icon: ChatBubbleIcon },
-      { title: 'Messages', href: '/messages', icon: EnvelopeIcon },
-      { title: 'Groups', href: '/groups', icon: UsersIcon },
-      { title: 'Attachments', href: '/attachments', icon: PaperClipIcon },
+      { title: 'Contacts', href: '/docs/contacts', icon: UserIcon },
+      { title: 'Conversations', href: '/docs/conversations', icon: ChatBubbleIcon },
+      { title: 'Messages', href: '/docs/messages', icon: EnvelopeIcon },
+      { title: 'Groups', href: '/docs/groups', icon: UsersIcon },
+      { title: 'Attachments', href: '/docs/attachments', icon: PaperClipIcon },
     ],
   },
 ]
@@ -214,8 +214,8 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
   return (
     <nav {...props}>
       <ul role="list">
-        <TopLevelNavItem href="/">API</TopLevelNavItem>
-        <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
+        <TopLevelNavItem href="/docs">API</TopLevelNavItem>
+        <TopLevelNavItem href="/docs">Documentation</TopLevelNavItem>
         <TopLevelNavItem href="#">Support</TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
