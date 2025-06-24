@@ -15,14 +15,13 @@ export function TableOfContents({ className }: { className?: string }) {
 
   return (
     <nav className={clsx('text-sm leading-6', className)} aria-label="目次">
-      <h2 className="font-semibold text-zinc-900 dark:text-white">目次</h2>
-      <ul className="mt-4 space-y-3 border-l border-zinc-200 pl-3 dark:border-zinc-700">
+      <ul className="mt-4 space-y-3 border-l border-zinc-200 pl-4 dark:border-zinc-700">
         {sections.map((section) => (
           <li key={section.id}>
             <Link
               href={`#${section.id}`}
               className={clsx(
-                'block -ml-1 hover:text-emerald-500',
+                'block hover:text-emerald-500',
                 section.id === current
                   ? 'text-emerald-500'
                   : 'text-zinc-700 dark:text-zinc-300'
