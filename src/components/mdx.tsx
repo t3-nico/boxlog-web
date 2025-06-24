@@ -13,7 +13,7 @@ export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 export function wrapper({ children }: { children: React.ReactNode }) {
   return (
     <article className="relative flex h-full flex-col pt-16 pb-10">
-      <div className="min-w-0 flex-auto lg:pr-56 xl:pr-64">
+      <div className="min-w-0 flex-auto lg:pr-60 xl:pr-72">
         <Prose className="flex-auto">{children}</Prose>
         <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
           <Feedback />
