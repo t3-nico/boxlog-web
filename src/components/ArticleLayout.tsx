@@ -11,47 +11,51 @@ export interface Breadcrumb {
 }
 
 export function ArticleLayout({
-  breadcrumbs,
+  breadcrumbs = [],
   title,
   children,
 }: {
-  breadcrumbs: Array<Breadcrumb>
-  title: string
+  breadcrumbs?: Array<Breadcrumb>
+  title?: string
   children: React.ReactNode
 }) {
   return (
     <>
       <HeroPattern />
       <div className="pt-6 pb-10">
-        <nav
-          aria-label="Breadcrumb"
-          className="mb-4 text-sm text-zinc-500 dark:text-zinc-400"
-        >
-          <ol className="flex flex-wrap items-center gap-1">
-            {breadcrumbs.map((crumb, index) => (
-              <li key={index} className="flex items-center gap-1">
-                {index > 0 && <span className="mx-1">/</span>}
-                {index === 0 ? (
-                  <span>{crumb.label}</span>
-                ) : (
-                  <Link
-                    href={crumb.href}
-                    className={clsx(
-                      index === breadcrumbs.length - 1
-                        ? 'font-semibold text-zinc-900 dark:text-white'
-                        : 'hover:text-emerald-500'
-                    )}
-                  >
-                    {crumb.label}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ol>
-        </nav>
-        <h1 className="mb-8 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-          {title}
-        </h1>
+        {breadcrumbs.length > 0 && (
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-4 text-sm text-zinc-500 dark:text-zinc-400"
+          >
+            <ol className="flex flex-wrap items-center gap-1">
+              {breadcrumbs.map((crumb, index) => (
+                <li key={index} className="flex items-center gap-1">
+                  {index > 0 && <span className="mx-1">/</span>}
+                  {index === 0 ? (
+                    <span>{crumb.label}</span>
+                  ) : (
+                    <Link
+                      href={crumb.href}
+                      className={clsx(
+                        index === breadcrumbs.length - 1
+                          ? 'font-semibold text-zinc-900 dark:text-white'
+                          : 'hover:text-emerald-500'
+                      )}
+                    >
+                      {crumb.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+        {title && (
+          <h1 className="mb-8 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            {title}
+          </h1>
+        )}
         <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12">
           <div className="min-w-0 flex-auto lg:pr-0">{children}</div>
           <aside className="mt-8 lg:mt-0 lg:w-64 lg:flex-none lg:pt-2 lg:pr-2">
