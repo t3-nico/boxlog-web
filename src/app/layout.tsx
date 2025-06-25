@@ -20,6 +20,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   let pages = await glob('{docs,blog}/**/*.{mdx,tsx}', { cwd: 'src/app' })
+
   let allSectionsEntries = (await Promise.all(
     pages.map(async (filename) => [
       '/' + filename.replace(/(^|\/)page\.(mdx|tsx)$/, ''),

@@ -1,5 +1,6 @@
 'use client'
 
+
 import { HeroPattern } from '@/components/HeroPattern'
 import Link from 'next/link'
 import clsx from 'clsx'
@@ -70,5 +71,49 @@ export function ArticleLayout({
         </div>
       </div>
     </>
+    <div className="pt-6 pb-10">
+      <nav aria-label="Breadcrumb" className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
+        <ol className="flex flex-wrap items-center gap-1">
+          {breadcrumbs.map((crumb, index) => (
+            <li key={index} className="flex items-center gap-1">
+              {index > 0 && <span className="mx-1">/</span>}
+              {index === 0 ? (
+                <span>{crumb.label}</span>
+              ) : (
+                <Link
+                  href={crumb.href}
+                  className={clsx(
+                    index === breadcrumbs.length - 1
+                      ? 'font-semibold text-zinc-900 dark:text-white'
+                      : 'hover:text-emerald-500'
+                  )}
+                >
+                  {crumb.label}
+                </Link>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <h1 className="mb-8 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+        {title}
+      </h1>
+      <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12">
+        <div className="min-w-0 flex-auto lg:pr-0">{children}</div>
+        <aside className="mt-8 lg:mt-0 lg:w-64 lg:flex-none lg:pt-2 lg:pr-2">
+          <div className="hidden lg:block fixed top-20">
+            <TableOfContents />
+          </div>
+          <details className="lg:hidden" open={false}>
+            <summary className="cursor-pointer font-semibold text-zinc-900 dark:text-white">
+              目次
+            </summary>
+            <div className="mt-2 border-l border-zinc-200 pl-4 dark:border-zinc-700">
+              <TableOfContents />
+            </div>
+          </details>
+        </aside>
+      </div>
+    </div>
   )
 }
