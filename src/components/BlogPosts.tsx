@@ -5,6 +5,7 @@ interface PostMeta {
   title: string
   description?: string
   date?: string
+  image?: string
 }
 
 interface Post {
@@ -33,9 +34,19 @@ export async function BlogPosts() {
   })
 
   return (
-    <ul className="space-y-10">
+    <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
       {posts.map((post) => (
-        <li key={post.slug}>
+        <article key={post.slug} className="flex flex-col gap-4">
+          {post.metadata.image && (
+            <Link href={`/blog/${post.slug}`} className="block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={post.metadata.image}
+                alt={post.metadata.title}
+                className="w-full rounded-lg"
+              />
+            </Link>
+          )}
           <h2 className="text-xl font-semibold">
             <Link href={`/blog/${post.slug}`}>{post.metadata.title}</Link>
           </h2>
@@ -52,8 +63,8 @@ export async function BlogPosts() {
               {post.metadata.description}
             </p>
           )}
-        </li>
+        </article>
       ))}
-    </ul>
+    </div>
   )
 }
