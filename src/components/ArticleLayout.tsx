@@ -19,7 +19,7 @@ export function ArticleLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="px-4 pt-6 pb-10 sm:px-6 lg:px-8">
+    <div className="pt-6 pb-10">
       <nav aria-label="Breadcrumb" className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
         <ol className="flex flex-wrap items-center gap-1">
           {breadcrumbs.map((crumb, index) => (
