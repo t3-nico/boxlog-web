@@ -47,7 +47,7 @@ export function ArticleLayout({
         {title}
       </h1>
       <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12">
-        <div className="min-w-0 flex-auto lg:pr-8">{children}</div>
+        <div className="min-w-0 flex-auto lg:pr-0">{children}</div>
         <aside className="mt-8 lg:mt-0 lg:w-64 lg:flex-none lg:pt-2">
           <div className="hidden lg:block sticky top-20">
             <TableOfContents />

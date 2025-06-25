@@ -36,7 +36,7 @@ export function Layout({
             <Navigation className="hidden lg:mt-10 lg:block" />
           </div>
         </motion.header>
-        <div className="relative flex h-full flex-col px-4 pt-14 sm:px-6 lg:px-8">
+        <div className="relative flex h-full flex-col pt-14 pl-4 pr-0 sm:pl-6 sm:pr-0 lg:pl-8 lg:pr-0">
           <main className="flex-auto">{children}</main>
           <Footer />
         </div>
