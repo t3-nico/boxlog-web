@@ -13,7 +13,7 @@ export const sections = [
 
 export default function Page() {
   const breadcrumbs: Breadcrumb[] = [
-    { href: '/docs', label: 'Administration' },
+    { href: '', label: 'Guides' },
     { href: '/docs/audit-log', label: 'Audit log' },
   ]
 

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import clsx from 'clsx'
 import { TableOfContents } from '@/components/TableOfContents'
 
 export interface Breadcrumb {
@@ -24,9 +25,20 @@ export function ArticleLayout({
           {breadcrumbs.map((crumb, index) => (
             <li key={index} className="flex items-center gap-1">
               {index > 0 && <span className="mx-1">/</span>}
-              <Link href={crumb.href} className="hover:text-emerald-500">
-                {crumb.label}
-              </Link>
+              {index === 0 ? (
+                <span>{crumb.label}</span>
+              ) : (
+                <Link
+                  href={crumb.href}
+                  className={clsx(
+                    index === breadcrumbs.length - 1
+                      ? 'font-semibold text-zinc-900 dark:text-white'
+                      : 'hover:text-emerald-500'
+                  )}
+                >
+                  {crumb.label}
+                </Link>
+              )}
             </li>
           ))}
         </ol>

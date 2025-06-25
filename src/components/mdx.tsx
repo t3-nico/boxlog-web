@@ -16,19 +16,43 @@ export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 export function wrapper({ children }: { children: React.ReactNode }) {
   let pathname = usePathname()
 
-  let breadcrumbs: Array<Breadcrumb> = pathname
-    .split('/')
-    .filter(Boolean)
-    .map((segment, index, segments) => {
-      let href = '/' + segments.slice(0, index + 1).join('/');
-      let label = segment
-        .split('-')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-      return { href, label };
-    })
+  const guides = new Set([
+    'quickstart',
+    'sdks',
+    'authentication',
+    'pagination',
+    'errors',
+    'webhooks',
+    'audit-log',
+  ])
 
-  let title = breadcrumbs[breadcrumbs.length - 1]?.label ?? ''
+  const resources = new Set([
+    'contacts',
+    'conversations',
+    'messages',
+    'groups',
+    'attachments',
+  ])
+
+  let slug = pathname.replace(/^\/(.+?)\/?$/, '$1').split('/')[1]
+
+  let breadcrumbs: Array<Breadcrumb> = []
+  let title = ''
+
+  if (slug) {
+    title = slug
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+
+    let category = resources.has(slug) ? 'Resources' : 'Guides'
+    breadcrumbs = [
+      { href: '', label: category },
+      { href: pathname, label: title },
+    ]
+  } else if (pathname.startsWith('/docs')) {
+    title = 'API Documentation'
+  }
 
   return (
     <ArticleLayout breadcrumbs={breadcrumbs} title={title}>
