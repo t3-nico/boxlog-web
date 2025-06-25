@@ -1,3 +1,5 @@
+"use client"
+
 import clsx from 'clsx'
 
 export function Prose<T extends React.ElementType = 'div'>({

@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { TableOfContents } from '@/components/TableOfContents'
 
