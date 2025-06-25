@@ -4,25 +4,41 @@ import Link from 'next/link'
 import { Feedback } from '@/components/Feedback'
 import { Heading } from '@/components/Heading'
 import { Prose } from '@/components/Prose'
-import { TableOfContents } from '@/components/TableOfContents'
+import { ArticleLayout, type Breadcrumb } from '@/components/ArticleLayout'
+import { usePathname } from 'next/navigation'
 
 export const a = Link
 export { Button } from '@/components/Button'
 export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 
 export function wrapper({ children }: { children: React.ReactNode }) {
+  let pathname = usePathname()
+
+  let breadcrumbs: Array<Breadcrumb> = pathname
+    .split('/')
+    .filter(Boolean)
+    .map((segment, index, segments) => {
+      let href = '/' + segments.slice(0, index + 1).join('/');
+      let label = segment
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+      return { href, label };
+    })
+
+  let title = breadcrumbs[breadcrumbs.length - 1]?.label ?? ''
+
   return (
-    <article className="relative flex h-full flex-col pt-16 pb-10">
-      <div className="min-w-0 flex-auto lg:pr-64 xl:pr-80">
-        <Prose className="flex-auto">{children}</Prose>
-        <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
-          <Feedback />
-        </footer>
-      </div>
-      <TableOfContents
-        className="fixed right-20 top-14 hidden w-56 overflow-y-auto lg:block xl:right-24 xl:w-64 max-h-[calc(100vh-3.5rem)]"
-      />
-    </article>
+    <ArticleLayout breadcrumbs={breadcrumbs} title={title}>
+      <article className="relative flex h-full flex-col pt-0 pb-10">
+        <div className="min-w-0 flex-auto lg:pr-64 xl:pr-80">
+          <Prose className="flex-auto">{children}</Prose>
+          <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
+            <Feedback />
+          </footer>
+        </div>
+      </article>
+    </ArticleLayout>
   )
 }
 
