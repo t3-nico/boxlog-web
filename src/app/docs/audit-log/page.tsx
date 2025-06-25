@@ -4,6 +4,7 @@ import { Heading } from '@/components/Heading'
 export const metadata = {
   title: 'Audit log',
   description: 'Example page demonstrating breadcrumb and 2-column layout.',
+  tags: ['docs', 'guide'],
 }
 
 export const sections = [

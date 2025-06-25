@@ -27,7 +27,18 @@ export async function getMediaPosts(): Promise<MediaPost[]> {
     }),
   )
 
-  let posts = [...blogPosts]
+  let docFiles = await glob('*/page.{mdx,tsx}', { cwd: 'src/app/docs' })
+  let docPosts = await Promise.all(
+    docFiles.map(async (file) => {
+      let mod = await import(`../app/docs/${file}`)
+      return {
+        slug: `/docs/${file.replace(/\/page\.(mdx|tsx)$/, '')}`,
+        metadata: mod.metadata as MediaMeta,
+        type: 'docs',
+      }
+    }),
+  )
+  let posts = [...blogPosts, ...docPosts]
 
   posts.sort((a, b) => {
     let da = a.metadata.date ? new Date(a.metadata.date).getTime() : 0
