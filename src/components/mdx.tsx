@@ -1,28 +1,70 @@
+"use client"
+
 import clsx from 'clsx'
 import Link from 'next/link'
 
 import { Feedback } from '@/components/Feedback'
 import { Heading } from '@/components/Heading'
 import { Prose } from '@/components/Prose'
-import { TableOfContents } from '@/components/TableOfContents'
+import { ArticleLayout, type Breadcrumb } from '@/components/ArticleLayout'
+import { usePathname } from 'next/navigation'
 
 export const a = Link
 export { Button } from '@/components/Button'
 export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 
 export function wrapper({ children }: { children: React.ReactNode }) {
+  let pathname = usePathname()
+
+  const guides = new Set([
+    'quickstart',
+    'sdks',
+    'authentication',
+    'pagination',
+    'errors',
+    'webhooks',
+    'audit-log',
+  ])
+
+  const resources = new Set([
+    'contacts',
+    'conversations',
+    'messages',
+    'groups',
+    'attachments',
+  ])
+
+  let slug = pathname.replace(/^\/(.+?)\/?$/, '$1').split('/')[1]
+
+  let breadcrumbs: Array<Breadcrumb> = []
+  let title = ''
+
+  if (slug) {
+    title = slug
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+
+    let category = resources.has(slug) ? 'Resources' : 'Guides'
+    breadcrumbs = [
+      { href: '', label: category },
+      { href: pathname, label: title },
+    ]
+  } else if (pathname.startsWith('/docs')) {
+    title = 'API Documentation'
+  }
+
   return (
-    <article className="relative flex h-full flex-col pt-16 pb-10">
-      <div className="min-w-0 flex-auto lg:pr-64 xl:pr-80">
-        <Prose className="flex-auto">{children}</Prose>
-        <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
-          <Feedback />
-        </footer>
-      </div>
-      <TableOfContents
-        className="fixed right-20 top-14 hidden w-56 overflow-y-auto lg:block xl:right-24 xl:w-64 max-h-[calc(100vh-3.5rem)]"
-      />
-    </article>
+    <ArticleLayout breadcrumbs={breadcrumbs} title={title}>
+      <article className="relative flex h-full flex-col pt-0 pb-10">
+        <div className="min-w-0 flex-auto">
+          <Prose className="flex-auto">{children}</Prose>
+          <footer className="mx-auto mt-16 w-full max-w-[630px] lg:max-w-[630px]">
+            <Feedback />
+          </footer>
+        </div>
+      </article>
+    </ArticleLayout>
   )
 }
 
