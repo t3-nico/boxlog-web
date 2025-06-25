@@ -39,7 +39,7 @@ export function ArticleLayout({
                     className={clsx(
                       index === breadcrumbs.length - 1
                         ? 'font-semibold text-zinc-900 dark:text-white'
-                        : 'hover:text-emerald-500',
+                        : 'hover:text-emerald-500'
                     )}
                   >
                     {crumb.label}
