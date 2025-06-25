@@ -16,7 +16,9 @@ export async function BlogPosts() {
   let files = await glob('*/page.mdx', { cwd: 'src/app/blog' })
   let posts: Post[] = await Promise.all(
     files.map(async (file) => {
-      let mod = await import(`../blog/${file}`)
+      // The blog posts live in src/app/blog so we need to import from there
+      // relative to this component file.
+      let mod = await import(`../app/blog/${file}`)
       return {
         slug: file.replace(/\/page\.mdx$/, ''),
         metadata: mod.metadata as PostMeta,
