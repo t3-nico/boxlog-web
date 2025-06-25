@@ -59,7 +59,7 @@ export function wrapper({ children }: { children: React.ReactNode }) {
       <article className="relative flex h-full flex-col pt-0 pb-10">
         <div className="min-w-0 flex-auto">
           <Prose className="flex-auto">{children}</Prose>
-          <footer className="mx-auto mt-16 w-full max-w-[630px] lg:max-w-[630px]">
+          <footer className="mx-auto mt-16 w-full max-w-[637px] lg:max-w-[637px]">
             <Feedback />
           </footer>
         </div>
