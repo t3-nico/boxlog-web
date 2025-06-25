@@ -57,7 +57,7 @@ export function wrapper({ children }: { children: React.ReactNode }) {
   return (
     <ArticleLayout breadcrumbs={breadcrumbs} title={title}>
       <article className="relative flex h-full flex-col pt-0 pb-10">
-        <div className="min-w-0 flex-auto lg:pr-64 xl:pr-80">
+        <div className="min-w-0 flex-auto">
           <Prose className="flex-auto">{children}</Prose>
           <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
             <Feedback />
