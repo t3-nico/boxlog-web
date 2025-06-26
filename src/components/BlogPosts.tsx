@@ -35,11 +35,11 @@ export async function BlogPosts() {
   })
 
   return (
-    <div className="not-prose flex flex-wrap gap-8">
+    <div className="not-prose mx-auto max-w-[640px] space-y-8 px-4 sm:px-6 lg:px-8">
       {posts.map((post) => (
         <article
           key={post.slug}
-          className="group flex w-full flex-col overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-zinc-200 transition hover:shadow-lg dark:bg-zinc-800/50 dark:ring-zinc-700 sm:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]"
+          className="group overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-zinc-200 transition hover:shadow-lg dark:bg-zinc-800/50 dark:ring-zinc-700"
         >
           {post.metadata.image && (
             <Link href={`/blog/${post.slug}`} className="block overflow-hidden">
