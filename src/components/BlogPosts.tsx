@@ -6,6 +6,7 @@ interface PostMeta {
   description?: string
   date?: string
   image?: string
+  tags?: string[]
 }
 
 interface Post {
@@ -34,35 +35,53 @@ export async function BlogPosts() {
   })
 
   return (
-    <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {posts.map((post) => (
-        <article key={post.slug} className="flex flex-col gap-4">
+        <article
+          key={post.slug}
+          className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-zinc-200 transition hover:shadow-lg dark:bg-zinc-800/50 dark:ring-zinc-700"
+        >
           {post.metadata.image && (
-            <Link href={`/blog/${post.slug}`} className="block">
+            <Link href={`/blog/${post.slug}`} className="block overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={post.metadata.image}
                 alt={post.metadata.title}
-                className="w-full rounded-lg"
+                className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
           )}
-          <h2 className="text-xl font-semibold">
-            <Link href={`/blog/${post.slug}`}>{post.metadata.title}</Link>
-          </h2>
-          {post.metadata.date && (
-            <time
-              dateTime={post.metadata.date}
-              className="block text-sm text-zinc-500"
-            >
-              {new Date(post.metadata.date).toLocaleDateString()}
-            </time>
-          )}
-          {post.metadata.description && (
-            <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-              {post.metadata.description}
-            </p>
-          )}
+          <div className="space-y-2 p-4">
+            {post.metadata.tags && (
+              <div className="flex flex-wrap gap-2">
+                {post.metadata.tags.map((tag) => (
+                  <Link
+                    href={`/tags/${tag}`}
+                    key={tag}
+                    className="rounded-full bg-gray-100 px-2 py-0.5 text-sm text-gray-700 transition hover:bg-gray-200 dark:bg-zinc-800 dark:text-zinc-200"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            )}
+            <h2 className="text-lg font-semibold">
+              <Link href={`/blog/${post.slug}`}>{post.metadata.title}</Link>
+            </h2>
+            {post.metadata.date && (
+              <time
+                dateTime={post.metadata.date}
+                className="block text-sm text-gray-500 dark:text-zinc-400"
+              >
+                {new Date(post.metadata.date).toLocaleDateString()}
+              </time>
+            )}
+            {post.metadata.description && (
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                {post.metadata.description}
+              </p>
+            )}
+          </div>
         </article>
       ))}
     </div>
