@@ -36,12 +36,12 @@ export async function BlogPosts() {
 
   return (
     <div
-      className="not-prose mx-auto grid grid-cols-1 gap-8 px-4 sm:grid-cols-2 lg:grid-cols-3 sm:px-6 lg:px-8"
+      className="not-prose mx-auto flex w-full flex-wrap justify-start gap-8 px-4 sm:px-6 lg:px-8"
     >
       {posts.map((post) => (
         <article
           key={post.slug}
-          className="group overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-zinc-200 transition hover:shadow-lg dark:bg-zinc-800/50 dark:ring-zinc-700"
+          className="group flex-1 basis-full overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-zinc-200 transition hover:shadow-lg dark:bg-zinc-800/50 dark:ring-zinc-700 sm:basis-1/2 lg:basis-1/3"
         >
           {post.metadata.image && (
             <Link href={`/blog/${post.slug}`} className="block overflow-hidden">
