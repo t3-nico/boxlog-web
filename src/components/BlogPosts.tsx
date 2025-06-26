@@ -35,11 +35,11 @@ export async function BlogPosts() {
   })
 
   return (
-    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="not-prose flex flex-wrap gap-8">
       {posts.map((post) => (
         <article
           key={post.slug}
-          className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-zinc-200 transition hover:shadow-lg dark:bg-zinc-800/50 dark:ring-zinc-700"
+          className="group flex w-full flex-col overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-zinc-200 transition hover:shadow-lg dark:bg-zinc-800/50 dark:ring-zinc-700 sm:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]"
         >
           {post.metadata.image && (
             <Link href={`/blog/${post.slug}`} className="block overflow-hidden">
@@ -75,11 +75,6 @@ export async function BlogPosts() {
               >
                 {new Date(post.metadata.date).toLocaleDateString()}
               </time>
-            )}
-            {post.metadata.description && (
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                {post.metadata.description}
-              </p>
             )}
           </div>
         </article>
