@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { getMediaPosts } from '@/lib/media'
+import { getBlogPosts } from '@/lib/blog'
 
 export const metadata = {
   title: 'Tags',
 }
 
 export default async function TagsPage() {
-  const posts = await getMediaPosts()
+  const posts = await getBlogPosts()
   const tagCounts: Record<string, number> = {}
   for (const post of posts) {
     for (const tag of post.metadata.tags ?? []) {

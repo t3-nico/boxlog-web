@@ -3,13 +3,13 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import clsx from 'clsx'
-import type { MediaPost } from '@/lib/media'
+import type { BlogPost } from '@/lib/blog'
 
-export function MediaListInner({
+export function BlogListInner({
   posts,
   initialTag,
 }: {
-  posts: MediaPost[]
+  posts: BlogPost[]
   initialTag?: string
 }) {
   const [tag, setTag] = useState(initialTag ?? 'all')
