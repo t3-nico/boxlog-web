@@ -1,6 +1,6 @@
 import glob from 'fast-glob'
 
-export interface MediaMeta {
+export interface BlogMeta {
   title: string
   description?: string
   date?: string
@@ -8,20 +8,20 @@ export interface MediaMeta {
   tags?: string[]
 }
 
-export interface MediaPost {
+export interface BlogPost {
   slug: string
-  metadata: MediaMeta
+  metadata: BlogMeta
   type: string
 }
 
-export async function getMediaPosts(): Promise<MediaPost[]> {
+export async function getBlogPosts(): Promise<BlogPost[]> {
   let blogFiles = await glob('*/page.mdx', { cwd: 'src/app/blog' })
   let blogPosts = await Promise.all(
     blogFiles.map(async (file) => {
       let mod = await import(`../app/blog/${file}`)
       return {
         slug: `/blog/${file.replace(/\/page\.mdx$/, '')}`,
-        metadata: mod.metadata as MediaMeta,
+        metadata: mod.metadata as BlogMeta,
         type: 'blog',
       }
     }),

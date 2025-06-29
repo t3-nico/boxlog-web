@@ -84,7 +84,6 @@ export const Header = forwardRef<
             <TopLevelNavItem href="/docs">API</TopLevelNavItem>
             <TopLevelNavItem href="/docs">Documentation</TopLevelNavItem>
             <TopLevelNavItem href="/blog">Blog</TopLevelNavItem>
-            <TopLevelNavItem href="/media">Media</TopLevelNavItem>
             <TopLevelNavItem href="#">Support</TopLevelNavItem>
           </ul>
         </nav>
