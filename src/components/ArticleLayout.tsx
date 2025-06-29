@@ -14,14 +14,16 @@ export function ArticleLayout({
   breadcrumbs = [],
   title,
   children,
+  showPattern = true,
 }: {
   breadcrumbs?: Array<Breadcrumb>
   title?: string
   children: React.ReactNode
+  showPattern?: boolean
 }) {
   return (
     <>
-      <HeroPattern />
+      {showPattern && <HeroPattern />}
       <div className="pt-6 pb-10">
         {breadcrumbs.length > 0 && (
           <nav
