@@ -68,7 +68,7 @@ export function BlogListInner({
         {visible.map((post) => (
           <article
             key={post.slug}
-            className="group overflow-hidden rounded-lg shadow-md transition hover:shadow-lg"
+            className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow transition hover:shadow-lg hover:ring-1 hover:ring-emerald-400 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:ring-emerald-500"
           >
             {post.metadata.image && (
               <Link href={post.slug} className="block overflow-hidden">
@@ -76,7 +76,7 @@ export function BlogListInner({
                 <img
                   src={post.metadata.image}
                   alt=""
-                  className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="h-48 w-full rounded-t-xl object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </Link>
             )}
@@ -86,7 +86,7 @@ export function BlogListInner({
                   <Link
                     href={`/tags/${tag}`}
                     key={tag}
-                    className="rounded-full bg-gray-100 px-2 py-0.5 text-sm text-gray-700 dark:bg-zinc-800 dark:text-zinc-200"
+                    className="rounded-full bg-gray-100 px-2 py-0.5 text-sm text-gray-700 transition-colors hover:bg-gray-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
                   >
                     {tag}
                   </Link>

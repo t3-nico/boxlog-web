@@ -1,12 +1,16 @@
 import { BlogList } from '@/components/BlogList'
+import { HeroPattern } from '@/components/HeroPattern'
 
 export const metadata = {
   title: 'Blog',
   description: '最新情報やアップデートをお届けします。',
 }
 
-# Blog
 
-最新の記事一覧です。
+<div className="relative mb-12 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 to-lime-400 p-8 text-center text-white shadow-lg not-prose">
+  <HeroPattern />
+  <h1 className="relative z-10 text-3xl font-bold">Blog</h1>
+  <p className="relative z-10 mt-2">最新の記事一覧です。</p>
+</div>
 
 <BlogList />
