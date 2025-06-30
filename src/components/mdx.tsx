@@ -16,6 +16,11 @@ export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 export function wrapper({ children }: { children: React.ReactNode }) {
   let pathname = usePathname()
 
+  // ブログページの場合はシンプルなレイアウト
+  if (pathname.startsWith('/blog')) {
+    return <>{children}</>
+  }
+
   const guides = new Set([
     'quickstart',
     'sdks',
