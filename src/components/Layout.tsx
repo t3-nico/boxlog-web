@@ -9,37 +9,8 @@ import { Header } from '@/components/Header'
 import { Logo } from '@/components/Logo'
 import { Navigation } from '@/components/Navigation'
 import { SectionProvider, type Section } from '@/components/SectionProvider'
+import { SiteHeader } from '@/components/SiteHeader'
 
-function BlogHeader() {
-  return (
-    <header className="bg-white shadow-sm dark:bg-zinc-900 dark:shadow-zinc-800/10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <Logo className="h-8 w-auto" />
-              <span className="text-xl font-bold text-gray-900 dark:text-white">Protocol</span>
-            </Link>
-          </div>
-          <nav className="hidden space-x-8 md:flex">
-            <Link 
-              href="/docs" 
-              className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-            >
-              Documentation
-            </Link>
-            <Link 
-              href="/blog" 
-              className="text-emerald-600 font-medium dark:text-emerald-400"
-            >
-              Blog
-            </Link>
-          </nav>
-        </div>
-      </div>
-    </header>
-  )
-}
 
 export function Layout({
   children,
@@ -49,17 +20,14 @@ export function Layout({
   allSections: Record<string, Array<Section>>
 }) {
   let pathname = usePathname()
-  let isBlogPage = pathname?.startsWith('/blog')
+  let isDocsPage = pathname?.startsWith('/docs')
 
-  // Blog pages use a different layout
-  if (isBlogPage) {
+  if (!isDocsPage) {
     return (
       <SectionProvider sections={[]}>
         <div className="flex min-h-screen flex-col">
-          <BlogHeader />
-          <main className="flex-1">
-            {children}
-          </main>
+          <SiteHeader />
+          <main className="flex-1">{children}</main>
         </div>
       </SectionProvider>
     )
