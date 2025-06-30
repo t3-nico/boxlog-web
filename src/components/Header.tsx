@@ -74,7 +74,7 @@ export const Header = forwardRef<
       <Search />
       <div className="flex items-center gap-5 lg:hidden">
         <MobileNavigation />
-        <CloseButton as={Link} href="/docs" aria-label="Home">
+        <CloseButton as={Link} href="/" aria-label="Home">
           <Logo className="h-6" />
         </CloseButton>
       </div>
