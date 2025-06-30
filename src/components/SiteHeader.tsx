@@ -5,7 +5,7 @@ import { Logo } from '@/components/Logo'
 
 export function SiteHeader() {
   return (
-    <header className="bg-white shadow-sm dark:bg-zinc-900 dark:shadow-zinc-800/10">
+    <header className="sticky top-0 z-20 bg-white shadow-sm dark:bg-zinc-900 dark:shadow-zinc-800/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
