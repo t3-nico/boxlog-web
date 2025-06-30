@@ -1,14 +1,17 @@
-# Marketing Site
+# shadcn/ui
 
-This repository contains a simple marketing website built with **Next.js 14**, **TypeScript**, **Tailwind CSS** and basic components inspired by `shadcn/ui`.
+Accessible and customizable components that you can copy and paste into your apps. Free. Open Source. **Use this to build your own component library**.
 
-## Getting Started
+![hero](apps/www/public/og.jpg)
 
-Install dependencies and start the development server:
+## Documentation
 
-```bash
-npm install
-npm run dev
-```
+Visit http://ui.shadcn.com/docs to view the documentation.
 
-The site is ready for deployment to Vercel.
+## Contributing
+
+Please read the [contributing guide](/CONTRIBUTING.md).
+
+## License
+
+Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
