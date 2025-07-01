@@ -1,3 +1,7 @@
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+
 export interface NavigationItem {
   title: string
   href?: string
@@ -5,210 +9,184 @@ export interface NavigationItem {
   items?: NavigationItem[]
   badge?: string
   external?: boolean
+  order?: number
 }
 
 export interface NavigationSection {
   title: string
   items: NavigationItem[]
+  order?: number
 }
 
+interface FileInfo {
+  title: string
+  href: string
+  order: number
+  category: string
+  slug: string
+  featured?: boolean
+  badge?: string
+}
+
+const CONTENT_PATH = path.join(process.cwd(), 'content/docs')
+
+/**
+ * MDXファイルからフロントマターを取得
+ */
+function getFileInfo(filePath: string, relativePath: string): FileInfo | null {
+  try {
+    const fileContent = fs.readFileSync(filePath, 'utf8')
+    const { data: frontMatter } = matter(fileContent)
+    
+    // パスからcategoryとslugを決定
+    const pathParts = relativePath.replace('.mdx', '').split('/')
+    let category: string
+    let slug: string
+    
+    if (pathParts.length === 1) {
+      // ルートレベルのファイル (例: introduction.mdx)
+      category = frontMatter.category || 'getting-started'
+      slug = pathParts[0]
+    } else {
+      // サブディレクトリのファイル (例: api-reference/authentication.mdx)
+      category = pathParts[0]
+      slug = pathParts.join('/')
+    }
+    
+    // フロントマターのslugを優先使用
+    if (frontMatter.slug) {
+      slug = frontMatter.slug
+    }
+    
+    return {
+      title: frontMatter.title || slug.charAt(0).toUpperCase() + slug.slice(1),
+      href: `/docs/${slug}`,
+      order: frontMatter.order || 999,
+      category: frontMatter.category || category,
+      slug,
+      featured: frontMatter.featured,
+      badge: frontMatter.badge
+    }
+  } catch (error) {
+    console.warn(`Failed to parse file: ${filePath}`, error)
+    return null
+  }
+}
+
+/**
+ * ディレクトリを再帰的にスキャンしてMDXファイルを取得
+ */
+function scanDirectory(dirPath: string, basePath: string = ''): FileInfo[] {
+  const files: FileInfo[] = []
+  
+  try {
+    const entries = fs.readdirSync(dirPath, { withFileTypes: true })
+    
+    for (const entry of entries) {
+      const fullPath = path.join(dirPath, entry.name)
+      const relativePath = path.join(basePath, entry.name)
+      
+      if (entry.isDirectory()) {
+        // サブディレクトリを再帰的にスキャン
+        files.push(...scanDirectory(fullPath, relativePath))
+      } else if (entry.name.endsWith('.mdx')) {
+        // MDXファイルを処理
+        const fileInfo = getFileInfo(fullPath, relativePath)
+        if (fileInfo) {
+          files.push(fileInfo)
+        }
+      }
+    }
+  } catch (error) {
+    console.warn(`Failed to scan directory: ${dirPath}`, error)
+  }
+  
+  return files
+}
+
+/**
+ * カテゴリ名を適切な表示名に変換
+ */
+function getCategoryDisplayName(category: string): string {
+  const categoryMap: Record<string, string> = {
+    'getting-started': 'Getting Started',
+    'api-reference': 'API Reference',
+    'guides': 'Guides',
+    'examples': 'Examples',
+    'resources': 'Resources'
+  }
+  
+  return categoryMap[category] || category
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+/**
+ * MDXファイルから動的にナビゲーション構造を生成
+ */
+export function generateDocsNavigation(): NavigationSection[] {
+  if (!fs.existsSync(CONTENT_PATH)) {
+    console.warn('Content directory not found:', CONTENT_PATH)
+    return []
+  }
+  
+  // すべてのMDXファイルをスキャン
+  const allFiles = scanDirectory(CONTENT_PATH)
+  
+  // カテゴリ別にグループ化
+  const categorizedFiles = allFiles.reduce((acc, file) => {
+    if (!acc[file.category]) {
+      acc[file.category] = []
+    }
+    acc[file.category].push(file)
+    return acc
+  }, {} as Record<string, FileInfo[]>)
+  
+  // カテゴリ順序を定義
+  const categoryOrder: Record<string, number> = {
+    'getting-started': 1,
+    'api-reference': 2,
+    'guides': 3,
+    'examples': 4,
+    'resources': 5
+  }
+  
+  // ナビゲーション構造を構築
+  const navigation: NavigationSection[] = Object.entries(categorizedFiles)
+    .map(([category, files]) => {
+      // ファイルをorder順でソート
+      const sortedFiles = files.sort((a, b) => a.order - b.order)
+      
+      // NavigationItemに変換
+      const items: NavigationItem[] = sortedFiles.map(file => ({
+        title: file.title,
+        href: file.href,
+        badge: file.badge,
+        order: file.order
+      }))
+      
+      return {
+        title: getCategoryDisplayName(category),
+        items,
+        order: categoryOrder[category] || 999
+      }
+    })
+    .sort((a, b) => (a.order || 999) - (b.order || 999))
+  
+  return navigation
+}
+
+/**
+ * 静的データ（後方互換性のため保持）
+ */
 export const docsNavigation: NavigationSection[] = [
   {
     title: 'Getting Started',
     items: [
-      {
-        title: 'Introduction',
-        href: '/docs',
-      },
-      {
-        title: 'Quick Start',
-        href: '/docs/quick-start',
-      },
-      {
-        title: 'Installation',
-        href: '/docs/installation',
-        items: [
-          { title: 'Next.js', href: '/docs/installation/nextjs' },
-          { title: 'React', href: '/docs/installation/react' },
-          { title: 'Vue.js', href: '/docs/installation/vue' },
-          { title: 'Angular', href: '/docs/installation/angular' },
-        ],
-      },
-      {
-        title: 'Configuration',
-        href: '/docs/configuration',
-        items: [
-          { title: 'Environment Variables', href: '/docs/configuration/env' },
-          { title: 'Database Setup', href: '/docs/configuration/database' },
-          { title: 'Authentication', href: '/docs/configuration/auth' },
-        ],
-      },
-      {
-        title: 'First Steps',
-        href: '/docs/first-steps',
-      },
+      { title: 'Introduction', href: '/docs/introduction' },
+      { title: 'Installation', href: '/docs/installation' },
+      { title: 'Quick Start', href: '/docs/quickstart' },
     ],
-  },
-  {
-    title: 'API Reference',
-    items: [
-      {
-        title: 'Authentication',
-        href: '/docs/api/authentication',
-        items: [
-          { title: 'API Keys', href: '/docs/api/authentication/api-keys' },
-          { title: 'OAuth 2.0', href: '/docs/api/authentication/oauth' },
-          { title: 'JWT Tokens', href: '/docs/api/authentication/jwt' },
-        ],
-      },
-      {
-        title: 'Users',
-        href: '/docs/api/users',
-        items: [
-          { title: 'Create User', href: '/docs/api/users/create' },
-          { title: 'Get User', href: '/docs/api/users/get' },
-          { title: 'Update User', href: '/docs/api/users/update' },
-          { title: 'Delete User', href: '/docs/api/users/delete' },
-        ],
-      },
-      {
-        title: 'Projects',
-        href: '/docs/api/projects',
-        items: [
-          { title: 'List Projects', href: '/docs/api/projects/list' },
-          { title: 'Create Project', href: '/docs/api/projects/create' },
-          { title: 'Project Settings', href: '/docs/api/projects/settings' },
-        ],
-      },
-      {
-        title: 'Webhooks',
-        href: '/docs/api/webhooks',
-        items: [
-          { title: 'Setup', href: '/docs/api/webhooks/setup' },
-          { title: 'Events', href: '/docs/api/webhooks/events' },
-          { title: 'Verification', href: '/docs/api/webhooks/verification' },
-        ],
-      },
-      {
-        title: 'Rate Limiting',
-        href: '/docs/api/rate-limiting',
-      },
-      {
-        title: 'Errors',
-        href: '/docs/api/errors',
-      },
-    ],
-  },
-  {
-    title: 'Guides',
-    items: [
-      {
-        title: 'Best Practices',
-        href: '/docs/guides/best-practices',
-        items: [
-          { title: 'Code Organization', href: '/docs/guides/best-practices/code-organization' },
-          { title: 'Error Handling', href: '/docs/guides/best-practices/error-handling' },
-          { title: 'Testing', href: '/docs/guides/best-practices/testing' },
-        ],
-      },
-      {
-        title: 'Security',
-        href: '/docs/guides/security',
-        items: [
-          { title: 'Data Protection', href: '/docs/guides/security/data-protection' },
-          { title: 'CORS Setup', href: '/docs/guides/security/cors' },
-          { title: 'Rate Limiting', href: '/docs/guides/security/rate-limiting' },
-        ],
-      },
-      {
-        title: 'Performance',
-        href: '/docs/guides/performance',
-        items: [
-          { title: 'Caching', href: '/docs/guides/performance/caching' },
-          { title: 'Optimization', href: '/docs/guides/performance/optimization' },
-          { title: 'Monitoring', href: '/docs/guides/performance/monitoring' },
-        ],
-      },
-      {
-        title: 'Integrations',
-        href: '/docs/guides/integrations',
-        items: [
-          { title: 'Third-party APIs', href: '/docs/guides/integrations/third-party' },
-          { title: 'Custom Integrations', href: '/docs/guides/integrations/custom' },
-        ],
-      },
-      {
-        title: 'Deployment',
-        href: '/docs/guides/deployment',
-        items: [
-          { title: 'Vercel', href: '/docs/guides/deployment/vercel' },
-          { title: 'AWS', href: '/docs/guides/deployment/aws' },
-          { title: 'Docker', href: '/docs/guides/deployment/docker' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Examples',
-    items: [
-      {
-        title: 'Frontend Frameworks',
-        items: [
-          { title: 'React', href: '/docs/examples/react' },
-          { title: 'Vue.js', href: '/docs/examples/vue' },
-          { title: 'Angular', href: '/docs/examples/angular' },
-          { title: 'Svelte', href: '/docs/examples/svelte' },
-        ],
-      },
-      {
-        title: 'Backend Languages',
-        items: [
-          { title: 'Node.js', href: '/docs/examples/nodejs' },
-          { title: 'Python', href: '/docs/examples/python' },
-          { title: 'PHP', href: '/docs/examples/php' },
-          { title: 'Ruby', href: '/docs/examples/ruby' },
-        ],
-      },
-      {
-        title: 'Use Cases',
-        items: [
-          { title: 'E-commerce', href: '/docs/examples/ecommerce' },
-          { title: 'Blog Platform', href: '/docs/examples/blog' },
-          { title: 'Dashboard', href: '/docs/examples/dashboard' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Resources',
-    items: [
-      {
-        title: 'Changelog',
-        href: '/docs/changelog',
-        badge: 'New',
-      },
-      {
-        title: 'Migration Guide',
-        href: '/docs/migration',
-      },
-      {
-        title: 'FAQ',
-        href: '/docs/faq',
-      },
-      {
-        title: 'Support',
-        href: '/docs/support',
-      },
-      {
-        title: 'Community',
-        href: '/docs/community',
-        external: true,
-      },
-      {
-        title: 'GitHub',
-        href: 'https://github.com/yoursaas',
-        external: true,
-      },
-    ],
-  },
+  }
 ]

@@ -121,12 +121,12 @@ export default function DocsPage() {
         </Text>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button variant="outline" asChild>
-            <Link href="/help">
-              Browse Help Center
+            <Link href="/docs/faq">
+              Browse FAQ
             </Link>
           </Button>
           <Button asChild>
-            <Link href="/contact">
+            <Link href="/docs/support">
               Contact Support
             </Link>
           </Button>
