@@ -1,0 +1,181 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { Heading } from '@/components/ui'
+import { BlogPostMeta } from '@/lib/blog'
+
+interface PostCardProps {
+  post: BlogPostMeta
+  priority?: boolean
+  layout?: 'horizontal' | 'vertical'
+}
+
+export function PostCard({ post, priority = false, layout = 'horizontal' }: PostCardProps) {
+  const [imageError, setImageError] = useState(false)
+  
+  // タグの色を決定する関数
+  const getTagColor = (tag: string, index: number) => {
+    const colors = [
+      'bg-blue-100 text-blue-800 hover:bg-blue-200',
+      'bg-green-100 text-green-800 hover:bg-green-200',
+      'bg-purple-100 text-purple-800 hover:bg-purple-200',
+      'bg-pink-100 text-pink-800 hover:bg-pink-200',
+      'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
+      'bg-indigo-100 text-indigo-800 hover:bg-indigo-200',
+      'bg-red-100 text-red-800 hover:bg-red-200',
+      'bg-teal-100 text-teal-800 hover:bg-teal-200',
+      'bg-orange-100 text-orange-800 hover:bg-orange-200',
+      'bg-cyan-100 text-cyan-800 hover:bg-cyan-200',
+    ]
+    
+    // タグ名のハッシュ値を使って色を決定（同じタグは常に同じ色）
+    let hash = 0
+    for (let i = 0; i < tag.length; i++) {
+      hash = tag.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    const colorIndex = Math.abs(hash) % colors.length
+    return colors[colorIndex]
+  }
+  
+  const formattedDate = new Date(post.frontMatter.publishedAt).toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+
+
+  if (layout === 'vertical') {
+    // 縦型レイアウト（注目記事用）: 上に画像、下にコンテンツ
+    return (
+      <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300">
+        <Link href={`/blog/${post.slug}`} className="block">
+          {/* カバー画像 */}
+          {post.frontMatter.coverImage && !imageError ? (
+            <div className="relative aspect-[16/9] overflow-hidden">
+              <img
+                src={post.frontMatter.coverImage}
+                alt={post.frontMatter.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onError={() => setImageError(true)}
+                loading={priority ? 'eager' : 'lazy'}
+              />
+              
+              {/* オーバーレイ */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          ) : (
+            <div className="aspect-[16/9] bg-gray-100 flex items-center justify-center">
+              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+          )}
+
+          {/* コンテンツ */}
+          <div className="p-6">
+            {/* タイトル */}
+            <Heading 
+              as="h2" 
+              size="xl" 
+              className="mb-3 group-hover:text-blue-600 transition-colors line-clamp-2"
+            >
+              {post.frontMatter.title}
+            </Heading>
+
+            {/* タグ */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {post.frontMatter.tags.map((tag, index) => (
+                <span
+                  key={tag}
+                  className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                    getTagColor(tag, index)
+                  }`}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+
+            {/* メタ情報 */}
+            <div className="text-sm text-gray-500">
+              <time dateTime={post.frontMatter.publishedAt}>
+                {formattedDate}
+              </time>
+            </div>
+          </div>
+        </Link>
+      </article>
+    )
+  }
+
+  // 横型レイアウト（通常記事用）: 左に画像、右にコンテンツ
+  return (
+    <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300">
+      <Link href={`/blog/${post.slug}`} className="block">
+        <div className="flex">
+          {/* 左側: カバー画像 */}
+          <div className="w-1/3 relative">
+            {post.frontMatter.coverImage && !imageError ? (
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={post.frontMatter.coverImage}
+                  alt={post.frontMatter.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  onError={() => setImageError(true)}
+                  loading={priority ? 'eager' : 'lazy'}
+                />
+                
+                {/* オーバーレイ */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            ) : (
+              <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            )}
+          </div>
+
+          {/* 右側: コンテンツ */}
+          <div className="w-2/3 p-4 flex flex-col justify-between">
+            <div>
+              {/* タイトル */}
+              <Heading 
+                as="h2" 
+                size="lg" 
+                className="mb-3 group-hover:text-blue-600 transition-colors line-clamp-2"
+              >
+                {post.frontMatter.title}
+              </Heading>
+
+              {/* タグ */}
+              <div className="flex flex-wrap gap-2 mb-3">
+                {post.frontMatter.tags.map((tag, index) => (
+                  <span
+                    key={tag}
+                    className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                      getTagColor(tag, index)
+                    }`}
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              {/* メタ情報 */}
+              <div className="mb-3 text-sm text-gray-500">
+                <time dateTime={post.frontMatter.publishedAt}>
+                  {formattedDate}
+                </time>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </article>
+  )
+}

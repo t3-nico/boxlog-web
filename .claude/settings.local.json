@@ -12,7 +12,8 @@
       "FileSystem(write:*)",
       "FileSystem(create:*)",
       "Bash(grep:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [
       "Bash(rm -rf:*)",

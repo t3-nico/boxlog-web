@@ -1,0 +1,189 @@
+---
+title: "サンプル記事：Next.jsとTailwindでブログを作る"
+description: "Next.jsとTailwind CSSを使ってモダンなブログサイトを構築する方法について解説します。"
+publishedAt: "2024-01-15"
+updatedAt: "2024-01-20"
+author: "山田太郎"
+authorAvatar: ""
+category: "技術"
+tags: ["Next.js", "React", "Tailwind CSS", "ブログ", "Web開発"]
+featured: true
+coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=630&fit=crop"
+readingTime: 8
+---
+
+# Next.jsとTailwindでブログを作る
+
+この記事では、Next.jsとTailwind CSSを使ってモダンなブログサイトを構築する方法について詳しく解説します。
+
+## はじめに
+
+現代のWeb開発において、**パフォーマンス**と**開発効率**は非常に重要な要素です。Next.jsは以下のような特徴を持つReactフレームワークです：
+
+- サーバーサイドレンダリング（SSR）
+- 静的サイト生成（SSG）
+- 自動コード分割
+- 画像最適化
+
+## セットアップ
+
+まず、新しいNext.jsプロジェクトを作成します：
+
+```bash
+npx create-next-app@latest my-blog
+cd my-blog
+npm install
+```
+
+次に、Tailwind CSSを追加します：
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+## ブログの構造
+
+ブログサイトには以下のような構造が必要です：
+
+1. **記事一覧ページ** - すべての記事を表示
+2. **個別記事ページ** - 記事の詳細を表示
+3. **タグページ** - タグごとの記事一覧
+4. **検索機能** - 記事を検索する機能
+
+### MDXの導入
+
+記事を書くためにMDXを使用します。MDXは以下の利点があります：
+
+- Markdownの簡潔な記法
+- ReactコンポーネントをMarkdown内で使用可能
+- 動的なコンテンツの作成が可能
+
+```javascript
+import { MDXRemote } from 'next-mdx-remote/rsc'
+
+const components = {
+  h1: (props) => <h1 className="text-3xl font-bold" {...props} />,
+  p: (props) => <p className="text-gray-700 leading-relaxed" {...props} />,
+}
+
+export default function BlogPost({ content }) {
+  return (
+    <div className="prose prose-lg max-w-none">
+      <MDXRemote source={content} components={components} />
+    </div>
+  )
+}
+```
+
+## スタイリング
+
+Tailwind CSSを使用することで、以下のようなメリットがあります：
+
+- **一貫性のあるデザイン** - デザインシステムに基づいたスタイリング
+- **高速な開発** - プリセットされたクラスで素早いスタイリング
+- **レスポンシブデザイン** - モバイルファーストなアプローチ
+
+### カードコンポーネント
+
+記事カードのサンプル：
+
+```jsx
+function PostCard({ post }) {
+  return (
+    <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+      <img 
+        src={post.coverImage} 
+        alt={post.title}
+        className="w-full h-48 object-cover"
+      />
+      <div className="p-6">
+        <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+        <p className="text-gray-600 mb-4">{post.description}</p>
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-gray-500">{post.publishedAt}</span>
+          <div className="flex gap-2">
+            {post.tags.map(tag => (
+              <span key={tag} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+}
+```
+
+## パフォーマンス最適化
+
+### 画像最適化
+
+Next.jsの`next/image`コンポーネントを使用することで、自動的に画像が最適化されます：
+
+```jsx
+import Image from 'next/image'
+
+function CoverImage({ src, alt }) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={1200}
+      height={630}
+      className="w-full h-auto rounded-lg"
+      priority
+    />
+  )
+}
+```
+
+### 静的生成
+
+ブログ記事は`generateStaticParams`を使用して事前生成します：
+
+```javascript
+export async function generateStaticParams() {
+  const posts = await getAllPosts()
+  
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
+}
+```
+
+## SEO対策
+
+メタデータを適切に設定することで、SEO効果を高めることができます：
+
+```javascript
+export async function generateMetadata({ params }) {
+  const post = await getPost(params.slug)
+  
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      images: [post.coverImage],
+    },
+  }
+}
+```
+
+## まとめ
+
+Next.jsとTailwind CSSを組み合わせることで、以下のようなメリットを得られます：
+
+- **高速なパフォーマンス** - SSGによる高速な読み込み
+- **優れた開発体験** - Hot Reloadやタイプセーフティ
+- **保守性の高いコード** - コンポーネントベースの設計
+- **SEOフレンドリー** - 適切なメタデータとSSR
+
+これらの技術を使用することで、モダンで高性能なブログサイトを構築することができます。
+
+---
+
+この記事が参考になったら、ぜひシェアしてください！他にも役立つ記事を書いているので、ブログをフォローしてもらえると嬉しいです。

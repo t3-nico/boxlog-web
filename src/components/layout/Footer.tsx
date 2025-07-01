@@ -7,7 +7,7 @@ const navigation = {
     { name: 'Pricing', href: '/pricing' },
     { name: 'Integrations', href: '/integrations' },
     { name: 'API', href: '/api' },
-    { name: 'Changelog', href: '/changelog' },
+    { name: 'Releases', href: '/releases' },
   ],
   company: [
     { name: 'About', href: '/about' },

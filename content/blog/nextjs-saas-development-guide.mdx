@@ -1,0 +1,516 @@
+---
+title: "Next.js 14でSaaSアプリケーションを構築する完全ガイド"
+description: "Next.js 14の最新機能を活用して、スケーラブルなSaaSアプリケーションを構築する方法を詳しく解説します。App Router、Server Components、認証システムの実装まで網羅的にカバーします。"
+publishedAt: "2024-01-15"
+updatedAt: "2024-01-20"
+tags: ["Next.js", "React", "SaaS", "TypeScript", "開発", "フルスタック"]
+category: "技術"
+author: "山田 武志"
+authorAvatar: "/avatars/takeshi-yamada.jpg"
+coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+featured: true
+draft: false
+---
+
+# Next.js 14でSaaSアプリケーションを構築する完全ガイド
+
+Next.js 14は、SaaSアプリケーション開発において革新的な機能を多数提供しています。本記事では、実際のプロダクション環境で使用できるSaaSアプリケーションを構築する方法を、具体的なコード例とともに詳しく解説します。
+
+## なぜNext.js 14なのか？
+
+Next.js 14がSaaS開発に適している理由は以下の通りです：
+
+- **App Router**: 新しいルーティングシステムで、より直感的なファイル構造
+- **Server Components**: サーバーサイドでのコンポーネントレンダリングによる高速化
+- **Streaming**: 段階的なページ読み込みでUX向上
+- **TypeScript統合**: 型安全な開発環境
+- **Vercelとの連携**: 簡単なデプロイメントとスケーリング
+
+## プロジェクトのセットアップ
+
+まず、Next.js 14プロジェクトを作成します：
+
+```bash
+npx create-next-app@latest my-saas-app --typescript --tailwind --eslint --app
+cd my-saas-app
+```
+
+必要なパッケージをインストール：
+
+```bash
+npm install next-auth prisma @prisma/client stripe @stripe/stripe-js
+npm install -D @types/bcryptjs bcryptjs
+```
+
+## 認証システムの実装
+
+SaaSアプリケーションの基盤となる認証システムを実装しましょう。
+
+### NextAuth.jsの設定
+
+```typescript
+// app/api/auth/[...nextauth]/route.ts
+import NextAuth from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
+import bcrypt from 'bcryptjs'
+import { prisma } from '@/lib/prisma'
+
+const handler = NextAuth({
+  providers: [
+    CredentialsProvider({
+      name: 'credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          return null
+        }
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email }
+        })
+
+        if (!user || !await bcrypt.compare(credentials.password, user.password)) {
+          return null
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        }
+      }
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    })
+  ],
+  session: {
+    strategy: 'jwt'
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (token.id) {
+        session.user.id = token.id as string
+      }
+      return session
+    }
+  }
+})
+
+export { handler as GET, handler as POST }
+```
+
+### データベーススキーマ
+
+Prismaを使用してユーザーモデルを定義：
+
+```prisma
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // SaaS関連
+  subscription Subscription?
+  
+  @@map("users")
+}
+
+model Subscription {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  stripeCustomerId  String?  @unique
+  stripePriceId     String?
+  stripeCurrentPeriodEnd DateTime?
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("subscriptions")
+}
+```
+
+## App Routerを活用したページ構成
+
+Next.js 14のApp Routerを使用して、効率的なページ構成を作成します。
+
+### ダッシュボードレイアウト
+
+```tsx
+// app/(dashboard)/layout.tsx
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { Sidebar } from '@/components/dashboard/Sidebar'
+import { Header } from '@/components/dashboard/Header'
+
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const session = await getServerSession()
+  
+  if (!session) {
+    redirect('/auth/signin')
+  }
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Header user={session.user} />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+          <div className="container mx-auto px-6 py-8">
+            {children}
+          </div>
+        </main>
+      </div>
+    </div>
+  )
+}
+```
+
+### Server Componentsの活用
+
+```tsx
+// app/(dashboard)/dashboard/page.tsx
+import { getServerSession } from 'next-auth'
+import { prisma } from '@/lib/prisma'
+import { DashboardStats } from '@/components/dashboard/DashboardStats'
+import { RecentActivity } from '@/components/dashboard/RecentActivity'
+
+async function getDashboardData(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      subscription: true,
+    }
+  })
+  
+  return user
+}
+
+export default async function DashboardPage() {
+  const session = await getServerSession()
+  const userData = await getDashboardData(session!.user.id)
+  
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">
+          ダッシュボード
+        </h1>
+        <p className="mt-2 text-gray-600">
+          ようこそ、{userData?.name}さん
+        </p>
+      </div>
+      
+      <DashboardStats user={userData} />
+      <RecentActivity userId={session!.user.id} />
+    </div>
+  )
+}
+```
+
+## Stripe決済システムの統合
+
+SaaSの収益化に欠かせないStripe決済システムを実装します。
+
+### Stripe設定
+
+```typescript
+// lib/stripe.ts
+import Stripe from 'stripe'
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+})
+
+export const getStripeSession = async ({
+  priceId,
+  domainUrl,
+  customerId,
+}: {
+  priceId: string
+  domainUrl: string
+  customerId?: string
+}) => {
+  const session = await stripe.checkout.sessions.create({
+    customer: customerId,
+    payment_method_types: ['card'],
+    billing_address_collection: 'required',
+    line_items: [
+      {
+        price: priceId,
+        quantity: 1,
+      },
+    ],
+    mode: 'subscription',
+    allow_promotion_codes: true,
+    success_url: `${domainUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${domainUrl}/pricing`,
+  })
+
+  return session
+}
+```
+
+### 決済ページの実装
+
+```tsx
+// app/pricing/page.tsx
+import { PricingCard } from '@/components/pricing/PricingCard'
+
+const pricingPlans = [
+  {
+    name: 'スターター',
+    price: '¥980',
+    priceId: 'price_starter_monthly',
+    features: [
+      'プロジェクト数: 3個まで',
+      'ストレージ: 1GB',
+      'メールサポート'
+    ]
+  },
+  {
+    name: 'プロ',
+    price: '¥2,980',
+    priceId: 'price_pro_monthly',
+    features: [
+      'プロジェクト数: 無制限',
+      'ストレージ: 10GB',
+      '優先サポート',
+      '高度な分析機能'
+    ]
+  }
+]
+
+export default function PricingPage() {
+  return (
+    <div className="py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            シンプルで透明な料金プラン
+          </h2>
+        </div>
+        
+        <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto">
+          {pricingPlans.map((plan) => (
+            <PricingCard key={plan.name} plan={plan} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+## パフォーマンス最適化のベストプラクティス
+
+### 1. 画像最適化
+
+```tsx
+import Image from 'next/image'
+
+export function ProductImage({ src, alt }: { src: string; alt: string }) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={300}
+      height={200}
+      priority
+      placeholder="blur"
+      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..."
+    />
+  )
+}
+```
+
+### 2. 動的インポート
+
+```tsx
+import dynamic from 'next/dynamic'
+
+const Analytics = dynamic(() => import('@/components/Analytics'), {
+  ssr: false,
+  loading: () => <div>分析データを読み込み中...</div>
+})
+```
+
+### 3. Suspenseとストリーミング
+
+```tsx
+import { Suspense } from 'react'
+
+export default function DashboardPage() {
+  return (
+    <div>
+      <h1>ダッシュボード</h1>
+      <Suspense fallback={<div>統計を読み込み中...</div>}>
+        <DashboardStats />
+      </Suspense>
+      <Suspense fallback={<div>アクティビティを読み込み中...</div>}>
+        <RecentActivity />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+## セキュリティ対策
+
+### CSRF保護
+
+```typescript
+// middleware.ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  const response = NextResponse.next()
+  
+  // CSRFトークンの設定
+  if (request.method === 'POST') {
+    const token = request.headers.get('x-csrf-token')
+    // トークン検証ロジック
+  }
+  
+  return response
+}
+```
+
+### レート制限
+
+```typescript
+// lib/rate-limit.ts
+import { Redis } from '@upstash/redis'
+
+const redis = Redis.fromEnv()
+
+export async function rateLimit(identifier: string) {
+  const result = await redis.incr(identifier)
+  
+  if (result === 1) {
+    await redis.expire(identifier, 60) // 1分間
+  }
+  
+  return result <= 10 // 1分間に10回まで
+}
+```
+
+## テストの実装
+
+### ユニットテスト
+
+```typescript
+// __tests__/auth.test.ts
+import { describe, expect, it } from '@jest/globals'
+import { validateEmail } from '@/lib/validation'
+
+describe('Authentication', () => {
+  it('should validate email correctly', () => {
+    expect(validateEmail('test@example.com')).toBe(true)
+    expect(validateEmail('invalid-email')).toBe(false)
+  })
+})
+```
+
+### E2Eテスト
+
+```typescript
+// e2e/auth.spec.ts
+import { test, expect } from '@playwright/test'
+
+test('user can sign up and sign in', async ({ page }) => {
+  await page.goto('/auth/signup')
+  
+  await page.fill('[data-testid=email]', 'test@example.com')
+  await page.fill('[data-testid=password]', 'password123')
+  await page.click('[data-testid=submit]')
+  
+  await expect(page).toHaveURL('/dashboard')
+})
+```
+
+## デプロイメントと運用
+
+### Vercelでのデプロイ
+
+```bash
+# 環境変数の設定
+vercel env add DATABASE_URL
+vercel env add NEXTAUTH_SECRET
+vercel env add STRIPE_SECRET_KEY
+
+# デプロイ
+vercel --prod
+```
+
+### 監視とログ
+
+```typescript
+// lib/logger.ts
+import { createLogger, format, transports } from 'winston'
+
+export const logger = createLogger({
+  level: 'info',
+  format: format.combine(
+    format.timestamp(),
+    format.errors({ stack: true }),
+    format.json()
+  ),
+  transports: [
+    new transports.File({ filename: 'error.log', level: 'error' }),
+    new transports.File({ filename: 'combined.log' })
+  ]
+})
+```
+
+## まとめ
+
+Next.js 14を使用したSaaSアプリケーション開発では、以下のポイントが重要です：
+
+1. **App Router**を活用した効率的なルーティング
+2. **Server Components**によるパフォーマンス最適化
+3. **NextAuth.js**での堅牢な認証システム
+4. **Stripe**を使用した決済システム
+5. **セキュリティ対策**の徹底
+6. **テスト**の実装による品質保証
+
+これらの要素を組み合わせることで、スケーラブルで保守性の高いSaaSアプリケーションを構築できます。継続的な改善とユーザーフィードバックを取り入れながら、価値のあるプロダクトを作り上げていきましょう。
+
+<Callout type="info">
+  この記事で紹介したコードは、実際のプロダクション環境で使用する前に、適切なテストとセキュリティレビューを行ってください。
+</Callout>
+
+## 関連リソース
+
+- [Next.js 14 公式ドキュメント](https://nextjs.org/docs)
+- [NextAuth.js ガイド](https://next-auth.js.org/)
+- [Stripe 決済ガイド](https://stripe.com/docs)
+- [Prisma データベースツールキット](https://www.prisma.io/docs)
