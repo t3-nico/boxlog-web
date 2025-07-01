@@ -188,8 +188,14 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
       />
       
       {/* ダイアログ */}
-      <div className="relative min-h-screen flex items-start justify-center p-4 pt-[10vh]">
-        <div className="relative bg-white rounded-lg shadow-xl w-full max-w-2xl">
+      <div 
+        className="relative min-h-screen flex items-start justify-center p-4 pt-[10vh]"
+        onClick={onClose}
+      >
+        <div 
+          className="relative bg-white rounded-lg shadow-xl w-full max-w-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* 検索ボックス */}
           <div className="flex items-center px-4 py-3 border-b border-gray-200">
             <svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

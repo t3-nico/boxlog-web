@@ -151,58 +151,60 @@ export default async function DocPage({ params }: DocPageProps) {
     return (
       <div className="flex">
         {/* Main Content */}
-        <div className="flex-1 max-w-4xl">
-          {/* パンくずナビゲーション */}
-          <Breadcrumbs slug={slug} title={frontMatter.title} />
-          
-          {/* MDXコンテンツ */}
-          <article className="prose prose-gray max-w-none">
-            <MDXRemote 
-              source={mdxContent} 
-              components={mdxComponents}
+        <div className="flex-1 min-w-0">
+          <div className="max-w-4xl">
+            {/* パンくずナビゲーション */}
+            <Breadcrumbs slug={slug} title={frontMatter.title} />
+            
+            {/* MDXコンテンツ */}
+            <article className="prose prose-gray max-w-none">
+              <MDXRemote 
+                source={mdxContent} 
+                components={mdxComponents}
+              />
+            </article>
+
+            {/* 関連コンテンツ */}
+            {relatedContent.length > 0 && (
+              <aside className="mt-12 pt-8 border-t border-gray-200">
+                <Heading as="h2" size="xl" className="mb-6">
+                  Related Articles
+                </Heading>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {relatedContent.map((related) => (
+                    <a
+                      key={related.slug}
+                      href={`/docs/${related.slug}`}
+                      className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                    >
+                      <Heading as="h3" size="lg" className="mb-2">
+                        {related.frontMatter.title}
+                      </Heading>
+                      <Text size="sm" variant="muted" className="line-clamp-2">
+                        {related.frontMatter.description}
+                      </Text>
+                      <div className="flex items-center gap-2 mt-3">
+                        {related.frontMatter.tags?.slice(0, 2).map((tag) => (
+                          <span 
+                            key={tag}
+                            className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </aside>
+            )}
+
+            {/* 前後ページナビゲーション */}
+            <PageNavigation 
+              previousPage={previousPage}
+              nextPage={nextPage}
             />
-          </article>
-
-          {/* 関連コンテンツ */}
-          {relatedContent.length > 0 && (
-            <aside className="mt-12 pt-8 border-t border-gray-200">
-              <Heading as="h2" size="xl" className="mb-6">
-                Related Articles
-              </Heading>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {relatedContent.map((related) => (
-                  <a
-                    key={related.slug}
-                    href={`/docs/${related.slug}`}
-                    className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
-                  >
-                    <Heading as="h3" size="lg" className="mb-2">
-                      {related.frontMatter.title}
-                    </Heading>
-                    <Text size="sm" variant="muted" className="line-clamp-2">
-                      {related.frontMatter.description}
-                    </Text>
-                    <div className="flex items-center gap-2 mt-3">
-                      {related.frontMatter.tags?.slice(0, 2).map((tag) => (
-                        <span 
-                          key={tag}
-                          className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </aside>
-          )}
-
-          {/* 前後ページナビゲーション */}
-          <PageNavigation 
-            previousPage={previousPage}
-            nextPage={nextPage}
-          />
+          </div>
         </div>
 
         {/* Right Sidebar - Table of Contents */}
