@@ -84,15 +84,27 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
   const resultsRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
-  // 検索履歴の読み込み
+  // 検索履歴の読み込みとスクロール制御
   useEffect(() => {
     if (isOpen) {
       setSearchHistory(SearchHistory.get())
       setShowHistory(true)
+      
+      // 背景スクロールを無効化
+      document.body.style.overflow = 'hidden'
+      
       // フォーカスを検索ボックスに
       setTimeout(() => {
         inputRef.current?.focus()
       }, 100)
+    } else {
+      // 背景スクロールを復元
+      document.body.style.overflow = 'unset'
+    }
+
+    // クリーンアップ
+    return () => {
+      document.body.style.overflow = 'unset'
     }
   }, [isOpen])
 
@@ -180,7 +192,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+    <div className="fixed inset-0 z-50 overflow-hidden">
       {/* オーバーレイ - ぼかし背景 */}
       <div 
         className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300"
@@ -189,7 +201,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
       
       {/* ダイアログ */}
       <div 
-        className="relative min-h-screen flex items-center justify-center p-4"
+        className="relative h-screen flex items-center justify-center p-4"
         onClick={onClose}
       >
         <div 
