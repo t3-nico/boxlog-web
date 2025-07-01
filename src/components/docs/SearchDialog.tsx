@@ -192,24 +192,18 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[99999] overflow-hidden">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
       {/* オーバーレイ - ぼかし背景 */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
       
       {/* ダイアログ */}
       <div 
-        className="relative h-screen flex items-center justify-center p-4"
-        onClick={onClose}
+        className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200 z-10"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div 
-          className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200"
-          onClick={(e) => e.stopPropagation()}
-          onWheel={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
-        >
           {/* 検索ボックス */}
           <div className="flex items-center px-4 py-3 border-b border-gray-200">
             <svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,7 +227,6 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
           <div 
             ref={resultsRef}
             className="max-h-96 overflow-y-auto"
-            onScroll={(e) => e.stopPropagation()}
           >
             {isLoading ? (
               <div className="flex items-center justify-center py-8">
