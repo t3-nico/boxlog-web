@@ -192,7 +192,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div className="fixed inset-0 z-[9999] overflow-hidden">
       {/* オーバーレイ - ぼかし背景 */}
       <div 
         className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300"
