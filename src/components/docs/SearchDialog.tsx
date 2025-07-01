@@ -189,7 +189,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
       
       {/* ダイアログ */}
       <div 
-        className="relative min-h-screen flex items-start justify-center p-4 pt-4"
+        className="relative min-h-screen flex items-center justify-center p-4"
         onClick={onClose}
       >
         <div 
