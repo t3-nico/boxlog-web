@@ -9,6 +9,7 @@ import {
 import { mdxComponents } from '@/components/docs/MDXComponents'
 import { Breadcrumbs } from '@/components/docs/Breadcrumbs'
 import { PageNavigation } from '@/components/docs/PageNavigation'
+import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
 import { Heading, Text } from '@/components/ui'
 import { ContentData } from '@/types/content'
 
@@ -148,8 +149,9 @@ export default async function DocPage({ params }: DocPageProps) {
     )
 
     return (
-      <div className="min-h-screen">
-        <div className="max-w-4xl">
+      <div className="flex">
+        {/* Main Content */}
+        <div className="flex-1 max-w-4xl">
           {/* パンくずナビゲーション */}
           <Breadcrumbs slug={slug} title={frontMatter.title} />
           
@@ -160,13 +162,6 @@ export default async function DocPage({ params }: DocPageProps) {
               components={mdxComponents}
             />
           </article>
-          
-          {/* 目次データをwindowオブジェクトに保存（ClientTableOfContents用） */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.__mdxContent = ${JSON.stringify(mdxContent)};`
-            }}
-          />
 
           {/* 関連コンテンツ */}
           {relatedContent.length > 0 && (
@@ -209,6 +204,13 @@ export default async function DocPage({ params }: DocPageProps) {
             nextPage={nextPage}
           />
         </div>
+
+        {/* Right Sidebar - Table of Contents */}
+        <aside className="w-[240px] flex-shrink-0 hidden xl:block">
+          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pl-6">
+            <ClientTableOfContents content={mdxContent} />
+          </div>
+        </aside>
       </div>
     )
   } catch (error) {

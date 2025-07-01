@@ -1,5 +1,4 @@
 import { ClientSidebar } from '@/components/docs/ClientSidebar'
-import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
 import { Container } from '@/components/ui'
 import { generateDocsNavigation } from '@/lib/navigation'
 
@@ -21,19 +20,10 @@ export default function DocsLayout({
             </div>
           </aside>
 
-          {/* Main Content */}
+          {/* Main Content - Table of Contents moved to page level */}
           <main className="flex-1 min-w-0 px-6 lg:px-8 py-8">
-            <div className="max-w-4xl">
-              {children}
-            </div>
+            {children}
           </main>
-
-          {/* Right Sidebar - Table of Contents */}
-          <aside className="w-[240px] flex-shrink-0 hidden xl:block">
-            <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pl-6 py-8">
-              <ClientTableOfContents />
-            </div>
-          </aside>
         </div>
       </Container>
 

@@ -202,7 +202,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 outline-none text-lg placeholder-gray-500"
+              className="flex-1 outline-none text-lg text-gray-900 placeholder-gray-500"
             />
             <div className="text-sm text-gray-400 ml-2">
               <kbd className="px-2 py-1 bg-gray-100 rounded text-xs">ESC</kbd>
