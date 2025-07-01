@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 
 // クライアントサイド用の型定義
@@ -191,7 +192,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
 
   if (!isOpen) return null
 
-  return (
+  return createPortal(
     <div 
       className="fixed inset-0 flex items-center justify-center p-4" 
       style={{ 
@@ -205,7 +206,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
     >
       {/* オーバーレイ - ぼかし背景 */}
       <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/20 backdrop-blur"
         onClick={onClose}
         style={{ zIndex: 2147483646 }}
       />
@@ -380,6 +381,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
             </div>
           </div>
         </div>
-    </div>
+    </div>,
+    typeof window !== 'undefined' ? document.body : (null as any)
   )
 }
