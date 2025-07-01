@@ -207,6 +207,8 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
         <div 
           className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200"
           onClick={(e) => e.stopPropagation()}
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
         >
           {/* 検索ボックス */}
           <div className="flex items-center px-4 py-3 border-b border-gray-200">
@@ -231,6 +233,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
           <div 
             ref={resultsRef}
             className="max-h-96 overflow-y-auto"
+            onScroll={(e) => e.stopPropagation()}
           >
             {isLoading ? (
               <div className="flex items-center justify-center py-8">
