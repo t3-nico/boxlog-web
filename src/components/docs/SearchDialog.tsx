@@ -181,19 +181,19 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      {/* オーバーレイ */}
+      {/* オーバーレイ - ぼかし背景 */}
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300"
         onClick={onClose}
       />
       
       {/* ダイアログ */}
       <div 
-        className="relative min-h-screen flex items-start justify-center p-4 pt-[10vh]"
+        className="relative min-h-screen flex items-start justify-center p-4 pt-4"
         onClick={onClose}
       >
         <div 
-          className="relative bg-white rounded-lg shadow-xl w-full max-w-2xl"
+          className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200"
           onClick={(e) => e.stopPropagation()}
         >
           {/* 検索ボックス */}

@@ -72,19 +72,40 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // 画面内に見える見出し要素をフィルタリング
         const visibleEntries = entries.filter(entry => entry.isIntersecting)
         
         if (visibleEntries.length > 0) {
           // 最も上に見える要素を選択
-          const topEntry = visibleEntries.reduce((top, entry) =>
-            entry.boundingClientRect.top < top.boundingClientRect.top ? entry : top
-          )
+          const topEntry = visibleEntries.reduce((top, entry) => {
+            const topRect = top.boundingClientRect
+            const entryRect = entry.boundingClientRect
+            return entryRect.top < topRect.top ? entry : top
+          })
           setActiveId(topEntry.target.id)
+        } else {
+          // 見える要素がない場合、最も上に近い要素を探す
+          const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+          let activeElement = null
+          let minDistance = Infinity
+
+          allHeadings.forEach((heading) => {
+            const rect = heading.getBoundingClientRect()
+            const distance = Math.abs(rect.top - 100) // ヘッダー高さを考慮
+            if (distance < minDistance && rect.top <= 200) {
+              minDistance = distance
+              activeElement = heading
+            }
+          })
+
+          if (activeElement && activeElement.id) {
+            setActiveId(activeElement.id)
+          }
         }
       },
       {
-        rootMargin: '-80px 0px -80% 0px', // ヘッダーとビューポート下部を考慮
-        threshold: [0, 0.25, 0.5, 0.75, 1],
+        rootMargin: '-100px 0px -70% 0px',
+        threshold: [0, 0.1, 0.5, 1],
       }
     )
 
@@ -97,7 +118,55 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
       }
     })
 
-    return () => observer.disconnect()
+    // 初期状態でアクティブな見出しを設定
+    const setInitialActive = () => {
+      const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      let activeElement = null
+      let minDistance = Infinity
+
+      allHeadings.forEach((heading) => {
+        const rect = heading.getBoundingClientRect()
+        const distance = Math.abs(rect.top - 100)
+        if (distance < minDistance && rect.top <= 200) {
+          minDistance = distance
+          activeElement = heading
+        }
+      })
+
+      if (activeElement && activeElement.id) {
+        setActiveId(activeElement.id)
+      }
+    }
+
+    // 少し遅延させてから初期設定
+    setTimeout(setInitialActive, 100)
+
+    // スクロールイベントも追加（バックアップ）
+    const handleScroll = () => {
+      const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      let activeElement = null
+      let minDistance = Infinity
+
+      allHeadings.forEach((heading) => {
+        const rect = heading.getBoundingClientRect()
+        const distance = Math.abs(rect.top - 100)
+        if (distance < minDistance && rect.top <= 200) {
+          minDistance = distance
+          activeElement = heading
+        }
+      })
+
+      if (activeElement && activeElement.id) {
+        setActiveId(activeElement.id)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [toc])
 
   // スムーズスクロール
