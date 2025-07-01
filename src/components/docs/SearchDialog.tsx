@@ -192,17 +192,29 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center p-4" style={{ zIndex: 999999 }}>
+    <div 
+      className="fixed inset-0 flex items-center justify-center p-4" 
+      style={{ 
+        zIndex: 2147483647,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }}
+    >
       {/* オーバーレイ - ぼかし背景 */}
       <div 
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
+        style={{ zIndex: 2147483646 }}
       />
       
       {/* ダイアログ */}
       <div 
-        className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200 z-10"
+        className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200"
         onClick={(e) => e.stopPropagation()}
+        style={{ zIndex: 2147483647 }}
       >
           {/* 検索ボックス */}
           <div className="flex items-center px-4 py-3 border-b border-gray-200">
