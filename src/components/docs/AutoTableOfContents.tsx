@@ -86,7 +86,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
         } else {
           // 見える要素がない場合、最も上に近い要素を探す
           const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-          let activeElement = null
+          let activeElement: Element | null = null
           let minDistance = Infinity
 
           allHeadings.forEach((heading) => {
@@ -98,8 +98,8 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
             }
           })
 
-          if (activeElement && activeElement.id) {
-            setActiveId(activeElement.id)
+          if (activeElement && (activeElement as HTMLElement).id) {
+            setActiveId((activeElement as HTMLElement).id)
           }
         }
       },
@@ -121,7 +121,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
     // 初期状態でアクティブな見出しを設定
     const setInitialActive = () => {
       const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-      let activeElement = null
+      let activeElement: Element | null = null
       let minDistance = Infinity
 
       allHeadings.forEach((heading) => {
@@ -133,8 +133,8 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
         }
       })
 
-      if (activeElement && activeElement.id) {
-        setActiveId(activeElement.id)
+      if (activeElement && (activeElement as HTMLElement).id) {
+        setActiveId((activeElement as HTMLElement).id)
       }
     }
 
@@ -144,7 +144,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
     // スクロールイベントも追加（バックアップ）
     const handleScroll = () => {
       const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-      let activeElement = null
+      let activeElement: Element | null = null
       let minDistance = Infinity
 
       allHeadings.forEach((heading) => {
@@ -156,8 +156,8 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
         }
       })
 
-      if (activeElement && activeElement.id) {
-        setActiveId(activeElement.id)
+      if (activeElement && (activeElement as HTMLElement).id) {
+        setActiveId((activeElement as HTMLElement).id)
       }
     }
 

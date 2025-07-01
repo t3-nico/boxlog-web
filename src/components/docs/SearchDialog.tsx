@@ -368,7 +368,6 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
             </div>
           </div>
         </div>
-      </div>
     </div>
   )
 }
