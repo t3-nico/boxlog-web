@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Container, Heading, Text, Input, Button, Badge } from '@/components/ui'
+import { Highlight } from '@/utils/highlight'
 
 // モックデータ - 実際の実装では検索APIから取得
 const MOCK_RESULTS = [
@@ -58,15 +59,18 @@ function SearchResults() {
     
     if (q) {
       setIsLoading(true)
-      // モック検索 - 実際の実装では API 呼び出し
-      setTimeout(() => {
-        const filtered = MOCK_RESULTS.filter(result => 
-          result.title.toLowerCase().includes(q.toLowerCase()) ||
-          result.description.toLowerCase().includes(q.toLowerCase())
-        )
-        setResults(filtered)
-        setIsLoading(false)
-      }, 500)
+      // 実際の検索API呼び出し
+      fetch(`/api/search?q=${encodeURIComponent(q)}`)
+        .then(response => response.json())
+        .then(data => {
+          setResults(data.results || [])
+          setIsLoading(false)
+        })
+        .catch(error => {
+          console.error('Search error:', error)
+          setResults([])
+          setIsLoading(false)
+        })
     } else {
       setResults([])
     }
@@ -213,7 +217,7 @@ function SearchResults() {
                           href={result.url}
                           className="text-lg font-medium text-blue-600 hover:text-blue-800 hover:underline block truncate"
                         >
-                          {result.title}
+                          <Highlight text={result.title} query={query} />
                         </a>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge 
@@ -230,7 +234,7 @@ function SearchResults() {
                       </div>
                     </div>
                     <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                      {result.description}
+                      <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">

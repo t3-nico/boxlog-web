@@ -133,9 +133,11 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
     getAllDocMetas()
   ])
 
+  const normalizedTag = tag.toLowerCase()
+
   // ブログ記事をフィルタリング
   const blogContent: TaggedContent[] = blogPosts
-    .filter(post => post.frontMatter.tags.includes(tag))
+    .filter(post => post.frontMatter.tags.some(t => t.toLowerCase() === normalizedTag))
     .map(post => ({
       type: 'blog' as const,
       slug: post.slug,
@@ -149,7 +151,7 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
 
   // リリースをフィルタリング
   const releaseContent: TaggedContent[] = releases
-    .filter(release => release.frontMatter.tags.includes(tag))
+    .filter(release => release.frontMatter.tags.some(t => t.toLowerCase() === normalizedTag))
     .map(release => ({
       type: 'release' as const,
       slug: release.frontMatter.version,
@@ -163,12 +165,17 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
     }))
 
   // ドキュメントをフィルタリング
-  const docContent: TaggedContent[] = docs.filter(doc => doc.tags.includes(tag))
+  const docContent: TaggedContent[] = docs.filter(doc => doc.tags.some(t => t.toLowerCase() === normalizedTag))
 
   const totalCount = blogContent.length + releaseContent.length + docContent.length
 
+  // 元のタグ名を取得（最初に見つかったマッチング）
+  const originalTag = [...blogContent, ...releaseContent, ...docContent]
+    .flatMap(content => content.tags)
+    .find(t => t.toLowerCase() === normalizedTag) || tag
+
   return {
-    tag,
+    tag: originalTag,
     totalCount,
     blog: blogContent,
     releases: releaseContent,
@@ -188,10 +195,11 @@ export async function getRelatedTags(currentTag: string, limit: number = 5): Pro
   const allContent = [...contentByTag.blog, ...contentByTag.releases, ...contentByTag.docs]
   
   const relatedTagCounts = new Map<string, number>()
+  const normalizedCurrentTag = currentTag.toLowerCase()
   
   allContent.forEach(content => {
     content.tags.forEach(tag => {
-      if (tag !== currentTag) {
+      if (tag.toLowerCase() !== normalizedCurrentTag) {
         relatedTagCounts.set(tag, (relatedTagCounts.get(tag) || 0) + 1)
       }
     })
