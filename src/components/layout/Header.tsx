@@ -194,6 +194,13 @@ export function Header() {
       
       {/* グローバル検索ダイアログ */}
       <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
+      
+      {/* テスト用: 常に表示 */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed bottom-4 right-4 bg-red-500 text-white p-2 rounded z-50 text-xs">
+          Search Open: {isSearchOpen ? 'Yes' : 'No'}
+        </div>
+      )}
     </header>
   )
 }
