@@ -58,7 +58,6 @@ export function ReleasesClient({
   // フィルター状態
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-  const [searchQuery, setSearchQuery] = useState('')
   const [showBreakingOnly, setShowBreakingOnly] = useState(false)
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false)
 
@@ -70,19 +69,6 @@ export function ReleasesClient({
         return false
       }
 
-      // 検索クエリ
-      if (searchQuery) {
-        const searchText = [
-          release.frontMatter.title,
-          release.frontMatter.description,
-          release.frontMatter.version,
-          ...release.frontMatter.tags
-        ].join(' ').toLowerCase()
-        
-        if (!searchText.includes(searchQuery.toLowerCase())) {
-          return false
-        }
-      }
 
       // 破壊的変更フィルター
       if (showBreakingOnly && !release.frontMatter.breaking) {
@@ -96,7 +82,7 @@ export function ReleasesClient({
 
       return true
     })
-  }, [initialReleases, selectedTags, selectedTypes, searchQuery, showBreakingOnly, showFeaturedOnly])
+  }, [initialReleases, selectedTags, selectedTypes, showBreakingOnly, showFeaturedOnly])
 
   // フィルターハンドラー
   const handleTagToggle = (tag: string) => {
@@ -118,7 +104,6 @@ export function ReleasesClient({
   const handleClearFilters = () => {
     setSelectedTags([])
     setSelectedTypes([])
-    setSearchQuery('')
     setShowBreakingOnly(false)
     setShowFeaturedOnly(false)
   }
@@ -136,12 +121,10 @@ export function ReleasesClient({
                   tags={initialTags}
                   selectedTags={selectedTags}
                   selectedTypes={selectedTypes}
-                  searchQuery={searchQuery}
                   showBreakingOnly={showBreakingOnly}
                   showFeaturedOnly={showFeaturedOnly}
                   onTagToggle={handleTagToggle}
                   onTypeToggle={handleTypeToggle}
-                  onSearchChange={setSearchQuery}
                   onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                   onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                   onClearFilters={handleClearFilters}
@@ -150,37 +133,6 @@ export function ReleasesClient({
                 {/* Upcoming Releases Compact */}
                 <UpcomingReleasesCompact upcomingReleases={upcomingReleases} />
 
-                {/* Statistics */}
-                <div className="bg-white rounded-xl p-6 border border-gray-200">
-                  <Heading as="h3" size="md" className="mb-4">
-                    リリース統計
-                  </Heading>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <Text size="sm" variant="muted">総リリース数</Text>
-                      <Text size="sm" className="font-semibold">
-                        {initialReleases.length}
-                      </Text>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <Text size="sm" variant="muted">今月のリリース</Text>
-                      <Text size="sm" className="font-semibold">
-                        {initialReleases.filter(r => {
-                          const releaseDate = new Date(r.frontMatter.date)
-                          const now = new Date()
-                          return releaseDate.getMonth() === now.getMonth() && 
-                                 releaseDate.getFullYear() === now.getFullYear()
-                        }).length}
-                      </Text>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <Text size="sm" variant="muted">注目リリース</Text>
-                      <Text size="sm" className="font-semibold">
-                        {featuredReleases.length}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
 
                 {/* RSS Feed */}
                 <div className="bg-white rounded-xl p-6 border border-gray-200">
@@ -209,14 +161,12 @@ export function ReleasesClient({
               <FilterSummary
                 selectedTags={selectedTags}
                 selectedTypes={selectedTypes}
-                searchQuery={searchQuery}
                 showBreakingOnly={showBreakingOnly}
                 showFeaturedOnly={showFeaturedOnly}
                 resultCount={filteredReleases.length}
                 totalCount={initialReleases.length}
                 onTagRemove={handleTagToggle}
                 onTypeRemove={handleTypeToggle}
-                onSearchClear={() => setSearchQuery('')}
                 onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                 onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                 onClearAll={handleClearFilters}

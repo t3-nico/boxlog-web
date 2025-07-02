@@ -13,7 +13,10 @@
       "FileSystem(create:*)",
       "Bash(grep:*)",
       "Bash(npm run build:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(mkdir:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)"
     ],
     "deny": [
       "Bash(rm -rf:*)",

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button, Container } from '@/components/ui'
+import { SearchDialog } from '@/components/search/SearchDialog'
 
 const navigation = [
   { name: 'Features', href: '/features' },
@@ -10,20 +11,34 @@ const navigation = [
   { name: 'Docs', href: '/docs' },
   { name: 'Releases', href: '/releases' },
   { name: 'Blog', href: '/blog' },
+  { name: 'Tags', href: '/tags' },
   { name: 'About', href: '/about' },
 ]
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setIsSearchOpen(true)
+      }
+    }
+
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('keydown', handleKeyDown)
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
   }, [])
 
   return (
@@ -57,6 +72,22 @@ export function Header() {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* グローバル検索ボタン */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-gray-500 border-gray-200 hover:border-gray-300"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span className="text-sm">検索...</span>
+              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-600 opacity-100">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </Button>
+            
             <Link
               href="/login"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
@@ -70,8 +101,22 @@ export function Header() {
             </Button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile actions */}
+          <div className="md:hidden flex items-center gap-2">
+            {/* モバイル検索ボタン */}
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span className="sr-only">検索</span>
+            </Button>
+            
+            {/* Mobile menu button */}
             <Button
               variant="outline"
               size="sm"
@@ -146,6 +191,9 @@ export function Header() {
           </div>
         )}
       </Container>
+      
+      {/* グローバル検索ダイアログ */}
+      <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </header>
   )
 }
