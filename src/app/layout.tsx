@@ -60,9 +60,9 @@ export default function RootLayout({
         <AccessibilityProvider>
           <PerformanceProvider>
             <Header />
-            <main id="main-content" role="main">
+            <div id="main-content">
               {children}
-            </main>
+            </div>
             <Footer />
           </PerformanceProvider>
         </AccessibilityProvider>

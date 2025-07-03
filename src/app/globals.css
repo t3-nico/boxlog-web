@@ -300,12 +300,10 @@ header {
   right: 0;
   z-index: 50;
   background: white;
-  border-bottom: 1px solid #e5e7eb;
   height: 64px;
   contain: layout;
 }
 
 main {
-  padding-top: 64px;
   min-height: 100vh;
 }
