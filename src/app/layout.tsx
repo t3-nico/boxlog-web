@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { PerformanceProvider } from '@/components/performance/PerformanceProvider'
+import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider'
+import { SkipLinks } from '@/components/accessibility/SkipLinks'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,10 +18,54 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/inter-var.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/inter-latin-400-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/inter-latin-500-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/inter-latin-600-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/inter-latin-700-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="antialiased">
-        <Header />
-        {children}
-        <Footer />
+        <SkipLinks />
+        <AccessibilityProvider>
+          <PerformanceProvider>
+            <Header />
+            <main id="main-content" role="main">
+              {children}
+            </main>
+            <Footer />
+          </PerformanceProvider>
+        </AccessibilityProvider>
       </body>
     </html>
   )
