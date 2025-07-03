@@ -66,6 +66,34 @@
   .tablet-desktop { @apply hidden sm:block; }
 }
 
+/* Fix for unwanted borders/lines */
+@layer base {
+  /* Remove default margins and borders that might cause visual artifacts */
+  main {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+  }
+  
+  section {
+    margin: 0;
+    border: none;
+    outline: none;
+  }
+  
+  /* Ensure header doesn't create unwanted visual artifacts */
+  header {
+    margin: 0;
+    box-shadow: none;
+  }
+  
+  /* Remove any default styling that might create lines */
+  * {
+    box-sizing: border-box;
+  }
+}
+
 /* Critical above-the-fold styles */
 @layer base {
   :root {
