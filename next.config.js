@@ -17,23 +17,21 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  // Bundle analyzer in development
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Bundle splitting optimization
+  // Simplified webpack configuration
+  webpack: (config, { dev, isServer }) => {
+    // Only apply optimizations in production
     if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'all',
-            enforce: true,
+      // Simplified optimization settings
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              chunks: 'all',
+            },
           },
         },
       }

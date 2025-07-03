@@ -1,14 +1,12 @@
 'use client'
 
 import { createContext, useContext, useEffect, ReactNode } from 'react'
-import PerformanceMonitor, { 
-  ResourcePreloader, 
-  criticalCSS,
-  reportWebVitals 
-} from '@/lib/performance'
 
 interface PerformanceContextValue {
-  monitor: PerformanceMonitor
+  monitor: {
+    measureFunction: (name: string, fn: Function) => void
+    recordMetric: (name: string, value: number) => void
+  }
 }
 
 const PerformanceContext = createContext<PerformanceContextValue | null>(null)
@@ -17,37 +15,44 @@ interface PerformanceProviderProps {
   children: ReactNode
 }
 
+// Simple performance monitor implementation
+const createSimpleMonitor = () => ({
+  measureFunction: (name: string, fn: Function) => {
+    if (typeof fn === 'function') {
+      const start = performance.now()
+      try {
+        fn()
+      } finally {
+        const end = performance.now()
+        console.log(`Performance: ${name} took ${end - start}ms`)
+      }
+    }
+  },
+  recordMetric: (name: string, value: number) => {
+    console.log(`Metric: ${name} = ${value}`)
+  }
+})
+
 export function PerformanceProvider({ children }: PerformanceProviderProps) {
   useEffect(() => {
-    const monitor = PerformanceMonitor.getInstance()
-    
-    // Initialize Core Web Vitals monitoring
-    monitor.initCoreWebVitals()
-    
-    // Preload critical resources
-    ResourcePreloader.preloadCriticalResources()
-    
-    // Inline critical CSS
-    criticalCSS.inlineStyles()
-    
-    // Setup Web Vitals reporting
+    // Setup Web Vitals reporting (simplified)
     if (typeof window !== 'undefined') {
       import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
+        const reportWebVitals = (metric: any) => {
+          console.log('Web Vital:', metric.name, metric.value)
+        }
+        
         onCLS(reportWebVitals)
         onFCP(reportWebVitals)
         onLCP(reportWebVitals)
         onTTFB(reportWebVitals)
         onINP(reportWebVitals)
-      })
-    }
-    
-    return () => {
-      monitor.cleanup()
+      }).catch(console.error)
     }
   }, [])
 
   const value = {
-    monitor: PerformanceMonitor.getInstance()
+    monitor: createSimpleMonitor()
   }
 
   return (

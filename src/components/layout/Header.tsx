@@ -44,7 +44,7 @@ export function Header() {
   return (
     <header
       id="navigation"
-      className="fixed top-0 left-0 right-0 z-[9999] bg-white"
+      className="fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200"
       role="banner"
     >
       <Container>
