@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Button, Container } from '@/components/ui'
+import { Button, Container, ThemeToggle } from '@/components/ui'
 import { SearchDialog } from '@/components/search/SearchDialog'
 
 const navigation = [
@@ -44,7 +44,7 @@ export function Header() {
   return (
     <header
       id="navigation"
-      className="fixed top-0 left-0 right-0 z-[9999] bg-white/95 backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 z-[9999] bg-white/95 backdrop-blur-sm dark:bg-gray-900/95"
       role="banner"
     >
       <Container>
@@ -53,7 +53,7 @@ export function Header() {
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors"
+              className="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors dark:text-gray-100 dark:hover:text-gray-300"
             >
               YourSaaS
             </Link>
@@ -65,7 +65,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors dark:text-gray-300 dark:hover:text-gray-100"
               >
                 {item.name}
               </Link>
@@ -79,21 +79,23 @@ export function Header() {
               variant="outline"
               size="sm"
               onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-gray-500 border-gray-200 hover:border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-gray-500 border-gray-200 hover:border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-gray-400 dark:border-gray-700 dark:hover:border-gray-600"
               aria-label="Open search dialog"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <span className="text-sm">検索...</span>
-              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-600 opacity-100">
+              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-600 opacity-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </Button>
             
+            <ThemeToggle />
+            
             <Link
               href="/login"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors dark:text-gray-300 dark:hover:text-gray-100"
             >
               Login
             </Link>
@@ -119,12 +121,14 @@ export function Header() {
               <span className="sr-only">検索</span>
             </Button>
             
+            <ThemeToggle />
+            
             {/* Mobile menu button */}
             <Button
               variant="outline"
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="border-0 bg-transparent hover:bg-gray-100"
+              className="border-0 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               <span className="sr-only">Open main menu</span>
               {isMobileMenuOpen ? (
@@ -163,21 +167,21 @@ export function Header() {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200 shadow-lg">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200 shadow-lg dark:bg-gray-900 dark:border-gray-700">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-4 pb-2 border-t border-gray-200 space-y-2">
+              <div className="pt-4 pb-2 border-t border-gray-200 space-y-2 dark:border-gray-700">
                 <Link
                   href="/login"
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Login

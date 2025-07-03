@@ -72,7 +72,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900" aria-labelledby="footer-heading">
+    <footer className="bg-gray-900 dark:bg-gray-950" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -172,7 +172,7 @@ export function Footer() {
           </div>
 
           {/* Bottom section */}
-          <div className="mt-12 pt-8 border-t border-gray-800">
+          <div className="mt-12 pt-8 border-t border-gray-800 dark:border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center">
               {/* Copyright */}
               <p className="text-base text-gray-400">

@@ -5,11 +5,11 @@ export default function Home() {
   return (
     <main className="pt-16">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Background decorative elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-3xl opacity-20"></div>
-          <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-3xl opacity-20 dark:opacity-10"></div>
+          <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20 dark:opacity-10"></div>
         </div>
         
         <Container className="relative">
@@ -51,7 +51,7 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="border-gray-300 hover:border-gray-400 bg-white/50 backdrop-blur-sm"
+                className="border-gray-300 hover:border-gray-400 bg-white/50 backdrop-blur-sm dark:border-gray-600 dark:hover:border-gray-500 dark:bg-gray-900/50"
                 asChild
               >
                 <Link href="/demo">
@@ -64,14 +64,14 @@ export default function Home() {
             </div>
             
             {/* Trust indicators */}
-            <div className="mt-16 pt-8 border-t border-gray-200/50">
+            <div className="mt-16 pt-8 border-t border-gray-200/50 dark:border-gray-700/50">
               <Text size="sm" variant="subtle" className="mb-6">
                 Trusted by teams at
               </Text>
               <div className="flex items-center justify-center gap-8 opacity-60">
-                <div className="text-2xl font-bold text-gray-400">Company A</div>
-                <div className="text-2xl font-bold text-gray-400">Company B</div>
-                <div className="text-2xl font-bold text-gray-400">Company C</div>
+                <div className="text-2xl font-bold text-gray-400 dark:text-gray-500">Company A</div>
+                <div className="text-2xl font-bold text-gray-400 dark:text-gray-500">Company B</div>
+                <div className="text-2xl font-bold text-gray-400 dark:text-gray-500">Company C</div>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@ export default function Home() {
       </section>
       
       {/* Additional sections can be added here */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-gray-900">
         <Container>
           <div className="text-center">
             <Heading as="h2" size="3xl" className="mb-4">

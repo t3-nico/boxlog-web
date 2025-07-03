@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/Footer'
 import { PerformanceProvider } from '@/components/performance/PerformanceProvider'
 import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider'
 import { SkipLinks } from '@/components/accessibility/SkipLinks'
+import { ThemeProvider } from '@/lib/theme-provider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -56,16 +57,23 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <SkipLinks />
-        <AccessibilityProvider>
-          <PerformanceProvider>
-            <Header />
-            <div id="main-content">
-              {children}
-            </div>
-            <Footer />
-          </PerformanceProvider>
-        </AccessibilityProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SkipLinks />
+          <AccessibilityProvider>
+            <PerformanceProvider>
+              <Header />
+              <div id="main-content">
+                {children}
+              </div>
+              <Footer />
+            </PerformanceProvider>
+          </AccessibilityProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

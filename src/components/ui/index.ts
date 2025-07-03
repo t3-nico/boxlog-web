@@ -6,6 +6,7 @@ export { Badge } from './Badge'
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './Card'
 export { Dialog, DialogContent, DialogHeader, DialogTitle } from './Dialog'
 export { Separator } from './Separator'
+export { ThemeToggle } from './ThemeToggle'
 
 export type { ButtonProps } from './Button'
 export type { ContainerProps } from './Container'
