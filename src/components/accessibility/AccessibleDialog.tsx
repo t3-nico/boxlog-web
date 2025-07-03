@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { FocusManager, KeyboardNav, ARIA_ROLES } from '@/lib/accessibility'
-import { useAccessibility } from './AccessibilityProvider'
+// import { FocusManager, KeyboardNav, ARIA_ROLES } from '@/lib/accessibility'
+import { useFocusManager } from './FocusManager'
+import { useScreenReader } from './ScreenReaderSupport'
 
 interface AccessibleDialogProps {
   isOpen: boolean
@@ -31,7 +32,8 @@ export function AccessibleDialog({
   const dialogRef = useRef<HTMLDivElement>(null)
   const titleId = `dialog-title-${Math.random().toString(36).substr(2, 9)}`
   const descId = description ? `dialog-desc-${Math.random().toString(36).substr(2, 9)}` : undefined
-  const { focusManager, announce } = useAccessibility()
+  const { trapFocus, restoreFocus } = useFocusManager()
+  const { announce } = useScreenReader()
 
   const sizeClasses = {
     sm: 'max-w-sm',
@@ -43,7 +45,7 @@ export function AccessibleDialog({
   useEffect(() => {
     if (isOpen && dialogRef.current) {
       // Trap focus within dialog
-      focusManager.trapFocus(dialogRef.current)
+      const cleanup = trapFocus(dialogRef.current)
       
       // Announce dialog opening
       announce(`Dialog opened: ${title}`, 'polite')
@@ -53,18 +55,19 @@ export function AccessibleDialog({
       
       return () => {
         // Restore focus and body scroll
-        focusManager.releaseFocusTrap()
+        cleanup()
+        restoreFocus()
         document.body.style.overflow = ''
         
         // Announce dialog closing
         announce('Dialog closed', 'polite')
       }
     }
-  }, [isOpen, title, focusManager, announce])
+  }, [isOpen, title, trapFocus, restoreFocus, announce])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === KeyboardNav.KEYS.ESCAPE && closeOnEscape && isOpen) {
+      if (event.key === 'Escape' && closeOnEscape && isOpen) {
         event.preventDefault()
         onClose()
       }
@@ -98,7 +101,7 @@ export function AccessibleDialog({
       <div
         ref={dialogRef}
         className={`relative bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]} ${className}`}
-        role={ARIA_ROLES.DIALOG}
+        role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={descId}

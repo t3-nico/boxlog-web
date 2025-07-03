@@ -156,7 +156,7 @@ export function KeyboardNavigationProvider({ children }: KeyboardNavigationProvi
     }
 
     // Find which navigation group contains the active element
-    for (const [groupId, group] of navigationGroups) {
+    for (const [groupId, group] of Array.from(navigationGroups.entries())) {
       const elementIndex = group.elements.indexOf(activeElement)
       if (elementIndex !== -1) {
         setCurrentGroupId(groupId)
@@ -276,7 +276,7 @@ export function KeyboardNavigationProvider({ children }: KeyboardNavigationProvi
   // Update navigation groups when DOM changes
   useEffect(() => {
     const observer = new MutationObserver(() => {
-      navigationGroups.forEach((_, id) => {
+      Array.from(navigationGroups.keys()).forEach((id) => {
         updateNavigationGroup(id)
       })
     })

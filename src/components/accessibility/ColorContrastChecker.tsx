@@ -129,7 +129,8 @@ export function ColorContrastProvider({ children, autoCheck = true }: ColorContr
     // Get all text elements
     const textElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, a, button, label, li')
     
-    for (const element of textElements) {
+    for (let i = 0; i < textElements.length; i++) {
+      const element = textElements[i]
       const foreground = getComputedColor(element, 'color')
       const background = getComputedColor(element, 'background-color')
       const fontSize = parseInt(getComputedColor(element, 'font-size'))
