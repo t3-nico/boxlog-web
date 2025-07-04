@@ -182,10 +182,10 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden bg-white shadow-2xl border-0">
+      <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden bg-white shadow-2xl border-0 dark:bg-gray-900 dark:border dark:border-gray-700">
         {/* 検索ヘッダー */}
-        <div className="flex items-center gap-3 p-4 border-b border-gray-100">
-          <svg className="h-5 w-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="flex items-center gap-3 p-4 border-b border-gray-100 dark:border-gray-700">
+          <svg className="h-5 w-5 text-gray-400 flex-shrink-0 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <Input
@@ -194,14 +194,14 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="border-0 shadow-none text-base text-gray-900 placeholder:text-gray-400 focus-visible:ring-0 focus:outline-none bg-transparent"
+            className="border-0 shadow-none text-base text-gray-900 placeholder:text-gray-400 focus-visible:ring-0 focus:outline-none bg-transparent dark:text-gray-100 dark:placeholder:text-gray-500"
           />
           {query && (
             <Button
               variant="secondary"
               size="sm"
               onClick={() => setQuery('')}
-              className="h-6 w-6 p-0 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 border-0"
+              className="h-6 w-6 p-0 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 border-0 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-400"
             >
               <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -217,7 +217,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {/* 最近の検索 */}
               {RECENT_SEARCHES.length > 0 && (
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
                     最近の検索
                   </h3>
                   <div className="space-y-1">
@@ -225,12 +225,12 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       <button
                         key={index}
                         onClick={() => setQuery(search)}
-                        className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                        className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
                       >
-                        <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-4 w-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span className="text-sm text-gray-700">{search}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{search}</span>
                       </button>
                     ))}
                   </div>
@@ -239,7 +239,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
               {/* 人気タグ */}
               <div>
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
                   人気タグ
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -261,7 +261,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
               {/* クイックリンク */}
               <div>
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
                   人気のページ
                 </h3>
                 <div className="space-y-1">
@@ -273,17 +273,17 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                         router.push(link.href)
                       }}
                       className={`flex items-start gap-3 w-full p-3 rounded-lg transition-colors text-left ${
-                        selectedIndex === index ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50'
+                        selectedIndex === index ? 'bg-blue-50 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-700' : 'hover:bg-gray-50 dark:hover:bg-gray-800'
                       }`}
                     >
                       <div className="mt-0.5">
                         {getTypeIcon(link.type)}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-gray-900 truncate">
+                        <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
                           {link.title}
                         </div>
-                        <div className="text-xs text-gray-500 mt-0.5">
+                        <div className="text-xs text-gray-500 mt-0.5 dark:text-gray-400">
                           {link.description}
                         </div>
                       </div>
@@ -300,7 +300,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
           ) : (
             <div className="p-4 space-y-3">
               <div className="flex items-center justify-between mb-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   「<span className="font-medium">{query}</span>」の検索結果
                 </p>
                 <Badge variant="outline" className="text-xs">
@@ -311,16 +311,16 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {/* 全文検索 */}
               <button
                 onClick={() => handleSearch(query)}
-                className="flex items-center gap-3 w-full p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200"
+                className="flex items-center gap-3 w-full p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/40 dark:border-blue-700"
               >
-                <svg className="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <div className="text-left">
-                  <div className="text-sm font-medium text-blue-900">
+                  <div className="text-sm font-medium text-blue-900 dark:text-blue-100">
                     「<Highlight text={query} query={query} />」を検索
                   </div>
-                  <div className="text-xs text-blue-700">
+                  <div className="text-xs text-blue-700 dark:text-blue-300">
                     すべてのコンテンツから検索結果を表示
                   </div>
                 </div>
@@ -329,7 +329,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {/* プレビュー検索結果 */}
               {previewResults.length > 0 && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-2">プレビュー結果:</p>
+                  <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">プレビュー結果:</p>
                   <div className="space-y-2">
                     {previewResults.map((result, index) => (
                       <button
@@ -338,16 +338,16 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                           onOpenChange(false)
                           router.push(result.url)
                         }}
-                        className="flex items-start gap-3 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100"
+                        className="flex items-start gap-3 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:hover:bg-gray-800 dark:border-gray-700"
                       >
                         <div className="mt-0.5">
                           {getTypeIcon(result.type)}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-medium text-gray-900 truncate">
+                          <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
                             <Highlight text={result.title} query={query} />
                           </div>
-                          <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">
+                          <div className="text-xs text-gray-500 mt-0.5 line-clamp-2 dark:text-gray-400">
                             <Highlight text={result.description} query={query} />
                           </div>
                         </div>
@@ -369,7 +369,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 if (matchedTags.length > 0) {
                   return (
                     <div>
-                      <p className="text-xs text-gray-500 mb-2">関連するタグ:</p>
+                      <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">関連するタグ:</p>
                       <div className="flex flex-wrap gap-2">
                         {matchedTags.map((tag, index) => (
                           <button
@@ -395,29 +395,29 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         </div>
 
         {/* フッター */}
-        <div className="p-3 border-t bg-gray-50/50 text-xs text-gray-500">
+        <div className="p-3 border-t bg-gray-50/50 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono">
+                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   Enter
                 </kbd>
                 <span>で選択</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono">
+                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   ↑↓
                 </kbd>
                 <span>で移動</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono">
+                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   Esc
                 </kbd>
                 <span>で閉じる</span>
               </div>
             </div>
-            <span className="text-gray-400">Powered by YourSaaS Search</span>
+            <span className="text-gray-400 dark:text-gray-500">Powered by YourSaaS Search</span>
           </div>
         </div>
       </DialogContent>

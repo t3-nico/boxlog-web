@@ -3,25 +3,25 @@ import { ctaData } from '@/lib/features-data'
 
 export function FeaturesCTA() {
   return (
-    <section className="py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 relative overflow-hidden">
+    <section className="py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 dark:from-blue-700 dark:via-blue-800 dark:to-purple-800 relative overflow-hidden">
       <Container>
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <Heading as="h2" size="4xl" className="text-white mb-6">
             {ctaData.title}
           </Heading>
           
-          <Text size="xl" className="text-blue-100 mb-4 max-w-2xl mx-auto">
+          <Text size="xl" className="text-blue-100 dark:text-blue-200 mb-4 max-w-2xl mx-auto">
             {ctaData.subtitle}
           </Text>
           
-          <Text size="lg" className="text-blue-200 mb-12 max-w-xl mx-auto">
+          <Text size="lg" className="text-blue-200 dark:text-blue-300 mb-12 max-w-xl mx-auto">
             {ctaData.description}
           </Text>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-white text-blue-600 hover:bg-gray-50 shadow-lg"
+              className="bg-white dark:bg-gray-100 text-blue-600 dark:text-blue-700 hover:bg-gray-50 dark:hover:bg-gray-200 shadow-lg"
               asChild
             >
               <a href={ctaData.primaryButton.href}>

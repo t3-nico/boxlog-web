@@ -16,7 +16,7 @@ export function PricingFAQ() {
   }
   
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white dark:bg-gray-900">
       <Container>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
@@ -24,8 +24,8 @@ export function PricingFAQ() {
               Frequently Asked Questions
             </Heading>
             <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-              Everything you need to know about our pricing and features. Can't find what you're looking for?{' '}
-              <a href="/contact" className="text-blue-600 hover:text-blue-700 font-medium">
+              Everything you need to know about our pricing and features. Can&apos;t find what you&apos;re looking for?{' '}
+              <a href="/contact" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
                 Contact our team
               </a>
               .
@@ -36,20 +36,20 @@ export function PricingFAQ() {
             {faqItems.map((item, index) => (
               <div
                 key={index}
-                className="border border-gray-200 rounded-lg overflow-hidden transition-all hover:shadow-sm"
+                className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transition-all hover:shadow-sm dark:hover:shadow-md"
               >
                 <button
                   onClick={() => toggleItem(index)}
-                  className="w-full px-6 py-4 text-left bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                  className="w-full px-6 py-4 text-left bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-inset"
                   aria-expanded={openItems.includes(index)}
                 >
                   <div className="flex items-center justify-between">
-                    <Heading as="h3" size="md" className="text-gray-900 pr-4">
+                    <Heading as="h3" size="md" className="text-gray-900 dark:text-gray-100 pr-4">
                       {item.question}
                     </Heading>
                     <div className="flex-shrink-0">
                       <svg
-                        className={`w-5 h-5 text-gray-500 transition-transform ${
+                        className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform ${
                           openItems.includes(index) ? 'rotate-180' : ''
                         }`}
                         fill="none"
@@ -63,8 +63,8 @@ export function PricingFAQ() {
                 </button>
                 
                 {openItems.includes(index) && (
-                  <div className="px-6 pb-4 bg-gray-50">
-                    <Text className="text-gray-700 leading-relaxed">
+                  <div className="px-6 pb-4 bg-gray-50 dark:bg-gray-700">
+                    <Text className="text-gray-700 dark:text-gray-300 leading-relaxed">
                       {item.answer}
                     </Text>
                   </div>
@@ -74,7 +74,7 @@ export function PricingFAQ() {
           </div>
           
           <div className="mt-16 text-center">
-            <div className="bg-gray-50 rounded-2xl p-8">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8">
               <Heading as="h3" size="xl" className="mb-4">
                 Still have questions?
               </Heading>
@@ -84,13 +84,13 @@ export function PricingFAQ() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
                   variant="outline" 
-                  className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   asChild
                 >
                   <a href="/contact">Contact Sales</a>
                 </Button>
                 <Button 
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white"
                   asChild
                 >
                   <a href="/docs">View Documentation</a>

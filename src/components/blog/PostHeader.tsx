@@ -17,12 +17,12 @@ export function PostHeader({ frontMatter }: PostHeaderProps) {
 
 
   return (
-    <header className="py-16 bg-white">
+    <header className="py-16 bg-white dark:bg-gray-800">
       <Container>
         <div className="max-w-4xl mx-auto">
           {/* 日付 */}
           <div className="mb-4">
-            <div className="text-gray-600">
+            <div className="text-gray-600 dark:text-gray-400">
               <time dateTime={frontMatter.publishedAt}>
                 {formattedDate}
               </time>

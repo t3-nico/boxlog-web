@@ -91,19 +91,19 @@ function SearchResults() {
     switch (type) {
       case 'docs':
         return (
-          <svg className="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         )
       case 'blog':
         return (
-          <svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
           </svg>
         )
       case 'release':
         return (
-          <svg className="h-4 w-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 text-purple-500 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m3 6V8a1 1 0 00-1-1H5a1 1 0 00-1 1v2m14 0v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8m14 0H4" />
           </svg>
         )
@@ -114,10 +114,10 @@ function SearchResults() {
 
   const getTypeBadgeColor = (type: string) => {
     switch (type) {
-      case 'docs': return 'bg-blue-50 text-blue-700 border-blue-200'
-      case 'blog': return 'bg-green-50 text-green-700 border-green-200'
-      case 'release': return 'bg-purple-50 text-purple-700 border-purple-200'
-      default: return 'bg-gray-50 text-gray-700 border-gray-200'
+      case 'docs': return 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700'
+      case 'blog': return 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-700'
+      case 'release': return 'bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-700'
+      default: return 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600'
     }
   }
 
@@ -133,7 +133,7 @@ function SearchResults() {
           {/* 検索ボックス */}
           <div className="flex items-center gap-3 mb-6">
             <div className="relative flex-1">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <Input
@@ -199,23 +199,23 @@ function SearchResults() {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="border rounded-lg p-6 bg-white animate-pulse">
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-3"></div>
-                    <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+                  <div key={i} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-800 animate-pulse">
+                    <div className="h-4 bg-gray-200 dark:bg-gray-600 rounded w-3/4 mb-3"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-gray-600 rounded w-full mb-2"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-gray-600 rounded w-2/3"></div>
                   </div>
                 ))}
               </div>
             ) : filteredResults.length > 0 ? (
               <div className="space-y-4">
                 {filteredResults.map((result) => (
-                  <div key={result.id} className="border rounded-lg p-6 bg-white hover:shadow-md transition-shadow">
+                  <div key={result.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-800 hover:shadow-md dark:hover:shadow-lg transition-shadow">
                     <div className="flex items-start gap-3 mb-3">
                       {getTypeIcon(result.type)}
                       <div className="flex-1 min-w-0">
                         <a 
                           href={result.url}
-                          className="text-lg font-medium text-blue-600 hover:text-blue-800 hover:underline block truncate"
+                          className="text-lg font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline block truncate"
                         >
                           <Highlight text={result.title} query={query} />
                         </a>
@@ -227,13 +227,13 @@ function SearchResults() {
                             {result.type === 'docs' ? 'ドキュメント' : 
                              result.type === 'blog' ? 'ブログ' : 'リリース'}
                           </Badge>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
                             {result.breadcrumbs.join(' › ')}
                           </span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
                       <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
@@ -242,7 +242,7 @@ function SearchResults() {
                       </span>
                       <a 
                         href={result.url}
-                        className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                        className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                       >
                         詳細を見る →
                       </a>
@@ -298,12 +298,12 @@ function SearchResults() {
 
 export default function SearchPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Suspense fallback={
         <Container className="py-8">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
             </div>
           </div>
         </Container>

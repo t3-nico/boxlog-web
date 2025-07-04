@@ -27,14 +27,14 @@ export function TeamMember({ member }: TeamMemberProps) {
 
   return (
     <div 
-      className="group relative bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:border-blue-200"
+      className="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-lg transition-all duration-300 hover:border-blue-200 dark:hover:border-blue-700"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Avatar */}
       <div className="flex flex-col items-center text-center mb-6">
         <div className="relative mb-4">
-          <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 ring-4 ring-white shadow-lg group-hover:shadow-xl transition-shadow">
+          <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 ring-4 ring-white dark:ring-gray-900 shadow-lg group-hover:shadow-xl transition-shadow">
             {!imageError ? (
               <img
                 src={member.avatar}
@@ -44,8 +44,8 @@ export function TeamMember({ member }: TeamMemberProps) {
                 loading="lazy"
               />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                <span className="text-2xl font-bold text-blue-600">
+              <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 flex items-center justify-center">
+                <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                   {member.name.charAt(0)}
                 </span>
               </div>
@@ -53,14 +53,14 @@ export function TeamMember({ member }: TeamMemberProps) {
           </div>
           
           {/* Hover effect */}
-          <div className={`absolute inset-0 rounded-full bg-blue-500/10 transition-opacity ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
+          <div className={`absolute inset-0 rounded-full bg-blue-500/10 dark:bg-blue-400/10 transition-opacity ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
         </div>
 
         <Heading as="h3" size="lg" className="mb-1">
           {member.name}
         </Heading>
         
-        <Text size="md" className="text-blue-600 font-medium mb-3">
+        <Text size="md" className="text-blue-600 dark:text-blue-400 font-medium mb-3">
           {member.position}
         </Text>
       </div>
@@ -75,7 +75,7 @@ export function TeamMember({ member }: TeamMemberProps) {
         {member.expertise.map((skill, index) => (
           <span
             key={index}
-            className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-blue-100 hover:text-blue-700 transition-colors"
+            className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
           >
             {skill}
           </span>
@@ -89,7 +89,7 @@ export function TeamMember({ member }: TeamMemberProps) {
             href={member.social.twitter}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-blue-100 hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             aria-label={`${member.name}のTwitterプロフィール`}
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -103,7 +103,7 @@ export function TeamMember({ member }: TeamMemberProps) {
             href={member.social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-blue-100 hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             aria-label={`${member.name}のLinkedInプロフィール`}
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -117,7 +117,7 @@ export function TeamMember({ member }: TeamMemberProps) {
             href={member.social.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-blue-100 hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             aria-label={`${member.name}のGitHubプロフィール`}
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

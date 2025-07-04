@@ -76,42 +76,42 @@ export async function generateStaticParams() {
 const mdxComponents = {
   // カスタムコンポーネントの定義
   h1: (props: any) => (
-    <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-4 first:mt-0" {...props} />
+    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
   ),
   h2: (props: any) => (
-    <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4 pb-2 border-b border-gray-200" {...props} />
+    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700" {...props} />
   ),
   h3: (props: any) => (
-    <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3" {...props} />
+    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
   ),
   h4: (props: any) => (
-    <h4 className="text-lg font-semibold text-gray-900 mt-6 mb-3" {...props} />
+    <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
   ),
   p: (props: any) => (
-    <p className="text-gray-700 leading-relaxed mb-4" {...props} />
+    <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" {...props} />
   ),
   a: (props: any) => (
     <a 
-      className="text-blue-600 hover:text-blue-800 underline underline-offset-2" 
+      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2" 
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props} 
     />
   ),
   blockquote: (props: any) => (
-    <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-blue-50 text-gray-700 italic rounded-r-lg" {...props} />
+    <blockquote className="border-l-4 border-blue-500 dark:border-blue-400 pl-4 py-2 my-6 bg-blue-50 dark:bg-blue-900 text-gray-700 dark:text-gray-300 italic rounded-r-lg" {...props} />
   ),
   code: (props: any) => (
-    <code className="bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono" {...props} />
+    <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1.5 py-0.5 rounded text-sm font-mono" {...props} />
   ),
   pre: (props: any) => (
-    <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm" {...props} />
+    <pre className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm" {...props} />
   ),
   ul: (props: any) => (
-    <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700" {...props} />
+    <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
   ),
   ol: (props: any) => (
-    <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700" {...props} />
+    <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
   ),
   li: (props: any) => (
     <li className="leading-relaxed" {...props} />
@@ -125,22 +125,22 @@ const mdxComponents = {
   ),
   table: (props: any) => (
     <div className="overflow-x-auto my-6">
-      <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg" {...props} />
+      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg" {...props} />
     </div>
   ),
   th: (props: any) => (
-    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...props} />
+    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" {...props} />
   ),
   td: (props: any) => (
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-t border-gray-200" {...props} />
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 border-t border-gray-200 dark:border-gray-700" {...props} />
   ),
   // カスタムコールアウト
   Callout: ({ type = 'info', children }: { type?: 'info' | 'warning' | 'error' | 'success', children: React.ReactNode }) => {
     const styles = {
-      info: 'bg-blue-50 border-blue-200 text-blue-800',
-      warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-      error: 'bg-red-50 border-red-200 text-red-800',
-      success: 'bg-green-50 border-green-200 text-green-800',
+      info: 'bg-blue-50 dark:bg-blue-900 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200',
+      warning: 'bg-yellow-50 dark:bg-yellow-900 border-yellow-200 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200',
+      error: 'bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700 text-red-800 dark:text-red-200',
+      success: 'bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200',
     }
     
     const icons = {
@@ -210,7 +210,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* カバー画像 */}
         {post.frontMatter.coverImage && (
-          <section className="pb-8 bg-white">
+          <section className="pb-8 bg-white dark:bg-gray-900">
             <Container>
               <div className="max-w-4xl mx-auto">
                 <img
@@ -225,7 +225,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         )}
 
         {/* 記事本文 */}
-        <article className="py-8 bg-white">
+        <article className="py-8 bg-white dark:bg-gray-900">
           <Container>
             <div className="max-w-4xl mx-auto">
               <div className="prose prose-lg max-w-none">
@@ -236,12 +236,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               {/* 記事終了マーカー */}
-              <div className="mt-16 pt-8 border-t border-gray-200">
+              <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
                   </div>
                 </div>
               </div>
@@ -250,7 +250,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="mt-8 space-y-6">
                 {/* タグ */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">タグ</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">タグ</h3>
                   <div className="flex flex-wrap gap-2">
                     {post.frontMatter.tags.map((tag) => {
                       // タグの色を決定する関数
@@ -291,7 +291,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 {/* シェアボタン */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">この記事をシェア</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">この記事をシェア</h3>
                   <ShareButton title={post.frontMatter.title} slug={params.slug} />
                 </div>
               </div>

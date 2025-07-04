@@ -71,42 +71,42 @@ export async function generateStaticParams() {
 // MDXコンポーネント
 const mdxComponents = {
   h1: (props: any) => (
-    <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-4 first:mt-0" {...props} />
+    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
   ),
   h2: (props: any) => (
-    <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4 pb-2 border-b border-gray-200" {...props} />
+    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700" {...props} />
   ),
   h3: (props: any) => (
-    <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3" {...props} />
+    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
   ),
   h4: (props: any) => (
-    <h4 className="text-lg font-semibold text-gray-900 mt-6 mb-3" {...props} />
+    <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
   ),
   p: (props: any) => (
-    <p className="text-gray-700 leading-relaxed mb-4" {...props} />
+    <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" {...props} />
   ),
   a: (props: any) => (
     <a 
-      className="text-blue-600 hover:text-blue-800 underline underline-offset-2" 
+      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2" 
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props} 
     />
   ),
   blockquote: (props: any) => (
-    <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-blue-50 text-gray-700 italic rounded-r-lg" {...props} />
+    <blockquote className="border-l-4 border-blue-500 dark:border-blue-400 pl-4 py-2 my-6 bg-blue-50 dark:bg-blue-900 text-gray-700 dark:text-gray-300 italic rounded-r-lg" {...props} />
   ),
   code: (props: any) => (
-    <code className="bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono" {...props} />
+    <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1.5 py-0.5 rounded text-sm font-mono" {...props} />
   ),
   pre: (props: any) => (
-    <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm" {...props} />
+    <pre className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm" {...props} />
   ),
   ul: (props: any) => (
-    <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700" {...props} />
+    <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
   ),
   ol: (props: any) => (
-    <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700" {...props} />
+    <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
   ),
   li: (props: any) => (
     <li className="leading-relaxed" {...props} />
@@ -150,38 +150,38 @@ const mdxComponents = {
 
   // 警告・注意コンポーネント
   Warning: ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 my-6">
+    <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 my-6">
       <div className="flex items-start">
-        <svg className="w-5 h-5 text-yellow-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L5.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
         </svg>
-        <div className="prose prose-sm max-w-none text-yellow-800">{children}</div>
+        <div className="prose prose-sm max-w-none text-yellow-800 dark:text-yellow-200">{children}</div>
       </div>
     </div>
   ),
 
   // 情報コンポーネント
   Info: ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-6">
+    <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 my-6">
       <div className="flex items-start">
-        <svg className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <div className="prose prose-sm max-w-none text-blue-800">{children}</div>
+        <div className="prose prose-sm max-w-none text-blue-800 dark:text-blue-200">{children}</div>
       </div>
     </div>
   ),
 
   // マイグレーションガイド
   Migration: ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 my-6">
+    <div className="bg-purple-50 dark:bg-purple-900 border border-purple-200 dark:border-purple-700 rounded-lg p-4 my-6">
       <div className="flex items-start">
-        <svg className="w-5 h-5 text-purple-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 text-purple-600 dark:text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
         </svg>
         <div>
-          <h4 className="font-semibold text-purple-800 mb-2">マイグレーション情報</h4>
-          <div className="prose prose-sm max-w-none text-purple-700">{children}</div>
+          <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">マイグレーション情報</h4>
+          <div className="prose prose-sm max-w-none text-purple-700 dark:text-purple-300">{children}</div>
         </div>
       </div>
     </div>
@@ -235,7 +235,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
         {/* カバー画像 */}
         {release.frontMatter.coverImage && (
-          <section className="py-8 bg-gray-50">
+          <section className="py-8 bg-gray-50 dark:bg-gray-800">
             <Container>
               <div className="max-w-4xl mx-auto">
                 <img
@@ -250,7 +250,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
         )}
 
         {/* リリース内容 */}
-        <article id="changes" className="py-16 bg-white">
+        <article id="changes" className="py-16 bg-white dark:bg-gray-900">
           <Container>
             <div className="max-w-4xl mx-auto">
               <div className="prose prose-lg max-w-none">
@@ -261,24 +261,24 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               </div>
 
               {/* リリース終了マーカー */}
-              <div className="mt-16 pt-8 border-t border-gray-200">
+              <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
                   </div>
                 </div>
               </div>
 
               {/* リリース情報フッター */}
-              <div className="mt-8 p-6 bg-gray-50 rounded-xl">
+              <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
                       このリリースは約 <strong>{release.readingTime}分</strong> で読めます
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       リリース日: {new Date(release.frontMatter.date).toLocaleDateString('ja-JP')}
                       {release.frontMatter.author && (
                         <span className="ml-4">
@@ -291,7 +291,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   <div className="flex items-center gap-4">
                     <a
                       href="/releases"
-                      className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                     >
                       すべてのリリースを見る
                     </a>

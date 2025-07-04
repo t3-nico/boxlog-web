@@ -67,14 +67,14 @@ export default async function TagPage({ params }: TagPageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 to-white">
+      <section className="py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             {/* パンくず */}
             <nav className="mb-8" aria-label="パンくず">
-              <ol className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+              <ol className="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
                 <li>
-                  <a href="/" className="hover:text-gray-700 transition-colors">
+                  <a href="/" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                     ホーム
                   </a>
                 </li>
@@ -84,7 +84,7 @@ export default async function TagPage({ params }: TagPageProps) {
                   </svg>
                 </li>
                 <li>
-                  <a href="/blog" className="hover:text-gray-700 transition-colors">
+                  <a href="/blog" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                     ブログ
                   </a>
                 </li>
@@ -93,15 +93,15 @@ export default async function TagPage({ params }: TagPageProps) {
                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                   </svg>
                 </li>
-                <li className="text-gray-900 font-medium">
+                <li className="text-gray-900 dark:text-gray-100 font-medium">
                   #{decodedTag}
                 </li>
               </ol>
             </nav>
 
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                 </svg>
               </div>
@@ -122,7 +122,7 @@ export default async function TagPage({ params }: TagPageProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/blog"
-                className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -132,7 +132,7 @@ export default async function TagPage({ params }: TagPageProps) {
               
               <a
                 href="#tags"
-                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center px-6 py-3 bg-blue-600 dark:bg-blue-700 text-white rounded-lg text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -145,7 +145,7 @@ export default async function TagPage({ params }: TagPageProps) {
       </section>
 
       {/* 記事一覧 */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-gray-900">
         <Container>
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
@@ -154,15 +154,15 @@ export default async function TagPage({ params }: TagPageProps) {
                 <div className="mb-8">
                   <Heading as="h2" size="2xl" className="mb-4">
                     記事一覧
-                    <span className="ml-2 text-lg font-normal text-gray-500">
+                    <span className="ml-2 text-lg font-normal text-gray-500 dark:text-gray-400">
                       ({posts.length}件)
                     </span>
                   </Heading>
                   
                   {/* ソート・フィルター */}
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
                       </svg>
                       <Text size="sm" variant="muted">
@@ -203,47 +203,47 @@ export default async function TagPage({ params }: TagPageProps) {
               <div className="lg:col-span-1">
                 <div className="sticky top-8 space-y-8">
                   {/* 現在のタグ情報 */}
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                  <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-xl p-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white dark:text-gray-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
                       </div>
-                      <Heading as="h3" size="lg" className="text-blue-900">
+                      <Heading as="h3" size="lg" className="text-blue-900 dark:text-blue-100">
                         #{decodedTag}
                       </Heading>
                     </div>
                     
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <Text size="sm" className="text-blue-700">記事数</Text>
-                        <Text size="sm" className="font-semibold text-blue-900">
+                        <Text size="sm" className="text-blue-700 dark:text-blue-300">記事数</Text>
+                        <Text size="sm" className="font-semibold text-blue-900 dark:text-blue-100">
                           {posts.length}件
                         </Text>
                       </div>
                       
                       <div className="flex justify-between items-center">
-                        <Text size="sm" className="text-blue-700">最新記事</Text>
-                        <Text size="sm" className="font-semibold text-blue-900">
+                        <Text size="sm" className="text-blue-700 dark:text-blue-300">最新記事</Text>
+                        <Text size="sm" className="font-semibold text-blue-900 dark:text-blue-100">
                           {new Date(posts[0]?.frontMatter.publishedAt).toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' })}
                         </Text>
                       </div>
                       
                       {currentTagInfo && allTags.length > 0 && (
                         <div className="flex justify-between items-center">
-                          <Text size="sm" className="text-blue-700">人気度</Text>
-                          <Text size="sm" className="font-semibold text-blue-900">
+                          <Text size="sm" className="text-blue-700 dark:text-blue-300">人気度</Text>
+                          <Text size="sm" className="font-semibold text-blue-900 dark:text-blue-100">
                             {allTags.findIndex(t => t.tag === decodedTag) + 1}位 / {allTags.length}
                           </Text>
                         </div>
                       )}
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-blue-200">
+                    <div className="mt-4 pt-4 border-t border-blue-200 dark:border-blue-700">
                       <a
                         href="/blog"
-                        className="inline-flex items-center text-sm font-medium text-blue-700 hover:text-blue-800"
+                        className="inline-flex items-center text-sm font-medium text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200"
                       >
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -254,7 +254,7 @@ export default async function TagPage({ params }: TagPageProps) {
                   </div>
 
                   {/* 関連タグ */}
-                  <div className="bg-white rounded-xl p-6 border border-gray-200">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                     <Heading as="h3" size="md" className="mb-4">
                       関連するタグ
                     </Heading>
@@ -267,10 +267,10 @@ export default async function TagPage({ params }: TagPageProps) {
                           <a
                             key={tagItem.tag}
                             href={`/blog/tag/${encodeURIComponent(tagItem.tag)}`}
-                            className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-blue-100 hover:text-blue-700 transition-colors"
+                            className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
                           >
                             #{tagItem.tag}
-                            <span className="ml-1 text-xs opacity-75">
+                            <span className="ml-1 text-xs opacity-75 dark:opacity-70">
                               {tagItem.count}
                             </span>
                           </a>
@@ -279,7 +279,7 @@ export default async function TagPage({ params }: TagPageProps) {
                   </div>
 
                   {/* 全タグリスト */}
-                  <div id="tags" className="bg-white rounded-xl p-6 border border-gray-200">
+                  <div id="tags" className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                     <TagList 
                       tags={allTags} 
                       currentTag={decodedTag}

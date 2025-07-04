@@ -20,7 +20,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
   return (
     <button
       onClick={handleShare}
-      className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+      className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
     >
       この記事をシェア
     </button>

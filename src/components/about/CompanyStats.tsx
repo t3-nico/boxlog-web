@@ -77,7 +77,7 @@ function AnimatedCounter({
 
 export function CompanyStats({ stats }: CompanyStatsProps) {
   return (
-    <section className="py-24 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <section className="py-24 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20">
       <Container>
         <div className="text-center mb-16">
           <Heading as="h2" size="3xl" className="mb-4">
@@ -92,17 +92,17 @@ export function CompanyStats({ stats }: CompanyStatsProps) {
           {stats.map((stat, index) => (
             <div
               key={stat.id}
-              className="relative group bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-white/50 hover:border-blue-200"
+              className="relative group bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-white/50 dark:border-gray-800/50 hover:border-blue-200 dark:hover:border-blue-700"
               style={{
                 animationDelay: `${index * 150}ms`
               }}
             >
               {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl opacity-20 -m-2 group-hover:opacity-30 transition-opacity" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl opacity-20 -m-2 group-hover:opacity-30 transition-opacity" />
               
               {/* Icon */}
               <div className="relative z-10 mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors">
                   <span className="text-2xl" role="img" aria-label={stat.label}>
                     {stat.icon}
                   </span>
@@ -111,7 +111,7 @@ export function CompanyStats({ stats }: CompanyStatsProps) {
 
               {/* Value */}
               <div className="relative z-10 mb-2">
-                <Heading as="h3" size="2xl" className="text-gray-900 font-bold">
+                <Heading as="h3" size="2xl" className="text-gray-900 dark:text-gray-100 font-bold">
                   {typeof stat.value === 'number' ? (
                     <AnimatedCounter 
                       endValue={stat.value} 
@@ -125,7 +125,7 @@ export function CompanyStats({ stats }: CompanyStatsProps) {
               </div>
 
               {/* Label */}
-              <Text size="md" className="font-semibold text-gray-900 mb-2">
+              <Text size="md" className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
                 {stat.label}
               </Text>
 
@@ -135,13 +135,13 @@ export function CompanyStats({ stats }: CompanyStatsProps) {
               </Text>
 
               {/* Hover effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-400/5 dark:to-purple-400/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ))}
         </div>
 
         {/* Trust indicators */}
-        <div className="mt-16 pt-12 border-t border-white/30">
+        <div className="mt-16 pt-12 border-t border-white/30 dark:border-gray-700/30">
           <div className="text-center">
             <Text size="sm" variant="muted" className="mb-6">
               信頼いただいている企業様
@@ -152,9 +152,9 @@ export function CompanyStats({ stats }: CompanyStatsProps) {
               {[1, 2, 3, 4, 5].map((i) => (
                 <div
                   key={i}
-                  className="w-24 h-12 bg-gray-200 rounded-lg flex items-center justify-center"
+                  className="w-24 h-12 bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center"
                 >
-                  <Text size="xs" className="text-gray-500 font-medium">
+                  <Text size="xs" className="text-gray-500 dark:text-gray-400 font-medium">
                     Company {i}
                   </Text>
                 </div>

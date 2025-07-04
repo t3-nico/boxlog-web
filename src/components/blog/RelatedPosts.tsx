@@ -16,7 +16,7 @@ export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gray-50 dark:bg-gray-800">
       <Container>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -43,7 +43,7 @@ export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
           <div className="text-center mt-12">
             <Link
               href="/blog"
-              className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-colors"
+              className="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
             >
               すべての記事を見る
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

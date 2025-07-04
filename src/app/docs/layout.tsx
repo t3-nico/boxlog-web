@@ -10,7 +10,7 @@ export default function DocsLayout({
   // サーバーサイドで動的にナビゲーションを生成
   const navigation = generateDocsNavigation()
   return (
-    <div className="min-h-screen pt-16 bg-white">
+    <div className="min-h-screen pt-16 bg-white dark:bg-gray-900">
       <Container>
         <div className="flex">
           {/* Left Sidebar - Navigation */}

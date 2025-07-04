@@ -55,10 +55,10 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
   const versionType = getVersionType(frontMatter.version)
   
   const versionBadgeStyles = {
-    major: 'bg-red-100 text-red-800 hover:bg-red-200',
-    minor: 'bg-blue-100 text-blue-800 hover:bg-blue-200', 
-    patch: 'bg-green-100 text-green-800 hover:bg-green-200',
-    prerelease: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
+    major: 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/40',
+    minor: 'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/40', 
+    patch: 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/40',
+    prerelease: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:hover:bg-yellow-900/40'
   }
 
 
@@ -76,7 +76,7 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
         href={`/releases/${frontMatter.version}`}
         className="group block"
       >
-        <article className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200">
+        <article className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200 dark:border-gray-700 dark:hover:border-blue-600">
           <div className="flex items-center gap-4">
             <div className="flex-shrink-0">
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${versionBadgeStyles[versionType]}`}>
@@ -85,10 +85,10 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
             </div>
             
             <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+              <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors dark:text-gray-100 dark:group-hover:text-blue-400">
                 {frontMatter.title}
               </h3>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">
                 {formatDate(frontMatter.date)}
               </p>
             </div>
@@ -96,18 +96,18 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
 
           <div className="flex items-center gap-2 flex-shrink-0">
             {frontMatter.breaking && (
-              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
+              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
                 ⚠️ Breaking
               </span>
             )}
             
             {frontMatter.featured && (
-              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800">
+              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
                 ✨ Featured
               </span>
             )}
 
-            <svg className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors dark:text-gray-500 dark:group-hover:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </div>
@@ -117,7 +117,7 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
   }
 
   return (
-    <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300">
+    <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300 dark:bg-gray-900 dark:border-gray-700 dark:hover:border-blue-600">
       <Link href={`/releases/${frontMatter.version}`} className="block">
         <div className="p-6">
           {/* Version Badge */}
@@ -128,7 +128,7 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
           </div>
 
           {/* Title */}
-          <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+          <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 dark:text-gray-100 dark:group-hover:text-blue-400">
             {frontMatter.title}
           </h2>
 
@@ -151,20 +151,20 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
           {/* Status Badges */}
           <div className="flex flex-wrap gap-2 mb-4">
             {frontMatter.featured && (
-              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800">
+              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
                 ✨ Featured
               </span>
             )}
             
             {frontMatter.breaking && (
-              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
+              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
                 ⚠️ Breaking
               </span>
             )}
           </div>
 
           {/* Date */}
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             <time dateTime={frontMatter.date}>
               {formatDate(frontMatter.date)}
             </time>

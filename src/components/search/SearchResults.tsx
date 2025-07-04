@@ -74,16 +74,16 @@ export function SearchResults({
           <button
             key={result.id}
             onClick={() => handleResultClick(result.url)}
-            className="flex items-start gap-3 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100"
+            className="flex items-start gap-3 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
           >
             <div className="mt-0.5">
               {getTypeIcon(result.type)}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-gray-900 truncate">
+              <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
                 <Highlight text={result.title} query={query} />
               </div>
-              <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">
+              <div className="text-xs text-gray-500 mt-0.5 line-clamp-2 dark:text-gray-400">
                 <Highlight text={result.description} query={query} />
               </div>
             </div>
@@ -99,13 +99,13 @@ export function SearchResults({
   return (
     <div className="space-y-4">
       {results.map((result) => (
-        <div key={result.id} className="border rounded-lg p-6 bg-white hover:shadow-md transition-shadow">
+        <div key={result.id} className="border rounded-lg p-6 bg-white hover:shadow-md transition-shadow dark:border-gray-700 dark:bg-gray-800">
           <div className="flex items-start gap-3 mb-3">
             {getTypeIcon(result.type)}
             <div className="flex-1 min-w-0">
               <button 
                 onClick={() => handleResultClick(result.url)}
-                className="text-lg font-medium text-blue-600 hover:text-blue-800 hover:underline block truncate text-left w-full"
+                className="text-lg font-medium text-blue-600 hover:text-blue-800 hover:underline block truncate text-left w-full dark:text-blue-400 dark:hover:text-blue-300"
               >
                 <Highlight text={result.title} query={query} />
               </button>
@@ -116,22 +116,22 @@ export function SearchResults({
                 >
                   {getTypeLabel(result.type)}
                 </Badge>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-gray-500 dark:text-gray-400">
                   {result.breadcrumbs.join(' › ')}
                 </span>
               </div>
             </div>
           </div>
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+          <p className="text-gray-600 text-sm mb-3 line-clamp-2 dark:text-gray-300">
             <Highlight text={result.description} query={query} />
           </p>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               最終更新: {result.lastModified}
             </span>
             <button 
               onClick={() => handleResultClick(result.url)}
-              className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+              className="text-xs text-blue-600 hover:text-blue-800 font-medium dark:text-blue-400 dark:hover:text-blue-300"
             >
               詳細を見る →
             </button>

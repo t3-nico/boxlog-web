@@ -5,7 +5,7 @@ import { detailedFeatures } from '@/lib/features-data'
 
 export function FeatureDetails() {
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-24 bg-gray-50 dark:bg-gray-800">
       <Container>
         {detailedFeatures.map((feature, index) => (
           <div
@@ -16,8 +16,8 @@ export function FeatureDetails() {
           >
             {/* Content */}
             <div className="flex-1 lg:max-w-lg">
-              <div className="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 text-sm font-medium rounded-full mb-6">
-                <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+              <div className="inline-flex items-center px-4 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm font-medium rounded-full mb-6">
+                <span className="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full mr-2"></span>
                 {feature.subtitle}
               </div>
               
@@ -32,12 +32,12 @@ export function FeatureDetails() {
               <div className="space-y-4">
                 {feature.features.map((item, itemIndex) => (
                   <div key={itemIndex} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
-                      <svg className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="flex-shrink-0 w-5 h-5 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mt-0.5">
+                      <svg className="w-3 h-3 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <Text className="text-gray-700">{item}</Text>
+                    <Text>{item}</Text>
                   </div>
                 ))}
               </div>
@@ -47,7 +47,7 @@ export function FeatureDetails() {
             <div className="flex-1 lg:max-w-lg">
               <div className="relative group">
                 {/* Placeholder for actual image */}
-                <div className="aspect-[4/3] bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl overflow-hidden shadow-2xl">
+                <div className="aspect-[4/3] bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl overflow-hidden shadow-2xl">
                   <div className="w-full h-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center mx-auto mb-4">

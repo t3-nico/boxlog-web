@@ -47,12 +47,12 @@ export function TagsByCategory({ tagsByCategory }: TagsByCategoryProps) {
   if (categories.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 dark:bg-gray-700">
+          <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
           </svg>
         </div>
-        <p className="text-gray-500">カテゴリが見つかりませんでした</p>
+        <p className="text-gray-500 dark:text-gray-400">カテゴリが見つかりませんでした</p>
       </div>
     )
   }
@@ -64,11 +64,11 @@ export function TagsByCategory({ tagsByCategory }: TagsByCategoryProps) {
         if (!config) return null
 
         return (
-          <div key={category} className={`bg-white rounded-2xl border-2 ${config.borderColor} overflow-hidden`}>
+          <div key={category} className={`bg-white rounded-2xl border-2 ${config.borderColor} overflow-hidden dark:bg-gray-900`}>
             {/* Header */}
-            <div className={`${config.color} px-6 py-4 border-b ${config.borderColor}`}>
+            <div className={`${config.color} px-6 py-4 border-b ${config.borderColor} dark:bg-opacity-20`}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center dark:bg-gray-800">
                   {config.icon}
                 </div>
                 <div>
@@ -89,19 +89,19 @@ export function TagsByCategory({ tagsByCategory }: TagsByCategoryProps) {
                   <Link
                     key={tagData.tag}
                     href={`/tags/${encodeURIComponent(tagData.tag)}`}
-                    className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                    className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group dark:hover:bg-gray-800"
                   >
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${getTagColor(tagData.tag)} group-hover:scale-105`}>
                       #{tagData.tag}
                     </span>
-                    <span className="text-sm text-gray-500 font-medium">
+                    <span className="text-sm text-gray-500 font-medium dark:text-gray-400">
                       {tagData.count}
                     </span>
                   </Link>
                 ))}
                 
                 {tags.length > 20 && (
-                  <div className="pt-3 border-t border-gray-100">
+                  <div className="pt-3 border-t border-gray-100 dark:border-gray-700">
                     <Text size="sm" variant="muted" className="text-center">
                       他 {tags.length - 20} 個のタグ
                     </Text>

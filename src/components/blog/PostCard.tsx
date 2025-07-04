@@ -17,16 +17,16 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
   // タグの色を決定する関数
   const getTagColor = (tag: string, index: number) => {
     const colors = [
-      'bg-blue-100 text-blue-800 hover:bg-blue-200',
-      'bg-green-100 text-green-800 hover:bg-green-200',
-      'bg-purple-100 text-purple-800 hover:bg-purple-200',
-      'bg-pink-100 text-pink-800 hover:bg-pink-200',
-      'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
-      'bg-indigo-100 text-indigo-800 hover:bg-indigo-200',
-      'bg-red-100 text-red-800 hover:bg-red-200',
-      'bg-teal-100 text-teal-800 hover:bg-teal-200',
-      'bg-orange-100 text-orange-800 hover:bg-orange-200',
-      'bg-cyan-100 text-cyan-800 hover:bg-cyan-200',
+      'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800',
+      'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-200 dark:hover:bg-green-800',
+      'bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-200 dark:hover:bg-purple-800',
+      'bg-pink-100 text-pink-800 hover:bg-pink-200 dark:bg-pink-900 dark:text-pink-200 dark:hover:bg-pink-800',
+      'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-200 dark:hover:bg-yellow-800',
+      'bg-indigo-100 text-indigo-800 hover:bg-indigo-200 dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-800',
+      'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900 dark:text-red-200 dark:hover:bg-red-800',
+      'bg-teal-100 text-teal-800 hover:bg-teal-200 dark:bg-teal-900 dark:text-teal-200 dark:hover:bg-teal-800',
+      'bg-orange-100 text-orange-800 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800',
+      'bg-cyan-100 text-cyan-800 hover:bg-cyan-200 dark:bg-cyan-900 dark:text-cyan-200 dark:hover:bg-cyan-800',
     ]
     
     // タグ名のハッシュ値を使って色を決定（同じタグは常に同じ色）
@@ -48,7 +48,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
   if (layout === 'vertical') {
     // 縦型レイアウト（注目記事用）: 上に画像、下にコンテンツ
     return (
-      <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300">
+      <article className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300">
         <Link href={`/blog/${post.slug}`} className="block">
           {/* カバー画像 */}
           {post.frontMatter.coverImage && !imageError ? (
@@ -65,8 +65,8 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ) : (
-            <div className="aspect-[16/9] bg-gray-100 flex items-center justify-center">
-              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="aspect-[16/9] bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+              <svg className="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
@@ -78,7 +78,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
             <Heading 
               as="h2" 
               size="xl" 
-              className="mb-3 group-hover:text-blue-600 transition-colors line-clamp-2"
+              className="mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2"
             >
               {post.frontMatter.title}
             </Heading>
@@ -98,7 +98,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
             </div>
 
             {/* メタ情報 */}
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-500 dark:text-gray-400">
               <time dateTime={post.frontMatter.publishedAt}>
                 {formattedDate}
               </time>
@@ -111,7 +111,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
 
   // 横型レイアウト（通常記事用）: 左に画像、右にコンテンツ
   return (
-    <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300">
+    <article className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300">
       <Link href={`/blog/${post.slug}`} className="block">
         <div className="flex">
           {/* 左側: カバー画像 */}
@@ -130,8 +130,8 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ) : (
-              <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
@@ -145,7 +145,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
               <Heading 
                 as="h2" 
                 size="lg" 
-                className="mb-3 group-hover:text-blue-600 transition-colors line-clamp-2"
+                className="mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2"
               >
                 {post.frontMatter.title}
               </Heading>
@@ -167,7 +167,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
 
             <div>
               {/* メタ情報 */}
-              <div className="mb-3 text-sm text-gray-500">
+              <div className="mb-3 text-sm text-gray-500 dark:text-gray-400">
                 <time dateTime={post.frontMatter.publishedAt}>
                   {formattedDate}
                 </time>

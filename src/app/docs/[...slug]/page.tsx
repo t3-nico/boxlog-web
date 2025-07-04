@@ -157,7 +157,7 @@ export default async function DocPage({ params }: DocPageProps) {
             <Breadcrumbs slug={slug} title={frontMatter.title} />
             
             {/* MDXコンテンツ */}
-            <article className="prose prose-gray max-w-none">
+            <article className="prose prose-gray dark:prose-invert max-w-none">
               <MDXRemote 
                 source={mdxContent} 
                 components={mdxComponents}
@@ -166,7 +166,7 @@ export default async function DocPage({ params }: DocPageProps) {
 
             {/* 関連コンテンツ */}
             {relatedContent.length > 0 && (
-              <aside className="mt-12 pt-8 border-t border-gray-200">
+              <aside className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <Heading as="h2" size="xl" className="mb-6">
                   Related Articles
                 </Heading>
@@ -175,7 +175,7 @@ export default async function DocPage({ params }: DocPageProps) {
                     <a
                       key={related.slug}
                       href={`/docs/${related.slug}`}
-                      className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                      className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors bg-white dark:bg-gray-800"
                     >
                       <Heading as="h3" size="lg" className="mb-2">
                         {related.frontMatter.title}
@@ -187,7 +187,7 @@ export default async function DocPage({ params }: DocPageProps) {
                         {related.frontMatter.tags?.slice(0, 2).map((tag) => (
                           <span 
                             key={tag}
-                            className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded"
+                            className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
                           >
                             {tag}
                           </span>
