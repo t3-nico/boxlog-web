@@ -26,8 +26,8 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
               level === 0 ? 'font-medium' : 'text-sm'
             } ${
               activeId === item.id
-                ? 'text-blue-600 bg-blue-50 border-l-2 border-blue-600'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 border-l-2 border-transparent'
+                ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border-l-2 border-blue-600 dark:border-blue-400'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 border-transparent'
             }`}
             title={item.title}
           >
@@ -193,25 +193,25 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
   if (!isLoaded || toc.length === 0) {
     return (
       <div className={`space-y-4 ${className}`}>
-        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
           On This Page
         </div>
         {!isLoaded ? (
-          <div className="text-sm text-gray-500">Loading...</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">Loading...</div>
         ) : (
-          <div className="text-sm text-gray-500">No headings found</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">No headings found</div>
         )}
         
         {/* Helpful Links */}
-        <div className="border-t border-gray-200 pt-4">
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
           <div className="space-y-3">
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Helpful Links
             </div>
             <div className="space-y-2">
               <a
                 href="#"
-                className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
+                className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
               >
                 <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -220,7 +220,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               </a>
               <a
                 href="#"
-                className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
+                className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
               >
                 <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
@@ -229,7 +229,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               </a>
               <a
                 href="#"
-                className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
+                className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
               >
                 <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8" />
@@ -245,7 +245,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
   return (
     <div className={`space-y-4 ${className}`}>
-      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+      <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
         On This Page
       </div>
       

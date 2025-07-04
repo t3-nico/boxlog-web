@@ -21,7 +21,7 @@ export function CopyCodeButton({ code }: CopyCodeButtonProps) {
 
   return (
     <button
-      className="px-2 py-1 text-xs bg-gray-700 text-gray-300 rounded hover:bg-gray-600 transition-colors"
+      className="px-2 py-1 text-xs bg-gray-700 dark:bg-gray-600 text-gray-300 dark:text-gray-200 rounded hover:bg-gray-600 dark:hover:bg-gray-500 transition-colors"
       onClick={handleCopy}
     >
       {copied ? 'Copied!' : 'Copy'}

@@ -25,14 +25,14 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
             href={item.href!}
             className={`flex items-center flex-1 px-3 py-1.5 text-sm rounded-md transition-colors ${
               isActive 
-                ? 'text-blue-600 bg-blue-50 font-medium' 
-                : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
+                ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 font-medium' 
+                : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
             }`}
             style={{ paddingLeft }}
           >
             <span className="flex-1">{item.title}</span>
             {item.badge && (
-              <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded">
+              <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
                 {item.badge}
               </span>
             )}
@@ -44,7 +44,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
           </Link>
         ) : (
           <span
-            className="flex items-center flex-1 px-3 py-1.5 text-sm text-gray-900 font-medium"
+            className="flex items-center flex-1 px-3 py-1.5 text-sm text-gray-900 dark:text-gray-100 font-medium"
             style={{ paddingLeft }}
           >
             {item.title}
@@ -82,7 +82,7 @@ export function ClientSidebar({ navigation }: ClientSidebarProps) {
       <nav className="flex-1 overflow-y-auto space-y-6">
         {navigation.map((section) => (
           <div key={section.title}>
-            <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-default">
+            <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-default">
               {section.title}
             </div>
             

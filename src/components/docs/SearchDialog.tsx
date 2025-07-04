@@ -206,20 +206,20 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
     >
       {/* オーバーレイ - ぼかし背景 */}
       <div 
-        className="absolute inset-0 bg-black/20 backdrop-blur"
+        className="absolute inset-0 bg-black/20 dark:bg-black/40 backdrop-blur"
         onClick={onClose}
         style={{ zIndex: 2147483646 }}
       />
       
       {/* ダイアログ */}
       <div 
-        className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200"
+        className="relative bg-white dark:bg-gray-900 rounded-lg shadow-2xl w-full max-w-2xl border border-gray-200 dark:border-gray-700"
         onClick={(e) => e.stopPropagation()}
         style={{ zIndex: 2147483647 }}
       >
           {/* 検索ボックス */}
-          <div className="flex items-center px-4 py-3 border-b border-gray-200">
-            <svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+            <svg className="w-5 h-5 text-gray-400 dark:text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
@@ -229,10 +229,10 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 outline-none text-lg text-gray-900 placeholder-gray-500"
+              className="flex-1 outline-none text-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-transparent"
             />
-            <div className="text-sm text-gray-400 ml-2">
-              <kbd className="px-2 py-1 bg-gray-100 rounded text-xs">ESC</kbd>
+            <div className="text-sm text-gray-400 dark:text-gray-500 ml-2">
+              <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">ESC</kbd>
             </div>
           </div>
 
@@ -244,23 +244,23 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
             {isLoading ? (
               <div className="flex items-center justify-center py-8">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                <span className="ml-2 text-gray-600">Searching...</span>
+                <span className="ml-2 text-gray-600 dark:text-gray-400">Searching...</span>
               </div>
             ) : showHistory && searchHistory.length > 0 ? (
               // 検索履歴表示
               <div className="py-2">
-                <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <div className="px-4 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                   Recent searches
                 </div>
                 {searchHistory.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => handleHistorySelect(item)}
-                    className={`w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center ${
-                      selectedIndex === index ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
+                    className={`w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center ${
+                      selectedIndex === index ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300'
                     }`}
                   >
-                    <svg className="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mr-3 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     {item}
@@ -270,15 +270,15 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
             ) : query && !isLoading && results.length === 0 ? (
               // 検索結果なし
               <div className="py-8 text-center">
-                <svg className="w-12 h-12 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 014 12H2.5A.5.5 0 012 11.5v-1A.5.5 0 012.5 10H4a7.962 7.962 0 0113.27 1.27m0 0A7.962 7.962 0 0120 12v2a.5.5 0 01-.5.5H19a7.962 7.962 0 01-2.27-1.27z" />
                 </svg>
-                <p className="text-gray-500 mb-2">No results found for "{query}"</p>
-                <p className="text-sm text-gray-400">
+                <p className="text-gray-500 dark:text-gray-400 mb-2">No results found for "{query}"</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500">
                   Try adjusting your search terms or browse the{' '}
                   <button 
                     onClick={() => router.push('/docs')}
-                    className="text-blue-600 hover:text-blue-700 underline"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline"
                   >
                     documentation
                   </button>
@@ -287,17 +287,17 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
             ) : results.length > 0 ? (
               // 検索結果表示
               <div className="py-2">
-                <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <div className="px-4 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                   {results.length} result{results.length !== 1 ? 's' : ''}
                 </div>
                 {results.map((result, index) => (
                   <button
                     key={result.id}
                     onClick={() => handleResultSelect(result)}
-                    className={`w-full px-4 py-3 text-left hover:bg-gray-50 border-l-2 transition-colors ${
+                    className={`w-full px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 transition-colors ${
                       selectedIndex === index 
-                        ? 'bg-blue-50 border-blue-500 text-blue-700' 
-                        : 'border-transparent text-gray-700'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 dark:border-blue-400 text-blue-700 dark:text-blue-300' 
+                        : 'border-transparent text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     <div className="flex items-start justify-between">
@@ -310,18 +310,18 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                         </div>
                         
                         {result.matches.description && (
-                          <div className="text-sm text-gray-600 mb-1">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
                             {renderHighlightedText(result.matches.description)}
                           </div>
                         )}
                         
                         {result.matches.content && (
-                          <div className="text-xs text-gray-500 mb-2">
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                             ...{renderHighlightedText(result.matches.content)}...
                           </div>
                         )}
                         
-                        <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
                           <span className="capitalize">{result.category.replace('-', ' ')}</span>
                           {result.tags.length > 0 && (
                             <>
@@ -333,7 +333,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                       </div>
                       
                       <div className="ml-4 flex-shrink-0">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -344,16 +344,16 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
             ) : !query && (
               // 初期状態 - 人気検索表示
               <div className="py-2">
-                <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <div className="px-4 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                   Popular searches
                 </div>
                 {getPopularSearches().map((popularSearch, index) => (
                   <button
                     key={index}
                     onClick={() => handleHistorySelect(popularSearch)}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center text-gray-700"
+                    className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center text-gray-700 dark:text-gray-300"
                   >
-                    <svg className="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mr-3 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                     {popularSearch}
@@ -364,19 +364,19 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
           </div>
 
           {/* フッター */}
-          <div className="px-4 py-3 border-t border-gray-200 text-xs text-gray-500 flex items-center justify-between">
+          <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400 flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
-                <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs mr-1">↑</kbd>
-                <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs mr-2">↓</kbd>
+                <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs mr-1">↑</kbd>
+                <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs mr-2">↓</kbd>
                 to navigate
               </div>
               <div className="flex items-center">
-                <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs mr-2">↵</kbd>
+                <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs mr-2">↵</kbd>
                 to select
               </div>
             </div>
-            <div className="text-gray-400">
+            <div className="text-gray-400 dark:text-gray-500">
               Search powered by YourSaaS
             </div>
           </div>
