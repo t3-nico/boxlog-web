@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { Container, Heading, Text, Input, Button, Badge } from '@/components/ui'
 import { Highlight } from '@/utils/highlight'
 
-// モックデータ - 実際の実装では検索APIから取得
+// Mock data - replace with actual search API in real implementation
 const MOCK_RESULTS = [
   {
     id: '1',
@@ -13,7 +13,7 @@ const MOCK_RESULTS = [
     description: 'Complete guide to YourSaaS authentication system. Learn how to implement secure user authentication, session management, and access control.',
     url: '/docs/api-reference/authentication',
     type: 'docs',
-    breadcrumbs: ['ドキュメント', 'API リファレンス', '認証'],
+    breadcrumbs: ['Documentation', 'API Reference', 'Authentication'],
     lastModified: '2024-01-25'
   },
   {
@@ -22,16 +22,16 @@ const MOCK_RESULTS = [
     description: 'Build your first YourSaaS application in just 5 minutes. This quickstart guide will have you creating users, handling authentication, and making API calls.',
     url: '/docs/guides/quick-start',
     type: 'docs',
-    breadcrumbs: ['ドキュメント', 'ガイド', 'クイックスタート'],
+    breadcrumbs: ['Documentation', 'Guides', 'Quick Start'],
     lastModified: '2024-01-28'
   },
   {
     id: '3',
-    title: 'Next.js 14でSaaSアプリケーションを構築する完全ガイド',
-    description: 'Next.js 14は、SaaSアプリケーション開発において革新的な機能を多数提供しています。実際のプロダクション環境で使用できるSaaSアプリケーションを構築する方法を解説。',
+    title: 'Complete Guide to Building SaaS Applications with Next.js 14',
+    description: 'Next.js 14 provides many innovative features for SaaS application development. Learn how to build production-ready SaaS applications.',
     url: '/blog/nextjs-saas-guide',
     type: 'blog',
-    breadcrumbs: ['ブログ', 'チュートリアル'],
+    breadcrumbs: ['Blog', 'Tutorial'],
     lastModified: '2024-01-20'
   },
   {
@@ -40,7 +40,7 @@ const MOCK_RESULTS = [
     description: 'New security enhancements including MFA support, advanced audit logging, and improved API rate limiting.',
     url: '/releases/v2.1.0',
     type: 'release',
-    breadcrumbs: ['リリース', 'v2.1.0'],
+    breadcrumbs: ['Releases', 'v2.1.0'],
     lastModified: '2024-01-15'
   }
 ]

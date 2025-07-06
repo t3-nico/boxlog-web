@@ -1,4 +1,4 @@
-// クライアントサイド用のタグユーティリティ（fsモジュールなし）
+// Client-side tag utilities (without fs module)
 
 export interface TagCount {
   tag: string
@@ -26,7 +26,7 @@ export interface UnifiedTagData {
   docs: TaggedContent[]
 }
 
-// タグの色を決定する統一関数（ブログと同じ仕組み）
+// Unified function to determine tag colors (same mechanism as blog)
 export function getTagColor(tag: string): string {
   const colors = [
     'bg-blue-100 text-blue-800 hover:bg-blue-200',

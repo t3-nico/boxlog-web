@@ -13,18 +13,18 @@ import {
 import { ReleasesClient } from '@/components/releases/ReleasesClient'
 
 export const metadata: Metadata = {
-  title: 'リリースノート | YourSaaS',
-  description: 'YourSaaSプラットフォームの最新機能、改善、バグ修正について。すべての変更は透明性を持って文書化され、お客様に迅速にお届けしています。',
-  keywords: 'リリースノート, アップデート, 新機能, バグ修正, YourSaaS',
+  title: 'Release Notes | YourSaaS',
+  description: 'Latest features, improvements, and bug fixes for the YourSaaS platform. All changes are transparently documented and delivered rapidly to our customers.',
+  keywords: 'release notes, updates, new features, bug fixes, YourSaaS',
   openGraph: {
-    title: 'リリースノート | YourSaaS',
-    description: 'YourSaaSプラットフォームの最新機能、改善、バグ修正について。',
+    title: 'Release Notes | YourSaaS',
+    description: 'Latest features, improvements, and bug fixes for the YourSaaS platform.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'リリースノート | YourSaaS',
-    description: 'YourSaaSプラットフォームの最新機能、改善、バグ修正について。',
+    title: 'Release Notes | YourSaaS',
+    description: 'Latest features, improvements, and bug fixes for the YourSaaS platform.',
   }
 }
 

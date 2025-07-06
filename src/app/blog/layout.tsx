@@ -5,19 +5,19 @@ export const metadata: Metadata = {
     template: '%s | YourSaaS Blog',
     default: 'Blog | YourSaaS Platform'
   },
-  description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の記事をお届けします。',
-  keywords: 'SaaS, ブログ, テクノロジー, 開発, ビジネス, スタートアップ',
+  description: 'Latest insights on SaaS development, technology, and business strategy to help you build better products.',
+  keywords: 'SaaS, blog, technology, development, business, startup, insights',
   authors: [{ name: 'YourSaaS Team' }],
   openGraph: {
     title: 'Blog | YourSaaS Platform',
-    description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の記事をお届けします。',
+    description: 'Latest insights on SaaS development, technology, and business strategy.',
     type: 'website',
     siteName: 'YourSaaS Platform',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Blog | YourSaaS Platform',
-    description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の記事をお届けします。',
+    description: 'Latest insights on SaaS development, technology, and business strategy.',
   },
   alternates: {
     canonical: '/blog',

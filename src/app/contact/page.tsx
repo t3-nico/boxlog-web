@@ -4,17 +4,17 @@ import { ContactForm } from '@/components/contact/ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact Us - YourSaaS Platform',
-  description: 'お問い合わせはこちらから。ご質問やご相談がございましたら、お気軽にお問い合わせください。専門スタッフが迅速にご対応いたします。',
-  keywords: 'contact, support, help, inquiry, customer service, お問い合わせ, サポート',
+  description: 'Get in touch with us. If you have any questions or need assistance, feel free to contact us. Our expert team will respond quickly.',
+  keywords: 'contact, support, help, inquiry, customer service',
   openGraph: {
     title: 'Contact Us - YourSaaS Platform',
-    description: 'お問い合わせはこちらから。専門スタッフが迅速にご対応いたします。',
+    description: 'Get in touch with us. Our expert team will respond quickly.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Contact Us - YourSaaS Platform',
-    description: 'お問い合わせはこちらから。専門スタッフが迅速にご対応いたします。',
+    description: 'Get in touch with us. Our expert team will respond quickly.',
   }
 }
 

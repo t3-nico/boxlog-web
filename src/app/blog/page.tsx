@@ -7,7 +7,7 @@ import { getAllBlogPostMetas, getAllTags, getFeaturedPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の記事をお届けします。',
+  description: 'Latest insights on SaaS development, technology, and business strategy to help you build better products.',
 }
 
 export default async function BlogPage() {
@@ -24,12 +24,12 @@ export default async function BlogPage() {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-6">
-              ブログ
+              Blog
             </Heading>
             
             <Text size="xl" variant="muted" className="mb-8 max-w-3xl mx-auto">
-              SaaS開発、テクノロジー、ビジネス戦略に関する最新の記事をお届けします。
-              私たちの経験と知識を共有し、皆様のビジネス成長をサポートします。
+              Latest insights on SaaS development, technology, and business strategy.
+              We share our experience and knowledge to support your business growth.
             </Text>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -40,10 +40,10 @@ export default async function BlogPage() {
                   </svg>
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  技術記事
+                  Technical Articles
                 </Heading>
                 <Text size="sm" variant="muted">
-                  最新の開発技術やベストプラクティス
+                  Latest development technologies and best practices
                 </Text>
               </div>
               
@@ -54,10 +54,10 @@ export default async function BlogPage() {
                   </svg>
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  ビジネス戦略
+                  Business Strategy
                 </Heading>
                 <Text size="sm" variant="muted">
-                  SaaS事業の成長戦略と運営ノウハウ
+                  SaaS business growth strategies and operational insights
                 </Text>
               </div>
               
@@ -68,10 +68,10 @@ export default async function BlogPage() {
                   </svg>
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  学習コンテンツ
+                  Learning Content
                 </Heading>
                 <Text size="sm" variant="muted">
-                  チュートリアルとハウツーガイド
+                  Tutorials and how-to guides
                 </Text>
               </div>
             </div>
@@ -91,7 +91,7 @@ export default async function BlogPage() {
                   </svg>
                 </div>
                 <Heading as="h2" size="2xl">
-                  注目記事
+                  Featured Articles
                 </Heading>
               </div>
 
@@ -119,9 +119,9 @@ export default async function BlogPage() {
               <div className="lg:col-span-2">
                 <div className="flex items-center justify-between mb-8">
                   <Heading as="h2" size="2xl">
-                    最新記事
+                    Latest Articles
                     <span className="ml-2 text-lg font-normal text-gray-500 dark:text-gray-400">
-                      ({Math.min(allPosts.length, 5)}件表示)
+                      (Showing {Math.min(allPosts.length, 5)})
                     </span>
                   </Heading>
                   
@@ -129,7 +129,7 @@ export default async function BlogPage() {
                     href="#all-posts-section"
                     className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
                   >
-                    すべて見る
+                    View All
                     <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
@@ -154,10 +154,10 @@ export default async function BlogPage() {
                       </svg>
                     </div>
                     <Heading as="h3" size="lg" className="mb-2">
-                      記事が見つかりませんでした
+                      No Articles Found
                     </Heading>
                     <Text variant="muted">
-                      現在記事を準備中です。しばらくお待ちください。
+                      We're currently preparing articles. Please check back soon.
                     </Text>
                   </div>
                 )}
@@ -166,9 +166,9 @@ export default async function BlogPage() {
                 {allPosts.length > 5 && (
                   <div id="all-posts-section" className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
                     <Heading as="h2" size="2xl" className="mb-8">
-                      全記事
+                      All Articles
                       <span className="ml-2 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        ({allPosts.length}件)
+                        ({allPosts.length} total)
                       </span>
                     </Heading>
                     
@@ -196,10 +196,10 @@ export default async function BlogPage() {
                   {/* RSS Feed */}
                   <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                     <Heading as="h3" size="md" className="mb-4">
-                      RSS フィード
+                      RSS Feed
                     </Heading>
                     <Text size="sm" variant="muted" className="mb-4">
-                      最新記事をRSSで購読できます
+                      Subscribe to our latest articles via RSS
                     </Text>
                     <a
                       href="/blog/feed.xml"
@@ -208,7 +208,7 @@ export default async function BlogPage() {
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M3.429 2.857A1.429 1.429 0 002 4.286v11.428A1.429 1.429 0 003.429 17h13.142A1.429 1.429 0 0018 15.714V4.286A1.429 1.429 0 0016.571 2.857H3.429zM4 6.857v2.286H6.286V6.857H4zm8.571 0h2.286v2.286h-2.286V6.857zM4 10.571v2.286h2.286v-2.286H4zm4.571-3.714v2.286h2.286V6.857H8.571zm4.572 3.714v2.286h2.286v-2.286h-2.286zM8.571 10.571v2.286h2.286v-2.286H8.571z" />
                       </svg>
-                      RSS フィード
+                      RSS Feed
                     </a>
                   </div>
                 </div>

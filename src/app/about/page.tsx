@@ -12,17 +12,17 @@ import {
 
 export const metadata: Metadata = {
   title: 'About Us - YourSaaS Platform',
-  description: '私たちのミッション、チーム、そして価値観について。テクノロジーの力で、すべての人がより良い未来を創造できる世界を実現します。',
+  description: 'Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.',
   keywords: 'about, company, team, mission, vision, values, SaaS platform',
   openGraph: {
     title: 'About Us - YourSaaS Platform',
-    description: '私たちのミッション、チーム、そして価値観について。',
+    description: 'Learn about our mission, team, and values.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'About Us - YourSaaS Platform',
-    description: '私たちのミッション、チーム、そして価値観について。',
+    description: 'Learn about our mission, team, and values.',
   }
 }
 
@@ -34,20 +34,20 @@ export default function AboutPage() {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-6">
-              私たちについて
+              About Us
             </Heading>
             
             <Text size="xl" variant="muted" className="mb-8 max-w-3xl mx-auto">
-              YourSaaSは、テクノロジーの力で企業の成長を支援する革新的なSaaSプラットフォームです。
-              私たちの使命は、すべての人がより良い未来を創造できる世界を実現することです。
+              YourSaaS is an innovative SaaS platform that supports corporate growth through the power of technology.
+              Our mission is to realize a world where everyone can create a better future.
             </Text>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <a href="/contact">お問い合わせ</a>
+                <a href="/contact">Contact Us</a>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <a href="#team">チームを見る</a>
+                <a href="#team">Meet the Team</a>
               </Button>
             </div>
           </div>
@@ -121,10 +121,10 @@ export default function AboutPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <Heading as="h2" size="3xl" className="mb-4">
-                私たちの価値観
+                Our Values
               </Heading>
               <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-                これらの価値観が、私たちの意思決定と行動の指針となっています
+                These values guide our decision-making and actions
               </Text>
             </div>
 
@@ -163,10 +163,10 @@ export default function AboutPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <Heading as="h2" size="3xl" className="mb-4">
-                私たちのチーム
+                Our Team
               </Heading>
               <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-                多様な背景を持つ専門家たちが、共通のビジョンに向かって協力しています
+                Experts from diverse backgrounds work together toward a common vision
               </Text>
             </div>
 
@@ -179,17 +179,17 @@ export default function AboutPage() {
             <div className="mt-16 text-center">
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 border border-blue-100 dark:border-blue-800">
                 <Heading as="h3" size="xl" className="mb-4">
-                  一緒に働きませんか？
+                  Want to Work With Us?
                 </Heading>
                 <Text size="md" variant="muted" className="mb-6 max-w-2xl mx-auto">
-                  私たちは常に優秀な人材を探しています。革新的な製品作りに興味がある方、ぜひご連絡ください。
+                  We are always looking for talented people. If you&apos;re interested in creating innovative products, please contact us.
                 </Text>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild>
-                    <a href="/careers">採用情報を見る</a>
+                    <a href="/careers">View Career Opportunities</a>
                   </Button>
                   <Button variant="outline" asChild>
-                    <a href="/contact">お問い合わせ</a>
+                    <a href="/contact">Contact Us</a>
                   </Button>
                 </div>
               </div>
@@ -203,12 +203,12 @@ export default function AboutPage() {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h2" size="3xl" className="text-white mb-6">
-              一緒に未来を創造しましょう
+              Let&apos;s Create the Future Together
             </Heading>
             
             <Text size="lg" className="text-blue-100 mb-12 max-w-2xl mx-auto">
-              私たちのプラットフォームで、あなたのビジネスの可能性を最大限に引き出してください。
-              今すぐ始めて、デジタル変革の第一歩を踏み出しましょう。
+              Unlock your business potential with our platform.
+              Start today and take the first step toward digital transformation.
             </Text>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -217,7 +217,7 @@ export default function AboutPage() {
                 className="bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-lg"
                 asChild
               >
-                <a href="/signup">無料で始める</a>
+                <a href="/signup">Start Free</a>
               </Button>
               
               <Button 
@@ -226,7 +226,7 @@ export default function AboutPage() {
                 className="border-white/30 dark:border-white/20 text-white hover:bg-white/10 dark:hover:bg-white/5 backdrop-blur"
                 asChild
               >
-                <a href="/features">機能を見る</a>
+                <a href="/features">View Features</a>
               </Button>
             </div>
           </div>

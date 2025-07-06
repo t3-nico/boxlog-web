@@ -74,7 +74,7 @@ export function Header() {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* グローバル検索ボタン */}
+            {/* Global search button */}
             <Button
               variant="outline"
               size="sm"
@@ -85,7 +85,7 @@ export function Header() {
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <span className="text-sm">検索...</span>
+              <span className="text-sm">Search...</span>
               <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-600 opacity-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
                 <span className="text-xs">⌘</span>K
               </kbd>
@@ -108,7 +108,7 @@ export function Header() {
 
           {/* Mobile actions */}
           <div className="md:hidden flex items-center gap-2">
-            {/* モバイル検索ボタン */}
+            {/* Mobile search button */}
             <Button
               variant="secondary"
               size="sm"
@@ -118,7 +118,7 @@ export function Header() {
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <span className="sr-only">検索</span>
+              <span className="sr-only">Search</span>
             </Button>
             
             <ThemeToggle />
@@ -199,7 +199,7 @@ export function Header() {
         )}
       </Container>
       
-      {/* グローバル検索ダイアログ */}
+      {/* Global search dialog */}
       <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </header>
   )

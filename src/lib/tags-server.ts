@@ -30,7 +30,7 @@ export interface UnifiedTagData {
   docs: TaggedContent[]
 }
 
-// ドキュメントのメタデータを取得
+// Get document metadata
 async function getAllDocMetas(): Promise<TaggedContent[]> {
   const docsDirectory = path.join(process.cwd(), 'content/docs')
   
@@ -89,7 +89,7 @@ async function getAllDocMetas(): Promise<TaggedContent[]> {
   return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
-// 全コンテンツタイプからタグとその使用回数を取得
+// Get tags and usage counts from all content types
 export async function getAllTags(): Promise<TagCount[]> {
   const [blogPosts, releases, docs] = await Promise.all([
     getAllBlogPostMetas(),
@@ -99,21 +99,21 @@ export async function getAllTags(): Promise<TagCount[]> {
 
   const tagCounts = new Map<string, number>()
 
-  // ブログ記事のタグを集計
+  // Aggregate blog post tags
   blogPosts.forEach(post => {
     post.frontMatter.tags.forEach(tag => {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
     })
   })
 
-  // リリースのタグを集計
+  // Aggregate release tags
   releases.forEach(release => {
     release.frontMatter.tags.forEach(tag => {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
     })
   })
 
-  // ドキュメントのタグを集計
+  // Aggregate document tags
   docs.forEach(doc => {
     doc.tags.forEach(tag => {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
@@ -125,7 +125,7 @@ export async function getAllTags(): Promise<TagCount[]> {
     .sort((a, b) => b.count - a.count)
 }
 
-// 特定のタグに関連するすべてのコンテンツを取得
+// Get all content related to a specific tag
 export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
   const [blogPosts, releases, docs] = await Promise.all([
     getAllBlogPostMetas(),
@@ -135,7 +135,7 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
 
   const normalizedTag = tag.toLowerCase()
 
-  // ブログ記事をフィルタリング
+  // Filter blog posts
   const blogContent: TaggedContent[] = blogPosts
     .filter(post => post.frontMatter.tags.some(t => t.toLowerCase() === normalizedTag))
     .map(post => ({
@@ -149,7 +149,7 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
       featured: post.frontMatter.featured,
     }))
 
-  // リリースをフィルタリング
+  // Filter releases
   const releaseContent: TaggedContent[] = releases
     .filter(release => release.frontMatter.tags.some(t => t.toLowerCase() === normalizedTag))
     .map(release => ({
@@ -164,12 +164,12 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
       breaking: release.frontMatter.breaking,
     }))
 
-  // ドキュメントをフィルタリング
+  // Filter documents
   const docContent: TaggedContent[] = docs.filter(doc => doc.tags.some(t => t.toLowerCase() === normalizedTag))
 
   const totalCount = blogContent.length + releaseContent.length + docContent.length
 
-  // 元のタグ名を取得（最初に見つかったマッチング）
+  // Get original tag name (first matching found)
   const originalTag = [...blogContent, ...releaseContent, ...docContent]
     .flatMap(content => content.tags)
     .find(t => t.toLowerCase() === normalizedTag) || tag
@@ -183,13 +183,13 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
   }
 }
 
-// よく使われるタグを取得
+// Get frequently used tags
 export async function getPopularTags(limit: number = 10): Promise<TagCount[]> {
   const allTags = await getAllTags()
   return allTags.slice(0, limit)
 }
 
-// 関連タグを取得（共通して使われているタグ）
+// Get related tags (commonly used together)
 export async function getRelatedTags(currentTag: string, limit: number = 5): Promise<string[]> {
   const contentByTag = await getContentByTag(currentTag)
   const allContent = [...contentByTag.blog, ...contentByTag.releases, ...contentByTag.docs]
@@ -211,7 +211,7 @@ export async function getRelatedTags(currentTag: string, limit: number = 5): Pro
     .map(([tag]) => tag)
 }
 
-// カテゴリ別タグ統計
+// Tag statistics by category
 export async function getTagsByCategory(): Promise<Record<string, TagCount[]>> {
   const [blogPosts, releases, docs] = await Promise.all([
     getAllBlogPostMetas(),
@@ -225,28 +225,28 @@ export async function getTagsByCategory(): Promise<Record<string, TagCount[]>> {
     docs: new Map(),
   }
 
-  // ブログタグを集計
+  // Aggregate blog tags
   blogPosts.forEach(post => {
     post.frontMatter.tags.forEach(tag => {
       categorizedTags.blog.set(tag, (categorizedTags.blog.get(tag) || 0) + 1)
     })
   })
 
-  // リリースタグを集計
+  // Aggregate release tags
   releases.forEach(release => {
     release.frontMatter.tags.forEach(tag => {
       categorizedTags.releases.set(tag, (categorizedTags.releases.get(tag) || 0) + 1)
     })
   })
 
-  // ドキュメントタグを集計
+  // Aggregate document tags
   docs.forEach(doc => {
     doc.tags.forEach(tag => {
       categorizedTags.docs.set(tag, (categorizedTags.docs.get(tag) || 0) + 1)
     })
   })
 
-  // Map を TagCount[] に変換
+  // Convert Map to TagCount[]
   const result: Record<string, TagCount[]> = {}
   
   Object.entries(categorizedTags).forEach(([category, tagMap]) => {

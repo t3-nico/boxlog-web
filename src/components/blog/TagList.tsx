@@ -45,7 +45,7 @@ export function TagList({
     return (
       <div className="text-center py-8">
         <Text variant="muted">
-          タグが見つかりませんでした
+          No tags found
         </Text>
       </div>
     )
@@ -56,9 +56,9 @@ export function TagList({
       {/* ヘッダー */}
       <div className="flex items-center justify-between">
         <Heading as="h2" size="lg">
-          タグ一覧
+          Tags
           <span className="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400">
-            ({tags.length}個)
+            ({tags.length} total)
           </span>
         </Heading>
         
@@ -67,7 +67,7 @@ export function TagList({
             href="/blog"
             className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
           >
-            すべての記事を見る
+            View all articles
           </Link>
         )}
       </div>
@@ -80,7 +80,7 @@ export function TagList({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
             </svg>
             <Text className="font-semibold text-blue-900 dark:text-blue-200">
-              現在のタグ
+              Current Tag
             </Text>
           </div>
           <div className="flex items-center gap-3">
@@ -88,7 +88,7 @@ export function TagList({
               #{currentTag}
             </span>
             <Text size="sm" className="text-blue-700 dark:text-blue-300">
-              {tags.find(t => t.tag === currentTag)?.count || 0}件の記事
+              {tags.find(t => t.tag === currentTag)?.count || 0} articles
             </Text>
           </div>
         </div>
@@ -135,14 +135,14 @@ export function TagList({
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
                 </svg>
-                少なく表示
+                Show less
               </>
             ) : (
               <>
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-                さらに表示 (+{tags.length - maxDisplay})
+                Show more (+{tags.length - maxDisplay})
               </>
             )}
           </button>
