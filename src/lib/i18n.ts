@@ -1,8 +1,8 @@
 /**
- * Internationalization configuration and utilities
+ * Simplified configuration for English-only site
  */
 
-export type Locale = 'en' | 'ja'
+export type Locale = 'en'
 
 export interface LocaleConfig {
   code: Locale
@@ -21,25 +21,17 @@ export const locales: LocaleConfig[] = [
     direction: 'ltr',
     country: 'US',
     region: 'Americas'
-  },
-  {
-    code: 'ja',
-    name: 'Japanese',
-    nativeName: '日本語',
-    direction: 'ltr',
-    country: 'JP',
-    region: 'Asia'
   }
 ]
 
 export const defaultLocale: Locale = 'en'
 
-export function getLocaleConfig(locale: Locale): LocaleConfig {
-  return locales.find(l => l.code === locale) || locales[0]
+export function getLocaleConfig(locale: Locale = 'en'): LocaleConfig {
+  return locales[0]
 }
 
 export function isValidLocale(locale: string): locale is Locale {
-  return locales.some(l => l.code === locale)
+  return locale === 'en'
 }
 
 /**
@@ -241,109 +233,10 @@ export const en: Dictionary = {
 }
 
 /**
- * Japanese translations
+ * Dictionary lookup for English-only site
  */
-export const ja: Dictionary = {
-  common: {
-    home: 'ホーム',
-    about: '会社概要',
-    features: '機能',
-    pricing: '料金',
-    blog: 'ブログ',
-    docs: 'ドキュメント',
-    contact: 'お問い合わせ',
-    releases: 'リリースノート',
-    search: '検索',
-    login: 'ログイン',
-    signup: '新規登録',
-    getStarted: '今すぐ始める',
-    learnMore: '詳細を見る',
-    readMore: '続きを読む',
-    viewAll: 'すべて見る',
-    loading: '読み込み中...',
-    error: 'エラー',
-    notFound: '見つかりません',
-    backToHome: 'ホームに戻る',
-    language: '言語',
-    theme: 'テーマ',
-    menu: 'メニュー',
-    close: '閉じる'
-  },
-  metadata: {
-    siteName: 'YourSaaS',
-    siteDescription: 'Next.jsとTailwind CSSで構築されたモダンなSaaSプラットフォーム',
-    keywords: ['SaaS', 'プラットフォーム', 'ビジネス', '生産性', '自動化']
-  },
-  navigation: {
-    main: 'メインナビゲーション',
-    footer: 'フッターナビゲーション',
-    breadcrumbs: 'パンくずナビゲーション',
-    pagination: 'ページネーション'
-  },
-  pages: {
-    home: {
-      title: 'スケーラブルなアプリケーションのための現代的SaaSプラットフォーム',
-      subtitle: 'YourSaaSでSaaSアプリケーションを構築、デプロイ、スケールしましょう。',
-      cta: '今すぐ始める'
-    },
-    features: {
-      title: 'モダンSaaSのための強力な機能',
-      subtitle: 'SaaSアプリケーションの構築とスケールに必要なすべて'
-    },
-    pricing: {
-      title: 'シンプルで透明な料金体系',
-      subtitle: 'あなのニーズに合ったプランを選択してください'
-    },
-    blog: {
-      title: 'SaaS開発とテクノロジーの洞察',
-      subtitle: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新記事',
-      readTime: '分で読める',
-      publishedOn: '公開日',
-      updatedOn: '更新日'
-    },
-    docs: {
-      title: 'ドキュメント',
-      subtitle: 'YourSaaSで素晴らしい製品を構築するために必要なすべて',
-      searchPlaceholder: 'ドキュメントを検索...'
-    },
-    contact: {
-      title: 'お問い合わせ',
-      subtitle: 'ご質問がございましたら、お気軽にお問い合わせください。'
-    },
-    privacy: {
-      title: 'プライバシーポリシー',
-      subtitle: '私たちがどのように情報を収集、使用、保護するか',
-      lastUpdated: '最終更新日'
-    },
-    notFound: {
-      title: 'ページが見つかりません',
-      subtitle: '404エラー',
-      description: 'お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。'
-    }
-  },
-  forms: {
-    name: '名前',
-    email: 'メールアドレス',
-    message: 'メッセージ',
-    submit: '送信',
-    sending: '送信中...',
-    sent: 'メッセージが正常に送信されました！',
-    required: 'この項目は必須です',
-    invalid: '有効な値を入力してください'
-  },
-  footer: {
-    copyright: 'All rights reserved.',
-    privacyPolicy: 'プライバシーポリシー',
-    termsOfService: '利用規約',
-    cookiePolicy: 'Cookieポリシー'
-  }
-}
+export const dictionaries = { en }
 
-/**
- * Dictionary lookup
- */
-export const dictionaries = { en, ja }
-
-export function getDictionary(locale: Locale): Dictionary {
-  return dictionaries[locale] || dictionaries[defaultLocale]
+export function getDictionary(locale: Locale = 'en'): Dictionary {
+  return dictionaries.en
 }

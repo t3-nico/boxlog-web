@@ -253,16 +253,16 @@ export const mdxComponents: MDXComponents = {
   ),
 
   // 画像
-  img: ({ src, alt, ...props }) => (
+  img: ({ src, alt, title, ...props }) => (
     <div className="relative my-6 rounded-lg overflow-hidden">
       <Image
-        src={src}
+        src={src || '/placeholder.png'}
         alt={alt || ''}
         width={800}
         height={600}
         className="rounded-lg max-w-full h-auto"
         style={{ width: 'auto', height: 'auto' }}
-        {...props}
+        title={title}
       />
     </div>
   ),

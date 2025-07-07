@@ -175,8 +175,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound()
   }
 
-  // Debug: Check if content is loaded correctly
-  console.log('Post content:', post.content)
 
   const relatedPosts = await getRelatedPosts(params.slug, 3)
 

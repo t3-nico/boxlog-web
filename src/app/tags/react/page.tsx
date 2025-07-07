@@ -6,27 +6,18 @@ import { UnifiedTagContent } from '@/components/tags/UnifiedTagContent'
 import { RelatedTags } from '@/components/tags/RelatedTags'
 
 export const metadata: Metadata = {
-  title: 'React タグの記事 | YourSaaS',
-  description: 'React に関連するブログ記事、リリースノート、ドキュメントの一覧です。'
+  title: 'React Articles | YourSaaS',
+  description: 'A list of blog posts, release notes, and documentation related to React.'
 }
 
 export default async function ReactTagPage() {
   const tag = 'React'
-  
-  console.log('Static React page - Fetching content for tag:', tag)
   
   const [tagData, relatedTags] = await Promise.all([
     getContentByTag(tag),
     getRelatedTags(tag)
   ])
 
-  console.log('Static React page - Tag data:', {
-    tag: tagData.tag,
-    totalCount: tagData.totalCount,
-    blogCount: tagData.blog.length,
-    releasesCount: tagData.releases.length,
-    docsCount: tagData.docs.length
-  })
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -35,11 +26,11 @@ export default async function ReactTagPage() {
         <Container>
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumb */}
-            <nav className="mb-8" aria-label="パンくず">
+            <nav className="mb-8" aria-label="Breadcrumb">
               <ol className="flex items-center space-x-2 text-sm text-gray-500">
                 <li>
                   <a href="/" className="hover:text-gray-700 transition-colors">
-                    ホーム
+                    Home
                   </a>
                 </li>
                 <li>
@@ -49,7 +40,7 @@ export default async function ReactTagPage() {
                 </li>
                 <li>
                   <a href="/tags" className="hover:text-gray-700 transition-colors">
-                    タグ一覧
+                    Tags
                   </a>
                 </li>
                 <li>
@@ -77,7 +68,7 @@ export default async function ReactTagPage() {
               </Heading>
               
               <Text size="lg" variant="muted" className="mb-8">
-                {tagData.totalCount}件のコンテンツが見つかりました
+                {tagData.totalCount} content items found
               </Text>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -85,21 +76,21 @@ export default async function ReactTagPage() {
                   <div className="text-2xl font-bold text-blue-600 mb-2">
                     {tagData.blog.length}
                   </div>
-                  <Text size="sm" className="font-medium">ブログ記事</Text>
+                  <Text size="sm" className="font-medium">Blog Posts</Text>
                 </div>
                 
                 <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/50 shadow-sm">
                   <div className="text-2xl font-bold text-green-600 mb-2">
                     {tagData.releases.length}
                   </div>
-                  <Text size="sm" className="font-medium">リリースノート</Text>
+                  <Text size="sm" className="font-medium">Release Notes</Text>
                 </div>
                 
                 <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/50 shadow-sm">
                   <div className="text-2xl font-bold text-purple-600 mb-2">
                     {tagData.docs.length}
                   </div>
-                  <Text size="sm" className="font-medium">ドキュメント</Text>
+                  <Text size="sm" className="font-medium">Documentation</Text>
                 </div>
               </div>
             </div>

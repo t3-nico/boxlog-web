@@ -37,7 +37,7 @@ export interface BlogPostMeta {
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
 
-// 読了時間計算（平均200文字/分）
+// Calculate reading time (average 200 characters/minute)
 export function calculateReadingTime(content: string): number {
   const wordsPerMinute = 200
   const wordCount = content.length
@@ -45,18 +45,18 @@ export function calculateReadingTime(content: string): number {
   return Math.max(1, minutes)
 }
 
-// 記事の抜粋を生成
+// Generate article excerpt
 export function generateExcerpt(content: string, maxLength: number = 160): string {
-  // Markdown記法とHTMLタグを除去
+  // Remove Markdown syntax and HTML tags
   const cleanContent = content
-    .replace(/#{1,6}\s+/g, '') // ヘッダー
+    .replace(/#{1,6}\s+/g, '') // Headers
     .replace(/\*\*(.+?)\*\*/g, '$1') // Bold
     .replace(/\*(.+?)\*/g, '$1') // Italic
     .replace(/`(.+?)`/g, '$1') // Code
     .replace(/\[(.+?)\]\(.+?\)/g, '$1') // Links
     .replace(/!\[.*?\]\(.+?\)/g, '') // Images
     .replace(/```[\s\S]*?```/g, '') // Code blocks
-    .replace(/\n+/g, ' ') // 改行
+    .replace(/\n+/g, ' ') // Line breaks
     .trim()
 
   if (cleanContent.length <= maxLength) {
@@ -66,7 +66,7 @@ export function generateExcerpt(content: string, maxLength: number = 160): strin
   return cleanContent.slice(0, maxLength).trim() + '...'
 }
 
-// 全ブログ記事のメタデータを取得
+// Get all blog post metadata
 export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
   if (!fs.existsSync(BLOG_DIR)) {
     return []
@@ -98,13 +98,13 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
       })
   )
 
-  // 下書きを除外し、公開日で降順ソート
+  // Exclude drafts and sort by publish date (descending)
   return posts
     .filter(post => !post.frontMatter.draft)
     .sort((a, b) => new Date(b.frontMatter.publishedAt).getTime() - new Date(a.frontMatter.publishedAt).getTime())
 }
 
-// 個別記事を取得
+// Get individual article
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
     const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
@@ -118,7 +118,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     
     const frontMatter = data as BlogPostFrontMatter
     
-    // 下書きの場合はnullを返す
+    // Return null for drafts
     if (frontMatter.draft) {
       return null
     }
@@ -142,7 +142,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   }
 }
 
-// タグ別記事取得
+// Get articles by tag
 export async function getBlogPostsByTag(tag: string): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   return allPosts.filter(post => 
@@ -152,7 +152,7 @@ export async function getBlogPostsByTag(tag: string): Promise<BlogPostMeta[]> {
   )
 }
 
-// カテゴリ別記事取得
+// Get articles by category
 export async function getBlogPostsByCategory(category: string): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   return allPosts.filter(post => 
@@ -160,7 +160,7 @@ export async function getBlogPostsByCategory(category: string): Promise<BlogPost
   )
 }
 
-// 関連記事取得
+// Get related articles
 export async function getRelatedPosts(currentSlug: string, maxPosts: number = 3): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   const currentPost = allPosts.find(post => post.slug === currentSlug)
@@ -172,18 +172,18 @@ export async function getRelatedPosts(currentSlug: string, maxPosts: number = 3)
   const currentTags = currentPost.frontMatter.tags
   const currentCategory = currentPost.frontMatter.category
 
-  // 他の記事を関連度順でソート
+  // Sort other articles by relevance
   const relatedPosts = allPosts
     .filter(post => post.slug !== currentSlug)
     .map(post => {
       let score = 0
       
-      // 同じカテゴリの場合は高スコア
+      // Higher score for same category
       if (post.frontMatter.category === currentCategory) {
         score += 10
       }
       
-      // 共通タグの数でスコア追加
+      // Add score based on common tags
       const commonTags = post.frontMatter.tags.filter(tag => 
         currentTags.includes(tag)
       ).length
@@ -198,7 +198,7 @@ export async function getRelatedPosts(currentSlug: string, maxPosts: number = 3)
   return relatedPosts.map(({ score, ...post }) => post)
 }
 
-// 全タグを取得
+// Get all tags
 export async function getAllTags(): Promise<{ tag: string; count: number }[]> {
   const allPosts = await getAllBlogPostMetas()
   const tagCounts: Record<string, number> = {}
@@ -214,7 +214,7 @@ export async function getAllTags(): Promise<{ tag: string; count: number }[]> {
     .sort((a, b) => b.count - a.count)
 }
 
-// 全カテゴリを取得
+// Get all categories
 export async function getAllCategories(): Promise<{ category: string; count: number }[]> {
   const allPosts = await getAllBlogPostMetas()
   const categoryCounts: Record<string, number> = {}
@@ -229,7 +229,7 @@ export async function getAllCategories(): Promise<{ category: string; count: num
     .sort((a, b) => b.count - a.count)
 }
 
-// 記事検索
+// Search articles
 export async function searchBlogPosts(query: string): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   const searchTerm = query.toLowerCase()
@@ -247,13 +247,13 @@ export async function searchBlogPosts(query: string): Promise<BlogPostMeta[]> {
   })
 }
 
-// 注目記事を取得
+// Get featured articles
 export async function getFeaturedPosts(): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   return allPosts.filter(post => post.frontMatter.featured)
 }
 
-// 最新記事を取得
+// Get latest articles
 export async function getRecentPosts(limit: number = 5): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   return allPosts.slice(0, limit)

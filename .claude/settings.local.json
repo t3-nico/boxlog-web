@@ -19,7 +19,11 @@
       "Bash(find:*)",
       "mcp__ide__getDiagnostics",
       "Bash(rg:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(mv:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm audit fix:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [
       "Bash(rm -rf:*)",

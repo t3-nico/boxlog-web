@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-// ドキュメントのメタデータを取得
+// Get document metadata
 async function getAllDocMetas() {
   const docsDirectory = path.join(process.cwd(), 'content/docs')
   
@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
     const searchTerm = query.toLowerCase()
     const results = []
 
-    // ブログ記事を検索
+    // Search blog posts
     for (const post of blogPosts) {
       const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
       const descriptionMatch = post.frontMatter.description?.toLowerCase().includes(searchTerm) || false
@@ -94,14 +94,14 @@ export async function GET(request: NextRequest) {
           description: post.frontMatter.description || '',
           url: `/blog/${post.slug}`,
           type: 'blog',
-          breadcrumbs: ['ブログ', post.frontMatter.category || 'カテゴリなし'],
+          breadcrumbs: ['Blog', post.frontMatter.category || 'Uncategorized'],
           lastModified: post.frontMatter.publishedAt,
           tags: post.frontMatter.tags || []
         })
       }
     }
 
-    // リリースを検索
+    // Search releases
     for (const release of releases) {
       const titleMatch = release.frontMatter.title.toLowerCase().includes(searchTerm)
       const descriptionMatch = release.frontMatter.description?.toLowerCase().includes(searchTerm) || false
@@ -114,14 +114,14 @@ export async function GET(request: NextRequest) {
           description: release.frontMatter.description || '',
           url: `/releases/${release.frontMatter.version || release.slug}`,
           type: 'release',
-          breadcrumbs: ['リリース', release.frontMatter.version || release.slug],
+          breadcrumbs: ['Releases', release.frontMatter.version || release.slug],
           lastModified: release.frontMatter.date,
           tags: release.frontMatter.tags || []
         })
       }
     }
 
-    // ドキュメントを検索
+    // Search documents
     for (const doc of docs) {
       const titleMatch = doc.title.toLowerCase().includes(searchTerm)
       const descriptionMatch = doc.description?.toLowerCase().includes(searchTerm) || false
@@ -134,14 +134,14 @@ export async function GET(request: NextRequest) {
           description: doc.description || '',
           url: `/docs/${doc.slug}`,
           type: 'docs',
-          breadcrumbs: ['ドキュメント', doc.category || 'カテゴリなし'],
+          breadcrumbs: ['Documentation', doc.category || 'Uncategorized'],
           lastModified: doc.date,
           tags: doc.tags || []
         })
       }
     }
 
-    // 関連度でソート (タイトルマッチを優先)
+    // Sort by relevance (prioritize title matches)
     results.sort((a, b) => {
       const aTitleMatch = a.title.toLowerCase().includes(searchTerm)
       const bTitleMatch = b.title.toLowerCase().includes(searchTerm)

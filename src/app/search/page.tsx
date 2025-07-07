@@ -127,7 +127,7 @@ function SearchResults() {
         {/* 検索ヘッダー */}
         <div className="mb-8">
           <Heading as="h1" size="3xl" className="mb-6">
-            検索結果
+            Search Results
           </Heading>
           
           {/* 検索ボックス */}
@@ -138,7 +138,7 @@ function SearchResults() {
               </svg>
               <Input
                 type="text"
-                placeholder="検索キーワードを入力..."
+                placeholder="Enter search keywords..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch(query)}
@@ -149,7 +149,7 @@ function SearchResults() {
               onClick={() => handleSearch(query)}
               className="px-6 py-3"
             >
-              検索
+              Search
             </Button>
           </div>
 

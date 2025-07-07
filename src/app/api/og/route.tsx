@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const author = searchParams.get('author')
     const date = searchParams.get('date')
 
-    // ブランドカラー
+    // Brand colors
     const brandColors = {
       primary: '#2563eb', // blue-600
       secondary: '#7c3aed', // violet-600
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       gradient: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)'
     }
 
-    // タイプ別の設定
+    // Type-specific configurations
     const typeConfig = {
       blog: {
         icon: '📝',
@@ -187,7 +187,7 @@ export async function GET(request: NextRequest) {
                   fontWeight: '500',
                 }}
               >
-                {new Date(date).toLocaleDateString('ja-JP', {
+                {new Date(date).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'

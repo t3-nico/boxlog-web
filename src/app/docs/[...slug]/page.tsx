@@ -21,7 +21,7 @@ interface DocPageProps {
   params: PageParams
 }
 
-// 静的パラメータ生成（SEO最適化）
+// Generate static parameters (SEO optimization)
 export async function generateStaticParams(): Promise<PageParams[]> {
   try {
     const allContent = await getAllContent()
@@ -35,7 +35,7 @@ export async function generateStaticParams(): Promise<PageParams[]> {
   }
 }
 
-// メタデータ生成
+// Generate metadata
 export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
   try {
     const slug = params.slug.join('/')
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
   }
 }
 
-// 前後ページを取得
+// Get adjacent pages
 async function getAdjacentPages(slug: string): Promise<{
   previousPage?: ContentData
   nextPage?: ContentData
@@ -105,7 +105,7 @@ async function getAdjacentPages(slug: string): Promise<{
   }
 }
 
-// メインページコンポーネント
+// Main page component
 export default async function DocPage({ params }: DocPageProps) {
   try {
     const slug = params.slug.join('/')
@@ -113,35 +113,34 @@ export default async function DocPage({ params }: DocPageProps) {
     const contentSlug = params.slug.slice(1).join('/')
     
     
-    // MDXコンテンツを取得
+    // Get MDX content
     let content;
     
-    // まず完全なslugで試す
+    // First try with complete slug
     content = await getMDXContentForRSC(slug)
     
-    // 見つからない場合、他のパターンを試す
+    // If not found, try other patterns
     if (!content && contentSlug) {
-      // カテゴリ/ファイル形式
+      // Category/file format
       content = await getMDXContentForRSC(`${category}/${contentSlug}`)
     }
     
     if (!content && !contentSlug) {
-      // 単一ファイル形式
+      // Single file format
       content = await getMDXContentForRSC(category)
     }
     
     
     if (!content) {
-      console.log('Content not found, calling notFound()')
       notFound()
     }
 
     const { content: mdxContent, frontMatter } = content
     
-    // 前後ページを取得
+    // Get adjacent pages
     const { previousPage, nextPage } = await getAdjacentPages(slug)
     
-    // 関連コンテンツを取得
+    // Get related content
     const relatedContent = await getRelatedContent(
       frontMatter.category, 
       slug, 
@@ -153,10 +152,10 @@ export default async function DocPage({ params }: DocPageProps) {
         {/* Main Content */}
         <div className="flex-1 min-w-0">
           <div className="max-w-4xl">
-            {/* パンくずナビゲーション */}
+            {/* Breadcrumb navigation */}
             <Breadcrumbs slug={slug} title={frontMatter.title} />
             
-            {/* MDXコンテンツ */}
+            {/* MDX content */}
             <article className="prose prose-gray dark:prose-invert max-w-none">
               <MDXRemote 
                 source={mdxContent} 
@@ -164,7 +163,7 @@ export default async function DocPage({ params }: DocPageProps) {
               />
             </article>
 
-            {/* 関連コンテンツ */}
+            {/* Related content */}
             {relatedContent.length > 0 && (
               <aside className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <Heading as="h2" size="xl" className="mb-6">
@@ -199,7 +198,7 @@ export default async function DocPage({ params }: DocPageProps) {
               </aside>
             )}
 
-            {/* 前後ページナビゲーション */}
+            {/* Previous/next page navigation */}
             <PageNavigation 
               previousPage={previousPage}
               nextPage={nextPage}
@@ -218,7 +217,7 @@ export default async function DocPage({ params }: DocPageProps) {
   } catch (error) {
     console.error('Error rendering doc page:', error)
     
-    // エラーページ
+    // Error page
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
