@@ -105,7 +105,12 @@ class ConsoleLogger implements ErrorLogger {
     if (error instanceof AppError) {
       const emoji = this.getSeverityEmoji(error.severity)
       console.group(`${emoji} ${error.category.toUpperCase()} Error [${error.code}]`)
-      if (error.stack) console.groupEnd()
+      console.error('Message:', error.message)
+      console.error('Context:', error.context)
+      if (error.stack) {
+        console.error('Stack:', error.stack)
+      }
+      console.groupEnd()
     } else {
       console.error('Error:', error.message)
       if (error.stack) {

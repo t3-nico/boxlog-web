@@ -50,7 +50,8 @@ export function PerformanceOptimizer() {
           await navigator.serviceWorker.register('/sw.js')
           PerformanceMonitor.mark('service-worker-registered')
         } catch (error) {
-          }
+          console.error('Failed to register service worker:', error)
+        }
       }
     }
 
@@ -103,7 +104,8 @@ export function PerformanceOptimizer() {
           })
         }
       } catch (error) {
-        }
+        console.error('Failed to monitor performance:', error)
+      }
     }
 
     // Initialize optimizations

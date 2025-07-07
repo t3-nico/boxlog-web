@@ -37,7 +37,8 @@ class SearchHistory {
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(newHistory))
     } catch (error) {
-      }
+      console.error('Failed to save search history:', error)
+    }
   }
   
   static get(): string[] {
