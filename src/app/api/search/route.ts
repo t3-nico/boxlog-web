@@ -56,8 +56,7 @@ async function getAllDocMetas() {
         featured: frontMatter.featured || false,
       })
     } catch (error) {
-      console.warn(`Error processing doc file ${filePath}:`, error)
-    }
+      }
   }
 
   return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -154,7 +153,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ results: results.slice(0, 50) })
   } catch (error) {
-    console.error('Search API error:', error)
     return NextResponse.json({ error: 'Search failed' }, { status: 500 })
   }
 }

@@ -172,7 +172,6 @@ export async function getRelease(version: string): Promise<ReleasePost | null> {
       readingTime
     }
   } catch (error) {
-    console.error('Error reading release:', error)
     return null
   }
 }

@@ -166,18 +166,10 @@ export function ColorContrastProvider({ children, autoCheck = true }: ColorContr
           if (issues.length > 0) {
             console.group('🎨 Color Contrast Issues Found')
             issues.forEach((issue, index) => {
-              console.warn(`Issue ${index + 1}:`, {
-                ratio: issue.ratio,
-                level: issue.level,
-                foreground: issue.foreground,
-                background: issue.background,
-                recommendation: `Minimum ratio needed: ${issue.ratio < 3 ? '3:1' : '4.5:1'}`
               })
-            })
             console.groupEnd()
           } else {
-            console.log('✅ No color contrast issues found')
-          }
+            }
         })
       }, 2000)
 

@@ -65,8 +65,7 @@ export function useDeferredScript(src: string, priority: 'high' | 'low' | 'idle'
       script.onload = () => {
         setLoaded(true)
         monitor.measureFunction('deferred-script-load', () => {
-          console.log(`Script loaded: ${src}`)
-        })
+          })
       }
       
       document.head.appendChild(script)
@@ -105,8 +104,7 @@ export function useDeferredStyle(href: string, priority: 'high' | 'low' | 'idle'
         link.media = 'all'
         setLoaded(true)
         monitor.measureFunction('deferred-style-load', () => {
-          console.log(`Style loaded: ${href}`)
-        })
+          })
       }
       
       document.head.appendChild(link)

@@ -142,7 +142,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...tagPages,
     ]
   } catch (error) {
-    console.error('Error generating sitemap:', error)
     return staticPages
   }
 }

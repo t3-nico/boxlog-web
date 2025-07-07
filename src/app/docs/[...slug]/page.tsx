@@ -30,7 +30,6 @@ export async function generateStaticParams(): Promise<PageParams[]> {
       slug: content.slug.split('/')
     }))
   } catch (error) {
-    console.error('Error generating static params:', error)
     return []
   }
 }
@@ -74,7 +73,6 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
       }
     }
   } catch (error) {
-    console.error('Error generating metadata:', error)
     return {
       title: 'Documentation - YourSaaS',
       description: 'YourSaaS documentation and guides'
@@ -100,7 +98,6 @@ async function getAdjacentPages(slug: string): Promise<{
       nextPage: currentIndex < allContent.length - 1 ? allContent[currentIndex + 1] : undefined
     }
   } catch (error) {
-    console.error('Error getting adjacent pages:', error)
     return {}
   }
 }
@@ -215,8 +212,6 @@ export default async function DocPage({ params }: DocPageProps) {
       </div>
     )
   } catch (error) {
-    console.error('Error rendering doc page:', error)
-    
     // Error page
     return (
       <div className="min-h-screen flex items-center justify-center">

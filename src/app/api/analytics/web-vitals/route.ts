@@ -16,14 +16,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Log the web vital metric
-    console.log('[Web Vitals]', {
-      name: data.name,
-      value: data.value,
-      rating: data.rating,
-      url: data.url,
-      timestamp: data.timestamp,
-    })
-
     // In a real application, you would:
     // 1. Store in a database
     // 2. Send to analytics service (e.g., Google Analytics, DataDog)
@@ -37,7 +29,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Error processing web vitals:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

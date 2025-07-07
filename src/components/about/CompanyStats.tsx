@@ -54,7 +54,7 @@ function AnimatedCounter({
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
       
-      // イージング関数を適用
+      // Apply easing function
       const easeOutQuart = 1 - Math.pow(1 - progress, 4)
       const value = Math.floor(easeOutQuart * endValue)
       
@@ -81,10 +81,10 @@ export function CompanyStats({ stats }: CompanyStatsProps) {
       <Container>
         <div className="text-center mb-16">
           <Heading as="h2" size="3xl" className="mb-4">
-            数字で見る私たちの成長
+Our Growth in Numbers
           </Heading>
           <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-            多くのお客様に信頼いただき、共に成長を続けています
+We are trusted by many customers and continue to grow together
           </Text>
         </div>
 
@@ -144,7 +144,7 @@ export function CompanyStats({ stats }: CompanyStatsProps) {
         <div className="mt-16 pt-12 border-t border-white/30 dark:border-gray-700/30">
           <div className="text-center">
             <Text size="sm" variant="muted" className="mb-6">
-              信頼いただいている企業様
+Trusted Partners
             </Text>
             
             <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">

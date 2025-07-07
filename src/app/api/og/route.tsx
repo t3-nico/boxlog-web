@@ -234,7 +234,6 @@ export async function GET(request: NextRequest) {
       }
     )
   } catch (error) {
-    console.error('Error generating OG image:', error)
     return new Response('Failed to generate image', { status: 500 })
   }
 }

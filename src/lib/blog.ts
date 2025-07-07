@@ -137,7 +137,6 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
       readingTime
     }
   } catch (error) {
-    console.error(`Error loading blog post ${slug}:`, error)
     return null
   }
 }

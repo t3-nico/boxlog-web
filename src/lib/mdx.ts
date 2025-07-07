@@ -72,7 +72,6 @@ export async function getMDXContent(filePath: string): Promise<ContentData | nul
       path: filePath,
     }
   } catch (error) {
-    console.error(`Error reading MDX file ${filePath}:`, error)
     return null
   }
 }

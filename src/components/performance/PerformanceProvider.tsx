@@ -24,13 +24,11 @@ const createSimpleMonitor = () => ({
         fn()
       } finally {
         const end = performance.now()
-        console.log(`Performance: ${name} took ${end - start}ms`)
-      }
+        }
     }
   },
   recordMetric: (name: string, value: number) => {
-    console.log(`Metric: ${name} = ${value}`)
-  }
+    }
 })
 
 export function PerformanceProvider({ children }: PerformanceProviderProps) {
@@ -39,8 +37,7 @@ export function PerformanceProvider({ children }: PerformanceProviderProps) {
     if (typeof window !== 'undefined') {
       import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
         const reportWebVitals = (metric: any) => {
-          console.log('Web Vital:', metric.name, metric.value)
-        }
+          }
         
         onCLS(reportWebVitals)
         onFCP(reportWebVitals)

@@ -37,8 +37,7 @@ class SearchHistory {
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(newHistory))
     } catch (error) {
-      console.warn('Failed to save search history:', error)
-    }
+      }
   }
   
   static get(): string[] {
@@ -48,7 +47,6 @@ class SearchHistory {
       const stored = localStorage.getItem(this.storageKey)
       return stored ? JSON.parse(stored) : []
     } catch (error) {
-      console.warn('Failed to load search history:', error)
       return []
     }
   }
@@ -127,7 +125,6 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
       setResults(data.results || [])
       setSelectedIndex(0)
     } catch (error) {
-      console.error('Search error:', error)
       setResults([])
     } finally {
       setIsLoading(false)

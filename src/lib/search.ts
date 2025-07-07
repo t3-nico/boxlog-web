@@ -44,7 +44,6 @@ export async function generateSearchIndex(): Promise<SearchIndexItem[]> {
     searchIndex = index
     return index
   } catch (error) {
-    console.error('Failed to generate search index:', error)
     return []
   }
 }
@@ -256,8 +255,7 @@ export class SearchHistory {
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(newHistory))
     } catch (error) {
-      console.warn('Failed to save search history:', error)
-    }
+      }
   }
   
   static get(): string[] {
@@ -265,7 +263,6 @@ export class SearchHistory {
       const stored = localStorage.getItem(this.storageKey)
       return stored ? JSON.parse(stored) : []
     } catch (error) {
-      console.warn('Failed to load search history:', error)
       return []
     }
   }
@@ -274,7 +271,6 @@ export class SearchHistory {
     try {
       localStorage.removeItem(this.storageKey)
     } catch (error) {
-      console.warn('Failed to clear search history:', error)
-    }
+      }
   }
 }

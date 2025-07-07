@@ -57,7 +57,6 @@ export function OptimizedImage({
     if (decorative) return ''
     
     if (!alt || alt.trim() === '') {
-      console.warn('Missing alt text for image:', src)
       return context === 'avatar' ? 'User avatar' : 
              context === 'logo' ? 'Company logo' : 
              context === 'product' ? 'Product image' : 

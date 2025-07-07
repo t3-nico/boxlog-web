@@ -61,7 +61,6 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
       setToc(tocItems)
       setIsLoaded(true)
     } catch (error) {
-      console.error('Failed to generate table of contents:', error)
       setIsLoaded(true)
     }
   }, [content])

@@ -12,8 +12,6 @@ export function ServiceWorkerRegistration() {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {
-          console.log('Service Worker registered:', registration)
-          
           // Check for updates
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing
@@ -30,8 +28,7 @@ export function ServiceWorkerRegistration() {
           })
         })
         .catch((error) => {
-          console.error('Service Worker registration failed:', error)
-        })
+          })
 
       // Listen for messages from the service worker
       navigator.serviceWorker.addEventListener('message', (event) => {

@@ -60,8 +60,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         }))
         setPopularTags(topTags)
       } catch (error) {
-        console.error('Failed to fetch popular tags:', error)
-      }
+        }
     }
     
     fetchPopularTags()
@@ -77,7 +76,6 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             setPreviewResults((data.results || []).slice(0, 3))
           })
           .catch(error => {
-            console.error('Preview search error:', error)
             setPreviewResults([])
           })
       }, 300) // 300ms debounce

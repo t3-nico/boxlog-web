@@ -67,7 +67,6 @@ function SearchResults() {
           setIsLoading(false)
         })
         .catch(error => {
-          console.error('Search error:', error)
           setResults([])
           setIsLoading(false)
         })

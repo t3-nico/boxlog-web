@@ -68,7 +68,6 @@ function getFileInfo(filePath: string, relativePath: string): FileInfo | null {
       badge: frontMatter.badge
     }
   } catch (error) {
-    console.warn(`Failed to parse file: ${filePath}`, error)
     return null
   }
 }
@@ -98,8 +97,7 @@ function scanDirectory(dirPath: string, basePath: string = ''): FileInfo[] {
       }
     }
   } catch (error) {
-    console.warn(`Failed to scan directory: ${dirPath}`, error)
-  }
+    }
   
   return files
 }
@@ -127,7 +125,6 @@ function getCategoryDisplayName(category: string): string {
  */
 export function generateDocsNavigation(): NavigationSection[] {
   if (!fs.existsSync(CONTENT_PATH)) {
-    console.warn('Content directory not found:', CONTENT_PATH)
     return []
   }
   
