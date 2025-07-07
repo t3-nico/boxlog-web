@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, createContext, useContext, ReactNode, useRef, useState } from 'react'
+import { useEffect, createContext, useContext, ReactNode, useRef, useState, useCallback } from 'react'
 
 interface KeyboardNavigationContextType {
   registerNavigationGroup: (id: string, options: NavigationGroupOptions) => void
@@ -98,7 +98,7 @@ export function KeyboardNavigationProvider({ children }: KeyboardNavigationProvi
     }
   }
 
-  const handleNavigation = (direction: 'next' | 'previous' | 'first' | 'last', orientation: 'horizontal' | 'vertical' | 'both' = 'both') => {
+  const handleNavigation = useCallback((direction: 'next' | 'previous' | 'first' | 'last', orientation: 'horizontal' | 'vertical' | 'both' = 'both') => {
     if (!currentGroupId) return
 
     const group = navigationGroups.get(currentGroupId)
@@ -140,9 +140,9 @@ export function KeyboardNavigationProvider({ children }: KeyboardNavigationProvi
     if (newElement) {
       newElement.focus()
     }
-  }
+  }, [currentGroupId, navigationGroups, setNavigationGroups])
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!enableKeyboardShortcuts) return
 
     const activeElement = document.activeElement as HTMLElement
@@ -265,13 +265,13 @@ export function KeyboardNavigationProvider({ children }: KeyboardNavigationProvi
           break
       }
     }
-  }
+  }, [enableKeyboardShortcuts, navigationGroups, currentGroupId, handleNavigation])
 
   // Set up global event listeners
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [enableKeyboardShortcuts, navigationGroups, currentGroupId])
+  }, [handleKeyDown])
 
   // Update navigation groups when DOM changes
   useEffect(() => {
@@ -341,7 +341,7 @@ export function KeyboardNavigationGroup({
     }
 
     return () => unregisterNavigationGroup(id)
-  }, [id, selector, orientation, wrap, autoFocus, onActivate])
+  }, [id, selector, orientation, wrap, autoFocus, onActivate, registerNavigationGroup, unregisterNavigationGroup, focusNavigationGroup])
 
   return <>{children}</>
 }

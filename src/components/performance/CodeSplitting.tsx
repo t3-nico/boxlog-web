@@ -23,7 +23,9 @@ export function CodeSplitting({
 }
 
 export const createAsyncComponent = (loader: () => Promise<{ default: ComponentType<any> }>) => {
-  return (props: any) => <CodeSplitting loader={loader} {...props} />
+  const AsyncComponent = (props: any) => <CodeSplitting loader={loader} {...props} />
+  AsyncComponent.displayName = 'AsyncComponent'
+  return AsyncComponent
 }
 
 export default CodeSplitting

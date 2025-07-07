@@ -3,17 +3,18 @@
 interface ShareButtonProps {
   title: string
   slug: string
+  locale?: string
 }
 
-export function ShareButton({ title, slug }: ShareButtonProps) {
+export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
   const handleShare = () => {
-    const url = `${window.location.origin}/blog/${slug}`
+    const url = `${window.location.origin}${locale === 'jp' ? '/jp' : ''}/blog/${slug}`
     
     if (navigator.share) {
       navigator.share({ title, url })
     } else {
       navigator.clipboard.writeText(url)
-      alert('URLをコピーしました')
+      alert(locale === 'jp' ? 'URLをコピーしました' : 'URL copied to clipboard')
     }
   }
 
@@ -22,7 +23,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
       onClick={handleShare}
       className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
     >
-      この記事をシェア
+      {locale === 'jp' ? 'この記事をシェア' : 'Share this article'}
     </button>
   )
 }

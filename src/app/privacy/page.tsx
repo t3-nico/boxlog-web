@@ -45,13 +45,13 @@ export default function PrivacyPolicyPage() {
                 Introduction
               </Heading>
               <Text className="mb-4 leading-relaxed">
-                At YourSaaS ("we," "our," or "us"), we respect your privacy and are committed to protecting your personal data. 
+                At YourSaaS (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;), we respect your privacy and are committed to protecting your personal data. 
                 This privacy policy explains how we collect, use, disclose, and safeguard your information when you visit our 
                 website and use our services.
               </Text>
               <Text className="mb-4 leading-relaxed">
                 This policy applies to all information collected through our website, mobile applications, and any related 
-                services, sales, marketing, or events (collectively, the "Services").
+                services, sales, marketing, or events (collectively, the &quot;Services&quot;).
               </Text>
             </div>
 
@@ -280,7 +280,7 @@ export default function PrivacyPolicyPage() {
             {/* Children's Privacy */}
             <div className="mb-12">
               <Heading as="h2" size="2xl" className="mb-6">
-                Children's Privacy
+                Children&apos;s Privacy
               </Heading>
               <Text className="mb-4 leading-relaxed">
                 Our Services are not intended for children under 13 years of age. We do not knowingly collect 
@@ -299,7 +299,7 @@ export default function PrivacyPolicyPage() {
               </Text>
               <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
                 <li>Posting the updated policy on our website</li>
-                <li>Updating the "Last updated" date</li>
+                <li>Updating the &quot;Last updated&quot; date</li>
                 <li>Sending email notifications for significant changes</li>
               </ul>
               <Text className="mb-4 leading-relaxed">

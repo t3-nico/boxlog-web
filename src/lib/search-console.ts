@@ -392,7 +392,9 @@ export class CustomEvents {
   }
 }
 
-export default {
+const SearchConsoleTools = {
   SearchConsole,
   CustomEvents
 }
+
+export default SearchConsoleTools

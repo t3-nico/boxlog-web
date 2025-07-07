@@ -82,7 +82,7 @@ export function ReleasesClient({
 
       return true
     })
-  }, [initialReleases, selectedTags, selectedTypes, showBreakingOnly, showFeaturedOnly])
+  }, [initialReleases, selectedTags, showBreakingOnly, showFeaturedOnly])
 
   // フィルターハンドラー
   const handleTagToggle = (tag: string) => {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import Image from 'next/image'
 import { Container } from '@/components/ui'
 import { ReleaseHeader } from '@/components/releases/ReleaseHeader'
 import { ChangeTypeSection } from '@/components/releases/ChangeTypeList'
@@ -13,13 +14,13 @@ interface ReleasePageProps {
   }
 }
 
-// メタデータ生成
+// Generate metadata
 export async function generateMetadata({ params }: ReleasePageProps): Promise<Metadata> {
   const release = await getRelease(params.version)
   
   if (!release) {
     return {
-      title: 'リリースが見つかりません',
+      title: 'Release not found',
     }
   }
 
@@ -59,7 +60,7 @@ export async function generateMetadata({ params }: ReleasePageProps): Promise<Me
   }
 }
 
-// 静的パス生成
+// Generate static paths
 export async function generateStaticParams() {
   const releases = await getAllReleaseMetas()
   
@@ -68,7 +69,7 @@ export async function generateStaticParams() {
   }))
 }
 
-// MDXコンポーネント
+// MDX Components
 const mdxComponents = {
   h1: (props: any) => (
     <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
@@ -112,10 +113,13 @@ const mdxComponents = {
     <li className="leading-relaxed" {...props} />
   ),
   img: (props: any) => (
-    <img 
-      className="rounded-lg shadow-lg my-6 max-w-full h-auto" 
+    <Image
+      className="rounded-lg shadow-lg my-6 max-w-full h-auto"
+      width={800}
+      height={600}
       loading="lazy"
-      {...props} 
+      alt={props.alt || 'Release image'}
+      {...props}
     />
   ),
   table: (props: any) => (
@@ -130,7 +134,7 @@ const mdxComponents = {
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-t border-gray-200" {...props} />
   ),
 
-  // リリースノート専用コンポーネント
+  // Release notes specific components
   ChangeLog: ({ type, children }: { type: string, children: React.ReactNode }) => {
     const changeType = changeTypes.find(ct => ct.id === type)
     if (!changeType) return <div>{children}</div>
@@ -148,7 +152,7 @@ const mdxComponents = {
     )
   },
 
-  // 警告・注意コンポーネント
+  // Warning component
   Warning: ({ children }: { children: React.ReactNode }) => (
     <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 my-6">
       <div className="flex items-start">
@@ -160,7 +164,7 @@ const mdxComponents = {
     </div>
   ),
 
-  // 情報コンポーネント
+  // Info component
   Info: ({ children }: { children: React.ReactNode }) => (
     <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 my-6">
       <div className="flex items-start">
@@ -172,7 +176,7 @@ const mdxComponents = {
     </div>
   ),
 
-  // マイグレーションガイド
+  // Migration guide
   Migration: ({ children }: { children: React.ReactNode }) => (
     <div className="bg-purple-50 dark:bg-purple-900 border border-purple-200 dark:border-purple-700 rounded-lg p-4 my-6">
       <div className="flex items-start">
@@ -180,7 +184,7 @@ const mdxComponents = {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
         </svg>
         <div>
-          <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">マイグレーション情報</h4>
+          <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Migration Information</h4>
           <div className="prose prose-sm max-w-none text-purple-700 dark:text-purple-300">{children}</div>
         </div>
       </div>
@@ -197,7 +201,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
   const relatedReleases = await getRelatedReleases(params.version, 3)
 
-  // 構造化データ（JSON-LD）
+  // Structured data (JSON-LD)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -223,33 +227,35 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
   return (
     <>
-      {/* 構造化データ */}
+      {/* Structured data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <div className="min-h-screen">
-        {/* リリースヘッダー */}
+        {/* Release header */}
         <ReleaseHeader frontMatter={release.frontMatter} version={params.version} />
 
-        {/* カバー画像 */}
+        {/* Cover image */}
         {release.frontMatter.coverImage && (
           <section className="py-8 bg-gray-50 dark:bg-gray-800">
             <Container>
               <div className="max-w-4xl mx-auto">
-                <img
+                <Image
                   src={release.frontMatter.coverImage}
                   alt={release.frontMatter.title}
+                  width={1200}
+                  height={630}
                   className="w-full h-auto rounded-xl shadow-lg"
-                  loading="eager"
+                  priority
                 />
               </div>
             </Container>
           </section>
         )}
 
-        {/* リリース内容 */}
+        {/* Release content */}
         <article id="changes" className="py-16 bg-white dark:bg-gray-900">
           <Container>
             <div className="max-w-4xl mx-auto">
@@ -260,7 +266,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 />
               </div>
 
-              {/* リリース終了マーカー */}
+              {/* Release end marker */}
               <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
@@ -271,18 +277,18 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 </div>
               </div>
 
-              {/* リリース情報フッター */}
+              {/* Release information footer */}
               <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                      このリリースは約 <strong>{release.readingTime}分</strong> で読めます
+                      This release takes approximately <strong>{release.readingTime} minutes</strong> to read
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      リリース日: {new Date(release.frontMatter.date).toLocaleDateString('ja-JP')}
+                      Release date: {new Date(release.frontMatter.date).toLocaleDateString('en-US')}
                       {release.frontMatter.author && (
                         <span className="ml-4">
-                          リリース責任者: {release.frontMatter.author}
+                          Release manager: {release.frontMatter.author}
                         </span>
                       )}
                     </p>
@@ -293,7 +299,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                       href="/releases"
                       className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                     >
-                      すべてのリリースを見る
+                      View all releases
                     </a>
                     
                     <a
@@ -302,7 +308,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                       rel="noopener noreferrer"
                       className="text-sm text-gray-600 hover:text-gray-800 font-medium"
                     >
-                      GitHub で見る
+                      View on GitHub
                     </a>
                   </div>
                 </div>
@@ -311,17 +317,17 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
           </Container>
         </article>
 
-        {/* 関連リリース */}
+        {/* Related releases */}
         {relatedReleases.length > 0 && (
           <section className="py-16 bg-gray-50">
             <Container>
               <div className="max-w-6xl mx-auto">
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    関連するリリース
+                    Related Releases
                   </h2>
                   <p className="text-gray-600">
-                    このリリースと関連する他のアップデート
+                    Other updates related to this release
                   </p>
                 </div>
 
@@ -343,7 +349,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
-                    すべてのリリースを見る
+                    View all releases
                   </a>
                 </div>
               </div>
@@ -351,15 +357,15 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
           </section>
         )}
 
-        {/* フィードバック・サポート */}
+        {/* Feedback & Support */}
         <section className="py-16 bg-blue-50 border-t border-blue-100">
           <Container>
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                フィードバックをお聞かせください
+                Share Your Feedback
               </h2>
               <p className="text-gray-600 mb-8">
-                この新機能についてご質問やご意見がございましたら、お気軽にお聞かせください。
+                If you have any questions or feedback about this new feature, please feel free to share it with us.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -370,7 +376,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  サポートに連絡
+                  Contact Support
                 </a>
                 
                 <a
@@ -380,7 +386,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  フィードバックを送る
+                  Send Feedback
                 </a>
               </div>
             </div>

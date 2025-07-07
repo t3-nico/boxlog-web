@@ -82,7 +82,7 @@ export function CookieConsent() {
               </h3>
               <p id="cookie-consent-description" className="text-sm text-gray-700 dark:text-gray-300">
                 We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
-                By clicking "Accept All", you consent to our use of cookies.{' '}
+                By clicking &quot;Accept All&quot;, you consent to our use of cookies.{' '}
                 <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
                   Learn more
                 </a>
@@ -185,7 +185,7 @@ export function CookieConsent() {
                   <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">Disabled</span>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Currently not used. We prioritize your privacy and don't track for advertising.
+                  Currently not used. We prioritize your privacy and don&apos;t track for advertising.
                 </p>
               </div>
             </div>

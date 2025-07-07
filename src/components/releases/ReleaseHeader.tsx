@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { Container, Heading, Text } from '@/components/ui'
 import { ShareButton } from './ShareButton'
 
@@ -60,7 +61,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ja-JP', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -69,7 +70,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
   }
 
   const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ja-JP', {
+    return new Date(dateString).toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit'
     })
@@ -86,11 +87,11 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
 
       <div className="relative max-w-4xl mx-auto px-6 py-16">
         {/* Breadcrumb */}
-        <nav className="mb-8" aria-label="パンくず">
+        <nav className="mb-8" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">
             <li>
               <a href="/" className="hover:text-gray-700 transition-colors dark:hover:text-gray-300">
-                ホーム
+                Home
               </a>
             </li>
             <li>
@@ -100,7 +101,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
             </li>
             <li>
               <a href="/releases" className="hover:text-gray-700 transition-colors dark:hover:text-gray-300">
-                リリースノート
+                Release Notes
               </a>
             </li>
             <li>
@@ -152,7 +153,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               </svg>
             </div>
             <div>
-              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">リリース日</div>
+              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">Release Date</div>
               <div className="text-sm">
                 {formatDate(frontMatter.date)} {formatTime(frontMatter.date)}
               </div>
@@ -164,9 +165,11 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden dark:bg-gray-700">
                 {frontMatter.authorAvatar ? (
-                  <img 
+                  <Image 
                     src={frontMatter.authorAvatar} 
-                    alt={frontMatter.author}
+                    alt={frontMatter.author || 'Author avatar'}
+                    width={40}
+                    height={40}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -176,7 +179,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
                 )}
               </div>
               <div>
-                <div className="text-sm font-medium text-gray-900 dark:text-gray-100">リリース責任者</div>
+                <div className="text-sm font-medium text-gray-900 dark:text-gray-100">Release Manager</div>
                 <div className="text-sm">{frontMatter.author}</div>
               </div>
             </div>
@@ -190,7 +193,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               </svg>
             </div>
             <div>
-              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">バージョン種別</div>
+              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">Version Type</div>
               <div className="text-sm capitalize">{versionType} Update</div>
             </div>
           </div>
@@ -203,7 +206,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
-              注目リリース
+              Featured Release
             </span>
           )}
           
@@ -212,7 +215,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L5.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
-              破壊的変更あり
+              Breaking Changes
             </span>
           )}
 
@@ -221,7 +224,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              メジャーアップデート
+              Major Update
             </span>
           )}
         </div>
@@ -229,7 +232,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
         {/* Tags */}
         {frontMatter.tags.length > 0 && (
           <div className="mt-8">
-            <h3 className="text-sm font-medium text-gray-700 mb-3 dark:text-gray-300">関連タグ</h3>
+            <h3 className="text-sm font-medium text-gray-700 mb-3 dark:text-gray-300">Related Tags</h3>
             <div className="flex flex-wrap gap-2">
               {frontMatter.tags.map((tag) => (
                 <a
@@ -254,7 +257,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
             </svg>
-            変更内容を見る
+            View Changes
           </a>
           
           <a
@@ -264,7 +267,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            リリース一覧に戻る
+            Back to Releases
           </a>
 
           <ShareButton 

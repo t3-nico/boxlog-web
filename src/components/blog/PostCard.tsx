@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Heading } from '@/components/ui'
 import { BlogPostMeta } from '@/lib/blog'
 
@@ -9,12 +10,13 @@ interface PostCardProps {
   post: BlogPostMeta
   priority?: boolean
   layout?: 'horizontal' | 'vertical'
+  locale?: string
 }
 
-export function PostCard({ post, priority = false, layout = 'horizontal' }: PostCardProps) {
+export function PostCard({ post, priority = false, layout = 'horizontal', locale = 'en' }: PostCardProps) {
   const [imageError, setImageError] = useState(false)
   
-  // タグの色を決定する関数
+  // Function to determine tag color
   const getTagColor = (tag: string, index: number) => {
     const colors = [
       'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800',
@@ -29,7 +31,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
       'bg-cyan-100 text-cyan-800 hover:bg-cyan-200 dark:bg-cyan-900 dark:text-cyan-200 dark:hover:bg-cyan-800',
     ]
     
-    // タグ名のハッシュ値を使って色を決定（同じタグは常に同じ色）
+    // Use tag name hash to determine color (same tag always gets same color)
     let hash = 0
     for (let i = 0; i < tag.length; i++) {
       hash = tag.charCodeAt(i) + ((hash << 5) - hash)
@@ -38,7 +40,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
     return colors[colorIndex]
   }
   
-  const formattedDate = new Date(post.frontMatter.publishedAt).toLocaleDateString('ja-JP', {
+  const formattedDate = new Date(post.frontMatter.publishedAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
@@ -46,22 +48,24 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
 
 
   if (layout === 'vertical') {
-    // 縦型レイアウト（注目記事用）: 上に画像、下にコンテンツ
+    // Vertical layout (for featured articles): image on top, content below
     return (
       <article className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300">
-        <Link href={`/blog/${post.slug}`} className="block">
-          {/* カバー画像 */}
+        <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="block">
+          {/* Cover image */}
           {post.frontMatter.coverImage && !imageError ? (
             <div className="relative aspect-[16/9] overflow-hidden">
-              <img
+              <Image
                 src={post.frontMatter.coverImage}
                 alt={post.frontMatter.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
                 onError={() => setImageError(true)}
-                loading={priority ? 'eager' : 'lazy'}
+                priority={priority}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               
-              {/* オーバーレイ */}
+              {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ) : (
@@ -72,9 +76,9 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
             </div>
           )}
 
-          {/* コンテンツ */}
+          {/* Content */}
           <div className="p-6">
-            {/* タイトル */}
+            {/* Title */}
             <Heading 
               as="h2" 
               size="xl" 
@@ -83,7 +87,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
               {post.frontMatter.title}
             </Heading>
 
-            {/* タグ */}
+            {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-4">
               {post.frontMatter.tags.map((tag, index) => (
                 <span
@@ -97,7 +101,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
               ))}
             </div>
 
-            {/* メタ情報 */}
+            {/* Meta information */}
             <div className="text-sm text-gray-500 dark:text-gray-400">
               <time dateTime={post.frontMatter.publishedAt}>
                 {formattedDate}
@@ -109,24 +113,26 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
     )
   }
 
-  // 横型レイアウト（通常記事用）: 左に画像、右にコンテンツ
+  // Horizontal layout (for regular articles): image on left, content on right
   return (
     <article className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300">
-      <Link href={`/blog/${post.slug}`} className="block">
+      <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="block">
         <div className="flex">
-          {/* 左側: カバー画像 */}
+          {/* Left side: Cover image */}
           <div className="w-1/3 relative">
             {post.frontMatter.coverImage && !imageError ? (
               <div className="relative aspect-[4/3] overflow-hidden">
-                <img
+                <Image
                   src={post.frontMatter.coverImage}
                   alt={post.frontMatter.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
                   onError={() => setImageError(true)}
-                  loading={priority ? 'eager' : 'lazy'}
+                  priority={priority}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                 />
                 
-                {/* オーバーレイ */}
+                {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ) : (
@@ -138,10 +144,10 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
             )}
           </div>
 
-          {/* 右側: コンテンツ */}
+          {/* Right side: Content */}
           <div className="w-2/3 p-4 flex flex-col justify-between">
             <div>
-              {/* タイトル */}
+              {/* Title */}
               <Heading 
                 as="h2" 
                 size="lg" 
@@ -150,7 +156,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
                 {post.frontMatter.title}
               </Heading>
 
-              {/* タグ */}
+              {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-3">
                 {post.frontMatter.tags.map((tag, index) => (
                   <span
@@ -166,7 +172,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal' }: Post
             </div>
 
             <div>
-              {/* メタ情報 */}
+              {/* Meta information */}
               <div className="mb-3 text-sm text-gray-500 dark:text-gray-400">
                 <time dateTime={post.frontMatter.publishedAt}>
                   {formattedDate}

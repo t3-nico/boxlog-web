@@ -157,7 +157,7 @@ export default async function BlogPage() {
                       No Articles Found
                     </Heading>
                     <Text variant="muted">
-                      We're currently preparing articles. Please check back soon.
+                      We&apos;re currently preparing articles. Please check back soon.
                     </Text>
                   </div>
                 )}

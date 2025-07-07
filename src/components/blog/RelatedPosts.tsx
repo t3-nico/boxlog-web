@@ -8,9 +8,10 @@ import Link from 'next/link'
 interface RelatedPostsProps {
   posts: BlogPostMeta[]
   currentSlug: string
+  locale?: string
 }
 
-export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
+export function RelatedPosts({ posts, currentSlug, locale = 'en' }: RelatedPostsProps) {
   if (posts.length === 0) {
     return null
   }
@@ -21,10 +22,10 @@ export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <Heading as="h2" size="2xl" className="mb-4">
-              関連記事
+              {locale === 'jp' ? '関連記事' : 'Related Articles'}
             </Heading>
             <Text size="lg" variant="muted">
-              この記事に関連するおすすめの記事をご紹介します
+              {locale === 'jp' ? 'この記事に関連するおすすめの記事をご紹介します' : 'Here are some recommended articles related to this post'}
             </Text>
           </div>
 
@@ -35,17 +36,18 @@ export function RelatedPosts({ posts, currentSlug }: RelatedPostsProps) {
                 post={post} 
                 priority={index === 0}
                 layout="vertical"
+                locale={locale}
               />
             ))}
           </div>
 
-          {/* すべての記事を見るリンク */}
+          {/* View all articles link */}
           <div className="text-center mt-12">
             <Link
-              href="/blog"
+              href={locale === 'jp' ? '/jp/blog' : '/blog'}
               className="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
             >
-              すべての記事を見る
+              {locale === 'jp' ? 'すべての記事を見る' : 'View All Articles'}
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

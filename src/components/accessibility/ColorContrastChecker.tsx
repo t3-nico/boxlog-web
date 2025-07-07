@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, createContext, useContext, ReactNode } from 'react'
+import { useEffect, useState, createContext, useContext, ReactNode, useCallback } from 'react'
 
 interface ColorContrastResult {
   ratio: number
@@ -34,50 +34,50 @@ interface ColorContrastProviderProps {
 export function ColorContrastProvider({ children, autoCheck = true }: ColorContrastProviderProps) {
   const [contrastIssues, setContrastIssues] = useState<ColorContrastResult[]>([])
 
-  const hexToRgb = (hex: string): [number, number, number] | null => {
+  const hexToRgb = useCallback((hex: string): [number, number, number] | null => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     return result ? [
       parseInt(result[1], 16),
       parseInt(result[2], 16),
       parseInt(result[3], 16)
     ] : null
-  }
+  }, [])
 
-  const rgbStringToArray = (rgb: string): [number, number, number] | null => {
+  const rgbStringToArray = useCallback((rgb: string): [number, number, number] | null => {
     const match = rgb.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
     return match ? [
       parseInt(match[1], 10),
       parseInt(match[2], 10),
       parseInt(match[3], 10)
     ] : null
-  }
+  }, [])
 
-  const parseColor = (color: string): [number, number, number] | null => {
+  const parseColor = useCallback((color: string): [number, number, number] | null => {
     if (color.startsWith('#')) {
       return hexToRgb(color)
     } else if (color.startsWith('rgb')) {
       return rgbStringToArray(color)
     }
     return null
-  }
+  }, [hexToRgb, rgbStringToArray])
 
-  const getLuminance = (r: number, g: number, b: number): number => {
+  const getLuminance = useCallback((r: number, g: number, b: number): number => {
     const [rs, gs, bs] = [r, g, b].map(c => {
       c = c / 255
       return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
     })
     return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs
-  }
+  }, [])
 
-  const getContrastRatio = (color1: [number, number, number], color2: [number, number, number]): number => {
+  const getContrastRatio = useCallback((color1: [number, number, number], color2: [number, number, number]): number => {
     const lum1 = getLuminance(...color1)
     const lum2 = getLuminance(...color2)
     const brightest = Math.max(lum1, lum2)
     const darkest = Math.min(lum1, lum2)
     return (brightest + 0.05) / (darkest + 0.05)
-  }
+  }, [getLuminance])
 
-  const checkContrast = (foreground: string, background: string, fontSize: number = 16): ColorContrastResult => {
+  const checkContrast = useCallback((foreground: string, background: string, fontSize: number = 16): ColorContrastResult => {
     const fgColor = parseColor(foreground)
     const bgColor = parseColor(background)
 
@@ -116,14 +116,14 @@ export function ColorContrastProvider({ children, autoCheck = true }: ColorContr
       background,
       isValid: level === 'AA' || level === 'AAA'
     }
-  }
+  }, [parseColor, getContrastRatio])
 
   const getComputedColor = (element: Element, property: string): string => {
     const computed = window.getComputedStyle(element)
     return computed.getPropertyValue(property)
   }
 
-  const validatePage = async (): Promise<ColorContrastResult[]> => {
+  const validatePage = useCallback(async (): Promise<ColorContrastResult[]> => {
     const issues: ColorContrastResult[] = []
     
     // Get all text elements
@@ -153,7 +153,7 @@ export function ColorContrastProvider({ children, autoCheck = true }: ColorContr
 
     setContrastIssues(issues)
     return issues
-  }
+  }, [checkContrast])
 
   const getContrastIssues = (): ColorContrastResult[] => {
     return contrastIssues
@@ -183,7 +183,7 @@ export function ColorContrastProvider({ children, autoCheck = true }: ColorContr
 
       return () => clearTimeout(timer)
     }
-  }, [autoCheck])
+  }, [autoCheck, validatePage])
 
   const contextValue: ColorContrastContextType = {
     checkContrast,

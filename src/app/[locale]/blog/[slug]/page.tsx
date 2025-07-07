@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import Image from 'next/image'
 import { Container } from '@/components/ui'
 import { PostHeader } from '@/components/blog/PostHeader'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
@@ -14,7 +15,7 @@ interface BlogPostPageProps {
   }
 }
 
-// メタデータ生成
+// Generate metadata
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug, locale } = params
   const post = await getBlogPost(slug)
@@ -65,7 +66,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 }
 
-// 静的パス生成
+// Generate static paths
 export async function generateStaticParams() {
   const posts = await getAllBlogPostMetas()
   
@@ -74,9 +75,9 @@ export async function generateStaticParams() {
   }))
 }
 
-// MDXコンポーネント
+// MDX components
 const mdxComponents = {
-  // カスタムコンポーネントの定義
+  // Custom component definitions
   h1: (props: any) => (
     <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
   ),
@@ -119,11 +120,17 @@ const mdxComponents = {
     <li className="leading-relaxed" {...props} />
   ),
   img: (props: any) => (
-    <img 
-      className="rounded-lg shadow-lg my-6 max-w-full h-auto" 
-      loading="lazy"
-      {...props} 
-    />
+    <div className="relative my-6 rounded-lg overflow-hidden shadow-lg">
+      <Image
+        className="rounded-lg shadow-lg"
+        loading="lazy"
+        width={800}
+        height={600}
+        style={{ width: '100%', height: 'auto' }}
+        alt={props.alt || 'Blog post image'}
+        {...props}
+      />
+    </div>
   ),
   table: (props: any) => (
     <div className="overflow-x-auto my-6">
@@ -136,7 +143,7 @@ const mdxComponents = {
   td: (props: any) => (
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 border-t border-gray-200 dark:border-gray-700" {...props} />
   ),
-  // カスタムコールアウト
+  // Custom callouts
   Callout: ({ type = 'info', children }: { type?: 'info' | 'warning' | 'error' | 'success', children: React.ReactNode }) => {
     const styles = {
       info: 'bg-blue-50 dark:bg-blue-900 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200',
@@ -171,12 +178,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound()
   }
 
-  // デバッグ: コンテンツが正しく読み込まれているか確認
+  // Debug: Check if content is loaded correctly
   console.log('Post content:', post.content)
 
   const relatedPosts = await getRelatedPosts(slug, 3)
 
-  // 構造化データ（JSON-LD）
+  // Structured data (JSON-LD)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -190,7 +197,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     dateModified: post.frontMatter.updatedAt || post.frontMatter.publishedAt,
     keywords: post.frontMatter.tags.join(', '),
     articleSection: post.frontMatter.category,
-    wordCount: post.readingTime * 200, // 推定文字数
+    wordCount: post.readingTime * 200, // Estimated word count
     timeRequired: `PT${post.readingTime}M`,
     image: post.frontMatter.coverImage,
     publisher: {
@@ -201,33 +208,37 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
-      {/* 構造化データ */}
+      {/* Structured data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <div className="min-h-screen">
-        {/* 記事ヘッダー */}
+        {/* Article header */}
         <PostHeader frontMatter={post.frontMatter} slug={slug} locale={locale} />
 
-        {/* カバー画像 */}
+        {/* Cover image */}
         {post.frontMatter.coverImage && (
           <section className="pb-8 bg-white dark:bg-gray-900">
             <Container>
               <div className="max-w-4xl mx-auto">
-                <img
-                  src={post.frontMatter.coverImage}
-                  alt={post.frontMatter.title}
-                  className="w-full h-auto rounded-xl shadow-lg"
-                  loading="eager"
-                />
+                <div className="relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
+                  <Image
+                    src={post.frontMatter.coverImage}
+                    alt={post.frontMatter.title}
+                    fill
+                    className="object-cover rounded-xl"
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  />
+                </div>
               </div>
             </Container>
           </section>
         )}
 
-        {/* 記事本文 */}
+        {/* Article content */}
         <article className="py-8 bg-white dark:bg-gray-900">
           <Container>
             <div className="max-w-4xl mx-auto">
@@ -238,7 +249,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 />
               </div>
 
-              {/* 記事終了マーカー */}
+              {/* Article end marker */}
               <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
@@ -249,14 +260,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
               </div>
 
-              {/* その他の記事情報 */}
+              {/* Additional article information */}
               <div className="mt-8 space-y-6">
-                {/* タグ */}
+                {/* Tags */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">{locale === 'jp' ? 'タグ' : 'Tags'}</h3>
                   <div className="flex flex-wrap gap-2">
                     {post.frontMatter.tags.map((tag) => {
-                      // タグの色を決定する関数
+                      // Function to determine tag color
                       const getTagColor = (tag: string) => {
                         const colors = [
                           'bg-blue-100 text-blue-800 hover:bg-blue-200',
@@ -292,7 +303,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
                 </div>
 
-                {/* シェアボタン */}
+                {/* Share button */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">{locale === 'jp' ? 'この記事をシェア' : 'Share this article'}</h3>
                   <ShareButton title={post.frontMatter.title} slug={slug} locale={locale} />
@@ -302,7 +313,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Container>
         </article>
 
-        {/* 関連記事 */}
+        {/* Related articles */}
         <RelatedPosts posts={relatedPosts} currentSlug={slug} locale={locale} />
 
       </div>

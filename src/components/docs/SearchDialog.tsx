@@ -273,7 +273,7 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                 <svg className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 014 12H2.5A.5.5 0 012 11.5v-1A.5.5 0 012.5 10H4a7.962 7.962 0 0113.27 1.27m0 0A7.962 7.962 0 0120 12v2a.5.5 0 01-.5.5H19a7.962 7.962 0 01-2.27-1.27z" />
                 </svg>
-                <p className="text-gray-500 dark:text-gray-400 mb-2">No results found for "{query}"</p>
+                <p className="text-gray-500 dark:text-gray-400 mb-2">No results found for &quot;{query}&quot;</p>
                 <p className="text-sm text-gray-400 dark:text-gray-500">
                   Try adjusting your search terms or browse the{' '}
                   <button 

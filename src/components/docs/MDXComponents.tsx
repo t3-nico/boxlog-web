@@ -1,5 +1,6 @@
 import { Heading, Text } from '@/components/ui'
 import Link from 'next/link'
+import Image from 'next/image'
 import { MDXComponents } from 'mdx/types'
 import { CopyCodeButton } from './CopyCodeButton'
 import { generateAnchorId } from '@/lib/toc'
@@ -253,12 +254,17 @@ export const mdxComponents: MDXComponents = {
 
   // 画像
   img: ({ src, alt, ...props }) => (
-    <img
-      src={src}
-      alt={alt}
-      className="rounded-lg my-6 max-w-full h-auto"
-      {...props}
-    />
+    <div className="relative my-6 rounded-lg overflow-hidden">
+      <Image
+        src={src}
+        alt={alt || ''}
+        width={800}
+        height={600}
+        className="rounded-lg max-w-full h-auto"
+        style={{ width: 'auto', height: 'auto' }}
+        {...props}
+      />
+    </div>
   ),
 
   // カスタムコンポーネント

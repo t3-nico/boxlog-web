@@ -225,7 +225,7 @@ export const getBundleAnalysis = async () => {
   }
 }
 
-export default {
+const CriticalCSSTools = {
   criticalCSS,
   fontLoadingCSS,
   PerformanceMonitor,
@@ -233,3 +233,5 @@ export default {
   criticalResources,
   getBundleAnalysis
 }
+
+export default CriticalCSSTools

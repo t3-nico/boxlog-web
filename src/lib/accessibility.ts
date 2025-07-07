@@ -519,7 +519,7 @@ export const A11yValidator = {
   }
 }
 
-export default {
+const AccessibilityTools = {
   FocusManager,
   ColorContrast,
   KeyboardNav,
@@ -531,3 +531,5 @@ export default {
   SCREEN_READER,
   SKIP_LINKS
 }
+
+export default AccessibilityTools
