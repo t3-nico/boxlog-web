@@ -110,6 +110,7 @@ export class PerformanceMonitor {
       this.metrics.set(name, duration)
       return duration
     } catch (error) {
+      console.error('Failed to measure performance:', error)
       return null
     }
   }
@@ -137,7 +138,8 @@ export class PerformanceMonitor {
       })
       observer.observe({ entryTypes: ['largest-contentful-paint'] })
     } catch (error) {
-      }
+      console.error('Failed to observe LCP:', error)
+    }
   }
 
   static observeCLS(): void {
@@ -157,7 +159,8 @@ export class PerformanceMonitor {
       })
       observer.observe({ entryTypes: ['layout-shift'] })
     } catch (error) {
-      }
+      console.error('Failed to observe CLS:', error)
+    }
   }
 
   static observeFID(): void {
@@ -173,7 +176,8 @@ export class PerformanceMonitor {
       })
       observer.observe({ entryTypes: ['first-input'] })
     } catch (error) {
-      }
+      console.error('Failed to observe FID:', error)
+    }
   }
 
   static initAllObservers(): void {
@@ -216,6 +220,7 @@ export const getBundleAnalysis = async () => {
       resourceCount: performance.getEntriesByType('resource').length
     }
   } catch (error) {
+    console.error('Failed to get bundle analysis:', error)
     return null
   }
 }

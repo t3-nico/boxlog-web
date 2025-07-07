@@ -107,7 +107,11 @@ class ConsoleLogger implements ErrorLogger {
       console.group(`${emoji} ${error.category.toUpperCase()} Error [${error.code}]`)
       if (error.stack) console.groupEnd()
     } else {
+      console.error('Error:', error.message)
+      if (error.stack) {
+        console.error('Stack:', error.stack)
       }
+    }
   }
 
   private getSeverityEmoji(severity: ErrorSeverity): string {
@@ -149,7 +153,8 @@ class LocalStorageLogger implements ErrorLogger {
 
       localStorage.setItem(this.storageKey, JSON.stringify(errors))
     } catch (storageError) {
-      }
+      console.warn('Failed to store error logs:', storageError)
+    }
   }
 
   private getStoredErrors(): any[] {
@@ -217,7 +222,8 @@ class RemoteLogger implements ErrorLogger {
         await new Promise(resolve => setTimeout(resolve, this.retryDelay * (attempt + 1)))
         return this.sendWithRetry(data, attempt + 1)
       } else {
-        }
+        console.error('Failed to send error log after', this.maxRetries, 'attempts:', error)
+      }
     }
   }
 }
@@ -312,7 +318,8 @@ export class ErrorHandler {
       try {
         logger.log(appError)
       } catch (loggerError) {
-        }
+        console.error('Logger error:', loggerError)
+      }
     })
 
     // Handle critical errors

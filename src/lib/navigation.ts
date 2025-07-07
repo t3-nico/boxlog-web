@@ -68,6 +68,7 @@ function getFileInfo(filePath: string, relativePath: string): FileInfo | null {
       badge: frontMatter.badge
     }
   } catch (error) {
+    console.error('Failed to process file:', filePath, error)
     return null
   }
 }
@@ -97,7 +98,8 @@ function scanDirectory(dirPath: string, basePath: string = ''): FileInfo[] {
       }
     }
   } catch (error) {
-    }
+    console.error('Failed to scan directory:', dirPath, error)
+  }
   
   return files
 }

@@ -82,7 +82,8 @@ async function getAllDocMetas(): Promise<TaggedContent[]> {
         featured: frontMatter.featured || false,
       })
     } catch (error) {
-      }
+      console.error('Failed to process document:', filePath, error)
+    }
   }
 
   return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
