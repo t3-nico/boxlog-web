@@ -1,8 +1,10 @@
+import { LucideIcon, Link, BarChart3, Users, Lock, Zap, Smartphone } from 'lucide-react'
+
 export interface Feature {
   id: string
   title: string
   description: string
-  icon: string
+  icon: LucideIcon
   category: 'integration' | 'analytics' | 'security' | 'workflow' | 'collaboration' | 'mobile'
 }
 
@@ -21,42 +23,42 @@ export const features: Feature[] = [
     id: 'api-integration',
     title: 'API Integration',
     description: 'Connect with 100+ third-party services and build custom integrations with our powerful REST API.',
-    icon: '🔗',
+    icon: Link,
     category: 'integration'
   },
   {
     id: 'real-time-analytics',
     title: 'Real-time Analytics',
     description: 'Monitor your application performance with live dashboards and custom metrics tracking.',
-    icon: '📊',
+    icon: BarChart3,
     category: 'analytics'
   },
   {
     id: 'team-collaboration',
     title: 'Team Collaboration',
     description: 'Work together seamlessly with shared workspaces, comments, and real-time collaboration tools.',
-    icon: '👥',
+    icon: Users,
     category: 'collaboration'
   },
   {
     id: 'advanced-security',
     title: 'Advanced Security',
     description: 'Enterprise-grade security with SSO, 2FA, audit logs, and compliance certifications.',
-    icon: '🔒',
+    icon: Lock,
     category: 'security'
   },
   {
     id: 'custom-workflows',
     title: 'Custom Workflows',
     description: 'Automate your processes with visual workflow builder and custom business logic.',
-    icon: '⚡',
+    icon: Zap,
     category: 'workflow'
   },
   {
     id: 'mobile-app',
     title: 'Mobile App',
     description: 'Access your data on the go with our native iOS and Android applications.',
-    icon: '📱',
+    icon: Smartphone,
     category: 'mobile'
   }
 ]

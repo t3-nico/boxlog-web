@@ -1,10 +1,12 @@
 'use client'
 
+import { PartyPopper, Wrench, Bug, AlertTriangle, Lock, LucideIcon, ChevronDown } from 'lucide-react'
+
 // Local type definitions and data
 interface ChangeType {
   id: string
   label: string
-  icon: string
+  icon: LucideIcon
   color: string
 }
 
@@ -12,31 +14,31 @@ const changeTypes: ChangeType[] = [
   {
     id: 'new-features',
     label: 'New Features',
-    icon: '🎉',
+    icon: PartyPopper,
     color: 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700'
   },
   {
     id: 'improvements',
     label: 'Improvements',
-    icon: '🔧',
+    icon: Wrench,
     color: 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700'
   },
   {
     id: 'bug-fixes',
     label: 'Bug Fixes',
-    icon: '🐛',
+    icon: Bug,
     color: 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700'
   },
   {
     id: 'breaking-changes',
     label: 'Breaking Changes',
-    icon: '⚠️',
+    icon: AlertTriangle,
     color: 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700'
   },
   {
     id: 'security-updates',
     label: 'Security Updates',
-    icon: '🔒',
+    icon: Lock,
     color: 'bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700'
   }
 ]
@@ -103,9 +105,7 @@ function ChangeTypeFilter({ type, isSelected, onToggle }: ChangeTypeFilterProps)
       <span className={`ml-3 flex items-center gap-2 text-sm transition-colors ${
         isSelected ? 'text-gray-900 font-medium dark:text-gray-100' : 'text-gray-600 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-gray-100'
       }`}>
-        <span className="text-base" role="img" aria-label={type.label}>
-          {type.icon}
-        </span>
+        <type.icon className="w-4 h-4" aria-label={type.label} />
         {type.label}
       </span>
     </label>
@@ -135,9 +135,7 @@ export function ChangeTypeBadge({
   return (
     <span className={`inline-flex items-center rounded-full font-medium border ${type.color} ${sizeClasses[size]}`}>
       {showIcon && (
-        <span className="mr-1.5" role="img" aria-label={type.label}>
-          {type.icon}
-        </span>
+        <type.icon className="w-4 h-4 mr-1.5" aria-label={type.label} />
       )}
       {type.label}
       {typeof count === 'number' && (
@@ -176,8 +174,8 @@ export function ChangeTypeGrid({ stats, onTypeClick }: ChangeTypeGridProps) {
             }`}
           >
             <div className="text-center">
-              <div className="text-2xl mb-2" role="img" aria-label={type.label}>
-                {type.icon}
+              <div className="mb-2 flex justify-center">
+                <type.icon className="w-8 h-8" aria-label={type.label} />
               </div>
               
               <div className="text-2xl font-bold mb-1">
@@ -225,9 +223,7 @@ export function ChangeTypeSection({
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-xl" role="img" aria-label={type.label}>
-              {type.icon}
-            </span>
+            <type.icon className="w-5 h-5" aria-label={type.label} />
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {type.label}
             </h3>
@@ -236,16 +232,11 @@ export function ChangeTypeSection({
             </span>
           </div>
           
-          <svg 
+          <ChevronDown 
             className={`w-5 h-5 text-gray-500 transition-transform dark:text-gray-400 ${
               isExpanded ? 'rotate-180' : ''
             }`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
+          />
         </div>
       </button>
       
