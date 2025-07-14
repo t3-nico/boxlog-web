@@ -4,6 +4,15 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Dialog, DialogContent, DialogHeader, Input, Button, Badge } from '@/components/ui'
 import { Highlight } from '@/utils/highlight'
+import { 
+  Search, 
+  Clock, 
+  Tag, 
+  FileText, 
+  Edit, 
+  Package, 
+  X 
+} from 'lucide-react'
 
 interface SearchDialogProps {
   open: boolean
@@ -140,29 +149,13 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'docs':
-        return (
-          <svg className="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        )
+        return <FileText className="h-4 w-4 text-blue-500" />
       case 'blog':
-        return (
-          <svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-          </svg>
-        )
+        return <Edit className="h-4 w-4 text-green-500" />
       case 'release':
-        return (
-          <svg className="h-4 w-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m3 6V8a1 1 0 00-1-1H5a1 1 0 00-1 1v2m14 0v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8m14 0H4" />
-          </svg>
-        )
+        return <Package className="h-4 w-4 text-purple-500" />
       default:
-        return (
-          <svg className="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        )
+        return <FileText className="h-4 w-4 text-gray-500" />
     }
   }
 
@@ -185,9 +178,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden bg-white shadow-2xl border-0 dark:bg-gray-900 dark:border dark:border-gray-700">
         {/* 検索ヘッダー */}
         <div className="flex items-center gap-3 p-4 border-b border-gray-100 dark:border-gray-700">
-          <svg className="h-5 w-5 text-gray-400 flex-shrink-0 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <Search className="h-5 w-5 text-gray-400 flex-shrink-0 dark:text-gray-500" />
           <Input
             ref={inputRef}
             placeholder="記事、タグ、ドキュメントを検索..."
@@ -203,9 +194,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               onClick={() => setQuery('')}
               className="h-6 w-6 p-0 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 border-0 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-400"
             >
-              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X className="h-3 w-3" />
             </Button>
           )}
         </div>
@@ -227,9 +216,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                         onClick={() => setQuery(search)}
                         className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
                       >
-                        <svg className="h-4 w-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                        <Clock className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                         <span className="text-sm text-gray-700 dark:text-gray-300">{search}</span>
                       </button>
                     ))}
@@ -249,9 +236,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       onClick={() => handleTagClick(tag.name)}
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${getTagColorClass(tag.color)}`}
                     >
-                      <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                      </svg>
+                      <Tag className="h-3 w-3" />
                       <span>{tag.name}</span>
                       <span className="text-xs opacity-75">({tag.count})</span>
                     </button>
@@ -313,9 +298,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 onClick={() => handleSearch(query)}
                 className="flex items-center gap-3 w-full p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/40 dark:border-blue-700"
               >
-                <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <div className="text-left">
                   <div className="text-sm font-medium text-blue-900 dark:text-blue-100">
                     「<Highlight text={query} query={query} />」を検索
@@ -377,9 +360,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                             onClick={() => handleTagClick(tag.name)}
                             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${getTagColorClass(tag.color)}`}
                           >
-                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 713 12V7a4 4 0 014-4z" />
-                            </svg>
+                            <Tag className="h-3 w-3" />
                             <span><Highlight text={tag.name} query={query} /></span>
                             <span className="text-xs opacity-75">({tag.count})</span>
                           </button>
