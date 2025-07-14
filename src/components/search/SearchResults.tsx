@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 import { Badge } from '@/components/ui'
 import { Highlight } from '@/utils/highlight'
 import { SearchResult } from '@/hooks/useSearch'
+import { FileText, Edit, Package } from 'lucide-react'
 
 interface SearchResultsProps {
   results: SearchResult[]
@@ -27,23 +28,11 @@ export function SearchResults({
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'docs':
-        return (
-          <svg className="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        )
+        return <FileText className="h-4 w-4 text-blue-500" />
       case 'blog':
-        return (
-          <svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-          </svg>
-        )
+        return <Edit className="h-4 w-4 text-green-500" />
       case 'release':
-        return (
-          <svg className="h-4 w-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m3 6V8a1 1 0 00-1-1H5a1 1 0 00-1 1v2m14 0v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8m14 0H4" />
-          </svg>
-        )
+        return <Package className="h-4 w-4 text-purple-500" />
       default:
         return null
     }

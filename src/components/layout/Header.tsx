@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button, Container, ThemeToggle } from '@/components/ui'
 import { SearchDialog } from '@/components/search/SearchDialog'
+import { Search, X, Menu } from 'lucide-react'
 
 const navigation = [
   { name: 'Features', href: '/features' },
@@ -82,9 +83,7 @@ export function Header() {
               className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-gray-500 border-gray-200 hover:border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-gray-400 dark:border-gray-700 dark:hover:border-gray-600"
               aria-label="Open search dialog"
             >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              <Search className="h-4 w-4" aria-hidden="true" />
               <span className="text-sm">Search...</span>
               <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-600 opacity-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
                 <span className="text-xs">⌘</span>K
@@ -115,9 +114,7 @@ export function Header() {
               onClick={() => setIsSearchOpen(true)}
               className="p-2"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
             
@@ -132,33 +129,9 @@ export function Header() {
             >
               <span className="sr-only">Open main menu</span>
               {isMobileMenuOpen ? (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <X className="h-6 w-6" />
               ) : (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+                <Menu className="h-6 w-6" />
               )}
             </Button>
           </div>

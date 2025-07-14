@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react'
 import { Button } from './Button'
+import { AlertTriangle, Wifi, Search } from 'lucide-react'
 
 interface ErrorStateProps {
   title?: string
@@ -16,26 +17,10 @@ interface ErrorStateProps {
 }
 
 const icons = {
-  error: (
-    <svg className="w-full h-full text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.864-.833-2.634 0L4.18 16.5c-.77.833.192 2.5 1.732 2.5z" />
-    </svg>
-  ),
-  warning: (
-    <svg className="w-full h-full text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.864-.833-2.634 0L4.18 16.5c-.77.833.192 2.5 1.732 2.5z" />
-    </svg>
-  ),
-  network: (
-    <svg className="w-full h-full text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
-    </svg>
-  ),
-  search: (
-    <svg className="w-full h-full text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
-  )
+  error: <AlertTriangle className="w-full h-full text-red-500" strokeWidth={1.5} />,
+  warning: <AlertTriangle className="w-full h-full text-yellow-500" strokeWidth={1.5} />,
+  network: <Wifi className="w-full h-full text-gray-500" strokeWidth={1.5} />,
+  search: <Search className="w-full h-full text-gray-500" strokeWidth={1.5} />
 }
 
 export function ErrorState({
