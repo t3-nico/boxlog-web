@@ -35,7 +35,7 @@
 }
 
 /* ダークモード */
-[data-theme="dark"] {
+.dark {
   --bg-primary: 10 10 10;         /* neutral-950 */
   --bg-secondary: 23 23 23;       /* neutral-900 */
   --bg-tertiary: 38 38 38;        /* neutral-800 */
@@ -71,7 +71,7 @@
 
 /* システムテーマに基づく自動切り替え */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
+  :root:not(.light):not(.dark) {
     --bg-primary: 10 10 10;
     --bg-secondary: 23 23 23;
     --bg-tertiary: 38 38 38;
@@ -110,7 +110,7 @@
     --focus-ring: 0 0 0;            /* black */
   }
   
-  [data-theme="dark"] {
+  .dark {
     --border-primary: 255 255 255;  /* white */
     --border-secondary: 212 212 212; /* neutral-300 */
     --focus-ring: 255 255 255;      /* white */
