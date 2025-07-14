@@ -100,9 +100,9 @@ function ThemeToggle() {
 - **ホバー**: blue-600, indigo-600, green-600, yellow-600, red-600
 
 ### ダークモード
-- **背景**: gray-900, gray-800, gray-700
-- **テキスト**: gray-50, gray-300, gray-400
-- **ボーダー**: gray-700, gray-600
+- **背景**: neutral-950, neutral-900, neutral-800 ⚠️ Tailwind標準のneutralカラーのみ使用
+- **テキスト**: neutral-50, neutral-300, neutral-400 ⚠️ Tailwind標準のneutralカラーのみ使用
+- **ボーダー**: neutral-700, neutral-600 ⚠️ Tailwind標準のneutralカラーのみ使用
 - **アクセント**: blue-500, indigo-500, green-500, yellow-500, red-500 ⚠️ ライトモードと同じ色を使用
 - **ホバー**: blue-600, indigo-600, green-600, yellow-600, red-600 ⚠️ ライトモードと同じ色を使用
 

@@ -83,14 +83,28 @@
   .bg-gray-50 { background-color: rgb(var(--bg-secondary)) !important; }
   .bg-gray-100 { background-color: rgb(var(--bg-tertiary)) !important; }
   
+  /* Neutral color overrides for dark mode */
+  .bg-neutral-950 { background-color: rgb(var(--bg-primary)) !important; }
+  .bg-neutral-900 { background-color: rgb(var(--bg-secondary)) !important; }
+  .bg-neutral-800 { background-color: rgb(var(--bg-tertiary)) !important; }
+  
   /* Text color overrides */
   .text-gray-900 { color: rgb(var(--text-primary)) !important; }
   .text-gray-500 { color: rgb(var(--text-secondary)) !important; }
   .text-gray-400 { color: rgb(var(--text-tertiary)) !important; }
   
+  /* Neutral text color overrides */
+  .text-neutral-50 { color: rgb(var(--text-primary)) !important; }
+  .text-neutral-300 { color: rgb(var(--text-secondary)) !important; }
+  .text-neutral-400 { color: rgb(var(--text-tertiary)) !important; }
+  
   /* Border color overrides */
   .border-gray-200 { border-color: rgb(var(--border-primary)) !important; }
   .border-gray-300 { border-color: rgb(var(--border-secondary)) !important; }
+  
+  /* Neutral border color overrides */
+  .border-neutral-700 { border-color: rgb(var(--border-primary)) !important; }
+  .border-neutral-600 { border-color: rgb(var(--border-secondary)) !important; }
   
   /* Accent color overrides */
   .bg-blue-500 { background-color: rgb(var(--accent-primary)) !important; }
