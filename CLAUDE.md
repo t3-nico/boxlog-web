@@ -473,6 +473,25 @@ function greet(name) {
 
 このガイドラインは定期的に見直し、必要に応じて更新してください。
 
+### Icon Guidelines
+- **Library**: Use Lucide React exclusively for all icons
+- **Import**: Import specific icons from 'lucide-react' (e.g., `import { Search, User } from 'lucide-react'`)
+- **Sizing**: Use consistent sizing classes:
+  - Small: `h-3 w-3` or `h-4 w-4`
+  - Medium: `h-5 w-5` or `h-6 w-6`
+  - Large: `h-8 w-8` or larger
+- **Colors**: Apply colors through className (e.g., `text-blue-500`, `text-gray-400`)
+- **Stroke Width**: Use `strokeWidth={1.5}` for thinner icons, default (2) for normal weight
+- **Accessibility**: Always include `aria-hidden="true"` for decorative icons, or proper `aria-label` for interactive icons
+- **Standard Icons**:
+  - Search: `Search`
+  - Navigation: `Menu`, `X`
+  - Content Types: `FileText` (docs), `Edit` (blog), `Package` (releases)
+  - Errors: `AlertTriangle`
+  - Social: `Twitter`, `Github`, `Linkedin`
+  - Actions: `Clock`, `Tag`, `Wifi`
+- **Never**: Use inline SVG or other icon libraries to maintain consistency
+
 ### Performance Requirements
 - Core Web Vitals targets: LCP < 2.5s, FID < 100ms, CLS < 0.1
 - Bundle size monitoring with automatic analysis
