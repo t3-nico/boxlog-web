@@ -26,7 +26,10 @@
       "Bash(git rm:*)",
       "Bash(git checkout:*)",
       "Bash(curl:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(npm run lint)"
     ],
     "deny": [
       "Bash(rm -rf:*)",

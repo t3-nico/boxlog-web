@@ -1,0 +1,126 @@
+/* 基本カラー定義（RGB値） */
+:root {
+  /* ライトモード */
+  --bg-primary: 255 255 255;      /* white */
+  --bg-secondary: 249 250 251;    /* gray-50 */
+  --bg-tertiary: 243 244 246;     /* gray-100 */
+  --text-primary: 17 24 39;       /* gray-900 */
+  --text-secondary: 107 114 128;  /* gray-500 */
+  --text-tertiary: 156 163 175;   /* gray-400 */
+  --border-primary: 229 231 235;  /* gray-200 */
+  --border-secondary: 209 213 219; /* gray-300 */
+  
+  /* アクセントカラー */
+  --accent-primary: 59 130 246;    /* blue-500 */
+  --accent-secondary: 99 102 241;  /* indigo-500 */
+  --accent-success: 16 185 129;    /* green-500 */
+  --accent-warning: 234 179 8;     /* yellow-500 */
+  --accent-error: 239 68 68;       /* red-500 */
+  
+  /* Interactive states */
+  --accent-primary-hover: 37 99 235;    /* blue-600 */
+  --accent-secondary-hover: 79 70 229;  /* indigo-600 */
+  --accent-success-hover: 5 150 105;    /* green-600 */
+  --accent-warning-hover: 202 138 4;    /* yellow-600 */
+  --accent-error-hover: 220 38 38;      /* red-600 */
+  
+  /* Surface colors */
+  --surface-elevated: 255 255 255;     /* white */
+  --surface-card: 249 250 251;         /* gray-50 */
+  --surface-overlay: 0 0 0;            /* black with opacity */
+  
+  /* Focus and selection */
+  --focus-ring: 59 130 246;            /* blue-500 */
+  --selection: 147 197 253;            /* blue-300 */
+}
+
+/* ダークモード */
+[data-theme="dark"] {
+  --bg-primary: 17 24 39;         /* gray-900 */
+  --bg-secondary: 31 41 55;       /* gray-800 */
+  --bg-tertiary: 55 65 81;        /* gray-700 */
+  --text-primary: 249 250 251;    /* gray-50 */
+  --text-secondary: 209 213 219;  /* gray-300 */
+  --text-tertiary: 156 163 175;   /* gray-400 */
+  --border-primary: 55 65 81;     /* gray-700 */
+  --border-secondary: 75 85 99;   /* gray-600 */
+  
+  /* アクセントカラー（ダークモードでも同じ色を使用） */
+  --accent-primary: 59 130 246;    /* blue-500 */
+  --accent-secondary: 99 102 241;  /* indigo-500 */
+  --accent-success: 16 185 129;    /* green-500 */
+  --accent-warning: 234 179 8;     /* yellow-500 */
+  --accent-error: 239 68 68;       /* red-500 */
+  
+  /* Interactive states */
+  --accent-primary-hover: 37 99 235;    /* blue-600 */
+  --accent-secondary-hover: 79 70 229;  /* indigo-600 */
+  --accent-success-hover: 5 150 105;    /* green-600 */
+  --accent-warning-hover: 202 138 4;    /* yellow-600 */
+  --accent-error-hover: 220 38 38;      /* red-600 */
+  
+  /* Surface colors */
+  --surface-elevated: 31 41 55;        /* gray-800 */
+  --surface-card: 55 65 81;            /* gray-700 */
+  --surface-overlay: 255 255 255;      /* white with opacity */
+  
+  /* Focus and selection */
+  --focus-ring: 59 130 246;            /* blue-500 */
+  --selection: 147 197 253;            /* blue-300 */
+}
+
+/* システムテーマに基づく自動切り替え */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-primary: 17 24 39;
+    --bg-secondary: 31 41 55;
+    --bg-tertiary: 55 65 81;
+    --text-primary: 249 250 251;
+    --text-secondary: 209 213 219;
+    --text-tertiary: 156 163 175;
+    --border-primary: 55 65 81;
+    --border-secondary: 75 85 99;
+    
+    --accent-primary: 59 130 246;
+    --accent-secondary: 99 102 241;
+    --accent-success: 16 185 129;
+    --accent-warning: 234 179 8;
+    --accent-error: 239 68 68;
+    
+    --accent-primary-hover: 37 99 235;
+    --accent-secondary-hover: 79 70 229;
+    --accent-success-hover: 5 150 105;
+    --accent-warning-hover: 202 138 4;
+    --accent-error-hover: 220 38 38;
+    
+    --surface-elevated: 31 41 55;
+    --surface-card: 55 65 81;
+    --surface-overlay: 255 255 255;
+    
+    --focus-ring: 59 130 246;
+    --selection: 147 197 253;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-primary: 0 0 0;        /* black */
+    --border-secondary: 55 65 81;   /* gray-700 */
+    --focus-ring: 0 0 0;            /* black */
+  }
+  
+  [data-theme="dark"] {
+    --border-primary: 255 255 255;  /* white */
+    --border-secondary: 209 213 219; /* gray-300 */
+    --focus-ring: 255 255 255;      /* white */
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

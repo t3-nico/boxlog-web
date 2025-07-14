@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import unified theme system */
+@import '../styles/theme.css';
+
 /* Enhanced responsive utilities */
 @layer utilities {
   /* Responsive text utilities */
@@ -70,6 +73,68 @@
 @layer utilities {
   .no-visual-artifacts {
     @apply m-0 border-0;
+  }
+}
+
+/* Unified color system overrides for existing Tailwind classes */
+@layer utilities {
+  /* Background color overrides */
+  .bg-white { background-color: rgb(var(--bg-primary)) !important; }
+  .bg-gray-50 { background-color: rgb(var(--bg-secondary)) !important; }
+  .bg-gray-100 { background-color: rgb(var(--bg-tertiary)) !important; }
+  
+  /* Text color overrides */
+  .text-gray-900 { color: rgb(var(--text-primary)) !important; }
+  .text-gray-500 { color: rgb(var(--text-secondary)) !important; }
+  .text-gray-400 { color: rgb(var(--text-tertiary)) !important; }
+  
+  /* Border color overrides */
+  .border-gray-200 { border-color: rgb(var(--border-primary)) !important; }
+  .border-gray-300 { border-color: rgb(var(--border-secondary)) !important; }
+  
+  /* Accent color overrides */
+  .bg-blue-500 { background-color: rgb(var(--accent-primary)) !important; }
+  .bg-blue-600 { background-color: rgb(var(--accent-primary-hover)) !important; }
+  .text-blue-500 { color: rgb(var(--accent-primary)) !important; }
+  .text-blue-600 { color: rgb(var(--accent-primary-hover)) !important; }
+  .border-blue-500 { border-color: rgb(var(--accent-primary)) !important; }
+  
+  /* Status color overrides */
+  .bg-green-500 { background-color: rgb(var(--accent-success)) !important; }
+  .bg-green-600 { background-color: rgb(var(--accent-success-hover)) !important; }
+  .text-green-500 { color: rgb(var(--accent-success)) !important; }
+  .text-green-600 { color: rgb(var(--accent-success-hover)) !important; }
+  
+  .bg-red-500 { background-color: rgb(var(--accent-error)) !important; }
+  .bg-red-600 { background-color: rgb(var(--accent-error-hover)) !important; }
+  .text-red-500 { color: rgb(var(--accent-error)) !important; }
+  .text-red-600 { color: rgb(var(--accent-error-hover)) !important; }
+  
+  .bg-yellow-500 { background-color: rgb(var(--accent-warning)) !important; }
+  .bg-yellow-600 { background-color: rgb(var(--accent-warning-hover)) !important; }
+  .text-yellow-500 { color: rgb(var(--accent-warning)) !important; }
+  .text-yellow-600 { color: rgb(var(--accent-warning-hover)) !important; }
+  
+  /* Hover state overrides */
+  .hover\:bg-gray-50:hover {
+    background-color: rgb(var(--bg-tertiary)) !important;
+  }
+  
+  .hover\:bg-blue-600:hover {
+    background-color: rgb(var(--accent-primary-hover)) !important;
+  }
+  
+  .hover\:text-blue-600:hover {
+    color: rgb(var(--accent-primary-hover)) !important;
+  }
+  
+  /* Focus ring overrides */
+  .focus\:ring-blue-500:focus {
+    --tw-ring-color: rgb(var(--focus-ring)) !important;
+  }
+  
+  .focus-visible\:ring-blue-500:focus-visible {
+    --tw-ring-color: rgb(var(--focus-ring)) !important;
   }
 }
 

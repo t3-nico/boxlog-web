@@ -12,5 +12,18 @@ type ThemeProviderProps = {
 }
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+  return (
+    <NextThemesProvider 
+      attribute="data-theme"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange={false}
+      {...props}
+    >
+      {children}
+    </NextThemesProvider>
+  )
 }
+
+// Hook for accessing theme context with unified color system support
+export { useTheme } from 'next-themes'
