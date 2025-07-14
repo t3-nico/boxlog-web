@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getTagColor } from '@/lib/tags-client'
+import { ChevronRight, AlertTriangle, Star } from 'lucide-react'
 
 // Local type definitions to avoid importing server-only lib
 interface ReleaseFrontMatter {
@@ -97,19 +98,19 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
           <div className="flex items-center gap-2 flex-shrink-0">
             {frontMatter.breaking && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
-                ⚠️ Breaking
+                <AlertTriangle className="w-3 h-3 mr-1" />
+                Breaking
               </span>
             )}
             
             {frontMatter.featured && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
-                ✨ Featured
+                <Star className="w-3 h-3 mr-1" />
+                Featured
               </span>
             )}
 
-            <svg className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors dark:text-gray-500 dark:group-hover:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors dark:text-gray-500 dark:group-hover:text-blue-400" />
           </div>
         </article>
       </Link>
@@ -152,13 +153,15 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
           <div className="flex flex-wrap gap-2 mb-4">
             {frontMatter.featured && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
-                ✨ Featured
+                <Star className="w-3 h-3 mr-1" />
+                Featured
               </span>
             )}
             
             {frontMatter.breaking && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
-                ⚠️ Breaking
+                <AlertTriangle className="w-3 h-3 mr-1" />
+                Breaking
               </span>
             )}
           </div>

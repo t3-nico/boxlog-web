@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { generateBreadcrumbs } from '@/lib/mdx'
+import { ChevronRight } from 'lucide-react'
 
 interface BreadcrumbsProps {
   slug: string
@@ -14,14 +15,7 @@ export function Breadcrumbs({ slug, title }: BreadcrumbsProps) {
       {breadcrumbs.map((crumb, index) => (
         <div key={`${crumb.href}-${index}`} className="flex items-center">
           {index > 0 && (
-            <svg 
-              className="w-4 h-4 mx-2 text-gray-400 dark:text-gray-500" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRight className="w-4 h-4 mx-2 text-gray-400 dark:text-gray-500" />
           )}
           
           {index === breadcrumbs.length - 1 ? (

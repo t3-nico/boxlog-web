@@ -1,3 +1,5 @@
+import { Clock, Calendar, Info, ChevronRight, Check, Clipboard, Wrench, TestTube, Eye } from 'lucide-react'
+
 interface UpcomingRelease {
   version: string
   expectedDate: string
@@ -78,25 +80,25 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
     planning: {
       label: '計画中',
       color: 'bg-gray-100 text-gray-800',
-      icon: '📋',
+      icon: Clipboard,
       progress: 10
     },
     development: {
       label: '開発中',
       color: 'bg-blue-100 text-blue-800',
-      icon: '🛠️',
+      icon: Wrench,
       progress: 50
     },
     testing: {
       label: 'テスト中',
       color: 'bg-yellow-100 text-yellow-800',
-      icon: '🧪',
+      icon: TestTube,
       progress: 80
     },
     review: {
       label: 'レビュー中',
       color: 'bg-purple-100 text-purple-800',
-      icon: '👀',
+      icon: Eye,
       progress: 90
     }
   }
@@ -127,9 +129,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             </span>
             
             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${config.color}`}>
-              <span role="img" aria-label={config.label}>
-                {config.icon}
-              </span>
+              <config.icon className="w-3 h-3" />
               {config.label}
             </span>
 
@@ -143,9 +143,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
 
           {/* Expected Date */}
           <div className="flex items-center gap-2 mb-4">
-            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+            <Calendar className="w-4 h-4 text-gray-400" />
             <span className={`text-sm ${isOverdue ? 'text-red-600 font-medium dark:text-red-400' : 'text-gray-600 dark:text-gray-400'}`}>
               予定日: {formatDate(release.expectedDate)}
               {isOverdue && ' (予定より遅れています)'}
@@ -196,9 +194,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
       {isFirst && (
         <div className="mt-4 pt-4 border-t border-blue-200 dark:border-blue-800">
           <div className="flex items-center gap-2 text-sm text-blue-700 dark:text-blue-300">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <Info className="w-4 h-4" />
             このリリースの詳細は開発ブログで随時更新されます
           </div>
         </div>
@@ -227,9 +223,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
     <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 dark:from-blue-900/20 dark:to-indigo-900/20 dark:border-blue-800">
       <div className="flex items-center gap-2 mb-3">
         <div className="w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center dark:bg-blue-600">
-          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+          <Clock className="w-3 h-3 text-white" />
         </div>
         <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
           次期リリース
@@ -265,9 +259,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
           className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium mt-2 dark:text-blue-400 dark:hover:text-blue-300"
         >
           詳細を見る
-          <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
+          <ChevronRight className="w-3 h-3 ml-1" />
         </a>
       </div>
     </div>
@@ -290,9 +282,7 @@ export function ReleaseTimeline() {
           {/* Current Release */}
           <div className="relative flex items-start gap-4">
             <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm dark:bg-green-900/30 dark:border-gray-900">
-              <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+              <Check className="w-5 h-5 text-green-600 dark:text-green-400" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
@@ -311,9 +301,7 @@ export function ReleaseTimeline() {
           {/* Upcoming Releases */}
           <div className="relative flex items-start gap-4">
             <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm dark:bg-blue-900/30 dark:border-gray-900">
-              <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
@@ -331,9 +319,7 @@ export function ReleaseTimeline() {
 
           <div className="relative flex items-start gap-4">
             <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm dark:bg-gray-700 dark:border-gray-900">
-              <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
+              <Clipboard className="w-5 h-5 text-gray-600 dark:text-gray-400" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">

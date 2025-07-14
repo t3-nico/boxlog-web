@@ -2,6 +2,7 @@
 
 import { Container, Heading, Text } from '@/components/ui'
 import { detailedFeatures } from '@/lib/features-data'
+import { Check, Zap, BarChart3, Lock } from 'lucide-react'
 
 export function FeatureDetails() {
   return (
@@ -33,9 +34,7 @@ export function FeatureDetails() {
                 {feature.features.map((item, itemIndex) => (
                   <div key={itemIndex} className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-5 h-5 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mt-0.5">
-                      <svg className="w-3 h-3 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
+                      <Check className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                     </div>
                     <Text>{item}</Text>
                   </div>
@@ -51,9 +50,9 @@ export function FeatureDetails() {
                   <div className="w-full h-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <span className="text-2xl">
-                          {index === 0 ? '⚡' : index === 1 ? '📊' : '🔒'}
-                        </span>
+                        <div className="text-blue-600 dark:text-blue-400">
+                          {index === 0 ? <Zap className="w-8 h-8" /> : index === 1 ? <BarChart3 className="w-8 h-8" /> : <Lock className="w-8 h-8" />}
+                        </div>
                       </div>
                       <Text className="text-gray-600 font-medium">
                         {feature.title} Preview

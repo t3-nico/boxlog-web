@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { type NavigationItem, type NavigationSection } from '@/lib/navigation'
+import { ExternalLink } from 'lucide-react'
 
 interface NavigationItemProps {
   item: NavigationItem
@@ -37,9 +38,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
               </span>
             )}
             {item.external && (
-              <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              <ExternalLink className="w-3 h-3 ml-1" />
             )}
           </Link>
         ) : (

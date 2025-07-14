@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Heading, Text } from '@/components/ui'
 import { UnifiedTagData, getTagColor } from '@/lib/tags-client'
+import { FileText, BookOpen, FileSpreadsheet, Star, AlertTriangle } from 'lucide-react'
 
 interface UnifiedTagContentProps {
   tagData: UnifiedTagData
@@ -40,23 +41,11 @@ export function UnifiedTagContent({ tagData }: UnifiedTagContentProps) {
   const getContentTypeIcon = (type: string) => {
     switch (type) {
       case 'blog':
-        return (
-          <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-          </svg>
-        )
+        return <FileText className="w-4 h-4 text-blue-600" />
       case 'release':
-        return (
-          <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        )
+        return <FileSpreadsheet className="w-4 h-4 text-green-600" />
       case 'doc':
-        return (
-          <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        )
+        return <BookOpen className="w-4 h-4 text-purple-600" />
       default:
         return null
     }
@@ -134,13 +123,15 @@ export function UnifiedTagContent({ tagData }: UnifiedTagContentProps) {
 
                     {content.featured && (
                       <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
-                        ✨ Featured
+                        <Star className="w-3 h-3 mr-1" />
+                        Featured
                       </span>
                     )}
 
                     {content.breaking && (
                       <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
-                        ⚠️ Breaking
+                        <AlertTriangle className="w-3 h-3 mr-1" />
+                        Breaking
                       </span>
                     )}
                   </div>
@@ -190,9 +181,7 @@ export function UnifiedTagContent({ tagData }: UnifiedTagContentProps) {
       ) : (
         <div className="text-center py-16">
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 dark:bg-gray-700">
-            <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+            <FileSpreadsheet className="w-8 h-8 text-gray-400 dark:text-gray-500" />
           </div>
           <Heading as="h3" size="lg" className="mb-2">
             コンテンツが見つかりませんでした

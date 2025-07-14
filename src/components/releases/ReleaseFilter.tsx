@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { Filter, ChevronDown, CheckCircle, Star, AlertTriangle, X } from 'lucide-react'
 // Local type definition
 interface TagCount {
   tag: string
@@ -47,9 +48,7 @@ export function ReleaseFilter({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center dark:bg-blue-900/30">
-              <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z" />
-              </svg>
+              <Filter className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               フィルター
@@ -75,14 +74,9 @@ export function ReleaseFilter({
               onClick={() => setIsExpanded(!isExpanded)}
               className="p-1 text-gray-400 hover:text-gray-600 transition-colors lg:hidden dark:text-gray-500 dark:hover:text-gray-400"
             >
-              <svg 
+              <ChevronDown 
                 className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              />
             </button>
           </div>
         </div>
@@ -181,9 +175,7 @@ export function CompactReleaseFilter({
       onClick={onOpenFilter}
       className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors dark:border-gray-600 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z" />
-      </svg>
+      <Filter className="w-4 h-4" />
       フィルター
       {hasActiveFilters && (
         <span className="inline-flex items-center justify-center w-2 h-2 bg-blue-600 rounded-full"></span>
@@ -231,9 +223,7 @@ export function FilterSummary({
     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 dark:bg-blue-900/20 dark:border-blue-800">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-          </svg>
+          <CheckCircle className="w-5 h-5 text-blue-600" />
           <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
             {resultCount}件のリリースが見つかりました（全{totalCount}件中）
           </span>
@@ -251,24 +241,26 @@ export function FilterSummary({
         {/* Quick Filters */}
         {showFeaturedOnly && (
           <span className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-blue-200 rounded-full text-sm">
-            ✨ 注目リリース
+            <Star className="w-4 h-4 mr-1" />
+            注目リリース
             <button
               onClick={onFeaturedToggle}
               className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
             >
-              ×
+              <X className="w-3 h-3" />
             </button>
           </span>
         )}
 
         {showBreakingOnly && (
           <span className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-blue-200 rounded-full text-sm">
-            ⚠️ 破壊的変更
+            <AlertTriangle className="w-4 h-4 mr-1" />
+            破壊的変更
             <button
               onClick={onBreakingToggle}
               className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
             >
-              ×
+              <X className="w-3 h-3" />
             </button>
           </span>
         )}
@@ -284,7 +276,7 @@ export function FilterSummary({
               onClick={() => onTypeRemove(type)}
               className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
             >
-              ×
+              <X className="w-3 h-3" />
             </button>
           </span>
         ))}
@@ -300,7 +292,7 @@ export function FilterSummary({
               onClick={() => onTagRemove(tag)}
               className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
             >
-              ×
+              <X className="w-3 h-3" />
             </button>
           </span>
         ))}
