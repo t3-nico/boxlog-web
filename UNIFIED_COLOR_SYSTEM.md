@@ -97,12 +97,16 @@ function ThemeToggle() {
 - **テキスト**: gray-900, gray-500, gray-400
 - **ボーダー**: gray-200, gray-300
 - **アクセント**: blue-500, indigo-500, green-500, yellow-500, red-500
+- **ホバー**: blue-600, indigo-600, green-600, yellow-600, red-600
 
 ### ダークモード
 - **背景**: gray-900, gray-800, gray-700
 - **テキスト**: gray-50, gray-300, gray-400
 - **ボーダー**: gray-700, gray-600
-- **アクセント**: blue-400, indigo-400, green-400, yellow-400, red-400
+- **アクセント**: blue-500, indigo-500, green-500, yellow-500, red-500 ⚠️ ライトモードと同じ色を使用
+- **ホバー**: blue-600, indigo-600, green-600, yellow-600, red-600 ⚠️ ライトモードと同じ色を使用
+
+**重要**: アクセントカラーは、ライトモードとダークモードで同じ色（blue-500、green-500など）を使用します。これにより、ブランドカラーの一貫性を保ちます。
 
 ## アクセシビリティ対応
 
