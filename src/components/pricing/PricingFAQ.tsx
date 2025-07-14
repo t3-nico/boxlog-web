@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Container, Heading, Text, Button } from '@/components/ui'
 import { faqItems } from '@/lib/pricing-data'
+import { ChevronDown } from 'lucide-react'
 
 export function PricingFAQ() {
   const [openItems, setOpenItems] = useState<number[]>([])
@@ -48,16 +49,11 @@ export function PricingFAQ() {
                       {item.question}
                     </Heading>
                     <div className="flex-shrink-0">
-                      <svg
+                      <ChevronDown
                         className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform ${
                           openItems.includes(index) ? 'rotate-180' : ''
                         }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                      />
                     </div>
                   </div>
                 </button>
