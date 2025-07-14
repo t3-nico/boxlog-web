@@ -10,9 +10,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const buttonVariants = {
   variant: {
-    primary: 'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-500 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200',
-    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700',
-    outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800',
+    primary: 'bg-accent-primary text-white hover:bg-accent-primary hover:opacity-90 focus:ring-accent-primary',
+    secondary: 'bg-bg-tertiary text-text-primary hover:bg-bg-tertiary hover:opacity-90 focus:ring-accent-primary',
+    outline: 'border border-border-primary bg-bg-primary text-text-primary hover:bg-bg-tertiary focus:ring-accent-primary',
   },
   size: {
     sm: 'px-3 py-1.5 text-sm',
@@ -25,7 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', asChild = false, children, ...props }, ref) => {
     const baseClasses = cn(
       'inline-flex items-center justify-center rounded-lg font-medium transition-colors',
-      'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900',
+      'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-primary',
       'disabled:opacity-50 disabled:pointer-events-none',
       buttonVariants.variant[variant],
       buttonVariants.size[size],

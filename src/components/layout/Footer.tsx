@@ -53,7 +53,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 dark:bg-gray-950" aria-labelledby="footer-heading">
+    <footer className="bg-bg-tertiary" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -65,11 +65,11 @@ export function Footer() {
             <div className="col-span-1 md:col-span-2 lg:col-span-2">
               <Link
                 href="/"
-                className="text-2xl font-bold text-white hover:text-gray-300 transition-colors"
+                className="text-2xl font-bold text-text-primary hover:text-text-secondary transition-colors"
               >
                 YourSaaS
               </Link>
-              <p className="mt-4 text-base text-gray-400 max-w-md">
+              <p className="mt-4 text-base text-text-tertiary max-w-md">
                 Build your next SaaS product with confidence. Transform your ideas into reality 
                 with our powerful platform and enterprise-grade tools.
               </p>
@@ -77,7 +77,7 @@ export function Footer() {
 
             {/* Product */}
             <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-white tracking-wider uppercase">
+              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Product
               </h3>
               <ul className="mt-4 space-y-3">
@@ -85,7 +85,7 @@ export function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-base text-gray-400 hover:text-white transition-colors"
+                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -96,7 +96,7 @@ export function Footer() {
 
             {/* Company */}
             <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-white tracking-wider uppercase">
+              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Company
               </h3>
               <ul className="mt-4 space-y-3">
@@ -104,7 +104,7 @@ export function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-base text-gray-400 hover:text-white transition-colors"
+                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -115,7 +115,7 @@ export function Footer() {
 
             {/* Resources */}
             <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-white tracking-wider uppercase">
+              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Resources
               </h3>
               <ul className="mt-4 space-y-3">
@@ -123,7 +123,7 @@ export function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-base text-gray-400 hover:text-white transition-colors"
+                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -134,7 +134,7 @@ export function Footer() {
 
             {/* Legal */}
             <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-white tracking-wider uppercase">
+              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Legal
               </h3>
               <ul className="mt-4 space-y-3">
@@ -142,7 +142,7 @@ export function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-base text-gray-400 hover:text-white transition-colors"
+                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -153,10 +153,10 @@ export function Footer() {
           </div>
 
           {/* Bottom section */}
-          <div className="mt-12 pt-8 border-t border-gray-800 dark:border-gray-700">
+          <div className="mt-12 pt-8 border-t border-border-secondary">
             <div className="flex flex-col md:flex-row justify-between items-center">
               {/* Copyright */}
-              <p className="text-base text-gray-400">
+              <p className="text-base text-text-tertiary">
                 &copy; {new Date().getFullYear()} YourSaaS, Inc. All rights reserved.
               </p>
 
@@ -167,7 +167,7 @@ export function Footer() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="text-gray-400 hover:text-white transition-colors"
+                      className="text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       <span className="sr-only">{item.name}</span>
                       {item.icon}

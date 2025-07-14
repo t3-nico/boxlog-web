@@ -45,7 +45,7 @@ export function Header() {
   return (
     <header
       id="navigation"
-      className="fixed top-0 left-0 right-0 z-[9999] bg-white/95 backdrop-blur-sm dark:bg-gray-900/95"
+      className="fixed top-0 left-0 right-0 z-[9999] bg-bg-primary/95 backdrop-blur-sm"
       role="banner"
     >
       <Container>
@@ -54,7 +54,7 @@ export function Header() {
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors dark:text-gray-100 dark:hover:text-gray-300"
+              className="text-xl font-bold text-text-primary hover:text-text-secondary transition-colors"
             >
               YourSaaS
             </Link>
@@ -66,7 +66,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors dark:text-gray-300 dark:hover:text-gray-100"
+                className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
               >
                 {item.name}
               </Link>
@@ -80,12 +80,12 @@ export function Header() {
               variant="outline"
               size="sm"
               onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-gray-500 border-gray-200 hover:border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-gray-400 dark:border-gray-700 dark:hover:border-gray-600"
+              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-text-secondary border-border-primary hover:border-border-secondary focus:ring-2 focus:ring-accent-primary focus:ring-offset-2"
               aria-label="Open search dialog"
             >
               <Search className="h-4 w-4" aria-hidden="true" />
               <span className="text-sm">Search...</span>
-              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] font-medium text-gray-600 opacity-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600">
+              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-bg-tertiary px-1.5 font-mono text-[10px] font-medium text-text-secondary opacity-100 border-border-primary">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </Button>
@@ -94,7 +94,7 @@ export function Header() {
             
             <Link
               href="/login"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors dark:text-gray-300 dark:hover:text-gray-100"
+              className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
             >
               Login
             </Link>
@@ -125,7 +125,7 @@ export function Header() {
               variant="outline"
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="border-0 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="border-0 bg-transparent hover:bg-bg-tertiary"
             >
               <span className="sr-only">Open main menu</span>
               {isMobileMenuOpen ? (
@@ -140,21 +140,21 @@ export function Header() {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200 shadow-lg dark:bg-gray-900 dark:border-gray-700">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-bg-primary border-t border-border-primary shadow-lg">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800"
+                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary rounded-md transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-4 pb-2 border-t border-gray-200 space-y-2 dark:border-gray-700">
+              <div className="pt-4 pb-2 border-t border-border-primary space-y-2">
                 <Link
                   href="/login"
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800"
+                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary rounded-md transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Login
