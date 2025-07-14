@@ -30,7 +30,9 @@
       "Bash(npm run dev:*)",
       "Bash(npm run type-check:*)",
       "Bash(npm run lint)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(chmod:*)",
+      "Bash(./scripts/color-cleanup.sh:*)"
     ],
     "deny": [
       "Bash(rm -rf:*)",

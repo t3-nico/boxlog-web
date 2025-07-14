@@ -26,7 +26,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
     return (
       <Component
         className={cn(
-          'text-gray-900 dark:text-gray-100 tracking-tight',
+          'text-text-primary tracking-tight',
           headingVariants.size[size],
           className
         )}
@@ -58,9 +58,9 @@ const textVariants = {
     xl: 'text-xl',
   },
   variant: {
-    default: 'text-gray-900 dark:text-gray-100',
-    muted: 'text-gray-600 dark:text-gray-400',
-    subtle: 'text-gray-500 dark:text-gray-500',
+    default: 'text-text-primary',
+    muted: 'text-text-secondary',
+    subtle: 'text-text-tertiary',
   },
 }
 
