@@ -22,6 +22,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Framework**: Next.js 14 with App Router and Server Components
 - **Language**: TypeScript with strict mode
 - **Styling**: Tailwind CSS with CSS variables for theming
+- **UI Components**: shadcn/ui + Radix UI primitives for component library
 - **Content**: MDX for blog posts, docs, and releases
 - **Internationalization**: next-intl with English and Japanese locales
 - **Theme**: next-themes with system/dark/light mode support
@@ -110,6 +111,35 @@ src/
 - **TypeScript**: Strict mode with comprehensive type definitions
 - **Error Handling**: Error boundaries and graceful degradation
 - **Testing**: Accessibility and performance testing integrated
+
+### UI/UX Component Development Guidelines
+
+#### **Primary Strategy: shadcn/ui First**
+- **Always prefer shadcn/ui components** for new UI development
+- Use Radix UI primitives through shadcn/ui for consistent behavior and accessibility
+- Maintain component library consistency with the main application
+
+#### **Component Selection Priority**
+1. **First Choice**: Use existing shadcn/ui components (Button, Card, Form, etc.)
+2. **Second Choice**: Extend shadcn/ui components with composition patterns
+3. **Last Resort**: Create custom components only when shadcn/ui cannot fulfill requirements
+
+#### **Custom Component Guidelines**
+- **Avoid custom UI components** unless absolutely necessary for project-specific functionality
+- When creating custom components, follow shadcn/ui patterns and Tailwind conventions
+- Use Radix UI primitives as base when shadcn/ui doesn't provide the needed component
+- Ensure all custom components maintain accessibility standards (WCAG 2.1 AA)
+
+#### **Future Design Changes**
+- **Design system evolution** should align with shadcn/ui capabilities
+- When redesigning existing components, prioritize migrating to shadcn/ui equivalents
+- Collaborate with design team to ensure new designs can leverage existing component library
+- Document any unavoidable custom components with clear justification
+
+#### **Current Component Status**
+- **shadcn/ui Components (74%)**: Button, Card, Input, Form, Dialog, Select, Switch, etc.
+- **Custom Components (26%)**: Container, Typography, ThemeToggle, ErrorBoundary, etc.
+- Target: Increase shadcn/ui usage percentage during design updates
 
 ### Build & Deployment
 - **Platform**: Optimized for Vercel deployment
