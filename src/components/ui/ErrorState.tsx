@@ -74,7 +74,7 @@ export function ErrorState({
         </div>
 
         {action && (
-          <Button onClick={action.onClick} size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}>
+          <Button onClick={action.onClick} size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'default'}>
             {action.label}
           </Button>
         )}
