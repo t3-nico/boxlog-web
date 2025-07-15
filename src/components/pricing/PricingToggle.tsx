@@ -1,8 +1,6 @@
 'use client'
 
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
-import { Badge } from '@/components/ui/badge'
+import { Label, Switch, Badge } from '@/components/ui'
 import { savingsText } from '@/lib/pricing-data'
 
 interface PricingToggleProps {

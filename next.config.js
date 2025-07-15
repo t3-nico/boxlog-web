@@ -8,9 +8,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  experimental: {
-    optimizePackageImports: ['@/components', '@/lib'],
-  },
+  // experimental: {
+  //   optimizePackageImports: ['@/components', '@/lib'],
+  // },
   images: {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000, // 1 year
