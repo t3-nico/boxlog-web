@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { Container } from '@/components/ui/Container'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading, Text } from '@/components/ui/typography'
 import Link from 'next/link'
 
 export default function Home() {
@@ -67,7 +67,7 @@ export default function Home() {
             
             {/* Trust indicators */}
             <div className="mt-16 pt-8 border-t border-neutral-200/50 dark:border-neutral-700/50">
-              <Text size="sm" variant="subtle" className="mb-6">
+              <Text size="sm" variant="muted" className="mb-6">
                 Trusted by teams at
               </Text>
               <div className="flex items-center justify-center gap-8 opacity-60">

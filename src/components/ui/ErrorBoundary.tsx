@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ErrorInfo, ReactNode } from 'react'
-import { Container } from './Container'
+import { Container } from './container'
 import { Button } from './button'
 
 interface ErrorBoundaryState {

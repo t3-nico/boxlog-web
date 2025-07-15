@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { useState } from 'react'
-import { Container } from '@/components/ui/Container'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import { 
   Form,

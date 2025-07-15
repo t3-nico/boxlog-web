@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import { Container } from '@/components/ui/Container'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading, Text } from '@/components/ui/typography'
 import { ShareButton } from './ShareButton'
 
 // Local type definitions and utilities

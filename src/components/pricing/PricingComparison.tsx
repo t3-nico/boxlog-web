@@ -1,7 +1,7 @@
 'use client'
 
-import { Container } from '@/components/ui/Container'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading, Text } from '@/components/ui/typography'
 import { detailedFeatures, pricingPlans } from '@/lib/pricing-data'
 import { Check, X } from 'lucide-react'
 

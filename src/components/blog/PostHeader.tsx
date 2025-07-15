@@ -1,7 +1,7 @@
 'use client'
 
-import { Container } from '@/components/ui/Container'
-import { Heading } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading } from '@/components/ui/typography'
 import { BlogPostFrontMatter } from '@/lib/blog'
 
 interface PostHeaderProps {

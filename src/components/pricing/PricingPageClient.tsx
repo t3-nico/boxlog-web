@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Container } from '@/components/ui/Container'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import { PricingToggle } from '@/components/pricing/PricingToggle'
 import { PricingCard } from '@/components/pricing/PricingCard'

@@ -1,4 +1,4 @@
-import { Heading, Text } from '@/components/ui/Typography'
+import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 

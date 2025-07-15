@@ -18,10 +18,10 @@ export function ThemeToggle() {
       <Button
         variant="outline"
         size="sm"
-        className="w-9 h-9 p-0"
+        className="h-8 w-8 p-0"
         disabled
       >
-        <span className="sr-only">テーマを切り替え</span>
+        <Sun className="h-4 w-4" />
       </Button>
     )
   }
@@ -30,24 +30,14 @@ export function ThemeToggle() {
     <Button
       variant="outline"
       size="sm"
-      className="w-9 h-9 p-0 border-border-primary hover:border-border-secondary"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      aria-label="テーマを切り替え"
+      className="h-8 w-8 p-0"
     >
       {theme === 'dark' ? (
-        <Sun 
-          className="h-4 w-4 text-accent-warning transition-all duration-200" 
-          aria-hidden="true" 
-        />
+        <Sun className="h-4 w-4" />
       ) : (
-        <Moon 
-          className="h-4 w-4 text-text-secondary transition-all duration-200" 
-          aria-hidden="true" 
-        />
+        <Moon className="h-4 w-4" />
       )}
-      <span className="sr-only">
-        {theme === 'dark' ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
-      </span>
     </Button>
   )
 }

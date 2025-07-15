@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Heading, Text } from '@/components/ui/typography'
 
 export interface TeamMemberData {
   id: string

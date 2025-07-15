@@ -10,7 +10,7 @@ import { mdxComponents } from '@/components/docs/MDXComponents'
 import { Breadcrumbs } from '@/components/docs/Breadcrumbs'
 import { PageNavigation } from '@/components/docs/PageNavigation'
 import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Heading, Text } from '@/components/ui/typography'
 import { ContentData } from '@/types/content'
 
 interface PageParams {

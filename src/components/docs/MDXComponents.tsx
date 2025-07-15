@@ -1,4 +1,4 @@
-import { Heading, Text } from '@/components/ui/Typography'
+import { Heading, Text } from '@/components/ui/typography'
 import Link from 'next/link'
 import Image from 'next/image'
 import { MDXComponents } from 'mdx/types'

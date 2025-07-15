@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Container } from '@/components/ui/Container'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading, Text } from '@/components/ui/typography'
 import { features } from '@/lib/features-data'
 
 const categoryColors = {

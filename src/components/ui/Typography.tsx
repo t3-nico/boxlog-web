@@ -1,86 +1,59 @@
-import { HTMLAttributes, forwardRef } from 'react'
-import { cn } from '@/lib/utils'
+import React from 'react'
 
-// Heading component
-export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
+export interface HeadingProps {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl'
   children: React.ReactNode
+  className?: string
 }
 
-const headingVariants = {
-  size: {
-    xs: 'text-xs font-semibold',
-    sm: 'text-sm font-semibold',
-    md: 'text-base font-semibold',
-    lg: 'text-lg font-semibold',
-    xl: 'text-xl font-bold',
-    '2xl': 'text-2xl font-bold',
-    '3xl': 'text-3xl font-bold',
-    '4xl': 'text-4xl font-bold',
-  },
-}
-
-export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
-  ({ className, as: Component = 'h2', size = 'md', children, ...props }, ref) => {
-    return (
-      <Component
-        className={cn(
-          'text-text-primary tracking-tight',
-          headingVariants.size[size],
-          className
-        )}
-        ref={ref}
-        {...props}
-      >
-        {children}
-      </Component>
-    )
-  }
-)
-
-Heading.displayName = 'Heading'
-
-// Text component
-export interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
+export interface TextProps {
   as?: 'p' | 'span' | 'div'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'default' | 'muted' | 'subtle'
+  variant?: 'default' | 'muted' | 'light'
   children: React.ReactNode
+  className?: string
 }
 
-const textVariants = {
-  size: {
+export function Heading({ as: Component = 'h1', size = 'xl', children, className = '' }: HeadingProps) {
+  const sizeClasses = {
     xs: 'text-xs',
     sm: 'text-sm',
     md: 'text-base',
     lg: 'text-lg',
     xl: 'text-xl',
-  },
-  variant: {
-    default: 'text-text-primary',
-    muted: 'text-text-secondary',
-    subtle: 'text-text-tertiary',
-  },
+    '2xl': 'text-2xl',
+    '3xl': 'text-3xl',
+    '4xl': 'text-4xl',
+    '5xl': 'text-5xl',
+    '6xl': 'text-6xl'
+  }
+
+  return (
+    <Component className={`font-bold ${sizeClasses[size]} ${className}`}>
+      {children}
+    </Component>
+  )
 }
 
-export const Text = forwardRef<HTMLParagraphElement, TextProps>(
-  ({ className, as: Component = 'p', size = 'md', variant = 'default', children, ...props }, ref) => {
-    return (
-      <Component
-        className={cn(
-          'leading-relaxed',
-          textVariants.size[size],
-          textVariants.variant[variant],
-          className
-        )}
-        ref={ref}
-        {...props}
-      >
-        {children}
-      </Component>
-    )
+export function Text({ as: Component = 'p', size = 'md', variant = 'default', children, className = '' }: TextProps) {
+  const sizeClasses = {
+    xs: 'text-xs',
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg',
+    xl: 'text-xl'
   }
-)
 
-Text.displayName = 'Text'
+  const variantClasses = {
+    default: 'text-gray-900 dark:text-gray-100',
+    muted: 'text-gray-600 dark:text-gray-400',
+    light: 'text-gray-500 dark:text-gray-500'
+  }
+
+  return (
+    <Component className={`${sizeClasses[size]} ${variantClasses[variant]} ${className}`}>
+      {children}
+    </Component>
+  )
+}

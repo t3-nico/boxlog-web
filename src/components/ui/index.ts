@@ -5,7 +5,7 @@
 // etc.
 
 export type { ButtonProps } from './button'
-export type { ContainerProps } from './Container'
-export type { HeadingProps, TextProps } from './Typography'
+export type { ContainerProps } from './container'
+export type { HeadingProps, TextProps } from './typography'
 export type { InputProps } from './input'
 export type { BadgeProps } from './badge'

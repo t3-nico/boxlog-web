@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import { Container } from '@/components/ui/Container'
-import { Heading, Text } from '@/components/ui/Typography'
+import { Container } from '@/components/ui/container'
+import { Heading, Text } from '@/components/ui/typography'
 import { ReleaseCard } from '@/components/releases/ReleaseCard'
 import { 
   getAllReleaseMetas, 
