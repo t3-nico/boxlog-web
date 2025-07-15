@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Container } from '@/components/ui/container'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { SearchDialog } from '@/components/search/SearchDialog'
 import { Search, X, Menu } from 'lucide-react'
@@ -50,9 +49,9 @@ export function Header() {
       className="fixed top-0 left-0 right-0 z-[9999] bg-bg-primary/95 backdrop-blur-sm"
       role="banner"
     >
-      <Container>
+      <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+          {/* Logo and Navigation */}
           <div className="flex items-center">
             <Link
               href="/"
@@ -60,29 +59,29 @@ export function Header() {
             >
               YourSaaS
             </Link>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-6 ml-10">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-
           {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center">
             {/* Global search button */}
             <Button
               variant="outline"
               size="sm"
               onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-text-secondary border-border-primary hover:border-border-secondary focus:ring-2 focus:ring-accent-primary focus:ring-offset-2"
+              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-text-secondary border-border-primary hover:border-border-secondary focus:ring-2 focus:ring-accent-primary focus:ring-offset-2 mr-4"
               aria-label="Open search dialog"
             >
               <Search className="h-4 w-4" aria-hidden="true" />
@@ -92,19 +91,32 @@ export function Header() {
               </kbd>
             </Button>
             
-            <ThemeToggle />
-            
-            <Link
-              href="/login"
-              className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
+            <Button 
+              variant="ghost" 
+              className="text-text-secondary hover:text-text-primary hover:bg-bg-tertiary ml-4"
+              asChild
             >
-              Login
-            </Link>
-            <Button asChild>
+              <Link href="/login">
+                Login
+              </Link>
+            </Button>
+            <Button 
+              asChild
+              style={{
+                backgroundColor: 'var(--signup-btn-bg, #171717)',
+                color: 'var(--signup-btn-text, #ffffff)',
+                border: 'none'
+              }}
+              className="hover:opacity-90"
+            >
               <Link href="/signup">
                 Sign Up
               </Link>
             </Button>
+            
+            <div className="ml-6">
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile actions */}
@@ -153,26 +165,34 @@ export function Header() {
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-4 pb-2 border-t border-border-primary space-y-2">
-                <Link
-                  href="/login"
-                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary rounded-md transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+              <div className="pt-4 pb-2 border-t border-border-primary space-y-2 px-3">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-center text-text-secondary hover:text-text-primary hover:bg-bg-tertiary" 
+                  asChild
                 >
-                  Login
-                </Link>
-                <div className="px-3">
-                  <Button size="sm" className="w-full" asChild>
-                    <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                      Sign Up
-                    </Link>
-                  </Button>
-                </div>
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    Login
+                  </Link>
+                </Button>
+                <Button 
+                  className="w-full hover:opacity-90" 
+                  style={{
+                    backgroundColor: 'var(--signup-btn-bg, #171717)',
+                    color: 'var(--signup-btn-text, #ffffff)',
+                    border: 'none'
+                  }}
+                  asChild
+                >
+                  <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                    Sign Up
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
         )}
-      </Container>
+      </div>
       
       {/* Global search dialog */}
       <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />

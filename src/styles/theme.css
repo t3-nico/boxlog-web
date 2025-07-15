@@ -25,6 +25,10 @@
   /* Focus and selection */
   --focus-ring: 59 130 246;       /* blue-500 */
   --selection: 191 219 254;       /* blue-200 */
+  
+  /* Button colors */
+  --signup-btn-bg: #171717;       /* neutral-900 for light mode */
+  --signup-btn-text: #ffffff;     /* white for light mode */
 }
 
 /* ダークモード */
@@ -54,6 +58,10 @@
   /* Focus and selection */
   --focus-ring: 59 130 246;       /* blue-500 */
   --selection: 30 64 175;         /* blue-800 */
+  
+  /* Button colors */
+  --signup-btn-bg: #ffffff;       /* white for dark mode */
+  --signup-btn-text: #171717;     /* neutral-900 for dark mode */
 }
 
 /* システムテーマに基づく自動切り替え */
@@ -81,6 +89,9 @@
     
     --focus-ring: 59 130 246;
     --selection: 30 64 175;
+    
+    --signup-btn-bg: #ffffff;
+    --signup-btn-text: #171717;
   }
 }
 
