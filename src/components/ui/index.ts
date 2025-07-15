@@ -42,6 +42,48 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 export { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter } from './dialog'
 export { Separator } from './separator'
 export { ThemeToggle } from './ThemeToggle'
+export {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './form'
+export { Label } from './label'
+export { Textarea } from './textarea'
+export {
+  Command,
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+  CommandSeparator,
+} from './command'
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from './breadcrumb'
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs'
+export { Switch } from './switch'
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './pagination'
 
 export type { ButtonProps } from './button'
 export type { ContainerProps } from './Container'

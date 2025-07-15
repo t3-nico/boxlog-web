@@ -1,13 +1,30 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 import { useState } from 'react'
 import { Container, Heading, Text, Button } from '@/components/ui'
-import { 
-  ContactFormData, 
-  ValidationErrors, 
-  validateContactForm, 
-  sanitizeContactForm 
-} from '@/lib/form-validation'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+
+const formSchema = z.object({
+  name: z.string().min(1, 'お名前を入力してください').max(50, 'お名前は50文字以内で入力してください'),
+  email: z.string().email('有効なメールアドレスを入力してください'),
+  subject: z.string().min(1, '件名を入力してください').max(100, '件名は100文字以内で入力してください'),
+  message: z.string().min(10, 'メッセージは10文字以上で入力してください').max(1000, 'メッセージは1000文字以内で入力してください'),
+})
+
+type FormData = z.infer<typeof formSchema>
 
 interface FormState {
   isSubmitting: boolean
@@ -16,55 +33,23 @@ interface FormState {
 }
 
 export function ContactForm() {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  })
-  
-  const [errors, setErrors] = useState<ValidationErrors>({})
   const [formState, setFormState] = useState<FormState>({
     isSubmitting: false,
     isSubmitted: false,
     submitError: null
   })
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-    
-    // リアルタイムバリデーション - エラーがある場合のみクリア
-    if (errors[name as keyof ValidationErrors]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: undefined
-      }))
-    }
-  }
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+  })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // フォームデータのサニタイズ
-    const sanitizedData = sanitizeContactForm(formData)
-    
-    // バリデーション
-    const validation = validateContactForm(sanitizedData)
-    
-    if (!validation.isValid) {
-      setErrors(validation.errors)
-      return
-    }
-    
-    // エラーをクリア
-    setErrors({})
+  async function onSubmit(data: FormData) {
     setFormState(prev => ({ 
       ...prev, 
       isSubmitting: true, 
@@ -83,12 +68,7 @@ export function ContactForm() {
       })
       
       // フォームをリセット
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      })
+      form.reset()
       
     } catch (error) {
       setFormState({
@@ -214,157 +194,128 @@ export function ContactForm() {
 
             {/* お問い合わせフォーム */}
             <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                {/* エラーメッセージ */}
-                {formState.submitError && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 dark:bg-red-900/20 dark:border-red-800">
-                    <div className="flex items-start">
-                      <svg className="w-5 h-5 text-red-600 mt-0.5 mr-2 flex-shrink-0 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                      </svg>
-                      <Text size="sm" className="text-red-700 dark:text-red-300">
-                        {formState.submitError}
-                      </Text>
-                    </div>
-                  </div>
-                )}
-
-                {/* 名前 */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">
-                    お名前 <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:focus:border-blue-500 ${
-                      errors.name ? 'border-red-300 bg-red-50 dark:border-red-500 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                    }`}
-                    placeholder="山田 太郎"
-                    aria-describedby={errors.name ? 'name-error' : undefined}
-                    aria-invalid={!!errors.name}
-                    disabled={formState.isSubmitting}
-                  />
-                  {errors.name && (
-                    <Text id="name-error" size="sm" className="text-red-600 mt-1 dark:text-red-400">
-                      {errors.name}
-                    </Text>
-                  )}
-                </div>
-
-                {/* メールアドレス */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">
-                    メールアドレス <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:focus:border-blue-500 ${
-                      errors.email ? 'border-red-300 bg-red-50 dark:border-red-500 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                    }`}
-                    placeholder="example@email.com"
-                    aria-describedby={errors.email ? 'email-error' : undefined}
-                    aria-invalid={!!errors.email}
-                    disabled={formState.isSubmitting}
-                  />
-                  {errors.email && (
-                    <Text id="email-error" size="sm" className="text-red-600 mt-1 dark:text-red-400">
-                      {errors.email}
-                    </Text>
-                  )}
-                </div>
-
-                {/* 件名 */}
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">
-                    件名 <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:focus:border-blue-500 ${
-                      errors.subject ? 'border-red-300 bg-red-50 dark:border-red-500 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                    }`}
-                    placeholder="お問い合わせの件名を入力してください"
-                    aria-describedby={errors.subject ? 'subject-error' : undefined}
-                    aria-invalid={!!errors.subject}
-                    disabled={formState.isSubmitting}
-                  />
-                  {errors.subject && (
-                    <Text id="subject-error" size="sm" className="text-red-600 mt-1 dark:text-red-400">
-                      {errors.subject}
-                    </Text>
-                  )}
-                </div>
-
-                {/* メッセージ */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">
-                    メッセージ <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:focus:border-blue-500 ${
-                      errors.message ? 'border-red-300 bg-red-50 dark:border-red-500 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                    }`}
-                    placeholder="お問い合わせ内容を詳しくお聞かせください（10文字以上）"
-                    aria-describedby={errors.message ? 'message-error' : undefined}
-                    aria-invalid={!!errors.message}
-                    disabled={formState.isSubmitting}
-                  />
-                  {errors.message && (
-                    <Text id="message-error" size="sm" className="text-red-600 mt-1 dark:text-red-400">
-                      {errors.message}
-                    </Text>
-                  )}
-                  <Text size="sm" variant="muted" className="mt-1">
-                    {formData.message.length}/1000文字
-                  </Text>
-                </div>
-
-                {/* 送信ボタン */}
-                <div className="pt-4">
-                  <Button
-                    type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700"
-                    disabled={formState.isSubmitting}
-                  >
-                    {formState.isSubmitting ? (
-                      <div className="flex items-center justify-center">
-                        <svg className="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  {/* エラーメッセージ */}
+                  {formState.submitError && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 dark:bg-red-900/20 dark:border-red-800">
+                      <div className="flex items-start">
+                        <svg className="w-5 h-5 text-red-600 mt-0.5 mr-2 flex-shrink-0 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                         </svg>
-                        送信中...
+                        <Text size="sm" className="text-red-700 dark:text-red-300">
+                          {formState.submitError}
+                        </Text>
                       </div>
-                    ) : (
-                      'メッセージを送信'
-                    )}
-                  </Button>
-                </div>
+                    </div>
+                  )}
 
-                {/* プライバシーポリシー */}
-                <Text size="sm" variant="muted" className="text-center">
-                  このフォームを送信することで、
-                  <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
-                    プライバシーポリシー
-                  </a>
-                  に同意したものとみなします。
-                </Text>
-              </form>
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>お名前 <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="山田 太郎" 
+                            disabled={formState.isSubmitting}
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>メールアドレス <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="email"
+                            placeholder="example@email.com" 
+                            disabled={formState.isSubmitting}
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>件名 <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="お問い合わせの件名を入力してください" 
+                            disabled={formState.isSubmitting}
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>メッセージ <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="お問い合わせ内容を詳しくお聞かせください（10文字以上）"
+                            className="resize-vertical"
+                            rows={6}
+                            disabled={formState.isSubmitting}
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          {field.value?.length || 0}/1000文字
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="pt-4">
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={formState.isSubmitting}
+                    >
+                      {formState.isSubmitting ? (
+                        <div className="flex items-center justify-center">
+                          <svg className="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          送信中...
+                        </div>
+                      ) : (
+                        'メッセージを送信'
+                      )}
+                    </Button>
+                  </div>
+
+                  <Text size="sm" variant="muted" className="text-center">
+                    このフォームを送信することで、
+                    <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
+                      プライバシーポリシー
+                    </a>
+                    に同意したものとみなします。
+                  </Text>
+                </form>
+              </Form>
             </div>
           </div>
         </div>
