@@ -41,7 +41,8 @@ export { Badge } from './badge'
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './card'
 export { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter } from './dialog'
 export { Separator } from './separator'
-export { ThemeToggle } from './ThemeToggle'
+// ThemeToggle has dependencies, import directly
+// export { ThemeToggle } from './ThemeToggle'
 export {
   Form,
   FormControl,
@@ -53,17 +54,18 @@ export {
 } from './form'
 export { Label } from './label'
 export { Textarea } from './textarea'
-export {
-  Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandShortcut,
-  CommandSeparator,
-} from './command'
+// Command component has internal dependencies, import directly
+// export {
+//   Command,
+//   CommandDialog,
+//   CommandInput,
+//   CommandList,
+//   CommandEmpty,
+//   CommandGroup,
+//   CommandItem,
+//   CommandShortcut,
+//   CommandSeparator,
+// } from './command'
 export {
   Breadcrumb,
   BreadcrumbList,

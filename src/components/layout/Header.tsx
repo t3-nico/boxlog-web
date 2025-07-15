@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Button, Container, ThemeToggle } from '@/components/ui'
+import { Button, Container } from '@/components/ui'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { SearchDialog } from '@/components/search/SearchDialog'
 import { Search, X, Menu } from 'lucide-react'
 
