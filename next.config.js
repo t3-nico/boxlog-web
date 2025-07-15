@@ -33,6 +33,9 @@ const nextConfig = {
   },
   // Simplified webpack configuration
   webpack: (config, { dev, isServer }) => {
+    // Add explicit file extensions for better module resolution
+    config.resolve.extensions = ['.tsx', '.ts', '.jsx', '.js', '.json']
+    
     // Only apply optimizations in production
     if (!dev && !isServer) {
       // Simplified optimization settings
