@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode } from 'react'
-import { Button } from './Button'
+import { Button } from './button'
 import { AlertTriangle, Wifi, Search } from 'lucide-react'
 
 interface ErrorStateProps {

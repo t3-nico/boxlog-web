@@ -2,7 +2,7 @@
 
 import React, { ErrorInfo, ReactNode } from 'react'
 import { Container } from './Container'
-import { Button } from './Button'
+import { Button } from './button'
 
 interface ErrorBoundaryState {
   hasError: boolean
