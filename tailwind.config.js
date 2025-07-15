@@ -44,7 +44,7 @@ module.exports = {
           foreground: 'var(--card-foreground)',
         },
         
-        // New unified color system
+        // Unified neutral-based color system
         'bg': {
           'primary': 'rgb(var(--bg-primary) / <alpha-value>)',
           'secondary': 'rgb(var(--bg-secondary) / <alpha-value>)',
@@ -59,17 +59,26 @@ module.exports = {
           'primary': 'rgb(var(--border-primary) / <alpha-value>)',
           'secondary': 'rgb(var(--border-secondary) / <alpha-value>)',
         },
-        'accent': {
-          'primary': 'rgb(var(--accent-primary) / <alpha-value>)',
-          'secondary': 'rgb(var(--accent-secondary) / <alpha-value>)',
-          'success': 'rgb(var(--accent-success) / <alpha-value>)',
-          'warning': 'rgb(var(--accent-warning) / <alpha-value>)',
-          'error': 'rgb(var(--accent-error) / <alpha-value>)',
+        // Semantic colors for meaningful information only
+        'error': {
+          'color': 'rgb(var(--error-color) / <alpha-value>)',
+          'bg': 'rgb(var(--error-bg) / <alpha-value>)',
         },
-        'surface': {
-          'elevated': 'rgb(var(--surface-elevated) / <alpha-value>)',
-          'card': 'rgb(var(--surface-card) / <alpha-value>)',
-          'overlay': 'rgb(var(--surface-overlay) / <alpha-value>)',
+        'success': {
+          'color': 'rgb(var(--success-color) / <alpha-value>)',
+          'bg': 'rgb(var(--success-bg) / <alpha-value>)',
+        },
+        'warning': {
+          'color': 'rgb(var(--warning-color) / <alpha-value>)',
+          'bg': 'rgb(var(--warning-bg) / <alpha-value>)',
+        },
+        'link': {
+          'color': 'rgb(var(--link-color) / <alpha-value>)',
+          'hover': 'rgb(var(--link-hover) / <alpha-value>)',
+        },
+        'info': {
+          'color': 'rgb(var(--info-color) / <alpha-value>)',
+          'bg': 'rgb(var(--info-bg) / <alpha-value>)',
         },
       },
       borderRadius: {

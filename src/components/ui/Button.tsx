@@ -10,9 +10,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const buttonVariants = {
   variant: {
-    primary: 'bg-accent-primary text-white hover:bg-accent-primary hover:opacity-90 focus:ring-accent-primary',
-    secondary: 'bg-bg-tertiary text-text-primary hover:bg-bg-tertiary hover:opacity-90 focus:ring-accent-primary',
-    outline: 'border border-border-primary bg-bg-primary text-text-primary hover:bg-bg-tertiary focus:ring-accent-primary',
+    primary: 'bg-link-color text-neutral-50 hover:bg-link-hover focus:ring-link-color',
+    secondary: 'bg-bg-tertiary text-text-primary hover:bg-bg-tertiary hover:opacity-90 focus:ring-link-color',
+    outline: 'border border-border-primary bg-bg-primary text-text-primary hover:bg-bg-tertiary focus:ring-link-color',
   },
   size: {
     sm: 'px-3 py-1.5 text-sm',

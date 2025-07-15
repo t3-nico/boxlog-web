@@ -76,78 +76,94 @@
   }
 }
 
-/* Unified color system overrides for existing Tailwind classes */
+/* Neutral-only color system overrides */
 @layer utilities {
-  /* Background color overrides */
+  /* Background color overrides - force all non-semantic colors to neutral */
   .bg-white { background-color: rgb(var(--bg-primary)) !important; }
-  .bg-gray-50 { background-color: rgb(var(--bg-secondary)) !important; }
-  .bg-gray-100 { background-color: rgb(var(--bg-tertiary)) !important; }
+  .bg-neutral-50, .bg-gray-50, .bg-slate-50, .bg-zinc-50, .bg-stone-50 { background-color: rgb(var(--bg-primary)) !important; }
+  .bg-neutral-100, .bg-gray-100, .bg-slate-100, .bg-zinc-100, .bg-stone-100 { background-color: rgb(var(--bg-secondary)) !important; }
+  .bg-neutral-200, .bg-gray-200, .bg-slate-200, .bg-zinc-200, .bg-stone-200 { background-color: rgb(var(--bg-tertiary)) !important; }
+  .bg-neutral-300, .bg-gray-300, .bg-slate-300, .bg-zinc-300, .bg-stone-300 { background-color: rgb(var(--border-secondary)) !important; }
+  .bg-neutral-400, .bg-gray-400, .bg-slate-400, .bg-zinc-400, .bg-stone-400 { background-color: rgb(var(--text-tertiary)) !important; }
+  .bg-neutral-500, .bg-gray-500, .bg-slate-500, .bg-zinc-500, .bg-stone-500 { background-color: rgb(var(--text-tertiary)) !important; }
+  .bg-neutral-600, .bg-gray-600, .bg-slate-600, .bg-zinc-600, .bg-stone-600 { background-color: rgb(var(--text-secondary)) !important; }
+  .bg-neutral-700, .bg-gray-700, .bg-slate-700, .bg-zinc-700, .bg-stone-700 { background-color: rgb(var(--bg-tertiary)) !important; }
+  .bg-neutral-800, .bg-gray-800, .bg-slate-800, .bg-zinc-800, .bg-stone-800 { background-color: rgb(var(--bg-secondary)) !important; }
+  .bg-neutral-900, .bg-gray-900, .bg-slate-900, .bg-zinc-900, .bg-stone-900 { background-color: rgb(var(--bg-primary)) !important; }
+  .bg-neutral-950, .bg-gray-950, .bg-slate-950, .bg-zinc-950, .bg-stone-950 { background-color: rgb(var(--bg-primary)) !important; }
   
-  /* Neutral color overrides for dark mode */
-  .bg-neutral-950 { background-color: rgb(var(--bg-primary)) !important; }
-  .bg-neutral-900 { background-color: rgb(var(--bg-secondary)) !important; }
-  .bg-neutral-800 { background-color: rgb(var(--bg-tertiary)) !important; }
+  /* Text color overrides - force all non-semantic colors to neutral */
+  .text-neutral-50, .text-gray-50, .text-slate-50, .text-zinc-50, .text-stone-50 { color: rgb(var(--text-primary)) !important; }
+  .text-neutral-100, .text-gray-100, .text-slate-100, .text-zinc-100, .text-stone-100 { color: rgb(var(--text-primary)) !important; }
+  .text-neutral-200, .text-gray-200, .text-slate-200, .text-zinc-200, .text-stone-200 { color: rgb(var(--text-secondary)) !important; }
+  .text-neutral-300, .text-gray-300, .text-slate-300, .text-zinc-300, .text-stone-300 { color: rgb(var(--text-secondary)) !important; }
+  .text-neutral-400, .text-gray-400, .text-slate-400, .text-zinc-400, .text-stone-400 { color: rgb(var(--text-tertiary)) !important; }
+  .text-neutral-500, .text-gray-500, .text-slate-500, .text-zinc-500, .text-stone-500 { color: rgb(var(--text-tertiary)) !important; }
+  .text-neutral-600, .text-gray-600, .text-slate-600, .text-zinc-600, .text-stone-600 { color: rgb(var(--text-secondary)) !important; }
+  .text-neutral-700, .text-gray-700, .text-slate-700, .text-zinc-700, .text-stone-700 { color: rgb(var(--text-primary)) !important; }
+  .text-neutral-800, .text-gray-800, .text-slate-800, .text-zinc-800, .text-stone-800 { color: rgb(var(--text-primary)) !important; }
+  .text-neutral-900, .text-gray-900, .text-slate-900, .text-zinc-900, .text-stone-900 { color: rgb(var(--text-primary)) !important; }
+  .text-neutral-950, .text-gray-950, .text-slate-950, .text-zinc-950, .text-stone-950 { color: rgb(var(--text-primary)) !important; }
   
-  /* Text color overrides */
-  .text-gray-900 { color: rgb(var(--text-primary)) !important; }
-  .text-gray-500 { color: rgb(var(--text-secondary)) !important; }
-  .text-gray-400 { color: rgb(var(--text-tertiary)) !important; }
+  /* Border color overrides - force all non-semantic colors to neutral */
+  .border-neutral-100, .border-gray-100, .border-slate-100, .border-zinc-100, .border-stone-100 { border-color: rgb(var(--border-primary)) !important; }
+  .border-neutral-200, .border-gray-200, .border-slate-200, .border-zinc-200, .border-stone-200 { border-color: rgb(var(--border-primary)) !important; }
+  .border-neutral-300, .border-gray-300, .border-slate-300, .border-zinc-300, .border-stone-300 { border-color: rgb(var(--border-secondary)) !important; }
+  .border-neutral-400, .border-gray-400, .border-slate-400, .border-zinc-400, .border-stone-400 { border-color: rgb(var(--border-secondary)) !important; }
+  .border-neutral-500, .border-gray-500, .border-slate-500, .border-zinc-500, .border-stone-500 { border-color: rgb(var(--border-secondary)) !important; }
+  .border-neutral-600, .border-gray-600, .border-slate-600, .border-zinc-600, .border-stone-600 { border-color: rgb(var(--border-secondary)) !important; }
+  .border-neutral-700, .border-gray-700, .border-slate-700, .border-zinc-700, .border-stone-700 { border-color: rgb(var(--border-primary)) !important; }
+  .border-neutral-800, .border-gray-800, .border-slate-800, .border-zinc-800, .border-stone-800 { border-color: rgb(var(--border-primary)) !important; }
   
-  /* Neutral text color overrides */
-  .text-neutral-50 { color: rgb(var(--text-primary)) !important; }
-  .text-neutral-300 { color: rgb(var(--text-secondary)) !important; }
-  .text-neutral-400 { color: rgb(var(--text-tertiary)) !important; }
+  /* Override blue colors used for decorative purposes with neutral */
+  .bg-blue-50 { background-color: rgb(var(--bg-secondary)) !important; }
+  .bg-blue-100 { background-color: rgb(var(--bg-tertiary)) !important; }
+  .bg-blue-900 { background-color: rgb(var(--bg-tertiary)) !important; }
+  .text-blue-600, .text-blue-700 { color: rgb(var(--text-primary)) !important; }
   
-  /* Border color overrides */
-  .border-gray-200 { border-color: rgb(var(--border-primary)) !important; }
-  .border-gray-300 { border-color: rgb(var(--border-secondary)) !important; }
+  /* Override purple colors with neutral */
+  .bg-purple-50 { background-color: rgb(var(--bg-secondary)) !important; }
+  .bg-purple-100 { background-color: rgb(var(--bg-tertiary)) !important; }
   
-  /* Neutral border color overrides */
-  .border-neutral-700 { border-color: rgb(var(--border-primary)) !important; }
-  .border-neutral-600 { border-color: rgb(var(--border-secondary)) !important; }
-  
-  /* Accent color overrides */
-  .bg-blue-500 { background-color: rgb(var(--accent-primary)) !important; }
-  .bg-blue-600 { background-color: rgb(var(--accent-primary-hover)) !important; }
-  .text-blue-500 { color: rgb(var(--accent-primary)) !important; }
-  .text-blue-600 { color: rgb(var(--accent-primary-hover)) !important; }
-  .border-blue-500 { border-color: rgb(var(--accent-primary)) !important; }
-  
-  /* Status color overrides */
-  .bg-green-500 { background-color: rgb(var(--accent-success)) !important; }
-  .bg-green-600 { background-color: rgb(var(--accent-success-hover)) !important; }
-  .text-green-500 { color: rgb(var(--accent-success)) !important; }
-  .text-green-600 { color: rgb(var(--accent-success-hover)) !important; }
-  
-  .bg-red-500 { background-color: rgb(var(--accent-error)) !important; }
-  .bg-red-600 { background-color: rgb(var(--accent-error-hover)) !important; }
-  .text-red-500 { color: rgb(var(--accent-error)) !important; }
-  .text-red-600 { color: rgb(var(--accent-error-hover)) !important; }
-  
-  .bg-yellow-500 { background-color: rgb(var(--accent-warning)) !important; }
-  .bg-yellow-600 { background-color: rgb(var(--accent-warning-hover)) !important; }
-  .text-yellow-500 { color: rgb(var(--accent-warning)) !important; }
-  .text-yellow-600 { color: rgb(var(--accent-warning-hover)) !important; }
-  
-  /* Hover state overrides */
-  .hover\:bg-gray-50:hover {
-    background-color: rgb(var(--bg-tertiary)) !important;
+  /* Override gradient backgrounds */
+  .bg-gradient-to-br,
+  .bg-gradient-to-b,
+  .bg-gradient-to-r {
+    background-image: linear-gradient(135deg, rgb(var(--bg-primary)), rgb(var(--bg-secondary))) !important;
   }
   
-  .hover\:bg-blue-600:hover {
-    background-color: rgb(var(--accent-primary-hover)) !important;
+  .dark .bg-gradient-to-br,
+  .dark .bg-gradient-to-b,
+  .dark .bg-gradient-to-r {
+    background-image: linear-gradient(135deg, rgb(var(--bg-primary)), rgb(var(--bg-secondary))) !important;
   }
   
-  .hover\:text-blue-600:hover {
-    color: rgb(var(--accent-primary-hover)) !important;
-  }
+  /* Semantic colors for meaningful information only */
+  .text-red-500 { color: rgb(var(--error-color)) !important; }
+  .bg-red-50 { background-color: rgb(var(--error-bg)) !important; }
+  .bg-red-900 { background-color: rgb(var(--error-bg)) !important; }
+  
+  .text-green-500 { color: rgb(var(--success-color)) !important; }
+  .bg-green-50 { background-color: rgb(var(--success-bg)) !important; }
+  .bg-green-900 { background-color: rgb(var(--success-bg)) !important; }
+  
+  .text-yellow-500 { color: rgb(var(--warning-color)) !important; }
+  .bg-yellow-50 { background-color: rgb(var(--warning-bg)) !important; }
+  .bg-yellow-900 { background-color: rgb(var(--warning-bg)) !important; }
+  
+  .text-blue-500 { color: rgb(var(--link-color)) !important; }
+  .text-blue-600 { color: rgb(var(--link-hover)) !important; }
+  .hover\:text-blue-600:hover { color: rgb(var(--link-hover)) !important; }
+  
+  .text-indigo-500 { color: rgb(var(--info-color)) !important; }
+  .bg-indigo-50 { background-color: rgb(var(--info-bg)) !important; }
+  .bg-indigo-900 { background-color: rgb(var(--info-bg)) !important; }
   
   /* Focus ring overrides */
-  .focus\:ring-blue-500:focus {
-    --tw-ring-color: rgb(var(--focus-ring)) !important;
-  }
-  
-  .focus-visible\:ring-blue-500:focus-visible {
+  .focus\:ring-blue-500:focus,
+  .focus-visible\:ring-blue-500:focus-visible,
+  .focus\:ring-indigo-500:focus,
+  .focus-visible\:ring-indigo-500:focus-visible {
     --tw-ring-color: rgb(var(--focus-ring)) !important;
   }
 }
