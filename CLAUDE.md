@@ -86,6 +86,25 @@ src/
 - **Theme Toggle**: Supports system, dark, and light modes
 - **Persistence**: Theme preference stored in localStorage
 
+### Color System Rules
+- **Neutral-Only Palette**: Strictly use Tailwind's `neutral-50` to `neutral-950` for all UI elements
+- **Light Mode Colors**:
+  - Backgrounds: `neutral-50` (primary), `neutral-100` (secondary), `neutral-200` (tertiary)
+  - Text: `neutral-900` (primary), `neutral-600` (secondary), `neutral-400` (tertiary)
+  - Borders: `neutral-200` (primary), `neutral-300` (secondary)
+- **Dark Mode Colors**:
+  - Backgrounds: `neutral-900` (primary), `neutral-800` (secondary), `neutral-700` (tertiary)
+  - Text: `neutral-50` (primary), `neutral-300` (secondary), `neutral-500` (tertiary)
+  - Borders: `neutral-700` (primary), `neutral-600` (secondary)
+- **Semantic Colors** (only for meaningful information):
+  - Error: `red-500` (text), `red-50/red-900` (background)
+  - Success: `green-500` (text), `green-50/green-900` (background)
+  - Warning: `yellow-500` (text), `yellow-50/yellow-900` (background)
+  - Link: `blue-500` (default), `blue-600` (hover)
+  - Info: `indigo-500` (text), `indigo-50/indigo-900` (background)
+- **Forbidden Colors**: Never use `gray-*`, `slate-*`, `zinc-*`, `stone-*` or any decorative blues, purples, etc.
+- **Implementation**: Color overrides in `src/app/globals.css` force all non-semantic colors to neutral palette
+
 ### Development Patterns
 - **Component Organization**: Grouped by feature/domain
 - **TypeScript**: Strict mode with comprehensive type definitions
