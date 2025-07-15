@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { Badge } from '@/components/ui'
+import { Badge } from '@/components/ui/badge'
 import { Highlight } from '@/utils/highlight'
 import { SearchResult } from '@/hooks/useSearch'
 import { FileText, Edit, Package } from 'lucide-react'

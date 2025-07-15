@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Container, Heading, Text } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import { PostCard } from '@/components/blog/PostCard'
 import { TagList } from '@/components/blog/TagList'
 import { getBlogPostsByTag, getAllTags } from '@/lib/blog'

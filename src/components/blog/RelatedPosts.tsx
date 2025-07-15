@@ -1,6 +1,7 @@
 'use client'
 
-import { Container, Heading, Text } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import { BlogPostMeta } from '@/lib/blog'
 import { PostCard } from './PostCard'
 import Link from 'next/link'

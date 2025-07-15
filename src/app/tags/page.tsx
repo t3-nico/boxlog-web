@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import { Container, Heading, Text } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import { getAllTags, getTagsByCategory } from '@/lib/tags-server'
 import { TagCloud } from '@/components/tags/TagCloud'
 import { TagsByCategory } from '@/components/tags/TagsByCategory'

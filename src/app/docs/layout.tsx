@@ -1,5 +1,5 @@
 import { ClientSidebar } from '@/components/docs/ClientSidebar'
-import { Container } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
 import { generateDocsNavigation } from '@/lib/navigation'
 
 export default function DocsLayout({

@@ -1,4 +1,5 @@
-import { Container, Heading, Text } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import { generateSEOMetadata } from '@/lib/metadata'
 
 export const metadata = generateSEOMetadata({

@@ -1,4 +1,6 @@
-import { Container, Heading, Text, Button } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
+import { Button } from '@/components/ui/button'
 
 export function FeaturesHero() {
   return (

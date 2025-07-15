@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Heading, Text } from '@/components/ui'
+import { Heading, Text } from '@/components/ui/Typography'
 import { TagCount, getTagColor } from '@/lib/tags-client'
 
 interface TagsByCategoryProps {

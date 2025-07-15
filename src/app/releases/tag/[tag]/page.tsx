@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Container, Heading, Text } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import { ReleaseCard } from '@/components/releases/ReleaseCard'
 import { UpcomingReleasesCompact } from '@/components/releases/UpcomingReleases'
 import { getReleasesByTag, getAllReleaseTags } from '@/lib/releases'

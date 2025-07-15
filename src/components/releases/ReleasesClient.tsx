@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { Container, Heading, Text } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import { ReleaseCard } from './ReleaseCard'
 import { UpcomingReleasesCompact } from './UpcomingReleases'
 import { ReleaseFilter, FilterSummary } from './ReleaseFilter'

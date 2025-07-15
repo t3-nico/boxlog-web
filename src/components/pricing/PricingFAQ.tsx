@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Container, Heading, Text, Button } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
+import { Button } from '@/components/ui/button'
 import { faqItems } from '@/lib/pricing-data'
 import { ChevronDown } from 'lucide-react'
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui'
+import { Button } from '@/components/ui/button'
 import { ConsentManager } from '@/lib/analytics'
 
 export function CookieConsent() {

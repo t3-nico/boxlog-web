@@ -1,6 +1,7 @@
 'use client'
 
-import { Container, Heading, Text } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import { detailedFeatures } from '@/lib/features-data'
 import { Check, Zap, BarChart3, Lock } from 'lucide-react'
 

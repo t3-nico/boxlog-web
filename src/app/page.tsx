@@ -1,4 +1,6 @@
-import { Button, Container, Heading, Text } from '@/components/ui'
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
 import Link from 'next/link'
 
 export default function Home() {

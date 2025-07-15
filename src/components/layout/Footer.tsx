@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Container } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
 import { Twitter, Github, Linkedin } from 'lucide-react'
 
 const navigation = {

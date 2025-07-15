@@ -1,4 +1,5 @@
-import { Heading, Text, Button } from '@/components/ui'
+import { Heading, Text } from '@/components/ui/Typography'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 export default function DocsPage() {

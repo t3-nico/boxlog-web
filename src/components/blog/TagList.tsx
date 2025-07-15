@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Heading, Text } from '@/components/ui'
+import { Heading, Text } from '@/components/ui/Typography'
 import { Tag as TagIcon, ChevronUp, ChevronDown } from 'lucide-react'
 
 interface Tag {

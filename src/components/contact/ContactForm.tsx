@@ -4,11 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { useState } from 'react'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
+import { Button } from '@/components/ui/button'
 import { 
-  Container, 
-  Heading, 
-  Text, 
-  Button,
   Form,
   FormControl,
   FormDescription,
@@ -16,9 +15,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  Textarea
-} from '@/components/ui'
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 const formSchema = z.object({
   name: z.string().min(1, 'お名前を入力してください').max(50, 'お名前は50文字以内で入力してください'),

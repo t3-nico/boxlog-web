@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Heading } from '@/components/ui'
+import { Heading } from '@/components/ui/Typography'
 import { BlogPostMeta } from '@/lib/blog'
 import { ImageIcon } from 'lucide-react'
 

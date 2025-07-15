@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Container, Heading, Text, Button } from '@/components/ui'
+import { Container } from '@/components/ui/Container'
+import { Heading, Text } from '@/components/ui/Typography'
+import { Button } from '@/components/ui/button'
 import { AlertTriangle } from 'lucide-react'
 
 export default function Error({

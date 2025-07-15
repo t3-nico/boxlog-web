@@ -2,7 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { Dialog, DialogContent, DialogHeader, Input, Button, Badge } from '@/components/ui'
+import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { Highlight } from '@/utils/highlight'
 import { 
   Search, 

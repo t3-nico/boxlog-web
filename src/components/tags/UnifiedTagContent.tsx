@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Heading, Text } from '@/components/ui'
+import { Heading, Text } from '@/components/ui/Typography'
 import { UnifiedTagData, getTagColor } from '@/lib/tags-client'
 import { FileText, BookOpen, FileSpreadsheet, Star, AlertTriangle } from 'lucide-react'
 
