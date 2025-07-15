@@ -112,34 +112,74 @@ src/
 - **Error Handling**: Error boundaries and graceful degradation
 - **Testing**: Accessibility and performance testing integrated
 
-### UI/UX Component Development Guidelines
+### UI/UX デザイン方針とコンポーネント開発ガイドライン
 
-#### **Primary Strategy: shadcn/ui First**
-- **Always prefer shadcn/ui components** for new UI development
-- Use Radix UI primitives through shadcn/ui for consistent behavior and accessibility
-- Maintain component library consistency with the main application
+#### **基本方針: shadcn/ui中心のデザインシステム**
+このプロジェクトは **shadcn/ui** を中心としたデザインシステムを採用しています。一貫性とアクセシビリティを保つため、すべてのUI開発において以下の方針に従ってください。
 
-#### **Component Selection Priority**
-1. **First Choice**: Use existing shadcn/ui components (Button, Card, Form, etc.)
-2. **Second Choice**: Extend shadcn/ui components with composition patterns
-3. **Last Resort**: Create custom components only when shadcn/ui cannot fulfill requirements
+#### **コンポーネント選択の優先順位**
+1. **第一選択**: 既存の shadcn/ui コンポーネント（Button、Card、Form、Input、Dialog、Select、Switch など）
+2. **第二選択**: shadcn/ui コンポーネントの組み合わせ（composition patterns）による拡張
+3. **最後の手段**: プロジェクト固有の機能で shadcn/ui では対応できない場合のみカスタムコンポーネント作成
 
-#### **Custom Component Guidelines**
-- **Avoid custom UI components** unless absolutely necessary for project-specific functionality
-- When creating custom components, follow shadcn/ui patterns and Tailwind conventions
-- Use Radix UI primitives as base when shadcn/ui doesn't provide the needed component
-- Ensure all custom components maintain accessibility standards (WCAG 2.1 AA)
+#### **shadcn/ui優先の理由**
+- **メインアプリケーションとの一貫性**: 同じ shadcn/ui + Radix UI の組み合わせを使用
+- **アクセシビリティ**: Radix UI のプリミティブにより WCAG 2.1 AA 準拠が保証
+- **メンテナンス性**: 標準化されたコンポーネントライブラリによる保守性向上
+- **開発効率**: 既存のコンポーネントの再利用による開発スピード向上
 
-#### **Future Design Changes**
-- **Design system evolution** should align with shadcn/ui capabilities
-- When redesigning existing components, prioritize migrating to shadcn/ui equivalents
-- Collaborate with design team to ensure new designs can leverage existing component library
-- Document any unavoidable custom components with clear justification
+#### **カスタムコンポーネントの作成指針**
+- **必要最小限**: プロジェクト固有の機能でのみカスタムコンポーネントを作成
+- **shadcn/ui パターンに準拠**: カスタムコンポーネントも shadcn/ui の設計パターンと Tailwind 規則に従う
+- **Radix UI ベース**: shadcn/ui にないコンポーネントは Radix UI プリミティブを基盤として使用
+- **アクセシビリティ必須**: すべてのカスタムコンポーネントは WCAG 2.1 AA 基準を満たす
 
-#### **Current Component Status**
-- **shadcn/ui Components (74%)**: Button, Card, Input, Form, Dialog, Select, Switch, etc.
-- **Custom Components (26%)**: Container, Typography, ThemeToggle, ErrorBoundary, etc.
-- Target: Increase shadcn/ui usage percentage during design updates
+#### **既存コンポーネントの現状**
+- **shadcn/ui コンポーネント (74%)**:
+  - UI/UX: Button、Card、Input、Form、Dialog、Select、Switch、Badge、Checkbox、RadioGroup
+  - フォーム: React Hook Form との統合、Zod バリデーション
+  - レイアウト: Responsive グリッド、Flexbox ユーティリティ
+  
+- **カスタムコンポーネント (26%)**:
+  - Container: プロジェクト固有のレイアウト制約
+  - Typography: 独自のタイポグラフィスケール
+  - ThemeToggle: プロジェクト固有のテーマ切り替え機能
+  - ErrorBoundary: エラー処理とフォールバック UI
+
+#### **今後のデザイン変更方針**
+- **shadcn/ui エコシステム内での進化**: 新しいデザイン要求は shadcn/ui の機能範囲内で解決
+- **コンポーネントライブラリの拡張**: 必要に応じて shadcn/ui に新しいコンポーネントを追加
+- **デザインチームとの協力**: 新しいデザインが既存のコンポーネントライブラリを活用できるよう調整
+- **段階的移行**: 既存カスタムコンポーネントの shadcn/ui への移行を設計更新時に実施
+
+#### **実装ガイドライン**
+```typescript
+// ✅ 推奨: shadcn/ui コンポーネントを使用
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+// ✅ 推奨: 組み合わせによる拡張
+<Card>
+  <CardHeader>
+    <CardTitle>タイトル</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <Button variant="outline">アクション</Button>
+  </CardContent>
+</Card>
+
+// ❌ 避けるべき: 不要なカスタムコンポーネント
+const CustomButton = ({ children, ...props }) => (
+  <button className="custom-styles" {...props}>
+    {children}
+  </button>
+)
+```
+
+#### **品質保証**
+- **コンポーネントレビュー**: 新しいコンポーネントは shadcn/ui 優先の原則に従っているか確認
+- **アクセシビリティテスト**: すべてのコンポーネントは WCAG 2.1 AA 基準でテスト
+- **一貫性チェック**: デザインシステムの一貫性を維持するための定期的な監査
 
 ### Build & Deployment
 - **Platform**: Optimized for Vercel deployment

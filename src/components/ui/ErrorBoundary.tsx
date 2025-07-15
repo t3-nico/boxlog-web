@@ -86,11 +86,11 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                 </svg>
               </div>
               
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              <h2 className="text-xl font-semibold text-neutral-900 mb-2">
                 Something went wrong
               </h2>
               
-              <p className="text-gray-600 mb-6">
+              <p className="text-neutral-600 mb-6">
                 We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
               </p>
               
@@ -111,17 +111,17 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
               {/* Error details for development */}
               {process.env.NODE_ENV === 'development' && this.state.error && (
                 <details className="mt-6 text-left">
-                  <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700 mb-2">
+                  <summary className="cursor-pointer text-sm text-neutral-500 hover:text-neutral-700 mb-2">
                     Error details (development only)
                   </summary>
-                  <div className="bg-gray-100 rounded-lg p-4 text-xs">
+                  <div className="bg-neutral-100 rounded-lg p-4 text-xs">
                     <div className="mb-2">
                       <strong>Error:</strong> {this.state.error.message}
                     </div>
                     {this.state.error.stack && (
                       <div className="mb-2">
                         <strong>Stack:</strong>
-                        <pre className="whitespace-pre-wrap mt-1 text-gray-700">
+                        <pre className="whitespace-pre-wrap mt-1 text-neutral-700">
                           {this.state.error.stack}
                         </pre>
                       </div>
@@ -129,7 +129,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                     {this.state.errorInfo && (
                       <div>
                         <strong>Component Stack:</strong>
-                        <pre className="whitespace-pre-wrap mt-1 text-gray-700">
+                        <pre className="whitespace-pre-wrap mt-1 text-neutral-700">
                           {this.state.errorInfo.componentStack}
                         </pre>
                       </div>

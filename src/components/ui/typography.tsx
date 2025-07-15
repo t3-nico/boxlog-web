@@ -46,9 +46,9 @@ export function Text({ as: Component = 'p', size = 'md', variant = 'default', ch
   }
 
   const variantClasses = {
-    default: 'text-gray-900 dark:text-gray-100',
-    muted: 'text-gray-600 dark:text-gray-400',
-    light: 'text-gray-500 dark:text-gray-500'
+    default: 'text-neutral-900 dark:text-neutral-100',
+    muted: 'text-neutral-600 dark:text-neutral-400',
+    light: 'text-neutral-500 dark:text-neutral-500'
   }
 
   return (
