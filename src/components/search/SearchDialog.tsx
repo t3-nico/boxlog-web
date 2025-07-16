@@ -280,7 +280,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             <div className="p-4 space-y-3">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Search results for "<span className="font-medium">{query}</span>"
+                  Search results for &ldquo;<span className="font-medium">{query}</span>&rdquo;
                 </p>
                 <Badge variant="outline" className="text-xs">
                   Press Enter to search
@@ -295,7 +295,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <div className="text-left">
                   <div className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                    Search for "<Highlight text={query} query={query} />"
+                    Search for &ldquo;<Highlight text={query} query={query} />&rdquo;
                   </div>
                   <div className="text-xs text-blue-700 dark:text-blue-300">
                     Find results across all content
