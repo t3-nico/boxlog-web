@@ -173,7 +173,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden bg-white shadow-2xl border-0 dark:bg-gray-900 dark:border dark:border-gray-700 [&>button]:!h-10 [&>button]:!w-10 [&>button_svg]:!h-6 [&>button_svg]:!w-6">
+      <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden bg-white shadow-2xl border-0 dark:bg-gray-900 dark:border dark:border-gray-700 [&>button]:hidden">
         {/* 検索ヘッダー */}
         <div className="flex items-center gap-3 p-4 border-b border-gray-100 dark:border-gray-700">
           <Search className="h-5 w-5 text-gray-400 flex-shrink-0 dark:text-gray-500" />
@@ -183,8 +183,14 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="border-0 shadow-none text-base text-gray-900 placeholder:text-gray-400 focus-visible:ring-0 focus:outline-none bg-transparent dark:text-gray-100 dark:placeholder:text-gray-500"
+            className="border-0 shadow-none text-base text-gray-900 placeholder:text-gray-400 focus-visible:ring-0 focus:outline-none bg-transparent dark:text-gray-100 dark:placeholder:text-gray-500 flex-1"
           />
+          <button
+            onClick={() => onOpenChange(false)}
+            className="h-5 w-5 rounded-sm opacity-70 hover:opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 flex items-center justify-center flex-shrink-0"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
 
         {/* 検索内容 */}
