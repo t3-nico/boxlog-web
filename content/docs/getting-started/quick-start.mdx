@@ -5,10 +5,10 @@ tags: ["quickstart", "tutorial", "getting-started", "5-minutes"]
 author: "YourSaaS Team"
 publishedAt: "2024-01-18"
 updatedAt: "2024-01-28"
-order: 1
+order: 2
 featured: true
-category: "guides"
-slug: "guides/quick-start"
+category: "getting-started"
+slug: "quick-start"
 ---
 
 # 5-Minute Quickstart
@@ -48,19 +48,7 @@ YOURSAAS_API_KEY=your_api_key_here
 YOURSAAS_PROJECT_ID=your_project_id_here
 ```
 
-<div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-4">
-  <div className="flex items-start">
-    <svg className="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-    </svg>
-    <div>
-      <h4 className="text-sm font-medium text-blue-800">Need API keys?</h4>
-      <p className="mt-1 text-sm text-blue-700">
-        <a href="https://dashboard.yoursaas.com" className="underline">Sign up for free</a> and get your keys instantly.
-      </p>
-    </div>
-  </div>
-</div>
+> **Need API keys?** [Sign up for free](https://dashboard.yoursaas.com) and get your keys instantly.
 
 ## Step 3: Initialize the Client (30 seconds)
 
@@ -187,40 +175,7 @@ export function LoginForm() {
 }
 ```
 
-## Step 6: Make Secure API Calls (1 minute)
-
-Add protected API functionality:
-
-```typescript
-// pages/api/profile.ts
-import { client } from '@/lib/yoursaas'
-
-export async function GET(request: Request) {
-  const authHeader = request.headers.get('authorization')
-  const token = authHeader?.replace('Bearer ', '')
-  
-  if (!token) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  
-  try {
-    // Verify session and get user
-    const user = await client.auth.verifySession(token)
-    
-    // Get additional user data
-    const profile = await client.users.get(user.id)
-    
-    return Response.json({
-      success: true,
-      profile
-    })
-  } catch (error) {
-    return Response.json({ error: 'Invalid session' }, { status: 401 })
-  }
-}
-```
-
-## Step 7: Test Everything (30 seconds)
+## Step 6: Test Everything (30 seconds)
 
 Start your development server and test:
 
@@ -274,82 +229,12 @@ await client.users.update(userId, {
 })
 ```
 
-### Add Team Features
-
-```typescript
-// Create an organization
-const org = await client.organizations.create({
-  name: 'My Company',
-  plan: 'pro'
-})
-
-// Invite team members
-await client.organizations.invite(org.id, {
-  email: 'teammate@company.com',
-  role: 'member'
-})
-```
-
-### Set up Webhooks
-
-```typescript
-// Listen for user events
-client.webhooks.on('user.created', (user) => {
-  console.log('New user registered:', user.email)
-  // Send welcome email, update analytics, etc.
-})
-```
-
 ## Common Next Steps
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-  <div className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
-    <h3 className="font-semibold mb-2">🔐 Advanced Authentication</h3>
-    <p className="text-sm text-gray-600 mb-3">Add social login, MFA, and advanced security.</p>
-    <a href="/docs/api-reference/authentication" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-      Learn more →
-    </a>
-  </div>
-  
-  <div className="border border-gray-200 rounded-lg p-4 hover:border-green-300 transition-colors">
-    <h3 className="font-semibold mb-2">👥 User Management</h3>
-    <p className="text-sm text-gray-600 mb-3">Build user profiles, preferences, and admin features.</p>
-    <a href="/docs/api-reference/users" className="text-green-600 hover:text-green-700 text-sm font-medium">
-      Explore users API →
-    </a>
-  </div>
-  
-  <div className="border border-gray-200 rounded-lg p-4 hover:border-purple-300 transition-colors">
-    <h3 className="font-semibold mb-2">⚡ Real-time Features</h3>
-    <p className="text-sm text-gray-600 mb-3">Add live updates, notifications, and collaboration.</p>
-    <a href="/docs/api-reference/realtime" className="text-purple-600 hover:text-purple-700 text-sm font-medium">
-      Go real-time →
-    </a>
-  </div>
-  
-  <div className="border border-gray-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
-    <h3 className="font-semibold mb-2">🏢 Organizations</h3>
-    <p className="text-sm text-gray-600 mb-3">Enable team features and B2B functionality.</p>
-    <a href="/docs/api-reference/organizations" className="text-orange-600 hover:text-orange-700 text-sm font-medium">
-      Build for teams →
-    </a>
-  </div>
-</div>
-
-## Troubleshooting
-
-**Not seeing your changes?** Try:
-
-1. Restart your development server
-2. Check your browser console for errors  
-3. Verify your API keys are correct
-4. Make sure your `.env.local` file is in the project root
-
-**Getting API errors?** 
-
-- Check your API key has the right permissions
-- Verify your project ID is correct
-- Review the [API Reference](/docs/api-reference) for detailed error codes
+1. **[Configuration](/docs/configuration)** - Advanced setup options
+2. **[API Reference](/docs/api-reference)** - Complete API documentation
+3. **[Examples](/docs/examples)** - Real-world implementation examples
+4. **[Best Practices](/docs/guides/best-practices)** - Learn recommended patterns
 
 ## Get Help
 
@@ -357,7 +242,6 @@ Stuck? We're here to help:
 
 - 💬 **[Discord Community](https://discord.gg/yoursaas)** - Get real-time help
 - 📚 **[Documentation](/docs)** - Comprehensive guides
-- 🎥 **[Video Tutorials](https://youtube.com/yoursaas)** - Visual walkthroughs
 - 📧 **[Support](mailto:support@yoursaas.com)** - Direct technical help
 
 ---
