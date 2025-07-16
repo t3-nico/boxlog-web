@@ -22,8 +22,7 @@ import {
   Settings,
   Key,
   CreditCard,
-  Shield,
-  Notifications
+  Shield
 } from 'lucide-react'
 
 function getPageIcon(href: string, title: string) {
@@ -38,7 +37,7 @@ function getPageIcon(href: string, title: string) {
   if (href.includes('/account/billing')) return CreditCard
   if (href.includes('/account/api-keys')) return Key
   if (href.includes('/account/security')) return Shield
-  if (href.includes('/account/notifications')) return Notifications
+  if (href.includes('/account/notifications')) return Bell
   if (href.includes('/account')) return Settings
   
   // Workspace
