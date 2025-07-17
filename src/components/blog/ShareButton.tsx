@@ -44,7 +44,7 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
   }
 
   const handleNativeShare = () => {
-    if (typeof navigator !== 'undefined' && navigator.share) {
+    if (typeof window !== 'undefined' && 'share' in navigator) {
       navigator.share({ title, url })
     } else {
       handleCopyLink()
@@ -74,7 +74,7 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
         >
           <Copy className="w-5 h-5" />
         </button>
-        {typeof navigator !== 'undefined' && navigator.share && (
+        {typeof window !== 'undefined' && 'share' in navigator && (
           <button
             onClick={handleNativeShare}
             className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors p-1 rounded"
