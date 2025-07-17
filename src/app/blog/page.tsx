@@ -3,6 +3,7 @@ import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { FilteredBlogClient } from '@/components/blog/FilteredBlogClient'
 import { getAllBlogPostMetas, getAllTagNames } from '@/lib/blog'
+import { ListContentLoader } from '@/components/loading/PageLoader'
 
 export const metadata: Metadata = {
   title: 'Blog Articles - Filter & Search',
@@ -35,7 +36,9 @@ export default async function BlogPage() {
       <section className="py-16 bg-neutral-50 dark:bg-neutral-800">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <FilteredBlogClient initialPosts={allPosts} tags={allTags} />
+            <ListContentLoader>
+              <FilteredBlogClient initialPosts={allPosts} tags={allTags} />
+            </ListContentLoader>
           </div>
         </Container>
       </section>

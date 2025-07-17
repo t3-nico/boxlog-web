@@ -1,11 +1,12 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 import { usePathname } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { SkipLinks } from '@/components/accessibility/SkipLinks'
 import { LightweightProviders, StandardProviders, FullProviders } from '@/components/providers/OptionalProviders'
+import { PageLoader } from '@/components/loading/PageLoader'
 
 interface OptimizedLayoutProps {
   children: ReactNode
@@ -27,9 +28,18 @@ const getProviderLevel = (pathname: string): 'lightweight' | 'standard' | 'full'
   return 'standard'
 }
 
+// ページ遷移時のローディング設定
+const getLoadingConfig = (pathname: string) => {
+  if (pathname === '/' || pathname === '/about' || pathname === '/features' || pathname === '/pricing') {
+    return { showSkeleton: false } // 軽量ページは最小限のローダー
+  }
+  return { showSkeleton: true } // 他のページはスケルトン表示
+}
+
 export function OptimizedLayout({ children }: OptimizedLayoutProps) {
   const pathname = usePathname()
   const providerLevel = getProviderLevel(pathname)
+  const loadingConfig = getLoadingConfig(pathname)
 
   const ProviderComponent = {
     lightweight: LightweightProviders,
@@ -42,7 +52,9 @@ export function OptimizedLayout({ children }: OptimizedLayoutProps) {
       <SkipLinks />
       <Header />
       <main id="main-content">
-        {children}
+        <PageLoader showSkeleton={loadingConfig.showSkeleton}>
+          {children}
+        </PageLoader>
       </main>
       <Footer />
     </ProviderComponent>
