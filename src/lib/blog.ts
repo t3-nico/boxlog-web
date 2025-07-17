@@ -213,6 +213,12 @@ export async function getAllTags(): Promise<{ tag: string; count: number }[]> {
     .sort((a, b) => b.count - a.count)
 }
 
+// Get all tags as simple string array
+export async function getAllTagNames(): Promise<string[]> {
+  const tagsWithCounts = await getAllTags()
+  return tagsWithCounts.map(({ tag }) => tag)
+}
+
 // Get all categories
 export async function getAllCategories(): Promise<{ category: string; count: number }[]> {
   const allPosts = await getAllBlogPostMetas()
@@ -229,9 +235,23 @@ export async function getAllCategories(): Promise<{ category: string; count: num
 }
 
 // Search articles
-export async function searchBlogPosts(query: string): Promise<BlogPostMeta[]> {
-  const allPosts = await getAllBlogPostMetas()
-  const searchTerm = query.toLowerCase()
+export async function searchBlogPosts(query: string): Promise<BlogPostMeta[]>
+export async function searchBlogPosts(posts: BlogPostMeta[], query: string): Promise<BlogPostMeta[]>
+export async function searchBlogPosts(queryOrPosts: string | BlogPostMeta[], query?: string): Promise<BlogPostMeta[]> {
+  let allPosts: BlogPostMeta[]
+  let searchTerm: string
+
+  if (typeof queryOrPosts === 'string') {
+    allPosts = await getAllBlogPostMetas()
+    searchTerm = queryOrPosts.toLowerCase()
+  } else {
+    allPosts = queryOrPosts
+    searchTerm = (query || '').toLowerCase()
+  }
+
+  if (!searchTerm) {
+    return allPosts
+  }
 
   return allPosts.filter(post => {
     const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
