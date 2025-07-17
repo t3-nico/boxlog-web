@@ -3,10 +3,19 @@ import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
 import { Container } from '@/components/ui/container'
-import { PostHeader } from '@/components/blog/PostHeader'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { ShareButton } from '@/components/blog/ShareButton'
+import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
+import { 
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from '@/components/ui/breadcrumb'
 import { getBlogPost, getAllBlogPostMetas, getRelatedPosts } from '@/lib/blog'
+import Link from 'next/link'
 
 interface BlogPostPageProps {
   params: {
@@ -75,19 +84,23 @@ export async function generateStaticParams() {
 
 // MDX components
 const mdxComponents = {
-  // Custom component definitions
-  h1: (props: any) => (
-    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
-  ),
-  h2: (props: any) => (
-    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700" {...props} />
-  ),
-  h3: (props: any) => (
-    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
-  ),
-  h4: (props: any) => (
-    <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
-  ),
+  // Custom component definitions with ID generation for anchor links
+  h1: (props: any) => {
+    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
+    return <h1 id={id} className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
+  },
+  h2: (props: any) => {
+    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
+    return <h2 id={id} className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4" {...props} />
+  },
+  h3: (props: any) => {
+    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
+    return <h3 id={id} className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
+  },
+  h4: (props: any) => {
+    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
+    return <h4 id={id} className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
+  },
   p: (props: any) => (
     <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" {...props} />
   ),
@@ -175,6 +188,43 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound()
   }
 
+  // Remove duplicate title and description from MDX content
+  let processedContent = post.content
+  
+  // Remove the first heading if it matches the frontmatter title
+  const titlePattern = new RegExp(`^# ${post.frontMatter.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`, 'gm')
+  processedContent = processedContent.replace(titlePattern, '')
+  
+  // Remove description if it matches frontmatter description
+  if (post.frontMatter.description) {
+    const descPattern = new RegExp(`^${post.frontMatter.description.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`, 'gm')
+    processedContent = processedContent.replace(descPattern, '')
+  }
+  
+  // Remove any remaining standalone h1 at the beginning
+  processedContent = processedContent.replace(/^# [^\n]*\n+/gm, '')
+  
+  // Remove description-like paragraph at the beginning (first paragraph after title)
+  const lines = processedContent.split('\n')
+  let processedLines = []
+  let skipNext = false
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim()
+    
+    // Skip empty lines at the beginning
+    if (processedLines.length === 0 && line === '') continue
+    
+    // If this looks like a description paragraph (first substantial paragraph)
+    if (processedLines.length === 0 && line && !line.startsWith('#') && !line.startsWith('```')) {
+      // Skip this line if it looks like a description
+      continue
+    }
+    
+    processedLines.push(lines[i])
+  }
+  
+  processedContent = processedLines.join('\n')
 
   const relatedPosts = await getRelatedPosts(params.slug, 3)
 
@@ -210,56 +260,83 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       />
 
       <div className="min-h-screen">
-        {/* Article header */}
-        <PostHeader frontMatter={post.frontMatter} slug={params.slug} locale="en" />
 
-        {/* Cover image */}
-        {post.frontMatter.coverImage && (
-          <section className="pb-8 bg-white dark:bg-gray-900">
-            <Container>
-              <div className="max-w-4xl mx-auto">
-                <div className="relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
-                  <Image
-                    src={post.frontMatter.coverImage}
-                    alt={post.frontMatter.title}
-                    fill
-                    className="object-cover rounded-xl"
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                  />
-                </div>
-              </div>
-            </Container>
-          </section>
-        )}
-
-        {/* Article content */}
+        {/* Article content with sidebar layout */}
         <article className="py-8 bg-white dark:bg-gray-900">
           <Container>
-            <div className="max-w-4xl mx-auto">
-              <div className="prose prose-lg max-w-none">
-                <MDXRemote 
-                  source={post.content} 
-                  components={mdxComponents}
-                />
-              </div>
+            <div className="flex gap-8 justify-center">
+              {/* Main content */}
+              <div className="w-[700px] flex-shrink-0 pt-16">
+
+                {/* Breadcrumb */}
+                <div className="mb-8">
+                  <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
+                    <Link 
+                      href="/" 
+                      className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+                    >
+                      Home
+                    </Link>
+                    <span className="text-gray-300 dark:text-gray-700">/</span>
+                    <Link 
+                      href="/blog" 
+                      className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+                    >
+                      Blog
+                    </Link>
+                    <span className="text-gray-300 dark:text-gray-700">/</span>
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">
+                      {post.frontMatter.title}
+                    </span>
+                  </nav>
+                </div>
+
+                {/* Date */}
+                <time className="text-sm text-gray-500 dark:text-gray-400 mb-2 block" dateTime={post.frontMatter.publishedAt}>
+                  {new Date(post.frontMatter.publishedAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+
+                {/* Title */}
+                <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+                  {post.frontMatter.title}
+                </h1>
+
+                {/* Cover image */}
+                {post.frontMatter.coverImage && (
+                  <div className="relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg mb-8">
+                    <Image
+                      src={post.frontMatter.coverImage}
+                      alt={post.frontMatter.title}
+                      fill
+                      className="object-cover rounded-xl"
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                    />
+                  </div>
+                )}
+
+
+                {/* Article content */}
+                <div className="prose prose-lg max-w-none">
+                  <MDXRemote 
+                    source={processedContent} 
+                    components={mdxComponents}
+                  />
+                </div>
 
               {/* Article end marker */}
-              <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-center">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                  </div>
-                </div>
+              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
               </div>
 
               {/* Additional article information */}
-              <div className="mt-8 space-y-6">
+              <div className="mt-6 space-y-6">
                 {/* Tags */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Tags</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Tags Used</h3>
                   <div className="flex flex-wrap gap-2">
                     {post.frontMatter.tags.map((tag) => {
                       // Function to determine tag color
@@ -304,6 +381,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <ShareButton title={post.frontMatter.title} slug={params.slug} locale="en" />
                 </div>
               </div>
+              </div>
+
+              {/* Right Sidebar - Table of Contents */}
+              <aside className="w-[240px] flex-shrink-0 hidden xl:block">
+                <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pl-6 pt-16">
+                  <ClientTableOfContents content={post.content} />
+                </div>
+              </aside>
             </div>
           </Container>
         </article>
