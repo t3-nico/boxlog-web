@@ -3,7 +3,6 @@
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
-import { AlertTriangle } from 'lucide-react'
 import { useEffect } from 'react'
 
 interface GlobalErrorProps {
@@ -23,14 +22,9 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center">
           <Container>
             <div className="max-w-md mx-auto text-center">
-              {/* Error illustration */}
-              <div className="w-24 h-24 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-8">
-                <AlertTriangle className="w-12 h-12 text-red-500" />
+              <div className="mb-4 text-9xl font-bold text-neutral-200 dark:text-neutral-800">
+                !
               </div>
-              
-              <Heading as="h1" size="4xl" className="mb-4">
-                Oops!
-              </Heading>
               
               <Heading as="h2" size="xl" className="mb-4">
                 Something went wrong
@@ -46,23 +40,13 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                   Try again
                 </Button>
                 
-                <div className="grid grid-cols-2 gap-3">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => window.location.href = '/'}
-                  >
-                    Go home
-                  </Button>
-                  
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => window.location.reload()}
-                  >
-                    Refresh page
-                  </Button>
-                </div>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => window.location.href = '/'}
+                >
+                  Go home
+                </Button>
               </div>
               
               {/* Error details for development */}

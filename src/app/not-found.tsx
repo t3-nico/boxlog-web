@@ -3,7 +3,6 @@ import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { generateSEOMetadata } from '@/lib/metadata'
-import { FileQuestion } from 'lucide-react'
 
 export const metadata = generateSEOMetadata({
   title: 'Page Not Found - 404 Error',
@@ -17,14 +16,9 @@ export default function NotFound() {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center">
       <Container>
         <div className="max-w-md mx-auto text-center">
-          {/* 404 illustration */}
-          <div className="w-24 h-24 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-8">
-            <FileQuestion className="w-12 h-12 text-neutral-600 dark:text-neutral-400" />
-          </div>
-          
-          <Heading as="h1" size="4xl" className="mb-4">
+          <div className="text-9xl font-bold text-neutral-200 dark:text-neutral-800 mb-4">
             404
-          </Heading>
+          </div>
           
           <Heading as="h2" size="xl" className="mb-4">
             Page Not Found
@@ -35,45 +29,12 @@ export default function NotFound() {
             or is temporarily unavailable.
           </Text>
           
-          <div className="space-y-4">
-            <Button asChild className="w-full">
-              <Link href="/">
-                Go back home
-              </Link>
-            </Button>
-            
-            <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/blog">
-                  Browse Blog
-                </Link>
-              </Button>
-              
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/docs">
-                  Documentation
-                </Link>
-              </Button>
-            </div>
-          </div>
+          <Button asChild className="w-full">
+            <Link href="/">
+              Go home
+            </Link>
+          </Button>
           
-          {/* Popular links */}
-          <div className="mt-8 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
-            <Text size="sm" variant="muted" className="mb-3">
-              Popular pages:
-            </Text>
-            <div className="flex flex-wrap gap-2">
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/features">Features</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/pricing">Pricing</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/releases">Releases</Link>
-              </Button>
-            </div>
-          </div>
         </div>
       </Container>
     </div>

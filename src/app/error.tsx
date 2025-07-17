@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
-import { AlertTriangle } from 'lucide-react'
 
 export default function Error({
   error,
@@ -22,12 +21,11 @@ export default function Error({
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center">
       <Container>
         <div className="max-w-md mx-auto text-center">
-          {/* Error icon */}
-          <div className="w-16 h-16 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <AlertTriangle className="w-8 h-8 text-red-500" />
+          <div className="mb-4 text-9xl font-bold text-neutral-200 dark:text-neutral-800">
+            !
           </div>
           
-          <Heading as="h1" size="2xl" className="mb-4">
+          <Heading as="h2" size="xl" className="mb-4">
             Something went wrong
           </Heading>
           
@@ -42,7 +40,7 @@ export default function Error({
             
             <Button variant="outline" asChild className="w-full">
               <a href="/">
-                Go back home
+                Go home
               </a>
             </Button>
           </div>
