@@ -1,10 +1,5 @@
 import type { Metadata } from 'next'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { PerformanceProvider } from '@/components/performance/PerformanceProvider'
-import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider'
-import { SkipLinks } from '@/components/accessibility/SkipLinks'
-import { ThemeProvider } from '@/lib/theme-provider'
+import { OptimizedLayout } from '@/components/layout/OptimizedLayout'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -21,23 +16,9 @@ export default function RootLayout({
     <html lang="en">
       <head></head>
       <body className="antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange={false}
-        >
-          <SkipLinks />
-          <AccessibilityProvider>
-            <PerformanceProvider>
-              <Header />
-              <main id="main-content">
-                {children}
-              </main>
-              <Footer />
-            </PerformanceProvider>
-          </AccessibilityProvider>
-        </ThemeProvider>
+        <OptimizedLayout>
+          {children}
+        </OptimizedLayout>
       </body>
     </html>
   )
