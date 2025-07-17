@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { LazySearchDialog } from '@/components/search/LazySearchDialog'
-import { Search, X, Menu } from 'lucide-react'
+import { Search, X, Menu } from '@/lib/icons'
 
 const navigation = [
   { name: 'Features', href: '/features' },

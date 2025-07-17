@@ -3,7 +3,7 @@ import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import { LazyContactForm } from '@/components/contact/LazyContactForm'
-import { Mail, Phone, MessageCircle } from 'lucide-react'
+import { Mail, Phone, MessageCircle } from '@/lib/icons'
 
 export const metadata: Metadata = {
   title: 'Contact Us - YourSaaS Platform',

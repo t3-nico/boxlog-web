@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { Search } from 'lucide-react'
+import { Search } from '@/lib/icons'
 
 // SearchDialogを動的インポート
 const SearchDialog = dynamic(() => import('./SearchDialog').then(mod => ({ default: mod.SearchDialog })), {
