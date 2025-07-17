@@ -51,52 +51,126 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
   if (layout === 'vertical') {
     // Vertical layout (for featured articles): image on top, content below
     return (
-      <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
+      <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
+        {/* Cover image */}
         <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="block">
-          {/* Cover image */}
           {post.frontMatter.coverImage && !imageError ? (
-            <div className="relative aspect-[380/214] overflow-hidden rounded-lg">
+            <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
               <Image
                 src={post.frontMatter.coverImage}
                 alt={post.frontMatter.title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
+                className="object-cover rounded-lg"
                 onError={() => setImageError(true)}
                 priority={priority}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
-              
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
             </div>
           ) : (
-            <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg">
-              <ImageIcon className="w-12 h-12 text-gray-400 dark:text-gray-500" />
+            <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg transition-all duration-300 hover:opacity-40">
+              <ImageIcon className="w-12 h-12 text-gray-600 dark:text-gray-300" />
             </div>
           )}
+        </Link>
 
-          {/* Content */}
-          <div className="p-6">
-            {/* Title */}
+        {/* Content */}
+        <div className="p-6">
+          {/* Title */}
+          <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`}>
             <Heading 
               as="h2" 
               size="xl" 
-              className="mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2"
+              className="mb-3 hover:underline transition-colors line-clamp-2 cursor-pointer"
             >
               {post.frontMatter.title}
             </Heading>
+          </Link>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {post.frontMatter.tags.map((tag, index) => (
+              <button
+                key={tag}
+                onClick={(e) => {
+                  e.preventDefault()
+                  // タグクリック処理をここに追加
+                  console.log('Tag clicked:', tag)
+                }}
+                className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors hover:opacity-80 ${
+                  getTagColor(tag, index)
+                }`}
+              >
+                #{tag}
+              </button>
+            ))}
+          </div>
+
+          {/* Meta information */}
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            <time dateTime={post.frontMatter.publishedAt}>
+              {formattedDate}
+            </time>
+          </div>
+        </div>
+      </article>
+    )
+  }
+
+  // Horizontal layout (for regular articles): image on left, content on right
+  return (
+    <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
+      <div className="flex gap-6">
+        {/* Left side: Cover image */}
+        <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="w-80 flex-shrink-0">
+          {post.frontMatter.coverImage && !imageError ? (
+            <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
+              <Image
+                src={post.frontMatter.coverImage}
+                alt={post.frontMatter.title}
+                fill
+                className="object-cover rounded-lg"
+                onError={() => setImageError(true)}
+                priority={priority}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+              />
+            </div>
+          ) : (
+            <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg transition-all duration-300 hover:opacity-40">
+              <ImageIcon className="w-8 h-8 text-gray-600 dark:text-gray-300" />
+            </div>
+          )}
+        </Link>
+
+        {/* Right side: Content */}
+        <div className="flex-1">
+          <div className="my-1">
+            {/* Title */}
+            <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`}>
+              <Heading 
+                as="h2" 
+                size="lg"
+                className="mb-3 hover:underline transition-colors line-clamp-2 cursor-pointer"
+              >
+                {post.frontMatter.title}
+              </Heading>
+            </Link>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2 mb-3">
               {post.frontMatter.tags.map((tag, index) => (
-                <span
+                <button
                   key={tag}
-                  className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                  onClick={(e) => {
+                    e.preventDefault()
+                    // タグクリック処理をここに追加
+                    console.log('Tag clicked:', tag)
+                  }}
+                  className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors hover:opacity-80 ${
                     getTagColor(tag, index)
                   }`}
                 >
                   #{tag}
-                </span>
+                </button>
               ))}
             </div>
 
@@ -107,76 +181,8 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
               </time>
             </div>
           </div>
-        </Link>
-      </article>
-    )
-  }
-
-  // Horizontal layout (for regular articles): image on left, content on right
-  return (
-    <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
-      <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="block">
-        <div className="flex gap-6">
-          {/* Left side: Cover image */}
-          <div className="w-80 flex-shrink-0">
-            {post.frontMatter.coverImage && !imageError ? (
-              <div className="relative aspect-[380/214] overflow-hidden rounded-lg">
-                <Image
-                  src={post.frontMatter.coverImage}
-                  alt={post.frontMatter.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
-                  onError={() => setImageError(true)}
-                  priority={priority}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                />
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
-              </div>
-            ) : (
-              <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg">
-                <ImageIcon className="w-8 h-8 text-gray-400 dark:text-gray-500" />
-              </div>
-            )}
-          </div>
-
-          {/* Right side: Content */}
-          <div className="flex-1">
-            <div className="my-1">
-              {/* Title */}
-              <Heading 
-                as="h2" 
-                size="lg"
-                className="mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2"
-              >
-                {post.frontMatter.title}
-              </Heading>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-3">
-                {post.frontMatter.tags.map((tag, index) => (
-                  <span
-                    key={tag}
-                    className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
-                      getTagColor(tag, index)
-                    }`}
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Meta information */}
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                <time dateTime={post.frontMatter.publishedAt}>
-                  {formattedDate}
-                </time>
-              </div>
-            </div>
-          </div>
         </div>
-      </Link>
+      </div>
     </article>
   )
 }

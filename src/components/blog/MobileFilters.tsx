@@ -178,7 +178,7 @@ export function MobileFilters({
                       'w-full flex items-center gap-3 px-4 py-3 text-left rounded-lg border transition-colors',
                       localFilters.sortBy === value
                         ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200'
-                        : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-600'
+                        : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100'
                     )}
                   >
                     <Icon className="w-4 h-4" />
@@ -194,7 +194,7 @@ export function MobileFilters({
                 {/* ソート順切り替え */}
                 <button
                   onClick={toggleSortOrder}
-                  className="w-full flex items-center justify-between px-4 py-3 text-left rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-600 transition-colors"
+                  className="w-full flex items-center justify-between px-4 py-3 text-left rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors"
                 >
                   <span className="font-medium">Order</span>
                   <span className="text-sm">
@@ -213,7 +213,7 @@ export function MobileFilters({
                 {localFilters.selectedTags.length > 1 && (
                   <button
                     onClick={toggleTagOperator}
-                    className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors"
+                    className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-200 rounded-full hover:bg-neutral-200 hover:text-neutral-700 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors"
                     title={`Currently using ${localFilters.tagOperator} logic`}
                   >
                     {localFilters.tagOperator}
@@ -232,7 +232,7 @@ export function MobileFilters({
                         'flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border transition-colors',
                         isSelected
                           ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200'
-                          : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-600'
+                          : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100'
                       )}
                     >
                       <span>#</span>
@@ -256,7 +256,7 @@ export function MobileFilters({
             <div className="flex gap-3">
               <button
                 onClick={clearAllFilters}
-                className="flex-1 px-4 py-3 text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-700 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors font-medium"
+                className="flex-1 px-4 py-3 text-neutral-600 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-700 rounded-lg hover:bg-neutral-200 hover:text-neutral-700 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors font-medium"
               >
                 Clear All
               </button>

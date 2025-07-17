@@ -151,7 +151,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
               {activeFiltersCount > 0 && (
                 <button
                   onClick={clearFilters}
-                  className="text-xs font-medium text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors"
+                  className="text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
                 >
                   Clear all
                 </button>
@@ -209,7 +209,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
                     'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border transition-colors',
                     filters.sortBy === value
                       ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200'
-                      : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-600'
+                      : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100'
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -219,7 +219,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
               
               <button
                 onClick={toggleSortOrder}
-                className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-600 transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors"
                 aria-label={`Sort ${filters.sortOrder === 'asc' ? 'ascending' : 'descending'}`}
               >
                 {filters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -237,7 +237,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
               {filters.selectedTags.length > 1 && (
                 <button
                   onClick={toggleTagOperator}
-                  className="px-2 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors"
+                  className="px-2 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-200 rounded hover:bg-neutral-200 hover:text-neutral-700 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors"
                   title={`Currently using ${filters.tagOperator} logic`}
                 >
                   {filters.tagOperator}
@@ -256,7 +256,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
                       'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border transition-colors',
                       isSelected
                         ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200'
-                        : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-600'
+                        : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100'
                     )}
                   >
                     <span>#</span>
