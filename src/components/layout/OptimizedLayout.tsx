@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/Footer'
 import { SkipLinks } from '@/components/accessibility/SkipLinks'
 import { LightweightProviders, StandardProviders, FullProviders } from '@/components/providers/OptionalProviders'
 import { PageLoader } from '@/components/loading/PageLoader'
+import { PreloadStrategy } from '@/components/performance/PreloadStrategy'
 
 interface OptimizedLayoutProps {
   children: ReactNode
@@ -49,6 +50,7 @@ export function OptimizedLayout({ children }: OptimizedLayoutProps) {
 
   return (
     <ProviderComponent>
+      <PreloadStrategy />
       <SkipLinks />
       <Header />
       <main id="main-content">

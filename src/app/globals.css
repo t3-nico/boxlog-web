@@ -5,6 +5,44 @@
 /* Import unified theme system */
 @import '../styles/theme.css';
 
+/* Critical CSS for faster initial rendering */
+@layer base {
+  /* Font loading optimization */
+  html {
+    font-display: swap;
+  }
+  
+  /* Prevent layout shift during font loading */
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variation-settings: normal;
+  }
+  
+  /* Critical layout stability */
+  main {
+    min-height: calc(100vh - 64px); /* Header height */
+  }
+  
+  /* Performance optimizations */
+  img, picture, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Reduce motion for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
 /* Enhanced responsive utilities */
 @layer utilities {
   /* Responsive text utilities */
