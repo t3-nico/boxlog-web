@@ -1,16 +1,16 @@
 {
   "name": "YourSaaS - Modern SaaS Platform",
   "short_name": "YourSaaS",
-  "description": "A modern SaaS platform built with Next.js and Tailwind CSS",
+  "description": "Powerful, scalable SaaS platform built with Next.js 14, React 18, and Tailwind CSS",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3b82f6",
+  "theme_color": "#171717",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "categories": ["business", "productivity", "utilities"],
   "lang": "en-US",
   "dir": "ltr",
-  "categories": ["business", "productivity", "utilities"],
+  "scope": "/",
   "icons": [
     {
       "src": "/icons/icon-72x72.png",
@@ -19,14 +19,14 @@
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-96x96.png",
+      "src": "/icons/icon-96x96.png", 
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
       "src": "/icons/icon-128x128.png",
-      "sizes": "128x128",
+      "sizes": "128x128", 
       "type": "image/png",
       "purpose": "maskable any"
     },
@@ -60,61 +60,5 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-home.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "YourSaaS Homepage on Desktop"
-    },
-    {
-      "src": "/screenshots/mobile-home.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "YourSaaS Homepage on Mobile"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Dashboard",
-      "short_name": "Dashboard",
-      "description": "Access your YourSaaS dashboard",
-      "url": "/dashboard",
-      "icons": [
-        {
-          "src": "/icons/dashboard-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Documentation",
-      "short_name": "Docs",
-      "description": "Browse documentation",
-      "url": "/docs",
-      "icons": [
-        {
-          "src": "/icons/docs-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Blog",
-      "short_name": "Blog",
-      "description": "Read our latest articles",
-      "url": "/blog",
-      "icons": [
-        {
-          "src": "/icons/blog-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    }
-  ],
-  "related_applications": [],
-  "prefer_related_applications": false
+  ]
 }

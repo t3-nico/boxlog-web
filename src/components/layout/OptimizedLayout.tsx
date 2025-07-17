@@ -8,6 +8,7 @@ import { SkipLinks } from '@/components/accessibility/SkipLinks'
 import { LightweightProviders, StandardProviders, FullProviders } from '@/components/providers/OptionalProviders'
 import { PageLoader } from '@/components/loading/PageLoader'
 import { PreloadStrategy } from '@/components/performance/PreloadStrategy'
+import { EnhancedAccessibility } from '@/components/accessibility/EnhancedAccessibility'
 
 interface OptimizedLayoutProps {
   children: ReactNode
@@ -51,9 +52,10 @@ export function OptimizedLayout({ children }: OptimizedLayoutProps) {
   return (
     <ProviderComponent>
       <PreloadStrategy />
+      <EnhancedAccessibility />
       <SkipLinks />
       <Header />
-      <main id="main-content">
+      <main id="main-content" role="main">
         <PageLoader showSkeleton={loadingConfig.showSkeleton}>
           {children}
         </PageLoader>
