@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
-import { ContactForm } from '@/components/contact/ContactForm'
+import { LazyContactForm } from '@/components/contact/LazyContactForm'
 import { Mail, Phone, MessageCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -79,7 +79,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form */}
-      <ContactForm />
+      <LazyContactForm />
 
       {/* Office Information */}
       <section className="py-24 bg-gray-50">

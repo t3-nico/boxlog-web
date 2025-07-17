@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { SearchDialog } from '@/components/search/SearchDialog'
+import { LazySearchDialog } from '@/components/search/LazySearchDialog'
 import { Search, X, Menu } from 'lucide-react'
 
 const navigation = [
@@ -195,7 +195,7 @@ export function Header() {
       </div>
       
       {/* Global search dialog */}
-      <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
+      <LazySearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </header>
   )
 }
