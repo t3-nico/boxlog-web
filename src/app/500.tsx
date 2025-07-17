@@ -3,36 +3,36 @@ import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { generateSEOMetadata } from '@/lib/metadata'
-import { FileQuestion } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
 
 export const metadata = generateSEOMetadata({
-  title: 'Page Not Found - 404 Error',
-  description: 'The page you are looking for could not be found. Return to our homepage or browse our available content.',
-  url: '/404',
+  title: 'Internal Server Error - 500 Error',
+  description: 'An internal server error occurred. Our team has been notified and is working to resolve the issue.',
+  url: '/500',
   noindex: true,
 })
 
-export default function NotFound() {
+export default function InternalServerError() {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center">
       <Container>
         <div className="max-w-md mx-auto text-center">
-          {/* 404 illustration */}
-          <div className="w-24 h-24 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-8">
-            <FileQuestion className="w-12 h-12 text-neutral-600 dark:text-neutral-400" />
+          {/* 500 illustration */}
+          <div className="w-24 h-24 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-8">
+            <AlertTriangle className="w-12 h-12 text-red-500" />
           </div>
           
           <Heading as="h1" size="4xl" className="mb-4">
-            404
+            500
           </Heading>
           
           <Heading as="h2" size="xl" className="mb-4">
-            Page Not Found
+            Internal Server Error
           </Heading>
           
           <Text variant="muted" className="mb-8">
-            The page you are looking for might have been removed, had its name changed, 
-            or is temporarily unavailable.
+            Something went wrong on our end. Our team has been automatically notified 
+            and is working to fix this issue.
           </Text>
           
           <div className="space-y-4">
@@ -57,20 +57,17 @@ export default function NotFound() {
             </div>
           </div>
           
-          {/* Popular links */}
+          {/* Help section */}
           <div className="mt-8 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
             <Text size="sm" variant="muted" className="mb-3">
-              Popular pages:
+              Need immediate help?
             </Text>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" size="sm" asChild>
-                <Link href="/features">Features</Link>
+                <Link href="/contact">Contact Support</Link>
               </Button>
               <Button variant="outline" size="sm" asChild>
-                <Link href="/pricing">Pricing</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/releases">Releases</Link>
+                <Link href="/status">System Status</Link>
               </Button>
             </div>
           </div>

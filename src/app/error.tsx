@@ -19,15 +19,15 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center">
       <Container>
         <div className="max-w-md mx-auto text-center">
           {/* Error icon */}
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <AlertTriangle className="w-8 h-8 text-red-600" />
+          <div className="w-16 h-16 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <AlertTriangle className="w-8 h-8 text-red-500" />
           </div>
           
-          <Heading as="h1" size="2xl" className="mb-4 text-gray-900">
+          <Heading as="h1" size="2xl" className="mb-4">
             Something went wrong
           </Heading>
           
@@ -50,10 +50,10 @@ export default function Error({
           {/* Error details for development */}
           {process.env.NODE_ENV === 'development' && (
             <details className="mt-8 text-left">
-              <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
+              <summary className="cursor-pointer text-sm text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300">
                 Error details (dev only)
               </summary>
-              <pre className="mt-2 p-4 bg-gray-100 rounded text-xs overflow-auto">
+              <pre className="mt-2 p-4 bg-neutral-100 dark:bg-neutral-800 rounded text-xs overflow-auto text-red-600 dark:text-red-400">
                 {error.message}
                 {error.stack && (
                   <>
