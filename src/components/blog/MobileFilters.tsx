@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, Filter, Search, Calendar, Clock } from 'lucide-react'
+import { X, Filter, Search, Calendar, TrendingUp, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { BlogFilterState } from './BlogFilters'
 
@@ -168,8 +168,8 @@ export function MobileFilters({
               <div className="space-y-2">
                 {[
                   { value: 'date', label: 'Date', icon: Calendar },
-                  { value: 'title', label: 'Title', icon: Filter },
-                  { value: 'readingTime', label: 'Reading Time', icon: Clock }
+                  { value: 'popularity', label: 'Popularity', icon: TrendingUp },
+                  { value: 'category', label: 'Category', icon: Tag }
                 ].map(({ value, label, icon: Icon }) => (
                   <button
                     key={value}

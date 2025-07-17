@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Search, X, Filter, ChevronDown, Calendar, Clock, Menu } from 'lucide-react'
+import { Search, X, Filter, ChevronDown, Calendar, TrendingUp, Tag, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { MobileFilters } from './MobileFilters'
 
@@ -15,7 +15,7 @@ interface BlogFiltersProps {
 export interface BlogFilterState {
   selectedTags: string[]
   searchQuery: string
-  sortBy: 'date' | 'title' | 'readingTime'
+  sortBy: 'date' | 'popularity' | 'category'
   sortOrder: 'asc' | 'desc'
   tagOperator: 'AND' | 'OR'
 }
@@ -199,8 +199,8 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
             <div className="flex flex-wrap gap-2">
               {[
                 { value: 'date', label: 'Date', icon: Calendar },
-                { value: 'title', label: 'Title', icon: Filter },
-                { value: 'readingTime', label: 'Reading Time', icon: Clock }
+                { value: 'popularity', label: 'Popularity', icon: TrendingUp },
+                { value: 'category', label: 'Category', icon: Tag }
               ].map(({ value, label, icon: Icon }) => (
                 <button
                   key={value}

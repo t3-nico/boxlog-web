@@ -96,11 +96,12 @@ export function FilteredBlogClient({ initialPosts, tags }: FilteredBlogClientPro
             case 'date':
               comparison = new Date(a.frontMatter.publishedAt).getTime() - new Date(b.frontMatter.publishedAt).getTime()
               break
-            case 'title':
-              comparison = a.frontMatter.title.localeCompare(b.frontMatter.title)
+            case 'popularity':
+              // タグ数でポピュラリティを判定（タグが多い = より多くのトピックに関連）
+              comparison = (a.frontMatter.tags?.length || 0) - (b.frontMatter.tags?.length || 0)
               break
-            case 'readingTime':
-              comparison = (a.readingTime || 0) - (b.readingTime || 0)
+            case 'category':
+              comparison = a.frontMatter.category.localeCompare(b.frontMatter.category)
               break
           }
 
@@ -154,7 +155,7 @@ export function FilteredBlogClient({ initialPosts, tags }: FilteredBlogClientPro
             <BlogSkeleton />
           ) : currentPosts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 gap-7">
                 {currentPosts.map((post, index) => (
                   <PostCard
                     key={post.slug}

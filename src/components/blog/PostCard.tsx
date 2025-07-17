@@ -51,26 +51,26 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
   if (layout === 'vertical') {
     // Vertical layout (for featured articles): image on top, content below
     return (
-      <article className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300">
+      <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
         <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="block">
           {/* Cover image */}
           {post.frontMatter.coverImage && !imageError ? (
-            <div className="relative aspect-[16/9] overflow-hidden">
+            <div className="relative aspect-[380/214] overflow-hidden rounded-lg">
               <Image
                 src={post.frontMatter.coverImage}
                 alt={post.frontMatter.title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
                 onError={() => setImageError(true)}
                 priority={priority}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
             </div>
           ) : (
-            <div className="aspect-[16/9] bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+            <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg">
               <ImageIcon className="w-12 h-12 text-gray-400 dark:text-gray-500" />
             </div>
           )}
@@ -114,40 +114,40 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
 
   // Horizontal layout (for regular articles): image on left, content on right
   return (
-    <article className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300">
+    <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
       <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="block">
-        <div className="flex">
+        <div className="flex gap-6">
           {/* Left side: Cover image */}
-          <div className="w-1/3 relative">
+          <div className="w-80 flex-shrink-0">
             {post.frontMatter.coverImage && !imageError ? (
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[380/214] overflow-hidden rounded-lg">
                 <Image
                   src={post.frontMatter.coverImage}
                   alt={post.frontMatter.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
                   onError={() => setImageError(true)}
                   priority={priority}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                 />
                 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
               </div>
             ) : (
-              <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+              <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg">
                 <ImageIcon className="w-8 h-8 text-gray-400 dark:text-gray-500" />
               </div>
             )}
           </div>
 
           {/* Right side: Content */}
-          <div className="w-2/3 p-4 flex flex-col justify-between">
-            <div>
+          <div className="flex-1">
+            <div className="my-1">
               {/* Title */}
               <Heading 
                 as="h2" 
-                size="lg" 
+                size="lg"
                 className="mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2"
               >
                 {post.frontMatter.title}
@@ -158,7 +158,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                 {post.frontMatter.tags.map((tag, index) => (
                   <span
                     key={tag}
-                    className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                    className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
                       getTagColor(tag, index)
                     }`}
                   >
@@ -166,11 +166,9 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                   </span>
                 ))}
               </div>
-            </div>
 
-            <div>
               {/* Meta information */}
-              <div className="mb-3 text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-gray-500 dark:text-gray-400">
                 <time dateTime={post.frontMatter.publishedAt}>
                   {formattedDate}
                 </time>
