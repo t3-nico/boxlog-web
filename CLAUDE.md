@@ -11,6 +11,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run lint` - Run ESLint
 - `npm run type-check` - Run TypeScript compiler without emitting files
 
+### Testing & Quality Assurance
+- `npm run test` - Run tests in interactive mode with Vitest
+- `npm run test:ui` - Run tests with Vitest UI interface
+- `npm run test:run` - Run tests once (CI mode)
+- `npm run test:watch` - Run tests in watch mode
+
 ### Analysis & Optimization
 - `npm run analyze` - Run bundle analyzer (requires ANALYZE=true env var)
 - `npm run build:production` - Production build with NODE_ENV=production
@@ -26,6 +32,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Content**: MDX for blog posts, docs, and releases
 - **Internationalization**: next-intl with English and Japanese locales
 - **Theme**: next-themes with system/dark/light mode support
+- **Testing**: Vitest with React Testing Library for unit and integration tests
 
 ### Key Features
 - **Performance**: Bundle splitting, image optimization, Core Web Vitals monitoring
@@ -33,6 +40,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Security**: CSP headers, security middleware, input validation
 - **SEO**: Structured data, meta tags, sitemap generation
 - **PWA**: Service Worker, offline capabilities
+- **CI/CD**: GitHub Actions with automated testing, building, and deployment
 
 ### Directory Structure
 ```
@@ -46,6 +54,7 @@ src/
 │   └── ui/               # Reusable UI components
 ├── lib/                  # Utilities and configurations
 ├── middleware.ts         # Security headers & i18n routing
+├── test/                 # Test setup and configuration
 └── types/               # TypeScript type definitions
 ```
 
@@ -65,7 +74,7 @@ src/
 - **Component Organization**: Grouped by feature/domain
 - **TypeScript**: Strict mode with comprehensive type definitions
 - **Error Handling**: Error boundaries and graceful degradation
-- **Testing**: Accessibility and performance testing integrated
+- **Testing**: Vitest for unit tests, accessibility and performance testing integrated
 
 ## Important Notes
 
