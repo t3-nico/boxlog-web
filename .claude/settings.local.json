@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run lint)"
+      "Bash(mkdir:*)"
     ],
     "deny": []
   },
@@ -28,7 +28,10 @@
       "postcss.config.js",
       ".env.example",
       "vercel.json",
-      "README.md"
+      "README.md",
+      "CLAUDE.md",
+      "docs/**/*.md",
+      "**/*.md"
     ],
     "exclude_patterns": [
       "**/node_modules/**",
