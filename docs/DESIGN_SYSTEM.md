@@ -96,6 +96,8 @@ const CustomButton = ({ children, ...props }) => (
 ### **基本原則**
 すべてのスペーシング（余白、パディング、マージン）は8pxの倍数を使用します。これにより視覚的なリズムと一貫性を保ち、デザインの品質を向上させます。
 
+**例外**: アイコンサイズは実用性を優先し、業界標準の20px（`h-5 w-5`）を推奨します。
+
 ### **8px Grid System の利点**
 - **視覚的統一感**: 一貫したスペーシングによる美しいレイアウト
 - **デザイナーとの協力**: 多くのデザインツールで採用されている標準
@@ -186,14 +188,17 @@ const CustomButton = ({ children, ...props }) => (
 - [ ] ボタンとフォーム要素の高さが8の倍数
 - [ ] 行間が8pxグリッドに適合
 - [ ] レスポンシブ時も8の倍数を維持
+- [ ] アイコンサイズは標準20px（`h-5 w-5`）を使用（8pxグリッドの例外として認める）
 
 ## Icon Guidelines
 - **Library**: Use Lucide React exclusively for all icons
 - **Import**: Import specific icons from 'lucide-react' (e.g., `import { Search, User } from 'lucide-react'`)
-- **Sizing**: Use consistent sizing classes:
-  - Small: `h-3 w-3` or `h-4 w-4`
-  - Medium: `h-5 w-5` or `h-6 w-6`
-  - Large: `h-8 w-8` or larger
+- **Sizing**: Balanced approach prioritizing usability over strict 8px grid:
+  - Small: `h-4 w-4` (16px - 2×8px) - Dense layouts, favicons
+  - **Standard**: `h-5 w-5` (20px - industry standard) - Default for most UI icons
+  - Large: `h-6 w-6` (24px - 3×8px, Lucide default) - Headers, prominent features
+  - Extra Large: `h-8 w-8` (32px - 4×8px) - Hero sections, CTAs
+- **Rationale**: 20px provides optimal balance with 16px text and follows IBM/industry standards
 - **Colors**: Apply colors through className (e.g., `text-blue-500`, `text-gray-400`)
 - **Stroke Width**: Use `strokeWidth={1.5}` for thinner icons, default (2) for normal weight
 - **Accessibility**: Always include `aria-hidden="true"` for decorative icons, or proper `aria-label` for interactive icons
