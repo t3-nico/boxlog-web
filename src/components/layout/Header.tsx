@@ -86,7 +86,7 @@ export function Header() {
             >
               <Search className="h-4 w-4" aria-hidden="true" />
               <span className="text-sm">Search...</span>
-              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-bg-tertiary px-1.5 font-mono text-[10px] font-medium text-text-secondary opacity-100 border-border-primary">
+              <kbd className="ml-auto pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-bg-tertiary px-1.5 font-mono text-[10px] font-medium text-text-secondary opacity-100 border-border-primary">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </Button>

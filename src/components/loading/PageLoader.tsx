@@ -15,7 +15,7 @@ function DefaultSkeleton() {
     <Container>
       <div className="py-12 space-y-8 animate-pulse">
         {/* ヘッダー部分 */}
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="h-8 bg-neutral-200 rounded-lg w-1/3 dark:bg-neutral-700" />
           <div className="h-4 bg-neutral-200 rounded-lg w-2/3 dark:bg-neutral-700" />
           <div className="h-4 bg-neutral-200 rounded-lg w-1/2 dark:bg-neutral-700" />
@@ -76,7 +76,7 @@ export function BlogContentLoader({ children }: { children: ReactNode }) {
               <div className="h-4 bg-neutral-200 rounded w-1/3 dark:bg-neutral-700" />
               <div className="h-64 bg-neutral-200 rounded-lg dark:bg-neutral-700" />
             </div>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="h-4 bg-neutral-200 rounded dark:bg-neutral-700" />
               ))}
@@ -100,7 +100,7 @@ export function ListContentLoader({ children }: { children: ReactNode }) {
             <div className="space-y-4">
               {[...Array(5)].map((_, i) => (
                 <div key={i} className="border border-neutral-200 rounded-lg p-6 dark:border-neutral-700">
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div className="h-6 bg-neutral-200 rounded w-2/3 dark:bg-neutral-700" />
                     <div className="h-4 bg-neutral-200 rounded w-full dark:bg-neutral-700" />
                     <div className="h-4 bg-neutral-200 rounded w-4/5 dark:bg-neutral-700" />

@@ -122,7 +122,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
             v{frontMatter.version}
           </span>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <span className="text-sm text-gray-500 uppercase tracking-wider font-medium dark:text-gray-400">
               {versionLabels[versionType]}
             </span>
@@ -201,7 +201,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
         </div>
 
         {/* Status Badges */}
-        <div className="flex flex-wrap gap-3 mt-8">
+        <div className="flex flex-wrap gap-4 mt-8">
           {frontMatter.featured && (
             <span className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-purple-100 text-purple-800 border border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700">
               <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">

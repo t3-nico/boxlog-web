@@ -23,7 +23,7 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden dark:bg-gray-900 dark:border-gray-700">
       {/* Header */}
       <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-100 dark:from-blue-900/20 dark:to-indigo-900/20 dark:border-gray-700">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center dark:bg-blue-900/30">
             <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -121,7 +121,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
         {/* Left Side */}
         <div className="flex-1 min-w-0">
           {/* Version and Status */}
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-4 mb-3">
             <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${
               isFirst ? 'bg-blue-600 text-white dark:bg-blue-600 dark:text-white' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
             }`}>

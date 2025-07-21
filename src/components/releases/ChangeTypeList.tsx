@@ -222,7 +222,7 @@ export function ChangeTypeSection({
         className="w-full px-6 py-4 bg-gray-50 hover:bg-gray-100 transition-colors dark:bg-gray-800 dark:hover:bg-gray-750"
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <type.icon className="w-5 h-5" aria-label={type.label} />
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {type.label}
@@ -242,9 +242,9 @@ export function ChangeTypeSection({
       
       {isExpanded && (
         <div className="px-6 py-4 bg-white dark:bg-gray-900">
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {changes.map((change, index) => (
-              <li key={index} className="flex items-start gap-3">
+              <li key={index} className="flex items-start gap-4">
                 <div className="flex-shrink-0 mt-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full dark:bg-gray-500"></div>
                 </div>

@@ -63,7 +63,7 @@ export function SearchResults({
           <button
             key={result.id}
             onClick={() => handleResultClick(result.url)}
-            className="flex items-start gap-3 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
+            className="flex items-start gap-4 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
           >
             <div className="mt-0.5">
               {getTypeIcon(result.type)}
@@ -89,7 +89,7 @@ export function SearchResults({
     <div className="space-y-4">
       {results.map((result) => (
         <div key={result.id} className="border rounded-lg p-6 bg-white hover:shadow-md transition-shadow dark:border-gray-700 dark:bg-gray-800">
-          <div className="flex items-start gap-3 mb-3">
+          <div className="flex items-start gap-4 mb-3">
             {getTypeIcon(result.type)}
             <div className="flex-1 min-w-0">
               <button 

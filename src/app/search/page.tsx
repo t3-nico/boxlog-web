@@ -134,7 +134,7 @@ function SearchResults() {
           </Heading>
           
           {/* 検索ボックス */}
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-4 mb-6">
             <div className="relative flex-1">
               <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -158,7 +158,7 @@ function SearchResults() {
 
           {/* フィルター */}
           {query && (
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-4 mb-6">
               <Text className="text-sm text-gray-600 mr-2">フィルター:</Text>
               <div className="flex gap-2">
                 {[
@@ -213,7 +213,7 @@ function SearchResults() {
               <div className="space-y-4">
                 {filteredResults.map((result) => (
                   <div key={result.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-800 hover:shadow-md dark:hover:shadow-lg transition-shadow">
-                    <div className="flex items-start gap-3 mb-3">
+                    <div className="flex items-start gap-4 mb-3">
                       {getTypeIcon(result.type)}
                       <div className="flex-1 min-w-0">
                         <a 

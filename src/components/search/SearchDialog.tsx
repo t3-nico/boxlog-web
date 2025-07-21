@@ -175,7 +175,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden bg-white shadow-2xl border-0 dark:bg-gray-900 dark:border dark:border-gray-700 [&>button]:hidden">
         {/* 検索ヘッダー */}
-        <div className="flex items-center gap-3 p-4 border-b border-gray-100 dark:border-gray-700">
+        <div className="flex items-center gap-4 p-4 border-b border-gray-100 dark:border-gray-700">
           <Search className="h-5 w-5 text-gray-400 flex-shrink-0 dark:text-gray-500" />
           <Input
             ref={inputRef}
@@ -277,7 +277,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               </div>
             </div>
           ) : (
-            <div className="p-4 space-y-3">
+            <div className="p-4 space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Search results for &ldquo;<span className="font-medium">{query}</span>&rdquo;

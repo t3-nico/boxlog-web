@@ -80,7 +80,7 @@ export function Footer() {
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Product
               </h3>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-4 space-y-2">
                 {navigation.product.map((item) => (
                   <li key={item.name}>
                     <Link
@@ -99,7 +99,7 @@ export function Footer() {
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Company
               </h3>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-4 space-y-2">
                 {navigation.company.map((item) => (
                   <li key={item.name}>
                     <Link
@@ -118,7 +118,7 @@ export function Footer() {
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Resources
               </h3>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-4 space-y-2">
                 {navigation.resources.map((item) => (
                   <li key={item.name}>
                     <Link
@@ -137,7 +137,7 @@ export function Footer() {
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
                 Legal
               </h3>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-4 space-y-2">
                 {navigation.legal.map((item) => (
                   <li key={item.name}>
                     <Link

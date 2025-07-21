@@ -67,7 +67,7 @@ export function TagsByCategory({ tagsByCategory }: TagsByCategoryProps) {
           <div key={category} className={`bg-white rounded-2xl border-2 ${config.borderColor} overflow-hidden dark:bg-gray-900`}>
             {/* Header */}
             <div className={`${config.color} px-6 py-4 border-b ${config.borderColor} dark:bg-opacity-20`}>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center dark:bg-gray-800">
                   {config.icon}
                 </div>
@@ -84,12 +84,12 @@ export function TagsByCategory({ tagsByCategory }: TagsByCategoryProps) {
 
             {/* Tags */}
             <div className="p-6">
-              <div className="space-y-3 max-h-80 overflow-y-auto">
+              <div className="space-y-4 max-h-80 overflow-y-auto">
                 {tags.slice(0, 20).map((tagData) => (
                   <Link
                     key={tagData.tag}
                     href={`/tags/${encodeURIComponent(tagData.tag)}`}
-                    className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group dark:hover:bg-gray-800"
+                    className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors group dark:hover:bg-gray-800"
                   >
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${getTagColor(tagData.tag)} group-hover:scale-105`}>
                       #{tagData.tag}

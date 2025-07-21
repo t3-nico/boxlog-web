@@ -15,7 +15,7 @@ export default function Loading() {
         </div>
         
         {/* Loading skeleton */}
-        <div className="mt-8 max-w-md mx-auto space-y-3">
+        <div className="mt-8 max-w-md mx-auto space-y-4">
           <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
           <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-5/6"></div>
           <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-4/6"></div>

@@ -82,7 +82,7 @@ export function TagList({
               Current Tag
             </Text>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-600 dark:bg-blue-600 text-white">
               #{currentTag}
             </span>
@@ -94,7 +94,7 @@ export function TagList({
       )}
 
       {/* タグクラウド */}
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2">
         {displayTags.map((tagItem, index) => {
           const isActive = currentTag === tagItem.tag
           

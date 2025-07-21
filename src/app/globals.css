@@ -55,6 +55,15 @@
   .text-responsive-3xl { @apply text-3xl sm:text-4xl lg:text-5xl; }
   .text-responsive-4xl { @apply text-4xl sm:text-5xl lg:text-6xl; }
   
+  /* 8px Grid aligned line heights */
+  .leading-8px-2 { line-height: 16px; }    /* 2×8px */
+  .leading-8px-3 { line-height: 24px; }    /* 3×8px */
+  .leading-8px-4 { line-height: 32px; }    /* 4×8px */
+  .leading-8px-5 { line-height: 40px; }    /* 5×8px */
+  .leading-8px-6 { line-height: 48px; }    /* 6×8px */
+  .leading-8px-7 { line-height: 56px; }    /* 7×8px */
+  .leading-8px-8 { line-height: 64px; }    /* 8×8px */
+  
   /* Responsive spacing utilities */
   .space-responsive { @apply space-y-4 sm:space-y-6 lg:space-y-8; }
   .gap-responsive { @apply gap-4 sm:gap-6 lg:gap-8; }

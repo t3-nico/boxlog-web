@@ -46,7 +46,7 @@ export function ReleaseFilter({
       {/* Header */}
       <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center dark:bg-blue-900/30">
               <Filter className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
@@ -121,7 +121,7 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10 }: TagFilt
   const displayTags = showAll ? tags : tags.slice(0, maxDisplay)
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="space-y-2">
         {displayTags.map((tagItem) => (
           <label

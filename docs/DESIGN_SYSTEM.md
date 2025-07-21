@@ -91,6 +91,102 @@ const CustomButton = ({ children, ...props }) => (
 - **アクセシビリティテスト**: すべてのコンポーネントは WCAG 2.1 AA 基準でテスト
 - **一貫性チェック**: デザインシステムの一貫性を維持するための定期的な監査
 
+## Spacing System - 8px Grid System
+
+### **基本原則**
+すべてのスペーシング（余白、パディング、マージン）は8pxの倍数を使用します。これにより視覚的なリズムと一貫性を保ち、デザインの品質を向上させます。
+
+### **8px Grid System の利点**
+- **視覚的統一感**: 一貫したスペーシングによる美しいレイアウト
+- **デザイナーとの協力**: 多くのデザインツールで採用されている標準
+- **スケーラビリティ**: レスポンシブデザインでの一貫した比率維持
+- **開発効率**: 迷いのないスペーシング選択
+
+### **スペーシング値対応表**
+
+| 用途 | Tailwind Class | px値 | 8px倍数 |
+|------|----------------|------|---------|
+| 極小間隔 | `space-y-1`, `p-1`, `m-1` | 4px | 0.5× |
+| 小間隔 | `space-y-2`, `p-2`, `m-2` | 8px | 1× |
+| 通常間隔 | `space-y-3`, `p-3`, `m-3` | 12px | 1.5× |
+| 標準間隔 | `space-y-4`, `p-4`, `m-4` | 16px | 2× |
+| 中間隔 | `space-y-6`, `p-6`, `m-6` | 24px | 3× |
+| 大間隔 | `space-y-8`, `p-8`, `m-8` | 32px | 4× |
+| 特大間隔 | `space-y-12`, `p-12`, `m-12` | 48px | 6× |
+| 最大間隔 | `space-y-16`, `p-16`, `m-16` | 64px | 8× |
+
+### **要素別ガイドライン**
+
+#### **コンポーネント内部**
+```typescript
+// ✅ 推奨: 8の倍数を使用
+<Card className="p-6">        // 24px padding
+  <div className="space-y-4"> // 16px間隔
+    <h2>タイトル</h2>
+    <p>コンテンツ</p>
+  </div>
+</Card>
+
+// ❌ 避けるべき: 不規則な値
+<Card className="p-5">        // 20px - 8の倍数ではない
+  <div className="space-y-5"> // 20px - 8の倍数ではない
+```
+
+#### **セクション間のスペーシング**
+- セクション間: `space-y-12` (48px) または `space-y-16` (64px)
+- カード間: `gap-6` (24px) または `gap-8` (32px)
+- リスト項目間: `space-y-2` (8px) または `space-y-3` (12px)
+
+#### **レスポンシブスペーシング**
+```typescript
+// ✅ 推奨: レスポンシブユーティリティを活用
+<div className="p-responsive">     // sm:p-6 lg:p-8
+<div className="space-responsive"> // space-y-4 sm:space-y-6 lg:space-y-8
+<div className="gap-responsive">   // gap-4 sm:gap-6 lg:gap-8
+```
+
+### **フォントサイズと行間**
+
+#### **8pxグリッドに適合したタイポグラフィ**
+| Tailwind Class | フォントサイズ | 行間 | 8px倍数行間 |
+|----------------|----------------|------|-------------|
+| `text-xs` | 12px | 16px | 2× |
+| `text-sm` | 14px | 20px | 2.5× |
+| `text-base` | 16px | 24px | 3× |
+| `text-lg` | 18px | 28px | 3.5× |
+| `text-xl` | 20px | 28px | 3.5× |
+| `text-2xl` | 24px | 32px | 4× |
+| `text-3xl` | 30px | 36px | 4.5× |
+
+#### **カスタム行間調整**
+```typescript
+// ✅ 推奨: 8の倍数に調整された行間
+<h1 className="text-3xl leading-10"> // 40px行間 (5×8px)
+<p className="text-base leading-6">  // 24px行間 (3×8px)
+```
+
+### **UI要素の高さ**
+
+#### **ボタンとフォーム要素**
+- 小ボタン: `h-8` (32px) - 4×8px
+- 標準ボタン: `h-10` (40px) - 5×8px
+- 大ボタン: `h-12` (48px) - 6×8px
+- 入力フィールド: `h-10` (40px) - 5×8px
+- テキストエリア: `h-24` (96px) - 12×8px
+
+#### **コンテナ要素**
+- ヘッダー: `h-16` (64px) - 8×8px
+- フッター: 最小 `h-32` (128px) - 16×8px
+- カード: 最小 `h-24` (96px) - 12×8px
+
+### **実装チェックリスト**
+- [ ] すべてのパディング値が8の倍数
+- [ ] すべてのマージン値が8の倍数
+- [ ] コンポーネント間のスペーシングが統一
+- [ ] ボタンとフォーム要素の高さが8の倍数
+- [ ] 行間が8pxグリッドに適合
+- [ ] レスポンシブ時も8の倍数を維持
+
 ## Icon Guidelines
 - **Library**: Use Lucide React exclusively for all icons
 - **Import**: Import specific icons from 'lucide-react' (e.g., `import { Search, User } from 'lucide-react'`)

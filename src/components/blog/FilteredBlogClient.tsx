@@ -155,7 +155,7 @@ export function FilteredBlogClient({ initialPosts, tags }: FilteredBlogClientPro
             <BlogSkeleton />
           ) : currentPosts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 gap-7">
+              <div className="grid grid-cols-1 gap-8">
                 {currentPosts.map((post, index) => (
                   <PostCard
                     key={post.slug}

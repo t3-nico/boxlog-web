@@ -24,7 +24,7 @@ export function BlogCardSkeleton() {
         <div className="w-full md:w-48 h-32 bg-neutral-200 dark:bg-neutral-700 rounded-lg flex-shrink-0" />
         
         {/* コンテンツスケルトン */}
-        <div className="flex-1 space-y-3">
+        <div className="flex-1 space-y-4">
           {/* タイトル */}
           <div className="h-6 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4" />
           

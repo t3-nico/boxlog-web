@@ -52,7 +52,7 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
   }
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-4">
         {shareLinks.map((social) => (
           <a
             key={social.name}

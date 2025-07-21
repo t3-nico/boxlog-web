@@ -203,7 +203,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
         
         {/* Helpful Links */}
         <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Helpful Links
             </div>
@@ -258,7 +258,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
       {/* Helpful Links */}
       <div className="border-t border-gray-200 pt-4">
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
             Helpful Links
           </div>

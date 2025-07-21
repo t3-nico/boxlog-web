@@ -44,7 +44,7 @@ export function ErrorState({
       icon: 'w-12 h-12 mb-4',
       title: 'text-base font-semibold',
       description: 'text-sm',
-      spacing: 'space-y-3'
+      spacing: 'space-y-4'
     },
     lg: {
       container: 'p-8',

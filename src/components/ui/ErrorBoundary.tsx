@@ -94,7 +94,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                 We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
               </p>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <Button onClick={this.handleReset} className="w-full">
                   Try again
                 </Button>

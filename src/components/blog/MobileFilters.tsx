@@ -111,7 +111,7 @@ export function MobileFilters({
         <div className="bg-white dark:bg-neutral-800 rounded-t-2xl shadow-xl transition-transform transform translate-y-0 flex flex-col max-h-[90vh]">
           {/* ヘッダー */}
           <div className="flex items-center justify-between p-6 border-b border-neutral-200 dark:border-neutral-700 flex-shrink-0">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <Filter className="w-5 h-5 text-neutral-500 dark:text-neutral-400" />
               <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
                 Filters
@@ -175,7 +175,7 @@ export function MobileFilters({
                     key={value}
                     onClick={() => handleSortChange(value as BlogFilterState['sortBy'])}
                     className={cn(
-                      'w-full flex items-center gap-3 px-4 py-3 text-left rounded-lg border transition-colors',
+                      'w-full flex items-center gap-4 px-4 py-3 text-left rounded-lg border transition-colors',
                       localFilters.sortBy === value
                         ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200'
                         : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100'
@@ -253,7 +253,7 @@ export function MobileFilters({
 
           {/* フッター */}
           <div className="p-6 border-t border-neutral-200 dark:border-neutral-700 space-y-3 flex-shrink-0">
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <button
                 onClick={clearAllFilters}
                 className="flex-1 px-4 py-3 text-neutral-600 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-700 rounded-lg hover:bg-neutral-200 hover:text-neutral-700 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors font-medium"
