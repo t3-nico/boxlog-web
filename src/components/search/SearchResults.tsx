@@ -63,7 +63,7 @@ export function SearchResults({
           <button
             key={result.id}
             onClick={() => handleResultClick(result.url)}
-            className="flex items-start gap-4 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
+            className="flex items-start gap-4 w-full p-4 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
           >
             <div className="mt-0.5">
               {getTypeIcon(result.type)}

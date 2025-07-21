@@ -251,7 +251,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                         onOpenChange(false)
                         router.push(link.href)
                       }}
-                      className={`flex items-start gap-3 w-full p-3 rounded-lg transition-colors text-left ${
+                      className={`flex items-start gap-4 w-full p-4 rounded-lg transition-colors text-left ${
                         selectedIndex === index ? 'bg-blue-50 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-700' : 'hover:bg-gray-50 dark:hover:bg-gray-800'
                       }`}
                     >
@@ -290,7 +290,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {/* 全文検索 */}
               <button
                 onClick={() => handleSearch(query)}
-                className="flex items-center gap-3 w-full p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/40 dark:border-blue-700"
+                className="flex items-center gap-4 w-full p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/40 dark:border-blue-700"
               >
                 <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <div className="text-left">
@@ -315,7 +315,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                           onOpenChange(false)
                           router.push(result.url)
                         }}
-                        className="flex items-start gap-3 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:hover:bg-gray-800 dark:border-gray-700"
+                        className="flex items-start gap-4 w-full p-4 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:hover:bg-gray-800 dark:border-gray-700"
                       >
                         <div className="mt-0.5">
                           {getTypeIcon(result.type)}
@@ -361,7 +361,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                           <button
                             key={index}
                             onClick={() => handleTagClick(tag.name)}
-                            className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
+                            className="flex items-center gap-4 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
                           >
                             <div className="mt-0.5">
                               <Tag className="h-4 w-4 text-gray-500" />
@@ -396,7 +396,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         </div>
 
         {/* フッター */}
-        <div className="p-3 border-t bg-gray-50/50 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400">
+        <div className="p-4 border-t bg-gray-50/50 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
