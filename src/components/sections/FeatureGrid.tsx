@@ -41,7 +41,7 @@ export function FeatureGrid() {
             >
               {/* Icon */}
               <div className="flex items-center justify-center w-14 h-14 bg-gray-50 rounded-xl mb-6 group-hover:bg-blue-50 transition-colors dark:bg-gray-700 dark:group-hover:bg-blue-900/50">
-                <feature.icon className="w-7 h-7 text-gray-600 group-hover:text-blue-600 transition-colors dark:text-gray-300 dark:group-hover:text-blue-400" />
+                <feature.icon className="w-8 h-8 text-gray-600 group-hover:text-blue-600 transition-colors dark:text-gray-300 dark:group-hover:text-blue-400" />
               </div>
               
               {/* Category Badge */}

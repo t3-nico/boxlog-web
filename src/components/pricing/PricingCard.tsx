@@ -89,7 +89,7 @@ export function PricingCard({ plan, isYearly }: PricingCardProps) {
         </Text>
         
         {plan.features.map((feature, index) => (
-          <div key={index} className="flex items-start gap-3">
+          <div key={index} className="flex items-start gap-4">
             <div className="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mt-0.5">
               <Check className="w-3 h-3 text-green-600 dark:text-green-400" />
             </div>

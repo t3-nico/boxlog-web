@@ -33,7 +33,7 @@ export function FeatureDetails() {
               
               <div className="space-y-4">
                 {feature.features.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex items-start gap-3">
+                  <div key={itemIndex} className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-5 h-5 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mt-0.5">
                       <Check className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                     </div>

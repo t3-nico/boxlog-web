@@ -208,7 +208,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       <button
                         key={index}
                         onClick={() => setQuery(search)}
-                        className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
+                        className="flex items-center gap-4 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
                       >
                         <Clock className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                         <span className="text-sm text-gray-700 dark:text-gray-300">{search}</span>
