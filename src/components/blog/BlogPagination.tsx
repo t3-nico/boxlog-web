@@ -1,8 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
 
 interface BlogPaginationProps {
   currentPage: number
@@ -48,38 +55,26 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
   const visiblePages = getVisiblePages()
 
   return (
-    <nav 
-      className={cn('flex items-center justify-center space-x-1', className)}
-      aria-label="Blog pagination"
-    >
-      {/* Previous button */}
-      {currentPage > 1 ? (
-        <Link
-          href={generatePageUrl(currentPage - 1)}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-neutral-500 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 hover:text-neutral-700 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200 transition-colors"
-          aria-label="Previous page"
-        >
-          <ChevronLeft className="w-4 h-4 mr-1" />
-          Previous
-        </Link>
-      ) : (
-        <span className="inline-flex items-center px-3 py-2 text-sm font-medium text-neutral-300 bg-white border border-neutral-200 rounded-lg cursor-not-allowed dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-600">
-          <ChevronLeft className="w-4 h-4 mr-1" />
-          Previous
-        </span>
-      )}
+    <Pagination className={className}>
+      <PaginationContent>
+        <PaginationItem>
+          {currentPage > 1 ? (
+            <PaginationPrevious href={generatePageUrl(currentPage - 1)} />
+          ) : (
+            <PaginationPrevious 
+              href="#" 
+              className="pointer-events-none opacity-50" 
+              aria-disabled="true"
+            />
+          )}
+        </PaginationItem>
 
-      {/* Page numbers */}
-      <div className="flex space-x-1">
         {visiblePages.map((page, index) => {
           if (page === '...') {
             return (
-              <span
-                key={`dots-${index}`}
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-neutral-500 dark:text-neutral-400"
-              >
-                ...
-              </span>
+              <PaginationItem key={`dots-${index}`}>
+                <PaginationEllipsis />
+              </PaginationItem>
             )
           }
 
@@ -87,40 +82,29 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
           const isCurrentPage = pageNumber === currentPage
 
           return (
-            <Link
-              key={pageNumber}
-              href={generatePageUrl(pageNumber)}
-              className={cn(
-                'inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors',
-                isCurrentPage
-                  ? 'text-white bg-blue-600 border border-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700'
-                  : 'text-neutral-500 bg-white border border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200'
-              )}
-              aria-label={isCurrentPage ? `Current page ${pageNumber}` : `Go to page ${pageNumber}`}
-              aria-current={isCurrentPage ? 'page' : undefined}
-            >
-              {pageNumber}
-            </Link>
+            <PaginationItem key={pageNumber}>
+              <PaginationLink 
+                href={generatePageUrl(pageNumber)}
+                isActive={isCurrentPage}
+              >
+                {pageNumber}
+              </PaginationLink>
+            </PaginationItem>
           )
         })}
-      </div>
 
-      {/* Next button */}
-      {currentPage < totalPages ? (
-        <Link
-          href={generatePageUrl(currentPage + 1)}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-neutral-500 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 hover:text-neutral-700 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200 transition-colors"
-          aria-label="Next page"
-        >
-          Next
-          <ChevronRight className="w-4 h-4 ml-1" />
-        </Link>
-      ) : (
-        <span className="inline-flex items-center px-3 py-2 text-sm font-medium text-neutral-300 bg-white border border-neutral-200 rounded-lg cursor-not-allowed dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-600">
-          Next
-          <ChevronRight className="w-4 h-4 ml-1" />
-        </span>
-      )}
-    </nav>
+        <PaginationItem>
+          {currentPage < totalPages ? (
+            <PaginationNext href={generatePageUrl(currentPage + 1)} />
+          ) : (
+            <PaginationNext 
+              href="#" 
+              className="pointer-events-none opacity-50" 
+              aria-disabled="true"
+            />
+          )}
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   )
 }
