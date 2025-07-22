@@ -43,37 +43,37 @@ export interface ChangeType {
   color: string
 }
 
-// 変更タイプの定義
+// 変更タイプの定義 - CSS変数ベースに統一
 export const changeTypes: ChangeType[] = [
   {
     id: 'new-features',
     label: 'New Features',
     icon: '🎉',
-    color: 'bg-green-100 text-green-800 border-green-200'
+    color: 'bg-[rgb(var(--release-new-bg))] text-[rgb(var(--release-new-text))] border-[rgb(var(--release-new-border))]'
   },
   {
     id: 'improvements',
     label: 'Improvements',
     icon: '🔧',
-    color: 'bg-blue-100 text-blue-800 border-blue-200'
+    color: 'bg-[rgb(var(--release-improvement-bg))] text-[rgb(var(--release-improvement-text))] border-[rgb(var(--release-improvement-border))]'
   },
   {
     id: 'bug-fixes',
     label: 'Bug Fixes',
     icon: '🐛',
-    color: 'bg-orange-100 text-orange-800 border-orange-200'
+    color: 'bg-[rgb(var(--release-bugfix-bg))] text-[rgb(var(--release-bugfix-text))] border-[rgb(var(--release-bugfix-border))]'
   },
   {
     id: 'breaking-changes',
     label: 'Breaking Changes',
     icon: '⚠️',
-    color: 'bg-red-100 text-red-800 border-red-200'
+    color: 'bg-[rgb(var(--release-breaking-bg))] text-[rgb(var(--release-breaking-text))] border-[rgb(var(--release-breaking-border))]'
   },
   {
     id: 'security-updates',
     label: 'Security Updates',
     icon: '🔒',
-    color: 'bg-purple-100 text-purple-800 border-purple-200'
+    color: 'bg-[rgb(var(--release-security-bg))] text-[rgb(var(--release-security-text))] border-[rgb(var(--release-security-border))]'
   }
 ]
 

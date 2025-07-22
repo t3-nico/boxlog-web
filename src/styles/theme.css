@@ -26,6 +26,40 @@
   --focus-ring: 59 130 246;       /* blue-500 */
   --selection: 191 219 254;       /* blue-200 */
   
+  /* Tag colors - ニュートラルベースのカラーパレット */
+  --tag-neutral-bg: 245 245 245;     /* neutral-100 */
+  --tag-neutral-text: 82 82 82;      /* neutral-600 */
+  --tag-neutral-hover: 229 229 229;  /* neutral-200 */
+  
+  --tag-accent-bg: 238 242 255;      /* indigo-50 */
+  --tag-accent-text: 79 70 229;      /* indigo-600 */
+  --tag-accent-hover: 224 231 255;   /* indigo-100 */
+  
+  /* Release type colors - セマンティックカラー */
+  --release-new-bg: 240 253 244;     /* green-50 */
+  --release-new-text: 22 101 52;     /* green-800 */
+  --release-new-border: 187 247 208; /* green-200 */
+  
+  --release-improvement-bg: 219 234 254; /* blue-50 */
+  --release-improvement-text: 30 64 175;  /* blue-800 */
+  --release-improvement-border: 191 219 254; /* blue-200 */
+  
+  --release-bugfix-bg: 255 237 213;  /* orange-50 */
+  --release-bugfix-text: 154 52 18;  /* orange-800 */
+  --release-bugfix-border: 253 186 116; /* orange-200 */
+  
+  --release-breaking-bg: 254 242 242; /* red-50 */
+  --release-breaking-text: 153 27 27; /* red-800 */
+  --release-breaking-border: 254 202 202; /* red-200 */
+  
+  --release-security-bg: 243 232 255; /* purple-50 */
+  --release-security-text: 107 33 168; /* purple-800 */
+  --release-security-border: 221 214 254; /* purple-200 */
+  
+  /* Search highlight colors */
+  --highlight-bg: 254 240 138;       /* yellow-200 */
+  --highlight-text: 146 64 14;       /* yellow-900 */
+
   /* Button colors */
   --signup-btn-bg: #171717;       /* neutral-900 for light mode */
   --signup-btn-text: #ffffff;     /* white for light mode */
@@ -59,6 +93,40 @@
   --focus-ring: 59 130 246;       /* blue-500 */
   --selection: 30 64 175;         /* blue-800 */
   
+  /* Tag colors - ダークモード */
+  --tag-neutral-bg: 38 38 38;        /* neutral-800 */
+  --tag-neutral-text: 212 212 212;   /* neutral-300 */
+  --tag-neutral-hover: 64 64 64;     /* neutral-700 */
+  
+  --tag-accent-bg: 49 46 129;        /* indigo-900 */
+  --tag-accent-text: 165 180 252;    /* indigo-300 */
+  --tag-accent-hover: 67 56 202;     /* indigo-800 */
+  
+  /* Release type colors - ダークモード */
+  --release-new-bg: 20 83 45;        /* green-900 */
+  --release-new-text: 187 247 208;   /* green-200 */
+  --release-new-border: 22 101 52;   /* green-800 */
+  
+  --release-improvement-bg: 30 58 138; /* blue-900 */
+  --release-improvement-text: 191 219 254; /* blue-200 */
+  --release-improvement-border: 30 64 175; /* blue-800 */
+  
+  --release-bugfix-bg: 124 45 18;     /* orange-900 */
+  --release-bugfix-text: 253 186 116; /* orange-200 */
+  --release-bugfix-border: 154 52 18; /* orange-800 */
+  
+  --release-breaking-bg: 127 29 29;   /* red-900 */
+  --release-breaking-text: 254 202 202; /* red-200 */
+  --release-breaking-border: 153 27 27; /* red-800 */
+  
+  --release-security-bg: 88 28 135;   /* purple-900 */
+  --release-security-text: 221 214 254; /* purple-200 */
+  --release-security-border: 107 33 168; /* purple-800 */
+  
+  /* Search highlight colors - ダークモード */
+  --highlight-bg: 133 77 14;         /* yellow-800 */
+  --highlight-text: 254 240 138;     /* yellow-200 */
+
   /* Button colors */
   --signup-btn-bg: #ffffff;       /* white for dark mode */
   --signup-btn-text: #171717;     /* neutral-900 for dark mode */
@@ -90,6 +158,40 @@
     --focus-ring: 59 130 246;
     --selection: 30 64 175;
     
+    /* Tag colors - システムダークモード */
+    --tag-neutral-bg: 38 38 38;
+    --tag-neutral-text: 212 212 212;
+    --tag-neutral-hover: 64 64 64;
+    
+    --tag-accent-bg: 49 46 129;
+    --tag-accent-text: 165 180 252;
+    --tag-accent-hover: 67 56 202;
+    
+    /* Release type colors - システムダークモード */
+    --release-new-bg: 20 83 45;
+    --release-new-text: 187 247 208;
+    --release-new-border: 22 101 52;
+    
+    --release-improvement-bg: 30 58 138;
+    --release-improvement-text: 191 219 254;
+    --release-improvement-border: 30 64 175;
+    
+    --release-bugfix-bg: 124 45 18;
+    --release-bugfix-text: 253 186 116;
+    --release-bugfix-border: 154 52 18;
+    
+    --release-breaking-bg: 127 29 29;
+    --release-breaking-text: 254 202 202;
+    --release-breaking-border: 153 27 27;
+    
+    --release-security-bg: 88 28 135;
+    --release-security-text: 221 214 254;
+    --release-security-border: 107 33 168;
+    
+    /* Search highlight colors - システムダークモード */
+    --highlight-bg: 133 77 14;
+    --highlight-text: 254 240 138;
+
     --signup-btn-bg: #ffffff;
     --signup-btn-text: #171717;
   }

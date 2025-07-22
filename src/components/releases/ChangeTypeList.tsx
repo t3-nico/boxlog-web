@@ -15,31 +15,31 @@ const changeTypes: ChangeType[] = [
     id: 'new-features',
     label: 'New Features',
     icon: PartyPopper,
-    color: 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700'
+    color: 'bg-[rgb(var(--release-new-bg))] text-[rgb(var(--release-new-text))] border-[rgb(var(--release-new-border))]'
   },
   {
     id: 'improvements',
     label: 'Improvements',
     icon: Wrench,
-    color: 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700'
+    color: 'bg-[rgb(var(--release-improvement-bg))] text-[rgb(var(--release-improvement-text))] border-[rgb(var(--release-improvement-border))]'
   },
   {
     id: 'bug-fixes',
     label: 'Bug Fixes',
     icon: Bug,
-    color: 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700'
+    color: 'bg-[rgb(var(--release-bugfix-bg))] text-[rgb(var(--release-bugfix-text))] border-[rgb(var(--release-bugfix-border))]'
   },
   {
     id: 'breaking-changes',
     label: 'Breaking Changes',
     icon: AlertTriangle,
-    color: 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700'
+    color: 'bg-[rgb(var(--release-breaking-bg))] text-[rgb(var(--release-breaking-text))] border-[rgb(var(--release-breaking-border))]'
   },
   {
     id: 'security-updates',
     label: 'Security Updates',
     icon: Lock,
-    color: 'bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700'
+    color: 'bg-[rgb(var(--release-security-bg))] text-[rgb(var(--release-security-text))] border-[rgb(var(--release-security-border))]'
   }
 ]
 
@@ -52,7 +52,7 @@ interface ChangeTypeListProps {
 export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true }: ChangeTypeListProps) {
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">変更タイプ</h3>
+      <h3 className="text-sm font-medium text-[rgb(var(--text-secondary))]">変更タイプ</h3>
       
       <div className="space-y-2">
         {showAll && (
@@ -66,9 +66,9 @@ export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true }: 
                   selectedTypes.forEach(type => onTypeToggle(type))
                 }
               }}
-              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:focus:ring-blue-400"
+              className="w-4 h-4 text-[rgb(var(--link-color))] border-[rgb(var(--border-primary))] rounded focus:ring-[rgb(var(--focus-ring))] bg-[rgb(var(--bg-primary))]"
             />
-            <span className="ml-3 text-sm text-gray-600 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-gray-100">
+            <span className="ml-3 text-sm text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]">
               すべて表示
             </span>
           </label>
@@ -100,10 +100,10 @@ function ChangeTypeFilter({ type, isSelected, onToggle }: ChangeTypeFilterProps)
         type="checkbox"
         checked={isSelected}
         onChange={onToggle}
-        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+        className="w-4 h-4 text-[rgb(var(--link-color))] border-[rgb(var(--border-primary))] rounded focus:ring-[rgb(var(--focus-ring))] bg-[rgb(var(--bg-primary))]"
       />
       <span className={`ml-3 flex items-center gap-2 text-sm transition-colors ${
-        isSelected ? 'text-gray-900 font-medium dark:text-gray-100' : 'text-gray-600 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-gray-100'
+        isSelected ? 'text-[rgb(var(--text-primary))] font-medium' : 'text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]'
       }`}>
         <type.icon className="w-4 h-4" aria-label={type.label} />
         {type.label}
@@ -169,8 +169,8 @@ export function ChangeTypeGrid({ stats, onTypeClick }: ChangeTypeGridProps) {
                 : ''
             } ${
               count > 0 
-                ? type.color.replace('bg-', 'bg-').replace('text-', 'text-').replace('border-', 'border-')
-                : 'bg-gray-50 text-gray-400 border-gray-200 dark:bg-gray-800 dark:text-gray-500 dark:border-gray-700'
+                ? type.color
+                : 'bg-[rgb(var(--bg-secondary))] text-[rgb(var(--text-tertiary))] border-[rgb(var(--border-primary))]'
             }`}
           >
             <div className="text-center">
@@ -216,15 +216,15 @@ export function ChangeTypeSection({
   if (changes.length === 0) return null
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden dark:border-gray-700">
+    <div className="border border-[rgb(var(--border-primary))] rounded-lg overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full px-6 py-4 bg-gray-50 hover:bg-gray-100 transition-colors dark:bg-gray-800 dark:hover:bg-gray-750"
+        className="w-full px-6 py-4 bg-[rgb(var(--bg-secondary))] hover:bg-[rgb(var(--bg-tertiary))] transition-colors"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <type.icon className="w-5 h-5" aria-label={type.label} />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]">
               {type.label}
             </h3>
             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${type.color}`}>
@@ -233,7 +233,7 @@ export function ChangeTypeSection({
           </div>
           
           <ChevronDown 
-            className={`w-5 h-5 text-gray-500 transition-transform dark:text-gray-400 ${
+            className={`w-5 h-5 text-[rgb(var(--text-tertiary))] transition-transform ${
               isExpanded ? 'rotate-180' : ''
             }`} 
           />
@@ -241,14 +241,14 @@ export function ChangeTypeSection({
       </button>
       
       {isExpanded && (
-        <div className="px-6 py-4 bg-white dark:bg-gray-900">
+        <div className="px-6 py-4 bg-[rgb(var(--bg-primary))]">
           <ul className="space-y-4">
             {changes.map((change, index) => (
               <li key={index} className="flex items-start gap-4">
                 <div className="flex-shrink-0 mt-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full dark:bg-gray-500"></div>
+                  <div className="w-2 h-2 bg-[rgb(var(--text-tertiary))] rounded-full"></div>
                 </div>
-                <span className="text-gray-700 leading-relaxed dark:text-gray-300">
+                <span className="text-[rgb(var(--text-secondary))] leading-relaxed">
                   {change}
                 </span>
               </li>
