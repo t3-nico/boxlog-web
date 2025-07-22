@@ -103,7 +103,7 @@ We are trusted by many customers and continue to grow together
               
               {/* Icon */}
               <div className="relative z-10 mb-4">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors">
+                <div className="w-12 h-12 bg-[rgb(var(--icon-bg-secondary))] rounded-xl flex items-center justify-center group-hover:bg-[rgb(var(--icon-bg-secondary))] transition-colors">
                   <span className="text-2xl" role="img" aria-label={stat.label}>
                     {stat.icon}
                   </span>

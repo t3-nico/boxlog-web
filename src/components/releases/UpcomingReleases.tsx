@@ -281,7 +281,7 @@ export function ReleaseTimeline() {
         <div className="space-y-8">
           {/* Current Release */}
           <div className="relative flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm dark:bg-green-900/30 dark:border-gray-900">
+            <div className="flex-shrink-0 w-12 h-12 bg-[rgb(var(--icon-bg-tertiary))] rounded-full flex items-center justify-center border-4 border-white shadow-sm dark:border-gray-900">
               <Check className="w-5 h-5 text-green-600 dark:text-green-400" />
             </div>
             <div className="flex-1 min-w-0">
@@ -300,7 +300,7 @@ export function ReleaseTimeline() {
 
           {/* Upcoming Releases */}
           <div className="relative flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm dark:bg-blue-900/30 dark:border-gray-900">
+            <div className="flex-shrink-0 w-12 h-12 bg-[rgb(var(--icon-bg-secondary))] rounded-full flex items-center justify-center border-4 border-white shadow-sm dark:border-gray-900">
               <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div className="flex-1 min-w-0">

@@ -56,7 +56,7 @@ export function PricingPageClient() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[rgb(var(--icon-bg-tertiary))] rounded-full flex items-center justify-center">
                     <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
@@ -70,7 +70,7 @@ export function PricingPageClient() {
               
               <div>
                 <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[rgb(var(--icon-bg-secondary))] rounded-full flex items-center justify-center">
                     <Lock className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export function PricingPageClient() {
               
               <div>
                 <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[rgb(var(--icon-bg-secondary))] rounded-full flex items-center justify-center">
                     <LifeBuoy className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                   </div>
                 </div>

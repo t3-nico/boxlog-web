@@ -131,17 +131,17 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
   return (
     <>
       {/* デスクトップ版 */}
-      <div className={cn('hidden lg:block bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700', className)}>
+      <div className={cn('hidden lg:block bg-[rgb(var(--bg-primary))] rounded-xl border border-[rgb(var(--border-primary))]', className)}>
         {/* フィルターヘッダー */}
-        <div className="p-4 border-b border-neutral-200 dark:border-neutral-700">
+        <div className="p-4 border-b border-[rgb(var(--border-primary))]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Filter className="w-5 h-5 text-neutral-500 dark:text-neutral-400" />
-              <h3 className="font-medium text-neutral-900 dark:text-neutral-100">
+              <Filter className="w-5 h-5 text-[rgb(var(--text-tertiary))]" />
+              <h3 className="font-medium text-[rgb(var(--text-primary))]"> 
                 Filters
               </h3>
               {activeFiltersCount > 0 && (
-                <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full">
+                <span className="px-2 py-1 text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] rounded-full">
                   {activeFiltersCount}
                 </span>
               )}
@@ -151,7 +151,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
               {activeFiltersCount > 0 && (
                 <button
                   onClick={clearFilters}
-                  className="text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+                  className="text-xs font-medium text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-primary))] transition-colors"
                 >
                   Clear all
                 </button>
@@ -166,23 +166,23 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
         <div className="p-4 space-y-6">
           {/* 検索 */}
           <div>
-            <label htmlFor="search" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            <label htmlFor="search" className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-2">
               Search Articles
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[rgb(var(--text-tertiary))]" />
               <input
                 id="search"
                 type="text"
                 value={filters.searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Search by title, content, or tags..."
-                className="w-full pl-10 pr-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 transition-colors"
+                className="w-full pl-10 pr-4 py-2 border border-[rgb(var(--border-primary))] rounded-lg bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] placeholder-[rgb(var(--text-tertiary))] focus:ring-2 focus:ring-[rgb(var(--focus-ring))] focus:border-[rgb(var(--focus-ring))] transition-colors"
               />
               {filters.searchQuery && (
                 <button
                   onClick={() => handleSearchChange('')}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] transition-colors"
                   aria-label="Clear search"
                 >
                   <X className="w-4 h-4" />
@@ -193,7 +193,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
 
           {/* ソート */}
           <div>
-            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-3">
+            <label className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">
               Sort By
             </label>
             <div className="flex flex-wrap gap-2">
@@ -208,8 +208,8 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
                   className={cn(
                     'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border transition-colors',
                     filters.sortBy === value
-                      ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200'
-                      : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100'
+                      ? 'bg-[rgb(var(--info-bg))] border-[rgb(var(--info-color))] text-[rgb(var(--info-color))]'
+                      : 'bg-[rgb(var(--bg-primary))] border-[rgb(var(--border-primary))] text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--bg-secondary))] hover:text-[rgb(var(--text-primary))]'
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -219,7 +219,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
               
               <button
                 onClick={toggleSortOrder}
-                className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-[rgb(var(--border-primary))] text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--bg-secondary))] hover:text-[rgb(var(--text-primary))] bg-[rgb(var(--bg-primary))] transition-colors"
                 aria-label={`Sort ${filters.sortOrder === 'asc' ? 'ascending' : 'descending'}`}
               >
                 {filters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -231,13 +231,13 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
           {/* タグフィルター */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              <label className="text-sm font-medium text-[rgb(var(--text-secondary))]"> 
                 Filter by Tags
               </label>
               {filters.selectedTags.length > 1 && (
                 <button
                   onClick={toggleTagOperator}
-                  className="px-2 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-200 rounded hover:bg-neutral-200 hover:text-neutral-700 dark:hover:bg-neutral-600 dark:hover:text-neutral-100 transition-colors"
+                  className="px-2 py-1 text-xs font-medium bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] rounded hover:bg-[rgb(var(--tag-neutral-hover))] hover:text-[rgb(var(--text-primary))] transition-colors"
                   title={`Currently using ${filters.tagOperator} logic`}
                 >
                   {filters.tagOperator}
@@ -255,8 +255,8 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
                     className={cn(
                       'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border transition-colors',
                       isSelected
-                        ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200'
-                        : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-100'
+                        ? 'bg-[rgb(var(--info-bg))] border-[rgb(var(--info-color))] text-[rgb(var(--info-color))]'
+                        : 'bg-[rgb(var(--bg-primary))] border-[rgb(var(--border-primary))] text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--bg-secondary))] hover:text-[rgb(var(--text-primary))]'
                     )}
                   >
                     <span>#</span>
@@ -268,7 +268,7 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
             </div>
             
             {filters.selectedTags.length > 1 && (
-              <p className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
+              <p className="mt-2 text-xs text-[rgb(var(--text-tertiary))]">
                 Showing posts that match {filters.tagOperator === 'AND' ? 'all' : 'any'} of the selected tags
               </p>
             )}
@@ -281,14 +281,14 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
       <div className="lg:hidden">
         <button
           onClick={() => setIsMobileOpen(true)}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--border-primary))] rounded-lg hover:bg-[rgb(var(--bg-secondary))] transition-colors"
         >
-          <Filter className="w-4 h-4 text-neutral-500 dark:text-neutral-400" />
-          <span className="font-medium text-neutral-900 dark:text-neutral-100">
+          <Filter className="w-4 h-4 text-[rgb(var(--text-tertiary))]" />
+          <span className="font-medium text-[rgb(var(--text-primary))]">
             Filters
           </span>
           {activeFiltersCount > 0 && (
-            <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full">
+            <span className="px-2 py-1 text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] rounded-full">
               {activeFiltersCount}
             </span>
           )}

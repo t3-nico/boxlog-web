@@ -66,7 +66,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Mission */}
               <div className="relative">
-                <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-100 dark:bg-blue-900 rounded-2xl opacity-20" />
+                <div className="absolute -top-4 -left-4 w-24 h-24 bg-[rgb(var(--icon-bg-secondary))] rounded-2xl opacity-20" />
                 <div className="relative z-10 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 border border-blue-100 dark:border-blue-800">
                   <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-xl flex items-center justify-center mb-6">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ export default function AboutPage() {
 
               {/* Vision */}
               <div className="relative">
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-purple-100 dark:bg-purple-900 rounded-2xl opacity-20" />
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-[rgb(var(--icon-bg-secondary))] rounded-2xl opacity-20" />
                 <div className="relative z-10 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-8 border border-purple-100 dark:border-purple-800">
                   <div className="w-12 h-12 bg-purple-600 dark:bg-purple-500 rounded-xl flex items-center justify-center mb-6">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -137,7 +137,7 @@ export default function AboutPage() {
                   className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-700 group"
                 >
                   <div className="flex items-start gap-6">
-                    <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors">
+                    <div className="w-14 h-14 bg-[rgb(var(--icon-bg-secondary))] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[rgb(var(--icon-bg-secondary))] transition-colors">
                       <span className="text-2xl" role="img" aria-label={value.title}>
                         {value.icon}
                       </span>

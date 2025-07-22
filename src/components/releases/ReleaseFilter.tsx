@@ -42,19 +42,19 @@ export function ReleaseFilter({
                           showFeaturedOnly
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden dark:bg-gray-900 dark:border-gray-700">
+    <div className="bg-[rgb(var(--bg-primary))] border border-[rgb(var(--border-primary))] rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+      <div className="px-6 py-4 border-b border-[rgb(var(--border-primary))]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center dark:bg-blue-900/30">
-              <Filter className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <div className="w-8 h-8 bg-[rgb(var(--info-bg))] rounded-lg flex items-center justify-center">
+              <Filter className="w-4 h-4 text-[rgb(var(--info-color))]" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]"> 
               フィルター
             </h3>
             {hasActiveFilters && (
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]">
                 {selectedTags.length + selectedTypes.length + (showBreakingOnly ? 1 : 0) + (showFeaturedOnly ? 1 : 0)} active
               </span>
             )}
@@ -64,7 +64,7 @@ export function ReleaseFilter({
             {hasActiveFilters && (
               <button
                 onClick={onClearFilters}
-                className="text-sm text-gray-500 hover:text-gray-700 font-medium dark:text-gray-400 dark:hover:text-gray-300"
+                className="text-sm text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] font-medium"
               >
                 クリア
               </button>
@@ -72,7 +72,7 @@ export function ReleaseFilter({
             
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors lg:hidden dark:text-gray-500 dark:hover:text-gray-400"
+              className="p-1 text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] transition-colors lg:hidden"
             >
               <ChevronDown 
                 className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
@@ -95,7 +95,7 @@ export function ReleaseFilter({
           {/* Tags */}
           {tags.length > 0 && (
             <div>
-              <h4 className="text-sm font-medium text-gray-700 mb-3">タグ</h4>
+              <h4 className="text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">タグ</h4>
               <TagFilter
                 tags={tags}
                 selectedTags={selectedTags}
@@ -133,17 +133,17 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10 }: TagFilt
                 type="checkbox"
                 checked={selectedTags.includes(tagItem.tag)}
                 onChange={() => onTagToggle(tagItem.tag)}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:focus:ring-blue-400"
+                className="w-4 h-4 text-[rgb(var(--info-color))] border-[rgb(var(--border-primary))] rounded focus:ring-[rgb(var(--focus-ring))] bg-[rgb(var(--bg-primary))]"
               />
               <span className={`ml-3 text-sm transition-colors ${
                 selectedTags.includes(tagItem.tag) 
-                  ? 'text-gray-900 font-medium dark:text-gray-100' 
-                  : 'text-gray-600 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-gray-100'
+                  ? 'text-[rgb(var(--text-primary))] font-medium' 
+                  : 'text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]'
               }`}>
                 #{tagItem.tag}
               </span>
             </div>
-            <span className="text-xs text-gray-400 dark:text-gray-500">
+            <span className="text-xs text-[rgb(var(--text-tertiary))]"> 
               {tagItem.count}
             </span>
           </label>
@@ -153,7 +153,7 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10 }: TagFilt
       {tags.length > maxDisplay && (
         <button
           onClick={() => setShowAll(!showAll)}
-          className="text-sm text-blue-600 hover:text-blue-800 font-medium dark:text-blue-400 dark:hover:text-blue-300"
+          className="text-sm text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
         >
           {showAll ? '表示を減らす' : `他 ${tags.length - maxDisplay}個のタグを表示`}
         </button>
@@ -173,12 +173,12 @@ export function CompactReleaseFilter({
   return (
     <button
       onClick={onOpenFilter}
-      className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors dark:border-gray-600 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700"
+      className="inline-flex items-center gap-2 px-4 py-2 border border-[rgb(var(--border-primary))] rounded-lg text-sm font-medium text-[rgb(var(--text-secondary))] bg-[rgb(var(--bg-primary))] hover:bg-[rgb(var(--bg-secondary))] transition-colors"
     >
       <Filter className="w-4 h-4" />
       フィルター
       {hasActiveFilters && (
-        <span className="inline-flex items-center justify-center w-2 h-2 bg-blue-600 rounded-full"></span>
+        <span className="inline-flex items-center justify-center w-2 h-2 bg-[rgb(var(--info-color))] rounded-full"></span>
       )}
     </button>
   )
@@ -220,18 +220,18 @@ export function FilterSummary({
   if (!hasFilters) return null
 
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 dark:bg-blue-900/20 dark:border-blue-800">
+    <div className="bg-[rgb(var(--info-bg))] border border-[rgb(var(--info-color))] rounded-lg p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <CheckCircle className="w-5 h-5 text-blue-600" />
-          <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
+          <CheckCircle className="w-5 h-5 text-[rgb(var(--info-color))]" />
+          <span className="text-sm font-medium text-[rgb(var(--info-color))]"> 
             {resultCount}件のリリースが見つかりました（全{totalCount}件中）
           </span>
         </div>
         
         <button
           onClick={onClearAll}
-          className="text-sm text-blue-700 hover:text-blue-900 font-medium dark:text-blue-300 dark:hover:text-blue-100"
+          className="text-sm text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))] font-medium"
         >
           すべてクリア
         </button>
@@ -240,12 +240,12 @@ export function FilterSummary({
       <div className="flex flex-wrap gap-2">
         {/* Quick Filters */}
         {showFeaturedOnly && (
-          <span className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-blue-200 rounded-full text-sm">
+          <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
             <Star className="w-4 h-4 mr-1" />
             注目リリース
             <button
               onClick={onFeaturedToggle}
-              className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
             >
               <X className="w-3 h-3" />
             </button>
@@ -253,12 +253,12 @@ export function FilterSummary({
         )}
 
         {showBreakingOnly && (
-          <span className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-blue-200 rounded-full text-sm">
+          <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
             <AlertTriangle className="w-4 h-4 mr-1" />
             破壊的変更
             <button
               onClick={onBreakingToggle}
-              className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
             >
               <X className="w-3 h-3" />
             </button>
@@ -269,12 +269,12 @@ export function FilterSummary({
         {selectedTypes.map((type) => (
           <span
             key={type}
-            className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-blue-200 rounded-full text-sm dark:bg-gray-800 dark:border-blue-700"
+            className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm"
           >
             {type}
             <button
               onClick={() => onTypeRemove(type)}
-              className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
             >
               <X className="w-3 h-3" />
             </button>
@@ -285,12 +285,12 @@ export function FilterSummary({
         {selectedTags.map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-blue-200 rounded-full text-sm dark:bg-gray-800 dark:border-blue-700"
+            className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm"
           >
             #{tag}
             <button
               onClick={() => onTagRemove(tag)}
-              className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
             >
               <X className="w-3 h-3" />
             </button>

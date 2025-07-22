@@ -28,11 +28,11 @@ export function SearchResults({
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'docs':
-        return <FileText className="h-4 w-4 text-blue-500" />
+        return <FileText className="h-4 w-4 text-[rgb(var(--info-color))]" />
       case 'blog':
-        return <Edit className="h-4 w-4 text-green-500" />
+        return <Edit className="h-4 w-4 text-[rgb(var(--success-color))]" />
       case 'release':
-        return <Package className="h-4 w-4 text-purple-500" />
+        return <Package className="h-4 w-4 text-[rgb(var(--tag-accent-text))]" />
       default:
         return null
     }
@@ -40,10 +40,10 @@ export function SearchResults({
 
   const getTypeBadgeColor = (type: string) => {
     switch (type) {
-      case 'docs': return 'bg-blue-50 text-blue-700 border-blue-200'
-      case 'blog': return 'bg-green-50 text-green-700 border-green-200'  
-      case 'release': return 'bg-purple-50 text-purple-700 border-purple-200'
-      default: return 'bg-gray-50 text-gray-700 border-gray-200'
+      case 'docs': return 'bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] border-[rgb(var(--info-color))]'
+      case 'blog': return 'bg-[rgb(var(--success-bg))] text-[rgb(var(--success-color))] border-[rgb(var(--success-color))]'
+      case 'release': return 'bg-[rgb(var(--tag-accent-bg))] text-[rgb(var(--tag-accent-text))] border-[rgb(var(--tag-accent-text))]'
+      default: return 'bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] border-[rgb(var(--border-primary))]'
     }
   }
 
@@ -63,16 +63,16 @@ export function SearchResults({
           <button
             key={result.id}
             onClick={() => handleResultClick(result.url)}
-            className="flex items-start gap-4 w-full p-4 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
+            className="flex items-start gap-4 w-full p-4 rounded-lg hover:bg-[rgb(var(--bg-secondary))] transition-colors text-left border border-[rgb(var(--border-primary))]"
           >
             <div className="mt-0.5">
               {getTypeIcon(result.type)}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
+              <div className="text-sm font-medium text-[rgb(var(--text-primary))] truncate">
                 <Highlight text={result.title} query={query} />
               </div>
-              <div className="text-xs text-gray-500 mt-0.5 line-clamp-2 dark:text-gray-400">
+              <div className="text-xs text-[rgb(var(--text-tertiary))] mt-0.5 line-clamp-2">
                 <Highlight text={result.description} query={query} />
               </div>
             </div>
@@ -88,13 +88,13 @@ export function SearchResults({
   return (
     <div className="space-y-4">
       {results.map((result) => (
-        <div key={result.id} className="border rounded-lg p-6 bg-white hover:shadow-md transition-shadow dark:border-gray-700 dark:bg-gray-800">
+        <div key={result.id} className="border rounded-lg p-6 bg-[rgb(var(--bg-primary))] hover:shadow-md transition-shadow border-[rgb(var(--border-primary))]"> 
           <div className="flex items-start gap-4 mb-3">
             {getTypeIcon(result.type)}
             <div className="flex-1 min-w-0">
               <button 
                 onClick={() => handleResultClick(result.url)}
-                className="text-lg font-medium text-blue-600 hover:text-blue-800 hover:underline block truncate text-left w-full dark:text-blue-400 dark:hover:text-blue-300"
+                className="text-lg font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] hover:underline block truncate text-left w-full"
               >
                 <Highlight text={result.title} query={query} />
               </button>
@@ -105,22 +105,22 @@ export function SearchResults({
                 >
                   {getTypeLabel(result.type)}
                 </Badge>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-[rgb(var(--text-tertiary))]">
                   {result.breadcrumbs.join(' › ')}
                 </span>
               </div>
             </div>
           </div>
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2 dark:text-gray-300">
+          <p className="text-[rgb(var(--text-secondary))] text-sm mb-3 line-clamp-2">
             <Highlight text={result.description} query={query} />
           </p>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="text-xs text-[rgb(var(--text-tertiary))]">
               最終更新: {result.lastModified}
             </span>
             <button 
               onClick={() => handleResultClick(result.url)}
-              className="text-xs text-blue-600 hover:text-blue-800 font-medium dark:text-blue-400 dark:hover:text-blue-300"
+              className="text-xs text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
             >
               詳細を見る →
             </button>

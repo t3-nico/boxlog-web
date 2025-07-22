@@ -94,19 +94,19 @@ function SearchResults() {
     switch (type) {
       case 'docs':
         return (
-          <svg className="h-4 w-4 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 text-[rgb(var(--info-color))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         )
       case 'blog':
         return (
-          <svg className="h-4 w-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 text-[rgb(var(--success-color))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
           </svg>
         )
       case 'release':
         return (
-          <svg className="h-4 w-4 text-purple-500 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 text-[rgb(var(--tag-accent-text))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m3 6V8a1 1 0 00-1-1H5a1 1 0 00-1 1v2m14 0v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8m14 0H4" />
           </svg>
         )
@@ -117,10 +117,10 @@ function SearchResults() {
 
   const getTypeBadgeColor = (type: string) => {
     switch (type) {
-      case 'docs': return 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700'
-      case 'blog': return 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-700'
-      case 'release': return 'bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-700'
-      default: return 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600'
+      case 'docs': return 'bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] border-[rgb(var(--info-color))]'
+      case 'blog': return 'bg-[rgb(var(--success-bg))] text-[rgb(var(--success-color))] border-[rgb(var(--success-color))]'
+      case 'release': return 'bg-[rgb(var(--tag-accent-bg))] text-[rgb(var(--tag-accent-text))] border-[rgb(var(--tag-accent-text))]'
+      default: return 'bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] border-[rgb(var(--border-primary))]'
     }
   }
 
@@ -136,7 +136,7 @@ function SearchResults() {
           {/* 検索ボックス */}
           <div className="flex items-center gap-4 mb-6">
             <div className="relative flex-1">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[rgb(var(--text-tertiary))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <Input
@@ -145,7 +145,7 @@ function SearchResults() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch(query)}
-                className="pl-10 pr-4 py-3 text-base border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                className="pl-10 pr-4 py-3 text-base border-[rgb(var(--border-primary))] focus:border-[rgb(var(--focus-ring))] focus:ring-[rgb(var(--focus-ring))]"
               />
             </div>
             <Button 
@@ -159,7 +159,7 @@ function SearchResults() {
           {/* フィルター */}
           {query && (
             <div className="flex items-center gap-4 mb-6">
-              <Text className="text-sm text-gray-600 mr-2">フィルター:</Text>
+              <Text className="text-sm text-[rgb(var(--text-secondary))] mr-2">フィルター:</Text>
               <div className="flex gap-2">
                 {[
                   { key: 'all', label: 'すべて', count: results.length },
@@ -172,8 +172,8 @@ function SearchResults() {
                     onClick={() => setSelectedFilter(filter.key as any)}
                     className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                       selectedFilter === filter.key
-                        ? 'bg-blue-100 text-blue-700 border border-blue-200'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
+                        ? 'bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] border border-[rgb(var(--info-color))]'
+                        : 'bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] hover:bg-[rgb(var(--tag-neutral-hover))] border border-transparent'
                     }`}
                   >
                     {filter.label} ({filter.count})
@@ -188,13 +188,13 @@ function SearchResults() {
         {query ? (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <Text className="text-gray-600">
+              <Text className="text-[rgb(var(--text-secondary))]">
                 「<span className="font-medium">{query}</span>」の検索結果: {filteredResults.length}件
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                  <Text className="text-sm text-gray-500">検索中...</Text>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[rgb(var(--focus-ring))]"></div>
+                  <Text className="text-sm text-[rgb(var(--text-tertiary))]">検索中...</Text>
                 </div>
               )}
             </div>
@@ -202,23 +202,23 @@ function SearchResults() {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-800 animate-pulse">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-600 rounded w-3/4 mb-3"></div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-600 rounded w-full mb-2"></div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-600 rounded w-2/3"></div>
+                  <div key={i} className="border border-[rgb(var(--border-primary))] rounded-lg p-6 bg-[rgb(var(--bg-primary))] animate-pulse">
+                    <div className="h-4 bg-[rgb(var(--bg-secondary))] rounded w-3/4 mb-3"></div>
+                    <div className="h-3 bg-[rgb(var(--bg-secondary))] rounded w-full mb-2"></div>
+                    <div className="h-3 bg-[rgb(var(--bg-secondary))] rounded w-2/3"></div>
                   </div>
                 ))}
               </div>
             ) : filteredResults.length > 0 ? (
               <div className="space-y-4">
                 {filteredResults.map((result) => (
-                  <div key={result.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-800 hover:shadow-md dark:hover:shadow-lg transition-shadow">
+                  <div key={result.id} className="border border-[rgb(var(--border-primary))] rounded-lg p-6 bg-[rgb(var(--bg-primary))] hover:shadow-md transition-shadow">
                     <div className="flex items-start gap-4 mb-3">
                       {getTypeIcon(result.type)}
                       <div className="flex-1 min-w-0">
                         <a 
                           href={result.url}
-                          className="text-lg font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline block truncate"
+                          className="text-lg font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] hover:underline block truncate"
                         >
                           <Highlight text={result.title} query={query} />
                         </a>
@@ -230,22 +230,22 @@ function SearchResults() {
                             {result.type === 'docs' ? 'ドキュメント' : 
                              result.type === 'blog' ? 'ブログ' : 'リリース'}
                           </Badge>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                          <span className="text-xs text-[rgb(var(--text-tertiary))]">
                             {result.breadcrumbs.join(' › ')}
                           </span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
+                    <p className="text-[rgb(var(--text-secondary))] text-sm mb-3 line-clamp-2">
                       <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-[rgb(var(--text-tertiary))]">
                         最終更新: {result.lastModified}
                       </span>
                       <a 
                         href={result.url}
-                        className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
+                        className="text-xs text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
                       >
                         詳細を見る →
                       </a>
@@ -255,7 +255,7 @@ function SearchResults() {
               </div>
             ) : (
               <div className="text-center py-16">
-                <svg className="h-16 w-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-16 w-16 text-[rgb(var(--text-tertiary))] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <Heading as="h3" size="lg" className="mb-2">
@@ -278,7 +278,7 @@ function SearchResults() {
           </div>
         ) : (
           <div className="text-center py-16">
-            <svg className="h-16 w-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-16 w-16 text-[rgb(var(--text-tertiary))] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <Heading as="h3" size="lg" className="mb-2">
@@ -301,12 +301,12 @@ function SearchResults() {
 
 export default function SearchPage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[rgb(var(--bg-secondary))]">
       <Suspense fallback={
         <Container className="py-8">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[rgb(var(--focus-ring))]"></div>
             </div>
           </div>
         </Container>

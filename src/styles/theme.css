@@ -59,6 +59,11 @@
   /* Search highlight colors */
   --highlight-bg: 254 240 138;       /* yellow-200 */
   --highlight-text: 146 64 14;       /* yellow-900 */
+  
+  /* Decorative icon backgrounds */
+  --icon-bg-primary: 245 245 245;    /* neutral-100 - primary decorative background */
+  --icon-bg-secondary: 238 242 255;  /* indigo-50 - accent decorative background */
+  --icon-bg-tertiary: 240 253 244;   /* green-50 - success decorative background */
 
   /* Button colors */
   --signup-btn-bg: #171717;       /* neutral-900 for light mode */
@@ -126,6 +131,11 @@
   /* Search highlight colors - ダークモード */
   --highlight-bg: 133 77 14;         /* yellow-800 */
   --highlight-text: 254 240 138;     /* yellow-200 */
+  
+  /* Decorative icon backgrounds - ダークモード */
+  --icon-bg-primary: 38 38 38;       /* neutral-800 - primary decorative background */
+  --icon-bg-secondary: 49 46 129;    /* indigo-900 - accent decorative background */
+  --icon-bg-tertiary: 20 83 45;      /* green-900 - success decorative background */
 
   /* Button colors */
   --signup-btn-bg: #ffffff;       /* white for dark mode */
@@ -191,6 +201,11 @@
     /* Search highlight colors - システムダークモード */
     --highlight-bg: 133 77 14;
     --highlight-text: 254 240 138;
+    
+    /* Decorative icon backgrounds - システムダークモード */
+    --icon-bg-primary: 38 38 38;
+    --icon-bg-secondary: 49 46 129;
+    --icon-bg-tertiary: 20 83 45;
 
     --signup-btn-bg: #ffffff;
     --signup-btn-text: #171717;
