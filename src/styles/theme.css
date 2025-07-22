@@ -66,8 +66,8 @@
   --icon-bg-tertiary: 240 253 244;   /* green-50 - success decorative background */
 
   /* Button colors */
-  --signup-btn-bg: #171717;       /* neutral-900 for light mode */
-  --signup-btn-text: #ffffff;     /* white for light mode */
+  --signup-btn-bg: 23 23 23;      /* neutral-900 for light mode */
+  --signup-btn-text: 255 255 255; /* white for light mode */
 }
 
 /* ダークモード */
@@ -138,8 +138,8 @@
   --icon-bg-tertiary: 20 83 45;      /* green-900 - success decorative background */
 
   /* Button colors */
-  --signup-btn-bg: #ffffff;       /* white for dark mode */
-  --signup-btn-text: #171717;     /* neutral-900 for dark mode */
+  --signup-btn-bg: 255 255 255;   /* white for dark mode */
+  --signup-btn-text: 23 23 23;    /* neutral-900 for dark mode */
 }
 
 /* システムテーマに基づく自動切り替え */
@@ -207,8 +207,8 @@
     --icon-bg-secondary: 49 46 129;
     --icon-bg-tertiary: 20 83 45;
 
-    --signup-btn-bg: #ffffff;
-    --signup-btn-text: #171717;
+    --signup-btn-bg: 255 255 255;
+    --signup-btn-text: 23 23 23;
   }
 }
 

@@ -166,10 +166,18 @@ export function ColorContrastProvider({ children, autoCheck = true }: ColorContr
           if (issues.length > 0) {
             console.group('🎨 Color Contrast Issues Found')
             issues.forEach((issue, index) => {
+              console.warn(`Issue ${index + 1}:`, {
+                foreground: issue.foreground,
+                background: issue.background,
+                ratio: issue.ratio,
+                level: issue.level,
+                required: 'AA (4.5:1 for normal text, 3:1 for large text)'
               })
+            })
             console.groupEnd()
           } else {
-            }
+            console.log('✅ All color contrasts meet WCAG AA standards')
+          }
         })
       }, 2000)
 
@@ -207,7 +215,7 @@ export function ColorContrastChecker() {
     <div className="fixed bottom-4 right-4 z-50">
       <button
         onClick={handleCheck}
-        className="bg-blue-600 text-white px-4 py-2 rounded shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="bg-blue-600 text-white px-4 py-2 rounded shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--focus-ring))]"
         aria-label="Check color contrast on this page"
       >
         Check Contrast

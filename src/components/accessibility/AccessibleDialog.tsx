@@ -117,7 +117,7 @@ export function AccessibleDialog({
           
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
+            className="p-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--focus-ring))] rounded-md"
             aria-label="Close dialog"
           >
             <svg
