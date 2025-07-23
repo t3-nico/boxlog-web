@@ -5,6 +5,8 @@ export async function generateStaticParams() {
   ]
 }
 
+import { OptimizedLayout } from '@/components/layout/OptimizedLayout'
+
 export default function LocaleLayout({
   children,
   params: { locale }
@@ -12,5 +14,9 @@ export default function LocaleLayout({
   children: React.ReactNode
   params: { locale: string }
 }) {
-  return children
+  return (
+    <OptimizedLayout locale={locale}>
+      {children}
+    </OptimizedLayout>
+  )
 }

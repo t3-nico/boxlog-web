@@ -3,16 +3,19 @@
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { locales, type Locale, getLocaleConfig } from '@/lib/i18n'
+import { locales, type Locale, getLocaleConfig, isValidLocale } from '@/lib/i18n'
 import { Globe } from '@/lib/icons'
 import { useLocale, setLocale } from '@/hooks/useLocale'
 
 interface LanguageSwitcherProps {
   className?: string
+  currentLocale?: string
 }
 
-export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
-  const currentLocale = useLocale()
+export function LanguageSwitcher({ className, currentLocale: providedLocale }: LanguageSwitcherProps) {
+  const hookLocale = useLocale()
+  const currentLocaleString = providedLocale || hookLocale
+  const currentLocale = isValidLocale(currentLocaleString) ? currentLocaleString : 'en'
   const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {

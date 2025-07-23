@@ -12,6 +12,7 @@ import { EnhancedAccessibility } from '@/components/accessibility/EnhancedAccess
 
 interface OptimizedLayoutProps {
   children: ReactNode
+  locale?: string
 }
 
 // ページタイプ別にProvider要件を定義
@@ -38,10 +39,13 @@ const getLoadingConfig = (pathname: string) => {
   return { showSkeleton: true } // 他のページはスケルトン表示
 }
 
-export function OptimizedLayout({ children }: OptimizedLayoutProps) {
+export function OptimizedLayout({ children, locale }: OptimizedLayoutProps) {
   const pathname = usePathname()
   const providerLevel = getProviderLevel(pathname)
   const loadingConfig = getLoadingConfig(pathname)
+  
+  // Extract locale from pathname if not provided
+  const currentLocale = locale || pathname.split('/')[1] || 'en'
 
   const ProviderComponent = {
     lightweight: LightweightProviders,
@@ -54,7 +58,7 @@ export function OptimizedLayout({ children }: OptimizedLayoutProps) {
       <PreloadStrategy />
       <EnhancedAccessibility />
       <SkipLinks />
-      <Header />
+      <Header locale={currentLocale} />
       <main id="main-content" role="main">
         <PageLoader showSkeleton={loadingConfig.showSkeleton}>
           {children}

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { OptimizedLayout } from '@/components/layout/OptimizedLayout'
 import { FontPreloader, FontOptimization } from '@/components/performance/FontOptimization'
 import { CriticalCSS } from '@/components/performance/CriticalCSS'
 import { ThirdPartyOptimization } from '@/components/performance/ThirdPartyOptimization'
@@ -49,9 +48,7 @@ export default function RootLayout({
       <body className="antialiased">
         <FontOptimization />
         <ThirdPartyOptimization />
-        <OptimizedLayout>
-          {children}
-        </OptimizedLayout>
+        {children}
       </body>
     </html>
   )

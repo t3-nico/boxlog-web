@@ -18,7 +18,11 @@ const navigation = [
   { name: 'About', href: '/about' },
 ]
 
-export function Header() {
+interface HeaderProps {
+  locale: string
+}
+
+export function Header({ locale }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -55,7 +59,7 @@ export function Header() {
           {/* Logo and Navigation */}
           <div className="flex items-center">
             <Link
-              href="/"
+              href={`/${locale}`}
               className="text-xl font-bold text-text-primary hover:text-text-secondary transition-colors"
             >
               YourSaaS
@@ -66,7 +70,7 @@ export function Header() {
               {navigation.map((item) => (
                 <Link
                   key={item.name}
-                  href={item.href}
+                  href={`/${locale}${item.href}`}
                   className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
                 >
                   {item.name}
@@ -97,7 +101,7 @@ export function Header() {
               className="text-text-secondary hover:text-text-primary hover:bg-bg-tertiary ml-4"
               asChild
             >
-              <Link href="/login">
+              <Link href={`/${locale}/login`}>
                 Login
               </Link>
             </Button>
@@ -110,13 +114,13 @@ export function Header() {
               }}
               className="hover:opacity-90"
             >
-              <Link href="/signup">
+              <Link href={`/${locale}/signup`}>
                 Sign Up
               </Link>
             </Button>
             
             <div className="ml-6 flex items-center gap-2">
-              <LanguageSwitcher />
+              <LanguageSwitcher currentLocale={locale} />
               <ThemeToggle />
             </div>
           </div>
@@ -134,7 +138,7 @@ export function Header() {
               <span className="sr-only">Search</span>
             </Button>
             
-            <LanguageSwitcher />
+            <LanguageSwitcher currentLocale={locale} />
             <ThemeToggle />
             
             {/* Mobile menu button */}
@@ -161,7 +165,7 @@ export function Header() {
               {navigation.map((item) => (
                 <Link
                   key={item.name}
-                  href={item.href}
+                  href={`/${locale}${item.href}`}
                   className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary rounded-md transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
@@ -174,7 +178,7 @@ export function Header() {
                   className="w-full justify-center text-text-secondary hover:text-text-primary hover:bg-bg-tertiary" 
                   asChild
                 >
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link href={`/${locale}/login`} onClick={() => setIsMobileMenuOpen(false)}>
                     Login
                   </Link>
                 </Button>
@@ -187,7 +191,7 @@ export function Header() {
                   }}
                   asChild
                 >
-                  <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link href={`/${locale}/signup`} onClick={() => setIsMobileMenuOpen(false)}>
                     Sign Up
                   </Link>
                 </Button>
