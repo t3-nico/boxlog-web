@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { X, Filter, Search, Calendar, TrendingUp, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { BlogFilterState } from './BlogFilters'
+import type { Dictionary } from '@/lib/i18n'
 
 interface MobileFiltersProps {
   isOpen: boolean
@@ -13,6 +14,8 @@ interface MobileFiltersProps {
   onFiltersChange: (filters: BlogFilterState) => void
   onClearFilters: () => void
   activeFiltersCount: number
+  dict: Dictionary
+  locale: string
 }
 
 export function MobileFilters({
@@ -22,7 +25,9 @@ export function MobileFilters({
   filters,
   onFiltersChange,
   onClearFilters,
-  activeFiltersCount
+  activeFiltersCount,
+  dict,
+  locale
 }: MobileFiltersProps) {
   const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters)
 
@@ -114,7 +119,7 @@ export function MobileFilters({
             <div className="flex items-center gap-4">
               <Filter className="w-5 h-5 text-[rgb(var(--text-tertiary))]" />
               <h2 className="text-lg font-semibold text-[rgb(var(--text-primary))]"> 
-                Filters
+                {dict.pages.blog.filters.title}
               </h2>
               {activeFiltersCount > 0 && (
                 <span className="px-2 py-1 text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] rounded-full">
@@ -125,7 +130,7 @@ export function MobileFilters({
             <button
               onClick={onClose}
               className="p-2 text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] transition-colors"
-              aria-label="Close filters"
+              aria-label={dict.pages.blog.filters.closeFilters}
             >
               <X className="w-5 h-5" />
             </button>
@@ -136,7 +141,7 @@ export function MobileFilters({
             {/* 検索 */}
             <div>
               <label htmlFor="mobile-search" className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-2">
-                Search Articles
+                {dict.pages.blog.filters.searchArticles}
               </label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[rgb(var(--text-tertiary))]" />
@@ -145,14 +150,14 @@ export function MobileFilters({
                   type="text"
                   value={localFilters.searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  placeholder="Search by title, content, or tags..."
+                  placeholder={dict.pages.blog.filters.searchPlaceholder}
                   className="w-full pl-10 pr-4 py-3 border border-[rgb(var(--border-primary))] rounded-lg bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] placeholder-[rgb(var(--text-tertiary))] focus:ring-2 focus:ring-[rgb(var(--focus-ring))] focus:border-[rgb(var(--focus-ring))] transition-colors text-base"
                 />
                 {localFilters.searchQuery && (
                   <button
                     onClick={() => handleSearchChange('')}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] transition-colors"
-                    aria-label="Clear search"
+                    aria-label={dict.pages.blog.filters.clearSearch}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -163,13 +168,13 @@ export function MobileFilters({
             {/* ソート */}
             <div>
               <label className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">
-                Sort By
+                {dict.pages.blog.filters.sortBy}
               </label>
               <div className="space-y-2">
                 {[
-                  { value: 'date', label: 'Date', icon: Calendar },
-                  { value: 'popularity', label: 'Popularity', icon: TrendingUp },
-                  { value: 'category', label: 'Category', icon: Tag }
+                  { value: 'date', label: dict.pages.blog.filters.date, icon: Calendar },
+                  { value: 'popularity', label: dict.pages.blog.filters.popularity, icon: TrendingUp },
+                  { value: 'category', label: dict.pages.blog.filters.category, icon: Tag }
                 ].map(({ value, label, icon: Icon }) => (
                   <button
                     key={value}
@@ -196,9 +201,9 @@ export function MobileFilters({
                   onClick={toggleSortOrder}
                   className="w-full flex items-center justify-between px-4 py-3 text-left rounded-lg border border-[rgb(var(--border-primary))] text-[rgb(var(--text-secondary))] hover:bg-[rgb(var(--bg-secondary))] hover:text-[rgb(var(--text-primary))] bg-[rgb(var(--bg-primary))] transition-colors"
                 >
-                  <span className="font-medium">Order</span>
+                  <span className="font-medium">{dict.pages.blog.filters.order}</span>
                   <span className="text-sm">
-                    {localFilters.sortOrder === 'asc' ? 'A-Z' : 'Z-A'}
+                    {localFilters.sortOrder === 'asc' ? dict.pages.blog.filters.orderAsc : dict.pages.blog.filters.orderDesc}
                   </span>
                 </button>
               </div>
@@ -208,13 +213,13 @@ export function MobileFilters({
             <div>
               <div className="flex items-center justify-between mb-3">
                 <label className="text-sm font-medium text-[rgb(var(--text-secondary))]"> 
-                  Filter by Tags
+                  {dict.pages.blog.filters.filterByTags}
                 </label>
                 {localFilters.selectedTags.length > 1 && (
                   <button
                     onClick={toggleTagOperator}
                     className="px-3 py-1 text-xs font-medium bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] rounded-full hover:bg-[rgb(var(--tag-neutral-hover))] hover:text-[rgb(var(--text-primary))] transition-colors"
-                    title={`Currently using ${localFilters.tagOperator} logic`}
+                    title={`${dict.pages.blog.filters.currentlyUsing} ${localFilters.tagOperator} ${dict.pages.blog.filters.logic}`}
                   >
                     {localFilters.tagOperator}
                   </button>
@@ -245,7 +250,7 @@ export function MobileFilters({
               
               {localFilters.selectedTags.length > 1 && (
                 <p className="mt-2 text-xs text-[rgb(var(--text-tertiary))]"> 
-                  Showing posts that match {localFilters.tagOperator === 'AND' ? 'all' : 'any'} of the selected tags
+                  {dict.pages.blog.filters.showingPosts} {localFilters.tagOperator === 'AND' ? dict.pages.blog.filters.showingPostsAll : dict.pages.blog.filters.showingPostsAny} of the selected tags
                 </p>
               )}
             </div>
@@ -258,13 +263,13 @@ export function MobileFilters({
                 onClick={clearAllFilters}
                 className="flex-1 px-4 py-3 text-[rgb(var(--text-secondary))] bg-[rgb(var(--tag-neutral-bg))] rounded-lg hover:bg-[rgb(var(--tag-neutral-hover))] hover:text-[rgb(var(--text-primary))] transition-colors font-medium"
               >
-                Clear All
+{dict.pages.blog.filters.clearAll}
               </button>
               <button
                 onClick={applyFilters}
                 className="flex-1 px-4 py-3 bg-[rgb(var(--info-color))] text-white rounded-lg hover:bg-[rgb(var(--link-hover))] transition-colors font-medium"
               >
-                Apply Filters
+{dict.pages.blog.filters.applyFilters}
               </button>
             </div>
           </div>

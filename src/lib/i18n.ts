@@ -294,12 +294,18 @@ export interface Dictionary {
         orderAsc: string
         orderDesc: string
         showingPosts: string
+        showingPostsAll: string
+        showingPostsAny: string
         articlesFound: string
         noArticlesFound: string
         tryAdjusting: string
         clearAllFilters: string
         filteredBy: string
         search: string
+        closeFilters: string
+        clearSearch: string
+        currentlyUsing: string
+        logic: string
       }
     }
     docs: {
@@ -791,12 +797,18 @@ export const en: Dictionary = {
         orderAsc: 'A-Z',
         orderDesc: 'Z-A',
         showingPosts: 'Showing posts that match',
+        showingPostsAll: 'all',
+        showingPostsAny: 'any',
         articlesFound: 'article(s) found',
         noArticlesFound: 'No Articles Found',
         tryAdjusting: 'Try adjusting your filters or search terms',
         clearAllFilters: 'Clear All Filters',
         filteredBy: 'Filtered by:',
-        search: 'Search:'
+        search: 'Search:',
+        closeFilters: 'Close filters',
+        clearSearch: 'Clear search',
+        currentlyUsing: 'Currently using',
+        logic: 'logic'
       }
     },
     docs: {
@@ -1288,12 +1300,18 @@ export const jp: Dictionary = {
         orderAsc: '昇順',
         orderDesc: '降順',
         showingPosts: '選択したタグに一致する記事を表示',
+        showingPostsAll: 'すべて',
+        showingPostsAny: 'いずれか',
         articlesFound: '件の記事が見つかりました',
         noArticlesFound: '記事が見つかりませんでした',
         tryAdjusting: 'フィルターや検索条件を調整してみてください',
         clearAllFilters: 'すべてのフィルターをクリア',
         filteredBy: 'フィルター：',
-        search: '検索：'
+        search: '検索：',
+        closeFilters: 'フィルターを閉じる',
+        clearSearch: '検索をクリア',
+        currentlyUsing: '現在使用中',
+        logic: 'ロジック'
       }
     },
     docs: {
@@ -1340,6 +1358,63 @@ export const jp: Dictionary = {
     contact: {
       title: 'お問い合わせ',
       subtitle: 'ご質問やご相談がございましたら、お気軽にお問い合わせください。専門スタッフが迅速にご対応いたします。',
+      form: {
+        title: 'お問い合わせ',
+        subtitle: 'ご質問やご相談がございましたら、お気軽にお問い合わせください。専門スタッフが迅速にご対応いたします。',
+        name: {
+          label: 'お名前',
+          placeholder: '山田太郎',
+          required: 'お名前を入力してください',
+          maxLength: 'お名前は50文字以内で入力してください'
+        },
+        email: {
+          label: 'メールアドレス',
+          placeholder: 'example@email.com',
+          invalid: '有効なメールアドレスを入力してください'
+        },
+        subject: {
+          label: '件名',
+          placeholder: 'お問い合わせの件名',
+          required: '件名を入力してください',
+          maxLength: '件名は100文字以内で入力してください'
+        },
+        message: {
+          label: 'メッセージ',
+          placeholder: 'お問い合わせの詳細をお聞かせください...',
+          minLength: 'メッセージは10文字以上で入力してください',
+          maxLength: 'メッセージは1000文字以内で入力してください',
+          charCount: '文字'
+        },
+        submit: 'メッセージを送信',
+        submitting: '送信中...',
+        submitError: '送信に失敗しました。時間をおいて再度お試しください。',
+        success: {
+          title: 'メッセージを送信しました',
+          description: 'お問い合わせありがとうございます。1営業日以内にご返信いたします。',
+          newMessage: '新しいメッセージを送信'
+        },
+        privacyNotice: 'フォームを送信することで、'
+      },
+      info: {
+        title: 'お問い合わせ情報',
+        email: {
+          label: 'メールアドレス',
+          value: 'contact@yoursaas.com'
+        },
+        phone: {
+          label: '電話番号',
+          value: '03-1234-5678',
+          hours: '平日 9:00-18:00'
+        },
+        location: {
+          label: '所在地',
+          address: '〒100-0001\\n東京都千代田区千代田1-1-1\\nYourSaaSビル 5F'
+        },
+        faq: {
+          text: 'よくある質問もご確認ください',
+          button: 'FAQ を見る'
+        }
+      },
       support: {
         email: {
           title: 'メールサポート',

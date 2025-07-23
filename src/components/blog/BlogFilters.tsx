@@ -5,11 +5,14 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Search, X, Filter, ChevronDown, Calendar, TrendingUp, Tag, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { MobileFilters } from './MobileFilters'
+import type { Dictionary } from '@/lib/i18n'
 
 interface BlogFiltersProps {
   tags: string[]
   className?: string
   onFiltersChange?: (filters: BlogFilterState) => void
+  dict: Dictionary
+  locale: string
 }
 
 export interface BlogFilterState {
@@ -28,7 +31,7 @@ const defaultFilters: BlogFilterState = {
   tagOperator: 'OR'
 }
 
-export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersProps) {
+export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: BlogFiltersProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isExpanded, setIsExpanded] = useState(true) // 常に開いた状態に変更
@@ -304,6 +307,8 @@ export function BlogFilters({ tags, className, onFiltersChange }: BlogFiltersPro
         onFiltersChange={updateFilters}
         onClearFilters={clearFilters}
         activeFiltersCount={activeFiltersCount}
+        dict={dict}
+        locale={locale}
       />
     </>
   )

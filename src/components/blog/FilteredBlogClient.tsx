@@ -219,6 +219,8 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
             <BlogFilters
               tags={tags}
               onFiltersChange={handleFiltersChange}
+              dict={dict}
+              locale={locale}
             />
           </div>
         </div>

@@ -18,15 +18,12 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import type { Dictionary } from '@/lib/i18n'
 
-const formSchema = z.object({
-  name: z.string().min(1, 'お名前を入力してください').max(50, 'お名前は50文字以内で入力してください'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  subject: z.string().min(1, '件名を入力してください').max(100, '件名は100文字以内で入力してください'),
-  message: z.string().min(10, 'メッセージは10文字以上で入力してください').max(1000, 'メッセージは1000文字以内で入力してください'),
-})
-
-type FormData = z.infer<typeof formSchema>
+interface ContactFormProps {
+  dict: Dictionary
+  locale: string
+}
 
 interface FormState {
   isSubmitting: boolean
@@ -34,7 +31,15 @@ interface FormState {
   submitError: string | null
 }
 
-export function ContactForm() {
+export function ContactForm({ dict, locale }: ContactFormProps) {
+  const formSchema = z.object({
+    name: z.string().min(1, dict.pages.contact.form.name.required).max(50, dict.pages.contact.form.name.maxLength),
+    email: z.string().email(dict.pages.contact.form.email.invalid),
+    subject: z.string().min(1, dict.pages.contact.form.subject.required).max(100, dict.pages.contact.form.subject.maxLength),
+    message: z.string().min(10, dict.pages.contact.form.message.minLength).max(1000, dict.pages.contact.form.message.maxLength),
+  })
+
+  type FormData = z.infer<typeof formSchema>
   const [formState, setFormState] = useState<FormState>({
     isSubmitting: false,
     isSubmitted: false,
@@ -76,7 +81,7 @@ export function ContactForm() {
       setFormState({
         isSubmitting: false,
         isSubmitted: false,
-        submitError: 'メッセージの送信に失敗しました。しばらく時間をおいて再度お試しください。'
+        submitError: dict.pages.contact.form.submitError
       })
     }
   }
@@ -94,11 +99,11 @@ export function ContactForm() {
             </div>
             
             <Heading as="h2" size="2xl" className="mb-4">
-              メッセージを送信しました
+              {dict.pages.contact.form.success.title}
             </Heading>
             
             <Text size="lg" variant="muted" className="mb-8">
-              お問い合わせありがとうございます。2営業日以内にご返信いたします。
+              {dict.pages.contact.form.success.description}
             </Text>
             
             <Button
@@ -109,7 +114,7 @@ export function ContactForm() {
               })}
               variant="outline"
             >
-              新しいメッセージを送信
+              {dict.pages.contact.form.success.newMessage}
             </Button>
           </div>
         </Container>
@@ -123,11 +128,10 @@ export function ContactForm() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <Heading as="h2" size="3xl" className="mb-4">
-              お問い合わせ
+              {dict.pages.contact.form.title}
             </Heading>
             <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-              ご質問やご相談がございましたら、お気軽にお問い合わせください。
-              専門スタッフが迅速にご対応いたします。
+              {dict.pages.contact.form.subtitle}
             </Text>
           </div>
 
@@ -136,7 +140,7 @@ export function ContactForm() {
             <div className="lg:col-span-1">
               <div className="bg-gray-50 rounded-2xl p-6 dark:bg-gray-800">
                 <Heading as="h3" size="lg" className="mb-6">
-                  お問い合わせ情報
+                  {dict.pages.contact.info.title}
                 </Heading>
                 
                 <div className="space-y-6">
@@ -147,8 +151,8 @@ export function ContactForm() {
                       </svg>
                     </div>
                     <div>
-                      <Text className="font-medium dark:text-gray-100">メール</Text>
-                      <Text size="sm" variant="muted">contact@yoursaas.com</Text>
+                      <Text className="font-medium dark:text-gray-100">{dict.pages.contact.info.email.label}</Text>
+                      <Text size="sm" variant="muted">{dict.pages.contact.info.email.value}</Text>
                     </div>
                   </div>
                   
@@ -159,9 +163,9 @@ export function ContactForm() {
                       </svg>
                     </div>
                     <div>
-                      <Text className="font-medium dark:text-gray-100">電話</Text>
-                      <Text size="sm" variant="muted">03-1234-5678</Text>
-                      <Text size="xs" variant="muted">平日 9:00-18:00</Text>
+                      <Text className="font-medium dark:text-gray-100">{dict.pages.contact.info.phone.label}</Text>
+                      <Text size="sm" variant="muted">{dict.pages.contact.info.phone.value}</Text>
+                      <Text size="xs" variant="muted">{dict.pages.contact.info.phone.hours}</Text>
                     </div>
                   </div>
                   
@@ -173,22 +177,18 @@ export function ContactForm() {
                       </svg>
                     </div>
                     <div>
-                      <Text className="font-medium dark:text-gray-100">所在地</Text>
-                      <Text size="sm" variant="muted">
-                        〒100-0001<br />
-                        東京都千代田区千代田1-1-1<br />
-                        YourSaaSビル 5F
-                      </Text>
+                      <Text className="font-medium dark:text-gray-100">{dict.pages.contact.info.location.label}</Text>
+                      <div className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: dict.pages.contact.info.location.address.replace(/\\n/g, '<br />') }} />
                     </div>
                   </div>
                 </div>
                 
                 <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                   <Text size="sm" variant="muted" className="mb-4">
-                    よくある質問もご確認ください
+                    {dict.pages.contact.info.faq.text}
                   </Text>
                   <Button variant="outline" size="sm" asChild>
-                    <a href="/pricing#faq">FAQ を見る</a>
+                    <a href={`/${locale}/pricing#faq`}>{dict.pages.contact.info.faq.button}</a>
                   </Button>
                 </div>
               </div>
@@ -217,10 +217,10 @@ export function ContactForm() {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>お名前 <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>{dict.pages.contact.form.name.label} <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                           <Input 
-                            placeholder="山田 太郎" 
+                            placeholder={dict.pages.contact.form.name.placeholder} 
                             disabled={formState.isSubmitting}
                             {...field} 
                           />
@@ -235,11 +235,11 @@ export function ContactForm() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>メールアドレス <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>{dict.pages.contact.form.email.label} <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                           <Input 
                             type="email"
-                            placeholder="example@email.com" 
+                            placeholder={dict.pages.contact.form.email.placeholder} 
                             disabled={formState.isSubmitting}
                             {...field} 
                           />
@@ -254,10 +254,10 @@ export function ContactForm() {
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>件名 <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>{dict.pages.contact.form.subject.label} <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                           <Input 
-                            placeholder="お問い合わせの件名を入力してください" 
+                            placeholder={dict.pages.contact.form.subject.placeholder} 
                             disabled={formState.isSubmitting}
                             {...field} 
                           />
@@ -272,10 +272,10 @@ export function ContactForm() {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>メッセージ <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>{dict.pages.contact.form.message.label} <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                           <Textarea 
-                            placeholder="お問い合わせ内容を詳しくお聞かせください（10文字以上）"
+                            placeholder={dict.pages.contact.form.message.placeholder}
                             className="resize-vertical"
                             rows={6}
                             disabled={formState.isSubmitting}
@@ -283,7 +283,7 @@ export function ContactForm() {
                           />
                         </FormControl>
                         <FormDescription>
-                          {field.value?.length || 0}/1000文字
+                          {field.value?.length || 0}/1000{dict.pages.contact.form.message.charCount}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -301,20 +301,20 @@ export function ContactForm() {
                           <svg className="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
-                          送信中...
+                          {dict.pages.contact.form.submitting}
                         </div>
                       ) : (
-                        'メッセージを送信'
+                        dict.pages.contact.form.submit
                       )}
                     </Button>
                   </div>
 
                   <Text size="sm" variant="muted" className="text-center">
-                    このフォームを送信することで、
-                    <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
-                      プライバシーポリシー
+                    {dict.pages.contact.form.privacyNotice}
+                    <a href={`/${locale}/privacy`} className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
+                      {dict.footer.privacyPolicy}
                     </a>
-                    に同意したものとみなします。
+                    {locale === 'jp' ? 'に同意したものとみなします。' : '.'}
                   </Text>
                 </form>
               </Form>

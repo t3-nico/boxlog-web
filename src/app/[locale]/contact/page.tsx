@@ -96,7 +96,7 @@ export default async function ContactPage({ params }: PageProps) {
       </section>
 
       {/* Contact Form */}
-      <LazyContactForm />
+      <LazyContactForm dict={dict} locale={locale} />
 
       {/* Office Information */}
       <section className="py-24 bg-gray-50">

@@ -14,11 +14,10 @@ const ContactForm = dynamic(() => import('./ContactForm').then(mod => ({ default
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <Heading as="h2" size="3xl" className="mb-4">
-              お問い合わせ
+              Loading...
             </Heading>
             <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-              ご質問やご相談がございましたら、お気軽にお問い合わせください。
-              専門スタッフが迅速にご対応いたします。
+              Please wait while we load the contact form.
             </Text>
           </div>
 
@@ -26,7 +25,7 @@ const ContactForm = dynamic(() => import('./ContactForm').then(mod => ({ default
             <div className="lg:col-span-1">
               <div className="bg-gray-50 rounded-2xl p-6 dark:bg-gray-800">
                 <Heading as="h3" size="lg" className="mb-6">
-                  お問い合わせ情報
+                  Contact Information
                 </Heading>
                 <div className="space-y-4">
                   <div className="h-4 bg-gray-200 rounded animate-pulse dark:bg-gray-700" />
@@ -52,10 +51,17 @@ const ContactForm = dynamic(() => import('./ContactForm').then(mod => ({ default
   )
 })
 
-export function LazyContactForm() {
+import type { Dictionary } from '@/lib/i18n'
+
+interface LazyContactFormProps {
+  dict: Dictionary
+  locale: string
+}
+
+export function LazyContactForm({ dict, locale }: LazyContactFormProps) {
   return (
     <Suspense fallback={null}>
-      <ContactForm />
+      <ContactForm dict={dict} locale={locale} />
     </Suspense>
   )
 }
