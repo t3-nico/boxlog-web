@@ -31,30 +31,30 @@ export function Footer({ locale, dict }: FooterProps) {
     product: [
       { name: dict.common.features, href: '/features' },
       { name: dict.common.pricing, href: '/pricing' },
-      { name: locale === 'jp' ? 'インテグレーション' : 'Integrations', href: '/integrations' },
-      { name: 'API', href: '/api' },
+      { name: dict.footer.integrations, href: '/integrations' },
+      { name: dict.footer.api, href: '/api' },
       { name: dict.common.releases, href: '/releases' },
     ],
     company: [
       { name: dict.common.about, href: '/about' },
       { name: dict.common.blog, href: '/blog' },
-      { name: locale === 'jp' ? 'キャリア' : 'Careers', href: '/careers' },
+      { name: dict.footer.careers, href: '/careers' },
       { name: dict.common.contact, href: '/contact' },
-      { name: locale === 'jp' ? 'パートナー' : 'Partners', href: '/partners' },
+      { name: dict.footer.partners, href: '/partners' },
     ],
     resources: [
       { name: dict.common.docs, href: '/docs' },
-      { name: locale === 'jp' ? 'ヘルプセンター' : 'Help Center', href: '/help' },
-      { name: locale === 'jp' ? 'ガイド' : 'Guides', href: '/guides' },
-      { name: locale === 'jp' ? 'コミュニティ' : 'Community', href: '/community' },
-      { name: locale === 'jp' ? 'ステータス' : 'Status', href: '/status' },
+      { name: dict.footer.helpCenter, href: '/help' },
+      { name: dict.footer.guides, href: '/guides' },
+      { name: dict.footer.community, href: '/community' },
+      { name: dict.footer.status, href: '/status' },
     ],
     legal: [
       { name: dict.footer.privacyPolicy, href: '/privacy' },
       { name: dict.footer.termsOfService, href: '/terms' },
       { name: dict.footer.cookiePolicy, href: '/cookies' },
       { name: 'GDPR', href: '/gdpr' },
-      { name: locale === 'jp' ? 'セキュリティ' : 'Security', href: '/security' },
+      { name: dict.footer.security, href: '/security' },
     ],
   }
   return (
@@ -82,7 +82,7 @@ export function Footer({ locale, dict }: FooterProps) {
             {/* Product */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {locale === 'jp' ? '製品' : 'Product'}
+                {dict.footer.product}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.product.map((item) => (
@@ -101,7 +101,7 @@ export function Footer({ locale, dict }: FooterProps) {
             {/* Company */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {locale === 'jp' ? '会社' : 'Company'}
+                {dict.footer.company}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.company.map((item) => (
@@ -120,7 +120,7 @@ export function Footer({ locale, dict }: FooterProps) {
             {/* Resources */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {locale === 'jp' ? 'リソース' : 'Resources'}
+                {dict.footer.resources}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.resources.map((item) => (
@@ -139,7 +139,7 @@ export function Footer({ locale, dict }: FooterProps) {
             {/* Legal */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {locale === 'jp' ? '法的事項' : 'Legal'}
+                {dict.footer.legal}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.legal.map((item) => (

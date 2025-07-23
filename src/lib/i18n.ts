@@ -279,6 +279,28 @@ export interface Dictionary {
       readTime: string
       publishedOn: string
       updatedOn: string
+      filters: {
+        title: string
+        searchArticles: string
+        searchPlaceholder: string
+        sortBy: string
+        order: string
+        filterByTags: string
+        clearAll: string
+        applyFilters: string
+        date: string
+        popularity: string
+        category: string
+        orderAsc: string
+        orderDesc: string
+        showingPosts: string
+        articlesFound: string
+        noArticlesFound: string
+        tryAdjusting: string
+        clearAllFilters: string
+        filteredBy: string
+        search: string
+      }
     }
     docs: {
       title: string
@@ -429,6 +451,19 @@ export interface Dictionary {
     privacyPolicy: string
     termsOfService: string
     cookiePolicy: string
+    product: string
+    company: string
+    resources: string
+    legal: string
+    integrations: string
+    careers: string
+    partners: string
+    helpCenter: string
+    guides: string
+    community: string
+    status: string
+    security: string
+    api: string
   }
 }
 
@@ -683,7 +718,29 @@ export const en: Dictionary = {
       subtitle: 'Latest articles on SaaS development, technology, and business strategy',
       readTime: 'min read',
       publishedOn: 'Published on',
-      updatedOn: 'Updated on'
+      updatedOn: 'Updated on',
+      filters: {
+        title: 'Filters',
+        searchArticles: 'Search Articles',
+        searchPlaceholder: 'Search by title, content, or tags...',
+        sortBy: 'Sort By',
+        order: 'Order',
+        filterByTags: 'Filter by Tags',
+        clearAll: 'Clear All',
+        applyFilters: 'Apply Filters',
+        date: 'Date',
+        popularity: 'Popularity',
+        category: 'Category',
+        orderAsc: 'A-Z',
+        orderDesc: 'Z-A',
+        showingPosts: 'Showing posts that match',
+        articlesFound: 'article(s) found',
+        noArticlesFound: 'No Articles Found',
+        tryAdjusting: 'Try adjusting your filters or search terms',
+        clearAllFilters: 'Clear All Filters',
+        filteredBy: 'Filtered by:',
+        search: 'Search:'
+      }
     },
     docs: {
       title: 'Documentation',
@@ -833,7 +890,20 @@ export const en: Dictionary = {
     copyright: 'All rights reserved.',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
-    cookiePolicy: 'Cookie Policy'
+    cookiePolicy: 'Cookie Policy',
+    product: 'Product',
+    company: 'Company',
+    resources: 'Resources',
+    legal: 'Legal',
+    integrations: 'Integrations',
+    careers: 'Careers',
+    partners: 'Partners',
+    helpCenter: 'Help Center',
+    guides: 'Guides',
+    community: 'Community',
+    status: 'Status',
+    security: 'Security',
+    api: 'API'
   }
 }
 
@@ -1088,7 +1158,29 @@ export const jp: Dictionary = {
       subtitle: 'SaaS開発、技術、ビジネス戦略に関する最新記事',
       readTime: '分で読了',
       publishedOn: '公開日',
-      updatedOn: '更新日'
+      updatedOn: '更新日',
+      filters: {
+        title: 'フィルター',
+        searchArticles: '記事を検索',
+        searchPlaceholder: 'タイトル、内容、タグで検索...',
+        sortBy: '並び替え',
+        order: '順序',
+        filterByTags: 'タグでフィルター',
+        clearAll: 'すべてクリア',
+        applyFilters: 'フィルターを適用',
+        date: '日付',
+        popularity: '人気度',
+        category: 'カテゴリー',
+        orderAsc: '昇順',
+        orderDesc: '降順',
+        showingPosts: '選択したタグに一致する記事を表示',
+        articlesFound: '件の記事が見つかりました',
+        noArticlesFound: '記事が見つかりませんでした',
+        tryAdjusting: 'フィルターや検索条件を調整してみてください',
+        clearAllFilters: 'すべてのフィルターをクリア',
+        filteredBy: 'フィルター：',
+        search: '検索：'
+      }
     },
     docs: {
       title: 'ドキュメント',
@@ -1238,7 +1330,20 @@ export const jp: Dictionary = {
     copyright: 'すべての権利を保有しています。',
     privacyPolicy: 'プライバシーポリシー',
     termsOfService: '利用規約',
-    cookiePolicy: 'クッキーポリシー'
+    cookiePolicy: 'クッキーポリシー',
+    product: '製品',
+    company: '会社',
+    resources: 'リソース',
+    legal: '法的事項',
+    integrations: 'インテグレーション',
+    careers: 'キャリア',
+    partners: 'パートナー',
+    helpCenter: 'ヘルプセンター',
+    guides: 'ガイド',
+    community: 'コミュニティ',
+    status: 'ステータス',
+    security: 'セキュリティ',
+    api: 'API'
   }
 }
 
