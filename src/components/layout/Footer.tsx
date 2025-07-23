@@ -1,37 +1,7 @@
 import Link from 'next/link'
 import { Container } from '@/components/ui/container'
 import { Twitter, Github, Linkedin } from 'lucide-react'
-
-const navigation = {
-  product: [
-    { name: 'Features', href: '/features' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Integrations', href: '/integrations' },
-    { name: 'API', href: '/api' },
-    { name: 'Releases', href: '/releases' },
-  ],
-  company: [
-    { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Partners', href: '/partners' },
-  ],
-  resources: [
-    { name: 'Documentation', href: '/docs' },
-    { name: 'Help Center', href: '/help' },
-    { name: 'Guides', href: '/guides' },
-    { name: 'Community', href: '/community' },
-    { name: 'Status', href: '/status' },
-  ],
-  legal: [
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Cookie Policy', href: '/cookies' },
-    { name: 'GDPR', href: '/gdpr' },
-    { name: 'Security', href: '/security' },
-  ],
-}
+import type { Dictionary } from '@/lib/i18n'
 
 const socialLinks = [
   {
@@ -51,7 +21,42 @@ const socialLinks = [
   },
 ]
 
-export function Footer() {
+interface FooterProps {
+  locale: string
+  dict: Dictionary
+}
+
+export function Footer({ locale, dict }: FooterProps) {
+  const navigation = {
+    product: [
+      { name: dict.common.features, href: '/features' },
+      { name: dict.common.pricing, href: '/pricing' },
+      { name: locale === 'jp' ? 'インテグレーション' : 'Integrations', href: '/integrations' },
+      { name: 'API', href: '/api' },
+      { name: dict.common.releases, href: '/releases' },
+    ],
+    company: [
+      { name: dict.common.about, href: '/about' },
+      { name: dict.common.blog, href: '/blog' },
+      { name: locale === 'jp' ? 'キャリア' : 'Careers', href: '/careers' },
+      { name: dict.common.contact, href: '/contact' },
+      { name: locale === 'jp' ? 'パートナー' : 'Partners', href: '/partners' },
+    ],
+    resources: [
+      { name: dict.common.docs, href: '/docs' },
+      { name: locale === 'jp' ? 'ヘルプセンター' : 'Help Center', href: '/help' },
+      { name: locale === 'jp' ? 'ガイド' : 'Guides', href: '/guides' },
+      { name: locale === 'jp' ? 'コミュニティ' : 'Community', href: '/community' },
+      { name: locale === 'jp' ? 'ステータス' : 'Status', href: '/status' },
+    ],
+    legal: [
+      { name: dict.footer.privacyPolicy, href: '/privacy' },
+      { name: dict.footer.termsOfService, href: '/terms' },
+      { name: dict.footer.cookiePolicy, href: '/cookies' },
+      { name: 'GDPR', href: '/gdpr' },
+      { name: locale === 'jp' ? 'セキュリティ' : 'Security', href: '/security' },
+    ],
+  }
   return (
     <footer className="bg-bg-tertiary" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
@@ -64,27 +69,26 @@ export function Footer() {
             {/* Company info */}
             <div className="col-span-1 md:col-span-2 lg:col-span-2">
               <Link
-                href="/"
+                href={`/${locale}`}
                 className="text-2xl font-bold text-text-primary hover:text-text-secondary transition-colors"
               >
                 YourSaaS
               </Link>
               <p className="mt-4 text-base text-text-tertiary max-w-md">
-                Build your next SaaS product with confidence. Transform your ideas into reality 
-                with our powerful platform and enterprise-grade tools.
+                {dict.pages.home.subtitle}
               </p>
             </div>
 
             {/* Product */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                Product
+                {locale === 'jp' ? '製品' : 'Product'}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.product.map((item) => (
                   <li key={item.name}>
                     <Link
-                      href={item.href}
+                      href={`/${locale}${item.href}`}
                       className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
@@ -97,13 +101,13 @@ export function Footer() {
             {/* Company */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                Company
+                {locale === 'jp' ? '会社' : 'Company'}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.company.map((item) => (
                   <li key={item.name}>
                     <Link
-                      href={item.href}
+                      href={`/${locale}${item.href}`}
                       className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
@@ -116,13 +120,13 @@ export function Footer() {
             {/* Resources */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                Resources
+                {locale === 'jp' ? 'リソース' : 'Resources'}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.resources.map((item) => (
                   <li key={item.name}>
                     <Link
-                      href={item.href}
+                      href={`/${locale}${item.href}`}
                       className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
@@ -135,13 +139,13 @@ export function Footer() {
             {/* Legal */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                Legal
+                {locale === 'jp' ? '法的事項' : 'Legal'}
               </h3>
               <ul className="mt-4 space-y-2">
                 {navigation.legal.map((item) => (
                   <li key={item.name}>
                     <Link
-                      href={item.href}
+                      href={`/${locale}${item.href}`}
                       className="text-base text-text-tertiary hover:text-text-primary transition-colors"
                     >
                       {item.name}
@@ -157,7 +161,7 @@ export function Footer() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               {/* Copyright */}
               <p className="text-base text-text-tertiary">
-                &copy; {new Date().getFullYear()} YourSaaS, Inc. All rights reserved.
+                &copy; {new Date().getFullYear()} YourSaaS, Inc. {dict.footer.copyright}
               </p>
 
               {/* Social links */}

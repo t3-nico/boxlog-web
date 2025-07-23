@@ -11,22 +11,8 @@ import {
   companyMission, 
   companyVision 
 } from '@/lib/about-data'
-
-export const metadata: Metadata = {
-  title: 'About Us - YourSaaS Platform',
-  description: 'Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.',
-  keywords: 'about, company, team, mission, vision, values, SaaS platform',
-  openGraph: {
-    title: 'About Us - YourSaaS Platform',
-    description: 'Learn about our mission, team, and values.',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'About Us - YourSaaS Platform',
-    description: 'Learn about our mission, team, and values.',
-  }
-}
+import { getDictionary } from '@/lib/i18n'
+import { generateSEOMetadata } from '@/lib/metadata'
 
 interface PageProps {
   params: {
@@ -39,6 +25,24 @@ export async function generateStaticParams() {
     { locale: 'en' },
     { locale: 'jp' }
   ]
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
+  return generateSEOMetadata({
+    title: dict.common.about,
+    description: locale === 'jp' 
+      ? '私たちのミッション、チーム、価値観について学んでください。誰もがより良い未来を築けるような技術を創造しています。'
+      : 'Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.',
+    url: `/${locale}/about`,
+    locale: locale,
+    keywords: locale === 'jp' 
+      ? ['概要', '会社', 'チーム', 'ミッション', 'ビジョン', '価値観', 'SaaSプラットフォーム']
+      : ['about', 'company', 'team', 'mission', 'vision', 'values', 'SaaS platform'],
+    type: 'website'
+  })
 }
 
 export default function AboutPage({ params }: PageProps) {

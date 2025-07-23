@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { locales, type Locale, getLocaleConfig, isValidLocale } from '@/lib/i18n'
 import { Globe } from '@/lib/icons'
-import { useLocale, setLocale } from '@/hooks/useLocale'
+import { useRouter, usePathname } from 'next/navigation'
 
 interface LanguageSwitcherProps {
   className?: string
@@ -13,19 +13,33 @@ interface LanguageSwitcherProps {
 }
 
 export function LanguageSwitcher({ className, currentLocale: providedLocale }: LanguageSwitcherProps) {
-  const hookLocale = useLocale()
-  const currentLocaleString = providedLocale || hookLocale
-  const currentLocale = isValidLocale(currentLocaleString) ? currentLocaleString : 'en'
+  const router = useRouter()
+  const pathname = usePathname()
   const [mounted, setMounted] = React.useState(false)
+
+  // Extract current locale from pathname
+  const pathSegments = pathname.split('/').filter(Boolean)
+  const currentLocale = (providedLocale || pathSegments[0] || 'en') as Locale
+  const validCurrentLocale = isValidLocale(currentLocale) ? currentLocale : 'en'
 
   React.useEffect(() => {
     setMounted(true)
   }, [])
 
   const handleLocaleChange = (newLocale: Locale) => {
-    setLocale(newLocale)
-    // Force a page reload to apply the new locale
-    window.location.reload()
+    // Get the path without the current locale
+    const pathWithoutLocale = pathname.startsWith(`/${validCurrentLocale}`) 
+      ? pathname.slice(`/${validCurrentLocale}`.length) || '/'
+      : pathname
+    
+    // Create new path with the new locale
+    const newPath = `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
+    
+    // Set locale cookie for persistence
+    document.cookie = `locale=${newLocale}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=lax`
+    
+    // Navigate to the new path
+    router.push(newPath)
   }
 
   if (!mounted) {
@@ -41,7 +55,7 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
     )
   }
 
-  const currentConfig = getLocaleConfig(currentLocale)
+  const currentConfig = getLocaleConfig(validCurrentLocale)
 
   return (
     <DropdownMenu>
@@ -60,11 +74,11 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
           <DropdownMenuItem
             key={locale.code}
             onClick={() => handleLocaleChange(locale.code)}
-            className={`cursor-pointer ${currentLocale === locale.code ? 'bg-accent' : ''}`}
+            className={`cursor-pointer ${validCurrentLocale === locale.code ? 'bg-accent' : ''}`}
           >
             <span className="flex items-center gap-2">
               <span className="text-sm font-medium">{locale.nativeName}</span>
-              {currentLocale === locale.code && (
+              {validCurrentLocale === locale.code && (
                 <span className="text-xs text-muted-foreground">✓</span>
               )}
             </span>

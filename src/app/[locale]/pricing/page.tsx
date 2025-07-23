@@ -1,21 +1,7 @@
 import type { Metadata } from 'next'
 import { PricingPageClient } from '@/components/pricing/PricingPageClient'
-
-export const metadata: Metadata = {
-  title: 'Pricing - YourSaaS Platform',
-  description: 'Simple, transparent pricing for teams of all sizes. Choose from Starter, Pro, or Enterprise plans with flexible monthly or annual billing.',
-  keywords: 'pricing, plans, subscription, SaaS pricing, team plans, enterprise, starter plan, pro plan',
-  openGraph: {
-    title: 'Pricing - YourSaaS Platform',
-    description: 'Simple, transparent pricing for teams of all sizes. Start your free trial today.',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Pricing - YourSaaS Platform',
-    description: 'Simple, transparent pricing for teams of all sizes. Start your free trial today.',
-  }
-}
+import { getDictionary } from '@/lib/i18n'
+import { generateSEOMetadata } from '@/lib/metadata'
 
 interface PageProps {
   params: {
@@ -28,6 +14,22 @@ export async function generateStaticParams() {
     { locale: 'en' },
     { locale: 'jp' }
   ]
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
+  return generateSEOMetadata({
+    title: dict.pages.pricing.title,
+    description: dict.pages.pricing.subtitle,
+    url: `/${locale}/pricing`,
+    locale: locale,
+    keywords: locale === 'jp' 
+      ? ['料金', 'プラン', 'サブスクリプション', 'SaaS料金', 'チームプラン', 'エンタープライズ']
+      : ['pricing', 'plans', 'subscription', 'SaaS pricing', 'team plans', 'enterprise'],
+    type: 'website'
+  })
 }
 
 export default function PricingPage({ params }: PageProps) {

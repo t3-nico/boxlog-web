@@ -56,6 +56,20 @@ export const siteConfig: SiteConfig = {
 }
 
 /**
+ * Convert locale code to proper format
+ */
+function formatLocaleForOpenGraph(locale: string): string {
+  switch (locale) {
+    case 'jp':
+      return 'ja_JP'
+    case 'en':
+      return 'en_US'
+    default:
+      return locale.includes('_') ? locale : `${locale}_${locale.toUpperCase()}`
+  }
+}
+
+/**
  * Generate comprehensive metadata for pages
  */
 export function generateSEOMetadata(data: SEOData = {}): Metadata {
@@ -109,16 +123,13 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
       canonical: pageUrl,
       languages: {
         'en-US': `${siteConfig.url}/en${url || ''}`,
-        'ja-JP': `${siteConfig.url}/ja${url || ''}`,
-        'x-default': pageUrl,
-        ...Object.fromEntries(
-          alternateLocales.map(loc => [loc, `${siteConfig.url}/${loc}${url || ''}`])
-        ),
+        'ja-JP': `${siteConfig.url}/jp${url || ''}`,
+        'x-default': `${siteConfig.url}/en${url || ''}`,
       },
     },
     openGraph: {
       type: type as any,
-      locale,
+      locale: formatLocaleForOpenGraph(locale),
       url: pageUrl,
       title: pageTitle,
       description,

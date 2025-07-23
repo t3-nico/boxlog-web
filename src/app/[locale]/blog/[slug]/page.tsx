@@ -15,6 +15,8 @@ import {
   BreadcrumbPage,
 } from '@/components/ui/breadcrumb'
 import { getBlogPost, getAllBlogPostMetas, getRelatedPosts } from '@/lib/blog'
+import { generateSEOMetadata } from '@/lib/metadata'
+import { getDictionary } from '@/lib/i18n'
 import Link from 'next/link'
 
 interface BlogPostPageProps {
@@ -26,52 +28,35 @@ interface BlogPostPageProps {
 
 // Generate metadata
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getBlogPost(params.slug)
+  const { locale, slug } = params
+  const post = await getBlogPost(slug)
+  const dict = await getDictionary(locale as 'en' | 'jp')
   
   if (!post) {
-    return {
-      title: 'Article Not Found',
-    }
+    return generateSEOMetadata({
+      title: locale === 'jp' ? '記事が見つかりません' : 'Article Not Found',
+      description: locale === 'jp' ? 'お探しの記事は見つかりませんでした。' : 'The article you are looking for could not be found.',
+      url: `/${locale}/blog/${slug}`,
+      locale: locale
+    })
   }
 
   const { frontMatter } = post
-  const publishedTime = new Date(frontMatter.publishedAt).toISOString()
-  const modifiedTime = frontMatter.updatedAt 
-    ? new Date(frontMatter.updatedAt).toISOString() 
-    : publishedTime
-
-  return {
+  
+  return generateSEOMetadata({
     title: frontMatter.title,
     description: frontMatter.description,
-    keywords: frontMatter.tags.join(', '),
-    authors: [{ name: frontMatter.author }],
-    openGraph: {
-      title: frontMatter.title,
-      description: frontMatter.description,
-      type: 'article',
-      publishedTime,
-      modifiedTime,
-      authors: [frontMatter.author],
-      tags: frontMatter.tags,
-      images: frontMatter.coverImage ? [
-        {
-          url: frontMatter.coverImage,
-          width: 1200,
-          height: 630,
-          alt: frontMatter.title,
-        }
-      ] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: frontMatter.title,
-      description: frontMatter.description,
-      images: frontMatter.coverImage ? [frontMatter.coverImage] : undefined,
-    },
-    alternates: {
-      canonical: `/blog/${params.slug}`,
-    }
-  }
+    url: `/${locale}/blog/${slug}`,
+    locale: locale,
+    type: 'article',
+    publishedTime: frontMatter.publishedAt,
+    modifiedTime: frontMatter.updatedAt || frontMatter.publishedAt,
+    authors: [frontMatter.author],
+    tags: frontMatter.tags,
+    keywords: frontMatter.tags,
+    image: frontMatter.coverImage,
+    section: frontMatter.category
+  })
 }
 
 // Generate static paths

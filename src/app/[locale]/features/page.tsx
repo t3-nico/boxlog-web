@@ -3,22 +3,8 @@ import { FeaturesHero } from '@/components/sections/FeaturesHero'
 import { FeatureGrid } from '@/components/sections/FeatureGrid'
 import { FeatureDetails } from '@/components/sections/FeatureDetails'
 import { FeaturesCTA } from '@/components/sections/FeaturesCTA'
-
-export const metadata: Metadata = {
-  title: 'Features - YourSaaS Platform',
-  description: 'Discover powerful features including API integration, real-time analytics, team collaboration, advanced security, custom workflows, and mobile apps.',
-  keywords: 'SaaS features, API integration, analytics, security, workflows, collaboration, mobile app',
-  openGraph: {
-    title: 'Features - YourSaaS Platform',
-    description: 'Everything you need to scale your business with powerful APIs, analytics, and collaboration tools.',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Features - YourSaaS Platform',
-    description: 'Everything you need to scale your business with powerful APIs, analytics, and collaboration tools.',
-  }
-}
+import { getDictionary } from '@/lib/i18n'
+import { generateSEOMetadata } from '@/lib/metadata'
 
 interface PageProps {
   params: {
@@ -31,6 +17,22 @@ export async function generateStaticParams() {
     { locale: 'en' },
     { locale: 'jp' }
   ]
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
+  return generateSEOMetadata({
+    title: dict.pages.features.title,
+    description: dict.pages.features.subtitle,
+    url: `/${locale}/features`,
+    locale: locale,
+    keywords: locale === 'jp' 
+      ? ['機能', 'SaaS', 'API', '分析', 'セキュリティ', 'ワークフロー', 'コラボレーション']
+      : ['features', 'SaaS', 'API', 'analytics', 'security', 'workflows', 'collaboration'],
+    type: 'website'
+  })
 }
 
 export default function FeaturesPage({ params }: PageProps) {

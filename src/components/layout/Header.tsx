@@ -7,22 +7,23 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { LazySearchDialog } from '@/components/search/LazySearchDialog'
 import { Search, X, Menu } from '@/lib/icons'
-
-const navigation = [
-  { name: 'Features', href: '/features' },
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'Docs', href: '/docs' },
-  { name: 'Releases', href: '/releases' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Tags', href: '/tags' },
-  { name: 'About', href: '/about' },
-]
+import type { Dictionary } from '@/lib/i18n'
 
 interface HeaderProps {
   locale: string
+  dict: Dictionary
 }
 
-export function Header({ locale }: HeaderProps) {
+export function Header({ locale, dict }: HeaderProps) {
+  const navigation = [
+    { name: dict.common.features, href: '/features' },
+    { name: dict.common.pricing, href: '/pricing' },
+    { name: dict.common.docs, href: '/docs' },
+    { name: dict.common.releases, href: '/releases' },
+    { name: dict.common.blog, href: '/blog' },
+    { name: 'Tags', href: '/tags' },
+    { name: dict.common.about, href: '/about' },
+  ]
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -90,7 +91,7 @@ export function Header({ locale }: HeaderProps) {
               aria-label="Open search dialog"
             >
               <Search className="h-4 w-4" aria-hidden="true" />
-              <span className="text-sm">Search...</span>
+              <span className="text-sm">{dict.common.search}...</span>
               <kbd className="ml-auto pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-bg-tertiary px-1.5 font-mono text-[10px] font-medium text-text-secondary opacity-100 border-border-primary">
                 <span className="text-xs">⌘</span>K
               </kbd>
@@ -102,7 +103,7 @@ export function Header({ locale }: HeaderProps) {
               asChild
             >
               <Link href={`/${locale}/login`}>
-                Login
+                {dict.common.login}
               </Link>
             </Button>
             <Button 
@@ -115,7 +116,7 @@ export function Header({ locale }: HeaderProps) {
               className="hover:opacity-90"
             >
               <Link href={`/${locale}/signup`}>
-                Sign Up
+                {dict.common.signup}
               </Link>
             </Button>
             
@@ -135,7 +136,7 @@ export function Header({ locale }: HeaderProps) {
               className="p-2"
             >
               <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
+              <span className="sr-only">{dict.common.search}</span>
             </Button>
             
             <LanguageSwitcher currentLocale={locale} />
@@ -179,7 +180,7 @@ export function Header({ locale }: HeaderProps) {
                   asChild
                 >
                   <Link href={`/${locale}/login`} onClick={() => setIsMobileMenuOpen(false)}>
-                    Login
+                    {dict.common.login}
                   </Link>
                 </Button>
                 <Button 
@@ -192,7 +193,7 @@ export function Header({ locale }: HeaderProps) {
                   asChild
                 >
                   <Link href={`/${locale}/signup`} onClick={() => setIsMobileMenuOpen(false)}>
-                    Sign Up
+                    {dict.common.signup}
                   </Link>
                 </Button>
               </div>

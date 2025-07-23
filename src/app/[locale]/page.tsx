@@ -1,7 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
+import { getDictionary } from '@/lib/i18n'
+import { generateSEOMetadata } from '@/lib/metadata'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 
 interface PageProps {
   params: {
@@ -16,8 +19,25 @@ export async function generateStaticParams() {
   ]
 }
 
-export default function Home({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
+  return generateSEOMetadata({
+    title: dict.pages.home.title,
+    description: dict.pages.home.subtitle,
+    url: `/${locale}`,
+    locale: locale,
+    keywords: locale === 'jp' 
+      ? ['SaaS', 'プラットフォーム', 'ビジネス', '生産性', '自動化', 'Next.js', 'TypeScript']
+      : ['SaaS', 'platform', 'business', 'productivity', 'automation', 'Next.js', 'TypeScript'],
+    type: 'website'
+  })
+}
+
+export default async function Home({ params }: PageProps) {
+  const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
   return (
     <main className="pt-16">
       {/* Hero Section */}
@@ -36,11 +56,7 @@ export default function Home({ params }: PageProps) {
               size="4xl" 
               className="mb-6 max-w-4xl leading-tight sm:text-5xl lg:text-6xl"
             >
-              Build Your Next
-              <span className="bg-gradient-to-r from-neutral-700 to-neutral-900 dark:from-neutral-200 dark:to-neutral-50 bg-clip-text text-transparent">
-                {' '}SaaS Product{' '}
-              </span>
-              with Confidence
+              {dict.pages.home.title}
             </Heading>
             
             {/* Subtitle */}
@@ -49,9 +65,7 @@ export default function Home({ params }: PageProps) {
               variant="muted" 
               className="mb-10 max-w-3xl leading-relaxed"
             >
-              Transform your ideas into reality with our powerful platform. 
-              Get access to enterprise-grade tools, seamless integrations, 
-              and world-class support to scale your business faster than ever.
+              {dict.pages.home.subtitle}
             </Text>
             
             {/* CTA Buttons */}
@@ -61,7 +75,7 @@ export default function Home({ params }: PageProps) {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
-                  Start Free Trial
+                  {dict.pages.home.cta}
                 </Link>
               </Button>
               <Button 
@@ -74,7 +88,7 @@ export default function Home({ params }: PageProps) {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  View Demo
+                  {dict.common.learnMore}
                 </Link>
               </Button>
             </div>
@@ -82,7 +96,7 @@ export default function Home({ params }: PageProps) {
             {/* Trust indicators */}
             <div className="mt-16 pt-8 border-t border-neutral-200/50 dark:border-neutral-700/50">
               <Text size="sm" variant="muted" className="mb-6">
-                Trusted by teams at
+                {locale === 'jp' ? '信頼される企業' : 'Trusted by teams at'}
               </Text>
               <div className="flex items-center justify-center gap-8 opacity-60">
                 <div className="text-2xl font-bold text-neutral-400 dark:text-neutral-500">Company A</div>
@@ -99,14 +113,14 @@ export default function Home({ params }: PageProps) {
         <Container>
           <div className="text-center">
             <Heading as="h2" size="3xl" className="mb-4">
-              Ready to get started?
+              {dict.common.getStarted}?
             </Heading>
             <Text variant="muted" className="mb-8">
-              Join thousands of teams already building with our platform.
+              {locale === 'jp' ? '何千ものチームが既に私たちのプラットフォームで構築しております。' : 'Join thousands of teams already building with our platform.'}
             </Text>
             <Button asChild>
               <Link href="/features">
-                Explore Features
+                {dict.common.features}
               </Link>
             </Button>
           </div>

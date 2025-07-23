@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Heading } from '@/components/ui/typography'
 import { BlogPostMeta } from '@/lib/blog'
+import { formatLocalizedDate } from '@/lib/i18n'
 import { ImageIcon } from 'lucide-react'
 
 interface PostCardProps {
@@ -41,11 +42,10 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
     return colors[colorIndex]
   }
   
-  const formattedDate = new Date(post.frontMatter.publishedAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
+  const formattedDate = formatLocalizedDate(
+    new Date(post.frontMatter.publishedAt),
+    locale as 'en' | 'jp'
+  )
 
 
   if (layout === 'vertical') {
