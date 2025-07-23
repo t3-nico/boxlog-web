@@ -1,6 +1,7 @@
 'use client'
 
 import { PartyPopper, Wrench, Bug, AlertTriangle, Lock, LucideIcon, ChevronDown } from 'lucide-react'
+import type { Dictionary } from '@/lib/i18n'
 
 // Local type definitions and data
 interface ChangeType {
@@ -10,34 +11,34 @@ interface ChangeType {
   color: string
 }
 
-const changeTypes: ChangeType[] = [
+const getChangeTypes = (dict: Dictionary): ChangeType[] => [
   {
     id: 'new-features',
-    label: 'New Features',
+    label: dict.releases.changeTypes.newFeatures,
     icon: PartyPopper,
     color: 'bg-[rgb(var(--release-new-bg))] text-[rgb(var(--release-new-text))] border-[rgb(var(--release-new-border))]'
   },
   {
     id: 'improvements',
-    label: 'Improvements',
+    label: dict.releases.changeTypes.improvements,
     icon: Wrench,
     color: 'bg-[rgb(var(--release-improvement-bg))] text-[rgb(var(--release-improvement-text))] border-[rgb(var(--release-improvement-border))]'
   },
   {
     id: 'bug-fixes',
-    label: 'Bug Fixes',
+    label: dict.releases.changeTypes.bugFixes,
     icon: Bug,
     color: 'bg-[rgb(var(--release-bugfix-bg))] text-[rgb(var(--release-bugfix-text))] border-[rgb(var(--release-bugfix-border))]'
   },
   {
     id: 'breaking-changes',
-    label: 'Breaking Changes',
+    label: dict.releases.changeTypes.breakingChanges,
     icon: AlertTriangle,
     color: 'bg-[rgb(var(--release-breaking-bg))] text-[rgb(var(--release-breaking-text))] border-[rgb(var(--release-breaking-border))]'
   },
   {
     id: 'security-updates',
-    label: 'Security Updates',
+    label: dict.releases.changeTypes.securityUpdates,
     icon: Lock,
     color: 'bg-[rgb(var(--release-security-bg))] text-[rgb(var(--release-security-text))] border-[rgb(var(--release-security-border))]'
   }
@@ -47,12 +48,16 @@ interface ChangeTypeListProps {
   selectedTypes: string[]
   onTypeToggle: (typeId: string) => void
   showAll?: boolean
+  dict: Dictionary
+  locale: string
 }
 
-export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true }: ChangeTypeListProps) {
+export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true, dict, locale }: ChangeTypeListProps) {
+  const changeTypes = getChangeTypes(dict)
+  
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium text-[rgb(var(--text-secondary))]">変更タイプ</h3>
+      <h3 className="text-sm font-medium text-[rgb(var(--text-secondary))]">{dict.releases.changeTypes.title}</h3>
       
       <div className="space-y-2">
         {showAll && (
@@ -69,7 +74,7 @@ export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true }: 
               className="w-4 h-4 text-[rgb(var(--link-color))] border-[rgb(var(--border-primary))] rounded focus:ring-[rgb(var(--focus-ring))] bg-[rgb(var(--bg-primary))]"
             />
             <span className="ml-3 text-sm text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]">
-              すべて表示
+              {dict.releases.changeTypes.showAll}
             </span>
           </label>
         )}
@@ -154,6 +159,20 @@ interface ChangeTypeGridProps {
 }
 
 export function ChangeTypeGrid({ stats, onTypeClick }: ChangeTypeGridProps) {
+  // Note: This component would need dict prop to work properly with translations
+  const fallbackDict = {
+    releases: {
+      changeTypes: {
+        newFeatures: 'New Features',
+        improvements: 'Improvements', 
+        bugFixes: 'Bug Fixes',
+        breakingChanges: 'Breaking Changes',
+        securityUpdates: 'Security Updates'
+      }
+    }
+  } as Dictionary
+  const changeTypes = getChangeTypes(fallbackDict)
+  
   return (
     <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
       {changeTypes.map((type) => {

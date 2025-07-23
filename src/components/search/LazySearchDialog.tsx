@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Search } from '@/lib/icons'
+import type { Dictionary } from '@/lib/i18n'
 
 // SearchDialogを動的インポート
 const SearchDialog = dynamic(() => import('./SearchDialog').then(mod => ({ default: mod.SearchDialog })), {
@@ -28,14 +29,16 @@ const SearchDialog = dynamic(() => import('./SearchDialog').then(mod => ({ defau
 interface LazySearchDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  dict: Dictionary
+  locale: string
 }
 
-export function LazySearchDialog({ open, onOpenChange }: LazySearchDialogProps) {
+export function LazySearchDialog({ open, onOpenChange, dict, locale }: LazySearchDialogProps) {
   if (!open) return null
 
   return (
     <Suspense fallback={null}>
-      <SearchDialog open={open} onOpenChange={onOpenChange} />
+      <SearchDialog open={open} onOpenChange={onOpenChange} dict={dict} locale={locale} />
     </Suspense>
   )
 }

@@ -3,6 +3,7 @@
 import { ReactNode } from 'react'
 import { Button } from './button'
 import { AlertTriangle, Wifi, Search } from 'lucide-react'
+import type { Dictionary } from '@/lib/i18n'
 
 interface ErrorStateProps {
   title?: string
@@ -14,6 +15,7 @@ interface ErrorStateProps {
   children?: ReactNode
   icon?: 'error' | 'warning' | 'network' | 'search'
   size?: 'sm' | 'md' | 'lg'
+  dict?: Dictionary
 }
 
 const icons = {
@@ -24,13 +26,17 @@ const icons = {
 }
 
 export function ErrorState({
-  title = 'Something went wrong',
-  description = 'An unexpected error occurred. Please try again.',
+  title,
+  description,
   action,
   children,
   icon = 'error',
-  size = 'md'
+  size = 'md',
+  dict
 }: ErrorStateProps) {
+  // Use provided title/description or fall back to dictionary or default
+  const finalTitle = title || dict?.errors.general.title || 'Something went wrong'
+  const finalDescription = description || dict?.errors.general.description || 'An unexpected error occurred. Please try again.'
   const sizeClasses = {
     sm: {
       container: 'p-4',
@@ -66,10 +72,10 @@ export function ErrorState({
         
         <div>
           <h3 className={`${classes.title} text-gray-900 mb-1`}>
-            {title}
+            {finalTitle}
           </h3>
           <p className={`${classes.description} text-gray-600`}>
-            {description}
+            {finalDescription}
           </p>
         </div>
 
@@ -86,43 +92,48 @@ export function ErrorState({
 }
 
 // Specific error states for common scenarios
-export function NetworkErrorState({ onRetry }: { onRetry?: () => void }) {
+export function NetworkErrorState({ onRetry, dict }: { onRetry?: () => void; dict?: Dictionary }) {
   return (
     <ErrorState
       icon="network"
-      title="Connection problem"
-      description="Unable to connect to the server. Please check your internet connection and try again."
-      action={onRetry ? { label: 'Try again', onClick: onRetry } : undefined}
+      title={dict?.errors.network.title}
+      description={dict?.errors.network.description}
+      action={onRetry ? { label: dict?.errors.network.tryAgain || 'Try again', onClick: onRetry } : undefined}
+      dict={dict}
     />
   )
 }
 
-export function SearchErrorState({ onClear }: { onClear?: () => void }) {
+export function SearchErrorState({ onClear, dict }: { onClear?: () => void; dict?: Dictionary }) {
   return (
     <ErrorState
       icon="search"
-      title="No results found"
-      description="We couldn't find anything matching your search. Try different keywords or browse our content."
-      action={onClear ? { label: 'Clear search', onClick: onClear } : undefined}
+      title={dict?.errors.search.title}
+      description={dict?.errors.search.description}
+      action={onClear ? { label: dict?.errors.search.clearSearch || 'Clear search', onClick: onClear } : undefined}
+      dict={dict}
     />
   )
 }
 
 export function FormErrorState({ 
-  title = 'Submission failed',
-  description = 'There was a problem submitting your form. Please check your input and try again.',
-  onRetry 
+  title,
+  description,
+  onRetry,
+  dict
 }: { 
   title?: string
   description?: string
-  onRetry?: () => void 
+  onRetry?: () => void
+  dict?: Dictionary
 }) {
   return (
     <ErrorState
       icon="warning"
-      title={title}
-      description={description}
-      action={onRetry ? { label: 'Try again', onClick: onRetry } : undefined}
+      title={title || dict?.errors.form.title}
+      description={description || dict?.errors.form.description}
+      action={onRetry ? { label: dict?.errors.form.tryAgain || 'Try again', onClick: onRetry } : undefined}
+      dict={dict}
     />
   )
 }

@@ -509,6 +509,135 @@ export interface Dictionary {
     required: string
     invalid: string
   }
+  errors: {
+    general: {
+      title: string
+      description: string
+      tryAgain: string
+      goHome: string
+    }
+    notFound: {
+      title: string
+      description: string
+      goHome: string
+    }
+    network: {
+      title: string
+      description: string
+      tryAgain: string
+    }
+    search: {
+      title: string
+      description: string
+      clearSearch: string
+    }
+    form: {
+      title: string
+      description: string
+      tryAgain: string
+    }
+    development: {
+      errorDetails: string
+    }
+  }
+  search: {
+    placeholder: string
+    recentSearches: string
+    popularTags: string
+    popularPages: string
+    searchResultsFor: string
+    pressEnterToSearch: string
+    searchFor: string
+    findResultsAcross: string
+    previewResults: string
+    relatedTags: string
+    articles: string
+    tags: string
+    docs: string
+    blog: string
+    release: string
+    toSelect: string
+    toNavigate: string
+    toClose: string
+    poweredBy: string
+  }
+  releases: {
+    version: string
+    date: string
+    major: string
+    minor: string
+    patch: string
+    prerelease: string
+    featured: string
+    breaking: string
+    changeTypes: {
+      title: string
+      showAll: string
+      newFeatures: string
+      improvements: string
+      bugFixes: string
+      breakingChanges: string
+      securityUpdates: string
+    }
+    rss: {
+      title: string
+      description: string
+      link: string
+    }
+    history: {
+      title: string
+      count: string
+    }
+    emptyState: {
+      title: string
+      description: string
+    }
+    noResults: {
+      title: string
+      description: string
+      clearFilters: string
+    }
+    filters: {
+      title: string
+      showLess: string
+      showMore: string
+      resultsFound: string
+      clearAll: string
+      featuredReleases: string
+      breakingChanges: string
+      tags: string
+    }
+  }
+  cookieConsent: {
+    title: string
+    description: string
+    learnMore: string
+    customize: string
+    essentialOnly: string
+    acceptAll: string
+    preferencesTitle: string
+    savePreferences: string
+    cookies: {
+      essential: {
+        title: string
+        description: string
+        required: string
+      }
+      analytics: {
+        title: string
+        description: string
+      }
+      functional: {
+        title: string
+        description: string
+      }
+      marketing: {
+        title: string
+        description: string
+        disabled: string
+      }
+    }
+  }
   footer: {
     copyright: string
     privacyPolicy: string
@@ -1012,6 +1141,135 @@ export const en: Dictionary = {
     required: 'This field is required',
     invalid: 'Please enter a valid value'
   },
+  errors: {
+    general: {
+      title: 'Something went wrong',
+      description: 'We encountered an unexpected error. Please try again or contact support if the problem persists.',
+      tryAgain: 'Try again',
+      goHome: 'Go home'
+    },
+    notFound: {
+      title: 'Page Not Found',
+      description: 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.',
+      goHome: 'Go home'
+    },
+    network: {
+      title: 'Connection problem',
+      description: 'Unable to connect to the server. Please check your internet connection and try again.',
+      tryAgain: 'Try again'
+    },
+    search: {
+      title: 'No results found',
+      description: 'We couldn\'t find anything matching your search. Try different keywords or browse our content.',
+      clearSearch: 'Clear search'
+    },
+    form: {
+      title: 'Submission failed',
+      description: 'There was a problem submitting your form. Please check your input and try again.',
+      tryAgain: 'Try again'
+    },
+    development: {
+      errorDetails: 'Error details (dev only)'
+    }
+  },
+  search: {
+    placeholder: 'Search articles, tags, documentation...',
+    recentSearches: 'Recent Searches',
+    popularTags: 'Popular Tags',
+    popularPages: 'Popular Pages',
+    searchResultsFor: 'Search results for',
+    pressEnterToSearch: 'Press Enter to search',
+    searchFor: 'Search for',
+    findResultsAcross: 'Find results across all content',
+    previewResults: 'Preview results:',
+    relatedTags: 'Related tags:',
+    articles: 'articles',
+    tags: 'Tags',
+    docs: 'Docs',
+    blog: 'Blog',
+    release: 'Release',
+    toSelect: 'to select',
+    toNavigate: 'to navigate',
+    toClose: 'to close',
+    poweredBy: 'Powered by YourSaaS Search'
+  },
+  releases: {
+    version: 'Version',
+    date: 'Release Date',
+    major: 'Major Release',
+    minor: 'Minor Release',
+    patch: 'Patch Release',
+    prerelease: 'Pre-release',
+    featured: 'Featured',
+    breaking: 'Breaking',
+    changeTypes: {
+      title: 'Change Types',
+      showAll: 'Show All',
+      newFeatures: 'New Features',
+      improvements: 'Improvements',
+      bugFixes: 'Bug Fixes',
+      breakingChanges: 'Breaking Changes',
+      securityUpdates: 'Security Updates'
+    },
+    rss: {
+      title: 'RSS Feed',
+      description: 'Subscribe to latest releases via RSS',
+      link: 'RSS Feed'
+    },
+    history: {
+      title: 'Release History',
+      count: ' releases'
+    },
+    emptyState: {
+      title: 'No release notes found',
+      description: 'Release notes are currently being prepared. Please check back soon.'
+    },
+    noResults: {
+      title: 'No releases match your filter criteria',
+      description: 'Try changing your search criteria or clear the filters.',
+      clearFilters: 'Clear Filters'
+    },
+    filters: {
+      title: 'Filters',
+      showLess: 'Show Less',
+      showMore: 'Show {count} more tags',
+      resultsFound: '{count} releases found (out of {total} total)',
+      clearAll: 'Clear All',
+      featuredReleases: 'Featured Releases',
+      breakingChanges: 'Breaking Changes',
+      tags: 'Tags'
+    }
+  },
+  cookieConsent: {
+    title: 'We use cookies',
+    description: 'We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies.',
+    learnMore: 'Learn more',
+    customize: 'Customize',
+    essentialOnly: 'Essential Only',
+    acceptAll: 'Accept All',
+    preferencesTitle: 'Cookie Preferences',
+    savePreferences: 'Save Preferences',
+    cookies: {
+      essential: {
+        title: 'Essential Cookies',
+        description: 'These cookies are necessary for the website to function and cannot be disabled.',
+        required: 'Required'
+      },
+      analytics: {
+        title: 'Analytics Cookies',
+        description: 'Help us understand how visitors interact with our website (Google Analytics).'
+      },
+      functional: {
+        title: 'Functional Cookies',
+        description: 'Remember your preferences and settings for a personalized experience.'
+      },
+      marketing: {
+        title: 'Marketing Cookies',
+        description: 'Currently not used. We prioritize your privacy and don\'t track for advertising.',
+        disabled: 'Disabled'
+      }
+    }
+  },
   footer: {
     copyright: 'All rights reserved.',
     privacyPolicy: 'Privacy Policy',
@@ -1514,6 +1772,135 @@ export const jp: Dictionary = {
     sent: 'メッセージが正常に送信されました！',
     required: 'この項目は必須です',
     invalid: '有効な値を入力してください'
+  },
+  errors: {
+    general: {
+      title: 'エラーが発生しました',
+      description: '予期しないエラーが発生しました。再度お試しいただくか、問題が解決しない場合はサポートにお問い合わせください。',
+      tryAgain: '再試行',
+      goHome: 'ホームに戻る'
+    },
+    notFound: {
+      title: 'ページが見つかりません',
+      description: 'お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。',
+      goHome: 'ホームに戻る'
+    },
+    network: {
+      title: '接続に問題があります',
+      description: 'サーバーに接続できません。インターネット接続を確認して再度お試しください。',
+      tryAgain: '再試行'
+    },
+    search: {
+      title: '検索結果が見つかりません',
+      description: '検索条件に一致するものが見つかりませんでした。異なるキーワードで検索するか、コンテンツを参照してください。',
+      clearSearch: '検索をクリア'
+    },
+    form: {
+      title: '送信に失敗しました',
+      description: 'フォームの送信に問題が発生しました。入力内容を確認して再度お試しください。',
+      tryAgain: '再試行'
+    },
+    development: {
+      errorDetails: 'エラー詳細（開発用）'
+    }
+  },
+  search: {
+    placeholder: '記事、タグ、ドキュメントを検索...',
+    recentSearches: '最近の検索',
+    popularTags: '人気のタグ',
+    popularPages: '人気のページ',
+    searchResultsFor: '検索結果',
+    pressEnterToSearch: 'Enterキーで検索',
+    searchFor: '検索：',
+    findResultsAcross: 'すべてのコンテンツから結果を検索',
+    previewResults: 'プレビュー結果：',
+    relatedTags: '関連タグ：',
+    articles: '記事',
+    tags: 'タグ',
+    docs: 'ドキュメント',
+    blog: 'ブログ',
+    release: 'リリース',
+    toSelect: '選択',
+    toNavigate: 'ナビゲート',
+    toClose: '閉じる',
+    poweredBy: 'YourSaaS Search による検索'
+  },
+  releases: {
+    version: 'バージョン',
+    date: 'リリース日',
+    major: 'メジャーリリース',
+    minor: 'マイナーリリース',
+    patch: 'パッチリリース',
+    prerelease: 'プレリリース',
+    featured: '注目',
+    breaking: '破壊的変更',
+    changeTypes: {
+      title: '変更タイプ',
+      showAll: 'すべて表示',
+      newFeatures: '新機能',
+      improvements: '改善',
+      bugFixes: 'バグ修正',
+      breakingChanges: '破壊的変更',
+      securityUpdates: 'セキュリティアップデート'
+    },
+    rss: {
+      title: 'RSSフィード',
+      description: '最新リリースをRSSで購読',
+      link: 'RSSフィード'
+    },
+    history: {
+      title: 'リリース履歴',
+      count: '件'
+    },
+    emptyState: {
+      title: 'リリースノートが見つかりませんでした',
+      description: '現在リリースノートを準備中です。しばらくお待ちください。'
+    },
+    noResults: {
+      title: 'フィルター条件に一致するリリースが見つかりませんでした',
+      description: '検索条件を変更するか、フィルターをクリアしてください。',
+      clearFilters: 'フィルターをクリア'
+    },
+    filters: {
+      title: 'フィルター',
+      showLess: '表示を減らす',
+      showMore: '他 {count}個のタグを表示',
+      resultsFound: '{count}件のリリースが見つかりました（全{total}件中）',
+      clearAll: 'すべてクリア',
+      featuredReleases: '注目リリース',
+      breakingChanges: '破壊的変更',
+      tags: 'タグ'
+    }
+  },
+  cookieConsent: {
+    title: 'クッキーの使用について',
+    description: '私たちは、ブラウジング体験の向上、サイトトラフィックの分析、コンテンツのパーソナライズのためにクッキーを使用しています。「すべて許可」をクリックすることで、クッキーの使用に同意したものとみなされます。',
+    learnMore: '詳細を見る',
+    customize: 'カスタマイズ',
+    essentialOnly: '必須のみ',
+    acceptAll: 'すべて許可',
+    preferencesTitle: 'クッキー設定',
+    savePreferences: '設定を保存',
+    cookies: {
+      essential: {
+        title: '必須クッキー',
+        description: 'これらのクッキーはウェブサイトの機能に必要なもので、無効にすることはできません。',
+        required: '必須'
+      },
+      analytics: {
+        title: '分析クッキー',
+        description: '訪問者がウェブサイトをどのように利用しているかを理解するのに役立ちます（Google Analytics）。'
+      },
+      functional: {
+        title: '機能性クッキー',
+        description: 'パーソナライズされた体験のために、お客様の設定や環境設定を記憶します。'
+      },
+      marketing: {
+        title: 'マーケティングクッキー',
+        description: '現在使用していません。プライバシーを優先し、広告のための追跡は行いません。',
+        disabled: '無効'
+      }
+    }
   },
   footer: {
     copyright: 'すべての権利を保有しています。',

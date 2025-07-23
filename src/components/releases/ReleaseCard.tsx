@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getTagColor } from '@/lib/tags-client'
 import { ChevronRight, AlertTriangle, Star } from 'lucide-react'
+import type { Dictionary } from '@/lib/i18n'
 
 // Local type definitions to avoid importing server-only lib
 interface ReleaseFrontMatter {
@@ -49,9 +50,11 @@ interface ReleaseCardProps {
   release: ReleasePostMeta
   priority?: boolean
   compact?: boolean
+  dict?: Dictionary
+  locale?: string
 }
 
-export function ReleaseCard({ release, priority = false, compact = false }: ReleaseCardProps) {
+export function ReleaseCard({ release, priority = false, compact = false, dict, locale }: ReleaseCardProps) {
   const { frontMatter } = release
   const versionType = getVersionType(frontMatter.version)
   
@@ -64,7 +67,8 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
 
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ja-JP', {
+    const localeCode = locale === 'jp' ? 'ja-JP' : 'en-US'
+    return new Date(dateString).toLocaleDateString(localeCode, {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -74,7 +78,7 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
   if (compact) {
     return (
       <Link 
-        href={`/releases/${frontMatter.version}`}
+        href={`/${locale || 'en'}/releases/${frontMatter.version}`}
         className="group block"
       >
         <article className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200 dark:border-gray-700 dark:hover:border-blue-600">
@@ -99,14 +103,14 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
             {frontMatter.breaking && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
                 <AlertTriangle className="w-3 h-3 mr-1" />
-                Breaking
+                {dict?.releases.breaking || 'Breaking'}
               </span>
             )}
             
             {frontMatter.featured && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
                 <Star className="w-3 h-3 mr-1" />
-                Featured
+                {dict?.releases.featured || 'Featured'}
               </span>
             )}
 
@@ -119,7 +123,7 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
 
   return (
     <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300 dark:bg-gray-900 dark:border-gray-700 dark:hover:border-blue-600">
-      <Link href={`/releases/${frontMatter.version}`} className="block">
+      <Link href={`/${locale || 'en'}/releases/${frontMatter.version}`} className="block">
         <div className="p-6">
           {/* Version Badge */}
           <div className="mb-3">
@@ -154,14 +158,14 @@ export function ReleaseCard({ release, priority = false, compact = false }: Rele
             {frontMatter.featured && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
                 <Star className="w-3 h-3 mr-1" />
-                Featured
+                {dict?.releases.featured || 'Featured'}
               </span>
             )}
             
             {frontMatter.breaking && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
                 <AlertTriangle className="w-3 h-3 mr-1" />
-                Breaking
+                {dict?.releases.breaking || 'Breaking'}
               </span>
             )}
           </div>

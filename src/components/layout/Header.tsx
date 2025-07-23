@@ -203,7 +203,7 @@ export function Header({ locale, dict }: HeaderProps) {
       </div>
       
       {/* Global search dialog */}
-      <LazySearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
+      <LazySearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} dict={dict} locale={locale} />
     </header>
   )
 }

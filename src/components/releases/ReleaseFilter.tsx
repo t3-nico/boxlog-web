@@ -8,6 +8,7 @@ interface TagCount {
   count: number
 }
 import { ChangeTypeList } from './ChangeTypeList'
+import type { Dictionary } from '@/lib/i18n'
 
 interface ReleaseFilterProps {
   tags: TagCount[]
@@ -20,6 +21,8 @@ interface ReleaseFilterProps {
   onBreakingToggle: () => void
   onFeaturedToggle: () => void
   onClearFilters: () => void
+  dict: Dictionary
+  locale: string
 }
 
 export function ReleaseFilter({
@@ -33,6 +36,8 @@ export function ReleaseFilter({
   onBreakingToggle,
   onFeaturedToggle,
   onClearFilters,
+  dict,
+  locale,
 }: ReleaseFilterProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   
@@ -51,7 +56,7 @@ export function ReleaseFilter({
               <Filter className="w-4 h-4 text-[rgb(var(--info-color))]" />
             </div>
             <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]"> 
-              フィルター
+              {dict.releases.filters.title}
             </h3>
             {hasActiveFilters && (
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]">
@@ -66,7 +71,7 @@ export function ReleaseFilter({
                 onClick={onClearFilters}
                 className="text-sm text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] font-medium"
               >
-                クリア
+                {dict.releases.filters.clearAll}
               </button>
             )}
             
@@ -90,16 +95,20 @@ export function ReleaseFilter({
             selectedTypes={selectedTypes}
             onTypeToggle={onTypeToggle}
             showAll={true}
+            dict={dict}
+            locale={locale}
           />
 
           {/* Tags */}
           {tags.length > 0 && (
             <div>
-              <h4 className="text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">タグ</h4>
+              <h4 className="text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">{dict.releases.filters.tags}</h4>
               <TagFilter
                 tags={tags}
                 selectedTags={selectedTags}
                 onTagToggle={onTagToggle}
+                dict={dict}
+                locale={locale}
               />
             </div>
           )}
@@ -114,9 +123,11 @@ interface TagFilterProps {
   selectedTags: string[]
   onTagToggle: (tag: string) => void
   maxDisplay?: number
+  dict: Dictionary
+  locale: string
 }
 
-function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10 }: TagFilterProps) {
+function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, dict, locale }: TagFilterProps) {
   const [showAll, setShowAll] = useState(false)
   const displayTags = showAll ? tags : tags.slice(0, maxDisplay)
 
@@ -155,7 +166,7 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10 }: TagFilt
           onClick={() => setShowAll(!showAll)}
           className="text-sm text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
         >
-          {showAll ? '表示を減らす' : `他 ${tags.length - maxDisplay}個のタグを表示`}
+          {showAll ? dict.releases.filters.showLess : dict.releases.filters.showMore.replace('{count}', String(tags.length - maxDisplay))}
         </button>
       )}
     </div>
@@ -166,9 +177,11 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10 }: TagFilt
 export function CompactReleaseFilter({
   hasActiveFilters,
   onOpenFilter,
+  dict,
 }: {
   hasActiveFilters: boolean
   onOpenFilter: () => void
+  dict: Dictionary
 }) {
   return (
     <button
@@ -176,7 +189,7 @@ export function CompactReleaseFilter({
       className="inline-flex items-center gap-2 px-4 py-2 border border-[rgb(var(--border-primary))] rounded-lg text-sm font-medium text-[rgb(var(--text-secondary))] bg-[rgb(var(--bg-primary))] hover:bg-[rgb(var(--bg-secondary))] transition-colors"
     >
       <Filter className="w-4 h-4" />
-      フィルター
+      {dict?.releases?.filters?.title || 'Filters'}
       {hasActiveFilters && (
         <span className="inline-flex items-center justify-center w-2 h-2 bg-[rgb(var(--info-color))] rounded-full"></span>
       )}
@@ -197,6 +210,8 @@ interface FilterSummaryProps {
   onBreakingToggle: () => void
   onFeaturedToggle: () => void
   onClearAll: () => void
+  dict: Dictionary
+  locale: string
 }
 
 export function FilterSummary({
@@ -211,6 +226,8 @@ export function FilterSummary({
   onBreakingToggle,
   onFeaturedToggle,
   onClearAll,
+  dict,
+  locale,
 }: FilterSummaryProps) {
   const hasFilters = selectedTags.length > 0 || 
                     selectedTypes.length > 0 || 
@@ -225,7 +242,7 @@ export function FilterSummary({
         <div className="flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-[rgb(var(--info-color))]" />
           <span className="text-sm font-medium text-[rgb(var(--info-color))]"> 
-            {resultCount}件のリリースが見つかりました（全{totalCount}件中）
+            {dict.releases.filters.resultsFound.replace('{count}', String(resultCount)).replace('{total}', String(totalCount))}
           </span>
         </div>
         
@@ -233,7 +250,7 @@ export function FilterSummary({
           onClick={onClearAll}
           className="text-sm text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))] font-medium"
         >
-          すべてクリア
+          {dict.releases.filters.clearAll}
         </button>
       </div>
 
@@ -242,7 +259,7 @@ export function FilterSummary({
         {showFeaturedOnly && (
           <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
             <Star className="w-4 h-4 mr-1" />
-            注目リリース
+            {dict.releases.filters.featuredReleases}
             <button
               onClick={onFeaturedToggle}
               className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
@@ -255,7 +272,7 @@ export function FilterSummary({
         {showBreakingOnly && (
           <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
             <AlertTriangle className="w-4 h-4 mr-1" />
-            破壊的変更
+            {dict.releases.filters.breakingChanges}
             <button
               onClick={onBreakingToggle}
               className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"

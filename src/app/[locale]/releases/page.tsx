@@ -80,6 +80,8 @@ export default async function ReleasesPage({ params }: PageProps) {
         initialTags={allTags}
         featuredReleases={featuredReleases}
         upcomingReleases={[]}
+        dict={dict}
+        locale={locale}
       />
     </div>
   )

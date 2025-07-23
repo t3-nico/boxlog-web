@@ -3,8 +3,14 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { ConsentManager } from '@/lib/analytics'
+import type { Dictionary } from '@/lib/i18n'
 
-export function CookieConsent() {
+interface CookieConsentProps {
+  dict: Dictionary
+  locale: string
+}
+
+export function CookieConsent({ dict, locale }: CookieConsentProps) {
   const [showBanner, setShowBanner] = useState(false)
   const [preferences, setPreferences] = useState({
     essential: true, // Always required
@@ -78,13 +84,12 @@ export function CookieConsent() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
               <h3 id="cookie-consent-title" className="text-sm font-medium text-gray-900 mb-1 dark:text-gray-100">
-                We use cookies
+                {dict.cookieConsent.title}
               </h3>
               <p id="cookie-consent-description" className="text-sm text-gray-700 dark:text-gray-300">
-                We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
-                By clicking &quot;Accept All&quot;, you consent to our use of cookies.{' '}
-                <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
-                  Learn more
+                {dict.cookieConsent.description}{' '}
+                <a href={`/${locale}/privacy`} className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
+                  {dict.cookieConsent.learnMore}
                 </a>
               </p>
             </div>
@@ -94,20 +99,20 @@ export function CookieConsent() {
                 size="sm"
                 onClick={() => setShowDetails(true)}
               >
-                Customize
+{dict.cookieConsent.customize}
               </Button>
               <Button 
                 variant="outline" 
                 size="sm"
                 onClick={acceptEssential}
               >
-                Essential Only
+{dict.cookieConsent.essentialOnly}
               </Button>
               <Button 
                 size="sm"
                 onClick={acceptAll}
               >
-                Accept All
+{dict.cookieConsent.acceptAll}
               </Button>
             </div>
           </div>
@@ -115,7 +120,7 @@ export function CookieConsent() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Cookie Preferences
+                {dict.cookieConsent.preferencesTitle}
               </h3>
               <button
                 onClick={() => setShowDetails(false)}
@@ -132,18 +137,18 @@ export function CookieConsent() {
               {/* Essential Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">Essential Cookies</h4>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">Required</span>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.essential.title}</h4>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">{dict.cookieConsent.cookies.essential.required}</span>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  These cookies are necessary for the website to function and cannot be disabled.
+                  {dict.cookieConsent.cookies.essential.description}
                 </p>
               </div>
 
               {/* Analytics Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">Analytics Cookies</h4>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.analytics.title}</h4>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -155,14 +160,14 @@ export function CookieConsent() {
                   </label>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Help us understand how visitors interact with our website (Google Analytics).
+                  {dict.cookieConsent.cookies.analytics.description}
                 </p>
               </div>
 
               {/* Functional Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">Functional Cookies</h4>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.functional.title}</h4>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -174,18 +179,18 @@ export function CookieConsent() {
                   </label>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Remember your preferences and settings for a personalized experience.
+                  {dict.cookieConsent.cookies.functional.description}
                 </p>
               </div>
 
               {/* Marketing Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 opacity-50">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">Marketing Cookies</h4>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">Disabled</span>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.marketing.title}</h4>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">{dict.cookieConsent.cookies.marketing.disabled}</span>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Currently not used. We prioritize your privacy and don&apos;t track for advertising.
+                  {dict.cookieConsent.cookies.marketing.description}
                 </p>
               </div>
             </div>
@@ -196,13 +201,13 @@ export function CookieConsent() {
                 size="sm"
                 onClick={acceptEssential}
               >
-                Essential Only
+{dict.cookieConsent.essentialOnly}
               </Button>
               <Button 
                 size="sm"
                 onClick={savePreferences}
               >
-                Save Preferences
+{dict.cookieConsent.savePreferences}
               </Button>
             </div>
           </div>

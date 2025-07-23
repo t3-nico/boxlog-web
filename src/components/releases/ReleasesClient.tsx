@@ -6,6 +6,7 @@ import { Heading, Text } from '@/components/ui/typography'
 import { ReleaseCard } from './ReleaseCard'
 import { UpcomingReleasesCompact } from './UpcomingReleases'
 import { ReleaseFilter, FilterSummary } from './ReleaseFilter'
+import type { Dictionary } from '@/lib/i18n'
 
 // Define types locally to avoid importing from server-only lib
 interface ReleaseFrontMatter {
@@ -48,13 +49,17 @@ interface ReleasesClientProps {
   initialTags: TagCount[]
   featuredReleases: ReleasePostMeta[]
   upcomingReleases: UpcomingRelease[]
+  dict: Dictionary
+  locale: string
 }
 
 export function ReleasesClient({ 
   initialReleases, 
   initialTags, 
   featuredReleases,
-  upcomingReleases
+  upcomingReleases,
+  dict,
+  locale
 }: ReleasesClientProps) {
   // フィルター状態
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -129,6 +134,8 @@ export function ReleasesClient({
                   onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                   onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                   onClearFilters={handleClearFilters}
+                  dict={dict}
+                  locale={locale}
                 />
 
                 {/* Upcoming Releases Compact */}
@@ -138,10 +145,10 @@ export function ReleasesClient({
                 {/* RSS Feed */}
                 <div className="bg-white rounded-xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                   <Heading as="h3" size="md" className="mb-4">
-                    RSS フィード
+                    {dict.releases.rss.title}
                   </Heading>
                   <Text size="sm" variant="muted" className="mb-4">
-                    最新リリースをRSSで購読
+                    {dict.releases.rss.description}
                   </Text>
                   <a
                     href="/releases/feed.xml"
@@ -150,7 +157,7 @@ export function ReleasesClient({
                     <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M3.429 2.857A1.429 1.429 0 002 4.286v11.428A1.429 1.429 0 003.429 17h13.142A1.429 1.429 0 0018 15.714V4.286A1.429 1.429 0 0016.571 2.857H3.429zM4 6.857v2.286H6.286V6.857H4zm8.571 0h2.286v2.286h-2.286V6.857zM4 10.571v2.286h2.286v-2.286H4zm4.571-3.714v2.286h2.286V6.857H8.571zm4.572 3.714v2.286h2.286v-2.286h-2.286zM8.571 10.571v2.286h2.286v-2.286H8.571z" />
                     </svg>
-                    RSS フィード
+                    {dict.releases.rss.link}
                   </a>
                 </div>
               </div>
@@ -171,13 +178,15 @@ export function ReleasesClient({
                 onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                 onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                 onClearAll={handleClearFilters}
+                dict={dict}
+                locale={locale}
               />
 
               <div className="flex items-center justify-between mb-8">
                 <Heading as="h2" size="2xl">
-                  リリース履歴
+                  {dict.releases.history.title}
                   <span className="ml-2 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    ({filteredReleases.length}件)
+                    ({filteredReleases.length}{dict.releases.history.count})
                   </span>
                 </Heading>
               </div>
@@ -189,6 +198,8 @@ export function ReleasesClient({
                       key={release.frontMatter.version} 
                       release={release}
                       priority={index < 3}
+                      dict={dict}
+                      locale={locale}
                     />
                   ))}
                 </div>
@@ -200,10 +211,10 @@ export function ReleasesClient({
                     </svg>
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">
-                    リリースノートが見つかりませんでした
+                    {dict.releases.emptyState.title}
                   </Heading>
                   <Text variant="muted">
-                    現在リリースノートを準備中です。しばらくお待ちください。
+                    {dict.releases.emptyState.description}
                   </Text>
                 </div>
               ) : (
@@ -214,16 +225,16 @@ export function ReleasesClient({
                     </svg>
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">
-                    フィルター条件に一致するリリースが見つかりませんでした
+                    {dict.releases.noResults.title}
                   </Heading>
                   <Text variant="muted" className="mb-4">
-                    検索条件を変更するか、フィルターをクリアしてください。
+                    {dict.releases.noResults.description}
                   </Text>
                   <button
                     onClick={handleClearFilters}
                     className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors dark:bg-blue-600 dark:hover:bg-blue-700"
                   >
-                    フィルターをクリア
+                    {dict.releases.noResults.clearFilters}
                   </button>
                 </div>
               )}

@@ -16,10 +16,13 @@ import {
   Package, 
   X 
 } from 'lucide-react'
+import type { Dictionary } from '@/lib/i18n'
 
 interface SearchDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  dict: Dictionary
+  locale: string
 }
 
 // Mock data (in actual implementation, fetch from external source)
@@ -29,11 +32,11 @@ const RECENT_SEARCHES = [
   'Next.js Guide'
 ]
 
-const QUICK_LINKS = [
-  { title: 'Quick Start', description: 'Get started with YourSaaS in 5 minutes', href: '/docs/quick-start', type: 'docs' },
-  { title: 'API Reference', description: 'Authentication and API usage', href: '/docs/api-reference', type: 'docs' },
-  { title: 'Latest Release', description: 'New features in v2.1.0', href: '/releases/v2.1.0', type: 'release' },
-  { title: 'SaaS Strategy', description: 'Business strategy for 2024', href: '/blog/saas-strategy-2024', type: 'blog' }
+const getQuickLinks = (locale: string) => [
+  { title: 'Quick Start', description: 'Get started with YourSaaS in 5 minutes', href: `/${locale}/docs/quick-start`, type: 'docs' },
+  { title: 'API Reference', description: 'Authentication and API usage', href: `/${locale}/docs/api-reference`, type: 'docs' },
+  { title: 'Latest Release', description: 'New features in v2.1.0', href: `/${locale}/releases/v2.1.0`, type: 'release' },
+  { title: 'SaaS Strategy', description: 'Business strategy for 2024', href: `/${locale}/blog/saas-strategy-2024`, type: 'blog' }
 ]
 
 interface PopularTag {
@@ -48,13 +51,14 @@ const getTagColor = (index: number): string => {
   return colors[index % colors.length]
 }
 
-export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
+export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogProps) {
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [popularTags, setPopularTags] = useState<PopularTag[]>([])
   const [previewResults, setPreviewResults] = useState<any[]>([])
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
+  const QUICK_LINKS = getQuickLinks(locale)
 
   // 人気タグを取得
   useEffect(() => {
@@ -115,12 +119,12 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
     if (!searchQuery.trim()) return
     
     onOpenChange(false)
-    router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
+    router.push(`/${locale}/search?q=${encodeURIComponent(searchQuery)}`)
   }
 
   const handleTagClick = (tagName: string) => {
     onOpenChange(false)
-    router.push(`/tags/${encodeURIComponent(tagName.toLowerCase())}`)
+    router.push(`/${locale}/tags/${encodeURIComponent(tagName.toLowerCase())}`)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -179,7 +183,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
           <Search className="h-5 w-5 text-gray-400 flex-shrink-0 dark:text-gray-500" />
           <Input
             ref={inputRef}
-            placeholder="Search articles, tags, documentation..."
+            placeholder={dict.search.placeholder}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -201,7 +205,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {RECENT_SEARCHES.length > 0 && (
                 <div>
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
-                    Recent Searches
+                    {dict.search.recentSearches}
                   </h3>
                   <div className="space-y-1">
                     {RECENT_SEARCHES.map((search, index) => (
@@ -221,7 +225,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {/* 人気タグ */}
               <div>
                 <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
-                  Popular Tags
+                  {dict.search.popularTags}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {popularTags.map((tag, index) => (
@@ -241,7 +245,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {/* クイックリンク */}
               <div>
                 <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
-                  Popular Pages
+                  {dict.search.popularPages}
                 </h3>
                 <div className="space-y-1">
                   {QUICK_LINKS.map((link, index) => (
@@ -268,7 +272,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       </div>
                       <div className="flex items-center gap-1">
                         <Badge variant="outline" className="text-xs px-2 py-0.5">
-                          {link.type === 'docs' ? 'Docs' : link.type === 'blog' ? 'Blog' : 'Release'}
+                          {link.type === 'docs' ? dict.search.docs : link.type === 'blog' ? dict.search.blog : dict.search.release}
                         </Badge>
                       </div>
                     </button>
@@ -280,10 +284,10 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             <div className="p-4 space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Search results for &ldquo;<span className="font-medium">{query}</span>&rdquo;
+                  {dict.search.searchResultsFor} &ldquo;<span className="font-medium">{query}</span>&rdquo;
                 </p>
                 <Badge variant="outline" className="text-xs">
-                  Press Enter to search
+                  {dict.search.pressEnterToSearch}
                 </Badge>
               </div>
               
@@ -295,10 +299,10 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <div className="text-left">
                   <div className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                    Search for &ldquo;<Highlight text={query} query={query} />&rdquo;
+                    {dict.search.searchFor} &ldquo;<Highlight text={query} query={query} />&rdquo;
                   </div>
                   <div className="text-xs text-blue-700 dark:text-blue-300">
-                    Find results across all content
+                    {dict.search.findResultsAcross}
                   </div>
                 </div>
               </button>
@@ -306,7 +310,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
               {/* プレビュー検索結果 */}
               {previewResults.length > 0 && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">Preview results:</p>
+                  <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">{dict.search.previewResults}</p>
                   <div className="space-y-2">
                     {previewResults.map((result, index) => (
                       <button
@@ -323,7 +327,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="text-xs font-medium text-gray-500 uppercase tracking-wide dark:text-gray-400">
-                              {result.breadcrumbs?.[0] || (result.type === 'docs' ? 'Docs' : result.type === 'blog' ? 'Blog' : result.type === 'tags' ? 'Tags' : 'Release')}
+                              {result.breadcrumbs?.[0] || (result.type === 'docs' ? dict.search.docs : result.type === 'blog' ? dict.search.blog : result.type === 'tags' ? dict.search.tags : dict.search.release)}
                             </span>
                             <span className="text-xs text-gray-400">•</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -338,7 +342,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                           </div>
                         </div>
                         <Badge variant="outline" className="text-xs px-2 py-0.5 self-start">
-                          {result.type === 'docs' ? 'Docs' : result.type === 'blog' ? 'Blog' : result.type === 'tags' ? 'Tags' : 'Release'}
+                          {result.type === 'docs' ? dict.search.docs : result.type === 'blog' ? dict.search.blog : result.type === 'tags' ? dict.search.tags : dict.search.release}
                         </Badge>
                       </button>
                     ))}
@@ -355,7 +359,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 if (matchedTags.length > 0) {
                   return (
                     <div>
-                      <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">Related tags:</p>
+                      <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">{dict.search.relatedTags}</p>
                       <div className="space-y-1">
                         {matchedTags.map((tag, index) => (
                           <button
@@ -369,11 +373,11 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="text-xs font-medium text-gray-500 uppercase tracking-wide dark:text-gray-400">
-                                  Tags
+                                  {dict.search.tags}
                                 </span>
                                 <span className="text-xs text-gray-400">•</span>
                                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                                  {tag.count} articles
+                                  {tag.count} {dict.search.articles}
                                 </span>
                               </div>
                               <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
@@ -381,7 +385,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                               </div>
                             </div>
                             <Badge variant="outline" className="text-xs px-2 py-0.5 self-start">
-                              Tag
+                              {dict.search.tags}
                             </Badge>
                           </button>
                         ))}
@@ -403,22 +407,22 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   Enter
                 </kbd>
-                <span>to select</span>
+                <span>{dict.search.toSelect}</span>
               </div>
               <div className="flex items-center gap-1">
                 <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   ↑↓
                 </kbd>
-                <span>to navigate</span>
+                <span>{dict.search.toNavigate}</span>
               </div>
               <div className="flex items-center gap-1">
                 <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   Esc
                 </kbd>
-                <span>to close</span>
+                <span>{dict.search.toClose}</span>
               </div>
             </div>
-            <span className="text-gray-400 dark:text-gray-500">Powered by YourSaaS Search</span>
+            <span className="text-gray-400 dark:text-gray-500">{dict.search.poweredBy}</span>
           </div>
         </div>
       </DialogContent>
