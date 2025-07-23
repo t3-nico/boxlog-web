@@ -283,6 +283,42 @@ export interface Dictionary {
       title: string
       subtitle: string
       searchPlaceholder: string
+      quickStart: {
+        title: string
+        description: string
+        link: string
+      }
+      apiReference: {
+        title: string
+        description: string
+        link: string
+      }
+      guides: {
+        title: string
+        description: string
+        link: string
+      }
+      popularTopics: {
+        title: string
+        authentication: {
+          title: string
+          description: string
+        }
+        integrations: {
+          title: string
+          description: string
+        }
+        webhooks: {
+          title: string
+          description: string
+        }
+      }
+      help: {
+        title: string
+        description: string
+        faqButton: string
+        supportButton: string
+      }
     }
     contact: {
       title: string
@@ -650,7 +686,43 @@ export const en: Dictionary = {
     docs: {
       title: 'Documentation',
       subtitle: 'Everything you need to build amazing products with YourSaaS',
-      searchPlaceholder: 'Search documentation...'
+      searchPlaceholder: 'Search documentation...',
+      quickStart: {
+        title: 'Quick Start',
+        description: 'Get up and running in minutes with our step-by-step guide.',
+        link: 'Start building →'
+      },
+      apiReference: {
+        title: 'API Reference',
+        description: 'Complete API documentation with examples and code samples.',
+        link: 'View API docs →'
+      },
+      guides: {
+        title: 'Guides',
+        description: 'Learn best practices with our comprehensive guides and tutorials.',
+        link: 'Browse guides →'
+      },
+      popularTopics: {
+        title: 'Popular Topics',
+        authentication: {
+          title: 'Authentication & Security',
+          description: 'Learn how to secure your application with authentication, authorization, and security best practices.'
+        },
+        integrations: {
+          title: 'Integrations',
+          description: 'Connect with third-party services and build powerful integrations with our platform.'
+        },
+        webhooks: {
+          title: 'Webhooks',
+          description: 'Set up real-time notifications and automate workflows with webhooks.'
+        }
+      },
+      help: {
+        title: 'Need Help?',
+        description: 'Can\'t find what you\'re looking for? Our support team is here to help you get the most out of YourSaaS.',
+        faqButton: 'Browse FAQ',
+        supportButton: 'Contact Support'
+      }
     },
     contact: {
       title: 'Get in Touch',
@@ -1018,7 +1090,43 @@ export const jp: Dictionary = {
     docs: {
       title: 'ドキュメント',
       subtitle: 'YourSaaSで素晴らしい製品を構築するために必要なすべて',
-      searchPlaceholder: 'ドキュメントを検索...'
+      searchPlaceholder: 'ドキュメントを検索...',
+      quickStart: {
+        title: 'クイックスタート',
+        description: 'ステップバイステップガイドで数分で始められます。',
+        link: '構築を開始 →'
+      },
+      apiReference: {
+        title: 'APIリファレンス',
+        description: '例とコードサンプルを含む完全なAPIドキュメント。',
+        link: 'APIドキュメントを見る →'
+      },
+      guides: {
+        title: 'ガイド',
+        description: '包括的なガイドとチュートリアルでベストプラクティスを学びましょう。',
+        link: 'ガイドを見る →'
+      },
+      popularTopics: {
+        title: '人気のトピック',
+        authentication: {
+          title: '認証とセキュリティ',
+          description: 'アプリケーションを認証、認可、セキュリティのベストプラクティスで保護する方法を学びましょう。'
+        },
+        integrations: {
+          title: '統合',
+          description: 'サードパーティサービスと接続し、プラットフォームで強力な統合を構築します。'
+        },
+        webhooks: {
+          title: 'Webhook',
+          description: 'リアルタイム通知を設定し、Webhookでワークフローを自動化します。'
+        }
+      },
+      help: {
+        title: 'サポートが必要ですか？',
+        description: 'お探しのものが見つかりませんか？サポートチームがYourSaaSを最大限活用するお手伝いをいたします。',
+        faqButton: 'FAQ を見る',
+        supportButton: 'サポートに連絡'
+      }
     },
     contact: {
       title: 'お問い合わせ',
