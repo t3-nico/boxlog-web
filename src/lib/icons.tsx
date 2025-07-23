@@ -22,5 +22,8 @@ export { Tag as TagIcon, MoreHorizontal, ImageIcon, BarChart3, Zap } from 'lucid
 // Theme icons
 export { Sun, Moon } from 'lucide-react'
 
+// Language icons
+export { Globe } from 'lucide-react'
+
 // Special icons (動的読み込み用)
 export { PartyPopper, Wrench, Bug, LifeBuoy, TestTube, Eye, Clipboard, FileQuestion, Circle, Wifi, TrendingUp } from 'lucide-react'

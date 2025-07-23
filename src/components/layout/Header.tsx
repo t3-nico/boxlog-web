@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { LazySearchDialog } from '@/components/search/LazySearchDialog'
 import { Search, X, Menu } from '@/lib/icons'
 
@@ -114,7 +115,8 @@ export function Header() {
               </Link>
             </Button>
             
-            <div className="ml-6">
+            <div className="ml-6 flex items-center gap-2">
+              <LanguageSwitcher />
               <ThemeToggle />
             </div>
           </div>
@@ -132,6 +134,7 @@ export function Header() {
               <span className="sr-only">Search</span>
             </Button>
             
+            <LanguageSwitcher />
             <ThemeToggle />
             
             {/* Mobile menu button */}
