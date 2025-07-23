@@ -12,21 +12,23 @@ import {
   TagCount
 } from '@/lib/releases'
 import { ReleasesClient } from '@/components/releases/ReleasesClient'
+import { getDictionary } from '@/lib/i18n'
+import { generateSEOMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Release Notes | YourSaaS',
-  description: 'Latest features, improvements, and bug fixes for the YourSaaS platform. All changes are transparently documented and delivered rapidly to our customers.',
-  keywords: 'release notes, updates, new features, bug fixes, YourSaaS',
-  openGraph: {
-    title: 'Release Notes | YourSaaS',
-    description: 'Latest features, improvements, and bug fixes for the YourSaaS platform.',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Release Notes | YourSaaS',
-    description: 'Latest features, improvements, and bug fixes for the YourSaaS platform.',
-  }
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
+  return generateSEOMetadata({
+    title: dict.pages.releases.title,
+    description: dict.pages.releases.subtitle,
+    url: `/${locale}/releases`,
+    locale: locale,
+    keywords: locale === 'jp' 
+      ? ['リリースノート', '更新', '新機能', 'バグ修正', 'YourSaaS']
+      : ['release notes', 'updates', 'new features', 'bug fixes', 'YourSaaS'],
+    type: 'website'
+  })
 }
 
 interface PageProps {
@@ -44,6 +46,8 @@ export async function generateStaticParams() {
 
 export default async function ReleasesPage({ params }: PageProps) {
   const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
   // サーバーサイドでデータを取得
   const [allReleases, allTags, featuredReleases] = await Promise.all([
     getAllReleaseMetas(),
@@ -58,11 +62,11 @@ export default async function ReleasesPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-4">
-              リリースノート
+              {dict.pages.releases.title}
             </Heading>
             
             <Text size="lg" variant="muted" className="mb-8">
-              最新の機能、改善、修正について
+              {dict.pages.releases.subtitle}
             </Text>
           </div>
         </Container>

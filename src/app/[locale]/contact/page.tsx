@@ -4,21 +4,23 @@ import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import { LazyContactForm } from '@/components/contact/LazyContactForm'
 import { Mail, Phone, MessageCircle } from '@/lib/icons'
+import { getDictionary } from '@/lib/i18n'
+import { generateSEOMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Contact Us - YourSaaS Platform',
-  description: 'Get in touch with us. If you have any questions or need assistance, feel free to contact us. Our expert team will respond quickly.',
-  keywords: 'contact, support, help, inquiry, customer service',
-  openGraph: {
-    title: 'Contact Us - YourSaaS Platform',
-    description: 'Get in touch with us. Our expert team will respond quickly.',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Contact Us - YourSaaS Platform',
-    description: 'Get in touch with us. Our expert team will respond quickly.',
-  }
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
+  return generateSEOMetadata({
+    title: dict.pages.contact.title,
+    description: dict.pages.contact.subtitle,
+    url: `/${locale}/contact`,
+    locale: locale,
+    keywords: locale === 'jp' 
+      ? ['お問い合わせ', 'サポート', 'ヘルプ', '質問', 'カスタマーサービス']
+      : ['contact', 'support', 'help', 'inquiry', 'customer service'],
+    type: 'website'
+  })
 }
 
 interface PageProps {
@@ -34,8 +36,10 @@ export async function generateStaticParams() {
   ]
 }
 
-export default function ContactPage({ params }: PageProps) {
+export default async function ContactPage({ params }: PageProps) {
   const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -43,12 +47,11 @@ export default function ContactPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-6">
-              お問い合わせ
+              {dict.pages.contact.title}
             </Heading>
             
             <Text size="xl" variant="muted" className="mb-8 max-w-3xl mx-auto">
-              ご質問やご相談がございましたら、お気軽にお問い合わせください。
-              専門スタッフが迅速にご対応いたします。
+              {dict.pages.contact.subtitle}
             </Text>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
@@ -57,10 +60,10 @@ export default function ContactPage({ params }: PageProps) {
                   <Mail className="w-6 h-6 text-blue-600" />
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  メールサポート
+                  {dict.pages.contact.support.email.title}
                 </Heading>
                 <Text size="sm" variant="muted">
-                  24時間以内に返信いたします
+                  {dict.pages.contact.support.email.description}
                 </Text>
               </div>
               
@@ -69,10 +72,10 @@ export default function ContactPage({ params }: PageProps) {
                   <Phone className="w-6 h-6 text-green-600" />
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  電話サポート
+                  {dict.pages.contact.support.phone.title}
                 </Heading>
                 <Text size="sm" variant="muted">
-                  平日 9:00-18:00
+                  {dict.pages.contact.support.phone.description}
                 </Text>
               </div>
               
@@ -81,10 +84,10 @@ export default function ContactPage({ params }: PageProps) {
                   <MessageCircle className="w-6 h-6 text-purple-600" />
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  チャットサポート
+                  {dict.pages.contact.support.chat.title}
                 </Heading>
                 <Text size="sm" variant="muted">
-                  リアルタイムでサポート
+                  {dict.pages.contact.support.chat.description}
                 </Text>
               </div>
             </div>
@@ -103,7 +106,7 @@ export default function ContactPage({ params }: PageProps) {
               {/* オフィス情報 */}
               <div>
                 <Heading as="h2" size="2xl" className="mb-6">
-                  オフィス情報
+                  {dict.pages.contact.office.title}
                 </Heading>
                 
                 <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
@@ -116,12 +119,10 @@ export default function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <Text className="font-medium mb-1">本社所在地</Text>
-                        <Text variant="muted">
-                          〒100-0001<br />
-                          東京都千代田区千代田1-1-1<br />
-                          YourSaaSビル 5F
-                        </Text>
+                        <Text className="font-medium mb-1">{dict.pages.contact.office.address.label}</Text>
+                        <div className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ 
+                          __html: dict.pages.contact.office.address.value.replace(/\\n/g, '<br />') 
+                        }} />
                       </div>
                     </div>
                     
@@ -132,11 +133,10 @@ export default function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <Text className="font-medium mb-1">営業時間</Text>
-                        <Text variant="muted">
-                          平日: 9:00 - 18:00<br />
-                          土日祝日: 休業
-                        </Text>
+                        <Text className="font-medium mb-1">{dict.pages.contact.office.hours.label}</Text>
+                        <div className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ 
+                          __html: dict.pages.contact.office.hours.value.replace(/\\n/g, '<br />') 
+                        }} />
                       </div>
                     </div>
                     
@@ -147,21 +147,20 @@ export default function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <Text className="font-medium mb-1">アクセス</Text>
-                        <Text variant="muted">
-                          JR東京駅 徒歩5分<br />
-                          地下鉄大手町駅 徒歩3分
-                        </Text>
+                        <Text className="font-medium mb-1">{dict.pages.contact.office.access.label}</Text>
+                        <div className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ 
+                          __html: dict.pages.contact.office.access.value.replace(/\\n/g, '<br />') 
+                        }} />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* サポート情報 */}
+              {/* Support Information */}
               <div>
                 <Heading as="h2" size="2xl" className="mb-6">
-                  サポート情報
+                  {dict.pages.contact.supportInfo.title}
                 </Heading>
                 
                 <div className="space-y-6">
@@ -173,12 +172,12 @@ export default function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <Heading as="h3" size="md">ドキュメント</Heading>
-                        <Text size="sm" variant="muted">詳細な使い方ガイド</Text>
+                        <Heading as="h3" size="md">{dict.pages.contact.supportInfo.docs.title}</Heading>
+                        <Text size="sm" variant="muted">{dict.pages.contact.supportInfo.docs.description}</Text>
                       </div>
                     </div>
                     <Button variant="outline" size="sm" asChild>
-                      <a href="/docs">ドキュメントを見る</a>
+                      <a href="/docs">{dict.pages.contact.supportInfo.docs.button}</a>
                     </Button>
                   </div>
                   
@@ -190,12 +189,12 @@ export default function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <Heading as="h3" size="md">よくある質問</Heading>
-                        <Text size="sm" variant="muted">お客様からよくいただく質問</Text>
+                        <Heading as="h3" size="md">{dict.pages.contact.supportInfo.faq.title}</Heading>
+                        <Text size="sm" variant="muted">{dict.pages.contact.supportInfo.faq.description}</Text>
                       </div>
                     </div>
                     <Button variant="outline" size="sm" asChild>
-                      <a href="/pricing#faq">FAQ を見る</a>
+                      <a href="/pricing#faq">{dict.pages.contact.supportInfo.faq.button}</a>
                     </Button>
                   </div>
                   
@@ -207,13 +206,13 @@ export default function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <Heading as="h3" size="md">ステータスページ</Heading>
-                        <Text size="sm" variant="muted">サービスの稼働状況</Text>
+                        <Heading as="h3" size="md">{dict.pages.contact.supportInfo.status.title}</Heading>
+                        <Text size="sm" variant="muted">{dict.pages.contact.supportInfo.status.description}</Text>
                       </div>
                     </div>
                     <Button variant="outline" size="sm" asChild>
                       <a href="https://status.yoursaas.com" target="_blank" rel="noopener noreferrer">
-                        ステータスを確認
+                        {dict.pages.contact.supportInfo.status.button}
                       </a>
                     </Button>
                   </div>
@@ -237,22 +236,21 @@ export default function ContactPage({ params }: PageProps) {
                 </div>
                 <div className="flex-1">
                   <Heading as="h3" size="lg" className="text-red-800 mb-2">
-                    緊急時のお問い合わせ
+                    {dict.pages.contact.emergency.title}
                   </Heading>
                   <Text className="text-red-700 mb-4">
-                    サービスに重大な問題が発生している場合や、セキュリティに関する緊急事態の場合は、
-                    以下の緊急連絡先までお電話ください。
+                    {dict.pages.contact.emergency.description}
                   </Text>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="bg-white rounded-lg p-4 border border-red-200">
-                      <Text className="font-semibold text-red-800">緊急ホットライン</Text>
-                      <Text className="text-red-700">03-1234-9999</Text>
-                      <Text size="sm" className="text-red-600">24時間対応</Text>
+                      <Text className="font-semibold text-red-800">{dict.pages.contact.emergency.hotline.label}</Text>
+                      <Text className="text-red-700">{dict.pages.contact.emergency.hotline.phone}</Text>
+                      <Text size="sm" className="text-red-600">{dict.pages.contact.emergency.hotline.availability}</Text>
                     </div>
                     <div className="bg-white rounded-lg p-4 border border-red-200">
-                      <Text className="font-semibold text-red-800">緊急メール</Text>
-                      <Text className="text-red-700">emergency@yoursaas.com</Text>
-                      <Text size="sm" className="text-red-600">最優先で対応</Text>
+                      <Text className="font-semibold text-red-800">{dict.pages.contact.emergency.email.label}</Text>
+                      <Text className="text-red-700">{dict.pages.contact.emergency.email.email}</Text>
+                      <Text size="sm" className="text-red-600">{dict.pages.contact.emergency.email.priority}</Text>
                     </div>
                   </div>
                 </div>

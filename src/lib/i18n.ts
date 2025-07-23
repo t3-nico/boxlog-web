@@ -91,6 +91,98 @@ export interface Dictionary {
     features: {
       title: string
       subtitle: string
+      hero: {
+        badge: string
+        headline: string
+        description: string
+        startTrial: string
+        scheduleDemo: string
+      }
+      grid: {
+        title: string
+        subtitle: string
+      }
+      categories: {
+        integration: string
+        analytics: string
+        security: string
+        workflow: string
+        collaboration: string
+        mobile: string
+      }
+      items: {
+        apiIntegration: {
+          title: string
+          description: string
+        }
+        realTimeAnalytics: {
+          title: string
+          description: string
+        }
+        advancedSecurity: {
+          title: string
+          description: string
+        }
+        workflowAutomation: {
+          title: string
+          description: string
+        }
+        teamCollaboration: {
+          title: string
+          description: string
+        }
+        mobileOptimized: {
+          title: string
+          description: string
+        }
+      }
+      details: {
+        integration: {
+          subtitle: string
+          title: string
+          description: string
+          features: string[]
+        }
+        analytics: {
+          subtitle: string
+          title: string
+          description: string
+          features: string[]
+        }
+        security: {
+          subtitle: string
+          title: string
+          description: string
+          features: string[]
+        }
+      }
+      cta: {
+        title: string
+        subtitle: string
+        description: string
+        primaryButton: {
+          text: string
+          href: string
+        }
+        secondaryButton: {
+          text: string
+          href: string
+        }
+        stats: {
+          uptime: {
+            value: string
+            label: string
+          }
+          customers: {
+            value: string
+            label: string
+          }
+          support: {
+            value: string
+            label: string
+          }
+        }
+      }
     }
     pricing: {
       title: string
@@ -111,6 +203,67 @@ export interface Dictionary {
     contact: {
       title: string
       subtitle: string
+      support: {
+        email: {
+          title: string
+          description: string
+        }
+        phone: {
+          title: string
+          description: string
+        }
+        chat: {
+          title: string
+          description: string
+        }
+      }
+      office: {
+        title: string
+        address: {
+          label: string
+          value: string
+        }
+        hours: {
+          label: string
+          value: string
+        }
+        access: {
+          label: string
+          value: string
+        }
+      }
+      supportInfo: {
+        title: string
+        docs: {
+          title: string
+          description: string
+          button: string
+        }
+        faq: {
+          title: string
+          description: string
+          button: string
+        }
+        status: {
+          title: string
+          description: string
+          button: string
+        }
+      }
+      emergency: {
+        title: string
+        description: string
+        hotline: {
+          label: string
+          phone: string
+          availability: string
+        }
+        email: {
+          label: string
+          email: string
+          priority: string
+        }
+      }
     }
     privacy: {
       title: string
@@ -121,6 +274,23 @@ export interface Dictionary {
       title: string
       subtitle: string
       description: string
+    }
+    releases: {
+      title: string
+      subtitle: string
+    }
+    tags: {
+      title: string
+      description: string
+      breadcrumbHome: string
+      allTags: string
+      relatedContent: string
+      noContentFound: string
+      contentTypes: {
+        blog: string
+        releases: string
+        docs: string
+      }
     }
   }
   forms: {
@@ -189,7 +359,114 @@ export const en: Dictionary = {
     },
     features: {
       title: 'Powerful Features for Modern SaaS',
-      subtitle: 'Everything you need to build and scale your SaaS application'
+      subtitle: 'Everything you need to build and scale your SaaS application',
+      hero: {
+        badge: 'Features',
+        headline: 'Everything you need to scale your business',
+        description: 'From powerful APIs to advanced analytics, YourSaaS provides all the tools you need to build, deploy, and scale your applications with confidence.',
+        startTrial: 'Start Free Trial',
+        scheduleDemo: 'Schedule Demo'
+      },
+      grid: {
+        title: 'Powerful features for modern teams',
+        subtitle: 'Everything you need to build, deploy, and scale your applications in one integrated platform.'
+      },
+      categories: {
+        integration: 'Integration',
+        analytics: 'Analytics',
+        security: 'Security',
+        workflow: 'Workflow',
+        collaboration: 'Collaboration',
+        mobile: 'Mobile'
+      },
+      items: {
+        apiIntegration: {
+          title: 'API Integration',
+          description: 'Connect with 100+ third-party services and build custom integrations with our powerful REST API.'
+        },
+        realTimeAnalytics: {
+          title: 'Real-time Analytics',
+          description: 'Get detailed insights into your application performance with comprehensive analytics and reporting.'
+        },
+        advancedSecurity: {
+          title: 'Advanced Security',
+          description: 'Enterprise-grade security with SSL encryption, two-factor authentication, and compliance certifications.'
+        },
+        workflowAutomation: {
+          title: 'Workflow Automation',
+          description: 'Streamline your processes with powerful automation tools and custom workflow builders.'
+        },
+        teamCollaboration: {
+          title: 'Team Collaboration',
+          description: 'Work together seamlessly with real-time collaboration, comments, and team management features.'
+        },
+        mobileOptimized: {
+          title: 'Mobile Optimized',
+          description: 'Fully responsive design that works perfectly on all devices and screen sizes.'
+        }
+      },
+      details: {
+        integration: {
+          subtitle: 'Seamless Integration',
+          title: 'Connect everything with powerful APIs',
+          description: 'Our comprehensive API ecosystem allows you to integrate with hundreds of third-party services and build custom solutions that perfectly fit your workflow.',
+          features: [
+            'REST API with comprehensive documentation',
+            'Webhooks for real-time notifications',
+            'Pre-built integrations with popular tools',
+            'Custom SDK for multiple programming languages'
+          ]
+        },
+        analytics: {
+          subtitle: 'Advanced Analytics',
+          title: 'Data-driven insights for better decisions',
+          description: 'Get deep insights into your application performance and user behavior with our advanced analytics platform and customizable dashboards.',
+          features: [
+            'Real-time performance monitoring',
+            'Custom dashboard creation',
+            'Advanced filtering and segmentation',
+            'Automated reporting and alerts'
+          ]
+        },
+        security: {
+          subtitle: 'Enterprise Security',
+          title: 'Bank-level security for your peace of mind',
+          description: 'Your data security is our top priority. We implement industry-leading security measures to protect your information and ensure compliance.',
+          features: [
+            'End-to-end encryption for all data',
+            'SOC 2 Type II compliance',
+            'Multi-factor authentication',
+            'Regular security audits and penetration testing'
+          ]
+        }
+      },
+      cta: {
+        title: 'Ready to transform your business?',
+        subtitle: 'Join thousands of companies already using YourSaaS to build better products.',
+        description: 'Start your free trial today and experience the power of our platform.',
+        primaryButton: {
+          text: 'Start Free Trial',
+          href: '/signup'
+        },
+        secondaryButton: {
+          text: 'Contact Sales',
+          href: '/contact'
+        },
+        stats: {
+          uptime: {
+            value: '99.9%',
+            label: 'Uptime SLA'
+          },
+          customers: {
+            value: '10k+',
+            label: 'Happy Customers'
+          },
+          support: {
+            value: '24/7',
+            label: 'Expert Support'
+          }
+        }
+      }
     },
     pricing: {
       title: 'Simple, Transparent Pricing',
@@ -209,7 +486,68 @@ export const en: Dictionary = {
     },
     contact: {
       title: 'Get in Touch',
-      subtitle: 'Have questions? We\'d love to hear from you.'
+      subtitle: 'Have questions? We\'d love to hear from you. Our expert team will respond quickly.',
+      support: {
+        email: {
+          title: 'Email Support',
+          description: 'We\'ll respond within 24 hours'
+        },
+        phone: {
+          title: 'Phone Support',
+          description: 'Weekdays 9:00-18:00'
+        },
+        chat: {
+          title: 'Chat Support',
+          description: 'Real-time support'
+        }
+      },
+      office: {
+        title: 'Office Information',
+        address: {
+          label: 'Head Office',
+          value: '100-0001\\nTokyo, Chiyoda-ku, Chiyoda 1-1-1\\nYourSaaS Building 5F'
+        },
+        hours: {
+          label: 'Business Hours',
+          value: 'Weekdays: 9:00 - 18:00\\nWeekends & Holidays: Closed'
+        },
+        access: {
+          label: 'Access',
+          value: 'Tokyo Station: 5 min walk\\nOtemachi Station: 3 min walk'
+        }
+      },
+      supportInfo: {
+        title: 'Support Information',
+        docs: {
+          title: 'Documentation',
+          description: 'Detailed usage guide',
+          button: 'View Documentation'
+        },
+        faq: {
+          title: 'Frequently Asked Questions',
+          description: 'Common questions from customers',
+          button: 'View FAQ'
+        },
+        status: {
+          title: 'Status Page',
+          description: 'Service availability status',
+          button: 'Check Status'
+        }
+      },
+      emergency: {
+        title: 'Emergency Contact',
+        description: 'If you are experiencing critical service issues or security emergencies, please call our emergency contact.',
+        hotline: {
+          label: 'Emergency Hotline',
+          phone: '03-1234-9999',
+          availability: '24/7 Available'
+        },
+        email: {
+          label: 'Emergency Email',
+          email: 'emergency@yoursaas.com',
+          priority: 'Highest Priority Response'
+        }
+      }
     },
     privacy: {
       title: 'Privacy Policy',
@@ -220,6 +558,23 @@ export const en: Dictionary = {
       title: 'Page Not Found',
       subtitle: '404 Error',
       description: 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.'
+    },
+    releases: {
+      title: 'Release Notes',
+      subtitle: 'Latest features, improvements, and bug fixes for the YourSaaS platform. All changes are transparently documented and delivered rapidly to our customers.'
+    },
+    tags: {
+      title: 'Tagged Articles',
+      description: 'Related blog posts, release notes, and documentation.',
+      breadcrumbHome: 'Home',
+      allTags: 'All Tags',
+      relatedContent: 'Related Content',
+      noContentFound: 'No content found for this tag.',
+      contentTypes: {
+        blog: 'Blog',
+        releases: 'Releases',
+        docs: 'Documentation'
+      }
     }
   },
   forms: {
@@ -288,7 +643,114 @@ export const jp: Dictionary = {
     },
     features: {
       title: 'モダンSaaSのための強力な機能',
-      subtitle: 'SaaSアプリケーションの構築とスケールに必要なすべて'
+      subtitle: 'SaaSアプリケーションの構築とスケールに必要なすべて',
+      hero: {
+        badge: '機能',
+        headline: 'ビジネスをスケールするために必要なすべて',
+        description: '強力なAPIから高度な分析まで、YourSaaSはアプリケーションの構築、デプロイ、スケールに必要なすべてのツールを自信を持って提供します。',
+        startTrial: '無料トライアル開始',
+        scheduleDemo: 'デモを予約'
+      },
+      grid: {
+        title: 'モダンチームのための強力な機能',
+        subtitle: 'アプリケーションの構築、デプロイ、スケールに必要なすべてを統合プラットフォームで提供します。'
+      },
+      categories: {
+        integration: '統合',
+        analytics: '分析',
+        security: 'セキュリティ',
+        workflow: 'ワークフロー',
+        collaboration: 'コラボレーション',
+        mobile: 'モバイル'
+      },
+      items: {
+        apiIntegration: {
+          title: 'API統合',
+          description: '100以上のサードパーティサービスと接続し、強力なREST APIでカスタム統合を構築できます。'
+        },
+        realTimeAnalytics: {
+          title: 'リアルタイム分析',
+          description: '包括的な分析とレポート機能により、アプリケーションのパフォーマンスに関する詳細な洞察を得られます。'
+        },
+        advancedSecurity: {
+          title: '高度なセキュリティ',
+          description: 'SSL暗号化、二要素認証、コンプライアンス認証を備えたエンタープライズグレードのセキュリティ。'
+        },
+        workflowAutomation: {
+          title: 'ワークフロー自動化',
+          description: '強力な自動化ツールとカスタムワークフロービルダーでプロセスを合理化します。'
+        },
+        teamCollaboration: {
+          title: 'チーム コラボレーション',
+          description: 'リアルタイムコラボレーション、コメント、チーム管理機能でシームレスに連携します。'
+        },
+        mobileOptimized: {
+          title: 'モバイル最適化',
+          description: 'すべてのデバイスと画面サイズで完璧に動作する完全レスポンシブデザイン。'
+        }
+      },
+      details: {
+        integration: {
+          subtitle: 'シームレスな統合',
+          title: '強力なAPIですべてを接続',
+          description: '包括的なAPIエコシステムにより、数百のサードパーティーサービスと統合し、ワークフローに完璧に適合するカスタムソリューションを構築できます。',
+          features: [
+            '包括的なドキュメントを備えたREST API',
+            'リアルタイム通知のためのWebhook',
+            '人気ツールとの事前構築済み統合',
+            '複数のプログラミング言語対応のカスタムSDK'
+          ]
+        },
+        analytics: {
+          subtitle: '高度な分析',
+          title: 'より良い意思決定のためのデータ駆動型洞察',
+          description: '高度な分析プラットフォームとカスタマイズ可能なダッシュボードで、アプリケーションのパフォーマンスとユーザー行動に関する深い洞察を得られます。',
+          features: [
+            'リアルタイムパフォーマンス監視',
+            'カスタムダッシュボード作成',
+            '高度なフィルタリングとセグメンテーション',
+            '自動レポートとアラート'
+          ]
+        },
+        security: {
+          subtitle: 'エンタープライズセキュリティ',
+          title: '安心のための銀行レベルのセキュリティ',
+          description: 'データセキュリティは私たちの最優先事項です。情報を保護し、コンプライアンスを確保するために、業界最高水準のセキュリティ対策を実装しています。',
+          features: [
+            'すべてのデータのエンドツーエンド暗号化',
+            'SOC 2 Type II準拠',
+            '多要素認証',
+            '定期的なセキュリティ監査と侵入テスト'
+          ]
+        }
+      },
+      cta: {
+        title: 'ビジネスを変革する準備はできていますか？',
+        subtitle: 'より良い製品を構築するために、すでに何千もの企業がYourSaaSを使用しています。',
+        description: '今すぐ無料トライアルを開始して、私たちのプラットフォームの力を体験してください。',
+        primaryButton: {
+          text: '無料トライアル開始',
+          href: '/signup'
+        },
+        secondaryButton: {
+          text: '営業に問い合わせ',
+          href: '/contact'
+        },
+        stats: {
+          uptime: {
+            value: '99.9%',
+            label: '稼働率SLA'
+          },
+          customers: {
+            value: '10k+',
+            label: '満足いただいているお客様'
+          },
+          support: {
+            value: '24/7',
+            label: '専門サポート'
+          }
+        }
+      }
     },
     pricing: {
       title: 'シンプルで透明な料金体系',
@@ -308,7 +770,68 @@ export const jp: Dictionary = {
     },
     contact: {
       title: 'お問い合わせ',
-      subtitle: 'ご質問がございましたら、お気軽にお声がけください。'
+      subtitle: 'ご質問やご相談がございましたら、お気軽にお問い合わせください。専門スタッフが迅速にご対応いたします。',
+      support: {
+        email: {
+          title: 'メールサポート',
+          description: '24時間以内に返信いたします'
+        },
+        phone: {
+          title: '電話サポート',
+          description: '平日 9:00-18:00'
+        },
+        chat: {
+          title: 'チャットサポート',
+          description: 'リアルタイムでサポート'
+        }
+      },
+      office: {
+        title: 'オフィス情報',
+        address: {
+          label: '本社所在地',
+          value: '〒100-0001\\n東京都千代田区千代田1-1-1\\nYourSaaSビル 5F'
+        },
+        hours: {
+          label: '営業時間',
+          value: '平日: 9:00 - 18:00\\n土日祝日: 休業'
+        },
+        access: {
+          label: 'アクセス',
+          value: 'JR東京駅 徒歩5分\\n地下鉄大手町駅 徒歩3分'
+        }
+      },
+      supportInfo: {
+        title: 'サポート情報',
+        docs: {
+          title: 'ドキュメント',
+          description: '詳細な使い方ガイド',
+          button: 'ドキュメントを見る'
+        },
+        faq: {
+          title: 'よくある質問',
+          description: 'お客様からよくいただく質問',
+          button: 'FAQ を見る'
+        },
+        status: {
+          title: 'ステータスページ',
+          description: 'サービスの稼働状況',
+          button: 'ステータスを確認'
+        }
+      },
+      emergency: {
+        title: '緊急時のお問い合わせ',
+        description: 'サービスに重大な問題が発生している場合や、セキュリティに関する緊急事態の場合は、以下の緊急連絡先までお電話ください。',
+        hotline: {
+          label: '緊急ホットライン',
+          phone: '03-1234-9999',
+          availability: '24時間対応'
+        },
+        email: {
+          label: '緊急メール',
+          email: 'emergency@yoursaas.com',
+          priority: '最優先で対応'
+        }
+      }
     },
     privacy: {
       title: 'プライバシーポリシー',
@@ -319,6 +842,23 @@ export const jp: Dictionary = {
       title: 'ページが見つかりません',
       subtitle: '404エラー',
       description: 'お探しのページは削除、名前変更、または一時的に利用できない可能性があります。'
+    },
+    releases: {
+      title: 'リリースノート',
+      subtitle: '最新の機能、改善、修正について'
+    },
+    tags: {
+      title: 'タグの記事',
+      description: '関連するブログ記事、リリースノート、ドキュメントの一覧です。',
+      breadcrumbHome: 'ホーム',
+      allTags: 'すべてのタグ',
+      relatedContent: '関連コンテンツ',
+      noContentFound: 'このタグに関連するコンテンツが見つかりませんでした。',
+      contentTypes: {
+        blog: 'ブログ記事',
+        releases: 'リリースノート',
+        docs: 'ドキュメント'
+      }
     }
   },
   forms: {

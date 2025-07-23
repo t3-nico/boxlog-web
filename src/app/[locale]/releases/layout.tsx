@@ -1,28 +1,7 @@
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s | YourSaaS Releases',
-    default: 'Release Notes | YourSaaS Platform'
-  },
-  description: 'YourSaaSプラットフォームの最新リリース情報、機能アップデート、バグ修正、破壊的変更について。',
-  keywords: 'YourSaaS, リリースノート, アップデート, 新機能, バグ修正, 変更履歴, SaaS',
-  authors: [{ name: 'YourSaaS Team' }],
-  openGraph: {
-    title: 'Release Notes | YourSaaS Platform',
-    description: 'YourSaaSプラットフォームの最新リリース情報、機能アップデート、バグ修正、破壊的変更について。',
-    type: 'website',
-    siteName: 'YourSaaS Platform',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Release Notes | YourSaaS Platform',
-    description: 'YourSaaSプラットフォームの最新リリース情報、機能アップデート、バグ修正、破壊的変更について。',
-  },
-  alternates: {
-    canonical: '/releases',
-  }
-}
+// This layout is shared across locales, so metadata should be handled in individual pages
+// Remove static metadata to avoid conflicts with page-level generateMetadata
 
 export default function ReleasesLayout({
   children,

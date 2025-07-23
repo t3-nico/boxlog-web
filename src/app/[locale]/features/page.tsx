@@ -35,14 +35,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   })
 }
 
-export default function FeaturesPage({ params }: PageProps) {
+export default async function FeaturesPage({ params }: PageProps) {
   const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  
   return (
     <div className="min-h-screen">
-      <FeaturesHero />
-      <FeatureGrid />
-      <FeatureDetails />
-      <FeaturesCTA />
+      <FeaturesHero dict={dict} />
+      <FeatureGrid dict={dict} />
+      <FeatureDetails dict={dict} />
+      <FeaturesCTA dict={dict} />
     </div>
   )
 }

@@ -66,8 +66,10 @@ src/
 
 ### Internationalization
 - **Locales**: `en` (English), `jp` (Japanese)
-- **Messages**: Stored in `messages/` directory as JSON files
-- **Routing**: Automatic locale detection with fallback to English
+- **Translation System**: Dictionary-based with `getDictionary()` function
+- **Routing**: Dynamic locale routing with `/[locale]/*` structure
+- **Auto-detection**: Accept-Language header parsing with cookie persistence
+- **SEO**: Complete hreflang, OpenGraph, and sitemap multilingual support
 - **Configuration**: Handled via `src/lib/i18n.ts`
 
 ### Development Patterns
@@ -87,8 +89,15 @@ src/
 ### Content Guidelines
 - All MDX content must include proper frontmatter
 - Images should use optimized formats (WebP/AVIF)
-- Internationalization keys should be defined in message files
+- All new pages automatically support both English and Japanese via `/[locale]/*` structure
+- Translation keys must be added to `src/lib/i18n.ts` dictionary
 - Blog posts and docs support code highlighting and GFM
+
+### Creating New Multilingual Pages
+1. Create page at `src/app/[locale]/page-name/page.tsx`
+2. Add `generateMetadata()` function with `getDictionary()` integration
+3. Add translation keys to `src/lib/i18n.ts` for both `en` and `jp`
+4. Pages automatically generate `/en/page-name` and `/jp/page-name` routes
 
 ## Detailed Guides
 
@@ -97,6 +106,7 @@ For comprehensive guidelines on specific aspects of development, refer to these 
 - **[Documentation Guide](docs/DOCUMENTATION_GUIDE.md)** - Content creation standards, writing style, and formatting guidelines
 - **[Design System Guide](docs/DESIGN_SYSTEM.md)** - UI/UX patterns, component guidelines, and color system rules
 - **[Performance Guide](docs/PERFORMANCE_GUIDE.md)** - Optimization strategies, build configuration, and monitoring
+- **[Multilingual Implementation](docs/MULTILINGUAL_IMPLEMENTATION.md)** - Complete guide for international/multilingual development
 
 ---
 

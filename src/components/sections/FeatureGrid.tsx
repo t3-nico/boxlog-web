@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import { features } from '@/lib/features-data'
+import { Link, BarChart3, Users, Lock, Zap, Smartphone } from 'lucide-react'
+import type { Dictionary } from '@/lib/i18n'
 
 const categoryColors = {
   integration: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700',
@@ -14,18 +15,67 @@ const categoryColors = {
   mobile: 'bg-pink-50 text-pink-700 border-pink-200 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-700'
 }
 
-export function FeatureGrid() {
+interface FeatureGridProps {
+  dict: Dictionary
+}
+
+export function FeatureGrid({ dict }: FeatureGridProps) {
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null)
+  
+  const features = [
+    {
+      id: 'api-integration',
+      title: dict.pages.features.items.apiIntegration.title,
+      description: dict.pages.features.items.apiIntegration.description,
+      icon: Link,
+      category: 'integration' as const
+    },
+    {
+      id: 'real-time-analytics',
+      title: dict.pages.features.items.realTimeAnalytics.title,
+      description: dict.pages.features.items.realTimeAnalytics.description,
+      icon: BarChart3,
+      category: 'analytics' as const
+    },
+    {
+      id: 'advanced-security',
+      title: dict.pages.features.items.advancedSecurity.title,
+      description: dict.pages.features.items.advancedSecurity.description,
+      icon: Lock,
+      category: 'security' as const
+    },
+    {
+      id: 'workflow-automation',
+      title: dict.pages.features.items.workflowAutomation.title,
+      description: dict.pages.features.items.workflowAutomation.description,
+      icon: Zap,
+      category: 'workflow' as const
+    },
+    {
+      id: 'team-collaboration',
+      title: dict.pages.features.items.teamCollaboration.title,
+      description: dict.pages.features.items.teamCollaboration.description,
+      icon: Users,
+      category: 'collaboration' as const
+    },
+    {
+      id: 'mobile-optimized',
+      title: dict.pages.features.items.mobileOptimized.title,
+      description: dict.pages.features.items.mobileOptimized.description,
+      icon: Smartphone,
+      category: 'mobile' as const
+    }
+  ]
 
   return (
     <section className="py-24 bg-white dark:bg-gray-900">
       <Container>
         <div className="text-center mb-16">
           <Heading as="h2" size="3xl" className="mb-4">
-            Powerful features for modern teams
+            {dict.pages.features.grid.title}
           </Heading>
           <Text size="xl" variant="muted" className="max-w-2xl mx-auto">
-            Everything you need to build, deploy, and scale your applications in one integrated platform.
+            {dict.pages.features.grid.subtitle}
           </Text>
         </div>
         
@@ -46,7 +96,7 @@ export function FeatureGrid() {
               
               {/* Category Badge */}
               <div className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full border mb-4 ${categoryColors[feature.category]}`}>
-                {feature.category.charAt(0).toUpperCase() + feature.category.slice(1).replace('-', ' ')}
+                {dict.pages.features.categories[feature.category]}
               </div>
               
               {/* Content */}

@@ -2,10 +2,43 @@
 
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import { detailedFeatures } from '@/lib/features-data'
 import { Check, Zap, BarChart3, Lock } from 'lucide-react'
+import type { Dictionary } from '@/lib/i18n'
 
-export function FeatureDetails() {
+interface FeatureDetailsProps {
+  dict: Dictionary
+}
+
+export function FeatureDetails({ dict }: FeatureDetailsProps) {
+  const detailedFeatures = [
+    {
+      id: 'integration',
+      subtitle: dict.pages.features.details.integration.subtitle,
+      title: dict.pages.features.details.integration.title,
+      description: dict.pages.features.details.integration.description,
+      features: dict.pages.features.details.integration.features,
+      image: '/api/placeholder/600/400',
+      reverse: false
+    },
+    {
+      id: 'analytics',
+      subtitle: dict.pages.features.details.analytics.subtitle,
+      title: dict.pages.features.details.analytics.title,
+      description: dict.pages.features.details.analytics.description,
+      features: dict.pages.features.details.analytics.features,
+      image: '/api/placeholder/600/400',
+      reverse: true
+    },
+    {
+      id: 'security',
+      subtitle: dict.pages.features.details.security.subtitle,
+      title: dict.pages.features.details.security.title,
+      description: dict.pages.features.details.security.description,
+      features: dict.pages.features.details.security.features,
+      image: '/api/placeholder/600/400',
+      reverse: false
+    }
+  ]
   return (
     <section className="py-24 bg-gray-50 dark:bg-gray-800">
       <Container>

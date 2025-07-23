@@ -6,42 +6,50 @@ import { Heading, Text } from '@/components/ui/typography'
 import { getContentByTag, getRelatedTags, getAllTags } from '@/lib/tags-server'
 import { UnifiedTagContent } from '@/components/tags/UnifiedTagContent'
 import { RelatedTags } from '@/components/tags/RelatedTags'
+import { getDictionary } from '@/lib/i18n'
+import { generateSEOMetadata } from '@/lib/metadata'
 
 interface TagPageProps {
   params: {
     tag: string
+    locale: string
   }
 }
 
 export async function generateStaticParams() {
   const allTags = await getAllTags()
-  return allTags.slice(0, 50).map((tagData) => ({
-    tag: tagData.tag,
-  }))
+  const tags = allTags.slice(0, 50)
+  const locales = ['en', 'jp']
+  
+  return locales.flatMap(locale => 
+    tags.map(tagData => ({
+      tag: tagData.tag,
+      locale: locale
+    }))
+  )
 }
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
-  const decodedTag = decodeURIComponent(params.tag)
+  const { tag, locale } = params
+  const decodedTag = decodeURIComponent(tag)
+  const dict = await getDictionary(locale as 'en' | 'jp')
   
-  return {
-    title: `${decodedTag} タグの記事 | YourSaaS`,
-    description: `${decodedTag} に関連するブログ記事、リリースノート、ドキュメントの一覧です。`,
-    keywords: `${decodedTag}, タグ, ブログ, リリースノート, ドキュメント`,
-    openGraph: {
-      title: `${decodedTag} タグの記事 | YourSaaS`,
-      description: `${decodedTag} に関連するコンテンツの一覧です。`,
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary',
-      title: `${decodedTag} タグの記事 | YourSaaS`,
-      description: `${decodedTag} に関連するコンテンツの一覧です。`,
-    }
-  }
+  return generateSEOMetadata({
+    title: `${decodedTag} ${dict.pages.tags.title}`,
+    description: `${decodedTag} ${dict.pages.tags.description}`,
+    url: `/${locale}/tags/${tag}`,
+    locale: locale,
+    keywords: locale === 'jp' 
+      ? [decodedTag, 'タグ', 'ブログ', 'リリースノート', 'ドキュメント']
+      : [decodedTag, 'tag', 'blog', 'release notes', 'documentation'],
+    type: 'website'
+  })
 }
 
 export default async function TagPage({ params }: TagPageProps) {
-  const decodedTag = decodeURIComponent(params.tag)
+  const { tag, locale } = params
+  const decodedTag = decodeURIComponent(tag)
+  const dict = await getDictionary(locale as 'en' | 'jp')
   
   const [tagData, relatedTags] = await Promise.all([
     getContentByTag(decodedTag),
@@ -59,11 +67,11 @@ export default async function TagPage({ params }: TagPageProps) {
         <Container>
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumb */}
-            <nav className="mb-8" aria-label="パンくず">
+            <nav className="mb-8" aria-label="breadcrumb">
               <ol className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
                 <li>
-                  <a href="/" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-                    ホーム
+                  <a href={`/${locale}`} className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                    {dict.pages.tags.breadcrumbHome}
                   </a>
                 </li>
                 <li>
@@ -109,21 +117,21 @@ export default async function TagPage({ params }: TagPageProps) {
                   <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                     {tagData.blog.length}
                   </div>
-                  <Text size="sm" className="font-medium">ブログ記事</Text>
+                  <Text size="sm" className="font-medium">{dict.pages.tags.contentTypes.blog}</Text>
                 </div>
                 
                 <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-white/50 dark:border-gray-700/50 shadow-sm">
                   <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
                     {tagData.releases.length}
                   </div>
-                  <Text size="sm" className="font-medium">リリースノート</Text>
+                  <Text size="sm" className="font-medium">{dict.pages.tags.contentTypes.releases}</Text>
                 </div>
                 
                 <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-white/50 dark:border-gray-700/50 shadow-sm">
                   <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                     {tagData.docs.length}
                   </div>
-                  <Text size="sm" className="font-medium">ドキュメント</Text>
+                  <Text size="sm" className="font-medium">{dict.pages.tags.contentTypes.docs}</Text>
                 </div>
               </div>
             </div>

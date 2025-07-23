@@ -1,23 +1,27 @@
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
-import { ctaData } from '@/lib/features-data'
+import type { Dictionary } from '@/lib/i18n'
 
-export function FeaturesCTA() {
+interface FeaturesCTAProps {
+  dict: Dictionary
+}
+
+export function FeaturesCTA({ dict }: FeaturesCTAProps) {
   return (
     <section className="py-24 bg-gradient-to-br from-neutral-700 via-neutral-800 to-neutral-900 dark:from-neutral-800 dark:via-neutral-900 dark:to-neutral-950 relative overflow-hidden">
       <Container>
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <Heading as="h2" size="4xl" className="text-white mb-6">
-            {ctaData.title}
+            {dict.pages.features.cta.title}
           </Heading>
           
           <Text size="xl" className="text-neutral-100 dark:text-neutral-200 mb-4 max-w-2xl mx-auto">
-            {ctaData.subtitle}
+            {dict.pages.features.cta.subtitle}
           </Text>
           
           <Text size="lg" className="text-neutral-200 dark:text-neutral-300 mb-12 max-w-xl mx-auto">
-            {ctaData.description}
+            {dict.pages.features.cta.description}
           </Text>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -26,8 +30,8 @@ export function FeaturesCTA() {
               className="bg-white dark:bg-neutral-100 text-neutral-700 dark:text-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-200 shadow-lg"
               asChild
             >
-              <a href={ctaData.primaryButton.href}>
-                {ctaData.primaryButton.text}
+              <a href={dict.pages.features.cta.primaryButton.href}>
+                {dict.pages.features.cta.primaryButton.text}
               </a>
             </Button>
             
@@ -37,8 +41,8 @@ export function FeaturesCTA() {
               className="border-white/30 text-white hover:bg-white/10 backdrop-blur"
               asChild
             >
-              <a href={ctaData.secondaryButton.href}>
-                {ctaData.secondaryButton.text}
+              <a href={dict.pages.features.cta.secondaryButton.href}>
+                {dict.pages.features.cta.secondaryButton.text}
               </a>
             </Button>
           </div>
@@ -46,16 +50,16 @@ export function FeaturesCTA() {
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-16 pt-16 border-t border-white/20">
             <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-2">99.9%</div>
-              <div className="text-neutral-200 text-sm">Uptime SLA</div>
+              <div className="text-3xl font-bold text-white mb-2">{dict.pages.features.cta.stats.uptime.value}</div>
+              <div className="text-neutral-200 text-sm">{dict.pages.features.cta.stats.uptime.label}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-2">10k+</div>
-              <div className="text-neutral-200 text-sm">Happy Customers</div>
+              <div className="text-3xl font-bold text-white mb-2">{dict.pages.features.cta.stats.customers.value}</div>
+              <div className="text-neutral-200 text-sm">{dict.pages.features.cta.stats.customers.label}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-2">24/7</div>
-              <div className="text-neutral-200 text-sm">Expert Support</div>
+              <div className="text-3xl font-bold text-white mb-2">{dict.pages.features.cta.stats.support.value}</div>
+              <div className="text-neutral-200 text-sm">{dict.pages.features.cta.stats.support.label}</div>
             </div>
           </div>
         </div>
