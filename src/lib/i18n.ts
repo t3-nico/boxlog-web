@@ -346,6 +346,63 @@ export interface Dictionary {
     contact: {
       title: string
       subtitle: string
+      form: {
+        title: string
+        subtitle: string
+        name: {
+          label: string
+          placeholder: string
+          required: string
+          maxLength: string
+        }
+        email: {
+          label: string
+          placeholder: string
+          invalid: string
+        }
+        subject: {
+          label: string
+          placeholder: string
+          required: string
+          maxLength: string
+        }
+        message: {
+          label: string
+          placeholder: string
+          minLength: string
+          maxLength: string
+          charCount: string
+        }
+        submit: string
+        submitting: string
+        submitError: string
+        success: {
+          title: string
+          description: string
+          newMessage: string
+        }
+        privacyNotice: string
+      }
+      info: {
+        title: string
+        email: {
+          label: string
+          value: string
+        }
+        phone: {
+          label: string
+          value: string
+          hours: string
+        }
+        location: {
+          label: string
+          address: string
+        }
+        faq: {
+          text: string
+          button: string
+        }
+      }
       support: {
         email: {
           title: string
@@ -786,6 +843,63 @@ export const en: Dictionary = {
     contact: {
       title: 'Get in Touch',
       subtitle: 'Have questions? We\'d love to hear from you. Our expert team will respond quickly.',
+      form: {
+        title: 'Contact Us',
+        subtitle: 'If you have any questions or inquiries, please feel free to contact us. Our expert staff will respond promptly.',
+        name: {
+          label: 'Name',
+          placeholder: 'John Doe',
+          required: 'Please enter your name',
+          maxLength: 'Name must be 50 characters or less'
+        },
+        email: {
+          label: 'Email Address',
+          placeholder: 'example@email.com',
+          invalid: 'Please enter a valid email address'
+        },
+        subject: {
+          label: 'Subject',
+          placeholder: 'Please enter the subject of your inquiry',
+          required: 'Please enter a subject',
+          maxLength: 'Subject must be 100 characters or less'
+        },
+        message: {
+          label: 'Message',
+          placeholder: 'Please provide details about your inquiry (minimum 10 characters)',
+          minLength: 'Message must be at least 10 characters',
+          maxLength: 'Message must be 1000 characters or less',
+          charCount: 'characters'
+        },
+        submit: 'Send Message',
+        submitting: 'Sending...',
+        submitError: 'Failed to send message. Please try again later.',
+        success: {
+          title: 'Message Sent Successfully',
+          description: 'Thank you for your inquiry. We will respond within 2 business days.',
+          newMessage: 'Send New Message'
+        },
+        privacyNotice: 'By submitting this form, you agree to our'
+      },
+      info: {
+        title: 'Contact Information',
+        email: {
+          label: 'Email',
+          value: 'contact@yoursaas.com'
+        },
+        phone: {
+          label: 'Phone',
+          value: '+1-555-123-4567',
+          hours: 'Weekdays 9:00-18:00'
+        },
+        location: {
+          label: 'Location',
+          address: '123 Business St.\\nSan Francisco, CA 94102\\nYourSaaS Building 5F'
+        },
+        faq: {
+          text: 'Please also check our frequently asked questions',
+          button: 'View FAQ'
+        }
+      },
       support: {
         email: {
           title: 'Email Support',
