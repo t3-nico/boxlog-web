@@ -3,7 +3,21 @@ import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import Link from 'next/link'
 
-export default function Home() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
+export default function Home({ params }: PageProps) {
+  const { locale } = params
   return (
     <main className="pt-16">
       {/* Hero Section */}

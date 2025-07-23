@@ -10,6 +10,7 @@ import { getRelease, getAllReleaseMetas, getRelatedReleases, changeTypes } from 
 
 interface ReleasePageProps {
   params: {
+    locale: string
     version: string
   }
 }
@@ -63,10 +64,16 @@ export async function generateMetadata({ params }: ReleasePageProps): Promise<Me
 // Generate static paths
 export async function generateStaticParams() {
   const releases = await getAllReleaseMetas()
+  const locales = ['en', 'jp']
+  const params = []
   
-  return releases.map((release) => ({
-    version: release.frontMatter.version,
-  }))
+  for (const locale of locales) {
+    for (const release of releases) {
+      params.push({ locale, version: release.frontMatter.version })
+    }
+  }
+  
+  return params
 }
 
 // MDX Components
@@ -193,13 +200,14 @@ const mdxComponents = {
 }
 
 export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
-  const release = await getRelease(params.version)
+  const { locale, version } = params
+  const release = await getRelease(version)
   
   if (!release) {
     notFound()
   }
 
-  const relatedReleases = await getRelatedReleases(params.version, 3)
+  const relatedReleases = await getRelatedReleases(version, 3)
 
   // Structured data (JSON-LD)
   const jsonLd = {

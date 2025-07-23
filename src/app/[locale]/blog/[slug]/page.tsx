@@ -19,6 +19,7 @@ import Link from 'next/link'
 
 interface BlogPostPageProps {
   params: {
+    locale: string
     slug: string
   }
 }
@@ -76,10 +77,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 // Generate static paths
 export async function generateStaticParams() {
   const posts = await getAllBlogPostMetas()
+  const locales = ['en', 'jp']
+  const params = []
   
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
+  for (const locale of locales) {
+    for (const post of posts) {
+      params.push({ locale, slug: post.slug })
+    }
+  }
+  
+  return params
 }
 
 // MDX components
@@ -182,7 +189,8 @@ const mdxComponents = {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getBlogPost(params.slug)
+  const { locale, slug } = params
+  const post = await getBlogPost(slug)
   
   if (!post) {
     notFound()

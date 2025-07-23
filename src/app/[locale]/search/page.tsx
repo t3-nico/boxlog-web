@@ -299,6 +299,7 @@ function SearchResults() {
   )
 }
 
+
 export default function SearchPage() {
   return (
     <div className="min-h-screen bg-[rgb(var(--bg-secondary))]">

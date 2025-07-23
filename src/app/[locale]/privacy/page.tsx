@@ -9,7 +9,21 @@ export const metadata = generateSEOMetadata({
   url: '/privacy',
 })
 
-export default function PrivacyPolicyPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
+export default function PrivacyPolicyPage({ params }: PageProps) {
+  const { locale } = params
   const lastUpdated = '2024-01-15'
 
   return (

@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   }
 }
 
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
 export default async function TagsPage() {
   const [allTags, tagsByCategory] = await Promise.all([
     getAllTags(),

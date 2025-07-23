@@ -10,7 +10,21 @@ export const metadata: Metadata = {
   description: 'Find and filter blog articles using our advanced search system.',
 }
 
-export default async function BlogPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
+export default async function BlogPage({ params }: PageProps) {
+  const { locale } = params
   const [allPosts, allTags] = await Promise.all([
     getAllBlogPostMetas(),
     getAllTagNames()

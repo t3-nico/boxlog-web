@@ -14,6 +14,7 @@ import { Heading, Text } from '@/components/ui/typography'
 import { ContentData } from '@/types/content'
 
 interface PageParams {
+  locale: string
   slug: string[]
 }
 
@@ -25,10 +26,20 @@ interface DocPageProps {
 export async function generateStaticParams(): Promise<PageParams[]> {
   try {
     const allContent = await getAllContent()
+    const locales = ['en', 'jp']
     
-    return allContent.map((content) => ({
-      slug: content.slug.split('/')
-    }))
+    const params: PageParams[] = []
+    
+    for (const locale of locales) {
+      for (const content of allContent) {
+        params.push({
+          locale,
+          slug: content.slug.split('/')
+        })
+      }
+    }
+    
+    return params
   } catch (error) {
     return []
   }
@@ -104,6 +115,7 @@ async function getAdjacentPages(slug: string): Promise<{
 
 // Main page component
 export default async function DocPage({ params }: DocPageProps) {
+  const { locale } = params
   try {
     const slug = params.slug.join('/')
     const category = params.slug[0] as any

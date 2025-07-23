@@ -246,7 +246,7 @@ export const en: Dictionary = {
 export const jp: Dictionary = {
   common: {
     home: 'ホーム',
-    about: '会社概要',
+    about: '概要',
     features: '機能',
     pricing: '料金',
     blog: 'ブログ',
@@ -271,7 +271,7 @@ export const jp: Dictionary = {
   },
   metadata: {
     siteName: 'YourSaaS',
-    siteDescription: 'Next.jsとTailwind CSSで構築されたモダンなSaaSプラットフォーム',
+    siteDescription: 'Next.jsとTailwind CSSで構築されたモダンなSaaSプラットフォーム。スケーラブルで高性能なWebアプリケーションを簡単に構築できます。',
     keywords: ['SaaS', 'プラットフォーム', 'ビジネス', '生産性', '自動化']
   },
   navigation: {
@@ -283,7 +283,7 @@ export const jp: Dictionary = {
   pages: {
     home: {
       title: 'スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム',
-      subtitle: 'YourSaaSでSaaSアプリケーションの構築、デプロイ、スケールを実現しましょう。',
+      subtitle: 'YourSaaSで次世代のSaaSアプリケーションを構築、デプロイ、スケールしましょう。',
       cta: '今すぐ構築を始める'
     },
     features: {
@@ -345,5 +345,74 @@ export const jp: Dictionary = {
 export const dictionaries = { en, jp }
 
 export function getDictionary(locale: Locale = 'en'): Dictionary {
+  // Validate locale and fallback to English if invalid
+  if (!isValidLocale(locale)) {
+    console.warn(`Invalid locale '${locale}', falling back to 'en'`)
+    return dictionaries.en
+  }
+  
   return dictionaries[locale] || dictionaries.en
+}
+
+/**
+ * Get localized text with fallback
+ */
+export function getLocalizedText(
+  key: keyof Dictionary,
+  locale: Locale = 'en'
+): Dictionary[keyof Dictionary] {
+  const dict = getDictionary(locale)
+  return dict[key]
+}
+
+/**
+ * Format localized date
+ */
+export function formatLocalizedDate(
+  date: Date,
+  locale: Locale = 'en',
+  options?: Intl.DateTimeFormatOptions
+): string {
+  const localeMap = {
+    en: 'en-US',
+    jp: 'ja-JP'
+  }
+  
+  return new Intl.DateTimeFormat(localeMap[locale], {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    ...options
+  }).format(date)
+}
+
+/**
+ * Format localized number
+ */
+export function formatLocalizedNumber(
+  number: number,
+  locale: Locale = 'en',
+  options?: Intl.NumberFormatOptions
+): string {
+  const localeMap = {
+    en: 'en-US',
+    jp: 'ja-JP'
+  }
+  
+  return new Intl.NumberFormat(localeMap[locale], options).format(number)
+}
+
+/**
+ * Get opposite locale
+ */
+export function getOppositeLocale(locale: Locale): Locale {
+  return locale === 'en' ? 'jp' : 'en'
+}
+
+/**
+ * Get locale display name
+ */
+export function getLocaleDisplayName(locale: Locale, displayLocale: Locale = locale): string {
+  const config = getLocaleConfig(locale)
+  return displayLocale === locale ? config.nativeName : config.name
 }

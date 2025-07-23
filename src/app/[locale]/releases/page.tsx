@@ -29,7 +29,21 @@ export const metadata: Metadata = {
   }
 }
 
-export default async function ReleasesPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
+export default async function ReleasesPage({ params }: PageProps) {
+  const { locale } = params
   // サーバーサイドでデータを取得
   const [allReleases, allTags, featuredReleases] = await Promise.all([
     getAllReleaseMetas(),

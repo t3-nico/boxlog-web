@@ -28,7 +28,21 @@ export const metadata: Metadata = {
   }
 }
 
-export default function AboutPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
+export default function AboutPage({ params }: PageProps) {
+  const { locale } = params
   return (
     <div className="min-h-screen">
       {/* Hero Section */}

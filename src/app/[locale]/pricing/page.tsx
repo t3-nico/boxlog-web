@@ -17,6 +17,20 @@ export const metadata: Metadata = {
   }
 }
 
-export default function PricingPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
+export default function PricingPage({ params }: PageProps) {
+  const { locale } = params
   return <PricingPageClient />
 }

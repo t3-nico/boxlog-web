@@ -21,7 +21,21 @@ export const metadata: Metadata = {
   }
 }
 
-export default function ContactPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'jp' }
+  ]
+}
+
+export default function ContactPage({ params }: PageProps) {
+  const { locale } = params
   return (
     <div className="min-h-screen">
       {/* Hero Section */}

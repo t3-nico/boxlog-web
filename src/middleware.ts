@@ -1,15 +1,97 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { locales, defaultLocale, isValidLocale } from '@/lib/i18n'
+
+// Public paths that should skip i18n routing
+const publicPaths = [
+  '/api',
+  '/_next',
+  '/favicon.ico',
+  '/sw.js',
+  '/manifest.json',
+  '/robots.txt',
+  '/sitemap.xml'
+]
+
+/**
+ * Detect user's preferred locale from request
+ */
+function getLocale(request: NextRequest): string {
+  // 1. Check for locale in cookies
+  const cookieLocale = request.cookies.get('locale')?.value
+  if (cookieLocale && isValidLocale(cookieLocale)) {
+    return cookieLocale
+  }
+
+  // 2. Parse Accept-Language header
+  const acceptLanguage = request.headers.get('Accept-Language')
+  if (acceptLanguage) {
+    const languages = acceptLanguage
+      .split(',')
+      .map(lang => lang.trim().split(';')[0])
+      .map(lang => lang.split('-')[0]) // Get language code only (en-US -> en)
+    
+    // Find first matching locale
+    for (const lang of languages) {
+      if (lang === 'ja' || lang === 'jp') return 'jp'
+      if (lang === 'en') return 'en'
+    }
+  }
+  
+  // 3. Default fallback
+  return defaultLocale
+}
+
+/**
+ * Check if path should skip i18n processing
+ */
+function shouldSkipPath(pathname: string): boolean {
+  return publicPaths.some(path => pathname.startsWith(path))
+}
+
+/**
+ * Check if pathname already has a locale
+ */
+function hasLocale(pathname: string): boolean {
+  return locales.some(locale => 
+    pathname.startsWith(`/${locale.code}/`) || pathname === `/${locale.code}`
+  )
+}
 
 export function middleware(request: NextRequest) {
-  // Clone the request headers
-  const requestHeaders = new Headers(request.headers)
+  const pathname = request.nextUrl.pathname
+
+  // Skip i18n processing for public paths
+  if (shouldSkipPath(pathname)) {
+    return addSecurityHeaders(NextResponse.next(), request)
+  }
+
+  // Check if pathname already has a locale
+  if (hasLocale(pathname)) {
+    return addSecurityHeaders(NextResponse.next(), request)
+  }
+
+  // Redirect to localized URL
+  const locale = getLocale(request)
+  const localizedUrl = new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url)
   
-  // Create a response
-  const response = NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
+  const response = NextResponse.redirect(localizedUrl)
+  
+  // Set locale cookie for future requests
+  response.cookies.set('locale', locale, {
+    maxAge: 365 * 24 * 60 * 60, // 1 year
+    httpOnly: false, // Allow client-side access
+    sameSite: 'lax'
   })
+
+  return addSecurityHeaders(response, request)
+}
+
+/**
+ * Add security headers to response
+ */
+function addSecurityHeaders(response: NextResponse, request?: NextRequest): NextResponse {
+  // Clone the request headers
+  const requestHeaders = new Headers()
 
   // Security headers
   response.headers.set('X-DNS-Prefetch-Control', 'on')
@@ -83,7 +165,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Strict Transport Security (HSTS)
-  if (request.nextUrl.protocol === 'https:') {
+  if (request && request.nextUrl.protocol === 'https:') {
     response.headers.set(
       'Strict-Transport-Security',
       'max-age=31536000; includeSubDomains; preload'
@@ -91,8 +173,8 @@ export function middleware(request: NextRequest) {
   }
 
   // Enhanced rate limiting and security monitoring
-  const ip = request.ip ?? request.headers.get('x-forwarded-for') ?? '127.0.0.1'
-  const userAgent = request.headers.get('user-agent') ?? ''
+  const ip = request?.ip ?? request?.headers.get('x-forwarded-for') ?? '127.0.0.1'
+  const userAgent = request?.headers.get('user-agent') ?? ''
   const now = Date.now()
   
   // Add security monitoring headers
