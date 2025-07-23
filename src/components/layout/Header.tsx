@@ -21,7 +21,7 @@ export function Header({ locale, dict }: HeaderProps) {
     { name: dict.common.docs, href: '/docs' },
     { name: dict.common.releases, href: '/releases' },
     { name: dict.common.blog, href: '/blog' },
-    { name: 'Tags', href: '/tags' },
+    { name: dict.common.tags, href: '/tags' },
     { name: dict.common.about, href: '/about' },
   ]
   const [isScrolled, setIsScrolled] = useState(false)
