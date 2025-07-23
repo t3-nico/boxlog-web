@@ -184,6 +184,64 @@ export interface Dictionary {
         }
       }
     }
+    about: {
+      title: string
+      subtitle: string
+      hero: {
+        title: string
+        description: string
+        contactButton: string
+        teamButton: string
+      }
+      mission: {
+        title: string
+        content: string
+        description: string
+      }
+      vision: {
+        title: string
+        content: string
+        description: string
+      }
+      values: {
+        title: string
+        subtitle: string
+        items: {
+          customerFirst: {
+            title: string
+            description: string
+          }
+          innovation: {
+            title: string
+            description: string
+          }
+          transparency: {
+            title: string
+            description: string
+          }
+          excellence: {
+            title: string
+            description: string
+          }
+        }
+      }
+      team: {
+        title: string
+        subtitle: string
+        hiring: {
+          title: string
+          description: string
+          careersButton: string
+          contactButton: string
+        }
+      }
+      cta: {
+        title: string
+        description: string
+        startButton: string
+        featuresButton: string
+      }
+    }
     pricing: {
       title: string
       subtitle: string
@@ -468,6 +526,64 @@ export const en: Dictionary = {
         }
       }
     },
+    about: {
+      title: 'About Us',
+      subtitle: 'Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.',
+      hero: {
+        title: 'About Us',
+        description: 'YourSaaS is an innovative SaaS platform that supports corporate growth through the power of technology. Our mission is to realize a world where everyone can create a better future.',
+        contactButton: 'Contact Us',
+        teamButton: 'Meet the Team'
+      },
+      mission: {
+        title: 'Our Mission',
+        content: 'Empowering Innovation Through Technology',
+        description: 'We believe that technology should be accessible, powerful, and intuitive. Our mission is to create tools that empower businesses to innovate, grow, and succeed in the digital age.'
+      },
+      vision: {
+        title: 'Our Vision',
+        content: 'A World Where Everyone Can Create',
+        description: 'We envision a future where advanced technology is within everyone\'s reach, enabling individuals and organizations to build solutions that make a positive impact on the world.'
+      },
+      values: {
+        title: 'Our Values',
+        subtitle: 'These values guide our decision-making and actions',
+        items: {
+          customerFirst: {
+            title: 'Customer First',
+            description: 'Our customers\' success is our success. We always develop products and provide services from the customer\'s perspective.'
+          },
+          innovation: {
+            title: 'Innovation',
+            description: 'We continue to follow the latest technology trends and provide innovative solutions that lead the industry.'
+          },
+          transparency: {
+            title: 'Transparency',
+            description: 'We value open and transparent communication and build trust relationships.'
+          },
+          excellence: {
+            title: 'Excellence',
+            description: 'We continuously improve and learn to provide high-quality products and services.'
+          }
+        }
+      },
+      team: {
+        title: 'Our Team',
+        subtitle: 'Experts from diverse backgrounds work together toward a common vision',
+        hiring: {
+          title: 'Want to Work With Us?',
+          description: 'We are always looking for talented people. If you\'re interested in creating innovative products, please contact us.',
+          careersButton: 'View Career Opportunities',
+          contactButton: 'Contact Us'
+        }
+      },
+      cta: {
+        title: 'Let\'s Create the Future Together',
+        description: 'Unlock your business potential with our platform. Start today and take the first step toward digital transformation.',
+        startButton: 'Start Free',
+        featuresButton: 'View Features'
+      }
+    },
     pricing: {
       title: 'Simple, Transparent Pricing',
       subtitle: 'Choose the plan that fits your needs'
@@ -750,6 +866,64 @@ export const jp: Dictionary = {
             label: '専門サポート'
           }
         }
+      }
+    },
+    about: {
+      title: '私たちについて',
+      subtitle: '私たちのミッション、チーム、価値観について学んでください。誰もがより良い未来を築けるような技術を創造しています。',
+      hero: {
+        title: '私たちについて',
+        description: 'YourSaaSは、テクノロジーの力で企業の成長を支援する革新的なSaaSプラットフォームです。私たちのミッションは、誰もがより良い未来を創造できる世界を実現することです。',
+        contactButton: 'お問い合わせ',
+        teamButton: 'チームに会う'
+      },
+      mission: {
+        title: '私たちのミッション',
+        content: 'テクノロジーによるイノベーションの促進',
+        description: 'テクノロジーは身近で、パワフルで、直感的であるべきだと私たちは信じています。企業がデジタル時代にイノベーションを起こし、成長し、成功できるツールを作ることが私たちのミッションです。'
+      },
+      vision: {
+        title: '私たちのビジョン',
+        content: '誰もが創造できる世界',
+        description: '高度なテクノロジーが誰の手にも届く未来を描き、個人と組織が世界にポジティブな影響を与えるソリューションを構築できるようにします。'
+      },
+      values: {
+        title: '私たちの価値観',
+        subtitle: 'これらの価値観が私たちの意思決定と行動を導いています',
+        items: {
+          customerFirst: {
+            title: 'お客様第一',
+            description: 'お客様の成功こそが私たちの成功です。常にお客様の視点に立って製品開発とサービス提供を行います。'
+          },
+          innovation: {
+            title: 'イノベーション',
+            description: '最新の技術トレンドを追い続け、業界をリードする革新的なソリューションを提供します。'
+          },
+          transparency: {
+            title: '透明性',
+            description: 'オープンで透明なコミュニケーションを大切にし、信頼関係を築きます。'
+          },
+          excellence: {
+            title: '卓越性',
+            description: '継続的な改善と学習により、高品質な製品とサービスを提供します。'
+          }
+        }
+      },
+      team: {
+        title: '私たちのチーム',
+        subtitle: '多様な背景を持つ専門家が共通のビジョンに向かって協力しています',
+        hiring: {
+          title: '私たちと一緒に働きませんか？',
+          description: '私たちは常に才能ある人材を求めています。革新的な製品の創造に興味がある方は、ぜひお声がけください。',
+          careersButton: 'キャリア機会を見る',
+          contactButton: 'お問い合わせ'
+        }
+      },
+      cta: {
+        title: '一緒に未来を創造しましょう',
+        description: '私たちのプラットフォームでビジネスの可能性を解き放ちましょう。今すぐ始めて、デジタル変革への第一歩を踏み出してください。',
+        startButton: '無料で始める',
+        featuresButton: '機能を見る'
       }
     },
     pricing: {

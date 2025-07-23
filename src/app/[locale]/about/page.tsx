@@ -45,8 +45,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   })
 }
 
-export default function AboutPage({ params }: PageProps) {
+export default async function AboutPage({ params }: PageProps) {
   const { locale } = params
+  const dict = await getDictionary(locale as 'en' | 'jp')
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -54,20 +55,19 @@ export default function AboutPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-6">
-              About Us
+              {dict.pages.about.hero.title}
             </Heading>
             
             <Text size="xl" variant="muted" className="mb-8 max-w-3xl mx-auto">
-              YourSaaS is an innovative SaaS platform that supports corporate growth through the power of technology.
-              Our mission is to realize a world where everyone can create a better future.
+              {dict.pages.about.hero.description}
             </Text>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <a href="/contact">Contact Us</a>
+                <a href={`/${locale}/contact`}>{dict.pages.about.hero.contactButton}</a>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <a href="#team">Meet the Team</a>
+                <a href="#team">{dict.pages.about.hero.teamButton}</a>
               </Button>
             </div>
           </div>
@@ -93,15 +93,15 @@ export default function AboutPage({ params }: PageProps) {
                   </div>
                   
                   <Heading as="h2" size="2xl" className="mb-4 text-blue-900 dark:text-blue-100">
-                    {companyMission.title}
+                    {dict.pages.about.mission.title}
                   </Heading>
                   
                   <Text size="lg" className="font-semibold text-blue-800 dark:text-blue-200 mb-4">
-                    {companyMission.content}
+                    {dict.pages.about.mission.content}
                   </Text>
                   
                   <Text variant="muted" className="leading-relaxed">
-                    {companyMission.description}
+                    {dict.pages.about.mission.description}
                   </Text>
                 </div>
               </div>
@@ -118,15 +118,15 @@ export default function AboutPage({ params }: PageProps) {
                   </div>
                   
                   <Heading as="h2" size="2xl" className="mb-4 text-purple-900 dark:text-purple-100">
-                    {companyVision.title}
+                    {dict.pages.about.vision.title}
                   </Heading>
                   
                   <Text size="lg" className="font-semibold text-purple-800 dark:text-purple-200 mb-4">
-                    {companyVision.content}
+                    {dict.pages.about.vision.content}
                   </Text>
                   
                   <Text variant="muted" className="leading-relaxed">
-                    {companyVision.description}
+                    {dict.pages.about.vision.description}
                   </Text>
                 </div>
               </div>
@@ -141,15 +141,36 @@ export default function AboutPage({ params }: PageProps) {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <Heading as="h2" size="3xl" className="mb-4">
-                Our Values
+                {dict.pages.about.values.title}
               </Heading>
               <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-                These values guide our decision-making and actions
+                {dict.pages.about.values.subtitle}
               </Text>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {companyValues.map((value, index) => (
+              {[
+                {
+                  id: 'customer-first',
+                  ...dict.pages.about.values.items.customerFirst,
+                  icon: '🎯'
+                },
+                {
+                  id: 'innovation',
+                  ...dict.pages.about.values.items.innovation,
+                  icon: '💡'
+                },
+                {
+                  id: 'transparency',
+                  ...dict.pages.about.values.items.transparency,
+                  icon: '🔍'
+                },
+                {
+                  id: 'excellence',
+                  ...dict.pages.about.values.items.excellence,
+                  icon: '⭐'
+                }
+              ].map((value, index) => (
                 <div
                   key={value.id}
                   className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-700 group"
@@ -183,10 +204,10 @@ export default function AboutPage({ params }: PageProps) {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <Heading as="h2" size="3xl" className="mb-4">
-                Our Team
+                {dict.pages.about.team.title}
               </Heading>
               <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
-                Experts from diverse backgrounds work together toward a common vision
+                {dict.pages.about.team.subtitle}
               </Text>
             </div>
 
@@ -199,17 +220,17 @@ export default function AboutPage({ params }: PageProps) {
             <div className="mt-16 text-center">
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 border border-blue-100 dark:border-blue-800">
                 <Heading as="h3" size="xl" className="mb-4">
-                  Want to Work With Us?
+                  {dict.pages.about.team.hiring.title}
                 </Heading>
                 <Text size="md" variant="muted" className="mb-6 max-w-2xl mx-auto">
-                  We are always looking for talented people. If you&apos;re interested in creating innovative products, please contact us.
+                  {dict.pages.about.team.hiring.description}
                 </Text>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild>
-                    <a href="/careers">View Career Opportunities</a>
+                    <a href={`/${locale}/careers`}>{dict.pages.about.team.hiring.careersButton}</a>
                   </Button>
                   <Button variant="outline" asChild>
-                    <a href="/contact">Contact Us</a>
+                    <a href={`/${locale}/contact`}>{dict.pages.about.team.hiring.contactButton}</a>
                   </Button>
                 </div>
               </div>
@@ -223,12 +244,11 @@ export default function AboutPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h2" size="3xl" className="text-white mb-6">
-              Let&apos;s Create the Future Together
+              {dict.pages.about.cta.title}
             </Heading>
             
             <Text size="lg" className="text-blue-100 mb-12 max-w-2xl mx-auto">
-              Unlock your business potential with our platform.
-              Start today and take the first step toward digital transformation.
+              {dict.pages.about.cta.description}
             </Text>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -237,7 +257,7 @@ export default function AboutPage({ params }: PageProps) {
                 className="bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 shadow-lg"
                 asChild
               >
-                <a href="/signup">Start Free</a>
+                <a href={`/${locale}/signup`}>{dict.pages.about.cta.startButton}</a>
               </Button>
               
               <Button 
@@ -246,7 +266,7 @@ export default function AboutPage({ params }: PageProps) {
                 className="border-white/30 dark:border-white/20 text-white hover:bg-white/10 dark:hover:bg-white/5 backdrop-blur"
                 asChild
               >
-                <a href="/features">View Features</a>
+                <a href={`/${locale}/features`}>{dict.pages.about.cta.featuresButton}</a>
               </Button>
             </div>
           </div>
