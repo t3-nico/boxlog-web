@@ -70,6 +70,7 @@ export interface Dictionary {
     theme: string
     menu: string
     close: string
+    tags: string
   }
   metadata: {
     siteName: string
@@ -458,7 +459,8 @@ export const en: Dictionary = {
     language: 'Language',
     theme: 'Theme',
     menu: 'Menu',
-    close: 'Close'
+    close: 'Close',
+    tags: 'Tags'
   },
   metadata: {
     siteName: 'YourSaaS',
@@ -862,7 +864,8 @@ export const jp: Dictionary = {
     language: '言語',
     theme: 'テーマ',
     menu: 'メニュー',
-    close: '閉じる'
+    close: '閉じる',
+    tags: 'タグ'
   },
   metadata: {
     siteName: 'YourSaaS',
