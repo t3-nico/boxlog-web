@@ -245,6 +245,32 @@ export interface Dictionary {
     pricing: {
       title: string
       subtitle: string
+      hero: {
+        title: string
+        subtitle: string
+        description: string
+        trialNote: string
+      }
+      trustIndicators: {
+        trial: {
+          title: string
+          description: string
+        }
+        security: {
+          title: string
+          description: string
+        }
+        support: {
+          title: string
+          description: string
+        }
+      }
+      cta: {
+        title: string
+        description: string
+        startButton: string
+        salesButton: string
+      }
     }
     blog: {
       title: string
@@ -586,7 +612,33 @@ export const en: Dictionary = {
     },
     pricing: {
       title: 'Simple, Transparent Pricing',
-      subtitle: 'Choose the plan that fits your needs'
+      subtitle: 'Choose the plan that fits your needs',
+      hero: {
+        title: 'Simple, transparent pricing',
+        subtitle: 'Choose the perfect plan for your team. All plans include a 14-day free trial.',
+        description: 'Start free, scale as you grow. Cancel anytime.',
+        trialNote: 'No credit card required.'
+      },
+      trustIndicators: {
+        trial: {
+          title: '14-day free trial',
+          description: 'No credit card required to get started'
+        },
+        security: {
+          title: 'Secure & compliant',
+          description: 'SOC 2 Type II certified and GDPR compliant'
+        },
+        support: {
+          title: '24/7 support',
+          description: 'Expert support when you need it most'
+        }
+      },
+      cta: {
+        title: 'Ready to get started?',
+        description: 'Join thousands of teams who trust our platform to scale their business. Start your free trial today.',
+        startButton: 'Start Free Trial',
+        salesButton: 'Talk to Sales'
+      }
     },
     blog: {
       title: 'SaaS Development & Tech Insights',
@@ -928,7 +980,33 @@ export const jp: Dictionary = {
     },
     pricing: {
       title: 'シンプルで透明な料金体系',
-      subtitle: 'ニーズに合ったプランをお選びください'
+      subtitle: 'ニーズに合ったプランをお選びください',
+      hero: {
+        title: 'シンプルで透明な料金体系',
+        subtitle: 'あなたのチームに最適なプランをお選びください。すべてのプランに14日間の無料トライアルが含まれています。',
+        description: '無料で始めて、成長に合わせてスケールしてください。いつでもキャンセル可能です。',
+        trialNote: 'クレジットカードは必要ありません。'
+      },
+      trustIndicators: {
+        trial: {
+          title: '14日間無料トライアル',
+          description: '開始にはクレジットカードは必要ありません'
+        },
+        security: {
+          title: 'セキュア＆コンプライアンス',
+          description: 'SOC 2 Type II認証およびGDPR準拠'
+        },
+        support: {
+          title: '24時間365日サポート',
+          description: '必要なときに専門サポートを提供'
+        }
+      },
+      cta: {
+        title: '始める準備はできましたか？',
+        description: 'ビジネスのスケールに私たちのプラットフォームを信頼する何千ものチームに参加してください。今すぐ無料トライアルを開始しましょう。',
+        startButton: '無料トライアル開始',
+        salesButton: '営業に相談'
+      }
     },
     blog: {
       title: 'SaaS開発＆技術インサイト',

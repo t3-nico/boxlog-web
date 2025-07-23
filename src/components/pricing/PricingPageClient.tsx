@@ -10,8 +10,14 @@ import { PricingComparison } from '@/components/pricing/PricingComparison'
 import { PricingFAQ } from '@/components/pricing/PricingFAQ'
 import { pricingPlans } from '@/lib/pricing-data'
 import { CheckCircle, Lock, LifeBuoy } from 'lucide-react'
+import type { Dictionary } from '@/lib/i18n'
 
-export function PricingPageClient() {
+interface PricingPageClientProps {
+  dict: Dictionary
+  locale: string
+}
+
+export function PricingPageClient({ dict, locale }: PricingPageClientProps) {
   const [isYearly, setIsYearly] = useState(false)
   
   return (
@@ -21,16 +27,16 @@ export function PricingPageClient() {
         <Container>
           <div className="text-center max-w-4xl mx-auto">
             <Heading as="h1" size="4xl" className="mb-6">
-              Simple, transparent pricing
+              {dict.pages.pricing.hero.title}
             </Heading>
             
             <Text size="xl" variant="muted" className="mb-4 max-w-2xl mx-auto">
-              Choose the perfect plan for your team. All plans include a 14-day free trial.
-              No credit card required.
+              {dict.pages.pricing.hero.subtitle}
+              {dict.pages.pricing.hero.trialNote}
             </Text>
             
             <Text size="lg" variant="muted" className="mb-12 max-w-xl mx-auto">
-              Start free, scale as you grow. Cancel anytime.
+              {dict.pages.pricing.hero.description}
             </Text>
             
             <PricingToggle isYearly={isYearly} onToggle={setIsYearly} />
@@ -61,10 +67,10 @@ export function PricingPageClient() {
                   </div>
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  14-day free trial
+                  {dict.pages.pricing.trustIndicators.trial.title}
                 </Heading>
                 <Text size="sm" variant="muted">
-                  No credit card required to get started
+                  {dict.pages.pricing.trustIndicators.trial.description}
                 </Text>
               </div>
               
@@ -75,10 +81,10 @@ export function PricingPageClient() {
                   </div>
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  Secure & compliant
+                  {dict.pages.pricing.trustIndicators.security.title}
                 </Heading>
                 <Text size="sm" variant="muted">
-                  SOC 2 Type II certified and GDPR compliant
+                  {dict.pages.pricing.trustIndicators.security.description}
                 </Text>
               </div>
               
@@ -89,10 +95,10 @@ export function PricingPageClient() {
                   </div>
                 </div>
                 <Heading as="h3" size="md" className="mb-2">
-                  24/7 support
+                  {dict.pages.pricing.trustIndicators.support.title}
                 </Heading>
                 <Text size="sm" variant="muted">
-                  Expert support when you need it most
+                  {dict.pages.pricing.trustIndicators.support.description}
                 </Text>
               </div>
             </div>
@@ -111,12 +117,11 @@ export function PricingPageClient() {
         <Container>
           <div className="text-center max-w-4xl mx-auto">
             <Heading as="h2" size="3xl" className="text-white mb-6">
-              Ready to get started?
+              {dict.pages.pricing.cta.title}
             </Heading>
             
             <Text size="lg" className="text-blue-100 dark:text-blue-200 mb-12 max-w-2xl mx-auto">
-              Join thousands of teams who trust our platform to scale their business.
-              Start your free trial today.
+              {dict.pages.pricing.cta.description}
             </Text>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -125,7 +130,7 @@ export function PricingPageClient() {
                 className="bg-white text-blue-600 hover:bg-gray-50 dark:bg-gray-100 dark:text-blue-700 dark:hover:bg-gray-200 shadow-lg"
                 asChild
               >
-                <a href="/signup">Start Free Trial</a>
+                <a href={`/${locale}/signup`}>{dict.pages.pricing.cta.startButton}</a>
               </Button>
               
               <Button 
@@ -134,7 +139,7 @@ export function PricingPageClient() {
                 className="border-white/30 text-white hover:bg-white/10 dark:border-white/40 dark:hover:bg-white/20 backdrop-blur"
                 asChild
               >
-                <a href="/contact">Talk to Sales</a>
+                <a href={`/${locale}/contact`}>{dict.pages.pricing.cta.salesButton}</a>
               </Button>
             </div>
           </div>

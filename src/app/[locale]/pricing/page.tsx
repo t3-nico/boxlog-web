@@ -32,7 +32,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   })
 }
 
-export default function PricingPage({ params }: PageProps) {
+export default async function PricingPage({ params }: PageProps) {
   const { locale } = params
-  return <PricingPageClient />
+  const dict = await getDictionary(locale as 'en' | 'jp')
+  return <PricingPageClient dict={dict} locale={locale} />
 }
