@@ -1,99 +1,34 @@
-name: Auto Update Compass
+name: Sync Compass Submodule
 
 on:
-  # compassからの通知を受け取る
   repository_dispatch:
     types: [compass-updated]
-  
-  # 定期実行（保険として1日1回）
-  schedule:
-    - cron: '0 9 * * *'  # 毎日朝9時（JST）
-  
-  # 手動実行も可能
-  workflow_dispatch:
 
 jobs:
-  update-submodule:
+  sync-compass:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout with submodules
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           submodules: true
-          fetch-depth: 0
+          token: ${{ secrets.APP_WEB_REPO_TOKEN }}
       
-      - name: Configure Git
+      - name: Update Compass submodule
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-      
-      - name: Update compass submodule
-        id: update
+          git submodule update --remote compass
+          
+      - name: Check for changes
+        id: check_changes
         run: |
-          echo "📚 Checking for compass updates..."
+          git diff --quiet || echo "changes=true" >> $GITHUB_OUTPUT
           
-          # 現在のCompass SHAを記録
-          OLD_SHA=$(cd compass && git rev-parse HEAD)
-          
-          # サブモジュールを最新に更新
-          cd compass
-          git fetch origin dev
-          git checkout origin/dev
-          cd ..
-          
-          # 新しいCompass SHAを取得
-          NEW_SHA=$(cd compass && git rev-parse HEAD)
-          
-          # 変更があるかチェック
-          if [[ "$OLD_SHA" == "$NEW_SHA" ]]; then
-            echo "✅ No updates needed (SHA: ${OLD_SHA:0:7})"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          
-          echo "📝 Changes detected:"
-          echo "  - Old SHA: ${OLD_SHA:0:7}"
-          echo "  - New SHA: ${NEW_SHA:0:7}"
-          
-          # 変更されたファイルを表示
-          echo "📋 Changed files since last update:"
-          cd compass
-          git log --oneline --name-only ${OLD_SHA:0:7}..${NEW_SHA:0:7} | head -20
-          cd ..
-          
-          echo "has_changes=true" >> $GITHUB_OUTPUT
-          echo "new_sha=${NEW_SHA:0:7}" >> $GITHUB_OUTPUT
-          
-      - name: Commit and push if updated
-        if: steps.update.outputs.has_changes == 'true'
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes == 'true'
         run: |
-          # 変更をステージング
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add compass
-          
-          # トリガー理由を取得
-          TRIGGER_REASON="${{ github.event.client_payload.trigger_reason || 'Manual/Scheduled update' }}"
-          
-          # コミットメッセージを作成
-          git commit -m "chore: Update compass to ${{ steps.update.outputs.new_sha }}
-
-          📚 ${TRIGGER_REASON}
-          🤖 Auto-updated by GitHub Actions
-          
-          Trigger: ${{ github.event_name }}
-          Source: compass/${{ github.event.client_payload.compass_ref || 'dev' }}"
-          
-          # devブランチにプッシュ
-          git push origin dev
-          
-          echo "✅ Successfully updated compass to ${{ steps.update.outputs.new_sha }}!"
-      
-      - name: Notify Slack (Optional)
-        if: steps.update.outputs.has_changes == 'true'
-        uses: 8398a7/action-slack@v3
-        with:
-          status: success
-          text: '📚 Compass updated in boxlog-web'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-        continue-on-error: true
+          git commit -m "[auto] Compass submodule updated to ${{ github.event.client_payload.sha }}"
+          git push
