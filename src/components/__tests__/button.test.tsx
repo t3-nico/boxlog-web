@@ -18,7 +18,7 @@ describe('Button Component', () => {
   it('applies size classes correctly', () => {
     render(<Button size="lg">Large Button</Button>)
     const button = screen.getByRole('button')
-    expect(button).toHaveClass('h-11')
+    expect(button).toHaveClass('h-12')
   })
 
   it('is disabled when disabled prop is true', () => {
