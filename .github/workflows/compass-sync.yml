@@ -34,20 +34,37 @@ jobs:
         run: |
           echo "📚 Checking for compass updates..."
           
+          # 現在のCompass SHAを記録
+          OLD_SHA=$(cd compass && git rev-parse HEAD)
+          
           # サブモジュールを最新に更新
           cd compass
           git fetch origin dev
           git checkout origin/dev
           cd ..
           
+          # 新しいCompass SHAを取得
+          NEW_SHA=$(cd compass && git rev-parse HEAD)
+          
           # 変更があるかチェック
-          if git diff --quiet; then
-            echo "✅ No updates needed"
+          if [[ "$OLD_SHA" == "$NEW_SHA" ]]; then
+            echo "✅ No updates needed (SHA: ${OLD_SHA:0:7})"
             echo "has_changes=false" >> $GITHUB_OUTPUT
             exit 0
           fi
           
+          echo "📝 Changes detected:"
+          echo "  - Old SHA: ${OLD_SHA:0:7}"
+          echo "  - New SHA: ${NEW_SHA:0:7}"
+          
+          # 変更されたファイルを表示
+          echo "📋 Changed files since last update:"
+          cd compass
+          git log --oneline --name-only ${OLD_SHA:0:7}..${NEW_SHA:0:7} | head -20
+          cd ..
+          
           echo "has_changes=true" >> $GITHUB_OUTPUT
+          echo "new_sha=${NEW_SHA:0:7}" >> $GITHUB_OUTPUT
           
       - name: Commit and push if updated
         if: steps.update.outputs.has_changes == 'true'
@@ -55,17 +72,22 @@ jobs:
           # 変更をステージング
           git add compass
           
+          # トリガー理由を取得
+          TRIGGER_REASON="${{ github.event.client_payload.trigger_reason || 'Manual/Scheduled update' }}"
+          
           # コミットメッセージを作成
-          COMPASS_SHA=$(cd compass && git rev-parse --short HEAD)
-          git commit -m "chore: Update compass to ${COMPASS_SHA}
+          git commit -m "chore: Update compass to ${{ steps.update.outputs.new_sha }}
 
+          📚 ${TRIGGER_REASON}
           🤖 Auto-updated by GitHub Actions
-          Triggered by: ${{ github.event_name }}"
+          
+          Trigger: ${{ github.event_name }}
+          Source: compass/${{ github.event.client_payload.compass_ref || 'dev' }}"
           
           # devブランチにプッシュ
           git push origin dev
           
-          echo "✅ Successfully updated compass!"
+          echo "✅ Successfully updated compass to ${{ steps.update.outputs.new_sha }}!"
       
       - name: Notify Slack (Optional)
         if: steps.update.outputs.has_changes == 'true'
