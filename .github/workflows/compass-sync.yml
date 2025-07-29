@@ -1,47 +1,77 @@
-name: Compass Submodule Auto Sync
+name: Auto Update Compass
 
 on:
+  # compassからの通知を受け取る
   repository_dispatch:
     types: [compass-updated]
+  
+  # 定期実行（保険として1日1回）
+  schedule:
+    - cron: '0 9 * * *'  # 毎日朝9時（JST）
+  
+  # 手動実行も可能
   workflow_dispatch:
 
 jobs:
-  sync-compass:
+  update-submodule:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    
     steps:
-      - name: Checkout web repository
+      - name: Checkout with submodules
         uses: actions/checkout@v4
         with:
-          submodules: recursive
-
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: true
+          fetch-depth: 0
+      
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
       - name: Update compass submodule
+        id: update
         run: |
+          echo "📚 Checking for compass updates..."
+          
+          # サブモジュールを最新に更新
           cd compass
-          git fetch origin
-          TARGET_BRANCH="${{ github.event.client_payload.compass_ref || 'dev' }}"
-          git checkout $TARGET_BRANCH
-          git pull origin $TARGET_BRANCH
+          git fetch origin dev
+          git checkout origin/dev
           cd ..
-
-      - name: Check for changes
-        id: changes
-        run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            echo "changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "changes=false" >> $GITHUB_OUTPUT
+          
+          # 変更があるかチェック
+          if git diff --quiet; then
+            echo "✅ No updates needed"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            exit 0
           fi
-
-      - name: Commit and push changes
-        if: steps.changes.outputs.changes == 'true'
+          
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+          
+      - name: Commit and push if updated
+        if: steps.update.outputs.has_changes == 'true'
         run: |
+          # 変更をステージング
           git add compass
-          git config --local user.name "GitHub Action"
-          git config --local user.email "action@github.com"
-          git commit -m "feat: compassサブモジュールを自動更新
+          
+          # コミットメッセージを作成
+          COMPASS_SHA=$(cd compass && git rev-parse --short HEAD)
+          git commit -m "chore: Update compass to ${COMPASS_SHA}
 
-          Compass commit: ${{ github.event.client_payload.compass_commit || 'latest' }}
-          Branch: ${{ github.event.client_payload.compass_ref || 'dev' }}"
-          git push
+          🤖 Auto-updated by GitHub Actions
+          Triggered by: ${{ github.event_name }}"
+          
+          # devブランチにプッシュ
+          git push origin dev
+          
+          echo "✅ Successfully updated compass!"
+      
+      - name: Notify Slack (Optional)
+        if: steps.update.outputs.has_changes == 'true'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          text: '📚 Compass updated in boxlog-web'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        continue-on-error: true
