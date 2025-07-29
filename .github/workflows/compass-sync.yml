@@ -1,0 +1,47 @@
+name: Compass Submodule Auto Sync
+
+on:
+  repository_dispatch:
+    types: [compass-updated]
+  workflow_dispatch:
+
+jobs:
+  sync-compass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout web repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Update compass submodule
+        run: |
+          cd compass
+          git fetch origin
+          TARGET_BRANCH="${{ github.event.client_payload.compass_ref || 'dev' }}"
+          git checkout $TARGET_BRANCH
+          git pull origin $TARGET_BRANCH
+          cd ..
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.changes == 'true'
+        run: |
+          git add compass
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git commit -m "feat: compassサブモジュールを自動更新
+
+          Compass commit: ${{ github.event.client_payload.compass_commit || 'latest' }}
+          Branch: ${{ github.event.client_payload.compass_ref || 'dev' }}"
+          git push

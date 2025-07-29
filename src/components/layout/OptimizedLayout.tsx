@@ -9,7 +9,9 @@ import { LightweightProviders, StandardProviders, FullProviders } from '@/compon
 import { PageLoader } from '@/components/loading/PageLoader'
 import { PreloadStrategy } from '@/components/performance/PreloadStrategy'
 import { EnhancedAccessibility } from '@/components/accessibility/EnhancedAccessibility'
+import { CompassCommandPalette } from '@/components/compass-command-palette'
 import { getDictionary, type Dictionary } from '@/lib/i18n'
+import { Toaster } from 'sonner'
 
 interface OptimizedLayoutProps {
   children: ReactNode
@@ -73,6 +75,8 @@ export function OptimizedLayout({ children, locale }: OptimizedLayoutProps) {
       <PreloadStrategy />
       <EnhancedAccessibility />
       <SkipLinks />
+      <CompassCommandPalette />
+      <Toaster richColors position="top-right" />
       <Header locale={currentLocale} dict={dict} />
       <main id="main-content" role="main">
         <PageLoader showSkeleton={loadingConfig.showSkeleton}>
