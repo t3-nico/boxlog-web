@@ -218,6 +218,7 @@
 /* Critical above-the-fold styles */
 @layer base {
   :root {
+    /* Existing shadcn/ui variables (maintained for compatibility) */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -238,6 +239,58 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+    
+    /* Compass Neutral Color System - Light Mode */
+    /* Background colors */
+    --background-primary: #ffffff;
+    --background-secondary: #fafafa;
+    --background-tertiary: #f5f5f5;
+    --background-elevated: #ffffff;
+    
+    /* Text colors */
+    --text-primary: #171717;
+    --text-secondary: #525252;
+    --text-tertiary: #a3a3a3;
+    --text-inverse: #ffffff;
+    --text-disabled: #d4d4d4;
+    
+    /* Border colors */
+    --border-primary: #e5e5e5;
+    --border-secondary: #d4d4d4;
+    --border-focus: #737373;
+    
+    /* Button colors - Primary */
+    --button-primary-default-background: #171717;
+    --button-primary-hover-background: #262626;
+    --button-primary-active-background: #0a0a0a;
+    --button-primary-default-text: #ffffff;
+    
+    /* Button colors - Secondary */
+    --button-secondary-default-background: #f5f5f5;
+    --button-secondary-hover-background: #e5e5e5;
+    --button-secondary-active-background: #d4d4d4;
+    --button-secondary-default-text: #171717;
+    
+    /* Button colors - Ghost */
+    --button-ghost-default-background: transparent;
+    --button-ghost-hover-background: #f5f5f5;
+    --button-ghost-active-background: #e5e5e5;
+    --button-ghost-default-text: #525252;
+    
+    /* Form elements */
+    --input-background: #ffffff;
+    --input-border: #d4d4d4;
+    --input-borderFocus: #737373;
+    --input-text: #171717;
+    --input-placeholder: #a3a3a3;
+    
+    /* Semantic colors */
+    --semantic-success-background: #f0fdf4;
+    --semantic-success-text: #14532d;
+    --semantic-warning-background: #fffbeb;
+    --semantic-warning-text: #78350f;
+    --semantic-error-background: #fef2f2;
+    --semantic-error-text: #7f1d1d;
     
     /* Legacy WCAG AA compliant color palette */
     --primary-50: #eff6ff;
@@ -276,6 +329,7 @@
   }
 
   .dark {
+    /* Existing shadcn/ui variables (maintained for compatibility) */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -297,6 +351,58 @@
     --ring: 221.2 83.2% 53.3%;
     
     --focus-ring-offset: #000000;
+    
+    /* Compass Neutral Color System - Dark Mode */
+    /* Background colors */
+    --background-primary: #0a0a0a;
+    --background-secondary: #171717;
+    --background-tertiary: #262626;
+    --background-elevated: #262626;
+    
+    /* Text colors */
+    --text-primary: #fafafa;
+    --text-secondary: #d4d4d4;
+    --text-tertiary: #737373;
+    --text-inverse: #171717;
+    --text-disabled: #525252;
+    
+    /* Border colors */
+    --border-primary: #404040;
+    --border-secondary: #525252;
+    --border-focus: #a3a3a3;
+    
+    /* Button colors - Primary */
+    --button-primary-default-background: #f5f5f5;
+    --button-primary-hover-background: #e5e5e5;
+    --button-primary-active-background: #ffffff;
+    --button-primary-default-text: #171717;
+    
+    /* Button colors - Secondary */
+    --button-secondary-default-background: #262626;
+    --button-secondary-hover-background: #404040;
+    --button-secondary-active-background: #525252;
+    --button-secondary-default-text: #f5f5f5;
+    
+    /* Button colors - Ghost */
+    --button-ghost-default-background: transparent;
+    --button-ghost-hover-background: #262626;
+    --button-ghost-active-background: #404040;
+    --button-ghost-default-text: #d4d4d4;
+    
+    /* Form elements */
+    --input-background: #171717;
+    --input-border: #525252;
+    --input-borderFocus: #a3a3a3;
+    --input-text: #f5f5f5;
+    --input-placeholder: #737373;
+    
+    /* Semantic colors */
+    --semantic-success-background: #14532d;
+    --semantic-success-text: #dcfce7;
+    --semantic-warning-background: #78350f;
+    --semantic-warning-text: #fef3c7;
+    --semantic-error-background: #7f1d1d;
+    --semantic-error-text: #fee2e2;
   }
 
   * {

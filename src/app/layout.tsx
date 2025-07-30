@@ -3,6 +3,7 @@ import { FontPreloader, FontOptimization } from '@/components/performance/FontOp
 import { CriticalCSS } from '@/components/performance/CriticalCSS'
 import { ThirdPartyOptimization } from '@/components/performance/ThirdPartyOptimization'
 import { generateEnhancedMetadata, StructuredData } from '@/components/seo/EnhancedSEO'
+import { ThemeProvider } from '@/lib/theme-provider'
 import './globals.css'
 
 export const metadata: Metadata = generateEnhancedMetadata({
@@ -48,7 +49,9 @@ export default function RootLayout({
       <body className="antialiased">
         <FontOptimization />
         <ThirdPartyOptimization />
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
