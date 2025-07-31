@@ -113,7 +113,7 @@ const SelectLabel = React.forwardRef<
     ref={ref}
     className={cn(
       // Neutral system - select label
-      "py-1.5 pl-8 pr-2 text-sm font-semibold text-text-secondary",
+      "py-2 pl-8 pr-2 text-sm font-semibold text-text-secondary",
       className
     )}
     {...props}
@@ -129,14 +129,14 @@ const SelectItem = React.forwardRef<
     ref={ref}
     className={cn(
       // Neutral system - select item with hover states
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm text-text-primary outline-none",
+      "relative flex w-full cursor-default select-none items-center rounded-sm py-2 pl-8 pr-2 text-sm text-text-primary outline-none",
       "focus:bg-bg-secondary focus:text-text-primary hover:bg-bg-secondary",
       "data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[disabled]:text-text-disabled",
       className
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
         <Check className="h-4 w-4" />
       </SelectPrimitive.ItemIndicator>

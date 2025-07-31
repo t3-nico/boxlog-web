@@ -232,7 +232,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                     <button
                       key={index}
                       onClick={() => handleTagClick(tag.name)}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${getTagColorClass(tag.color)}`}
+                      className={`inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-colors ${getTagColorClass(tag.color)}`}
                     >
                       <Tag className="h-3 w-3" />
                       <span>{tag.name}</span>
@@ -271,7 +271,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                         </div>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Badge variant="outline" className="text-xs px-2 py-0.5">
+                        <Badge variant="outline" className="text-xs px-2 py-1">
                           {link.type === 'docs' ? dict.search.docs : link.type === 'blog' ? dict.search.blog : dict.search.release}
                         </Badge>
                       </div>
@@ -341,7 +341,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                             <Highlight text={result.description} query={query} />
                           </div>
                         </div>
-                        <Badge variant="outline" className="text-xs px-2 py-0.5 self-start">
+                        <Badge variant="outline" className="text-xs px-2 py-1 self-start">
                           {result.type === 'docs' ? dict.search.docs : result.type === 'blog' ? dict.search.blog : result.type === 'tags' ? dict.search.tags : dict.search.release}
                         </Badge>
                       </button>
@@ -384,7 +384,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                                 <Highlight text={tag.name} query={query} />
                               </div>
                             </div>
-                            <Badge variant="outline" className="text-xs px-2 py-0.5 self-start">
+                            <Badge variant="outline" className="text-xs px-2 py-1 self-start">
                               {dict.search.tags}
                             </Badge>
                           </button>
@@ -404,19 +404,19 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                <kbd className="px-2 py-1 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   Enter
                 </kbd>
                 <span>{dict.search.toSelect}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                <kbd className="px-2 py-1 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   ↑↓
                 </kbd>
                 <span>{dict.search.toNavigate}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                <kbd className="px-2 py-1 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                   Esc
                 </kbd>
                 <span>{dict.search.toClose}</span>

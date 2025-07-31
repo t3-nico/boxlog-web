@@ -225,7 +225,7 @@ function SearchResults() {
                         <div className="flex items-center gap-2 mt-1">
                           <Badge 
                             variant="outline" 
-                            className={`text-xs px-2 py-0.5 ${getTypeBadgeColor(result.type)}`}
+                            className={`text-xs px-2 py-1 ${getTypeBadgeColor(result.type)}`}
                           >
                             {result.type === 'docs' ? 'ドキュメント' : 
                              result.type === 'blog' ? 'ブログ' : 'リリース'}

@@ -128,14 +128,14 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
               {release.version}
             </span>
             
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${config.color}`}>
+            <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${config.color}`}>
               <config.icon className="w-3 h-3" />
               {config.label}
             </span>
 
             {isFirst && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                <span className="w-1.5 h-1.5 bg-green-600 rounded-full mr-1.5"></span>
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
                 Next Release
               </span>
             )}
@@ -156,7 +156,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             <ul className="space-y-1">
               {release.features.map((feature, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <span className="flex-shrink-0 w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 dark:bg-gray-500"></span>
+                  <span className="flex-shrink-0 w-2 h-2 bg-gray-400 rounded-full mt-2 dark:bg-gray-500"></span>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -276,7 +276,7 @@ export function ReleaseTimeline() {
 
       <div className="relative">
         {/* Timeline Line */}
-        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700"></div>
+        <div className="absolute left-6 top-0 bottom-0 w-1 bg-gray-200 dark:bg-gray-700"></div>
 
         <div className="space-y-8">
           {/* Current Release */}

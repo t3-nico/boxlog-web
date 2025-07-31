@@ -76,7 +76,7 @@ export function SearchResults({
                 <Highlight text={result.description} query={query} />
               </div>
             </div>
-            <Badge variant="outline" className="text-xs px-2 py-0.5">
+            <Badge variant="outline" className="text-xs px-2 py-1">
               {getTypeLabel(result.type)}
             </Badge>
           </button>
@@ -101,7 +101,7 @@ export function SearchResults({
               <div className="flex items-center gap-2 mt-1">
                 <Badge 
                   variant="outline" 
-                  className={`text-xs px-2 py-0.5 ${getTypeBadgeColor(result.type)}`}
+                  className={`text-xs px-2 py-1 ${getTypeBadgeColor(result.type)}`}
                 >
                   {getTypeLabel(result.type)}
                 </Badge>

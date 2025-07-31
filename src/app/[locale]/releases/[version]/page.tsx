@@ -105,7 +105,7 @@ const mdxComponents = {
     <blockquote className="border-l-4 border-blue-500 dark:border-blue-400 pl-4 py-2 my-6 bg-blue-50 dark:bg-blue-900 text-gray-700 dark:text-gray-300 italic rounded-r-lg" {...props} />
   ),
   code: (props: any) => (
-    <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1.5 py-0.5 rounded text-sm font-mono" {...props} />
+    <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded text-sm font-mono" {...props} />
   ),
   pre: (props: any) => (
     <pre className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm" {...props} />
