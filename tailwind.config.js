@@ -172,15 +172,143 @@ module.exports = {
         'icon-xl': '32px',  // 4×8px
         'icon-2xl': '40px', // 5×8px
       },
+      // タイポグラフィシステム（心理的余裕重視・グローバル対応）
+      fontSize: {
+        // Display sizes - ヒーロー・ランディング用
+        'display-2xl': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }], // 72px
+        'display-xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }], // 60px
+        'display-lg': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '600' }], // 48px
+        'display-md': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' }], // 36px
+        'display-sm': ['1.875rem', { lineHeight: '1.3', letterSpacing: '-0.01em', fontWeight: '600' }], // 30px
+        
+        // Heading sizes - セクション・記事見出し用
+        'heading-2xl': ['1.5rem', { lineHeight: '1.4', letterSpacing: '0em', fontWeight: '600' }], // 24px
+        'heading-xl': ['1.25rem', { lineHeight: '1.4', letterSpacing: '0em', fontWeight: '600' }], // 20px
+        'heading-lg': ['1.125rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '500' }], // 18px
+        'heading-md': ['1rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '500' }], // 16px
+        'heading-sm': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '500' }], // 14px
+        
+        // Body text - 本文・UI用
+        'body-xl': ['1.125rem', { lineHeight: '1.7', letterSpacing: '0em', fontWeight: '400' }], // 18px - 読みやすさ重視
+        'body-lg': ['1rem', { lineHeight: '1.6', letterSpacing: '0em', fontWeight: '400' }], // 16px - 標準本文
+        'body-md': ['0.875rem', { lineHeight: '1.6', letterSpacing: '0em', fontWeight: '400' }], // 14px - UI標準
+        'body-sm': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '400' }], // 12px - サブテキスト
+        
+        // Caption - 補助情報用
+        'caption-lg': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0.01em', fontWeight: '500' }], // 12px - 強調キャプション
+        'caption-md': ['0.6875rem', { lineHeight: '1.4', letterSpacing: '0.01em', fontWeight: '400' }], // 11px - 標準キャプション
+        'caption-sm': ['0.625rem', { lineHeight: '1.3', letterSpacing: '0.02em', fontWeight: '400' }], // 10px - 最小キャプション
+        
+        // Label - ラベル・タグ用
+        'label-lg': ['0.875rem', { lineHeight: '1.3', letterSpacing: '0.01em', fontWeight: '500' }], // 14px - 大きめラベル
+        'label-md': ['0.75rem', { lineHeight: '1.3', letterSpacing: '0.01em', fontWeight: '500' }], // 12px - 標準ラベル
+        'label-sm': ['0.6875rem', { lineHeight: '1.2', letterSpacing: '0.02em', fontWeight: '500' }], // 11px - 小さめラベル
+        
+        // Button text - ボタン専用
+        'button-lg': ['1rem', { lineHeight: '1.3', letterSpacing: '0.01em', fontWeight: '500' }], // 16px - 大きめボタン
+        'button-md': ['0.875rem', { lineHeight: '1.3', letterSpacing: '0.01em', fontWeight: '500' }], // 14px - 標準ボタン
+        'button-sm': ['0.75rem', { lineHeight: '1.2', letterSpacing: '0.02em', fontWeight: '500' }], // 12px - 小さめボタン
+        
+        // Code - モノスペース用
+        'code-lg': ['1rem', { lineHeight: '1.6', letterSpacing: '0em', fontFamily: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'] }], // 16px
+        'code-md': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0em', fontFamily: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'] }], // 14px
+        'code-sm': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0em', fontFamily: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'] }], // 12px
+      },
+      // フォントファミリー（グローバル対応）
+      fontFamily: {
+        'sans': [
+          'Inter Variable',
+          'Inter',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          // 日本語フォント
+          'Hiragino Kaku Gothic ProN',
+          'Hiragino Sans',
+          'Yu Gothic',
+          'Meiryo UI',
+          'NotoSansCJK JP',
+          'sans-serif'
+        ],
+        'mono': [
+          'SFMono-Regular',
+          'Menlo',
+          'Monaco', 
+          'Consolas',
+          'Liberation Mono',
+          'Courier New',
+          'monospace'
+        ],
+        // 日本語専用フォント
+        'jp-sans': [
+          'Hiragino Kaku Gothic ProN',
+          'Hiragino Sans',
+          'Yu Gothic',
+          'Meiryo UI',
+          'NotoSansCJK JP',
+          'sans-serif'
+        ]
+      },
+      // エレベーションシステム（威圧感のない深度表現）
+      boxShadow: {
+        // レイヤー0: フラット（影なし）
+        'elevation-0': 'none',
+        
+        // レイヤー1: 軽い浮遊感（カード、ボタン）
+        'elevation-1': '0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.06)',
+        
+        // レイヤー2: ほんのり浮き上がり（ホバー状態）
+        'elevation-2': '0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 4px 6px -1px rgba(0, 0, 0, 0.08)',
+        
+        // レイヤー3: 明確な浮遊感（ドロップダウン、ツールチップ）
+        'elevation-3': '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 10px 15px -3px rgba(0, 0, 0, 0.12)',
+        
+        // レイヤー4: 強い浮遊感（モーダル背景）
+        'elevation-4': '0 10px 15px -3px rgba(0, 0, 0, 0.12), 0 20px 25px -5px rgba(0, 0, 0, 0.16)',
+        
+        // レイヤー5: 最大深度（最前面モーダル）
+        'elevation-5': '0 20px 25px -5px rgba(0, 0, 0, 0.16), 0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        
+        // ダークモード対応の軽い影
+        'elevation-dark-1': '0 1px 2px 0 rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.25)',
+        'elevation-dark-2': '0 1px 3px 0 rgba(0, 0, 0, 0.25), 0 4px 6px -1px rgba(0, 0, 0, 0.35)',
+        'elevation-dark-3': '0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 10px 15px -3px rgba(0, 0, 0, 0.45)',
+        'elevation-dark-4': '0 10px 15px -3px rgba(0, 0, 0, 0.45), 0 20px 25px -5px rgba(0, 0, 0, 0.55)',
+        'elevation-dark-5': '0 20px 25px -5px rgba(0, 0, 0, 0.55), 0 25px 50px -12px rgba(0, 0, 0, 0.65)',
+        
+        // フォーカス専用（アクセシビリティ重視）
+        'focus': '0 0 0 2px var(--focus-ring), 0 0 0 4px rgba(59, 130, 246, 0.1)',
+        'focus-inset': 'inset 0 0 0 2px var(--focus-ring)',
+        
+        // 既存のshadcn/ui互換性
+        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      },
       // Button animations from neutral system
       animation: {
         'button-press': 'button-press 0.1s ease-in-out',
+        'elevation-hover': 'elevation-hover 0.2s ease-in-out',
+        'elevation-press': 'elevation-press 0.1s ease-in-out',
       },
       keyframes: {
         'button-press': {
           '0%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(0.98)' },
           '100%': { transform: 'scale(1)' }
+        },
+        'elevation-hover': {
+          '0%': { transform: 'translateY(0px)', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.06)' },
+          '100%': { transform: 'translateY(-1px)', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 4px 6px -1px rgba(0, 0, 0, 0.08)' }
+        },
+        'elevation-press': {
+          '0%': { transform: 'translateY(-1px)' },
+          '100%': { transform: 'translateY(0px)' }
         }
       }
     },

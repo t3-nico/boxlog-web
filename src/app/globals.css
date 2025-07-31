@@ -596,6 +596,75 @@
   }
 }
 
+/* デザインシステム5大要素のユーティリティクラス */
+@layer utilities {
+  /* エレベーション（影）クラス */
+  .elevation-0 { @apply shadow-elevation-0; }
+  .elevation-1 { @apply shadow-elevation-1; }
+  .elevation-2 { @apply shadow-elevation-2; }
+  .elevation-3 { @apply shadow-elevation-3; }
+  .elevation-4 { @apply shadow-elevation-4; }
+  .elevation-5 { @apply shadow-elevation-5; }
+  
+  /* ダークモード対応エレベーション */
+  .dark .elevation-1 { @apply shadow-elevation-dark-1; }
+  .dark .elevation-2 { @apply shadow-elevation-dark-2; }
+  .dark .elevation-3 { @apply shadow-elevation-dark-3; }
+  .dark .elevation-4 { @apply shadow-elevation-dark-4; }
+  .dark .elevation-5 { @apply shadow-elevation-dark-5; }
+  
+  /* インタラクティブエレベーション */
+  .elevation-interactive {
+    @apply elevation-1 transition-all duration-200 ease-in-out;
+  }
+  
+  .elevation-interactive:hover {
+    @apply elevation-2 -translate-y-0.5;
+  }
+  
+  .elevation-interactive:active {
+    @apply elevation-1 translate-y-0;
+  }
+  
+  /* カードコンポーネント用の組み合わせクラス */
+  .design-card {
+    @apply elevation-1 rounded-lg bg-bg-primary border border-border-primary;
+  }
+  
+  .design-card:hover {
+    @apply elevation-2;
+  }
+  
+  /* ボタンコンポーネント用の組み合わせクラス */
+  .design-button-primary {
+    @apply elevation-1 rounded-lg px-4 py-2 text-button-md bg-btn-primary text-btn-primary-text;
+    @apply hover:bg-btn-primary-hover hover:elevation-2 hover:-translate-y-0.5;
+    @apply active:bg-btn-primary-active active:elevation-1 active:translate-y-0;
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  .design-button-secondary {
+    @apply elevation-0 rounded-lg px-4 py-2 text-button-md bg-btn-secondary text-btn-secondary-text;
+    @apply hover:bg-btn-secondary-hover hover:elevation-1;
+    @apply active:bg-btn-secondary-active active:elevation-0;
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  .design-button-ghost {
+    @apply elevation-0 rounded-lg px-4 py-2 text-button-md bg-btn-ghost text-btn-ghost-text;
+    @apply hover:bg-btn-ghost-hover hover:elevation-1;
+    @apply active:bg-btn-ghost-active active:elevation-0;
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  /* フォーム要素用の組み合わせクラス */
+  .design-input {
+    @apply elevation-0 rounded-md px-3 py-2 text-body-md bg-input-bg text-input-text border border-input-border;
+    @apply focus:border-input-focus focus:shadow-focus focus:outline-none;
+    @apply transition-all duration-200 ease-in-out;
+  }
+}
+
 /* Line clamp utilities for text truncation */
 .line-clamp-1 {
   overflow: hidden;

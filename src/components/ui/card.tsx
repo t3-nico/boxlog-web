@@ -9,8 +9,8 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      // Neutral Color System Integration for Card
-      "rounded-lg border border-border-primary bg-bg-elevated text-text-primary shadow-sm transition-colors",
+      // デザインシステム統合: Neutral Color + Elevation + 8px Grid
+      "elevation-1 rounded-lg border border-border-primary bg-bg-elevated text-text-primary hover:elevation-2 transition-all duration-200 ease-in-out",
       className
     )}
     {...props}
@@ -24,7 +24,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn("flex flex-col space-y-2 p-6", className)} // 8pxグリッド準拠
     {...props}
   />
 ))
@@ -37,8 +37,8 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      // Neutral system - Primary text for card titles
-      "text-2xl font-semibold leading-none tracking-tight text-text-primary",
+      // 新しいタイポグラフィシステム適用
+      "text-heading-xl text-text-primary",
       className
     )}
     {...props}
@@ -53,8 +53,8 @@ const CardDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      // Neutral system - Secondary text for descriptions
-      "text-sm text-text-secondary",
+      // 新しいタイポグラフィシステム適用
+      "text-body-md text-text-secondary",
       className
     )}
     {...props}
