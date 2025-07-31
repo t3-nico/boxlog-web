@@ -141,10 +141,10 @@ export function CompassCommandPalette() {
             <CommandGroup heading="📚 検索のヒント">
               <CommandItem disabled>
                 <div className="text-sm text-muted-foreground">
-                  <div>• "CLAUDE" - 開発ガイド</div>
-                  <div>• "database" - データベース関連</div>
-                  <div>• "auth" - 認証設定</div>
-                  <div>• "component" - UIコンポーネント</div>
+                  <div>• &quot;CLAUDE&quot; - 開発ガイド</div>
+                  <div>• &quot;database&quot; - データベース関連</div>
+                  <div>• &quot;auth&quot; - 認証設定</div>
+                  <div>• &quot;component&quot; - UIコンポーネント</div>
                 </div>
               </CommandItem>
             </CommandGroup>

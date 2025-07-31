@@ -252,3 +252,84 @@ export const VERIFIED_COMBINATIONS = {
     SECONDARY_BUTTON: { bg: '#262626', text: '#f5f5f5', ratio: 15.56 },
   }
 } as const
+
+// Skip links configuration
+export const SKIP_LINKS = [
+  { text: 'Skip to content', href: '#main-content' },
+  { text: 'Skip to navigation', href: '#navigation' },
+  { text: 'Skip to footer', href: '#footer' },
+] as const
+
+// Screen reader utility classes
+export const SCREEN_READER = {
+  ONLY: 'sr-only',
+  FOCUSABLE: 'sr-only focus:not-sr-only',
+  ANNOUNCE: 'sr-only live-region',
+} as const
+
+// Placeholder exports for legacy components (will be refactored)
+export class FocusManager {
+  static trapFocus = focusUtils.trapFocus
+}
+
+export class Announcer {
+  static init() {
+    // Initialization placeholder
+  }
+  
+  static announce(message: string) {
+    if (typeof window !== 'undefined') {
+      const announcement = document.createElement('div')
+      announcement.setAttribute('role', 'status')
+      announcement.setAttribute('aria-live', 'polite')
+      announcement.className = 'sr-only'
+      announcement.textContent = message
+      document.body.appendChild(announcement)
+      setTimeout(() => announcement.remove(), 1000)
+    }
+  }
+}
+
+export class A11yValidator {
+  static validateContrast = getContrastRatio
+  static meetsRequirement = meetsContrastRequirement
+  
+  static reportIssues() {
+    // Placeholder for reporting issues
+    const results = validateNeutralColorCombinations()
+    const issues = results.filter(r => !r.recommended)
+    return issues
+  }
+}
+
+export const KeyboardNav = {
+  KEYS: {
+    ENTER: 'Enter',
+    SPACE: ' ',
+    ESCAPE: 'Escape',
+    TAB: 'Tab',
+    ARROW_UP: 'ArrowUp',
+    ARROW_DOWN: 'ArrowDown',
+    ARROW_LEFT: 'ArrowLeft',
+    ARROW_RIGHT: 'ArrowRight',
+  },
+  
+  handleArrowKeys: (e: KeyboardEvent, items: HTMLElement[]) => {
+    const currentIndex = items.findIndex(item => item === document.activeElement)
+    let nextIndex = currentIndex
+    
+    switch (e.key) {
+      case 'ArrowDown':
+        nextIndex = (currentIndex + 1) % items.length
+        break
+      case 'ArrowUp':
+        nextIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1
+        break
+    }
+    
+    if (nextIndex !== currentIndex) {
+      e.preventDefault()
+      items[nextIndex]?.focus()
+    }
+  }
+}
