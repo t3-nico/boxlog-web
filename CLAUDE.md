@@ -121,6 +121,15 @@ npm run build:production    # プロダクションビルド
 npm run test:lighthouse     # Lighthouse CI テスト
 ```
 
+### 1Password CLI Integration
+```bash
+npm run dev:secure          # 1Password秘密情報付きで開発開始
+npm run build:secure        # 1Password秘密情報付きでビルド
+npm run test:secure         # 1Password秘密情報付きでテスト
+npm run secrets:inject      # .env.template → .env.local生成
+npm run secrets:validate    # 1Password接続確認
+```
+
 ## 🧩 Component Development Guidelines
 
 ### Component Priority (必須)

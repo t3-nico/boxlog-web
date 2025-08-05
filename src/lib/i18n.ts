@@ -485,6 +485,11 @@ export interface Dictionary {
       title: string
       subtitle: string
     }
+    terms: {
+      title: string
+      description: string
+      lastUpdated: string
+    }
     tags: {
       title: string
       description: string
@@ -1117,6 +1122,11 @@ export const en: Dictionary = {
       title: 'Release Notes',
       subtitle: 'Latest features, improvements, and bug fixes for the YourSaaS platform. All changes are transparently documented and delivered rapidly to our customers.'
     },
+    terms: {
+      title: 'Terms of Service',
+      description: 'Our terms and conditions for using the BoxLog service',
+      lastUpdated: 'Last updated'
+    },
     tags: {
       title: 'Tagged Articles',
       description: 'Related blog posts, release notes, and documentation.',
@@ -1748,6 +1758,11 @@ export const jp: Dictionary = {
     releases: {
       title: 'リリースノート',
       subtitle: '最新の機能、改善、修正について'
+    },
+    terms: {
+      title: '利用規約',
+      description: 'BoxLogサービスをご利用いただく上での規約',
+      lastUpdated: '最終更新'
     },
     tags: {
       title: 'タグの記事',

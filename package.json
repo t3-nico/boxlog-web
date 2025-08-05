@@ -21,7 +21,12 @@
     "audit:performance": "node src/scripts/performance-audit.js",
     "test:performance": "npm run build && npm run audit:performance",
     "cleanup:console": "node src/scripts/cleanup-console.js",
-    "prepare:production": "npm run cleanup:console && npm run lint && npm run type-check && npm run test:run && npm run build"
+    "prepare:production": "npm run cleanup:console && npm run lint && npm run type-check && npm run test:run && npm run build",
+    "dev:secure": "op run -- npm run dev",
+    "build:secure": "op run -- npm run build",
+    "test:secure": "op run -- npm run test",
+    "secrets:inject": "op inject -i .env.template -o .env.local",
+    "secrets:validate": "op item list --vault Private"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
