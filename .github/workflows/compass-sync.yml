@@ -1,0 +1,38 @@
+name: Sync Compass Submodule
+
+on:
+  repository_dispatch:
+    types: [compass-updated]
+
+jobs:
+  sync-compass:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.APP_WEB_REPO_TOKEN }}
+          submodules: recursive
+      
+      - name: Update Compass submodule
+        run: |
+          git submodule update --remote compass
+          
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add compass
+          git commit -m "[auto] Compass submodule updated to ${{ github.event.client_payload.sha }}"
+          git push origin ${{ github.ref_name }}
