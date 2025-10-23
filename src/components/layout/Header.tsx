@@ -5,9 +5,26 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { LazySearchDialog } from '@/components/search/LazySearchDialog'
-import { Search, X, Menu } from '@/lib/icons'
+import { Search, Menu } from '@/lib/icons'
 import type { Dictionary } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
 
 interface HeaderProps {
   locale: string
@@ -15,18 +32,23 @@ interface HeaderProps {
 }
 
 export function Header({ locale, dict }: HeaderProps) {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const navigation = [
     { name: dict.common.features, href: '/features' },
     { name: dict.common.pricing, href: '/pricing' },
-    { name: dict.common.docs, href: '/docs' },
-    { name: dict.common.releases, href: '/releases' },
-    { name: dict.common.blog, href: '/blog' },
-    { name: dict.common.tags, href: '/tags' },
+    {
+      name: 'Resources',
+      items: [
+        { name: dict.common.docs, href: '/docs', description: 'Documentation and guides' },
+        { name: dict.common.blog, href: '/blog', description: 'Latest articles and tutorials' },
+        { name: dict.common.releases, href: '/releases', description: 'Release notes and changelog' },
+      ]
+    },
     { name: dict.common.about, href: '/about' },
   ]
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +64,7 @@ export function Header({ locale, dict }: HeaderProps) {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     window.addEventListener('keydown', handleKeyDown)
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('keydown', handleKeyDown)
@@ -51,159 +73,171 @@ export function Header({ locale, dict }: HeaderProps) {
 
   return (
     <header
-      id="navigation"
-      className="fixed top-0 left-0 right-0 z-[9999] bg-bg-primary/95 backdrop-blur-sm"
-      role="banner"
+      className={cn(
+        'sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60',
+        isScrolled && 'shadow-sm'
+      )}
     >
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo and Navigation */}
-          <div className="flex items-center">
-            <Link
-              href={`/${locale}`}
-              className="text-xl font-bold text-text-primary hover:text-text-secondary transition-colors"
-            >
-              YourSaaS
+      <div className="container flex h-16 items-center justify-between">
+        {/* Logo */}
+        <Link
+          href={`/${locale}`}
+          className="flex items-center space-x-2"
+        >
+          <span className="text-xl font-bold">BoxLog</span>
+        </Link>
+
+        {/* Desktop Navigation */}
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList>
+            {navigation.map((item) => (
+              <NavigationMenuItem key={item.name}>
+                {'items' in item ? (
+                  <>
+                    <NavigationMenuTrigger>{item.name}</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                        {item.items.map((subItem) => (
+                          <li key={subItem.name}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href={`/${locale}${subItem.href}`}
+                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              >
+                                <div className="text-sm font-medium leading-none">
+                                  {subItem.name}
+                                </div>
+                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                  {subItem.description}
+                                </p>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                ) : (
+                  <Link href={`/${locale}${item.href}`} legacyBehavior passHref>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      {item.name}
+                    </NavigationMenuLink>
+                  </Link>
+                )}
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+
+        {/* Desktop Actions */}
+        <div className="hidden md:flex items-center space-x-2">
+          {/* Search Button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsSearchOpen(true)}
+            className="relative h-9 w-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
+          >
+            <Search className="h-4 w-4 xl:mr-2" aria-hidden="true" />
+            <span className="hidden xl:inline-flex">{dict.common.search}...</span>
+            <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 xl:flex">
+              <span className="text-xs">⌘</span>K
+            </kbd>
+          </Button>
+
+          <LanguageSwitcher currentLocale={locale} />
+          <ThemeToggle />
+
+          <Button variant="ghost" asChild>
+            <Link href={`/${locale}/contact`}>
+              {dict.common.contact || 'Contact'}
             </Link>
-            
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-6 ml-10">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={`/${locale}${item.href}`}
-                  className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center">
-            {/* Global search button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 px-3 min-w-[200px] justify-start text-text-secondary border-border-primary hover:border-border-secondary focus:ring-2 focus:ring-accent-primary focus:ring-offset-2 mr-4"
-              aria-label="Open search dialog"
-            >
-              <Search className="h-4 w-4" aria-hidden="true" />
-              <span className="text-sm">{dict.common.search}...</span>
-              <kbd className="ml-auto pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-bg-tertiary px-1.5 font-mono text-[10px] font-medium text-text-secondary opacity-100 border-border-primary">
-                <span className="text-xs">⌘</span>K
-              </kbd>
-            </Button>
-            
-            <Button 
-              variant="ghost" 
-              className="text-text-secondary hover:text-text-primary hover:bg-bg-tertiary ml-4"
-              asChild
-            >
-              <Link href={`/${locale}/login`}>
-                {dict.common.login}
-              </Link>
-            </Button>
-            <Button 
-              asChild
-              style={{
-                backgroundColor: 'var(--signup-btn-bg, #171717)',
-                color: 'var(--signup-btn-text, #ffffff)',
-                border: 'none'
-              }}
-              className="hover:opacity-90"
-            >
-              <Link href={`/${locale}/signup`}>
-                {dict.common.signup}
-              </Link>
-            </Button>
-            
-            <div className="ml-6 flex items-center gap-2">
-              <LanguageSwitcher currentLocale={locale} />
-              <ThemeToggle />
-            </div>
-          </div>
-
-          {/* Mobile actions */}
-          <div className="md:hidden flex items-center gap-2">
-            {/* Mobile search button */}
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => setIsSearchOpen(true)}
-              className="p-2"
-            >
-              <Search className="h-5 w-5" />
-              <span className="sr-only">{dict.common.search}</span>
-            </Button>
-            
-            <LanguageSwitcher currentLocale={locale} />
-            <ThemeToggle />
-            
-            {/* Mobile menu button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="border-0 bg-transparent hover:bg-bg-tertiary"
-            >
-              <span className="sr-only">Open main menu</span>
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </Button>
-          </div>
+          </Button>
         </div>
 
-        {/* Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-bg-primary border-t border-border-primary shadow-lg">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={`/${locale}${item.href}`}
-                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary rounded-md transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="pt-4 pb-2 border-t border-border-primary space-y-2 px-3">
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-center text-text-secondary hover:text-text-primary hover:bg-bg-tertiary" 
-                  asChild
-                >
-                  <Link href={`/${locale}/login`} onClick={() => setIsMobileMenuOpen(false)}>
-                    {dict.common.login}
-                  </Link>
-                </Button>
-                <Button 
-                  className="w-full hover:opacity-90" 
-                  style={{
-                    backgroundColor: 'var(--signup-btn-bg, #171717)',
-                    color: 'var(--signup-btn-text, #ffffff)',
-                    border: 'none'
-                  }}
-                  asChild
-                >
-                  <Link href={`/${locale}/signup`} onClick={() => setIsMobileMenuOpen(false)}>
-                    {dict.common.signup}
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Mobile Menu */}
+        <div className="flex md:hidden items-center space-x-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSearchOpen(true)}
+          >
+            <Search className="h-5 w-5" />
+            <span className="sr-only">{dict.common.search}</span>
+          </Button>
+
+          <LanguageSwitcher currentLocale={locale} />
+          <ThemeToggle />
+
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+              </SheetHeader>
+              <nav className="flex flex-col space-y-4 mt-6">
+                {navigation.map((item) => (
+                  'items' in item ? (
+                    <div key={item.name} className="space-y-2">
+                      <div className="font-medium text-sm text-muted-foreground px-2">
+                        {item.name}
+                      </div>
+                      <div className="space-y-1 pl-4">
+                        {item.items.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            href={`/${locale}${subItem.href}`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block px-2 py-1.5 text-sm rounded-md hover:bg-accent"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      href={`/${locale}${item.href}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block px-2 py-1.5 text-sm font-medium rounded-md hover:bg-accent"
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                ))}
+                <div className="pt-4 border-t">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    asChild
+                  >
+                    <Link
+                      href={`/${locale}/contact`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {dict.common.contact || 'Contact'}
+                    </Link>
+                  </Button>
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
-      
-      {/* Global search dialog */}
-      <LazySearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} dict={dict} locale={locale} />
+
+      {/* Search Dialog */}
+      <LazySearchDialog
+        open={isSearchOpen}
+        onOpenChange={setIsSearchOpen}
+        dict={dict}
+        locale={locale}
+      />
     </header>
   )
 }
