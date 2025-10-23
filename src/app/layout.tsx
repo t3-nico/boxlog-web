@@ -1,7 +1,4 @@
 import type { Metadata } from 'next'
-import { FontPreloader, FontOptimization } from '@/components/performance/FontOptimization'
-import { CriticalCSS } from '@/components/performance/CriticalCSS'
-import { ThirdPartyOptimization } from '@/components/performance/ThirdPartyOptimization'
 import { generateEnhancedMetadata, StructuredData } from '@/components/seo/EnhancedSEO'
 import { ThemeProvider } from '@/lib/theme-provider'
 import './globals.css'
@@ -21,10 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <FontPreloader />
-        <CriticalCSS />
-        <StructuredData 
-          type="Organization" 
+        <StructuredData
+          type="Organization"
           data={{
             name: 'YourSaaS',
             alternateName: 'YourSaaS Platform',
@@ -36,19 +31,17 @@ export default function RootLayout({
               contactType: 'customer service',
               email: 'contact@yoursaas.com'
             }
-          }} 
+          }}
         />
-        <StructuredData 
-          type="WebSite" 
+        <StructuredData
+          type="WebSite"
           data={{
             name: 'YourSaaS Platform',
             alternateName: 'YourSaaS'
-          }} 
+          }}
         />
       </head>
       <body className="antialiased">
-        <FontOptimization />
-        <ThirdPartyOptimization />
         <ThemeProvider>
           {children}
         </ThemeProvider>
