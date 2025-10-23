@@ -1,32 +1,45 @@
 'use client'
 
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { Share2 } from 'lucide-react'
+
 interface ShareButtonProps {
   title: string
   version: string
 }
 
 export function ShareButton({ title, version }: ShareButtonProps) {
-  const handleShare = () => {
+  const handleShare = async () => {
     const url = window.location.href
     const fullTitle = `${title} - v${version}`
-    
+
     if (navigator.share) {
-      navigator.share({ title: fullTitle, url })
+      try {
+        await navigator.share({ title: fullTitle, url })
+      } catch (err) {
+        // User cancelled share
+        console.log('Share cancelled')
+      }
     } else {
-      navigator.clipboard.writeText(url)
-      alert('URL copied to clipboard')
+      try {
+        await navigator.clipboard.writeText(url)
+        toast.success('URL copied to clipboard')
+      } catch (err) {
+        console.error('Failed to copy URL:', err)
+        toast.error('Failed to copy URL')
+      }
     }
   }
 
   return (
-    <button
+    <Button
       onClick={handleShare}
-      className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+      variant="outline"
+      className="gap-2"
     >
-      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-      </svg>
+      <Share2 className="w-4 h-4" />
       Share
-    </button>
+    </Button>
   )
 }

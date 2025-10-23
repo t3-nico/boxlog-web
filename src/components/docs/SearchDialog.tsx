@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
 // クライアントサイド用の型定義
 interface SearchResult {
@@ -251,18 +252,19 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                   Recent searches
                 </div>
                 {searchHistory.map((item, index) => (
-                  <button
+                  <Button
                     key={index}
                     onClick={() => handleHistorySelect(item)}
-                    className={`w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center ${
-                      selectedIndex === index ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300'
+                    variant="ghost"
+                    className={`w-full px-4 py-2 h-auto justify-start ${
+                      selectedIndex === index ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : ''
                     }`}
                   >
-                    <svg className="w-4 h-4 mr-3 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mr-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     {item}
-                  </button>
+                  </Button>
                 ))}
               </div>
             ) : query && !isLoading && results.length === 0 ? (
@@ -274,12 +276,14 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                 <p className="text-gray-500 dark:text-gray-400 mb-2">No results found for &quot;{query}&quot;</p>
                 <p className="text-sm text-gray-400 dark:text-gray-500">
                   Try adjusting your search terms or browse the{' '}
-                  <button 
+                  <Button
                     onClick={() => router.push('/docs')}
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline"
+                    variant="ghost"
+                    size="sm"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline h-auto p-0"
                   >
                     documentation
-                  </button>
+                  </Button>
                 </p>
               </div>
             ) : results.length > 0 ? (
@@ -289,36 +293,37 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                   {results.length} result{results.length !== 1 ? 's' : ''}
                 </div>
                 {results.map((result, index) => (
-                  <button
+                  <Button
                     key={result.id}
                     onClick={() => handleResultSelect(result)}
-                    className={`w-full px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 transition-colors ${
-                      selectedIndex === index 
-                        ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 dark:border-blue-400 text-blue-700 dark:text-blue-300' 
-                        : 'border-transparent text-gray-700 dark:text-gray-300'
+                    variant="ghost"
+                    className={`w-full px-4 py-3 h-auto justify-start border-l-2 ${
+                      selectedIndex === index
+                        ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 dark:border-blue-400 text-blue-700 dark:text-blue-300'
+                        : 'border-transparent'
                     }`}
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between w-full">
                       <div className="flex-1 min-w-0">
                         <div className="font-medium text-sm mb-1">
-                          {result.matches.title ? 
-                            renderHighlightedText(result.matches.title) : 
+                          {result.matches.title ?
+                            renderHighlightedText(result.matches.title) :
                             result.title
                           }
                         </div>
-                        
+
                         {result.matches.description && (
                           <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
                             {renderHighlightedText(result.matches.description)}
                           </div>
                         )}
-                        
+
                         {result.matches.content && (
                           <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                             ...{renderHighlightedText(result.matches.content)}...
                           </div>
                         )}
-                        
+
                         <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
                           <span className="capitalize">{result.category.replace('-', ' ')}</span>
                           {result.tags.length > 0 && (
@@ -329,14 +334,14 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                           )}
                         </div>
                       </div>
-                      
+
                       <div className="ml-4 flex-shrink-0">
                         <svg className="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
                     </div>
-                  </button>
+                  </Button>
                 ))}
               </div>
             ) : !query && (
@@ -346,16 +351,17 @@ export function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                   Popular searches
                 </div>
                 {getPopularSearches().map((popularSearch, index) => (
-                  <button
+                  <Button
                     key={index}
                     onClick={() => handleHistorySelect(popularSearch)}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center text-gray-700 dark:text-gray-300"
+                    variant="ghost"
+                    className="w-full px-4 py-2 h-auto justify-start"
                   >
-                    <svg className="w-4 h-4 mr-3 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mr-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                     {popularSearch}
-                  </button>
+                  </Button>
                 ))}
               </div>
             )}

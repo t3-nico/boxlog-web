@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { Button } from '@/components/ui/button'
 
 interface TocItem {
   id: string
@@ -150,20 +151,21 @@ export function TableOfContents() {
       
       <nav className="space-y-1">
         {toc.map((item) => (
-          <button
+          <Button
             key={item.id}
             onClick={() => handleClick(item.id)}
-            className={`block w-full text-left py-2 px-3 text-sm rounded-md transition-colors ${
+            variant="ghost"
+            className={`block w-full text-left py-2 px-3 h-auto justify-start ${
               item.level === 3 ? 'ml-4 text-xs' : ''
             } ${
               activeId === item.id
                 ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 font-medium border-l-2 border-blue-600 dark:border-blue-400'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 border-transparent'
+                : 'hover:text-foreground border-l-2 border-transparent'
             }`}
             title={item.title}
           >
             <span className="line-clamp-2">{item.title}</span>
-          </button>
+          </Button>
         ))}
       </nav>
 

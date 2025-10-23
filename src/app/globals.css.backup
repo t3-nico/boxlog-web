@@ -1,72 +1,55 @@
 @import "tailwindcss";
 
-/* Modern Minimal Theme with Custom Extensions */
+/* Theme Variables */
 @layer theme {
   :root {
-    /* Modern Minimal - Base Variables (Blue Theme) */
+    /* shadcn/ui compatibility - HSL format */
     --background: 0 0% 100%;
-    --foreground: 222 84% 4.9%;
+    --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 4.9%;
+    --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 4.9%;
+    --popover-foreground: 240 10% 3.9%;
     --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 84% 4.9%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222 84% 4.9%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
-    --radius: 0.375rem;
+    --radius: 0.5rem;
 
-    /* Chart colors */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    /* Neutral Color System - RGB format for light mode */
+    --bg-primary: 250 250 250;      /* neutral-50 */
+    --bg-secondary: 245 245 245;    /* neutral-100 */
+    --bg-tertiary: 229 229 229;     /* neutral-200 */
+    --text-primary: 23 23 23;       /* neutral-900 */
+    --text-secondary: 82 82 82;     /* neutral-600 */
+    --text-tertiary: 163 163 163;   /* neutral-400 */
+    --border-primary: 229 229 229;  /* neutral-200 */
+    --border-secondary: 212 212 212; /* neutral-300 */
 
-    /* Sidebar */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5% 26%;
-    --sidebar-primary: 240 6% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 5% 96%;
-    --sidebar-accent-foreground: 240 6% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217 92% 76%;
-
-    /* Custom Neutral Color System - RGB format */
-    --bg-primary: 250 250 250;
-    --bg-secondary: 245 245 245;
-    --bg-tertiary: 229 229 229;
-    --text-primary: 23 23 23;
-    --text-secondary: 82 82 82;
-    --text-tertiary: 163 163 163;
-    --border-primary: 229 229 229;
-    --border-secondary: 212 212 212;
-
-    /* Semantic colors */
-    --error-color: 239 68 68;
-    --error-bg: 254 242 242;
-    --success-color: 34 197 94;
-    --success-bg: 240 253 244;
-    --warning-color: 234 179 8;
-    --warning-bg: 254 249 195;
-    --link-color: 59 130 246;
-    --link-hover: 37 99 235;
-    --info-color: 99 102 241;
-    --info-bg: 238 242 255;
+    /* Semantic colors - meaningful information only */
+    --error-color: 239 68 68;       /* red-500 */
+    --error-bg: 254 242 242;        /* red-50 */
+    --success-color: 34 197 94;     /* green-500 */
+    --success-bg: 240 253 244;      /* green-50 */
+    --warning-color: 234 179 8;     /* yellow-500 */
+    --warning-bg: 254 249 195;      /* yellow-50 */
+    --link-color: 59 130 246;       /* blue-500 */
+    --link-hover: 37 99 235;        /* blue-600 */
+    --info-color: 99 102 241;       /* indigo-500 */
+    --info-bg: 238 242 255;         /* indigo-50 */
 
     /* Focus and selection */
-    --focus-ring: 59 130 246;
-    --selection: 191 219 254;
+    --focus-ring: 59 130 246;       /* blue-500 */
+    --selection: 191 219 254;       /* blue-200 */
 
     /* Tag colors */
     --tag-neutral-bg: 245 245 245;
@@ -108,45 +91,28 @@
   }
 
   .dark {
-    /* Modern Minimal - Dark Mode (Blue Theme) */
-    --background: 222 84% 5%;
-    --foreground: 210 40% 98%;
-    --card: 222 84% 5%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 84% 5%;
-    --popover-foreground: 210 40% 98%;
+    /* shadcn/ui compatibility - dark mode */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
     --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
     --ring: 221.2 83.2% 53.3%;
 
-    /* Chart colors - dark mode */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-
-    /* Sidebar - dark mode */
-    --sidebar-background: 240 6% 10%;
-    --sidebar-foreground: 240 5% 65%;
-    --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 240 5% 26%;
-    --sidebar-accent: 240 4% 16%;
-    --sidebar-accent-foreground: 240 5% 65%;
-    --sidebar-border: 240 4% 16%;
-    --sidebar-ring: 217 92% 76%;
-
-    /* Custom Neutral Color System - dark mode */
+    /* Neutral Color System - dark mode */
     --bg-primary: 23 23 23;
     --bg-secondary: 38 38 38;
     --bg-tertiary: 64 64 64;
@@ -211,6 +177,40 @@
     --signup-btn-text: 23 23 23;
   }
 
+  /* System theme auto-switching */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light):not(.dark) {
+      --background: 240 10% 3.9%;
+      --foreground: 0 0% 98%;
+      --bg-primary: 23 23 23;
+      --bg-secondary: 38 38 38;
+      --bg-tertiary: 64 64 64;
+      --text-primary: 250 250 250;
+      --text-secondary: 212 212 212;
+      --text-tertiary: 115 115 115;
+      --border-primary: 64 64 64;
+      --border-secondary: 82 82 82;
+      --error-bg: 127 29 29;
+      --success-bg: 20 83 45;
+      --warning-bg: 113 63 18;
+      --info-bg: 49 46 129;
+      --selection: 30 64 175;
+      --tag-neutral-bg: 38 38 38;
+      --tag-neutral-text: 212 212 212;
+      --tag-neutral-hover: 64 64 64;
+      --tag-accent-bg: 49 46 129;
+      --tag-accent-text: 165 180 252;
+      --tag-accent-hover: 67 56 202;
+      --highlight-bg: 133 77 14;
+      --highlight-text: 254 240 138;
+      --icon-bg-primary: 38 38 38;
+      --icon-bg-secondary: 49 46 129;
+      --icon-bg-tertiary: 20 83 45;
+      --signup-btn-bg: 255 255 255;
+      --signup-btn-text: 23 23 23;
+    }
+  }
+
   /* High contrast mode */
   @media (prefers-contrast: high) {
     :root {
@@ -239,7 +239,6 @@
 @layer base {
   * {
     box-sizing: border-box;
-    border-color: hsl(var(--border));
   }
 
   html {
@@ -250,7 +249,7 @@
   body {
     color: hsl(var(--foreground));
     background: hsl(var(--background));
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -287,7 +286,7 @@
   select:focus-visible {
     outline: 2px solid rgb(var(--focus-ring));
     outline-offset: 2px;
-    border-radius: calc(var(--radius) - 2px);
+    border-radius: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import { Heading, Text } from '@/components/ui/typography'
 import { Tag as TagIcon, ChevronUp, ChevronDown } from 'lucide-react'
 import { getTagColor } from '@/lib/tags-client'
@@ -113,9 +114,11 @@ export function TagList({
       {/* 展開/縮小ボタン */}
       {hasMoreTags && (
         <div className="text-center">
-          <button
+          <Button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="inline-flex items-center px-4 py-2 border border-[rgb(var(--border-primary))] rounded-lg text-sm font-medium text-[rgb(var(--text-secondary))] bg-[rgb(var(--bg-primary))] hover:bg-[rgb(var(--bg-secondary))] transition-colors"
+            variant="outline"
+            size="sm"
+            className="inline-flex items-center"
           >
             {isExpanded ? (
               <>
@@ -128,7 +131,7 @@ export function TagList({
                 Show more (+{tags.length - maxDisplay})
               </>
             )}
-          </button>
+          </Button>
         </div>
       )}
 

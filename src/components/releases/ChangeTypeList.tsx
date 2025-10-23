@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { PartyPopper, Wrench, Bug, AlertTriangle, Lock, LucideIcon, ChevronDown } from 'lucide-react'
 import type { Dictionary } from '@/lib/i18n'
 
@@ -236,11 +237,12 @@ export function ChangeTypeSection({
 
   return (
     <div className="border border-[rgb(var(--border-primary))] rounded-lg overflow-hidden">
-      <button
+      <Button
         onClick={onToggle}
-        className="w-full px-6 py-4 bg-[rgb(var(--bg-secondary))] hover:bg-[rgb(var(--bg-tertiary))] transition-colors"
+        variant="ghost"
+        className="w-full px-6 py-4 h-auto bg-[rgb(var(--bg-secondary))] hover:bg-[rgb(var(--bg-tertiary))] justify-start"
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-4">
             <type.icon className="w-5 h-5" aria-label={type.label} />
             <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]">
@@ -250,14 +252,14 @@ export function ChangeTypeSection({
               {changes.length}
             </span>
           </div>
-          
-          <ChevronDown 
+
+          <ChevronDown
             className={`w-5 h-5 text-[rgb(var(--text-tertiary))] transition-transform ${
               isExpanded ? 'rotate-180' : ''
-            }`} 
+            }`}
           />
         </div>
-      </button>
+      </Button>
       
       {isExpanded && (
         <div className="px-6 py-4 bg-[rgb(var(--bg-primary))]">

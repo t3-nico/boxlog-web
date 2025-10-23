@@ -1,8 +1,9 @@
 'use client'
 
 import { ReactNode } from 'react'
+import { Alert, AlertDescription, AlertTitle } from './alert'
 import { Button } from './button'
-import { AlertTriangle, Wifi, Search } from 'lucide-react'
+import { AlertTriangle, Wifi, Search, AlertCircle } from 'lucide-react'
 import type { Dictionary } from '@/lib/i18n'
 
 interface ErrorStateProps {
@@ -13,16 +14,23 @@ interface ErrorStateProps {
     onClick: () => void
   }
   children?: ReactNode
-  icon?: 'error' | 'warning' | 'network' | 'search'
+  variant?: 'error' | 'warning' | 'network' | 'search'
   size?: 'sm' | 'md' | 'lg'
   dict?: Dictionary
 }
 
 const icons = {
-  error: <AlertTriangle className="w-full h-full text-red-500" strokeWidth={1.5} />,
-  warning: <AlertTriangle className="w-full h-full text-yellow-500" strokeWidth={1.5} />,
-  network: <Wifi className="w-full h-full text-gray-500" strokeWidth={1.5} />,
-  search: <Search className="w-full h-full text-gray-500" strokeWidth={1.5} />
+  error: AlertCircle,
+  warning: AlertTriangle,
+  network: Wifi,
+  search: Search
+}
+
+const variantStyles = {
+  error: 'border-red-500/50 text-red-900 dark:text-red-400',
+  warning: 'border-yellow-500/50 text-yellow-900 dark:text-yellow-400',
+  network: 'border-gray-500/50',
+  search: 'border-gray-500/50'
 }
 
 export function ErrorState({
@@ -30,64 +38,50 @@ export function ErrorState({
   description,
   action,
   children,
-  icon = 'error',
+  variant = 'error',
   size = 'md',
   dict
 }: ErrorStateProps) {
   // Use provided title/description or fall back to dictionary or default
   const finalTitle = title || dict?.errors.general.title || 'Something went wrong'
   const finalDescription = description || dict?.errors.general.description || 'An unexpected error occurred. Please try again.'
+
+  const Icon = icons[variant]
+
   const sizeClasses = {
-    sm: {
-      container: 'p-4',
-      icon: 'w-8 h-8 mb-3',
-      title: 'text-sm font-medium',
-      description: 'text-xs',
-      spacing: 'space-y-2'
-    },
-    md: {
-      container: 'p-6',
-      icon: 'w-12 h-12 mb-4',
-      title: 'text-base font-semibold',
-      description: 'text-sm',
-      spacing: 'space-y-4'
-    },
-    lg: {
-      container: 'p-8',
-      icon: 'w-16 h-16 mb-6',
-      title: 'text-lg font-semibold',
-      description: 'text-base',
-      spacing: 'space-y-4'
-    }
+    sm: 'p-4',
+    md: 'p-6',
+    lg: 'p-8'
   }
 
-  const classes = sizeClasses[size]
+  const iconSizeClasses = {
+    sm: 'h-4 w-4',
+    md: 'h-5 w-5',
+    lg: 'h-6 w-6'
+  }
 
   return (
-    <div className={`text-center ${classes.container}`}>
-      <div className={`${classes.spacing}`}>
-        <div className={`${classes.icon} mx-auto flex items-center justify-center`}>
-          {icons[icon]}
-        </div>
-        
-        <div>
-          <h3 className={`${classes.title} text-gray-900 mb-1`}>
-            {finalTitle}
-          </h3>
-          <p className={`${classes.description} text-gray-600`}>
-            {finalDescription}
-          </p>
-        </div>
+    <Alert className={`${sizeClasses[size]} ${variantStyles[variant]}`}>
+      <Icon className={iconSizeClasses[size]} />
+      <AlertTitle className="mt-0">{finalTitle}</AlertTitle>
+      <AlertDescription className="mt-2">
+        {finalDescription}
+      </AlertDescription>
 
-        {action && (
-          <Button onClick={action.onClick} size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'default'}>
+      {action && (
+        <div className="mt-4">
+          <Button
+            onClick={action.onClick}
+            size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'default'}
+            variant="outline"
+          >
             {action.label}
           </Button>
-        )}
+        </div>
+      )}
 
-        {children}
-      </div>
-    </div>
+      {children && <div className="mt-4">{children}</div>}
+    </Alert>
   )
 }
 
@@ -95,7 +89,7 @@ export function ErrorState({
 export function NetworkErrorState({ onRetry, dict }: { onRetry?: () => void; dict?: Dictionary }) {
   return (
     <ErrorState
-      icon="network"
+      variant="network"
       title={dict?.errors.network.title}
       description={dict?.errors.network.description}
       action={onRetry ? { label: dict?.errors.network.tryAgain || 'Try again', onClick: onRetry } : undefined}
@@ -107,7 +101,7 @@ export function NetworkErrorState({ onRetry, dict }: { onRetry?: () => void; dic
 export function SearchErrorState({ onClear, dict }: { onClear?: () => void; dict?: Dictionary }) {
   return (
     <ErrorState
-      icon="search"
+      variant="search"
       title={dict?.errors.search.title}
       description={dict?.errors.search.description}
       action={onClear ? { label: dict?.errors.search.clearSearch || 'Clear search', onClick: onClear } : undefined}
@@ -116,12 +110,12 @@ export function SearchErrorState({ onClear, dict }: { onClear?: () => void; dict
   )
 }
 
-export function FormErrorState({ 
+export function FormErrorState({
   title,
   description,
   onRetry,
   dict
-}: { 
+}: {
   title?: string
   description?: string
   onRetry?: () => void
@@ -129,7 +123,7 @@ export function FormErrorState({
 }) {
   return (
     <ErrorState
-      icon="warning"
+      variant="warning"
       title={title || dict?.errors.form.title}
       description={description || dict?.errors.form.description}
       action={onRetry ? { label: dict?.errors.form.tryAgain || 'Try again', onClick: onRetry } : undefined}

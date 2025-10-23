@@ -1,25 +1,7 @@
 import Link from 'next/link'
-import { Container } from '@/components/ui/container'
-import { Twitter, Github, Linkedin } from 'lucide-react'
+import { Twitter, Github, Youtube } from 'lucide-react'
 import type { Dictionary } from '@/lib/i18n'
-
-const socialLinks = [
-  {
-    name: 'Twitter',
-    href: '#',
-    icon: <Twitter className="h-6 w-6" />,
-  },
-  {
-    name: 'GitHub',
-    href: '#',
-    icon: <Github className="h-6 w-6" />,
-  },
-  {
-    name: 'LinkedIn',
-    href: '#',
-    icon: <Linkedin className="h-6 w-6" />,
-  },
-]
+import { getNavigationConfig } from '@/lib/navigation'
 
 interface FooterProps {
   locale: string
@@ -27,69 +9,65 @@ interface FooterProps {
 }
 
 export function Footer({ locale, dict }: FooterProps) {
-  const navigation = {
-    product: [
-      { name: dict.common.features, href: '/features' },
-      { name: dict.common.pricing, href: '/pricing' },
-      { name: dict.footer.integrations, href: '/integrations' },
-      { name: dict.footer.api, href: '/api' },
-      { name: dict.common.releases, href: '/releases' },
-    ],
-    company: [
-      { name: dict.common.about, href: '/about' },
-      { name: dict.common.blog, href: '/blog' },
-      { name: dict.footer.careers, href: '/careers' },
-      { name: dict.common.contact, href: '/contact' },
-      { name: dict.footer.partners, href: '/partners' },
-    ],
-    resources: [
-      { name: dict.common.docs, href: '/docs' },
-      { name: dict.footer.helpCenter, href: '/help' },
-      { name: dict.footer.guides, href: '/guides' },
-      { name: dict.footer.community, href: '/community' },
-      { name: dict.footer.status, href: '/status' },
-    ],
-    legal: [
-      { name: dict.footer.privacyPolicy, href: '/privacy' },
-      { name: dict.footer.termsOfService, href: '/terms' },
-      { name: dict.footer.cookiePolicy, href: '/cookies' },
-      { name: 'GDPR', href: '/gdpr' },
-      { name: dict.footer.security, href: '/security' },
-    ],
-  }
-  return (
-    <footer className="bg-bg-tertiary" aria-labelledby="footer-heading">
-      <h2 id="footer-heading" className="sr-only">
-        Footer
-      </h2>
-      <Container>
-        <div className="py-16">
-          {/* Main footer content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
-            {/* Company info */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-2">
-              <Link
-                href={`/${locale}`}
-                className="text-2xl font-bold text-text-primary hover:text-text-secondary transition-colors"
-              >
-                YourSaaS
-              </Link>
-              <p className="mt-4 text-base text-text-tertiary max-w-md">
-                {dict.pages.home.subtitle}
-              </p>
-            </div>
+  const navigation = getNavigationConfig(dict)
 
+  const socialLinks = [
+    {
+      name: 'Twitter',
+      href: 'https://twitter.com',
+      icon: Twitter,
+    },
+    {
+      name: 'GitHub',
+      href: 'https://github.com',
+      icon: Github,
+    },
+    {
+      name: 'YouTube',
+      href: 'https://youtube.com',
+      icon: Youtube,
+    },
+  ]
+
+  return (
+    <footer className="bg-background">
+      <div className="mx-auto max-w-7xl px-6 pt-16 pb-8 sm:pt-24 lg:px-8 lg:pt-32">
+        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
+          {/* ブランドセクション */}
+          <div className="space-y-8">
+            <Link href={`/${locale}`} className="flex items-center">
+              <span className="text-2xl font-bold">BoxLog</span>
+            </Link>
+            <p className="text-sm leading-6 text-balance text-muted-foreground">
+              {dict.pages.home.subtitle}
+            </p>
+            <div className="flex gap-x-6">
+              {socialLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* ナビゲーションリンク */}
+          <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             {/* Product */}
-            <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {dict.footer.product}
-              </h3>
-              <ul className="mt-4 space-y-2">
-                {navigation.product.map((item) => (
+            <div>
+              <h3 className="text-sm font-semibold leading-6">Product</h3>
+              <ul role="list" className="mt-6 space-y-4">
+                {navigation.footer.product.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={`/${locale}${item.href}`}
-                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
+                      className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -99,90 +77,47 @@ export function Footer({ locale, dict }: FooterProps) {
             </div>
 
             {/* Company */}
-            <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {dict.footer.company}
-              </h3>
-              <ul className="mt-4 space-y-2">
-                {navigation.company.map((item) => (
+            <div>
+              <h3 className="text-sm font-semibold leading-6">Company</h3>
+              <ul role="list" className="mt-6 space-y-4">
+                {navigation.footer.company.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={`/${locale}${item.href}`}
-                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
+                      className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {item.name}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
-
-            {/* Resources */}
-            <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {dict.footer.resources}
-              </h3>
-              <ul className="mt-4 space-y-2">
-                {navigation.resources.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      href={`/${locale}${item.href}`}
-                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div className="col-span-1">
-              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                {dict.footer.legal}
-              </h3>
-              <ul className="mt-4 space-y-2">
-                {navigation.legal.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      href={`/${locale}${item.href}`}
-                      className="text-base text-text-tertiary hover:text-text-primary transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom section */}
-          <div className="mt-12 pt-8 border-t border-border-secondary">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              {/* Copyright */}
-              <p className="text-base text-text-tertiary">
-                &copy; {new Date().getFullYear()} YourSaaS, Inc. {dict.footer.copyright}
-              </p>
-
-              {/* Social links */}
-              <div className="mt-4 md:mt-0">
-                <div className="flex space-x-6">
-                  {socialLinks.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="text-text-tertiary hover:text-text-primary transition-colors"
-                    >
-                      <span className="sr-only">{item.name}</span>
-                      {item.icon}
-                    </Link>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </div>
-      </Container>
+
+        {/* コピーライト */}
+        <div className="mt-16 border-t border-border pt-8 sm:mt-20 lg:mt-24">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
+            <p className="text-sm leading-6 text-muted-foreground">
+              &copy; {new Date().getFullYear()} BoxLog, Inc. All rights reserved.
+            </p>
+            <div className="flex gap-x-6">
+              <Link
+                href={`/${locale}/privacy`}
+                className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Privacy
+              </Link>
+              <Link
+                href={`/${locale}/terms`}
+                className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Terms
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
   )
 }

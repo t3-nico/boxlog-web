@@ -189,12 +189,14 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
             onKeyDown={handleKeyDown}
             className="border-0 shadow-none text-base text-gray-900 placeholder:text-gray-400 focus-visible:ring-0 focus:outline-none bg-transparent dark:text-gray-100 dark:placeholder:text-gray-500 flex-1"
           />
-          <button
+          <Button
             onClick={() => onOpenChange(false)}
-            className="h-5 w-5 rounded-sm opacity-70 hover:opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 flex items-center justify-center flex-shrink-0"
+            variant="ghost"
+            size="icon"
+            className="h-5 w-5 flex-shrink-0"
           >
             <X className="h-4 w-4" />
-          </button>
+          </Button>
         </div>
 
         {/* 検索内容 */}
@@ -209,14 +211,15 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                   </h3>
                   <div className="space-y-1">
                     {RECENT_SEARCHES.map((search, index) => (
-                      <button
+                      <Button
                         key={index}
                         onClick={() => setQuery(search)}
-                        className="flex items-center gap-4 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
+                        variant="ghost"
+                        className="flex items-center gap-4 w-full p-2 h-auto justify-start"
                       >
-                        <Clock className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                        <span className="text-sm text-gray-700 dark:text-gray-300">{search}</span>
-                      </button>
+                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm">{search}</span>
+                      </Button>
                     ))}
                   </div>
                 </div>
@@ -229,15 +232,17 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {popularTags.map((tag, index) => (
-                    <button
+                    <Button
                       key={index}
                       onClick={() => handleTagClick(tag.name)}
-                      className={`inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-colors ${getTagColorClass(tag.color)}`}
+                      variant="ghost"
+                      size="sm"
+                      className={`inline-flex items-center gap-2 rounded-full ${getTagColorClass(tag.color)}`}
                     >
                       <Tag className="h-3 w-3" />
                       <span>{tag.name}</span>
                       <span className="text-xs opacity-75">({tag.count})</span>
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -249,14 +254,15 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                 </h3>
                 <div className="space-y-1">
                   {QUICK_LINKS.map((link, index) => (
-                    <button
+                    <Button
                       key={index}
                       onClick={() => {
                         onOpenChange(false)
                         router.push(link.href)
                       }}
-                      className={`flex items-start gap-4 w-full p-4 rounded-lg transition-colors text-left ${
-                        selectedIndex === index ? 'bg-blue-50 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-700' : 'hover:bg-gray-50 dark:hover:bg-gray-800'
+                      variant="ghost"
+                      className={`flex items-start gap-4 w-full p-4 h-auto justify-start ${
+                        selectedIndex === index ? 'bg-blue-50 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-700' : ''
                       }`}
                     >
                       <div className="mt-0.5">
@@ -275,7 +281,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                           {link.type === 'docs' ? dict.search.docs : link.type === 'blog' ? dict.search.blog : dict.search.release}
                         </Badge>
                       </div>
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -292,9 +298,10 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
               </div>
               
               {/* 全文検索 */}
-              <button
+              <Button
                 onClick={() => handleSearch(query)}
-                className="flex items-center gap-4 w-full p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/40 dark:border-blue-700"
+                variant="ghost"
+                className="flex items-center gap-4 w-full p-4 h-auto justify-start bg-blue-50 hover:bg-blue-100 border border-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/40 dark:border-blue-700"
               >
                 <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <div className="text-left">
@@ -305,7 +312,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                     {dict.search.findResultsAcross}
                   </div>
                 </div>
-              </button>
+              </Button>
 
               {/* プレビュー検索結果 */}
               {previewResults.length > 0 && (
@@ -313,13 +320,14 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                   <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">{dict.search.previewResults}</p>
                   <div className="space-y-2">
                     {previewResults.map((result, index) => (
-                      <button
+                      <Button
                         key={index}
                         onClick={() => {
                           onOpenChange(false)
                           router.push(result.url)
                         }}
-                        className="flex items-start gap-4 w-full p-4 rounded-lg hover:bg-gray-50 transition-colors text-left border border-gray-100 dark:hover:bg-gray-800 dark:border-gray-700"
+                        variant="ghost"
+                        className="flex items-start gap-4 w-full p-4 h-auto justify-start border border-gray-100 dark:border-gray-700"
                       >
                         <div className="mt-0.5">
                           {getTypeIcon(result.type)}
@@ -344,7 +352,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                         <Badge variant="outline" className="text-xs px-2 py-1 self-start">
                           {result.type === 'docs' ? dict.search.docs : result.type === 'blog' ? dict.search.blog : result.type === 'tags' ? dict.search.tags : dict.search.release}
                         </Badge>
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </div>
@@ -362,13 +370,14 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                       <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">{dict.search.relatedTags}</p>
                       <div className="space-y-1">
                         {matchedTags.map((tag, index) => (
-                          <button
+                          <Button
                             key={index}
                             onClick={() => handleTagClick(tag.name)}
-                            className="flex items-center gap-4 w-full p-2 rounded-lg hover:bg-gray-50 transition-colors text-left dark:hover:bg-gray-800"
+                            variant="ghost"
+                            className="flex items-center gap-4 w-full p-2 h-auto justify-start"
                           >
                             <div className="mt-0.5">
-                              <Tag className="h-4 w-4 text-gray-500" />
+                              <Tag className="h-4 w-4 text-muted-foreground" />
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
@@ -387,7 +396,7 @@ export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogP
                             <Badge variant="outline" className="text-xs px-2 py-1 self-start">
                               {dict.search.tags}
                             </Badge>
-                          </button>
+                          </Button>
                         ))}
                       </div>
                     </div>

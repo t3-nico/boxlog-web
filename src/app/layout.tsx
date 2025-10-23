@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { generateEnhancedMetadata, StructuredData } from '@/components/seo/EnhancedSEO'
 import { ThemeProvider } from '@/lib/theme-provider'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
 export const metadata: Metadata = generateEnhancedMetadata({
@@ -44,6 +45,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
+import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { ReleaseCard } from './ReleaseCard'
@@ -230,12 +231,13 @@ export function ReleasesClient({
                   <Text variant="muted" className="mb-4">
                     {dict.releases.noResults.description}
                   </Text>
-                  <button
+                  <Button
                     onClick={handleClearFilters}
-                    className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors dark:bg-blue-600 dark:hover:bg-blue-700"
+                    variant="default"
+                    className="bg-blue-600 hover:bg-blue-700"
                   >
                     {dict.releases.noResults.clearFilters}
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>

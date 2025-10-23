@@ -1,6 +1,8 @@
 'use client'
 
 import { Twitter, Facebook, Linkedin, Link2, Copy } from 'lucide-react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 
 interface ShareButtonProps {
   title: string
@@ -12,7 +14,7 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
   const url = `${typeof window !== 'undefined' ? window.location.origin : ''}${locale === 'jp' ? '/jp' : ''}/blog/${slug}`
   const encodedTitle = encodeURIComponent(title)
   const encodedUrl = encodeURIComponent(url)
-  
+
   const shareLinks = [
     {
       name: 'Twitter',
@@ -37,9 +39,10 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(url)
-      alert(locale === 'jp' ? 'URLをコピーしました' : 'URL copied to clipboard')
+      toast.success(locale === 'jp' ? 'URLをコピーしました' : 'URL copied to clipboard')
     } catch (err) {
       console.error('Failed to copy URL:', err)
+      toast.error(locale === 'jp' ? 'URLのコピーに失敗しました' : 'Failed to copy URL')
     }
   }
 
@@ -52,37 +55,47 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
         {shareLinks.map((social) => (
-          <a
+          <Button
             key={social.name}
-            href={social.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`text-gray-500 dark:text-gray-400 ${social.color} transition-colors p-1 rounded`}
-            title={`Share on ${social.name}`}
-            aria-label={`Share on ${social.name}`}
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            asChild
           >
-            <social.icon className="w-5 h-5" />
-          </a>
+            <a
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`Share on ${social.name}`}
+              aria-label={`Share on ${social.name}`}
+            >
+              <social.icon className="h-4 w-4" />
+            </a>
+          </Button>
         ))}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
           onClick={handleCopyLink}
-          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors p-1 rounded"
           title="Copy link"
           aria-label="Copy link"
         >
-          <Copy className="w-5 h-5" />
-        </button>
+          <Copy className="h-4 w-4" />
+        </Button>
         {typeof window !== 'undefined' && 'share' in navigator && (
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
             onClick={handleNativeShare}
-            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors p-1 rounded"
             title="Share"
             aria-label="Share"
           >
-            <Link2 className="w-5 h-5" />
-          </button>
+            <Link2 className="h-4 w-4" />
+          </Button>
         )}
     </div>
   )

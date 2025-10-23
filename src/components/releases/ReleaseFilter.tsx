@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { Button } from '@/components/ui/button'
 import { Filter, ChevronDown, CheckCircle, Star, AlertTriangle, X } from 'lucide-react'
 // Local type definition
 interface TagCount {
@@ -67,22 +68,26 @@ export function ReleaseFilter({
 
           <div className="flex items-center gap-2">
             {hasActiveFilters && (
-              <button
+              <Button
                 onClick={onClearFilters}
-                className="text-sm text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] font-medium"
+                variant="ghost"
+                size="sm"
+                className="text-sm h-auto p-1"
               >
                 {dict.releases.filters.clearAll}
-              </button>
+              </Button>
             )}
-            
-            <button
+
+            <Button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="p-1 text-[rgb(var(--text-tertiary))] hover:text-[rgb(var(--text-secondary))] transition-colors lg:hidden"
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
             >
-              <ChevronDown 
-                className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
               />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -162,12 +167,14 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, dict, loc
       </div>
 
       {tags.length > maxDisplay && (
-        <button
+        <Button
           onClick={() => setShowAll(!showAll)}
-          className="text-sm text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
+          variant="ghost"
+          size="sm"
+          className="text-sm text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] h-auto p-1"
         >
           {showAll ? dict.releases.filters.showLess : dict.releases.filters.showMore.replace('{count}', String(tags.length - maxDisplay))}
-        </button>
+        </Button>
       )}
     </div>
   )
@@ -184,16 +191,18 @@ export function CompactReleaseFilter({
   dict: Dictionary
 }) {
   return (
-    <button
+    <Button
       onClick={onOpenFilter}
-      className="inline-flex items-center gap-2 px-4 py-2 border border-[rgb(var(--border-primary))] rounded-lg text-sm font-medium text-[rgb(var(--text-secondary))] bg-[rgb(var(--bg-primary))] hover:bg-[rgb(var(--bg-secondary))] transition-colors"
+      variant="outline"
+      size="sm"
+      className="inline-flex items-center gap-2"
     >
       <Filter className="w-4 h-4" />
       {dict?.releases?.filters?.title || 'Filters'}
       {hasActiveFilters && (
         <span className="inline-flex items-center justify-center w-2 h-2 bg-[rgb(var(--info-color))] rounded-full"></span>
       )}
-    </button>
+    </Button>
   )
 }
 
@@ -246,12 +255,14 @@ export function FilterSummary({
           </span>
         </div>
         
-        <button
+        <Button
           onClick={onClearAll}
-          className="text-sm text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))] font-medium"
+          variant="ghost"
+          size="sm"
+          className="text-sm text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))] h-auto p-1"
         >
           {dict.releases.filters.clearAll}
-        </button>
+        </Button>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -260,12 +271,14 @@ export function FilterSummary({
           <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
             <Star className="w-4 h-4 mr-1" />
             {dict.releases.filters.featuredReleases}
-            <button
+            <Button
               onClick={onFeaturedToggle}
-              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
+              variant="ghost"
+              size="icon"
+              className="ml-1 h-auto w-auto p-0"
             >
               <X className="w-3 h-3" />
-            </button>
+            </Button>
           </span>
         )}
 
@@ -273,12 +286,14 @@ export function FilterSummary({
           <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
             <AlertTriangle className="w-4 h-4 mr-1" />
             {dict.releases.filters.breakingChanges}
-            <button
+            <Button
               onClick={onBreakingToggle}
-              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
+              variant="ghost"
+              size="icon"
+              className="ml-1 h-auto w-auto p-0"
             >
               <X className="w-3 h-3" />
-            </button>
+            </Button>
           </span>
         )}
 
@@ -289,12 +304,14 @@ export function FilterSummary({
             className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm"
           >
             {type}
-            <button
+            <Button
               onClick={() => onTypeRemove(type)}
-              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
+              variant="ghost"
+              size="icon"
+              className="ml-1 h-auto w-auto p-0"
             >
               <X className="w-3 h-3" />
-            </button>
+            </Button>
           </span>
         ))}
 
@@ -305,12 +322,14 @@ export function FilterSummary({
             className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm"
           >
             #{tag}
-            <button
+            <Button
               onClick={() => onTagRemove(tag)}
-              className="ml-1 text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
+              variant="ghost"
+              size="icon"
+              className="ml-1 h-auto w-auto p-0"
             >
               <X className="w-3 h-3" />
-            </button>
+            </Button>
           </span>
         ))}
       </div>

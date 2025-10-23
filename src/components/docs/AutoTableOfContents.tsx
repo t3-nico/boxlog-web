@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
 import { TocItem, generateTableOfContents, truncateHeading } from '@/lib/toc'
 
 interface AutoTableOfContentsProps {
@@ -20,21 +21,22 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
     <ul className={`space-y-2 ${level > 0 ? 'ml-4' : ''}`}>
       {items.map((item) => (
         <li key={item.id}>
-          <button
+          <Button
             onClick={() => onItemClick(item.id)}
-            className={`block w-full text-left py-1 px-2 text-sm rounded-md transition-colors ${
+            variant="ghost"
+            className={`block w-full text-left py-1 px-2 h-auto justify-start ${
               level === 0 ? 'font-medium' : 'text-sm'
             } ${
               activeId === item.id
                 ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
+                : 'hover:text-foreground'
             }`}
             title={item.title}
           >
             <span className="line-clamp-2">
               {truncateHeading(item.title, level === 0 ? 40 : 35)}
             </span>
-          </button>
+          </Button>
           {item.children && item.children.length > 0 && (
             <TocList
               items={item.children}

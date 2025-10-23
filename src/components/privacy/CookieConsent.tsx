@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
 import { ConsentManager } from '@/lib/analytics'
 import type { Dictionary } from '@/lib/i18n'
 
@@ -56,14 +58,14 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
     // Save to localStorage
     localStorage.setItem('cookie_consent_timestamp', new Date().toISOString())
     localStorage.setItem('cookie_preferences', JSON.stringify(preferences))
-    
+
     // Update analytics consent
     if (analyticsEnabled) {
       ConsentManager.grantConsent()
     } else {
       ConsentManager.revokeConsent()
     }
-    
+
     setShowBanner(false)
   }
 
@@ -72,7 +74,7 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
   }
 
   return (
-    <div 
+    <div
       className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg dark:bg-gray-900 dark:border-gray-700"
       role="dialog"
       aria-labelledby="cookie-consent-title"
@@ -94,25 +96,25 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 min-w-fit">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => setShowDetails(true)}
               >
-{dict.cookieConsent.customize}
+                {dict.cookieConsent.customize}
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={acceptEssential}
               >
-{dict.cookieConsent.essentialOnly}
+                {dict.cookieConsent.essentialOnly}
               </Button>
-              <Button 
+              <Button
                 size="sm"
                 onClick={acceptAll}
               >
-{dict.cookieConsent.acceptAll}
+                {dict.cookieConsent.acceptAll}
               </Button>
             </div>
           </div>
@@ -132,15 +134,15 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
                 </svg>
               </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Essential Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.essential.title}</h4>
+                  <Label className="font-medium">{dict.cookieConsent.cookies.essential.title}</Label>
                   <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">{dict.cookieConsent.cookies.essential.required}</span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   {dict.cookieConsent.cookies.essential.description}
                 </p>
               </div>
@@ -148,18 +150,16 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
               {/* Analytics Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.analytics.title}</h4>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences.analytics}
-                      onChange={(e) => setPreferences(prev => ({ ...prev, analytics: e.target.checked }))}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <Label htmlFor="analytics-switch" className="font-medium">
+                    {dict.cookieConsent.cookies.analytics.title}
+                  </Label>
+                  <Switch
+                    id="analytics-switch"
+                    checked={preferences.analytics}
+                    onCheckedChange={(checked) => setPreferences(prev => ({ ...prev, analytics: checked }))}
+                  />
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   {dict.cookieConsent.cookies.analytics.description}
                 </p>
               </div>
@@ -167,47 +167,45 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
               {/* Functional Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.functional.title}</h4>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences.functional}
-                      onChange={(e) => setPreferences(prev => ({ ...prev, functional: e.target.checked }))}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <Label htmlFor="functional-switch" className="font-medium">
+                    {dict.cookieConsent.cookies.functional.title}
+                  </Label>
+                  <Switch
+                    id="functional-switch"
+                    checked={preferences.functional}
+                    onCheckedChange={(checked) => setPreferences(prev => ({ ...prev, functional: checked }))}
+                  />
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   {dict.cookieConsent.cookies.functional.description}
                 </p>
               </div>
 
               {/* Marketing Cookies */}
-              <div className="border border-gray-200 rounded-lg p-4 opacity-50">
+              <div className="border border-gray-200 rounded-lg p-4 opacity-50 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{dict.cookieConsent.cookies.marketing.title}</h4>
+                  <Label className="font-medium">{dict.cookieConsent.cookies.marketing.title}</Label>
                   <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">{dict.cookieConsent.cookies.marketing.disabled}</span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   {dict.cookieConsent.cookies.marketing.description}
                 </p>
               </div>
             </div>
 
             <div className="flex justify-end gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={acceptEssential}
               >
-{dict.cookieConsent.essentialOnly}
+                {dict.cookieConsent.essentialOnly}
               </Button>
-              <Button 
+              <Button
                 size="sm"
                 onClick={savePreferences}
               >
-{dict.cookieConsent.savePreferences}
+                {dict.cookieConsent.savePreferences}
               </Button>
             </div>
           </div>
