@@ -3,7 +3,6 @@ import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { FilteredBlogClient } from '@/components/blog/FilteredBlogClient'
 import { getAllBlogPostMetas, getAllTagNames } from '@/lib/blog'
-import { ListContentLoader } from '@/components/loading/PageLoader'
 import { getDictionary } from '@/lib/i18n'
 import { generateSEOMetadata } from '@/lib/metadata'
 
@@ -64,14 +63,12 @@ export default async function BlogPage({ params }: PageProps) {
       <section className="py-16 bg-neutral-50 dark:bg-neutral-800">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <ListContentLoader>
-              <FilteredBlogClient 
-                initialPosts={allPosts} 
-                tags={allTags} 
-                locale={locale}
-                dict={dict}
-              />
-            </ListContentLoader>
+            <FilteredBlogClient
+              initialPosts={allPosts}
+              tags={allTags}
+              locale={locale}
+              dict={dict}
+            />
           </div>
         </Container>
       </section>
