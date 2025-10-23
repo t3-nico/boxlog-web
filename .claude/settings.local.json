@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)"
+    ],
+    "deny": []
+  },
+  "api": {
+    "model": "claude-opus-4-20250514",
+    "temperature": 0.7,
+    "max_tokens": 4096
+  },
+  "context": {
+    "include_patterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.css",
+      "**/*.module.css",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json",
+      "next.config.js",
+      "next.config.mjs",
+      "tailwind.config.js",
+      "tailwind.config.ts",
+      "postcss.config.js",
+      ".env.example",
+      "vercel.json",
+      "README.md",
+      "CLAUDE.md",
+      "docs/**/*.md",
+      "**/*.md"
+    ],
+    "exclude_patterns": [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.vercel/**",
+      "**/coverage/**",
+      "**/*.test.*",
+      "**/*.spec.*",
+      "**/.turbo/**",
+      "**/public/assets/**",
+      "**/*.min.js",
+      "**/*.map"
+    ],
+    "max_file_size": 100000,
+    "auto_include_related": true,
+    "prefer_typescript": true
+  },
+  "behavior": {
+    "always_include_current_file": true,
+    "auto_suggest_files": true,
+    "preserve_conversation_context": true,
+    "auto_detect_framework": true
+  },
+  "project": {
+    "type": "web-application",
+    "framework": "next.js",
+    "version": "14+",
+    "language": "typescript",
+    "styling": "tailwindcss",
+    "deployment": "vercel",
+    "package_manager": "npm",
+    "features": [
+      "app-router",
+      "server-components",
+      "typescript",
+      "tailwind-css"
+    ]
+  },
+  "custom_instructions": {
+    "coding_style": "モダンなReact Hooksを使用、関数コンポーネントを優先",
+    "imports": "絶対パスインポートを使用（@/で始まる）",
+    "components": "再利用可能なコンポーネント設計、単一責任の原則",
+    "styling": "Tailwind CSSクラスを使用、カスタムCSSは最小限に",
+    "typescript": "厳密な型定義、anyの使用を避ける",
+    "async": "Server Componentsではasync/await、Client Componentsではuse hook",
+    "error_handling": "Error BoundaryとSuspenseを適切に使用",
+    "performance": "動的インポート、画像最適化、不要な再レンダリングを避ける",
+    "comments": "複雑なロジックには日本語コメントを追加",
+    "file_structure": "app/ディレクトリ構造に従う、コロケーションを意識",
+    "api_routes": "Route HandlersはHTTPメソッドごとに明確に分離",
+    "state_management": "小規模ならuseState/useContext、大規模ならZustandを検討"
+  },
+  "code_generation": {
+    "prefer_server_components": true,
+    "use_typescript": true,
+    "tailwind_classes": {
+      "responsive": true,
+      "dark_mode": "class",
+      "custom_prefix": ""
+    },
+    "next_config": {
+      "strict_mode": true,
+      "swc_minify": true
+    }
+  }
+}
