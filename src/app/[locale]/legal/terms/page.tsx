@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { getDictionary, Locale } from '@/lib/i18n'
 import { Container } from '@/components/ui/container'
 import { Metadata } from 'next'
@@ -8,11 +9,9 @@ interface TermsPageProps {
   }
 }
 
-export async function generateMetadata({
-  params,
-}: TermsPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: TermsPageProps): Promise<Metadata> {
   const dict = getDictionary(params.locale)
-
+  
   return {
     title: dict.pages.terms.title,
     description: dict.pages.terms.description,
@@ -59,24 +58,24 @@ export default async function TermsPage({ params }: TermsPageProps) {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">2. アカウント登録</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                2. アカウント登録
+              </h2>
               <p className="mb-4">
                 本サービスの一部機能を利用するためには、アカウント登録が必要です。
                 登録時には正確かつ最新の情報を提供していただく必要があります。
               </p>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li>登録情報は常に最新の状態に保ってください</li>
-                <li>
-                  アカウント情報の管理は利用者の責任において行ってください
-                </li>
-                <li>
-                  第三者によるアカウントの不正利用を防ぐため、適切なセキュリティ対策を講じてください
-                </li>
+                <li>アカウント情報の管理は利用者の責任において行ってください</li>
+                <li>第三者によるアカウントの不正利用を防ぐため、適切なセキュリティ対策を講じてください</li>
               </ul>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">3. 利用制限・禁止事項</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                3. 利用制限・禁止事項
+              </h2>
               <p className="mb-4">
                 本サービスをご利用いただく際、以下の行為を禁止いたします：
               </p>
@@ -91,7 +90,9 @@ export default async function TermsPage({ params }: TermsPageProps) {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">4. 知的財産権</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                4. 知的財産権
+              </h2>
               <p className="mb-4">
                 本サービスに関する知的財産権は、当社または正当な権利者に帰属します。
                 利用者は、本サービスを通じて得られる情報を、個人的な利用の範囲を超えて使用することはできません。
@@ -99,21 +100,22 @@ export default async function TermsPage({ params }: TermsPageProps) {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">5. プライバシー</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                5. プライバシー
+              </h2>
               <p className="mb-4">
                 個人情報の取り扱いについては、
-                <a
-                  href={`/${params.locale}/privacy`}
-                  className="text-primary hover:underline"
-                >
+                <Link href={`/${params.locale}/privacy`} className="text-primary hover:underline">
                   プライバシーポリシー
-                </a>
+                </Link>
                 をご確認ください。
               </p>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">6. 料金・支払い</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                6. 料金・支払い
+              </h2>
               <p className="mb-4">
                 有料プランをご利用の場合、記載された料金をお支払いいただく必要があります。
                 料金は事前の通知なく変更される場合があります。
@@ -131,7 +133,9 @@ export default async function TermsPage({ params }: TermsPageProps) {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">8. 免責事項</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                8. 免責事項
+              </h2>
               <p className="mb-4">
                 当社は、本サービスの利用により生じた損害について、法律上許される範囲で責任を負わないものとします。
                 ただし、当社の故意または重大な過失による場合は除きます。
@@ -139,7 +143,9 @@ export default async function TermsPage({ params }: TermsPageProps) {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">9. 準拠法・管轄裁判所</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                9. 準拠法・管轄裁判所
+              </h2>
               <p className="mb-4">
                 本規約は日本法に準拠し、本規約に関する紛争については、
                 東京地方裁判所を第一審の専属的合意管轄裁判所とします。
@@ -147,15 +153,14 @@ export default async function TermsPage({ params }: TermsPageProps) {
             </section>
 
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-6">10. お問い合わせ</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                10. お問い合わせ
+              </h2>
               <p className="mb-4">
                 本規約に関するご質問は、
-                <a
-                  href={`/${params.locale}/contact`}
-                  className="text-primary hover:underline"
-                >
+                <Link href={`/${params.locale}/contact`} className="text-primary hover:underline">
                   お問い合わせページ
-                </a>
+                </Link>
                 よりご連絡ください。
               </p>
             </section>
