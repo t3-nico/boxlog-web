@@ -1,327 +1,282 @@
-# BoxLog Marketing Website
+# BoxLog マーケティングウェブサイト
 
-A modern, high-performance marketing website built with Next.js 14, featuring comprehensive accessibility compliance (WCAG 2.1 AA), advanced performance optimizations, and enterprise-level security.
+Next.js 14で構築された、モダンで高パフォーマンスなマーケティングウェブサイトです。包括的なアクセシビリティ対応（WCAG 2.1 AA準拠）、高度なパフォーマンス最適化、エンタープライズレベルのセキュリティを実現しています。
 
-## 🚀 Features
+## 🚀 主な機能
 
-### Core Features
-- **Next.js 14** with App Router and Server Components
-- **TypeScript** for type safety and better developer experience
-- **Tailwind CSS** for utility-first styling
-- **MDX** for rich content with React components
-- **SEO Optimized** with structured data and meta tags
+### コア機能
+- **Next.js 14**: App RouterとServer Componentsを採用
+- **TypeScript**: 型安全性と開発体験の向上
+- **Tailwind CSS**: ユーティリティファーストのスタイリング
+- **shadcn/ui**: 高品質なUIコンポーネント
+- **MDX**: Reactコンポーネントを含むリッチコンテンツ
+- **多言語対応**: 英語・日本語の完全サポート
 
-### Performance Optimizations
-- **Core Web Vitals** monitoring and optimization
-- **Dynamic imports** with code splitting
-- **Image optimization** with responsive sizes and WebP/AVIF support
-- **Font preloading** for critical typefaces
-- **Bundle analysis** with size optimization
-- **Critical CSS** inlining for above-the-fold content
-- **Service Worker** for offline capabilities
+### パフォーマンス最適化
+- **Core Web Vitals**: リアルタイム監視と最適化
+- **動的インポート**: コード分割による最適化
+- **画像最適化**: レスポンシブサイズとWebP/AVIF対応
+- **フォント最適化**: クリティカルなフォントのプリロード
+- **バンドル分析**: サイズ最適化の自動分析
+- **Service Worker**: オフライン対応
 
-### Accessibility (WCAG 2.1 AA Compliant)
-- **Smart alt attributes** with context-aware generation
-- **Focus management** with trap and restore functionality
-- **Color contrast validation** with real-time checking
-- **Screen reader support** with comprehensive ARIA labels
-- **Keyboard navigation** with full directional support
-- **Reduced motion** respect for user preferences
+### アクセシビリティ（WCAG 2.1 AA準拠）
+- **適切なalt属性**: コンテキストを考慮した自動生成
+- **フォーカス管理**: トラップと復元機能
+- **色コントラスト検証**: リアルタイムチェック
+- **スクリーンリーダー対応**: 包括的なARIAラベル
+- **キーボードナビゲーション**: 完全な方向キー対応
+- **モーション設定の尊重**: ユーザー設定に配慮
 
-### Security Features
-- **Content Security Policy (CSP)** with strict headers
-- **Input validation** and sanitization
-- **XSS protection** with HTML escaping
-- **CSRF protection** with token validation
-- **Rate limiting** implementation
-- **Security headers** for production deployment
+### セキュリティ機能
+- **Content Security Policy (CSP)**: 厳格なヘッダー設定
+- **入力検証**: サニタイゼーション処理
+- **XSS対策**: HTMLエスケープ処理
+- **CSRF対策**: トークン検証
+- **レート制限**: 実装済み
+- **セキュリティヘッダー**: 本番環境向け設定
 
-### Developer Experience
-- **TypeScript** strict mode configuration
-- **ESLint** with Next.js recommended rules
-- **Error boundaries** for graceful error handling
-- **Hot reload** with fast refresh
-- **Bundle analyzer** for optimization insights
-
-## 📁 Project Structure
+## 📁 プロジェクト構造
 
 ```
 src/
-├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes
-│   ├── blog/              # Blog pages
-│   ├── docs/              # Documentation pages
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Homepage
-├── components/            # React components
-│   ├── accessibility/     # Accessibility components
-│   ├── analytics/         # Analytics and tracking
-│   ├── layout/           # Layout components
-│   ├── performance/      # Performance optimization
-│   ├── search/           # Search functionality
-│   ├── seo/              # SEO components
-│   └── ui/               # UI components
-├── lib/                  # Utility libraries
-│   ├── accessibility.ts  # Accessibility utilities
-│   ├── analytics.ts      # Analytics configuration
-│   ├── metadata.ts       # SEO metadata generation
-│   ├── performance.ts    # Performance utilities
-│   └── security.ts       # Security utilities
-└── middleware.ts         # Next.js middleware
+├── app/                    # Next.js App Router（ページ・レイアウト）
+│   ├── [locale]/           # 多言語対応ルート
+│   ├── api/                # APIルート
+│   └── globals.css         # グローバルスタイル
+├── components/             # Reactコンポーネント
+│   ├── ui/                 # shadcn/ui基盤コンポーネント
+│   ├── layout/             # Header, Footer, Navigation
+│   ├── blog/               # ブログ関連
+│   ├── docs/               # ドキュメント関連
+│   └── releases/           # リリース関連
+├── lib/                    # ユーティリティライブラリ
+│   ├── i18n.ts             # 国際化
+│   ├── metadata.ts         # SEOメタデータ生成
+│   └── utils.ts            # 汎用ユーティリティ
+├── hooks/                  # カスタムフック
+└── middleware.ts           # Next.jsミドルウェア
+
+content/
+├── blog/                   # ブログ記事（MDX）
+├── docs/                   # ドキュメント（MDX）
+└── releases/               # リリースノート（MDX）
 ```
 
-## 🛠 Getting Started
+## 🛠 はじめに
 
-### Prerequisites
+### 前提条件
 
-- Node.js 18.0 or later
-- npm, yarn, or pnpm
+- Node.js 18.0以上
+- npm、yarn、またはpnpm
 
-### Installation
+### インストール
 
-1. **Clone the repository**
+1. **リポジトリをクローン**
    ```bash
    git clone https://github.com/your-username/boxlog-web.git
    cd boxlog-web
    ```
 
-2. **Install dependencies**
+2. **依存関係をインストール**
    ```bash
    npm install
-   # or
-   yarn install
-   # or
-   pnpm install
    ```
 
-3. **Set up environment variables**
+3. **環境変数を設定**
    ```bash
    cp .env.example .env.local
    ```
-   Edit `.env.local` with your configuration values.
+   `.env.local`を編集して設定値を入力してください。
 
-4. **Run the development server**
+4. **開発サーバーを起動**
    ```bash
    npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
    ```
 
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+5. **ブラウザで開く**
+   [http://localhost:3000](http://localhost:3000)にアクセス
 
-## 📋 Available Scripts
+## 📋 利用可能なスクリプト
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run type-check` | Run TypeScript compiler |
-| `npm run analyze` | Analyze bundle size |
-| `npm run test:lighthouse` | Run Lighthouse CI |
+### 開発
 
-## 🔧 Configuration
+| スクリプト | 説明 |
+|-----------|------|
+| `npm run dev` | 開発サーバー起動 |
+| `npm run build` | 本番用ビルド |
+| `npm run start` | 本番サーバー起動 |
 
-### Environment Variables
+### 品質管理
 
-Create a `.env.local` file based on `.env.example`:
+| スクリプト | 説明 |
+|-----------|------|
+| `npm run lint` | ESLint実行 |
+| `npm run type-check` | TypeScript型チェック |
+| `npm run test` | Vitestテスト実行 |
+| `npm run test:run` | テスト一回実行（CI用） |
+| `npm run test:ui` | Vitest UIインターフェース |
+
+### 分析・最適化
+
+| スクリプト | 説明 |
+|-----------|------|
+| `npm run analyze` | バンドルサイズ分析 |
+| `npm run test:lighthouse` | Lighthouse CI テスト |
+
+## 🔧 設定
+
+### 環境変数
+
+`.env.example`を参考に`.env.local`を作成してください：
 
 ```bash
-# Required
+# 必須
 NEXT_PUBLIC_SITE_URL=https://yoursite.com
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
-# Optional
+# オプション
 CONTACT_EMAIL=contact@yoursite.com
 SENDGRID_API_KEY=your-sendgrid-key
 ```
 
-See `.env.example` for all available configuration options.
+### コンテンツ管理
 
-### Content Management
+コンテンツはMDXファイルで管理します：
+- `content/blog/` - ブログ記事
+- `content/docs/` - ドキュメント
+- `content/releases/` - リリースノート
 
-Content is managed through MDX files located in:
-- `content/blog/` - Blog posts
-- `content/docs/` - Documentation
-- `content/releases/` - Release notes
-
-Each file should include frontmatter metadata:
+各ファイルにはFrontmatterメタデータが必要です：
 
 ```markdown
 ---
-title: "Your Post Title"
-description: "Post description"
-date: "2024-01-01"
-tags: ["tag1", "tag2"]
+title: "記事タイトル"
+description: "記事の説明"
+date: "2025-01-01"
+tags: ["タグ1", "タグ2"]
 ---
 
-Your content here...
+コンテンツ本文...
 ```
 
-## 🚀 Deployment
+## 🚀 デプロイ
 
-### Vercel (Recommended)
+### Vercel（推奨）
 
-1. **Connect your repository** to Vercel
-2. **Configure environment variables** in Vercel dashboard
-3. **Deploy** - automatic deployments on push to main branch
+1. Vercelにリポジトリを接続
+2. 環境変数をVercelダッシュボードで設定
+3. mainブランチへのpushで自動デプロイ
 
-### Manual Deployment
-
-1. **Build the application**
-   ```bash
-   npm run build
-   ```
-
-2. **Start the production server**
-   ```bash
-   npm run start
-   ```
-
-### Environment-specific Builds
+### 手動デプロイ
 
 ```bash
-# Production build with optimizations
-npm run build:production
+# ビルド
+npm run build
 
-# Development build with debugging
-NODE_ENV=development npm run build
+# 本番サーバー起動
+npm run start
 ```
 
-## 📊 Performance Monitoring
+詳細は[DEPLOYMENT.md](DEPLOYMENT.md)を参照してください。
 
-### Core Web Vitals
+## 📊 パフォーマンス監視
 
-The site includes comprehensive Core Web Vitals monitoring:
+### Core Web Vitals目標
 
-- **LCP (Largest Contentful Paint)**: < 2.5s
-- **FID (First Input Delay)**: < 100ms  
-- **CLS (Cumulative Layout Shift)**: < 0.1
+| 指標 | 目標値 |
+|------|--------|
+| LCP (Largest Contentful Paint) | < 2.5秒 |
+| FID (First Input Delay) | < 100ms |
+| CLS (Cumulative Layout Shift) | < 0.1 |
 
-### Bundle Analysis
-
-Run bundle analysis to identify optimization opportunities:
+### バンドル分析
 
 ```bash
 npm run analyze
 ```
 
-### Lighthouse Testing
+## ♿ アクセシビリティ
 
-Automated Lighthouse testing for performance, accessibility, and SEO:
+WCAG 2.1 AA準拠を完全サポート：
+
+- セマンティックHTML構造
+- ARIAラベルとロール
+- キーボードナビゲーション対応
+- スクリーンリーダー互換性
+- 色コントラスト準拠
+- フォーカス管理
+- モーション設定の尊重
+
+## 🧪 テスト
 
 ```bash
+# 全テスト実行
+npm test
+
+# ウォッチモード
+npm run test:watch
+
+# Lighthouse テスト
 npm run test:lighthouse
 ```
 
-## ♿ Accessibility
+詳細は[docs/TESTING_AND_CICD_GUIDE.md](docs/TESTING_AND_CICD_GUIDE.md)を参照してください。
 
-This project is fully compliant with WCAG 2.1 AA standards:
+## 🔒 セキュリティ
 
-### Features
-- Semantic HTML structure
-- ARIA labels and roles
-- Keyboard navigation support
-- Screen reader compatibility
-- Color contrast compliance
-- Focus management
-- Reduced motion support
-
-### Testing
-- Manual keyboard navigation testing
-- Screen reader testing (NVDA, JAWS, VoiceOver)
-- Automated accessibility testing with axe-core
-- Color contrast validation
-
-## 🔒 Security
-
-### Security Headers
+### セキュリティヘッダー
 - Content Security Policy (CSP)
 - X-Frame-Options
 - X-Content-Type-Options
 - X-XSS-Protection
 - Strict-Transport-Security
 
-### Input Validation
-- XSS prevention
-- SQL injection protection
-- CSRF token validation
-- File upload restrictions
-- Rate limiting
+### 入力検証
+- XSS対策
+- SQLインジェクション対策
+- CSRFトークン検証
+- ファイルアップロード制限
+- レート制限
 
-## 🧪 Testing
+## 🤝 コントリビューション
 
-### Running Tests
-
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run accessibility tests
-npm run test:a11y
-
-# Run performance tests
-npm run test:lighthouse
-```
-
-### Test Coverage
-
-The project includes:
-- Unit tests for utility functions
-- Component tests with React Testing Library
-- Accessibility tests with axe-core
-- Performance tests with Lighthouse CI
-
-## 🤝 Contributing
-
-1. **Fork the repository**
-2. **Create a feature branch**
+1. リポジトリをフォーク
+2. フィーチャーブランチを作成
    ```bash
    git checkout -b feature/amazing-feature
    ```
-3. **Commit your changes**
+3. 変更をコミット
    ```bash
-   git commit -m 'Add amazing feature'
+   git commit -m 'feat: 新機能を追加'
    ```
-4. **Push to the branch**
+4. ブランチにプッシュ
    ```bash
    git push origin feature/amazing-feature
    ```
-5. **Open a Pull Request**
+5. プルリクエストを作成
 
-### Development Guidelines
+### 開発ガイドライン
 
-- Follow TypeScript strict mode requirements
-- Maintain 100% accessibility compliance
-- Ensure all performance metrics pass
-- Add tests for new functionality
-- Update documentation as needed
+- TypeScript strictモードの要件を遵守
+- アクセシビリティ準拠を維持
+- すべてのパフォーマンス指標をクリア
+- 新機能にはテストを追加
+- 必要に応じてドキュメントを更新
 
-## 📄 License
+## 📚 関連ドキュメント
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- [CLAUDE.md](CLAUDE.md) - Claude Code向け開発ガイド
+- [DEPLOYMENT.md](DEPLOYMENT.md) - デプロイガイド
+- [docs/TESTING_AND_CICD_GUIDE.md](docs/TESTING_AND_CICD_GUIDE.md) - テスト・CI/CDガイド
+- [docs/PERFORMANCE_GUIDE.md](docs/PERFORMANCE_GUIDE.md) - パフォーマンスガイド
+- [docs/MULTILINGUAL_IMPLEMENTATION.md](docs/MULTILINGUAL_IMPLEMENTATION.md) - 多言語実装ガイド
 
-## 🙏 Acknowledgments
+## 📄 ライセンス
 
-- **Next.js** team for the amazing framework
-- **Vercel** for deployment and hosting
-- **Tailwind CSS** for the utility-first CSS framework
-- **Web Accessibility Initiative** for WCAG guidelines
-
-## 📞 Support
-
-- **Documentation**: [docs.yoursite.com](https://docs.yoursite.com)
-- **Email**: support@yoursite.com
-- **Issues**: [GitHub Issues](https://github.com/your-username/boxlog-web/issues)
+このプロジェクトはMITライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルを参照してください。
 
 ---
 
-Built with ❤️ using [Next.js](https://nextjs.org/), [TypeScript](https://typescriptlang.org/), and [Tailwind CSS](https://tailwindcss.com/)
+**最終更新**: 2025年1月
+**バージョン**: v2.0

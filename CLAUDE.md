@@ -23,7 +23,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ## 📁 Project Architecture
 
 ### Tech Stack
-- **Framework**: Next.js 14 with App Router and Server Components
+- **Framework**: Next.js 16 with App Router and Server Components
 - **Language**: TypeScript with strict mode
 - **Styling**: Tailwind CSS + shadcn/ui
 - **UI Components**: shadcn/ui + Radix UI primitives
@@ -155,5 +155,5 @@ export const dictionaries = {
 ---
 
 **📖 このドキュメントについて**: Web版BoxLogの完全開発ガイド
-**最終更新**: 2025-01-29
-**バージョン**: v2.0
+**最終更新**: 2025年1月
+**バージョン**: v2.1
