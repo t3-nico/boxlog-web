@@ -1,32 +1,28 @@
 import type { Metadata } from 'next'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import { getDictionary } from '@/lib/i18n'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
 
 interface PageProps {
-  params: {
-    locale: string
-  }
+  params: Promise<{ locale: string }>
 }
 
-export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return generateSEOMetadata({
-    title: dict.pages.contact.title,
-    description: dict.pages.contact.subtitle,
+    title: t('contact.title'),
+    description: t('contact.subtitle'),
     url: `/${locale}/contact`,
     locale: locale,
-    keywords: locale === 'jp'
+    keywords: locale === 'ja'
       ? ['お問い合わせ', 'サポート', 'ヘルプ', '質問', 'カスタマーサービス']
       : ['contact', 'support', 'help', 'inquiry', 'customer service'],
     type: 'website'
@@ -34,8 +30,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ContactPage({ params }: PageProps) {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return (
     <div className="min-h-screen">
@@ -43,10 +41,10 @@ export default async function ContactPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-6">
-              {dict.pages.contact.title}
+              {t('contact.title')}
             </Heading>
             <Text size="xl" variant="muted">
-              {dict.pages.contact.subtitle}
+              {t('contact.subtitle')}
             </Text>
           </div>
         </Container>

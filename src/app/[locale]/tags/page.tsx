@@ -1,14 +1,17 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { Search, TrendingUp, Hash } from 'lucide-react'
 import { getAllTags as getAllBlogTags } from '@/lib/blog'
 import { getAllReleaseTags } from '@/lib/releases'
-import { getDictionary } from '@/lib/i18n'
+import { setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
+import { Link } from '@/i18n/navigation'
 
 interface TagsPageProps {
-  params: {
-    locale: string
-  }
+  params: Promise<{ locale: string }>
+}
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
 export const metadata: Metadata = {
@@ -17,7 +20,8 @@ export const metadata: Metadata = {
 }
 
 export default async function TagsPage({ params }: TagsPageProps) {
-  const dict = getDictionary(params.locale as 'en' | 'jp')
+  const { locale } = await params
+  setRequestLocale(locale)
 
   const [blogTags, releaseTags] = await Promise.all([
     getAllBlogTags(),
@@ -71,10 +75,10 @@ export default async function TagsPage({ params }: TagsPageProps) {
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-500 dark:text-neutral-400">
-              Browse {totalTags} topics covering {totalContent} pieces of content. Find everything from tutorials to release notes.
+              Browse {totalTags} topics covering {totalContent} pieces of content.
             </p>
 
-            {/* Search Bar - placeholder for future */}
+            {/* Search Bar */}
             <div className="mt-10 mx-auto max-w-xl">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />

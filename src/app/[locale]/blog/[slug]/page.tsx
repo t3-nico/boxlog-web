@@ -6,43 +6,32 @@ import { Container } from '@/components/ui/container'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { ShareButton } from '@/components/blog/ShareButton'
 import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
-import { 
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
-} from '@/components/ui/breadcrumb'
 import { getBlogPost, getAllBlogPostMetas, getRelatedPosts } from '@/lib/blog'
 import { generateSEOMetadata } from '@/lib/metadata'
-import { getDictionary } from '@/lib/i18n'
-import Link from 'next/link'
+import { setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
+import { Link } from '@/i18n/navigation'
 
 interface BlogPostPageProps {
-  params: {
-    locale: string
-    slug: string
-  }
+  params: Promise<{ locale: string; slug: string }>
 }
 
 // Generate metadata
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { locale, slug } = params
+  const { locale, slug } = await params
   const post = await getBlogPost(slug)
-  const dict = await getDictionary(locale as 'en' | 'jp')
-  
+
   if (!post) {
     return generateSEOMetadata({
-      title: locale === 'jp' ? '記事が見つかりません' : 'Article Not Found',
-      description: locale === 'jp' ? 'お探しの記事は見つかりませんでした。' : 'The article you are looking for could not be found.',
+      title: locale === 'ja' ? '記事が見つかりません' : 'Article Not Found',
+      description: locale === 'ja' ? 'お探しの記事は見つかりませんでした。' : 'The article you are looking for could not be found.',
       url: `/${locale}/blog/${slug}`,
       locale: locale
     })
   }
 
   const { frontMatter } = post
-  
+
   return generateSEOMetadata({
     title: frontMatter.title,
     description: frontMatter.description,
@@ -62,21 +51,19 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 // Generate static paths
 export async function generateStaticParams() {
   const posts = await getAllBlogPostMetas()
-  const locales = ['en', 'jp']
   const params = []
-  
-  for (const locale of locales) {
+
+  for (const locale of routing.locales) {
     for (const post of posts) {
       params.push({ locale, slug: post.slug })
     }
   }
-  
+
   return params
 }
 
 // MDX components
 const mdxComponents = {
-  // Custom component definitions with ID generation for anchor links
   h1: (props: any) => {
     const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
     return <h1 id={id} className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
@@ -97,11 +84,11 @@ const mdxComponents = {
     <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" {...props} />
   ),
   a: (props: any) => (
-    <a 
-      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2" 
+    <a
+      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-      {...props} 
+      {...props}
     />
   ),
   blockquote: (props: any) => (
@@ -146,7 +133,6 @@ const mdxComponents = {
   td: (props: any) => (
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 border-t border-gray-200 dark:border-gray-700" {...props} />
   ),
-  // Custom callouts
   Callout: ({ type = 'info', children }: { type?: 'info' | 'warning' | 'error' | 'success', children: React.ReactNode }) => {
     const styles = {
       info: 'bg-blue-50 dark:bg-blue-900 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200',
@@ -154,14 +140,14 @@ const mdxComponents = {
       error: 'bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700 text-red-800 dark:text-red-200',
       success: 'bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200',
     }
-    
+
     const icons = {
       info: '💡',
       warning: '⚠️',
       error: '❌',
       success: '✅',
     }
-    
+
     return (
       <div className={`border-l-4 p-4 my-6 rounded-r-lg ${styles[type]}`}>
         <div className="flex items-start">
@@ -174,54 +160,47 @@ const mdxComponents = {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { locale, slug } = params
+  const { locale, slug } = await params
+  setRequestLocale(locale)
+
   const post = await getBlogPost(slug)
-  
+
   if (!post) {
     notFound()
   }
 
   // Remove duplicate title and description from MDX content
   let processedContent = post.content
-  
-  // Remove the first heading if it matches the frontmatter title
+
   const titlePattern = new RegExp(`^# ${post.frontMatter.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`, 'gm')
   processedContent = processedContent.replace(titlePattern, '')
-  
-  // Remove description if it matches frontmatter description
+
   if (post.frontMatter.description) {
     const descPattern = new RegExp(`^${post.frontMatter.description.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`, 'gm')
     processedContent = processedContent.replace(descPattern, '')
   }
-  
-  // Remove any remaining standalone h1 at the beginning
+
   processedContent = processedContent.replace(/^# [^\n]*\n+/gm, '')
-  
-  // Remove description-like paragraph at the beginning (first paragraph after title)
+
   const lines = processedContent.split('\n')
-  let processedLines = []
-  let skipNext = false
-  
+  const processedLines = []
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim()
-    
-    // Skip empty lines at the beginning
+
     if (processedLines.length === 0 && line === '') continue
-    
-    // If this looks like a description paragraph (first substantial paragraph)
+
     if (processedLines.length === 0 && line && !line.startsWith('#') && !line.startsWith('```')) {
-      // Skip this line if it looks like a description
       continue
     }
-    
+
     processedLines.push(lines[i])
   }
-  
+
   processedContent = processedLines.join('\n')
 
-  const relatedPosts = await getRelatedPosts(params.slug, 3)
+  const relatedPosts = await getRelatedPosts(slug, 3)
 
-  // Structured data (JSON-LD)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -235,44 +214,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     dateModified: post.frontMatter.updatedAt || post.frontMatter.publishedAt,
     keywords: post.frontMatter.tags.join(', '),
     articleSection: post.frontMatter.category,
-    wordCount: post.readingTime * 200, // Estimated word count
+    wordCount: post.readingTime * 200,
     timeRequired: `PT${post.readingTime}M`,
     image: post.frontMatter.coverImage,
     publisher: {
       '@type': 'Organization',
-      name: 'YourSaaS Platform',
+      name: 'BoxLog Platform',
     },
   }
 
   return (
     <>
-      {/* Structured data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <div className="min-h-screen">
-
-        {/* Article content with sidebar layout */}
         <article className="py-8 bg-white dark:bg-gray-900">
           <Container>
             <div className="flex gap-8 justify-center">
-              {/* Main content */}
               <div className="w-[700px] flex-shrink-0 pt-16">
-
-                {/* Breadcrumb */}
                 <div className="mb-8">
                   <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
-                    <Link 
-                      href="/" 
+                    <Link
+                      href="/"
                       className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
                     >
                       Home
                     </Link>
                     <span className="text-gray-300 dark:text-gray-700">/</span>
-                    <Link 
-                      href="/blog" 
+                    <Link
+                      href="/blog"
                       className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
                     >
                       Blog
@@ -284,7 +257,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </nav>
                 </div>
 
-                {/* Date */}
                 <time className="text-sm text-gray-500 dark:text-gray-400 mb-2 block" dateTime={post.frontMatter.publishedAt}>
                   {new Date(post.frontMatter.publishedAt).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -293,12 +265,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   })}
                 </time>
 
-                {/* Title */}
                 <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
                   {post.frontMatter.title}
                 </h1>
 
-                {/* Cover image */}
                 {post.frontMatter.coverImage && (
                   <div className="relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg mb-8">
                     <Image
@@ -312,71 +282,63 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
                 )}
 
-
-                {/* Article content */}
                 <div className="prose prose-lg max-w-none">
-                  <MDXRemote 
-                    source={processedContent} 
+                  <MDXRemote
+                    source={processedContent}
                     components={mdxComponents}
                   />
                 </div>
 
-              {/* Article end marker */}
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-              </div>
+                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                </div>
 
-              {/* Additional article information */}
-              <div className="mt-6 space-y-6">
-                {/* Tags */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Tags Used</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {post.frontMatter.tags.map((tag) => {
-                      // Function to determine tag color
-                      const getTagColor = (tag: string) => {
-                        const colors = [
-                          'bg-blue-100 text-blue-800 hover:bg-blue-200',
-                          'bg-green-100 text-green-800 hover:bg-green-200',
-                          'bg-purple-100 text-purple-800 hover:bg-purple-200',
-                          'bg-pink-100 text-pink-800 hover:bg-pink-200',
-                          'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
-                          'bg-indigo-100 text-indigo-800 hover:bg-indigo-200',
-                          'bg-red-100 text-red-800 hover:bg-red-200',
-                          'bg-teal-100 text-teal-800 hover:bg-teal-200',
-                          'bg-orange-100 text-orange-800 hover:bg-orange-200',
-                          'bg-cyan-100 text-cyan-800 hover:bg-cyan-200',
-                        ]
-                        
-                        let hash = 0
-                        for (let i = 0; i < tag.length; i++) {
-                          hash = tag.charCodeAt(i) + ((hash << 5) - hash)
+                <div className="mt-6 space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Tags Used</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {post.frontMatter.tags.map((tag) => {
+                        const getTagColor = (tag: string) => {
+                          const colors = [
+                            'bg-blue-100 text-blue-800 hover:bg-blue-200',
+                            'bg-green-100 text-green-800 hover:bg-green-200',
+                            'bg-purple-100 text-purple-800 hover:bg-purple-200',
+                            'bg-pink-100 text-pink-800 hover:bg-pink-200',
+                            'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
+                            'bg-indigo-100 text-indigo-800 hover:bg-indigo-200',
+                            'bg-red-100 text-red-800 hover:bg-red-200',
+                            'bg-teal-100 text-teal-800 hover:bg-teal-200',
+                            'bg-orange-100 text-orange-800 hover:bg-orange-200',
+                            'bg-cyan-100 text-cyan-800 hover:bg-cyan-200',
+                          ]
+
+                          let hash = 0
+                          for (let i = 0; i < tag.length; i++) {
+                            hash = tag.charCodeAt(i) + ((hash << 5) - hash)
+                          }
+                          const colorIndex = Math.abs(hash) % colors.length
+                          return colors[colorIndex]
                         }
-                        const colorIndex = Math.abs(hash) % colors.length
-                        return colors[colorIndex]
-                      }
-                      
-                      return (
-                        <a
-                          key={tag}
-                          href={`/blog/tag/${encodeURIComponent(tag)}`}
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${getTagColor(tag)}`}
-                        >
-                          #{tag}
-                        </a>
-                      )
-                    })}
+
+                        return (
+                          <Link
+                            key={tag}
+                            href={`/tags/${encodeURIComponent(tag)}`}
+                            className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${getTagColor(tag)}`}
+                          >
+                            #{tag}
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Share this article</h3>
+                    <ShareButton title={post.frontMatter.title} slug={slug} locale={locale} />
                   </div>
                 </div>
-
-                {/* Share button */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Share this article</h3>
-                  <ShareButton title={post.frontMatter.title} slug={params.slug} locale="en" />
-                </div>
-              </div>
               </div>
 
-              {/* Right Sidebar - Table of Contents */}
               <aside className="w-[240px] flex-shrink-0 hidden xl:block">
                 <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pl-6 pt-16">
                   <ClientTableOfContents content={post.content} />
@@ -386,9 +348,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Container>
         </article>
 
-        {/* Related articles */}
-        <RelatedPosts posts={relatedPosts} currentSlug={params.slug} locale="en" />
-
+        <RelatedPosts posts={relatedPosts} currentSlug={slug} locale={locale} />
       </div>
     </>
   )

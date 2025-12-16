@@ -2,58 +2,56 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import { ReleaseCard } from '@/components/releases/ReleaseCard'
-import { 
-  getAllReleaseMetas, 
-  getAllReleaseTags, 
+import {
+  getAllReleaseMetas,
+  getAllReleaseTags,
   getFeaturedReleases,
-  generateReleaseTimeline,
-  ReleasePostMeta,
-  TagCount
 } from '@/lib/releases'
 import { ReleasesClient } from '@/components/releases/ReleasesClient'
-import { getDictionary } from '@/lib/i18n'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
 
+interface PageProps {
+  params: Promise<{ locale: string }>
+}
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
-  
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'common' })
+
   return generateSEOMetadata({
-    title: dict.pages.releases.title,
-    description: dict.pages.releases.subtitle,
+    title: t('navigation.releases'),
+    description: locale === 'ja'
+      ? '最新のリリースノートと更新情報'
+      : 'Latest release notes and updates',
     url: `/${locale}/releases`,
     locale: locale,
-    keywords: locale === 'jp' 
-      ? ['リリースノート', '更新', '新機能', 'バグ修正', 'YourSaaS']
-      : ['release notes', 'updates', 'new features', 'bug fixes', 'YourSaaS'],
+    keywords: locale === 'ja'
+      ? ['リリースノート', '更新', '新機能', 'バグ修正', 'BoxLog']
+      : ['release notes', 'updates', 'new features', 'bug fixes', 'BoxLog'],
     type: 'website'
   })
 }
 
-interface PageProps {
-  params: {
-    locale: string
-  }
-}
-
-export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
-}
-
 export default async function ReleasesPage({ params }: PageProps) {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
-  
-  // サーバーサイドでデータを取得
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations({ locale, namespace: 'common' })
+
+  // Fetch data server-side
   const [allReleases, allTags, featuredReleases] = await Promise.all([
     getAllReleaseMetas(),
     getAllReleaseTags(),
     getFeaturedReleases()
   ])
+
+  const isJa = locale === 'ja'
 
   return (
     <div className="min-h-screen">
@@ -62,25 +60,22 @@ export default async function ReleasesPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-4">
-              {dict.pages.releases.title}
+              {t('navigation.releases')}
             </Heading>
-            
+
             <Text size="lg" variant="muted" className="mb-8">
-              {dict.pages.releases.subtitle}
+              {isJa ? '最新のリリースノートと更新情報' : 'Latest release notes and updates'}
             </Text>
           </div>
         </Container>
       </section>
 
-
-
       {/* Main Releases Section - Client Component */}
-      <ReleasesClient 
+      <ReleasesClient
         initialReleases={allReleases}
         initialTags={allTags}
         featuredReleases={featuredReleases}
         upcomingReleases={[]}
-        dict={dict}
         locale={locale}
       />
     </div>

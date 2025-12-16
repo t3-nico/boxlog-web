@@ -1,22 +1,21 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { ArrowLeft, FileText, Megaphone, BookOpen } from 'lucide-react'
+import { ArrowLeft, FileText, Megaphone } from 'lucide-react'
 import { getBlogPostsByTag, getAllTags as getAllBlogTags } from '@/lib/blog'
 import { getReleasesByTag, getAllReleaseTags } from '@/lib/releases'
 import { PostCard } from '@/components/blog/PostCard'
 import { ReleaseCard } from '@/components/releases/ReleaseCard'
-import { getDictionary } from '@/lib/i18n'
+import { setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
+import { Link } from '@/i18n/navigation'
 
 interface TagPageProps {
-  params: {
-    tag: string
-    locale: string
-  }
+  params: Promise<{ tag: string; locale: string }>
 }
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
-  const decodedTag = decodeURIComponent(params.tag)
+  const { tag } = await params
+  const decodedTag = decodeURIComponent(tag)
   const [blogPosts, releases] = await Promise.all([
     getBlogPostsByTag(decodedTag),
     getReleasesByTag(decodedTag)
@@ -54,14 +53,21 @@ export async function generateStaticParams() {
     ...releaseTags.map(t => t.tag)
   ])
 
-  return Array.from(allTagsSet).map((tag) => ({
-    tag: encodeURIComponent(tag),
-  }))
+  const params = []
+  for (const locale of routing.locales) {
+    for (const tag of allTagsSet) {
+      params.push({ locale, tag: encodeURIComponent(tag) })
+    }
+  }
+
+  return params
 }
 
 export default async function UnifiedTagPage({ params }: TagPageProps) {
-  const decodedTag = decodeURIComponent(params.tag)
-  const dict = getDictionary(params.locale as 'en' | 'jp')
+  const { tag, locale } = await params
+  setRequestLocale(locale)
+
+  const decodedTag = decodeURIComponent(tag)
 
   const [blogPosts, releases, allBlogTags, allReleaseTags] = await Promise.all([
     getBlogPostsByTag(decodedTag),
@@ -84,6 +90,8 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
     .map(([tag, count]) => ({ tag, count }))
     .sort((a, b) => b.count - a.count)
 
+  const isJa = locale === 'ja'
+
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
       {/* Hero Section */}
@@ -95,7 +103,7 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
               <ol className="flex items-center space-x-2 text-sm text-neutral-500 dark:text-neutral-400">
                 <li>
                   <Link href="/" className="hover:text-neutral-700 dark:hover:text-neutral-300">
-                    {dict.common.home}
+                    {isJa ? 'ホーム' : 'Home'}
                   </Link>
                 </li>
                 <li>
@@ -168,7 +176,7 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
                 <div>
                   <h2 className="mb-8 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
                     <FileText className="inline-block h-6 w-6 mr-2" />
-                    {dict.common.blog}
+                    {isJa ? 'ブログ' : 'Blog'}
                     <span className="ml-2 text-lg font-normal text-neutral-500 dark:text-neutral-400">
                       ({blogPosts.length})
                     </span>
@@ -190,7 +198,7 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
                 <div>
                   <h2 className="mb-8 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
                     <Megaphone className="inline-block h-6 w-6 mr-2" />
-                    {dict.common.releases}
+                    {isJa ? 'リリース' : 'Releases'}
                     <span className="ml-2 text-lg font-normal text-neutral-500 dark:text-neutral-400">
                       ({releases.length})
                     </span>

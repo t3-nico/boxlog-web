@@ -1,33 +1,31 @@
 import { Heading, Text } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { getDictionary } from '@/lib/i18n'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
+import { Link } from '@/i18n/navigation'
 import { generateSEOMetadata } from '@/lib/metadata'
 import type { Metadata } from 'next'
 
 interface PageProps {
-  params: {
-    locale: string
-  }
+  params: Promise<{ locale: string }>
 }
 
-export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
-  
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'common' })
+
   return generateSEOMetadata({
-    title: dict.pages.docs.title,
-    description: dict.pages.docs.subtitle,
+    title: t('navigation.docs'),
+    description: locale === 'ja'
+      ? 'ドキュメントとガイド'
+      : 'Documentation and guides',
     url: `/${locale}/docs`,
     locale: locale,
-    keywords: locale === 'jp' 
+    keywords: locale === 'ja'
       ? ['ドキュメント', 'API', 'ガイド', 'チュートリアル', 'SaaS', '開発']
       : ['documentation', 'API', 'guides', 'tutorials', 'SaaS', 'development'],
     type: 'website'
@@ -35,17 +33,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function DocsPage({ params }: PageProps) {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations({ locale, namespace: 'common' })
+
+  const isJa = locale === 'ja'
+
   return (
     <div className="space-y-12">
       {/* Header Section */}
       <div className="space-y-4">
         <Heading as="h1" size="4xl" className="text-gray-900 dark:text-gray-100">
-          {dict.pages.docs.title}
+          {t('navigation.docs')}
         </Heading>
         <Text size="xl" variant="muted" className="max-w-3xl">
-          {dict.pages.docs.subtitle}
+          {isJa ? 'ドキュメントとガイドでBoxLogを始めましょう' : 'Get started with BoxLog using our documentation and guides'}
         </Text>
       </div>
 
@@ -58,13 +61,13 @@ export default async function DocsPage({ params }: PageProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <Heading as="h3" size="lg">{dict.pages.docs.quickStart.title}</Heading>
+            <Heading as="h3" size="lg">{isJa ? 'クイックスタート' : 'Quick Start'}</Heading>
           </div>
           <Text variant="muted" className="mb-4">
-            {dict.pages.docs.quickStart.description}
+            {isJa ? '数分でBoxLogを始めましょう' : 'Get started with BoxLog in minutes'}
           </Text>
-          <Link href={`/${locale}/docs/quick-start`} className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
-            {dict.pages.docs.quickStart.link}
+          <Link href="/docs/quick-start" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+            {isJa ? 'ガイドを読む →' : 'Read guide →'}
           </Link>
         </div>
 
@@ -75,13 +78,13 @@ export default async function DocsPage({ params }: PageProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
               </svg>
             </div>
-            <Heading as="h3" size="lg">{dict.pages.docs.apiReference.title}</Heading>
+            <Heading as="h3" size="lg">{isJa ? 'APIリファレンス' : 'API Reference'}</Heading>
           </div>
           <Text variant="muted" className="mb-4">
-            {dict.pages.docs.apiReference.description}
+            {isJa ? 'APIドキュメントを探索する' : 'Explore our API documentation'}
           </Text>
-          <Link href={`/${locale}/docs/api`} className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
-            {dict.pages.docs.apiReference.link}
+          <Link href="/docs/api" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+            {isJa ? 'ドキュメントを見る →' : 'View docs →'}
           </Link>
         </div>
 
@@ -92,76 +95,34 @@ export default async function DocsPage({ params }: PageProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <Heading as="h3" size="lg">{dict.pages.docs.guides.title}</Heading>
+            <Heading as="h3" size="lg">{isJa ? 'ガイド' : 'Guides'}</Heading>
           </div>
           <Text variant="muted" className="mb-4">
-            {dict.pages.docs.guides.description}
+            {isJa ? 'ステップバイステップのチュートリアル' : 'Step-by-step tutorials'}
           </Text>
-          <Link href={`/${locale}/docs/guides`} className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
-            {dict.pages.docs.guides.link}
+          <Link href="/docs/guides" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+            {isJa ? 'ガイドを見る →' : 'Browse guides →'}
           </Link>
-        </div>
-      </div>
-
-      {/* Popular Topics */}
-      <div className="space-y-6">
-        <Heading as="h2" size="2xl" className="text-gray-900 dark:text-gray-100">
-          {dict.pages.docs.popularTopics.title}
-        </Heading>
-        
-        <div className="space-y-4">
-          <div className="border-l-4 border-blue-500 pl-4">
-            <Link href={`/${locale}/docs/authentication`} className="block hover:bg-gray-50 dark:hover:bg-gray-800 -ml-4 -mr-4 pl-4 pr-4 py-2 rounded">
-              <Heading as="h3" size="lg" className="text-gray-900 dark:text-gray-100 mb-1">
-                {dict.pages.docs.popularTopics.authentication.title}
-              </Heading>
-              <Text variant="muted">
-                {dict.pages.docs.popularTopics.authentication.description}
-              </Text>
-            </Link>
-          </div>
-
-          <div className="border-l-4 border-green-500 pl-4">
-            <Link href={`/${locale}/docs/integrations`} className="block hover:bg-gray-50 dark:hover:bg-gray-800 -ml-4 -mr-4 pl-4 pr-4 py-2 rounded">
-              <Heading as="h3" size="lg" className="text-gray-900 dark:text-gray-100 mb-1">
-                {dict.pages.docs.popularTopics.integrations.title}
-              </Heading>
-              <Text variant="muted">
-                {dict.pages.docs.popularTopics.integrations.description}
-              </Text>
-            </Link>
-          </div>
-
-          <div className="border-l-4 border-purple-500 pl-4">
-            <Link href={`/${locale}/docs/webhooks`} className="block hover:bg-gray-50 dark:hover:bg-gray-800 -ml-4 -mr-4 pl-4 pr-4 py-2 rounded">
-              <Heading as="h3" size="lg" className="text-gray-900 dark:text-gray-100 mb-1">
-                {dict.pages.docs.popularTopics.webhooks.title}
-              </Heading>
-              <Text variant="muted">
-                {dict.pages.docs.popularTopics.webhooks.description}
-              </Text>
-            </Link>
-          </div>
         </div>
       </div>
 
       {/* Help Section */}
       <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8 text-center">
         <Heading as="h2" size="xl" className="text-gray-900 dark:text-gray-100 mb-4">
-          {dict.pages.docs.help.title}
+          {isJa ? 'お困りですか？' : 'Need Help?'}
         </Heading>
         <Text variant="muted" className="mb-6 max-w-2xl mx-auto">
-          {dict.pages.docs.help.description}
+          {isJa ? 'ドキュメントで答えが見つからない場合は、お気軽にお問い合わせください。' : "Can't find what you're looking for? Reach out to us."}
         </Text>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button variant="outline" asChild>
-            <Link href={`/${locale}/docs/faq`}>
-              {dict.pages.docs.help.faqButton}
+            <Link href="/docs/faq">
+              {isJa ? 'よくある質問' : 'FAQ'}
             </Link>
           </Button>
           <Button asChild>
-            <Link href={`/${locale}/docs/support`}>
-              {dict.pages.docs.help.supportButton}
+            <Link href="/contact">
+              {t('navigation.contact')}
             </Link>
           </Button>
         </div>
