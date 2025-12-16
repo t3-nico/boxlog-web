@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Dialog, DialogPanel, Popover, PopoverButton, PopoverPanel, PopoverGroup } from '@headlessui/react'
 import { Menu, X, ChevronDown, Search } from 'lucide-react'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
@@ -59,40 +60,39 @@ export function Header({ locale, dict }: HeaderProps) {
         </div>
 
         {/* Desktop navigation */}
-        <PopoverGroup className="hidden lg:flex lg:gap-x-8">
+        <div className="hidden lg:flex lg:gap-x-8">
           {navigation.main.map((item) => (
             item.items ? (
-              <Popover key={item.name} className="relative">
-                <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-foreground hover:text-foreground/80 outline-none">
+              <DropdownMenuPrimitive.Root key={item.name}>
+                <DropdownMenuPrimitive.Trigger className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-foreground hover:text-foreground/80 outline-none">
                   {item.name}
                   <ChevronDown className="h-4 w-4 flex-none text-muted-foreground" aria-hidden="true" />
-                </PopoverButton>
+                </DropdownMenuPrimitive.Trigger>
 
-                <PopoverPanel
-                  transition
-                  className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-xl bg-popover shadow-lg ring-1 ring-border transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
-                >
-                  <div className="p-4">
+                <DropdownMenuPrimitive.Portal>
+                  <DropdownMenuPrimitive.Content
+                    className="z-50 mt-3 w-screen max-w-md overflow-hidden rounded-xl bg-popover shadow-lg ring-1 ring-border p-4 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+                    sideOffset={8}
+                    align="start"
+                  >
                     {item.items.map((subItem) => (
-                      <div
-                        key={subItem.name}
-                        className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-accent"
-                      >
-                        <div className="flex-auto">
-                          <Link
-                            href={`/${locale}${subItem.href}`}
-                            className="block font-semibold text-foreground"
-                          >
-                            {subItem.name}
-                            <span className="absolute inset-0" />
-                          </Link>
-                          <p className="mt-1 text-muted-foreground">{subItem.description}</p>
-                        </div>
-                      </div>
+                      <DropdownMenuPrimitive.Item key={subItem.name} asChild>
+                        <Link
+                          href={`/${locale}${subItem.href}`}
+                          className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-accent outline-none cursor-pointer"
+                        >
+                          <div className="flex-auto">
+                            <span className="block font-semibold text-foreground">
+                              {subItem.name}
+                            </span>
+                            <p className="mt-1 text-muted-foreground">{subItem.description}</p>
+                          </div>
+                        </Link>
+                      </DropdownMenuPrimitive.Item>
                     ))}
-                  </div>
-                </PopoverPanel>
-              </Popover>
+                  </DropdownMenuPrimitive.Content>
+                </DropdownMenuPrimitive.Portal>
+              </DropdownMenuPrimitive.Root>
             ) : (
               <Link
                 key={item.name}
@@ -103,7 +103,7 @@ export function Header({ locale, dict }: HeaderProps) {
               </Link>
             )
           ))}
-        </PopoverGroup>
+        </div>
 
         {/* Right side actions */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-2">
@@ -123,81 +123,79 @@ export function Header({ locale, dict }: HeaderProps) {
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-        <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border">
-          <div className="flex items-center justify-between">
-            <Link href={`/${locale}`} className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
-              <span className="sr-only">BoxLog</span>
-              <span className="text-lg font-bold">BoxLog</span>
-            </Link>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-foreground"
-            >
-              <span className="sr-only">Close menu</span>
-              <X className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
+      {/* Mobile menu - Using Radix Dialog */}
+      <DialogPrimitive.Root open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/20 lg:hidden" />
+          <DialogPrimitive.Content className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border lg:hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right duration-300">
+            <div className="flex items-center justify-between">
+              <Link href={`/${locale}`} className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
+                <span className="sr-only">BoxLog</span>
+                <span className="text-lg font-bold">BoxLog</span>
+              </Link>
+              <DialogPrimitive.Close className="-m-2.5 rounded-md p-2.5 text-foreground">
+                <span className="sr-only">Close menu</span>
+                <X className="h-6 w-6" aria-hidden="true" />
+              </DialogPrimitive.Close>
+            </div>
 
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-border">
-              <div className="space-y-2 py-6">
-                {navigation.main.map((item) => (
-                  item.items ? (
-                    <div key={item.name} className="space-y-2">
-                      <div className="px-3 py-2 text-base font-semibold leading-7 text-foreground">
+            <div className="mt-6 flow-root">
+              <div className="-my-6 divide-y divide-border">
+                <div className="space-y-2 py-6">
+                  {navigation.main.map((item) => (
+                    item.items ? (
+                      <div key={item.name} className="space-y-2">
+                        <div className="px-3 py-2 text-base font-semibold leading-7 text-foreground">
+                          {item.name}
+                        </div>
+                        <div className="space-y-2 pl-4">
+                          {item.items.map((subItem) => (
+                            <Link
+                              key={subItem.name}
+                              href={`/${locale}${subItem.href}`}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="block rounded-lg py-2 px-3 text-sm leading-7 text-foreground hover:bg-accent"
+                            >
+                              <div className="font-semibold">{subItem.name}</div>
+                              <div className="text-xs text-muted-foreground">{subItem.description}</div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        key={item.name}
+                        href={`/${locale}${item.href}`}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-accent"
+                      >
                         {item.name}
-                      </div>
-                      <div className="space-y-2 pl-4">
-                        {item.items.map((subItem) => (
-                          <Link
-                            key={subItem.name}
-                            href={`/${locale}${subItem.href}`}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="block rounded-lg py-2 px-3 text-sm leading-7 text-foreground hover:bg-accent"
-                          >
-                            <div className="font-semibold">{subItem.name}</div>
-                            <div className="text-xs text-muted-foreground">{subItem.description}</div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link
-                      key={item.name}
-                      href={`/${locale}${item.href}`}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-accent"
-                    >
-                      {item.name}
-                    </Link>
-                  )
-                ))}
-              </div>
-
-              <div className="py-6 space-y-2">
-                <div className="flex items-center gap-2 px-3">
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Search className="h-4 w-4" />
-                    <span className="sr-only">{dict.common.search}</span>
-                  </Button>
-                  <LanguageSwitcher currentLocale={locale} />
-                  <ThemeToggle />
+                      </Link>
+                    )
+                  ))}
                 </div>
 
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
-                    {dict.common.contact || 'Contact'}
-                  </Link>
-                </Button>
+                <div className="py-6 space-y-2">
+                  <div className="flex items-center gap-2 px-3">
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Search className="h-4 w-4" />
+                      <span className="sr-only">{dict.common.search}</span>
+                    </Button>
+                    <LanguageSwitcher currentLocale={locale} />
+                    <ThemeToggle />
+                  </div>
+
+                  <Button variant="outline" className="w-full" asChild>
+                    <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
+                      {dict.common.contact || 'Contact'}
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        </DialogPanel>
-      </Dialog>
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </header>
   )
 }
