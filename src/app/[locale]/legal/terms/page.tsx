@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { getDictionary, Locale } from '@/lib/i18n'
 import { Container } from '@/components/ui/container'
 import { Metadata } from 'next'
@@ -104,9 +105,9 @@ export default async function TermsPage({ params }: TermsPageProps) {
               </h2>
               <p className="mb-4">
                 個人情報の取り扱いについては、
-                <a href={`/${params.locale}/privacy`} className="text-primary hover:underline">
+                <Link href={`/${params.locale}/privacy`} className="text-primary hover:underline">
                   プライバシーポリシー
-                </a>
+                </Link>
                 をご確認ください。
               </p>
             </section>
@@ -157,9 +158,9 @@ export default async function TermsPage({ params }: TermsPageProps) {
               </h2>
               <p className="mb-4">
                 本規約に関するご質問は、
-                <a href={`/${params.locale}/contact`} className="text-primary hover:underline">
+                <Link href={`/${params.locale}/contact`} className="text-primary hover:underline">
                   お問い合わせページ
-                </a>
+                </Link>
                 よりご連絡ください。
               </p>
             </section>

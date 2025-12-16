@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { 
   getAllContent, 
@@ -234,12 +235,12 @@ export default async function DocPage({ params }: DocPageProps) {
           <Text variant="muted" className="mb-6">
             We encountered an error while loading this page.
           </Text>
-          <a 
+          <Link
             href="/docs"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Back to Documentation
-          </a>
+          </Link>
         </div>
       </div>
     )

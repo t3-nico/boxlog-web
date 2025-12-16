@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
+import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
@@ -216,12 +217,12 @@ function SearchResults() {
                     <div className="flex items-start gap-4 mb-3">
                       {getTypeIcon(result.type)}
                       <div className="flex-1 min-w-0">
-                        <a 
+                        <Link
                           href={result.url}
                           className="text-lg font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] hover:underline block truncate"
                         >
                           <Highlight text={result.title} query={query} />
-                        </a>
+                        </Link>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge 
                             variant="outline" 
@@ -243,12 +244,12 @@ function SearchResults() {
                       <span className="text-xs text-[rgb(var(--text-tertiary))]">
                         最終更新: {result.lastModified}
                       </span>
-                      <a 
+                      <Link
                         href={result.url}
                         className="text-xs text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
                       >
                         詳細を見る →
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 ))}
