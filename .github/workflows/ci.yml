@@ -1,107 +1,57 @@
-name: CI
+name: CI Pipeline
 
 on:
-  workflow_dispatch:  # Manual trigger only
-  # push:
-  #   branches: [ dev, main ]
-  # pull_request:
-  #   branches: [ dev, main ]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run type-check
+
   test:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test:run
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run linting
-      run: npm run lint
-
-    - name: Run type checking
-      run: npm run type-check
-
-    - name: Run tests
-      run: npm run test:run
-
-    - name: Build application
-      run: npm run build
-
-  lighthouse:
+  build:
     runs-on: ubuntu-latest
-    needs: test
-
+    needs: [lint, typecheck, test]
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Use Node.js 20.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Build application
-      run: npm run build
-
-    - name: Run Lighthouse CI
-      run: npm run test:lighthouse
-      continue-on-error: true
-
-  accessibility:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Use Node.js 20.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run accessibility tests
-      run: npm run test:a11y
-      continue-on-error: true
-
-  performance:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Use Node.js 20.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run performance tests
-      run: npm run test:performance
-      continue-on-error: true
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
