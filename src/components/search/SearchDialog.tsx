@@ -6,8 +6,16 @@ import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Highlight } from '@/utils/highlight'
-import { Search, Clock, Tag, FileText, Edit, Package, X } from 'lucide-react'
+import { Highlight } from '@/lib/highlight'
+import { 
+  Search, 
+  Clock, 
+  Tag, 
+  FileText, 
+  Edit, 
+  Package, 
+  X 
+} from 'lucide-react'
 import type { Dictionary } from '@/lib/i18n'
 
 interface SearchDialogProps {
@@ -21,34 +29,14 @@ interface SearchDialogProps {
 const RECENT_SEARCHES = [
   'API Authentication',
   'Release v2.1.0',
-  'Next.js Guide',
+  'Next.js Guide'
 ]
 
 const getQuickLinks = (locale: string) => [
-  {
-    title: 'Quick Start',
-    description: 'Get started with YourSaaS in 5 minutes',
-    href: `/${locale}/docs/quick-start`,
-    type: 'docs',
-  },
-  {
-    title: 'API Reference',
-    description: 'Authentication and API usage',
-    href: `/${locale}/docs/api-reference`,
-    type: 'docs',
-  },
-  {
-    title: 'Latest Release',
-    description: 'New features in v2.1.0',
-    href: `/${locale}/releases/v2.1.0`,
-    type: 'release',
-  },
-  {
-    title: 'SaaS Strategy',
-    description: 'Business strategy for 2024',
-    href: `/${locale}/blog/saas-strategy-2024`,
-    type: 'blog',
-  },
+  { title: 'Quick Start', description: 'Get started with YourSaaS in 5 minutes', href: `/${locale}/docs/quick-start`, type: 'docs' },
+  { title: 'API Reference', description: 'Authentication and API usage', href: `/${locale}/docs/api-reference`, type: 'docs' },
+  { title: 'Latest Release', description: 'New features in v2.1.0', href: `/${locale}/releases/v2.1.0`, type: 'release' },
+  { title: 'SaaS Strategy', description: 'Business strategy for 2024', href: `/${locale}/blog/saas-strategy-2024`, type: 'blog' }
 ]
 
 interface PopularTag {
@@ -63,12 +51,7 @@ const getTagColor = (index: number): string => {
   return colors[index % colors.length]
 }
 
-export function SearchDialog({
-  open,
-  onOpenChange,
-  dict,
-  locale,
-}: SearchDialogProps) {
+export function SearchDialog({ open, onOpenChange, dict, locale }: SearchDialogProps) {
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [popularTags, setPopularTags] = useState<PopularTag[]>([])
@@ -89,14 +72,14 @@ export function SearchDialog({
         const topTags = allTags.slice(0, 8).map((tag: any, index: number) => ({
           name: tag.tag,
           count: tag.count,
-          color: getTagColor(index),
+          color: getTagColor(index)
         }))
         setPopularTags(topTags)
       } catch (error) {
         console.error('Failed to fetch tags:', error)
       }
     }
-
+    
     fetchPopularTags()
   }, [])
 
@@ -105,11 +88,11 @@ export function SearchDialog({
     if (query.length > 2) {
       const timeoutId = setTimeout(() => {
         fetch(`/api/search?q=${encodeURIComponent(query)}`)
-          .then((response) => response.json())
-          .then((data) => {
+          .then(response => response.json())
+          .then(data => {
             setPreviewResults((data.results || []).slice(0, 3))
           })
-          .catch((error) => {
+          .catch(error => {
             console.error('Failed to fetch search results:', error)
             setPreviewResults([])
           })
@@ -134,7 +117,7 @@ export function SearchDialog({
 
   const handleSearch = (searchQuery: string) => {
     if (!searchQuery.trim()) return
-
+    
     onOpenChange(false)
     router.push(`/${locale}/search?q=${encodeURIComponent(searchQuery)}`)
   }
@@ -185,17 +168,11 @@ export function SearchDialog({
 
   const getTagColorClass = (color: string) => {
     const colorMap = {
-      'neutral-100':
-        'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700',
-      'neutral-200':
-        'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600',
-      'neutral-300':
-        'bg-neutral-300 text-neutral-800 hover:bg-neutral-400 dark:bg-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-500',
+      'neutral-100': 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700',
+      'neutral-200': 'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600',
+      'neutral-300': 'bg-neutral-300 text-neutral-800 hover:bg-neutral-400 dark:bg-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-500'
     }
-    return (
-      colorMap[color as keyof typeof colorMap] ||
-      'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700'
-    )
+    return colorMap[color as keyof typeof colorMap] || 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700'
   }
 
   return (
@@ -285,12 +262,12 @@ export function SearchDialog({
                       }}
                       variant="ghost"
                       className={`flex items-start gap-4 w-full p-4 h-auto justify-start ${
-                        selectedIndex === index
-                          ? 'bg-blue-50 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-700'
-                          : ''
+                        selectedIndex === index ? 'bg-blue-50 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-700' : ''
                       }`}
                     >
-                      <div className="mt-0.5">{getTypeIcon(link.type)}</div>
+                      <div className="mt-0.5">
+                        {getTypeIcon(link.type)}
+                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
                           {link.title}
@@ -301,11 +278,7 @@ export function SearchDialog({
                       </div>
                       <div className="flex items-center gap-1">
                         <Badge variant="outline" className="text-xs px-2 py-1">
-                          {link.type === 'docs'
-                            ? dict.search.docs
-                            : link.type === 'blog'
-                              ? dict.search.blog
-                              : dict.search.release}
+                          {link.type === 'docs' ? dict.search.docs : link.type === 'blog' ? dict.search.blog : dict.search.release}
                         </Badge>
                       </div>
                     </Button>
@@ -317,14 +290,13 @@ export function SearchDialog({
             <div className="p-4 space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {dict.search.searchResultsFor} &ldquo;
-                  <span className="font-medium">{query}</span>&rdquo;
+                  {dict.search.searchResultsFor} &ldquo;<span className="font-medium">{query}</span>&rdquo;
                 </p>
                 <Badge variant="outline" className="text-xs">
                   {dict.search.pressEnterToSearch}
                 </Badge>
               </div>
-
+              
               {/* 全文検索 */}
               <Button
                 onClick={() => handleSearch(query)}
@@ -334,9 +306,7 @@ export function SearchDialog({
                 <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <div className="text-left">
                   <div className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                    {dict.search.searchFor} &ldquo;
-                    <Highlight text={query} query={query} />
-                    &rdquo;
+                    {dict.search.searchFor} &ldquo;<Highlight text={query} query={query} />&rdquo;
                   </div>
                   <div className="text-xs text-blue-700 dark:text-blue-300">
                     {dict.search.findResultsAcross}
@@ -347,9 +317,7 @@ export function SearchDialog({
               {/* プレビュー検索結果 */}
               {previewResults.length > 0 && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">
-                    {dict.search.previewResults}
-                  </p>
+                  <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">{dict.search.previewResults}</p>
                   <div className="space-y-2">
                     {previewResults.map((result, index) => (
                       <Button
@@ -361,47 +329,28 @@ export function SearchDialog({
                         variant="ghost"
                         className="flex items-start gap-4 w-full p-4 h-auto justify-start border border-gray-100 dark:border-gray-700"
                       >
-                        <div className="mt-0.5">{getTypeIcon(result.type)}</div>
+                        <div className="mt-0.5">
+                          {getTypeIcon(result.type)}
+                        </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="text-xs font-medium text-gray-500 uppercase tracking-wide dark:text-gray-400">
-                              {result.breadcrumbs?.[0] ||
-                                (result.type === 'docs'
-                                  ? dict.search.docs
-                                  : result.type === 'blog'
-                                    ? dict.search.blog
-                                    : result.type === 'tags'
-                                      ? dict.search.tags
-                                      : dict.search.release)}
+                              {result.breadcrumbs?.[0] || (result.type === 'docs' ? dict.search.docs : result.type === 'blog' ? dict.search.blog : result.type === 'tags' ? dict.search.tags : dict.search.release)}
                             </span>
                             <span className="text-xs text-gray-400">•</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
-                              {result.breadcrumbs?.[1] ||
-                                result.category ||
-                                'General'}
+                              {result.breadcrumbs?.[1] || result.category || 'General'}
                             </span>
                           </div>
                           <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
                             <Highlight text={result.title} query={query} />
                           </div>
                           <div className="text-xs text-gray-500 mt-0.5 line-clamp-2 dark:text-gray-400">
-                            <Highlight
-                              text={result.description}
-                              query={query}
-                            />
+                            <Highlight text={result.description} query={query} />
                           </div>
                         </div>
-                        <Badge
-                          variant="outline"
-                          className="text-xs px-2 py-1 self-start"
-                        >
-                          {result.type === 'docs'
-                            ? dict.search.docs
-                            : result.type === 'blog'
-                              ? dict.search.blog
-                              : result.type === 'tags'
-                                ? dict.search.tags
-                                : dict.search.release}
+                        <Badge variant="outline" className="text-xs px-2 py-1 self-start">
+                          {result.type === 'docs' ? dict.search.docs : result.type === 'blog' ? dict.search.blog : result.type === 'tags' ? dict.search.tags : dict.search.release}
                         </Badge>
                       </Button>
                     ))}
@@ -411,16 +360,14 @@ export function SearchDialog({
 
               {/* タグ検索候補 */}
               {(() => {
-                const matchedTags = popularTags.filter((tag) =>
+                const matchedTags = popularTags.filter(tag => 
                   tag.name.toLowerCase().includes(query.toLowerCase())
                 )
-
+                
                 if (matchedTags.length > 0) {
                   return (
                     <div>
-                      <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">
-                        {dict.search.relatedTags}
-                      </p>
+                      <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">{dict.search.relatedTags}</p>
                       <div className="space-y-1">
                         {matchedTags.map((tag, index) => (
                           <Button
@@ -446,10 +393,7 @@ export function SearchDialog({
                                 <Highlight text={tag.name} query={query} />
                               </div>
                             </div>
-                            <Badge
-                              variant="outline"
-                              className="text-xs px-2 py-1 self-start"
-                            >
+                            <Badge variant="outline" className="text-xs px-2 py-1 self-start">
                               {dict.search.tags}
                             </Badge>
                           </Button>
@@ -487,9 +431,7 @@ export function SearchDialog({
                 <span>{dict.search.toClose}</span>
               </div>
             </div>
-            <span className="text-gray-400 dark:text-gray-500">
-              {dict.search.poweredBy}
-            </span>
+            <span className="text-gray-400 dark:text-gray-500">{dict.search.poweredBy}</span>
           </div>
         </div>
       </DialogContent>
