@@ -63,6 +63,8 @@ export async function getMDXContent(
       order: data.order || 0,
       draft: data.draft || false,
       featured: data.featured || false,
+      // AI/RAG用メタデータ
+      ai: data.ai || undefined,
     }
 
     return {

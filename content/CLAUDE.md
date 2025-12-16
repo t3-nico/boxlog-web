@@ -45,25 +45,119 @@ content/
 
 ---
 
+## 🤖 AI/RAGメタデータ（Human-AI Dual Purpose Docs）
+
+### 概要
+
+すべてのMDXファイルには、AIチャットボット/RAGシステム用のメタデータを追加する。
+このメタデータはYAML frontmatter内に記述され、**ユーザーには表示されない**。
+
+### 設計方針（重複回避）
+
+**既存フィールドを流用し、重複を避ける:**
+- `keywords` → 既存の `tags` フィールドを使用（aiに書かない）
+- `aiSummary` → 既存の `description` フィールドを使用（aiに書かない）
+- **手動で書くのは `relatedQuestions` のみ**
+
+### 型定義（src/types/content.ts）
+
+```typescript
+export interface AIMetadata {
+  relatedQuestions?: string[]   // 🔴 手動必須: ユーザーが尋ねそうな質問
+  prerequisites?: string[]      // 前提知識（必要に応じて）
+  relatedDocs?: string[]        // 関連ドキュメントパス（必要に応じて）
+  chunkStrategy?: 'h2' | 'h3' | 'paragraph' | 'full'  // チャンキング戦略
+  searchable?: boolean          // 検索対象フラグ
+  difficulty?: 'beginner' | 'intermediate' | 'advanced'
+  contentType?: 'tutorial' | 'reference' | 'guide' | 'troubleshooting' | 'concept'
+}
+
+// ※ keywords と aiSummary は削除済み（tags, description を流用）
+```
+
+### AI メタデータテンプレート（簡略版）
+
+```yaml
+# === AI/RAG用メタデータ ===
+ai:
+  relatedQuestions:            # 🔴 手動で書く（3-5個推奨）
+    - "ユーザーが尋ねそうな質問1？"
+    - "ユーザーが尋ねそうな質問2？"
+    - "ユーザーが尋ねそうな質問3？"
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "intermediate"   # beginner / intermediate / advanced
+  contentType: "guide"         # tutorial / reference / guide / troubleshooting / concept
+```
+
+### フィールド説明
+
+| フィールド | 必須 | 説明 |
+|-----------|------|------|
+| `relatedQuestions` | ✅ | ユーザーがチャットボットに尋ねそうな質問。**手動で記述が必要** |
+| `prerequisites` | ❌ | このコンテンツを理解するための前提知識 |
+| `relatedDocs` | ❌ | 関連ドキュメントへのパス（チャットボットが追加情報として提示） |
+| `chunkStrategy` | ✅ | RAGチャンキング戦略。通常は`h2`（見出しレベル2で分割） |
+| `searchable` | ✅ | `true`にすると検索対象。`false`で除外 |
+| `difficulty` | ✅ | 難易度レベル（初心者向けか上級者向けか） |
+| `contentType` | ✅ | コンテンツの種類（チュートリアル、リファレンス等） |
+
+### 流用されるフィールド（aiセクションに書かない）
+
+| 用途 | 流用元 | 説明 |
+|------|--------|------|
+| キーワード | `tags` | 既存のタグがそのままRAG検索用キーワードになる |
+| AI用要約 | `description` | 既存の説明文がAI回答生成時の要約になる |
+
+### contentType の選び方
+
+| タイプ | 説明 | 例 |
+|--------|------|-----|
+| `tutorial` | 手順を追って学ぶ形式 | インストールガイド、はじめてのログ送信 |
+| `reference` | 参照用の情報 | API仕様、リリースノート、設定オプション一覧 |
+| `guide` | ベストプラクティスや解説 | 設計ガイドライン、パフォーマンス最適化 |
+| `troubleshooting` | 問題解決方法 | よくあるエラーと対処法 |
+| `concept` | 概念や理論の説明 | アーキテクチャ解説、用語説明 |
+
+### difficulty の選び方
+
+| レベル | 説明 |
+|--------|------|
+| `beginner` | 初心者向け。前提知識なしで理解可能 |
+| `intermediate` | 中級者向け。基本知識を前提 |
+| `advanced` | 上級者向け。深い知識を前提 |
+
+---
+
 ## 📝 MDXファイル作成ガイド
 
 ### ブログ記事（content/blog/*.mdx）
 
-#### Frontmatter構造
+#### Frontmatter構造（AI メタデータ含む）
 
 ```yaml
 ---
 title: "記事タイトル"
-description: "記事の説明文（SEO用）"
+description: "記事の説明文（SEO用 + AI要約として流用）"
 publishedAt: "2025-01-23"
 updatedAt: "2025-01-23"
-tags: ["Next.js", "React", "TypeScript"]
+tags: ["Next.js", "React", "TypeScript"]  # ← RAGキーワードとして流用
 category: "Technology"
 author: "著者名"
 authorAvatar: "/avatars/author.jpg"
 coverImage: "/images/blog/cover.jpg"
 featured: true
 draft: false
+
+# === AI/RAG用メタデータ（簡略版） ===
+ai:
+  relatedQuestions:              # 🔴 手動で書く
+    - "Next.jsでSaaSを作るには？"
+    - "App Routerの使い方は？"
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "intermediate"
+  contentType: "tutorial"
 ---
 ```
 
@@ -130,16 +224,26 @@ Next.js 14 is a powerful framework for building modern SaaS applications.
 
 ### ドキュメント（content/docs/**/*.mdx）
 
-#### Frontmatter構造
+#### Frontmatter構造（AI メタデータ含む）
 
 ```yaml
 ---
 title: "ドキュメントタイトル"
-description: "ドキュメントの説明"
+description: "ドキュメントの説明（AI要約として流用）"
 category: "Getting Started"
 order: 1
 lastUpdated: "2025-01-23"
-tags: ["setup", "configuration"]
+tags: ["setup", "configuration"]  # ← RAGキーワードとして流用
+
+# === AI/RAG用メタデータ（簡略版） ===
+ai:
+  relatedQuestions:              # 🔴 手動で書く
+    - "インストール方法は？"
+    - "必要な前提条件は？"
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "beginner"
+  contentType: "tutorial"
 ---
 ```
 
@@ -153,22 +257,36 @@ tags: ["setup", "configuration"]
 | `order` | number | ✅ | 表示順序（昇順） |
 | `lastUpdated` | string | ✅ | 最終更新日（ISO 8601形式） |
 | `tags` | string[] | ❌ | タグ |
+| `ai` | AIMetadata | ✅ | AI/RAGメタデータ（上記参照） |
 
 ---
 
 ### リリースノート（content/releases/*.mdx）
 
-#### Frontmatter構造
+#### Frontmatter構造（AI メタデータ含む）
 
 ```yaml
 ---
-version: "1.0.0"
-title: "First Major Release"
+version: "2.0.0"
 date: "2025-01-23"
-type: "major"
+title: "次世代プラットフォームへの大型アップデート"
+description: "完全に再設計されたアーキテクチャと新UI（AI要約として流用）"
+tags: ["frontend", "backend", "breaking"]  # ← RAGキーワードとして流用
+breaking: true
 featured: true
-breaking: false
-tags: ["feature", "improvement", "bugfix"]
+author: "田中一郎"
+authorAvatar: "/avatars/tanaka-ichiro.jpg"
+
+# === AI/RAG用メタデータ（簡略版） ===
+ai:
+  relatedQuestions:              # 🔴 手動で書く
+    - "v2.0.0の主な変更点は？"
+    - "v1.xからの移行方法は？"
+    - "破壊的変更は何？"
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "advanced"
+  contentType: "reference"
 ---
 ```
 
@@ -179,10 +297,13 @@ tags: ["feature", "improvement", "bugfix"]
 | `version` | string | ✅ | バージョン番号（Semantic Versioning） |
 | `title` | string | ✅ | リリースタイトル |
 | `date` | string | ✅ | リリース日（ISO 8601形式） |
-| `type` | string | ✅ | リリースタイプ（`major`, `minor`, `patch`, `prerelease`） |
+| `description` | string | ✅ | リリースの説明 |
 | `featured` | boolean | ❌ | 注目リリースか（デフォルト: `false`） |
 | `breaking` | boolean | ❌ | 破壊的変更を含むか（デフォルト: `false`） |
-| `tags` | string[] | ❌ | タグ（new, improvement, bugfix, breaking, security） |
+| `tags` | string[] | ✅ | タグ（frontend, backend, security, breaking等） |
+| `author` | string | ❌ | 著者名 |
+| `authorAvatar` | string | ❌ | 著者アバター画像パス |
+| `ai` | AIMetadata | ✅ | AI/RAGメタデータ（上記参照） |
 
 #### 完全な例
 
@@ -439,6 +560,7 @@ lang: "jp"
 
 ## 🎓 新規コンテンツ作成チェックリスト
 
+### 基本項目
 - [ ] Frontmatterはすべて記述したか？
 - [ ] 日付はISO 8601形式か？（`YYYY-MM-DD`）
 - [ ] タグは適切に設定したか？（3-6個推奨）
@@ -449,6 +571,15 @@ lang: "jp"
 - [ ] コードブロックに言語指定したか？
 - [ ] リンクは正しく機能するか？
 - [ ] 多言語対応は必要か？（必要な場合は両言語版を作成）
+
+### AI/RAGメタデータ（簡略版）
+- [ ] `tags` は設定したか？（RAGキーワードとして流用される）
+- [ ] `description` は適切に記述したか？（AI要約として流用される）
+- [ ] `ai.relatedQuestions` は設定したか？（3-5個推奨、**手動で記述**）
+- [ ] `ai.chunkStrategy` は適切か？（通常 `h2`）
+- [ ] `ai.searchable` は `true` か？
+- [ ] `ai.difficulty` は適切か？（`beginner`/`intermediate`/`advanced`）
+- [ ] `ai.contentType` は適切か？（`tutorial`/`reference`/`guide`等）
 
 ---
 
@@ -484,4 +615,4 @@ export const mdxComponents = {
 
 ---
 
-**📖 最終更新**: 2025-10-23 | **バージョン**: v1.0
+**📖 最終更新**: 2025-12-16 | **バージョン**: v1.1 (AI/RAGメタデータ追加)
