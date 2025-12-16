@@ -45,11 +45,95 @@ content/
 
 ---
 
+## 🤖 AI/RAGメタデータ（Human-AI Dual Purpose Docs）
+
+### 概要
+
+すべてのMDXファイルには、AIチャットボット/RAGシステム用のメタデータを追加する。
+このメタデータはYAML frontmatter内に記述され、**ユーザーには表示されない**。
+
+### 型定義（src/types/content.ts）
+
+```typescript
+export interface AIMetadata {
+  keywords?: string[]           // 検索・RAG用キーワード
+  relatedQuestions?: string[]   // ユーザーが尋ねそうな質問
+  prerequisites?: string[]      // 前提知識
+  relatedDocs?: string[]        // 関連ドキュメントパス
+  aiSummary?: string            // AIが参照する要約（2-4行）
+  chunkStrategy?: 'h2' | 'h3' | 'paragraph' | 'full'  // チャンキング戦略
+  searchable?: boolean          // 検索対象フラグ
+  difficulty?: 'beginner' | 'intermediate' | 'advanced'
+  contentType?: 'tutorial' | 'reference' | 'guide' | 'troubleshooting' | 'concept'
+}
+```
+
+### AI メタデータテンプレート
+
+```yaml
+# === AI/RAG用メタデータ ===
+ai:
+  keywords:
+    - "キーワード1"
+    - "キーワード2"
+    - "キーワード3"
+  relatedQuestions:
+    - "ユーザーが尋ねそうな質問1？"
+    - "ユーザーが尋ねそうな質問2？"
+  prerequisites:
+    - "前提知識1"
+    - "前提知識2"
+  relatedDocs:
+    - "/docs/関連ドキュメント1"
+    - "/docs/関連ドキュメント2"
+  aiSummary: |
+    AIが参照する要約文（2-4行）。
+    このコンテンツの主要なポイントを簡潔に記述。
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "intermediate"
+  contentType: "guide"
+```
+
+### フィールド説明
+
+| フィールド | 必須 | 説明 |
+|-----------|------|------|
+| `keywords` | ✅ | ベクトル検索で使用されるキーワード。日本語・英語混在OK |
+| `relatedQuestions` | ✅ | ユーザーがチャットボットに尋ねそうな質問。RAG検索のヒット率向上 |
+| `prerequisites` | ❌ | このコンテンツを理解するための前提知識 |
+| `relatedDocs` | ❌ | 関連ドキュメントへのパス（チャットボットが追加情報として提示） |
+| `aiSummary` | ✅ | AIが回答生成時に参照する要約。簡潔かつ情報量のある記述 |
+| `chunkStrategy` | ✅ | RAGチャンキング戦略。通常は`h2`（見出しレベル2で分割） |
+| `searchable` | ✅ | `true`にすると検索対象。`false`で除外 |
+| `difficulty` | ✅ | 難易度レベル（初心者向けか上級者向けか） |
+| `contentType` | ✅ | コンテンツの種類（チュートリアル、リファレンス等） |
+
+### contentType の選び方
+
+| タイプ | 説明 | 例 |
+|--------|------|-----|
+| `tutorial` | 手順を追って学ぶ形式 | インストールガイド、はじめてのログ送信 |
+| `reference` | 参照用の情報 | API仕様、リリースノート、設定オプション一覧 |
+| `guide` | ベストプラクティスや解説 | 設計ガイドライン、パフォーマンス最適化 |
+| `troubleshooting` | 問題解決方法 | よくあるエラーと対処法 |
+| `concept` | 概念や理論の説明 | アーキテクチャ解説、用語説明 |
+
+### difficulty の選び方
+
+| レベル | 説明 |
+|--------|------|
+| `beginner` | 初心者向け。前提知識なしで理解可能 |
+| `intermediate` | 中級者向け。基本知識を前提 |
+| `advanced` | 上級者向け。深い知識を前提 |
+
+---
+
 ## 📝 MDXファイル作成ガイド
 
 ### ブログ記事（content/blog/*.mdx）
 
-#### Frontmatter構造
+#### Frontmatter構造（AI メタデータ含む）
 
 ```yaml
 ---
@@ -64,6 +148,23 @@ authorAvatar: "/avatars/author.jpg"
 coverImage: "/images/blog/cover.jpg"
 featured: true
 draft: false
+
+# === AI/RAG用メタデータ ===
+ai:
+  keywords:
+    - "Next.js"
+    - "SaaS開発"
+    - "TypeScript"
+  relatedQuestions:
+    - "Next.jsでSaaSを作るには？"
+    - "App Routerの使い方は？"
+  aiSummary: |
+    Next.js 14でSaaSアプリケーションを構築する完全ガイド。
+    App Router、Server Components、認証実装を解説。
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "intermediate"
+  contentType: "tutorial"
 ---
 ```
 
@@ -130,7 +231,7 @@ Next.js 14 is a powerful framework for building modern SaaS applications.
 
 ### ドキュメント（content/docs/**/*.mdx）
 
-#### Frontmatter構造
+#### Frontmatter構造（AI メタデータ含む）
 
 ```yaml
 ---
@@ -140,6 +241,23 @@ category: "Getting Started"
 order: 1
 lastUpdated: "2025-01-23"
 tags: ["setup", "configuration"]
+
+# === AI/RAG用メタデータ ===
+ai:
+  keywords:
+    - "インストール"
+    - "セットアップ"
+    - "初期設定"
+  relatedQuestions:
+    - "インストール方法は？"
+    - "必要な前提条件は？"
+  aiSummary: |
+    BoxLogのインストールと初期セットアップの手順。
+    npm/yarn/pnpmでのインストール方法を解説。
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "beginner"
+  contentType: "tutorial"
 ---
 ```
 
@@ -153,22 +271,45 @@ tags: ["setup", "configuration"]
 | `order` | number | ✅ | 表示順序（昇順） |
 | `lastUpdated` | string | ✅ | 最終更新日（ISO 8601形式） |
 | `tags` | string[] | ❌ | タグ |
+| `ai` | AIMetadata | ✅ | AI/RAGメタデータ（上記参照） |
 
 ---
 
 ### リリースノート（content/releases/*.mdx）
 
-#### Frontmatter構造
+#### Frontmatter構造（AI メタデータ含む）
 
 ```yaml
 ---
-version: "1.0.0"
-title: "First Major Release"
+version: "2.0.0"
 date: "2025-01-23"
-type: "major"
+title: "次世代プラットフォームへの大型アップデート"
+description: "完全に再設計されたアーキテクチャと新UI"
+tags: ["frontend", "backend", "breaking"]
+breaking: true
 featured: true
-breaking: false
-tags: ["feature", "improvement", "bugfix"]
+author: "田中一郎"
+authorAvatar: "/avatars/tanaka-ichiro.jpg"
+
+# === AI/RAG用メタデータ ===
+ai:
+  keywords:
+    - "メジャーアップデート"
+    - "v2.0"
+    - "破壊的変更"
+    - "移行ガイド"
+  relatedQuestions:
+    - "v2.0.0の主な変更点は？"
+    - "v1.xからの移行方法は？"
+    - "破壊的変更は何？"
+  aiSummary: |
+    v2.0.0メジャーリリース。新UI、マイクロサービス化、
+    API認証方式の変更（破壊的変更）を含む。
+    移行ガイドとサポート情報あり。
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "advanced"
+  contentType: "reference"
 ---
 ```
 
@@ -179,10 +320,13 @@ tags: ["feature", "improvement", "bugfix"]
 | `version` | string | ✅ | バージョン番号（Semantic Versioning） |
 | `title` | string | ✅ | リリースタイトル |
 | `date` | string | ✅ | リリース日（ISO 8601形式） |
-| `type` | string | ✅ | リリースタイプ（`major`, `minor`, `patch`, `prerelease`） |
+| `description` | string | ✅ | リリースの説明 |
 | `featured` | boolean | ❌ | 注目リリースか（デフォルト: `false`） |
 | `breaking` | boolean | ❌ | 破壊的変更を含むか（デフォルト: `false`） |
-| `tags` | string[] | ❌ | タグ（new, improvement, bugfix, breaking, security） |
+| `tags` | string[] | ✅ | タグ（frontend, backend, security, breaking等） |
+| `author` | string | ❌ | 著者名 |
+| `authorAvatar` | string | ❌ | 著者アバター画像パス |
+| `ai` | AIMetadata | ✅ | AI/RAGメタデータ（上記参照） |
 
 #### 完全な例
 
@@ -439,6 +583,7 @@ lang: "jp"
 
 ## 🎓 新規コンテンツ作成チェックリスト
 
+### 基本項目
 - [ ] Frontmatterはすべて記述したか？
 - [ ] 日付はISO 8601形式か？（`YYYY-MM-DD`）
 - [ ] タグは適切に設定したか？（3-6個推奨）
@@ -449,6 +594,15 @@ lang: "jp"
 - [ ] コードブロックに言語指定したか？
 - [ ] リンクは正しく機能するか？
 - [ ] 多言語対応は必要か？（必要な場合は両言語版を作成）
+
+### AI/RAGメタデータ（必須）
+- [ ] `ai.keywords` は設定したか？（5-10個推奨）
+- [ ] `ai.relatedQuestions` は設定したか？（3-5個推奨）
+- [ ] `ai.aiSummary` は記述したか？（2-4行）
+- [ ] `ai.chunkStrategy` は適切か？（通常 `h2`）
+- [ ] `ai.searchable` は `true` か？
+- [ ] `ai.difficulty` は適切か？（`beginner`/`intermediate`/`advanced`）
+- [ ] `ai.contentType` は適切か？（`tutorial`/`reference`/`guide`等）
 
 ---
 
@@ -484,4 +638,4 @@ export const mdxComponents = {
 
 ---
 
-**📖 最終更新**: 2025-10-23 | **バージョン**: v1.0
+**📖 最終更新**: 2025-12-16 | **バージョン**: v1.1 (AI/RAGメタデータ追加)
