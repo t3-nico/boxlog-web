@@ -6,6 +6,10 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Turbopack configuration (default bundler in Next.js 16)
+  turbopack: {
+    // Turbopack handles optimization automatically
+  },
   // Performance optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

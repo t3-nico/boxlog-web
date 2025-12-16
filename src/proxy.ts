@@ -57,7 +57,7 @@ function hasLocale(pathname: string): boolean {
   )
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // Skip i18n processing for public paths
@@ -173,7 +173,7 @@ function addSecurityHeaders(response: NextResponse, request?: NextRequest): Next
   }
 
   // Enhanced rate limiting and security monitoring
-  const ip = request?.ip ?? request?.headers.get('x-forwarded-for') ?? '127.0.0.1'
+  const ip = request?.headers.get('x-forwarded-for') ?? '127.0.0.1'
   const userAgent = request?.headers.get('user-agent') ?? ''
   const now = Date.now()
   

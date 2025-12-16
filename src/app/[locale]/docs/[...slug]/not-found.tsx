@@ -6,7 +6,7 @@ import { headers } from 'next/headers'
 
 export default async function NotFound() {
   // Try to get locale from headers or fallback to 'en'
-  const headersList = headers()
+  const headersList = await headers()
   const pathname = headersList.get('x-pathname') || ''
   const locale = pathname.split('/')[1] || 'en'
   const dict = await getDictionary(locale as 'en' | 'jp')
