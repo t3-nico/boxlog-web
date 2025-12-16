@@ -1,0 +1,169 @@
+{
+  "common": {
+    "navigation": {
+      "home": "ホーム",
+      "about": "概要",
+      "features": "機能",
+      "pricing": "料金",
+      "blog": "ブログ",
+      "docs": "ドキュメント",
+      "contact": "お問い合わせ",
+      "releases": "リリース",
+      "tags": "タグ",
+      "resources": "リソース",
+      "blogDescription": "最新の記事とチュートリアル",
+      "docsDescription": "ドキュメントとガイド",
+      "releasesDescription": "最新のアップデートと変更履歴"
+    },
+    "actions": {
+      "search": "検索",
+      "login": "ログイン",
+      "signup": "新規登録",
+      "getStarted": "今すぐ始める",
+      "learnMore": "詳細を見る",
+      "readMore": "続きを読む",
+      "viewAll": "すべて表示",
+      "backToHome": "ホームに戻る",
+      "tryAgain": "再試行",
+      "close": "閉じる",
+      "submit": "送信",
+      "save": "保存",
+      "cancel": "キャンセル",
+      "copyLink": "リンクをコピー",
+      "share": "共有",
+      "shareOn": "{platform}で共有",
+      "urlCopied": "URLをコピーしました",
+      "urlCopyFailed": "URLのコピーに失敗しました"
+    },
+    "states": {
+      "loading": "読み込み中...",
+      "error": "エラー",
+      "notFound": "見つかりません"
+    },
+    "labels": {
+      "language": "言語",
+      "theme": "テーマ",
+      "menu": "メニュー"
+    },
+    "metadata": {
+      "siteName": "BoxLog",
+      "siteDescription": "Next.jsとTailwind CSSで構築されたモダンなSaaSプラットフォーム"
+    }
+  },
+  "footer": {
+    "sections": {
+      "product": "製品",
+      "company": "会社",
+      "resources": "リソース",
+      "legal": "法的事項"
+    },
+    "links": {
+      "integrations": "インテグレーション",
+      "careers": "キャリア",
+      "partners": "パートナー",
+      "helpCenter": "ヘルプセンター",
+      "guides": "ガイド",
+      "community": "コミュニティ",
+      "status": "ステータス",
+      "security": "セキュリティ",
+      "api": "API"
+    },
+    "legal": {
+      "copyright": "すべての権利を保有しています。",
+      "privacyPolicy": "プライバシーポリシー",
+      "termsOfService": "利用規約",
+      "cookiePolicy": "クッキーポリシー"
+    }
+  },
+  "errors": {
+    "general": {
+      "title": "エラーが発生しました",
+      "description": "予期しないエラーが発生しました。再度お試しいただくか、問題が解決しない場合はサポートにお問い合わせください。"
+    },
+    "notFound": {
+      "title": "ページが見つかりません",
+      "description": "お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。"
+    },
+    "network": {
+      "title": "接続に問題があります",
+      "description": "サーバーに接続できません。インターネット接続を確認して再度お試しください。"
+    }
+  },
+  "blog": {
+    "filters": {
+      "title": "フィルター",
+      "clearAll": "すべてクリア",
+      "searchArticles": "記事を検索",
+      "searchPlaceholder": "タイトル、内容、タグで検索...",
+      "clearSearch": "検索をクリア",
+      "sortBy": "並び替え",
+      "order": "順序",
+      "date": "日付",
+      "popularity": "人気順",
+      "category": "カテゴリ",
+      "orderAsc": "昇順",
+      "orderDesc": "降順",
+      "filterByTags": "タグで絞り込み",
+      "showingPostsAll": "すべて",
+      "showingPostsAny": "いずれか",
+      "showingPostsMessage": "選択したタグの{match}に一致する記事を表示中",
+      "applyFilters": "フィルターを適用"
+    },
+    "relatedPosts": {
+      "title": "関連記事",
+      "subtitle": "この記事に関連するおすすめの記事をご紹介します",
+      "viewAll": "すべての記事を見る"
+    },
+    "list": {
+      "articlesFound": "{count}件の記事が見つかりました",
+      "articlesFoundPlural": "{count}件の記事が見つかりました",
+      "filteredBy": "フィルター",
+      "searchTerm": "検索",
+      "noArticles": "記事が見つかりませんでした",
+      "noArticlesHint": "フィルターや検索条件を変更してみてください",
+      "clearAllFilters": "すべてのフィルターをクリア"
+    },
+    "share": {
+      "title": "この記事をシェア"
+    }
+  },
+  "releases": {
+    "filters": {
+      "title": "フィルター",
+      "clearAll": "すべてクリア",
+      "tags": "タグ",
+      "showLess": "表示を減らす",
+      "showMore": "さらに{count}件表示",
+      "resultsFound": "{total}件中{count}件のリリース",
+      "featuredReleases": "注目のリリース",
+      "breakingChanges": "破壊的変更"
+    },
+    "changeTypes": {
+      "title": "変更タイプ",
+      "showAll": "すべて表示",
+      "newFeatures": "新機能",
+      "improvements": "改善",
+      "bugFixes": "バグ修正",
+      "breakingChanges": "破壊的変更",
+      "securityUpdates": "セキュリティアップデート"
+    },
+    "rss": {
+      "title": "最新情報を受け取る",
+      "description": "RSSフィードを購読して、新しいリリースの通知を受け取りましょう。",
+      "link": "RSSを購読"
+    },
+    "history": {
+      "title": "リリース履歴",
+      "count": "件"
+    },
+    "emptyState": {
+      "title": "リリースはまだありません",
+      "description": "後で更新をご確認ください。"
+    },
+    "noResults": {
+      "title": "リリースが見つかりません",
+      "description": "現在のフィルターに一致するリリースはありません。",
+      "clearFilters": "フィルターをクリア"
+    }
+  }
+}

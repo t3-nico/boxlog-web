@@ -1,0 +1,48 @@
+{
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "subtitle": "How we collect, use, and protect your information",
+      "lastUpdated": "Last updated"
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "description": "Our terms and conditions for using the BoxLog service",
+      "lastUpdated": "Last updated"
+    },
+    "security": {
+      "title": "Security",
+      "description": "How we protect your data and ensure platform security"
+    },
+    "cookieConsent": {
+      "title": "We use cookies",
+      "description": "We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking \"Accept All\", you consent to our use of cookies.",
+      "learnMore": "Learn more",
+      "customize": "Customize",
+      "essentialOnly": "Essential Only",
+      "acceptAll": "Accept All",
+      "preferencesTitle": "Cookie Preferences",
+      "savePreferences": "Save Preferences",
+      "cookies": {
+        "essential": {
+          "title": "Essential Cookies",
+          "description": "These cookies are necessary for the website to function and cannot be disabled.",
+          "required": "Required"
+        },
+        "analytics": {
+          "title": "Analytics Cookies",
+          "description": "Help us understand how visitors interact with our website (Google Analytics)."
+        },
+        "functional": {
+          "title": "Functional Cookies",
+          "description": "Remember your preferences and settings for a personalized experience."
+        },
+        "marketing": {
+          "title": "Marketing Cookies",
+          "description": "Currently not used. We prioritize your privacy and don't track for advertising.",
+          "disabled": "Disabled"
+        }
+      }
+    }
+  }
+}
