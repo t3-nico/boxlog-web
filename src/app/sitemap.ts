@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { getAllBlogPostMetas } from '@/lib/blog'
 import { getAllReleaseMetas } from '@/lib/releases'
 import { getAllTags } from '@/lib/tags-server'
+import { getAllContent } from '@/lib/mdx'
 import { siteConfig } from '@/lib/metadata'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -121,20 +122,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     )
 
-    // Documentation pages for both locales
-    const docPaths = [
-      '/docs/introduction',
-      '/docs/installation',
-      '/docs/quickstart',
-      '/docs/api-reference/authentication',
-      '/docs/guides/quick-start',
-    ]
-    const docPages = docPaths.flatMap((path) =>
+    // Documentation pages for both locales (dynamically from MDX files)
+    const allDocs = await getAllContent()
+    const docPages = allDocs.flatMap((doc) =>
       locales.map((locale) => ({
-        url: `${baseUrl}/${locale}${path}`,
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.8,
+        url: `${baseUrl}/${locale}/docs/${doc.slug}`,
+        lastModified: doc.frontMatter.updatedAt
+          ? new Date(doc.frontMatter.updatedAt)
+          : new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: doc.frontMatter.featured ? 0.8 : 0.6,
       }))
     )
 

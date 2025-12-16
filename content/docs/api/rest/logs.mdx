@@ -9,6 +9,40 @@ order: 3
 featured: false
 category: "api"
 slug: "rest-logs"
+
+# === AI/RAG用メタデータ ===
+ai:
+  keywords:
+    - "Logs API"
+    - "ログAPI"
+    - "REST API"
+    - "ログ送信"
+    - "ログ検索"
+    - "クエリ構文"
+    - "エンドポイント"
+    - "レート制限"
+  relatedQuestions:
+    - "ログを送信するAPIは？"
+    - "ログを検索するAPIの使い方は？"
+    - "APIでログを削除するには？"
+    - "クエリ構文の書き方は？"
+    - "レート制限はどれくらい？"
+    - "ログレベルの種類は？"
+  prerequisites:
+    - "BoxLog APIキーを取得済み"
+    - "RESTful APIの基本を理解している"
+  relatedDocs:
+    - "/docs/api/rest/authentication"
+    - "/docs/sdks/javascript"
+    - "/docs/search/search-syntax"
+  aiSummary: |
+    BoxLog Logs API完全リファレンス。ログ送信（POST /logs）、検索（GET /logs/search）、
+    取得（GET /logs/{id}）、削除（DELETE /logs）エンドポイントを解説。
+    ログレベル、クエリ構文、レート制限、エラーコードも網羅。
+  chunkStrategy: "h2"
+  searchable: true
+  difficulty: "intermediate"
+  contentType: "reference"
 ---
 
 # Logs API
