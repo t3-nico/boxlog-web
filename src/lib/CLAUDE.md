@@ -756,4 +756,4 @@ const timeAgo = formatRelativeTime(post.date, 'jp')
 
 ---
 
-**📖 最終更新**: 2025-10-23 | **バージョン**: v1.0
+**📖 最終更新**: 2025年1月 | **バージョン**: v1.1

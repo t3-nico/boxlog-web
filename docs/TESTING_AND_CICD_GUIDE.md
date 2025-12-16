@@ -1,26 +1,26 @@
-# Testing & CI/CD Guide
+# テスト・CI/CDガイド
 
-This document provides comprehensive guidance on testing strategies, CI/CD workflows, and development practices for the Boxlog Web project.
+このドキュメントでは、BoxLog Webプロジェクトのテスト戦略、CI/CDワークフロー、開発プラクティスについて説明します。
 
-## Overview
+## 概要
 
-The project implements a robust testing and continuous integration/deployment (CI/CD) system using:
-- **Vitest** for unit and integration testing
-- **React Testing Library** for component testing
-- **GitHub Actions** for automated CI/CD pipelines
-- **ESM modules** for modern JavaScript compatibility
+プロジェクトでは以下を使用した堅牢なテストと継続的インテグレーション/デプロイ（CI/CD）システムを実装しています：
+- **Vitest** - ユニット・統合テスト
+- **React Testing Library** - コンポーネントテスト
+- **GitHub Actions** - 自動CI/CDパイプライン
+- **ESMモジュール** - モダンJavaScript互換性
 
-## Testing Infrastructure
+## テストインフラストラクチャ
 
-### Test Framework Stack
+### テストフレームワークスタック
 
-- **Vitest** - Fast unit test runner with native ESM support
-- **React Testing Library** - Component testing utilities
-- **jsdom** - Browser environment simulation
-- **@testing-library/user-event** - User interaction simulation
-- **@testing-library/jest-dom** - Custom Jest matchers
+- **Vitest** - ネイティブESMサポートの高速ユニットテストランナー
+- **React Testing Library** - コンポーネントテストユーティリティ
+- **jsdom** - ブラウザ環境シミュレーション
+- **@testing-library/user-event** - ユーザーインタラクションシミュレーション
+- **@testing-library/jest-dom** - カスタムJestマッチャー
 
-### Test Configuration
+### テスト設定
 
 ```typescript
 // vitest.config.ts
@@ -40,347 +40,349 @@ export default defineConfig({
 })
 ```
 
-### Test Commands
+### テストコマンド
 
-| Command | Description |
-|---------|-------------|
-| `npm run test` | Run tests in interactive watch mode |
-| `npm run test:run` | Run all tests once (CI mode) |
-| `npm run test:ui` | Launch Vitest UI interface |
-| `npm run test:watch` | Run tests in watch mode |
+| コマンド | 説明 |
+|---------|------|
+| `npm run test` | インタラクティブウォッチモードでテスト実行 |
+| `npm run test:run` | 全テスト一回実行（CI用） |
+| `npm run test:ui` | Vitest UIインターフェース起動 |
+| `npm run test:watch` | ウォッチモードでテスト実行 |
 
-## Test Structure
+## テスト構造
 
-### Current Test Coverage
+### 現在のテストカバレッジ
 
 ```
 src/components/__tests__/
-├── sample.test.tsx          # Basic test setup verification
-├── button.test.tsx          # Button component tests
-├── theme-toggle.test.tsx    # Theme toggle functionality
-└── error-boundary.test.tsx  # Error boundary behavior
+├── sample.test.tsx          # 基本テストセットアップ確認
+├── button.test.tsx          # Buttonコンポーネントテスト
+├── theme-toggle.test.tsx    # テーマ切替機能
+└── error-boundary.test.tsx  # エラーバウンダリ動作
 ```
 
-**Total Test Count**: 17 tests across 4 test files
+**総テスト数**: 4テストファイル、17テスト
 
-### Test Categories
+### テストカテゴリ
 
-#### 1. **Component Tests**
-- **Button Component**: Variants, sizes, accessibility, user interactions
-- **Theme Toggle**: Theme switching, mounting behavior, accessibility
-- **Error Boundary**: Error handling, fallback UI, recovery mechanisms
+#### 1. **コンポーネントテスト**
+- **Buttonコンポーネント**: バリアント、サイズ、アクセシビリティ、ユーザーインタラクション
+- **テーマトグル**: テーマ切替、マウント動作、アクセシビリティ
+- **エラーバウンダリ**: エラーハンドリング、フォールバックUI、リカバリーメカニズム
 
-#### 2. **Integration Tests**
-- Component interaction with external libraries (next-themes)
-- Error state management and recovery
-- User event simulation and responses
+#### 2. **統合テスト**
+- 外部ライブラリ（next-themes）とのコンポーネント連携
+- エラー状態管理とリカバリー
+- ユーザーイベントシミュレーションとレスポンス
 
-#### 3. **Accessibility Tests**
-- Proper ARIA attributes
-- Keyboard navigation
-- Screen reader compatibility
+#### 3. **アクセシビリティテスト**
+- 適切なARIA属性
+- キーボードナビゲーション
+- スクリーンリーダー互換性
 
-### Writing Tests
+### テストの書き方
 
-#### Best Practices
+#### ベストプラクティス
 
 ```typescript
-// Example: Component test structure
+// 例: コンポーネントテスト構造
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { ComponentName } from '@/components/ui/component-name'
 
 describe('ComponentName', () => {
-  it('renders correctly', () => {
+  it('正しくレンダリングされる', () => {
     render(<ComponentName />)
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
 
-  it('handles user interactions', async () => {
+  it('ユーザーインタラクションを処理する', async () => {
     const user = userEvent.setup()
     const handleClick = vi.fn()
-    
+
     render(<ComponentName onClick={handleClick} />)
-    
+
     await user.click(screen.getByRole('button'))
     expect(handleClick).toHaveBeenCalledOnce()
   })
 })
 ```
 
-#### Testing Guidelines
+#### テストガイドライン
 
-1. **Test Behavior, Not Implementation**
-   - Focus on user-visible behavior
-   - Test component outputs and side effects
-   - Avoid testing internal state or implementation details
+1. **実装ではなく動作をテスト**
+   - ユーザーに見える動作に焦点を当てる
+   - コンポーネントの出力と副作用をテスト
+   - 内部状態や実装詳細のテストを避ける
 
-2. **Use Proper Queries**
-   - Prefer `getByRole()` over `getByTestId()`
-   - Use semantic queries that match user interaction
-   - Follow React Testing Library query priority
+2. **適切なクエリを使用**
+   - `getByTestId()`より`getByRole()`を優先
+   - ユーザーインタラクションに合致するセマンティッククエリを使用
+   - React Testing Libraryのクエリ優先順位に従う
 
-3. **Mock External Dependencies**
-   - Mock third-party libraries when necessary
-   - Use `vi.mock()` for module-level mocking
-   - Provide realistic mock implementations
+3. **外部依存関係のモック**
+   - 必要に応じてサードパーティライブラリをモック
+   - モジュールレベルのモックには`vi.mock()`を使用
+   - 現実的なモック実装を提供
 
-4. **Test Accessibility**
-   - Verify proper ARIA attributes
-   - Test keyboard navigation
-   - Ensure screen reader compatibility
+4. **アクセシビリティをテスト**
+   - 適切なARIA属性を検証
+   - キーボードナビゲーションをテスト
+   - スクリーンリーダー互換性を確保
 
-## CI/CD Pipeline
+## CI/CDパイプライン
 
-### Workflow Overview
+### ワークフロー概要
 
-The project uses three main GitHub Actions workflows:
+プロジェクトでは3つのメインGitHub Actionsワークフローを使用：
 
-#### 1. **CI Workflow** (`ci.yml`)
-**Triggers**: Push to `dev`/`main`, Pull Requests to `dev`/`main`
+#### 1. **CIワークフロー** (`ci.yml`)
+**トリガー**: `dev`/`main`へのpush、`dev`/`main`へのPR
 
-**Jobs**:
-- **Test Job** (Node.js 18.x & 20.x matrix)
-  - Install dependencies (`npm ci`)
-  - Run linting (`npm run lint`)
-  - Run type checking (`npm run type-check`)
-  - **Run Vitest tests** (`npm run test:run`)
-  - Build application (`npm run build`)
+**ジョブ**:
+- **Testジョブ** (Node.js 18.x & 20.xマトリックス)
+  - 依存関係インストール (`npm ci`)
+  - リント実行 (`npm run lint`)
+  - 型チェック実行 (`npm run type-check`)
+  - **Vitestテスト実行** (`npm run test:run`)
+  - アプリケーションビルド (`npm run build`)
 
-- **Lighthouse Job** (after tests pass)
-  - Performance auditing
-  - SEO analysis
-  - Best practices verification
+- **Lighthouseジョブ** (テスト通過後)
+  - パフォーマンス監査
+  - SEO分析
+  - ベストプラクティス検証
 
-- **Accessibility Job** (after tests pass)
-  - WCAG compliance checking
-  - Screen reader compatibility
-  - Color contrast validation
+- **アクセシビリティジョブ** (テスト通過後)
+  - WCAG準拠チェック
+  - スクリーンリーダー互換性
+  - 色コントラスト検証
 
-- **Performance Job** (after tests pass)
-  - Bundle size analysis
-  - Core Web Vitals measurement
-  - Performance regression detection
+- **パフォーマンスジョブ** (テスト通過後)
+  - バンドルサイズ分析
+  - Core Web Vitals測定
+  - パフォーマンス回帰検出
 
-#### 2. **Deploy Workflow** (`deploy.yml`)
-**Triggers**: Push to `main` branch, Manual dispatch
+#### 2. **デプロイワークフロー** (`deploy.yml`)
+**トリガー**: `main`ブランチへのpush、手動ディスパッチ
 
-**Jobs**:
-- **Deploy Job**
-  - Production build preparation
-  - Vercel deployment
-  - Environment configuration
+**ジョブ**:
+- **Deployジョブ**
+  - 本番ビルド準備
+  - Vercelデプロイ
+  - 環境設定
 
-- **Post-Deploy Job**
-  - Production environment testing
-  - Lighthouse audit on live site
-  - Accessibility validation
+- **Post-Deployジョブ**
+  - 本番環境テスト
+  - ライブサイトのLighthouse監査
+  - アクセシビリティ検証
 
-#### 3. **PR Preview Workflow** (`pr-preview.yml`)
-**Triggers**: Pull Request events (opened, synchronized, reopened)
+#### 3. **PRプレビューワークフロー** (`pr-preview.yml`)
+**トリガー**: PRイベント（opened、synchronized、reopened）
 
-**Jobs**:
-- **Preview Job**
-  - Build preview version
-  - Deploy to Vercel preview environment
-  - Comment PR with preview URL
+**ジョブ**:
+- **Previewジョブ**
+  - プレビューバージョンビルド
+  - Vercelプレビュー環境へデプロイ
+  - PRにプレビューURLをコメント
 
-### Automated Quality Gates
+### 自動品質ゲート
 
-#### Test Requirements
-- All Vitest tests must pass (17/17)
-- TypeScript compilation must succeed
-- ESLint must pass with no errors
-- Build process must complete successfully
+#### テスト要件
+- すべてのVitestテストが通過（17/17）
+- TypeScriptコンパイル成功
+- ESLintがエラーなしで通過
+- ビルドプロセス正常完了
 
-#### Performance Requirements
-- Lighthouse performance score > 90
-- First Contentful Paint < 1.8s
-- Largest Contentful Paint < 2.5s
+#### パフォーマンス要件
+- Lighthouseパフォーマンススコア > 90
+- First Contentful Paint < 1.8秒
+- Largest Contentful Paint < 2.5秒
 - Cumulative Layout Shift < 0.1
 
-#### Accessibility Requirements
-- WCAG 2.1 AA compliance
-- Color contrast ratio > 4.5:1
-- Keyboard navigation support
-- Screen reader compatibility
+#### アクセシビリティ要件
+- WCAG 2.1 AA準拠
+- 色コントラスト比 > 4.5:1
+- キーボードナビゲーション対応
+- スクリーンリーダー互換性
 
-### Branch Protection Rules
+### ブランチ保護ルール
 
-#### For `main` branch:
-- Require PR reviews
-- Require status checks to pass
-- Require branches to be up to date
-- Restrict pushes to specific roles
+#### `main`ブランチ:
+- PRレビュー必須
+- ステータスチェック通過必須
+- ブランチが最新であること必須
+- 特定ロールへのpush制限
 
-#### For `dev` branch:
-- Require status checks to pass
-- Allow merge commits and squash merging
-- Automatic deployment to staging environment
+#### `dev`ブランチ:
+- ステータスチェック通過必須
+- マージコミットとスカッシュマージを許可
+- ステージング環境への自動デプロイ
 
-## Development Workflow
+## 開発ワークフロー
 
-### 1. **Local Development**
+### 1. **ローカル開発**
 
 ```bash
-# Start development server
+# 開発サーバー起動
 npm run dev
 
-# Run tests in watch mode
+# ウォッチモードでテスト実行
 npm run test
 
-# Run full quality check
+# 完全品質チェック実行
 npm run lint && npm run type-check && npm run test:run && npm run build
 ```
 
-### 2. **Feature Development**
+### 2. **フィーチャー開発**
 
 ```bash
-# Create feature branch
+# フィーチャーブランチ作成
 git checkout -b feat/your-feature-name
 
-# Implement feature with tests
-# Run local tests
+# テスト付きでフィーチャー実装
+# ローカルテスト実行
 npm run test:run
 
-# Commit changes
+# 変更をコミット
 git add .
-git commit -m "feat: add your feature description"
+git commit -m "feat: フィーチャーの説明"
 
-# Push and create PR
+# pushしてPR作成
 git push origin feat/your-feature-name
 ```
 
-### 3. **Pull Request Process**
+### 3. **プルリクエストプロセス**
 
-1. **Create PR** targeting `dev` branch
-2. **Automated Checks** run automatically:
-   - CI pipeline executes all tests
-   - Preview deployment created
-   - Quality gates evaluated
-3. **Code Review** by team members
-4. **Merge** after approval and successful checks
+1. **PR作成** - `dev`ブランチをターゲット
+2. **自動チェック**が自動実行：
+   - CIパイプラインが全テスト実行
+   - プレビューデプロイ作成
+   - 品質ゲート評価
+3. チームメンバーによる**コードレビュー**
+4. 承認とチェック成功後に**マージ**
 
-### 4. **Release Process**
+### 4. **リリースプロセス**
 
-1. **Feature Complete** on `dev` branch
-2. **Create Release PR** from `dev` to `main`
-3. **Production Testing** in staging environment
-4. **Deploy to Production** via merge to `main`
-5. **Post-Deploy Verification** via automated tests
+1. `dev`ブランチで**フィーチャー完了**
+2. `dev`から`main`への**リリースPR作成**
+3. ステージング環境での**本番テスト**
+4. `main`へのマージで**本番デプロイ**
+5. 自動テストによる**デプロイ後検証**
 
-## Monitoring and Maintenance
+## 監視とメンテナンス
 
-### Test Maintenance
+### テストメンテナンス
 
-#### Regular Tasks
-- **Weekly**: Review test coverage reports
-- **Monthly**: Update testing dependencies
-- **Per Release**: Add integration tests for new features
-- **Quarterly**: Performance test review and optimization
+#### 定期タスク
+- **週次**: テストカバレッジレポートレビュー
+- **月次**: テスト依存関係更新
+- **リリースごと**: 新機能の統合テスト追加
+- **四半期**: パフォーマンステストレビューと最適化
 
-#### Test Expansion Areas
-1. **API Integration Tests**
-   - Route handler testing
-   - Database integration
-   - External service mocking
+#### テスト拡張領域
+1. **API統合テスト**
+   - ルートハンドラテスト
+   - データベース統合
+   - 外部サービスモック
 
-2. **E2E Tests** (Future)
-   - User journey testing
-   - Cross-browser compatibility
-   - Mobile responsiveness
+2. **E2Eテスト**（将来）
+   - ユーザージャーニーテスト
+   - クロスブラウザ互換性
+   - モバイルレスポンシブ
 
-3. **Visual Regression Tests** (Future)
-   - Component visual consistency
-   - Theme switching verification
-   - Responsive design validation
+3. **ビジュアル回帰テスト**（将来）
+   - コンポーネントビジュアル一貫性
+   - テーマ切替検証
+   - レスポンシブデザイン検証
 
-### CI/CD Monitoring
+### CI/CD監視
 
-#### Key Metrics
-- **Build Success Rate**: Target 95%+
-- **Test Execution Time**: Target <2 minutes
-- **Deployment Frequency**: Track and optimize
-- **Recovery Time**: Monitor incident response
+#### 主要メトリクス
+- **ビルド成功率**: 目標95%以上
+- **テスト実行時間**: 目標2分以内
+- **デプロイ頻度**: 追跡・最適化
+- **リカバリー時間**: インシデント対応監視
 
-#### Alerting
-- Failed builds notify development team
-- Performance regressions trigger alerts
-- Security vulnerabilities block deployments
-- Accessibility issues prevent merges
+#### アラート
+- ビルド失敗時に開発チームへ通知
+- パフォーマンス回帰でアラート発火
+- セキュリティ脆弱性でデプロイブロック
+- アクセシビリティ問題でマージ防止
 
-## Troubleshooting
+## トラブルシューティング
 
-### Common Issues
+### よくある問題
 
-#### 1. **Test Failures in CI**
+#### 1. **CIでのテスト失敗**
 ```bash
-# Check local test execution
+# ローカルテスト実行確認
 npm run test:run
 
-# Verify ESM compatibility
-node --version  # Should be 18.x or 20.x
+# ESM互換性確認
+node --version  # 18.xまたは20.xであること
 
-# Check dependency installation
+# 依存関係インストール確認
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-#### 2. **Build Failures**
+#### 2. **ビルド失敗**
 ```bash
-# Verify TypeScript compilation
+# TypeScriptコンパイル確認
 npm run type-check
 
-# Check for ESLint errors
+# ESLintエラー確認
 npm run lint
 
-# Verify all dependencies
+# 全依存関係確認
 npm audit --audit-level=moderate
 ```
 
-#### 3. **ESM Module Issues**
-- Ensure `"type": "module"` in `package.json`
-- Use ES import/export syntax in config files
-- Check `vitest.config.ts` path resolution
+#### 3. **ESMモジュール問題**
+- `package.json`に`"type": "module"`があることを確認
+- 設定ファイルでES import/export構文を使用
+- `vitest.config.ts`のパス解決を確認
 
-#### 4. **Flaky Tests**
-- Use `user.setup()` for user events
-- Properly mock external dependencies
-- Add appropriate `waitFor()` for async operations
+#### 4. **不安定なテスト**
+- ユーザーイベントには`user.setup()`を使用
+- 外部依存関係を適切にモック
+- 非同期操作には適切な`waitFor()`を追加
 
-### Getting Help
+### ヘルプ
 
-#### Documentation Resources
-- [Vitest Documentation](https://vitest.dev/)
+#### ドキュメントリソース
+- [Vitestドキュメント](https://vitest.dev/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [GitHub Actions](https://docs.github.com/en/actions)
 
-#### Internal Resources
-- `CLAUDE.md` - Project overview and commands
-- `docs/DESIGN_SYSTEM.md` - Component guidelines
-- `docs/PERFORMANCE_GUIDE.md` - Optimization strategies
+#### 内部リソース
+- `CLAUDE.md` - プロジェクト概要とコマンド
+- `docs/DOCUMENTATION_GUIDE.md` - ドキュメントガイドライン
+- `docs/PERFORMANCE_GUIDE.md` - 最適化戦略
 
-## Future Roadmap
+## 将来のロードマップ
 
-### Short Term (1-2 months)
-- [ ] Expand component test coverage to 90%+
-- [ ] Add API route integration tests
-- [ ] Implement visual regression testing
-- [ ] Set up performance budgets
+### 短期（1-2ヶ月）
+- [ ] コンポーネントテストカバレッジを90%以上に拡張
+- [ ] APIルート統合テスト追加
+- [ ] ビジュアル回帰テスト実装
+- [ ] パフォーマンス予算設定
 
-### Medium Term (3-6 months)
-- [ ] Full E2E test suite with Playwright
-- [ ] Automated security scanning
-- [ ] Multi-environment testing (staging/prod)
-- [ ] Test result analytics dashboard
+### 中期（3-6ヶ月）
+- [ ] Playwrightによる完全E2Eテストスイート
+- [ ] 自動セキュリティスキャン
+- [ ] マルチ環境テスト（ステージング/本番）
+- [ ] テスト結果分析ダッシュボード
 
-### Long Term (6+ months)
-- [ ] AI-powered test generation
-- [ ] Chaos engineering practices
-- [ ] Advanced performance monitoring
-- [ ] Cross-platform testing automation
+### 長期（6ヶ月以上）
+- [ ] AI駆動テスト生成
+- [ ] カオスエンジニアリング実践
+- [ ] 高度なパフォーマンス監視
+- [ ] クロスプラットフォームテスト自動化
 
 ---
 
-*This guide is maintained alongside the codebase. For questions or improvements, please create an issue or submit a pull request.*
+*このガイドはコードベースと共にメンテナンスされています。質問や改善提案はissueを作成するかPRを提出してください。*
+
+**最終更新**: 2025年1月

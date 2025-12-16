@@ -1,25 +1,25 @@
-# Deployment Guide
+# デプロイガイド
 
-This guide covers deployment strategies for the BoxLog Marketing Website across different environments.
+このガイドでは、BoxLogマーケティングウェブサイトの各環境へのデプロイ方法を説明します。
 
-## 🌍 Environment Overview
+## 🌍 環境概要
 
-| Environment | URL | Branch | Auto Deploy | Purpose |
-|-------------|-----|--------|-------------|---------|
-| Development | `localhost:3000` | `dev` | ❌ | Local development |
-| Staging | `staging.yoursite.com` | `staging` | ✅ | Testing and QA |
-| Production | `yoursite.com` | `main` | ✅ | Live site |
+| 環境 | URL | ブランチ | 自動デプロイ | 用途 |
+|------|-----|----------|--------------|------|
+| 開発 | `localhost:3000` | `dev` | ❌ | ローカル開発 |
+| ステージング | `staging.yoursite.com` | `staging` | ✅ | テスト・QA |
+| 本番 | `yoursite.com` | `main` | ✅ | ライブサイト |
 
-## 🚀 Vercel Deployment (Recommended)
+## 🚀 Vercelデプロイ（推奨）
 
-### Initial Setup
+### 初期セットアップ
 
-1. **Connect Repository**
-   - Visit [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Select the project root directory
+1. **リポジトリを接続**
+   - [vercel.com](https://vercel.com)にアクセス
+   - GitHubリポジトリをインポート
+   - プロジェクトのルートディレクトリを選択
 
-2. **Configure Build Settings**
+2. **ビルド設定**
    ```json
    {
      "buildCommand": "npm run build",
@@ -29,18 +29,18 @@ This guide covers deployment strategies for the BoxLog Marketing Website across 
    }
    ```
 
-3. **Environment Variables**
-   Set up the following in Vercel dashboard:
-   
-   **Production:**
+3. **環境変数**
+   Vercelダッシュボードで以下を設定：
+
+   **本番環境:**
    ```bash
    NEXT_PUBLIC_SITE_URL=https://yoursite.com
    NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
    NODE_ENV=production
    CONTACT_EMAIL=contact@yoursite.com
    ```
-   
-   **Staging:**
+
+   **ステージング:**
    ```bash
    NEXT_PUBLIC_SITE_URL=https://staging.yoursite.com
    NEXT_PUBLIC_GA_MEASUREMENT_ID=G-STAGING-ID
@@ -48,26 +48,26 @@ This guide covers deployment strategies for the BoxLog Marketing Website across 
    CONTACT_EMAIL=staging@yoursite.com
    ```
 
-### Branch Configuration
+### ブランチ設定
 
-1. **Production Branch**: `main`
-   - Automatic deployments
-   - Custom domain: `yoursite.com`
-   - Production environment variables
+1. **本番ブランチ**: `main`
+   - 自動デプロイ
+   - カスタムドメイン: `yoursite.com`
+   - 本番環境変数を使用
 
-2. **Staging Branch**: `staging`
-   - Automatic deployments
-   - Preview domain: `staging.yoursite.com`
-   - Staging environment variables
+2. **ステージングブランチ**: `staging`
+   - 自動デプロイ
+   - プレビュードメイン: `staging.yoursite.com`
+   - ステージング環境変数を使用
 
-3. **Development Branch**: `dev`
-   - Manual deployments only
-   - Preview domains for testing
+3. **開発ブランチ**: `dev`
+   - 手動デプロイのみ
+   - テスト用プレビュードメイン
 
-### Custom Domains
+### カスタムドメイン
 
-1. **Add Domain** in Vercel dashboard
-2. **Configure DNS** records:
+1. Vercelダッシュボードで**ドメインを追加**
+2. **DNS設定**:
    ```
    Type: CNAME
    Name: www
@@ -77,23 +77,23 @@ This guide covers deployment strategies for the BoxLog Marketing Website across 
    Name: @
    Value: 76.76.19.61
    ```
-3. **SSL Certificate** - Automatic via Vercel
+3. **SSL証明書** - Vercelで自動発行
 
-## 🔧 Alternative Deployment Options
+## 🔧 代替デプロイオプション
 
 ### Netlify
 
-1. **Build Settings**
+1. **ビルド設定**
    ```toml
    [build]
      command = "npm run build && npm run export"
      publish = "out"
-   
+
    [build.environment]
      NODE_VERSION = "18"
    ```
 
-2. **Redirects** (`_redirects` file)
+2. **リダイレクト** (`_redirects`ファイル)
    ```
    /api/* /.netlify/functions/:splat 200
    /* /index.html 200
@@ -101,7 +101,7 @@ This guide covers deployment strategies for the BoxLog Marketing Website across 
 
 ### AWS Amplify
 
-1. **Build Specification** (`amplify.yml`)
+1. **ビルド仕様** (`amplify.yml`)
    ```yaml
    version: 1
    frontend:
@@ -121,7 +121,7 @@ This guide covers deployment strategies for the BoxLog Marketing Website across 
          - node_modules/**/*
    ```
 
-### Docker Deployment
+### Dockerデプロイ
 
 1. **Dockerfile**
    ```dockerfile
@@ -139,7 +139,7 @@ This guide covers deployment strategies for the BoxLog Marketing Website across 
    FROM node:18-alpine AS runner
    WORKDIR /app
    ENV NODE_ENV production
-   
+
    COPY --from=builder /app/public ./public
    COPY --from=builder /app/.next ./.next
    COPY --from=builder /app/node_modules ./node_modules
@@ -149,17 +149,17 @@ This guide covers deployment strategies for the BoxLog Marketing Website across 
    CMD ["npm", "start"]
    ```
 
-2. **Build and Run**
+2. **ビルドと実行**
    ```bash
    docker build -t boxlog-web .
    docker run -p 3000:3000 boxlog-web
    ```
 
-## ⚙️ Environment Configuration
+## ⚙️ 環境設定
 
-### Environment Variables by Environment
+### 環境別の環境変数
 
-#### Development (`.env.local`)
+#### 開発環境 (`.env.local`)
 ```bash
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NODE_ENV=development
@@ -169,7 +169,7 @@ NEXT_PUBLIC_ENABLE_BETA_FEATURES=true
 SKIP_TYPE_CHECK=false
 ```
 
-#### Staging
+#### ステージング環境
 ```bash
 NEXT_PUBLIC_SITE_URL=https://staging.yoursite.com
 NODE_ENV=staging
@@ -178,7 +178,7 @@ CONTACT_EMAIL=staging@yoursite.com
 NEXT_PUBLIC_ENABLE_BETA_FEATURES=true
 ```
 
-#### Production
+#### 本番環境
 ```bash
 NEXT_PUBLIC_SITE_URL=https://yoursite.com
 NODE_ENV=production
@@ -188,14 +188,14 @@ SENDGRID_API_KEY=SG.production-key
 SENTRY_DSN=https://production@sentry.io/project
 ```
 
-## 🔐 Security Configuration
+## 🔐 セキュリティ設定
 
-### Production Security Headers
+### 本番用セキュリティヘッダー
 
-Ensure these headers are configured in your deployment:
+デプロイ時に以下のヘッダーを設定してください：
 
 ```javascript
-// Security headers (configured in middleware.ts)
+// セキュリティヘッダー（middleware.tsで設定済み）
 {
   "X-DNS-Prefetch-Control": "on",
   "X-XSS-Protection": "1; mode=block",
@@ -207,40 +207,40 @@ Ensure these headers are configured in your deployment:
 }
 ```
 
-### SSL/TLS Configuration
+### SSL/TLS設定
 
-- **TLS 1.2+** minimum
-- **HTTP/2** enabled
-- **HSTS** with preload
-- **Certificate transparency** logging
+- **TLS 1.2以上**必須
+- **HTTP/2**有効化
+- **HSTS**プリロード付き
+- **証明書の透明性**ログ記録
 
-## 📊 Performance Optimization
+## 📊 パフォーマンス最適化
 
-### Build Optimization
+### ビルド最適化
 
-1. **Bundle Analysis**
+1. **バンドル分析**
    ```bash
    npm run analyze
    ```
 
-2. **Type Checking**
+2. **型チェック**
    ```bash
    npm run type-check
    ```
 
-3. **Linting**
+3. **リント**
    ```bash
    npm run lint
    ```
 
-### CDN Configuration
+### CDN設定
 
 #### Vercel Edge Network
-- Automatic global CDN
-- Edge functions support
-- Image optimization
+- グローバルCDN自動設定
+- Edge Functions対応
+- 画像最適化
 
-#### CloudFront (for AWS)
+#### CloudFront（AWS用）
 ```json
 {
   "cacheBehaviors": [
@@ -257,60 +257,58 @@ Ensure these headers are configured in your deployment:
 }
 ```
 
-## 🧪 Pre-deployment Testing
+## 🧪 デプロイ前テスト
 
-### Automated Testing Pipeline
+### 自動テストパイプライン
 
-1. **Run Test Suite**
+1. **テストスイート実行**
    ```bash
    npm run test
-   npm run test:a11y
    npm run type-check
    npm run lint
    ```
 
-2. **Performance Testing**
+2. **パフォーマンステスト**
    ```bash
    npm run test:lighthouse
    ```
 
-3. **Security Scanning**
+3. **セキュリティスキャン**
    ```bash
    npm audit
-   npm run security:scan
    ```
 
-### Manual Testing Checklist
+### 手動テストチェックリスト
 
-- [ ] All pages load correctly
-- [ ] Search functionality works
-- [ ] Forms submit properly
-- [ ] Mobile responsiveness
-- [ ] Accessibility with screen reader
-- [ ] Performance scores (90+ Lighthouse)
-- [ ] SEO metadata correct
-- [ ] Analytics tracking
+- [ ] すべてのページが正しく読み込まれる
+- [ ] 検索機能が動作する
+- [ ] フォームが正しく送信される
+- [ ] モバイルレスポンシブ対応
+- [ ] スクリーンリーダーでのアクセシビリティ
+- [ ] パフォーマンススコア（Lighthouse 90以上）
+- [ ] SEOメタデータが正しい
+- [ ] アナリティクスのトラッキング
 
-## 🚨 Monitoring & Alerts
+## 🚨 監視とアラート
 
-### Performance Monitoring
+### パフォーマンス監視
 
 1. **Core Web Vitals**
-   - LCP < 2.5s
+   - LCP < 2.5秒
    - FID < 100ms
    - CLS < 0.1
 
-2. **Uptime Monitoring**
-   - Status page checks
-   - API endpoint monitoring
-   - Geographic monitoring
+2. **稼働監視**
+   - ステータスページチェック
+   - APIエンドポイント監視
+   - 地理的監視
 
-### Error Tracking
+### エラートラッキング
 
-1. **Sentry Configuration**
+1. **Sentry設定**
    ```javascript
    import * as Sentry from "@sentry/nextjs"
-   
+
    Sentry.init({
      dsn: process.env.SENTRY_DSN,
      environment: process.env.NODE_ENV,
@@ -318,87 +316,89 @@ Ensure these headers are configured in your deployment:
    })
    ```
 
-2. **Alert Configuration**
-   - Error rate > 1%
-   - Performance degradation
-   - Uptime < 99.9%
+2. **アラート設定**
+   - エラー率 > 1%
+   - パフォーマンス低下
+   - 稼働率 < 99.9%
 
-## 🔄 Rollback Strategy
+## 🔄 ロールバック戦略
 
-### Vercel Rollback
+### Vercelロールバック
 
-1. **Via Dashboard**
-   - Go to Deployments tab
-   - Select previous deployment
-   - Click "Promote to Production"
+1. **ダッシュボードから**
+   - Deploymentsタブに移動
+   - 以前のデプロイを選択
+   - 「Promote to Production」をクリック
 
-2. **Via CLI**
+2. **CLIから**
    ```bash
    vercel --prod --force
    ```
 
-### Emergency Procedures
+### 緊急時の手順
 
-1. **Immediate Rollback**
-   - Revert to last known good deployment
-   - Communicate to stakeholders
-   - Investigate issue
+1. **即時ロールバック**
+   - 最後の正常なデプロイに戻す
+   - 関係者に連絡
+   - 問題を調査
 
-2. **Hotfix Process**
-   - Create hotfix branch from main
-   - Apply minimal fix
-   - Fast-track through testing
-   - Deploy to production
+2. **ホットフィックスプロセス**
+   - mainからhotfixブランチを作成
+   - 最小限の修正を適用
+   - テストを迅速に実行
+   - 本番にデプロイ
 
-## 📋 Deployment Checklist
+## 📋 デプロイチェックリスト
 
-### Pre-deployment
-- [ ] Code review completed
-- [ ] Tests passing
-- [ ] Performance metrics verified
-- [ ] Security scan completed
-- [ ] Environment variables updated
-- [ ] Database migrations (if any)
+### デプロイ前
+- [ ] コードレビュー完了
+- [ ] テスト通過
+- [ ] パフォーマンス指標確認
+- [ ] セキュリティスキャン完了
+- [ ] 環境変数更新
+- [ ] データベースマイグレーション（必要な場合）
 
-### Deployment
-- [ ] Deploy to staging
-- [ ] Smoke testing on staging
-- [ ] Deploy to production
-- [ ] Verify production deployment
-- [ ] Monitor for errors
+### デプロイ中
+- [ ] ステージングにデプロイ
+- [ ] ステージングで動作確認
+- [ ] 本番にデプロイ
+- [ ] 本番デプロイを確認
+- [ ] エラー監視
 
-### Post-deployment
-- [ ] Performance monitoring
-- [ ] Error tracking
-- [ ] User feedback monitoring
-- [ ] Analytics verification
-- [ ] SEO indexing status
+### デプロイ後
+- [ ] パフォーマンス監視
+- [ ] エラートラッキング
+- [ ] ユーザーフィードバック監視
+- [ ] アナリティクス確認
+- [ ] SEOインデックス状況
 
-## 📞 Support & Troubleshooting
+## 📞 サポート・トラブルシューティング
 
-### Common Issues
+### よくある問題
 
-1. **Build Failures**
-   - Check Node.js version (18+)
-   - Verify environment variables
-   - Clear build cache
+1. **ビルド失敗**
+   - Node.jsバージョンを確認（18以上）
+   - 環境変数を確認
+   - ビルドキャッシュをクリア
 
-2. **Performance Issues**
-   - Run bundle analyzer
-   - Check image optimization
-   - Verify CDN configuration
+2. **パフォーマンス問題**
+   - バンドルアナライザーを実行
+   - 画像最適化を確認
+   - CDN設定を確認
 
-3. **SEO Issues**
-   - Verify meta tags
-   - Check sitemap generation
-   - Validate structured data
+3. **SEO問題**
+   - メタタグを確認
+   - サイトマップ生成を確認
+   - 構造化データを検証
 
-### Getting Help
+### ヘルプ
 
-- **Documentation**: Internal wiki
-- **Support**: DevOps team
-- **Emergency**: On-call engineer
+- **ドキュメント**: 内部Wiki参照
+- **サポート**: DevOpsチームに連絡
+- **緊急時**: オンコールエンジニアに連絡
 
 ---
 
-For more detailed information, refer to the main [README.md](README.md) or contact the development team.
+詳細情報は[README.md](README.md)を参照するか、開発チームに連絡してください。
+
+**最終更新**: 2025年1月
