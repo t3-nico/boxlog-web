@@ -7,7 +7,7 @@ import { Heading, Text } from '@/components/ui/typography'
 import { ReleaseCard } from './ReleaseCard'
 import { UpcomingReleasesCompact } from './UpcomingReleases'
 import { ReleaseFilter, FilterSummary } from './ReleaseFilter'
-import type { Dictionary } from '@/lib/i18n'
+import { useTranslations } from 'next-intl'
 
 // Define types locally to avoid importing from server-only lib
 interface ReleaseFrontMatter {
@@ -50,18 +50,17 @@ interface ReleasesClientProps {
   initialTags: TagCount[]
   featuredReleases: ReleasePostMeta[]
   upcomingReleases: UpcomingRelease[]
-  dict: Dictionary
   locale: string
 }
 
-export function ReleasesClient({ 
-  initialReleases, 
-  initialTags, 
+export function ReleasesClient({
+  initialReleases,
+  initialTags,
   featuredReleases,
   upcomingReleases,
-  dict,
   locale
 }: ReleasesClientProps) {
+  const t = useTranslations('releases')
   // フィルター状態
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
@@ -135,7 +134,6 @@ export function ReleasesClient({
                   onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                   onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                   onClearFilters={handleClearFilters}
-                  dict={dict}
                   locale={locale}
                 />
 
@@ -146,10 +144,10 @@ export function ReleasesClient({
                 {/* RSS Feed */}
                 <div className="bg-white rounded-xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                   <Heading as="h3" size="md" className="mb-4">
-                    {dict.releases.rss.title}
+                    {t('rss.title')}
                   </Heading>
                   <Text size="sm" variant="muted" className="mb-4">
-                    {dict.releases.rss.description}
+                    {t('rss.description')}
                   </Text>
                   <a
                     href="/releases/feed.xml"
@@ -158,7 +156,7 @@ export function ReleasesClient({
                     <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M3.429 2.857A1.429 1.429 0 002 4.286v11.428A1.429 1.429 0 003.429 17h13.142A1.429 1.429 0 0018 15.714V4.286A1.429 1.429 0 0016.571 2.857H3.429zM4 6.857v2.286H6.286V6.857H4zm8.571 0h2.286v2.286h-2.286V6.857zM4 10.571v2.286h2.286v-2.286H4zm4.571-3.714v2.286h2.286V6.857H8.571zm4.572 3.714v2.286h2.286v-2.286h-2.286zM8.571 10.571v2.286h2.286v-2.286H8.571z" />
                     </svg>
-                    {dict.releases.rss.link}
+                    {t('rss.link')}
                   </a>
                 </div>
               </div>
@@ -179,15 +177,14 @@ export function ReleasesClient({
                 onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                 onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                 onClearAll={handleClearFilters}
-                dict={dict}
                 locale={locale}
               />
 
               <div className="flex items-center justify-between mb-8">
                 <Heading as="h2" size="2xl">
-                  {dict.releases.history.title}
+                  {t('history.title')}
                   <span className="ml-2 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    ({filteredReleases.length}{dict.releases.history.count})
+                    ({filteredReleases.length}{t('history.count')})
                   </span>
                 </Heading>
               </div>
@@ -195,11 +192,10 @@ export function ReleasesClient({
               {filteredReleases.length > 0 ? (
                 <div className="space-y-8">
                   {filteredReleases.map((release, index) => (
-                    <ReleaseCard 
-                      key={release.frontMatter.version} 
+                    <ReleaseCard
+                      key={release.frontMatter.version}
                       release={release}
                       priority={index < 3}
-                      dict={dict}
                       locale={locale}
                     />
                   ))}
@@ -212,10 +208,10 @@ export function ReleasesClient({
                     </svg>
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">
-                    {dict.releases.emptyState.title}
+                    {t('emptyState.title')}
                   </Heading>
                   <Text variant="muted">
-                    {dict.releases.emptyState.description}
+                    {t('emptyState.description')}
                   </Text>
                 </div>
               ) : (
@@ -226,17 +222,17 @@ export function ReleasesClient({
                     </svg>
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">
-                    {dict.releases.noResults.title}
+                    {t('noResults.title')}
                   </Heading>
                   <Text variant="muted" className="mb-4">
-                    {dict.releases.noResults.description}
+                    {t('noResults.description')}
                   </Text>
                   <Button
                     onClick={handleClearFilters}
                     variant="default"
                     className="bg-blue-600 hover:bg-blue-700"
                   >
-                    {dict.releases.noResults.clearFilters}
+                    {t('noResults.clearFilters')}
                   </Button>
                 </div>
               )}

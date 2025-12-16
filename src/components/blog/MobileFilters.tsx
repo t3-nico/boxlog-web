@@ -2,13 +2,12 @@
 
 import { useState } from 'react'
 import { X, Filter, Search, Calendar, TrendingUp, Tag } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
+import { useTranslations } from 'next-intl'
 import type { BlogFilterState } from './BlogFilters'
-import type { Dictionary } from '@/lib/i18n'
 
 interface MobileFiltersProps {
   isOpen: boolean
@@ -18,7 +17,6 @@ interface MobileFiltersProps {
   onFiltersChange: (filters: BlogFilterState) => void
   onClearFilters: () => void
   activeFiltersCount: number
-  dict: Dictionary
   locale: string
 }
 
@@ -30,9 +28,9 @@ export function MobileFilters({
   onFiltersChange,
   onClearFilters,
   activeFiltersCount,
-  dict,
   locale
 }: MobileFiltersProps) {
+  const t = useTranslations('blog.filters')
   const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters)
 
   // フィルター適用
@@ -95,7 +93,7 @@ export function MobileFilters({
             <div className="flex items-center gap-4">
               <Filter className="w-5 h-5 text-muted-foreground" />
               <SheetTitle className="text-lg font-semibold">
-                {dict.pages.blog.filters.title}
+                {t('title')}
               </SheetTitle>
               {activeFiltersCount > 0 && (
                 <Badge variant="default" className="ml-auto">
@@ -110,7 +108,7 @@ export function MobileFilters({
             {/* 検索 */}
             <div>
               <label htmlFor="mobile-search" className="block text-sm font-medium text-muted-foreground mb-2">
-                {dict.pages.blog.filters.searchArticles}
+                {t('searchArticles')}
               </label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -119,7 +117,7 @@ export function MobileFilters({
                   type="text"
                   value={localFilters.searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  placeholder={dict.pages.blog.filters.searchPlaceholder}
+                  placeholder={t('searchPlaceholder')}
                   className="pl-10 pr-10"
                 />
                 {localFilters.searchQuery && (
@@ -128,7 +126,7 @@ export function MobileFilters({
                     size="icon"
                     className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8"
                     onClick={() => handleSearchChange('')}
-                    aria-label={dict.pages.blog.filters.clearSearch}
+                    aria-label={t('clearSearch')}
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -139,13 +137,13 @@ export function MobileFilters({
             {/* ソート */}
             <div>
               <label className="block text-sm font-medium text-muted-foreground mb-3">
-                {dict.pages.blog.filters.sortBy}
+                {t('sortBy')}
               </label>
               <div className="space-y-2">
                 {[
-                  { value: 'date', label: dict.pages.blog.filters.date, icon: Calendar },
-                  { value: 'popularity', label: dict.pages.blog.filters.popularity, icon: TrendingUp },
-                  { value: 'category', label: dict.pages.blog.filters.category, icon: Tag }
+                  { value: 'date', label: t('date'), icon: Calendar },
+                  { value: 'popularity', label: t('popularity'), icon: TrendingUp },
+                  { value: 'category', label: t('category'), icon: Tag }
                 ].map(({ value, label, icon: Icon }) => (
                   <Button
                     key={value}
@@ -169,9 +167,9 @@ export function MobileFilters({
                   variant="outline"
                   className="w-full justify-between"
                 >
-                  <span className="font-medium">{dict.pages.blog.filters.order}</span>
+                  <span className="font-medium">{t('order')}</span>
                   <span className="text-sm">
-                    {localFilters.sortOrder === 'asc' ? dict.pages.blog.filters.orderAsc : dict.pages.blog.filters.orderDesc}
+                    {localFilters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
                   </span>
                 </Button>
               </div>
@@ -181,14 +179,13 @@ export function MobileFilters({
             <div>
               <div className="flex items-center justify-between mb-3">
                 <label className="text-sm font-medium text-muted-foreground">
-                  {dict.pages.blog.filters.filterByTags}
+                  {t('filterByTags')}
                 </label>
                 {localFilters.selectedTags.length > 1 && (
                   <Button
                     onClick={toggleTagOperator}
                     variant="secondary"
                     size="sm"
-                    title={`${dict.pages.blog.filters.currentlyUsing} ${localFilters.tagOperator} ${dict.pages.blog.filters.logic}`}
                   >
                     {localFilters.tagOperator}
                   </Button>
@@ -216,7 +213,7 @@ export function MobileFilters({
 
               {localFilters.selectedTags.length > 1 && (
                 <p className="mt-2 text-xs text-muted-foreground">
-                  {dict.pages.blog.filters.showingPosts} {localFilters.tagOperator === 'AND' ? dict.pages.blog.filters.showingPostsAll : dict.pages.blog.filters.showingPostsAny} of the selected tags
+                  {t('showingPostsMessage', { match: localFilters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny') })}
                 </p>
               )}
             </div>
@@ -230,13 +227,13 @@ export function MobileFilters({
                 variant="outline"
                 className="flex-1"
               >
-                {dict.pages.blog.filters.clearAll}
+                {t('clearAll')}
               </Button>
               <Button
                 onClick={applyFilters}
                 className="flex-1"
               >
-                {dict.pages.blog.filters.applyFilters}
+                {t('applyFilters')}
               </Button>
             </div>
           </div>

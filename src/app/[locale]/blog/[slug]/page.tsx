@@ -8,7 +8,7 @@ import { ShareButton } from '@/components/blog/ShareButton'
 import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
 import { getBlogPost, getAllBlogPostMetas, getRelatedPosts } from '@/lib/blog'
 import { generateSEOMetadata } from '@/lib/metadata'
-import { setRequestLocale } from 'next-intl/server'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { Link } from '@/i18n/navigation'
 
@@ -162,6 +162,7 @@ const mdxComponents = {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { locale, slug } = await params
   setRequestLocale(locale)
+  const t = await getTranslations('blog.share')
 
   const post = await getBlogPost(slug)
 
@@ -333,8 +334,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Share this article</h3>
-                    <ShareButton title={post.frontMatter.title} slug={slug} locale={locale} />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">{t('title')}</h3>
+                    <ShareButton title={post.frontMatter.title} slug={slug} />
                   </div>
                 </div>
               </div>

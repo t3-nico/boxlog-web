@@ -2,64 +2,68 @@
 
 import { Button } from '@/components/ui/button'
 import { PartyPopper, Wrench, Bug, AlertTriangle, Lock, LucideIcon, ChevronDown } from 'lucide-react'
-import type { Dictionary } from '@/lib/i18n'
+import { useTranslations } from 'next-intl'
 
 // Local type definitions and data
 interface ChangeType {
   id: string
-  label: string
+  labelKey: string
   icon: LucideIcon
   color: string
 }
 
-const getChangeTypes = (dict: Dictionary): ChangeType[] => [
+const changeTypeData: Omit<ChangeType, 'labelKey'>[] = [
   {
     id: 'new-features',
-    label: dict.releases.changeTypes.newFeatures,
+    labelKey: 'newFeatures',
     icon: PartyPopper,
     color: 'bg-[rgb(var(--release-new-bg))] text-[rgb(var(--release-new-text))] border-[rgb(var(--release-new-border))]'
   },
   {
     id: 'improvements',
-    label: dict.releases.changeTypes.improvements,
+    labelKey: 'improvements',
     icon: Wrench,
     color: 'bg-[rgb(var(--release-improvement-bg))] text-[rgb(var(--release-improvement-text))] border-[rgb(var(--release-improvement-border))]'
   },
   {
     id: 'bug-fixes',
-    label: dict.releases.changeTypes.bugFixes,
+    labelKey: 'bugFixes',
     icon: Bug,
     color: 'bg-[rgb(var(--release-bugfix-bg))] text-[rgb(var(--release-bugfix-text))] border-[rgb(var(--release-bugfix-border))]'
   },
   {
     id: 'breaking-changes',
-    label: dict.releases.changeTypes.breakingChanges,
+    labelKey: 'breakingChanges',
     icon: AlertTriangle,
     color: 'bg-[rgb(var(--release-breaking-bg))] text-[rgb(var(--release-breaking-text))] border-[rgb(var(--release-breaking-border))]'
   },
   {
     id: 'security-updates',
-    label: dict.releases.changeTypes.securityUpdates,
+    labelKey: 'securityUpdates',
     icon: Lock,
     color: 'bg-[rgb(var(--release-security-bg))] text-[rgb(var(--release-security-text))] border-[rgb(var(--release-security-border))]'
   }
-]
+] as any
 
-interface ChangeTypeListProps {
+export interface ChangeTypeListProps {
   selectedTypes: string[]
   onTypeToggle: (typeId: string) => void
   showAll?: boolean
-  dict: Dictionary
   locale: string
 }
 
-export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true, dict, locale }: ChangeTypeListProps) {
-  const changeTypes = getChangeTypes(dict)
-  
+export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true, locale }: ChangeTypeListProps) {
+  const t = useTranslations('releases.changeTypes')
+
+  const changeTypes = changeTypeData.map((type: any) => ({
+    ...type,
+    label: t(type.labelKey)
+  }))
+
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium text-[rgb(var(--text-secondary))]">{dict.releases.changeTypes.title}</h3>
-      
+      <h3 className="text-sm font-medium text-[rgb(var(--text-secondary))]">{t('title')}</h3>
+
       <div className="space-y-2">
         {showAll && (
           <label className="flex items-center cursor-pointer group">
@@ -75,12 +79,12 @@ export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true, di
               className="w-4 h-4 text-[rgb(var(--link-color))] border-[rgb(var(--border-primary))] rounded focus:ring-[rgb(var(--focus-ring))] bg-[rgb(var(--bg-primary))]"
             />
             <span className="ml-3 text-sm text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]">
-              {dict.releases.changeTypes.showAll}
+              {t('showAll')}
             </span>
           </label>
         )}
-        
-        {changeTypes.map((type) => (
+
+        {changeTypes.map((type: any) => (
           <ChangeTypeFilter
             key={type.id}
             type={type}
@@ -94,7 +98,7 @@ export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true, di
 }
 
 interface ChangeTypeFilterProps {
-  type: ChangeType
+  type: { id: string; label: string; icon: LucideIcon; color: string }
   isSelected: boolean
   onToggle: () => void
 }
@@ -120,17 +124,17 @@ function ChangeTypeFilter({ type, isSelected, onToggle }: ChangeTypeFilterProps)
 
 // 変更タイプバッジコンポーネント
 interface ChangeTypeBadgeProps {
-  type: ChangeType
+  type: { id: string; label: string; icon: LucideIcon; color: string }
   size?: 'sm' | 'md' | 'lg'
   showIcon?: boolean
   count?: number
 }
 
-export function ChangeTypeBadge({ 
-  type, 
-  size = 'md', 
-  showIcon = true, 
-  count 
+export function ChangeTypeBadge({
+  type,
+  size = 'md',
+  showIcon = true,
+  count
 }: ChangeTypeBadgeProps) {
   const sizeClasses = {
     sm: 'px-2 py-1 text-xs',
@@ -153,85 +157,19 @@ export function ChangeTypeBadge({
   )
 }
 
-// 変更タイプグリッド（統計表示用）
-interface ChangeTypeGridProps {
-  stats: Record<string, number>
-  onTypeClick?: (typeId: string) => void
-}
-
-export function ChangeTypeGrid({ stats, onTypeClick }: ChangeTypeGridProps) {
-  // Note: This component would need dict prop to work properly with translations
-  const fallbackDict = {
-    releases: {
-      changeTypes: {
-        newFeatures: 'New Features',
-        improvements: 'Improvements', 
-        bugFixes: 'Bug Fixes',
-        breakingChanges: 'Breaking Changes',
-        securityUpdates: 'Security Updates'
-      }
-    }
-  } as Dictionary
-  const changeTypes = getChangeTypes(fallbackDict)
-  
-  return (
-    <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-      {changeTypes.map((type) => {
-        const count = stats[type.id] || 0
-        
-        return (
-          <div
-            key={type.id}
-            onClick={() => onTypeClick?.(type.id)}
-            className={`relative p-4 rounded-lg border-2 transition-all duration-200 ${
-              onTypeClick 
-                ? 'cursor-pointer hover:shadow-md hover:scale-105' 
-                : ''
-            } ${
-              count > 0 
-                ? type.color
-                : 'bg-[rgb(var(--bg-secondary))] text-[rgb(var(--text-tertiary))] border-[rgb(var(--border-primary))]'
-            }`}
-          >
-            <div className="text-center">
-              <div className="mb-2 flex justify-center">
-                <type.icon className="w-8 h-8" aria-label={type.label} />
-              </div>
-              
-              <div className="text-2xl font-bold mb-1">
-                {count}
-              </div>
-              
-              <div className="text-xs font-medium uppercase tracking-wide">
-                {type.label}
-              </div>
-            </div>
-            
-            {count > 0 && (
-              <div className="absolute top-2 right-2">
-                <div className="w-2 h-2 bg-current rounded-full opacity-60"></div>
-              </div>
-            )}
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
 // 変更タイプセクション（リリース詳細ページ用）
 interface ChangeTypeSectionProps {
-  type: ChangeType
+  type: { id: string; label: string; icon: LucideIcon; color: string }
   changes: string[]
   isExpanded: boolean
   onToggle: () => void
 }
 
-export function ChangeTypeSection({ 
-  type, 
-  changes, 
-  isExpanded, 
-  onToggle 
+export function ChangeTypeSection({
+  type,
+  changes,
+  isExpanded,
+  onToggle
 }: ChangeTypeSectionProps) {
   if (changes.length === 0) return null
 
@@ -260,7 +198,7 @@ export function ChangeTypeSection({
           />
         </div>
       </Button>
-      
+
       {isExpanded && (
         <div className="px-6 py-4 bg-[rgb(var(--bg-primary))]">
           <ul className="space-y-4">

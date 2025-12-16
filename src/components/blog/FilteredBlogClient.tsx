@@ -7,9 +7,8 @@ import { PostCard } from '@/components/blog/PostCard'
 import { BlogFilters, type BlogFilterState } from '@/components/blog/BlogFilters'
 import { BlogPagination } from '@/components/blog/BlogPagination'
 import { BlogSkeleton } from '@/components/blog/BlogSkeleton'
-// import { searchBlogPosts } from '@/lib/blog' // サーバー専用関数のため削除
+import { useTranslations } from 'next-intl'
 import type { BlogPostMeta } from '@/lib/blog'
-import type { Dictionary } from '@/lib/i18n'
 
 const POSTS_PER_PAGE = 12
 
@@ -17,10 +16,10 @@ interface FilteredBlogClientProps {
   initialPosts: BlogPostMeta[]
   tags: string[]
   locale: string
-  dict: Dictionary
 }
 
-export function FilteredBlogClient({ initialPosts, tags, locale, dict }: FilteredBlogClientProps) {
+export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogClientProps) {
+  const t = useTranslations('blog')
   const searchParams = useSearchParams()
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState<BlogPostMeta[]>(initialPosts)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -137,19 +136,19 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
       {/* フィルター情報 */}
       <div className="flex flex-wrap gap-4 text-sm text-neutral-600 dark:text-neutral-400 mb-6">
         <span>
-          {locale === 'jp' 
-            ? `${totalPosts}件の記事が見つかりました`
-            : `${totalPosts} article${totalPosts !== 1 ? 's' : ''} found`
+          {totalPosts === 1
+            ? t('list.articlesFound', { count: totalPosts })
+            : t('list.articlesFoundPlural', { count: totalPosts })
           }
         </span>
         {filters.selectedTags.length > 0 && (
           <span>
-            • {locale === 'jp' ? 'フィルター: ' : 'Filtered by: '}{filters.selectedTags.join(', ')}
+            • {t('list.filteredBy')}: {filters.selectedTags.join(', ')}
           </span>
         )}
         {filters.searchQuery && (
           <span>
-            • {locale === 'jp' ? '検索: ' : 'Search: '}&quot;{filters.searchQuery}&quot;
+            • {t('list.searchTerm')}: &quot;{filters.searchQuery}&quot;
           </span>
         )}
       </div>
@@ -192,10 +191,10 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
                 </svg>
               </div>
               <Heading as="h3" size="lg" className="mb-2">
-                {locale === 'jp' ? '記事が見つかりませんでした' : 'No Articles Found'}
+                {t('list.noArticles')}
               </Heading>
               <Text variant="muted" className="mb-4">
-                Try adjusting your filters or search terms
+                {t('list.noArticlesHint')}
               </Text>
               <button
                 onClick={() => setFilters({
@@ -207,7 +206,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
                 })}
                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
               >
-                Clear All Filters
+                {t('list.clearAllFilters')}
               </button>
             </div>
           )}
@@ -219,7 +218,6 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
             <BlogFilters
               tags={tags}
               onFiltersChange={handleFiltersChange}
-              dict={dict}
               locale={locale}
             />
           </div>

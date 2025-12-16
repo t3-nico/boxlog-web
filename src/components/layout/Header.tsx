@@ -25,11 +25,11 @@ export function Header({ locale }: HeaderProps) {
       { name: t('navigation.features'), href: '/features' },
       { name: t('navigation.pricing'), href: '/pricing' },
       {
-        name: 'Resources',
+        name: t('navigation.resources'),
         items: [
-          { name: t('navigation.blog'), href: '/blog', description: 'Read our latest articles and tutorials' },
-          { name: t('navigation.docs'), href: '/docs', description: 'Documentation and guides' },
-          { name: t('navigation.releases'), href: '/releases', description: 'Latest updates and changelog' },
+          { name: t('navigation.blog'), href: '/blog', description: t('navigation.blogDescription') },
+          { name: t('navigation.docs'), href: '/docs', description: t('navigation.docsDescription') },
+          { name: t('navigation.releases'), href: '/releases', description: t('navigation.releasesDescription') },
         ]
       },
       { name: t('navigation.about'), href: '/about' },

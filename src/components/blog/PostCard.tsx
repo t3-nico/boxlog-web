@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { Heading } from '@/components/ui/typography'
 import { BlogPostMeta } from '@/lib/blog'
@@ -53,7 +53,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
     return (
       <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
         {/* Cover image */}
-        <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="block">
+        <Link href={`/blog/${post.slug}`} className="block">
           {post.frontMatter.coverImage && !imageError ? (
             <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
               <Image
@@ -76,10 +76,10 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
         {/* Content */}
         <div className="p-6">
           {/* Title */}
-          <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`}>
-            <Heading 
-              as="h2" 
-              size="xl" 
+          <Link href={`/blog/${post.slug}`}>
+            <Heading
+              as="h2"
+              size="xl"
               className="mb-3 hover:underline transition-colors line-clamp-2 cursor-pointer"
             >
               {post.frontMatter.title}
@@ -121,7 +121,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
     <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
       <div className="flex gap-6">
         {/* Left side: Cover image */}
-        <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`} className="w-80 flex-shrink-0">
+        <Link href={`/blog/${post.slug}`} className="w-80 flex-shrink-0">
           {post.frontMatter.coverImage && !imageError ? (
             <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
               <Image
@@ -145,9 +145,9 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
         <div className="flex-1">
           <div className="my-1">
             {/* Title */}
-            <Link href={locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`}>
-              <Heading 
-                as="h2" 
+            <Link href={`/blog/${post.slug}`}>
+              <Heading
+                as="h2"
                 size="lg"
                 className="mb-3 hover:underline transition-colors line-clamp-2 cursor-pointer"
               >

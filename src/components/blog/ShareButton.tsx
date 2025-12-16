@@ -3,15 +3,17 @@
 import { Twitter, Facebook, Linkedin, Link2, Copy } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { useTranslations, useLocale } from 'next-intl'
 
 interface ShareButtonProps {
   title: string
   slug: string
-  locale?: string
 }
 
-export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
-  const url = `${typeof window !== 'undefined' ? window.location.origin : ''}${locale === 'jp' ? '/jp' : ''}/blog/${slug}`
+export function ShareButton({ title, slug }: ShareButtonProps) {
+  const t = useTranslations('common.actions')
+  const locale = useLocale()
+  const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/${locale}/blog/${slug}`
   const encodedTitle = encodeURIComponent(title)
   const encodedUrl = encodeURIComponent(url)
 
@@ -39,10 +41,10 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(url)
-      toast.success(locale === 'jp' ? 'URLをコピーしました' : 'URL copied to clipboard')
+      toast.success(t('urlCopied'))
     } catch (err) {
       console.error('Failed to copy URL:', err)
-      toast.error(locale === 'jp' ? 'URLのコピーに失敗しました' : 'Failed to copy URL')
+      toast.error(t('urlCopyFailed'))
     }
   }
 
@@ -68,8 +70,8 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              title={`Share on ${social.name}`}
-              aria-label={`Share on ${social.name}`}
+              title={t('shareOn', { platform: social.name })}
+              aria-label={t('shareOn', { platform: social.name })}
             >
               <social.icon className="h-4 w-4" />
             </a>
@@ -80,8 +82,8 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
           size="icon"
           className="h-8 w-8"
           onClick={handleCopyLink}
-          title="Copy link"
-          aria-label="Copy link"
+          title={t('copyLink')}
+          aria-label={t('copyLink')}
         >
           <Copy className="h-4 w-4" />
         </Button>
@@ -91,8 +93,8 @@ export function ShareButton({ title, slug, locale = 'en' }: ShareButtonProps) {
             size="icon"
             className="h-8 w-8"
             onClick={handleNativeShare}
-            title="Share"
-            aria-label="Share"
+            title={t('share')}
+            aria-label={t('share')}
           >
             <Link2 className="h-4 w-4" />
           </Button>

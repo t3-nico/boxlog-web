@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { getTagColor } from '@/lib/tags-client'
 import { ChevronRight, AlertTriangle, Star } from 'lucide-react'
 import type { Dictionary } from '@/lib/i18n'
@@ -77,8 +77,8 @@ export function ReleaseCard({ release, priority = false, compact = false, dict, 
 
   if (compact) {
     return (
-      <Link 
-        href={`/${locale || 'en'}/releases/${frontMatter.version}`}
+      <Link
+        href={`/releases/${frontMatter.version}`}
         className="group block"
       >
         <article className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200 dark:border-gray-700 dark:hover:border-blue-600">
@@ -123,7 +123,7 @@ export function ReleaseCard({ release, priority = false, compact = false, dict, 
 
   return (
     <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300 dark:bg-gray-900 dark:border-gray-700 dark:hover:border-blue-600">
-      <Link href={`/${locale || 'en'}/releases/${frontMatter.version}`} className="block">
+      <Link href={`/releases/${frontMatter.version}`} className="block">
         <div className="p-6">
           {/* Version Badge */}
           <div className="mb-3">

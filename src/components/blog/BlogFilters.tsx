@@ -6,13 +6,12 @@ import { Button } from '@/components/ui/button'
 import { Search, X, Filter, ChevronDown, Calendar, TrendingUp, Tag, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { MobileFilters } from './MobileFilters'
-import type { Dictionary } from '@/lib/i18n'
+import { useTranslations } from 'next-intl'
 
 interface BlogFiltersProps {
   tags: string[]
   className?: string
   onFiltersChange?: (filters: BlogFilterState) => void
-  dict: Dictionary
   locale: string
 }
 
@@ -32,12 +31,13 @@ const defaultFilters: BlogFilterState = {
   tagOperator: 'OR'
 }
 
-export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: BlogFiltersProps) {
+export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFiltersProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isExpanded, setIsExpanded] = useState(true) // 常に開いた状態に変更
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [filters, setFilters] = useState<BlogFilterState>(defaultFilters)
+  const t = useTranslations('blog.filters')
 
   // URLパラメータから初期状態を復元
   useEffect(() => {
@@ -141,8 +141,8 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Filter className="w-5 h-5 text-[rgb(var(--text-tertiary))]" />
-              <h3 className="font-medium text-[rgb(var(--text-primary))]"> 
-                Filters
+              <h3 className="font-medium text-[rgb(var(--text-primary))]">
+                {t('title')}
               </h3>
               {activeFiltersCount > 0 && (
                 <span className="px-2 py-1 text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] rounded-full">
@@ -150,7 +150,7 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
                 </span>
               )}
             </div>
-            
+
             <div className="flex items-center gap-2">
               {activeFiltersCount > 0 && (
                 <Button
@@ -159,7 +159,7 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
                   size="sm"
                   className="text-xs h-auto p-1"
                 >
-                  Clear all
+                  {t('clearAll')}
                 </Button>
               )}
               {/* 常に開いているため、展開ボタンは非表示 */}
@@ -173,7 +173,7 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
           {/* 検索 */}
           <div>
             <label htmlFor="search" className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-2">
-              Search Articles
+              {t('searchArticles')}
             </label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[rgb(var(--text-tertiary))]" />
@@ -182,7 +182,7 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
                 type="text"
                 value={filters.searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder="Search by title, content, or tags..."
+                placeholder={t('searchPlaceholder')}
                 className="w-full pl-10 pr-4 py-2 border border-[rgb(var(--border-primary))] rounded-lg bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] placeholder-[rgb(var(--text-tertiary))] focus:ring-2 focus:ring-[rgb(var(--focus-ring))] focus:border-[rgb(var(--focus-ring))] transition-colors"
               />
               {filters.searchQuery && (
@@ -202,13 +202,13 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
           {/* ソート */}
           <div>
             <label className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">
-              Sort By
+              {t('sortBy')}
             </label>
             <div className="flex flex-wrap gap-2">
               {[
-                { value: 'date', label: 'Date', icon: Calendar },
-                { value: 'popularity', label: 'Popularity', icon: TrendingUp },
-                { value: 'category', label: 'Category', icon: Tag }
+                { value: 'date', label: t('date'), icon: Calendar },
+                { value: 'popularity', label: t('popularity'), icon: TrendingUp },
+                { value: 'category', label: t('category'), icon: Tag }
               ].map(({ value, label, icon: Icon }) => (
                 <Button
                   key={value}
@@ -235,7 +235,7 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
                 aria-label={`Sort ${filters.sortOrder === 'asc' ? 'ascending' : 'descending'}`}
               >
                 {filters.sortOrder === 'asc' ? '↑' : '↓'}
-                {filters.sortOrder === 'asc' ? 'A-Z' : 'Z-A'}
+                {filters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
               </Button>
             </div>
           </div>
@@ -243,8 +243,8 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
           {/* タグフィルター */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="text-sm font-medium text-[rgb(var(--text-secondary))]"> 
-                Filter by Tags
+              <label className="text-sm font-medium text-[rgb(var(--text-secondary))]">
+                {t('filterByTags')}
               </label>
               {filters.selectedTags.length > 1 && (
                 <Button
@@ -285,7 +285,7 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
             
             {filters.selectedTags.length > 1 && (
               <p className="mt-2 text-xs text-[rgb(var(--text-tertiary))]">
-                Showing posts that match {filters.tagOperator === 'AND' ? 'all' : 'any'} of the selected tags
+                {t('showingPostsMessage', { match: filters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny') })}
               </p>
             )}
           </div>
@@ -302,7 +302,7 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
         >
           <Filter className="w-4 h-4 text-[rgb(var(--text-tertiary))]" />
           <span className="font-medium text-[rgb(var(--text-primary))]">
-            Filters
+            {t('title')}
           </span>
           {activeFiltersCount > 0 && (
             <span className="px-2 py-1 text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] rounded-full">
@@ -321,7 +321,6 @@ export function BlogFilters({ tags, className, onFiltersChange, dict, locale }: 
         onFiltersChange={updateFilters}
         onClearFilters={clearFilters}
         activeFiltersCount={activeFiltersCount}
-        dict={dict}
         locale={locale}
       />
     </>
