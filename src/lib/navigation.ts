@@ -12,17 +12,60 @@ export interface NavSection {
   items: NavItem[]
 }
 
+// Docs navigation types (used by ClientSidebar)
+export interface NavigationItem {
+  title: string
+  href?: string
+  items?: NavigationItem[]
+  badge?: string
+  external?: boolean
+}
+
+export interface NavigationSection {
+  title: string
+  items: NavigationItem[]
+}
+
+// Generate docs navigation structure
+export function generateDocsNavigation(): NavigationSection[] {
+  return [
+    {
+      title: 'Getting Started',
+      items: [
+        { title: 'Introduction', href: '/docs' },
+        { title: 'Quick Start', href: '/docs/getting-started' },
+        { title: 'Installation', href: '/docs/installation' },
+      ],
+    },
+    {
+      title: 'Core Concepts',
+      items: [
+        { title: 'Logging', href: '/docs/logging' },
+        { title: 'Search', href: '/docs/search' },
+        { title: 'Alerts', href: '/docs/alerts' },
+      ],
+    },
+    {
+      title: 'Integrations',
+      items: [
+        { title: 'SDKs', href: '/docs/sdks' },
+        { title: 'API Reference', href: '/docs/api', badge: 'New' },
+      ],
+    },
+  ]
+}
+
 export function getNavigationConfig(dict: Dictionary) {
   return {
     // メインナビゲーション（Header用）
     main: [
       {
         name: dict.common.features || 'Features',
-        href: '/features'
+        href: '/features',
       },
       {
         name: dict.common.pricing || 'Pricing',
-        href: '/pricing'
+        href: '/pricing',
       },
       {
         name: 'Resources',
@@ -30,23 +73,23 @@ export function getNavigationConfig(dict: Dictionary) {
           {
             name: dict.common.blog,
             href: '/blog',
-            description: 'Read our latest articles and tutorials'
+            description: 'Read our latest articles and tutorials',
           },
           {
             name: dict.common.docs,
             href: '/docs',
-            description: 'Documentation and guides'
+            description: 'Documentation and guides',
           },
           {
             name: dict.common.releases,
             href: '/releases',
-            description: 'Latest updates and changelog'
+            description: 'Latest updates and changelog',
           },
-        ]
+        ],
       },
       {
         name: dict.common.about,
-        href: '/about'
+        href: '/about',
       },
     ],
 
@@ -61,6 +104,6 @@ export function getNavigationConfig(dict: Dictionary) {
         { name: dict.common.about, href: '/about' },
         { name: dict.common.contact, href: '/contact' },
       ],
-    }
+    },
   }
 }

@@ -18,7 +18,12 @@ interface BlogPaginationProps {
   className?: string
 }
 
-export function BlogPagination({ currentPage, totalPages, basePath, className }: BlogPaginationProps) {
+export function BlogPagination({
+  currentPage,
+  totalPages,
+  basePath,
+  className,
+}: BlogPaginationProps) {
   if (totalPages <= 1) return null
 
   const generatePageUrl = (page: number) => {
@@ -31,7 +36,11 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
     const range: number[] = []
     const rangeWithDots: (number | string)[] = []
 
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
       range.push(i)
     }
 
@@ -61,9 +70,9 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
           {currentPage > 1 ? (
             <PaginationPrevious href={generatePageUrl(currentPage - 1)} />
           ) : (
-            <PaginationPrevious 
-              href="#" 
-              className="pointer-events-none opacity-50" 
+            <PaginationPrevious
+              href="#"
+              className="pointer-events-none opacity-50"
               aria-disabled="true"
             />
           )}
@@ -83,7 +92,7 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
 
           return (
             <PaginationItem key={pageNumber}>
-              <PaginationLink 
+              <PaginationLink
                 href={generatePageUrl(pageNumber)}
                 isActive={isCurrentPage}
               >
@@ -97,9 +106,9 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
           {currentPage < totalPages ? (
             <PaginationNext href={generatePageUrl(currentPage + 1)} />
           ) : (
-            <PaginationNext 
-              href="#" 
-              className="pointer-events-none opacity-50" 
+            <PaginationNext
+              href="#"
+              className="pointer-events-none opacity-50"
               aria-disabled="true"
             />
           )}

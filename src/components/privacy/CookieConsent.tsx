@@ -18,7 +18,7 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
     essential: true, // Always required
     analytics: false,
     marketing: false,
-    functional: false
+    functional: false,
   })
   const [showDetails, setShowDetails] = useState(false)
 
@@ -35,7 +35,7 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
       essential: true,
       analytics: true,
       marketing: false, // Keep marketing disabled by default
-      functional: true
+      functional: true,
     })
     saveConsent(true)
   }
@@ -45,7 +45,7 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
       essential: true,
       analytics: false,
       marketing: false,
-      functional: false
+      functional: false,
     })
     saveConsent(false)
   }
@@ -85,12 +85,21 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
         {!showDetails ? (
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 id="cookie-consent-title" className="text-sm font-medium text-gray-900 mb-1 dark:text-gray-100">
+              <h3
+                id="cookie-consent-title"
+                className="text-sm font-medium text-gray-900 mb-1 dark:text-gray-100"
+              >
                 {dict.cookieConsent.title}
               </h3>
-              <p id="cookie-consent-description" className="text-sm text-gray-700 dark:text-gray-300">
+              <p
+                id="cookie-consent-description"
+                className="text-sm text-gray-700 dark:text-gray-300"
+              >
                 {dict.cookieConsent.description}{' '}
-                <a href={`/${locale}/privacy`} className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300">
+                <a
+                  href={`/${locale}/privacy`}
+                  className="text-blue-600 hover:text-blue-700 underline dark:text-blue-400 dark:hover:text-blue-300"
+                >
                   {dict.cookieConsent.learnMore}
                 </a>
               </p>
@@ -103,17 +112,10 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
               >
                 {dict.cookieConsent.customize}
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={acceptEssential}
-              >
+              <Button variant="outline" size="sm" onClick={acceptEssential}>
                 {dict.cookieConsent.essentialOnly}
               </Button>
-              <Button
-                size="sm"
-                onClick={acceptAll}
-              >
+              <Button size="sm" onClick={acceptAll}>
                 {dict.cookieConsent.acceptAll}
               </Button>
             </div>
@@ -129,8 +131,18 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
                 className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
                 aria-label="Close preferences"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -139,8 +151,12 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
               {/* Essential Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <Label className="font-medium">{dict.cookieConsent.cookies.essential.title}</Label>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">{dict.cookieConsent.cookies.essential.required}</span>
+                  <Label className="font-medium">
+                    {dict.cookieConsent.cookies.essential.title}
+                  </Label>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">
+                    {dict.cookieConsent.cookies.essential.required}
+                  </span>
                 </div>
                 <p className="text-sm text-muted-foreground">
                   {dict.cookieConsent.cookies.essential.description}
@@ -156,7 +172,12 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
                   <Switch
                     id="analytics-switch"
                     checked={preferences.analytics}
-                    onCheckedChange={(checked) => setPreferences(prev => ({ ...prev, analytics: checked }))}
+                    onCheckedChange={(checked) =>
+                      setPreferences((prev) => ({
+                        ...prev,
+                        analytics: checked,
+                      }))
+                    }
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -173,7 +194,12 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
                   <Switch
                     id="functional-switch"
                     checked={preferences.functional}
-                    onCheckedChange={(checked) => setPreferences(prev => ({ ...prev, functional: checked }))}
+                    onCheckedChange={(checked) =>
+                      setPreferences((prev) => ({
+                        ...prev,
+                        functional: checked,
+                      }))
+                    }
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -184,8 +210,12 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
               {/* Marketing Cookies */}
               <div className="border border-gray-200 rounded-lg p-4 opacity-50 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <Label className="font-medium">{dict.cookieConsent.cookies.marketing.title}</Label>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">{dict.cookieConsent.cookies.marketing.disabled}</span>
+                  <Label className="font-medium">
+                    {dict.cookieConsent.cookies.marketing.title}
+                  </Label>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-300">
+                    {dict.cookieConsent.cookies.marketing.disabled}
+                  </span>
                 </div>
                 <p className="text-sm text-muted-foreground">
                   {dict.cookieConsent.cookies.marketing.description}
@@ -194,17 +224,10 @@ export function CookieConsent({ dict, locale }: CookieConsentProps) {
             </div>
 
             <div className="flex justify-end gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={acceptEssential}
-              >
+              <Button variant="outline" size="sm" onClick={acceptEssential}>
                 {dict.cookieConsent.essentialOnly}
               </Button>
-              <Button
-                size="sm"
-                onClick={savePreferences}
-              >
+              <Button size="sm" onClick={savePreferences}>
                 {dict.cookieConsent.savePreferences}
               </Button>
             </div>

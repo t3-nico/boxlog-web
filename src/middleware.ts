@@ -9,7 +9,7 @@ const publicPaths = [
   '/sw.js',
   '/manifest.json',
   '/robots.txt',
-  '/sitemap.xml'
+  '/sitemap.xml',
 ]
 
 /**
@@ -27,16 +27,16 @@ function getLocale(request: NextRequest): string {
   if (acceptLanguage) {
     const languages = acceptLanguage
       .split(',')
-      .map(lang => lang.trim().split(';')[0])
-      .map(lang => lang.split('-')[0]) // Get language code only (en-US -> en)
-    
+      .map((lang) => lang.trim().split(';')[0])
+      .map((lang) => lang.split('-')[0]) // Get language code only (en-US -> en)
+
     // Find first matching locale
     for (const lang of languages) {
       if (lang === 'ja' || lang === 'jp') return 'jp'
       if (lang === 'en') return 'en'
     }
   }
-  
+
   // 3. Default fallback
   return defaultLocale
 }
@@ -45,15 +45,16 @@ function getLocale(request: NextRequest): string {
  * Check if path should skip i18n processing
  */
 function shouldSkipPath(pathname: string): boolean {
-  return publicPaths.some(path => pathname.startsWith(path))
+  return publicPaths.some((path) => pathname.startsWith(path))
 }
 
 /**
  * Check if pathname already has a locale
  */
 function hasLocale(pathname: string): boolean {
-  return locales.some(locale => 
-    pathname.startsWith(`/${locale.code}/`) || pathname === `/${locale.code}`
+  return locales.some(
+    (locale) =>
+      pathname.startsWith(`/${locale.code}/`) || pathname === `/${locale.code}`
   )
 }
 
@@ -72,15 +73,18 @@ export function middleware(request: NextRequest) {
 
   // Redirect to localized URL
   const locale = getLocale(request)
-  const localizedUrl = new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url)
-  
+  const localizedUrl = new URL(
+    `/${locale}${pathname === '/' ? '' : pathname}`,
+    request.url
+  )
+
   const response = NextResponse.redirect(localizedUrl)
-  
+
   // Set locale cookie for future requests
   response.cookies.set('locale', locale, {
     maxAge: 365 * 24 * 60 * 60, // 1 year
     httpOnly: false, // Allow client-side access
-    sameSite: 'lax'
+    sameSite: 'lax',
   })
 
   return addSecurityHeaders(response, request)
@@ -89,7 +93,10 @@ export function middleware(request: NextRequest) {
 /**
  * Add security headers to response
  */
-function addSecurityHeaders(response: NextResponse, request?: NextRequest): NextResponse {
+function addSecurityHeaders(
+  response: NextResponse,
+  request?: NextRequest
+): NextResponse {
   // Clone the request headers
   const requestHeaders = new Headers()
 
@@ -103,7 +110,7 @@ function addSecurityHeaders(response: NextResponse, request?: NextRequest): Next
   response.headers.set('Cross-Origin-Embedder-Policy', 'unsafe-none')
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin')
   response.headers.set('Cross-Origin-Resource-Policy', 'same-origin')
-  
+
   // Enhanced Permissions Policy
   const permissionsPolicy = [
     'camera=()',
@@ -121,11 +128,11 @@ function addSecurityHeaders(response: NextResponse, request?: NextRequest): Next
     'fullscreen=(self)',
     'picture-in-picture=()',
     'display-capture=()',
-    'web-share=(self)'
+    'web-share=(self)',
   ].join(', ')
-  
+
   response.headers.set('Permissions-Policy', permissionsPolicy)
-  
+
   // Content Security Policy
   const cspDirectives = [
     "default-src 'self'",
@@ -143,17 +150,19 @@ function addSecurityHeaders(response: NextResponse, request?: NextRequest): Next
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
-    "upgrade-insecure-requests"
+    'upgrade-insecure-requests',
   ]
 
   const isDev = process.env.NODE_ENV === 'development'
-  
+
   if (isDev) {
     // More permissive CSP for development
-    cspDirectives.push("script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com")
+    cspDirectives.push(
+      "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com"
+    )
   } else {
     // Stricter CSP for production
-    cspDirectives.push("block-all-mixed-content")
+    cspDirectives.push('block-all-mixed-content')
   }
 
   const cspHeader = cspDirectives.join('; ')
@@ -173,22 +182,29 @@ function addSecurityHeaders(response: NextResponse, request?: NextRequest): Next
   }
 
   // Enhanced rate limiting and security monitoring
-  const ip = request?.ip ?? request?.headers.get('x-forwarded-for') ?? '127.0.0.1'
+  const ip =
+    request?.ip ?? request?.headers.get('x-forwarded-for') ?? '127.0.0.1'
   const userAgent = request?.headers.get('user-agent') ?? ''
   const now = Date.now()
-  
+
   // Add security monitoring headers
   response.headers.set('X-Request-ID', crypto.randomUUID())
   response.headers.set('X-Response-Time', now.toString())
-  
+
   // Set rate limiting headers for transparency
   response.headers.set('X-RateLimit-Limit', '100')
   response.headers.set('X-RateLimit-Remaining', '95') // Placeholder - would be dynamic in real implementation
   response.headers.set('X-RateLimit-Reset', (now + 3600000).toString()) // 1 hour from now
-  
+
   // Bot protection headers
-  if (userAgent.toLowerCase().includes('bot') || userAgent.toLowerCase().includes('crawler')) {
-    response.headers.set('X-Robots-Tag', 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large')
+  if (
+    userAgent.toLowerCase().includes('bot') ||
+    userAgent.toLowerCase().includes('crawler')
+  ) {
+    response.headers.set(
+      'X-Robots-Tag',
+      'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'
+    )
   }
 
   return response
@@ -201,7 +217,8 @@ export const config = {
      * Include API routes for security headers
      */
     {
-      source: '/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.json|browserconfig.xml|robots.txt|sitemap.xml).*)',
+      source:
+        '/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.json|browserconfig.xml|robots.txt|sitemap.xml).*)',
       missing: [
         { type: 'header', key: 'next-router-prefetch' },
         { type: 'header', key: 'purpose', value: 'prefetch' },

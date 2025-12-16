@@ -1,10 +1,10 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { 
-  getAllContent, 
-  getMDXContentForRSC, 
-  getRelatedContent 
+import {
+  getAllContent,
+  getMDXContentForRSC,
+  getRelatedContent,
 } from '@/lib/mdx'
 import { mdxComponents } from '@/components/docs/MDXComponents'
 import { Breadcrumbs } from '@/components/docs/Breadcrumbs'
@@ -27,18 +27,18 @@ export async function generateStaticParams(): Promise<PageParams[]> {
   try {
     const allContent = await getAllContent()
     const locales = ['en', 'jp']
-    
+
     const params: PageParams[] = []
-    
+
     for (const locale of locales) {
       for (const content of allContent) {
         params.push({
           locale,
-          slug: content.slug.split('/')
+          slug: content.slug.split('/'),
         })
       }
     }
-    
+
     return params
   } catch (error) {
     return []
@@ -46,23 +46,25 @@ export async function generateStaticParams(): Promise<PageParams[]> {
 }
 
 // Generate metadata
-export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: DocPageProps): Promise<Metadata> {
   try {
     const slug = params.slug.join('/')
     const category = params.slug[0] as any
     const contentSlug = params.slug.slice(1).join('/')
-    
+
     const content = await getMDXContentForRSC(`${category}/${contentSlug}`)
-    
+
     if (!content) {
       return {
         title: 'Page Not Found - YourSaaS Documentation',
-        description: 'The requested documentation page could not be found.'
+        description: 'The requested documentation page could not be found.',
       }
     }
 
     const { frontMatter } = content
-    
+
     return {
       title: `${frontMatter.title} - YourSaaS Documentation`,
       description: frontMatter.description,
@@ -81,12 +83,12 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
         card: 'summary_large_image',
         title: frontMatter.title,
         description: frontMatter.description,
-      }
+      },
     }
   } catch (error) {
     return {
       title: 'Documentation - YourSaaS',
-      description: 'YourSaaS documentation and guides'
+      description: 'YourSaaS documentation and guides',
     }
   }
 }
@@ -98,15 +100,20 @@ async function getAdjacentPages(slug: string): Promise<{
 }> {
   try {
     const allContent = await getAllContent()
-    const currentIndex = allContent.findIndex(content => content.slug === slug)
-    
+    const currentIndex = allContent.findIndex(
+      (content) => content.slug === slug
+    )
+
     if (currentIndex === -1) {
       return {}
     }
-    
+
     return {
       previousPage: currentIndex > 0 ? allContent[currentIndex - 1] : undefined,
-      nextPage: currentIndex < allContent.length - 1 ? allContent[currentIndex + 1] : undefined
+      nextPage:
+        currentIndex < allContent.length - 1
+          ? allContent[currentIndex + 1]
+          : undefined,
     }
   } catch (error) {
     return {}
@@ -120,39 +127,37 @@ export default async function DocPage({ params }: DocPageProps) {
     const slug = params.slug.join('/')
     const category = params.slug[0] as any
     const contentSlug = params.slug.slice(1).join('/')
-    
-    
+
     // Get MDX content
-    let content;
-    
+    let content
+
     // First try with complete slug
     content = await getMDXContentForRSC(slug)
-    
+
     // If not found, try other patterns
     if (!content && contentSlug) {
       // Category/file format
       content = await getMDXContentForRSC(`${category}/${contentSlug}`)
     }
-    
+
     if (!content && !contentSlug) {
       // Single file format
       content = await getMDXContentForRSC(category)
     }
-    
-    
+
     if (!content) {
       notFound()
     }
 
     const { content: mdxContent, frontMatter } = content
-    
+
     // Get adjacent pages
     const { previousPage, nextPage } = await getAdjacentPages(slug)
-    
+
     // Get related content
     const relatedContent = await getRelatedContent(
-      frontMatter.category, 
-      slug, 
+      frontMatter.category,
+      slug,
       3
     )
 
@@ -163,13 +168,10 @@ export default async function DocPage({ params }: DocPageProps) {
           <div className="max-w-4xl">
             {/* Breadcrumb navigation */}
             <Breadcrumbs slug={slug} title={frontMatter.title} />
-            
+
             {/* MDX content */}
             <article className="prose prose-gray dark:prose-invert max-w-none">
-              <MDXRemote 
-                source={mdxContent} 
-                components={mdxComponents}
-              />
+              <MDXRemote source={mdxContent} components={mdxComponents} />
             </article>
 
             {/* Related content */}
@@ -193,7 +195,7 @@ export default async function DocPage({ params }: DocPageProps) {
                       </Text>
                       <div className="flex items-center gap-2 mt-3">
                         {related.frontMatter.tags?.slice(0, 2).map((tag) => (
-                          <span 
+                          <span
                             key={tag}
                             className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
                           >
@@ -208,10 +210,7 @@ export default async function DocPage({ params }: DocPageProps) {
             )}
 
             {/* Previous/next page navigation */}
-            <PageNavigation 
-              previousPage={previousPage}
-              nextPage={nextPage}
-            />
+            <PageNavigation previousPage={previousPage} nextPage={nextPage} />
           </div>
         </div>
 
@@ -234,7 +233,7 @@ export default async function DocPage({ params }: DocPageProps) {
           <Text variant="muted" className="mb-6">
             We encountered an error while loading this page.
           </Text>
-          <a 
+          <a
             href="/docs"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >

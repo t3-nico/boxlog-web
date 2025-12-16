@@ -46,7 +46,10 @@ export function calculateReadingTime(content: string): number {
 }
 
 // Generate article excerpt
-export function generateExcerpt(content: string, maxLength: number = 160): string {
+export function generateExcerpt(
+  content: string,
+  maxLength: number = 160
+): string {
   // Remove Markdown syntax and HTML tags
   const cleanContent = content
     .replace(/#{1,6}\s+/g, '') // Headers
@@ -81,7 +84,7 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
         const filePath = path.join(BLOG_DIR, file)
         const fileContent = fs.readFileSync(filePath, 'utf-8')
         const { data, content } = matter(fileContent)
-        
+
         const frontMatter = data as BlogPostFrontMatter
         const readingTime = calculateReadingTime(content)
         const excerpt = frontMatter.description || generateExcerpt(content)
@@ -90,34 +93,38 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
           slug,
           frontMatter: {
             ...frontMatter,
-            readingTime
+            readingTime,
           },
           excerpt,
-          readingTime
+          readingTime,
         }
       })
   )
 
   // Exclude drafts and sort by publish date (descending)
   return posts
-    .filter(post => !post.frontMatter.draft)
-    .sort((a, b) => new Date(b.frontMatter.publishedAt).getTime() - new Date(a.frontMatter.publishedAt).getTime())
+    .filter((post) => !post.frontMatter.draft)
+    .sort(
+      (a, b) =>
+        new Date(b.frontMatter.publishedAt).getTime() -
+        new Date(a.frontMatter.publishedAt).getTime()
+    )
 }
 
 // Get individual article
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
     const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
-    
+
     if (!fs.existsSync(filePath)) {
       return null
     }
 
     const fileContent = fs.readFileSync(filePath, 'utf-8')
     const { data, content } = matter(fileContent)
-    
+
     const frontMatter = data as BlogPostFrontMatter
-    
+
     // Return null for drafts
     if (frontMatter.draft) {
       return null
@@ -130,11 +137,11 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
       slug,
       frontMatter: {
         ...frontMatter,
-        readingTime
+        readingTime,
       },
       content,
       excerpt,
-      readingTime
+      readingTime,
     }
   } catch (error) {
     return null
@@ -144,26 +151,31 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 // Get articles by tag
 export async function getBlogPostsByTag(tag: string): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
-  return allPosts.filter(post => 
-    post.frontMatter.tags.some(postTag => 
-      postTag.toLowerCase() === tag.toLowerCase()
+  return allPosts.filter((post) =>
+    post.frontMatter.tags.some(
+      (postTag) => postTag.toLowerCase() === tag.toLowerCase()
     )
   )
 }
 
 // Get articles by category
-export async function getBlogPostsByCategory(category: string): Promise<BlogPostMeta[]> {
+export async function getBlogPostsByCategory(
+  category: string
+): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
-  return allPosts.filter(post => 
-    post.frontMatter.category.toLowerCase() === category.toLowerCase()
+  return allPosts.filter(
+    (post) => post.frontMatter.category.toLowerCase() === category.toLowerCase()
   )
 }
 
 // Get related articles
-export async function getRelatedPosts(currentSlug: string, maxPosts: number = 3): Promise<BlogPostMeta[]> {
+export async function getRelatedPosts(
+  currentSlug: string,
+  maxPosts: number = 3
+): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
-  const currentPost = allPosts.find(post => post.slug === currentSlug)
-  
+  const currentPost = allPosts.find((post) => post.slug === currentSlug)
+
   if (!currentPost) {
     return []
   }
@@ -173,24 +185,24 @@ export async function getRelatedPosts(currentSlug: string, maxPosts: number = 3)
 
   // Sort other articles by relevance
   const relatedPosts = allPosts
-    .filter(post => post.slug !== currentSlug)
-    .map(post => {
+    .filter((post) => post.slug !== currentSlug)
+    .map((post) => {
       let score = 0
-      
+
       // Higher score for same category
       if (post.frontMatter.category === currentCategory) {
         score += 10
       }
-      
+
       // Add score based on common tags
-      const commonTags = post.frontMatter.tags.filter(tag => 
+      const commonTags = post.frontMatter.tags.filter((tag) =>
         currentTags.includes(tag)
       ).length
       score += commonTags * 5
 
       return { ...post, score }
     })
-    .filter(post => post.score > 0)
+    .filter((post) => post.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, maxPosts)
 
@@ -202,8 +214,8 @@ export async function getAllTags(): Promise<{ tag: string; count: number }[]> {
   const allPosts = await getAllBlogPostMetas()
   const tagCounts: Record<string, number> = {}
 
-  allPosts.forEach(post => {
-    post.frontMatter.tags.forEach(tag => {
+  allPosts.forEach((post) => {
+    post.frontMatter.tags.forEach((tag) => {
       tagCounts[tag] = (tagCounts[tag] || 0) + 1
     })
   })
@@ -220,11 +232,13 @@ export async function getAllTagNames(): Promise<string[]> {
 }
 
 // Get all categories
-export async function getAllCategories(): Promise<{ category: string; count: number }[]> {
+export async function getAllCategories(): Promise<
+  { category: string; count: number }[]
+> {
   const allPosts = await getAllBlogPostMetas()
   const categoryCounts: Record<string, number> = {}
 
-  allPosts.forEach(post => {
+  allPosts.forEach((post) => {
     const category = post.frontMatter.category
     categoryCounts[category] = (categoryCounts[category] || 0) + 1
   })
@@ -236,8 +250,14 @@ export async function getAllCategories(): Promise<{ category: string; count: num
 
 // Search articles
 export async function searchBlogPosts(query: string): Promise<BlogPostMeta[]>
-export async function searchBlogPosts(posts: BlogPostMeta[], query: string): Promise<BlogPostMeta[]>
-export async function searchBlogPosts(queryOrPosts: string | BlogPostMeta[], query?: string): Promise<BlogPostMeta[]> {
+export async function searchBlogPosts(
+  posts: BlogPostMeta[],
+  query: string
+): Promise<BlogPostMeta[]>
+export async function searchBlogPosts(
+  queryOrPosts: string | BlogPostMeta[],
+  query?: string
+): Promise<BlogPostMeta[]> {
   let allPosts: BlogPostMeta[]
   let searchTerm: string
 
@@ -253,27 +273,39 @@ export async function searchBlogPosts(queryOrPosts: string | BlogPostMeta[], que
     return allPosts
   }
 
-  return allPosts.filter(post => {
+  return allPosts.filter((post) => {
     const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
-    const descriptionMatch = post.frontMatter.description?.toLowerCase().includes(searchTerm)
-    const tagMatch = post.frontMatter.tags.some(tag => 
+    const descriptionMatch = post.frontMatter.description
+      ?.toLowerCase()
+      .includes(searchTerm)
+    const tagMatch = post.frontMatter.tags.some((tag) =>
       tag.toLowerCase().includes(searchTerm)
     )
-    const categoryMatch = post.frontMatter.category.toLowerCase().includes(searchTerm)
+    const categoryMatch = post.frontMatter.category
+      .toLowerCase()
+      .includes(searchTerm)
     const excerptMatch = post.excerpt.toLowerCase().includes(searchTerm)
 
-    return titleMatch || descriptionMatch || tagMatch || categoryMatch || excerptMatch
+    return (
+      titleMatch ||
+      descriptionMatch ||
+      tagMatch ||
+      categoryMatch ||
+      excerptMatch
+    )
   })
 }
 
 // Get featured articles
 export async function getFeaturedPosts(): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
-  return allPosts.filter(post => post.frontMatter.featured)
+  return allPosts.filter((post) => post.frontMatter.featured)
 }
 
 // Get latest articles
-export async function getRecentPosts(limit: number = 5): Promise<BlogPostMeta[]> {
+export async function getRecentPosts(
+  limit: number = 5
+): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   return allPosts.slice(0, limit)
 }

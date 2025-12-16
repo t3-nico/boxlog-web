@@ -37,15 +37,19 @@ class WebVitalsOptimizer {
       for (const entry of list.getEntries()) {
         if (entry.entryType === 'resource') {
           const resourceEntry = entry as PerformanceResourceTiming
-          
+
           // Check for slow resources
           if (resourceEntry.duration > 1000) {
-            this.improvements.push(`Slow resource detected: ${resourceEntry.name} (${Math.round(resourceEntry.duration)}ms)`)
+            this.improvements.push(
+              `Slow resource detected: ${resourceEntry.name} (${Math.round(resourceEntry.duration)}ms)`
+            )
           }
-          
+
           // Check for large resources
           if (resourceEntry.transferSize > 1024 * 1024) {
-            this.improvements.push(`Large resource detected: ${resourceEntry.name} (${Math.round(resourceEntry.transferSize / 1024)}KB)`)
+            this.improvements.push(
+              `Large resource detected: ${resourceEntry.name} (${Math.round(resourceEntry.transferSize / 1024)}KB)`
+            )
           }
         }
       }
@@ -60,10 +64,15 @@ class WebVitalsOptimizer {
 
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (entry.entryType === 'layout-shift' && !(entry as any).hadRecentInput) {
+        if (
+          entry.entryType === 'layout-shift' &&
+          !(entry as any).hadRecentInput
+        ) {
           const layoutShiftEntry = entry as any
           if (layoutShiftEntry.value > 0.1) {
-            this.improvements.push(`Layout shift detected: ${layoutShiftEntry.value.toFixed(4)}`)
+            this.improvements.push(
+              `Layout shift detected: ${layoutShiftEntry.value.toFixed(4)}`
+            )
           }
         }
       }
@@ -81,7 +90,9 @@ class WebVitalsOptimizer {
         if (entry.entryType === 'largest-contentful-paint') {
           const lcpEntry = entry as any
           if (lcpEntry.startTime > 2500) {
-            this.improvements.push(`LCP is slow: ${Math.round(lcpEntry.startTime)}ms (target: <2.5s)`)
+            this.improvements.push(
+              `LCP is slow: ${Math.round(lcpEntry.startTime)}ms (target: <2.5s)`
+            )
           }
         }
       }
@@ -99,7 +110,9 @@ class WebVitalsOptimizer {
         if (entry.entryType === 'event') {
           const eventEntry = entry as any
           if (eventEntry.duration > 200) {
-            this.improvements.push(`Slow interaction detected: ${eventEntry.name} (${Math.round(eventEntry.duration)}ms)`)
+            this.improvements.push(
+              `Slow interaction detected: ${eventEntry.name} (${Math.round(eventEntry.duration)}ms)`
+            )
           }
         }
       }
@@ -132,20 +145,26 @@ class WebVitalsOptimizer {
 
     // Provide improvement suggestions
     if (metric.name === 'LCP' && metric.value > 2500) {
-      this.improvements.push('LCP > 2.5s: Consider optimizing images, reducing server response time, or preloading critical resources')
+      this.improvements.push(
+        'LCP > 2.5s: Consider optimizing images, reducing server response time, or preloading critical resources'
+      )
     }
-    
+
     if (metric.name === 'CLS' && metric.value > 0.1) {
-      this.improvements.push('CLS > 0.1: Reserve space for images, avoid inserting content above existing content')
+      this.improvements.push(
+        'CLS > 0.1: Reserve space for images, avoid inserting content above existing content'
+      )
     }
-    
+
     if (metric.name === 'INP' && metric.value > 200) {
-      this.improvements.push('INP > 200ms: Optimize JavaScript execution, use requestIdleCallback for non-critical tasks')
+      this.improvements.push(
+        'INP > 200ms: Optimize JavaScript execution, use requestIdleCallback for non-critical tasks'
+      )
     }
   }
 
   public cleanup() {
-    this.observers.forEach(observer => observer.disconnect())
+    this.observers.forEach((observer) => observer.disconnect())
     this.observers.clear()
   }
 }
@@ -160,9 +179,11 @@ function sendToAnalytics(metric: any) {
   if (process.env.NODE_ENV === 'production') {
     // Example: Send to Google Analytics 4
     if (typeof window !== 'undefined' && 'gtag' in window) {
-      (window as any).gtag('event', metric.name, {
+      ;(window as any).gtag('event', metric.name, {
         event_category: 'Web Vitals',
-        value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+        value: Math.round(
+          metric.name === 'CLS' ? metric.value * 1000 : metric.value
+        ),
         event_label: metric.id,
         non_interaction: true,
       })
@@ -194,7 +215,7 @@ export function WebVitals() {
     try {
       // Initialize optimizer
       optimizerRef.current = new WebVitalsOptimizer()
-      
+
       const handleMetric = (metric: any) => {
         optimizerRef.current?.recordMetric(metric)
         sendToAnalytics(metric)
@@ -212,7 +233,9 @@ export function WebVitals() {
           const improvements = optimizerRef.current.getImprovements()
           if (improvements.length > 0) {
             console.group('🚀 Performance Improvement Suggestions')
-            improvements.forEach(improvement => console.log(`• ${improvement}`))
+            improvements.forEach((improvement) =>
+              console.log(`• ${improvement}`)
+            )
             console.groupEnd()
           }
         }

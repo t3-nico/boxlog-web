@@ -23,14 +23,14 @@ const icons = {
   error: AlertCircle,
   warning: AlertTriangle,
   network: Wifi,
-  search: Search
+  search: Search,
 }
 
 const variantStyles = {
   error: 'border-red-500/50 text-red-900 dark:text-red-400',
   warning: 'border-yellow-500/50 text-yellow-900 dark:text-yellow-400',
   network: 'border-gray-500/50',
-  search: 'border-gray-500/50'
+  search: 'border-gray-500/50',
 }
 
 export function ErrorState({
@@ -40,33 +40,35 @@ export function ErrorState({
   children,
   variant = 'error',
   size = 'md',
-  dict
+  dict,
 }: ErrorStateProps) {
   // Use provided title/description or fall back to dictionary or default
-  const finalTitle = title || dict?.errors.general.title || 'Something went wrong'
-  const finalDescription = description || dict?.errors.general.description || 'An unexpected error occurred. Please try again.'
+  const finalTitle =
+    title || dict?.errors.general.title || 'Something went wrong'
+  const finalDescription =
+    description ||
+    dict?.errors.general.description ||
+    'An unexpected error occurred. Please try again.'
 
   const Icon = icons[variant]
 
   const sizeClasses = {
     sm: 'p-4',
     md: 'p-6',
-    lg: 'p-8'
+    lg: 'p-8',
   }
 
   const iconSizeClasses = {
     sm: 'h-4 w-4',
     md: 'h-5 w-5',
-    lg: 'h-6 w-6'
+    lg: 'h-6 w-6',
   }
 
   return (
     <Alert className={`${sizeClasses[size]} ${variantStyles[variant]}`}>
       <Icon className={iconSizeClasses[size]} />
       <AlertTitle className="mt-0">{finalTitle}</AlertTitle>
-      <AlertDescription className="mt-2">
-        {finalDescription}
-      </AlertDescription>
+      <AlertDescription className="mt-2">{finalDescription}</AlertDescription>
 
       {action && (
         <div className="mt-4">
@@ -86,25 +88,51 @@ export function ErrorState({
 }
 
 // Specific error states for common scenarios
-export function NetworkErrorState({ onRetry, dict }: { onRetry?: () => void; dict?: Dictionary }) {
+export function NetworkErrorState({
+  onRetry,
+  dict,
+}: {
+  onRetry?: () => void
+  dict?: Dictionary
+}) {
   return (
     <ErrorState
       variant="network"
       title={dict?.errors.network.title}
       description={dict?.errors.network.description}
-      action={onRetry ? { label: dict?.errors.network.tryAgain || 'Try again', onClick: onRetry } : undefined}
+      action={
+        onRetry
+          ? {
+              label: dict?.errors.network.tryAgain || 'Try again',
+              onClick: onRetry,
+            }
+          : undefined
+      }
       dict={dict}
     />
   )
 }
 
-export function SearchErrorState({ onClear, dict }: { onClear?: () => void; dict?: Dictionary }) {
+export function SearchErrorState({
+  onClear,
+  dict,
+}: {
+  onClear?: () => void
+  dict?: Dictionary
+}) {
   return (
     <ErrorState
       variant="search"
       title={dict?.errors.search.title}
       description={dict?.errors.search.description}
-      action={onClear ? { label: dict?.errors.search.clearSearch || 'Clear search', onClick: onClear } : undefined}
+      action={
+        onClear
+          ? {
+              label: dict?.errors.search.clearSearch || 'Clear search',
+              onClick: onClear,
+            }
+          : undefined
+      }
       dict={dict}
     />
   )
@@ -114,7 +142,7 @@ export function FormErrorState({
   title,
   description,
   onRetry,
-  dict
+  dict,
 }: {
   title?: string
   description?: string
@@ -126,7 +154,14 @@ export function FormErrorState({
       variant="warning"
       title={title || dict?.errors.form.title}
       description={description || dict?.errors.form.description}
-      action={onRetry ? { label: dict?.errors.form.tryAgain || 'Try again', onClick: onRetry } : undefined}
+      action={
+        onRetry
+          ? {
+              label: dict?.errors.form.tryAgain || 'Try again',
+              onClick: onRetry,
+            }
+          : undefined
+      }
       dict={dict}
     />
   )

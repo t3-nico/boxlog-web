@@ -19,24 +19,21 @@ interface TagListProps {
   maxDisplay?: number
 }
 
-export function TagList({ 
-  tags, 
-  currentTag, 
-  showAll = false, 
-  maxDisplay = 20 
+export function TagList({
+  tags,
+  currentTag,
+  showAll = false,
+  maxDisplay = 20,
 }: TagListProps) {
   const [isExpanded, setIsExpanded] = useState(showAll)
-  
+
   const displayTags = isExpanded ? tags : tags.slice(0, maxDisplay)
   const hasMoreTags = tags.length > maxDisplay
-
 
   if (tags.length === 0) {
     return (
       <div className="text-center py-8">
-        <Text variant="muted">
-          No tags found
-        </Text>
+        <Text variant="muted">No tags found</Text>
       </div>
     )
   }
@@ -51,7 +48,7 @@ export function TagList({
             ({tags.length} total)
           </span>
         </Heading>
-        
+
         {currentTag && (
           <Link
             href="/blog"
@@ -76,7 +73,7 @@ export function TagList({
               #{currentTag}
             </span>
             <Text size="sm" className="text-[rgb(var(--text-secondary))]">
-              {tags.find(t => t.tag === currentTag)?.count || 0} articles
+              {tags.find((t) => t.tag === currentTag)?.count || 0} articles
             </Text>
           </div>
         </div>
@@ -86,24 +83,26 @@ export function TagList({
       <div className="flex flex-wrap gap-2">
         {displayTags.map((tagItem, index) => {
           const isActive = currentTag === tagItem.tag
-          
+
           return (
             <Link
               key={tagItem.tag}
               href={`/blog/tag/${encodeURIComponent(tagItem.tag)}`}
               className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                isActive 
-                  ? 'bg-[rgb(var(--link-color))] text-white shadow-lg ring-2 ring-[rgb(var(--link-color))]/30' 
+                isActive
+                  ? 'bg-[rgb(var(--link-color))] text-white shadow-lg ring-2 ring-[rgb(var(--link-color))]/30'
                   : `${getTagColor(tagItem.tag)} hover:scale-105 hover:shadow-md`
               }`}
             >
               <span className="mr-2">#</span>
               <span>{tagItem.tag}</span>
-              <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
-                isActive 
-                  ? 'bg-[rgb(var(--link-hover))] text-white' 
-                  : 'bg-[rgb(var(--bg-primary))]/80 text-[rgb(var(--text-secondary))]'
-              }`}>
+              <span
+                className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+                  isActive
+                    ? 'bg-[rgb(var(--link-hover))] text-white'
+                    : 'bg-[rgb(var(--bg-primary))]/80 text-[rgb(var(--text-secondary))]'
+                }`}
+              >
                 {tagItem.count}
               </span>
             </Link>
@@ -134,7 +133,6 @@ export function TagList({
           </Button>
         </div>
       )}
-
     </div>
   )
 }

@@ -3,7 +3,12 @@
 import { useState } from 'react'
 import { X, Filter, Search, Calendar, TrendingUp, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -31,7 +36,7 @@ export function MobileFilters({
   onClearFilters,
   activeFiltersCount,
   dict,
-  locale
+  locale,
 }: MobileFiltersProps) {
   const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters)
 
@@ -44,7 +49,7 @@ export function MobileFilters({
   // タグの選択/選択解除
   const toggleTag = (tag: string) => {
     const newSelectedTags = localFilters.selectedTags.includes(tag)
-      ? localFilters.selectedTags.filter(t => t !== tag)
+      ? localFilters.selectedTags.filter((t) => t !== tag)
       : [...localFilters.selectedTags, tag]
 
     setLocalFilters({ ...localFilters, selectedTags: newSelectedTags })
@@ -79,7 +84,7 @@ export function MobileFilters({
       searchQuery: '',
       sortBy: 'date',
       sortOrder: 'desc',
-      tagOperator: 'OR'
+      tagOperator: 'OR',
     }
     setLocalFilters(defaultFilters)
     onClearFilters()
@@ -109,7 +114,10 @@ export function MobileFilters({
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {/* 検索 */}
             <div>
-              <label htmlFor="mobile-search" className="block text-sm font-medium text-muted-foreground mb-2">
+              <label
+                htmlFor="mobile-search"
+                className="block text-sm font-medium text-muted-foreground mb-2"
+              >
                 {dict.pages.blog.filters.searchArticles}
               </label>
               <div className="relative">
@@ -143,14 +151,30 @@ export function MobileFilters({
               </label>
               <div className="space-y-2">
                 {[
-                  { value: 'date', label: dict.pages.blog.filters.date, icon: Calendar },
-                  { value: 'popularity', label: dict.pages.blog.filters.popularity, icon: TrendingUp },
-                  { value: 'category', label: dict.pages.blog.filters.category, icon: Tag }
+                  {
+                    value: 'date',
+                    label: dict.pages.blog.filters.date,
+                    icon: Calendar,
+                  },
+                  {
+                    value: 'popularity',
+                    label: dict.pages.blog.filters.popularity,
+                    icon: TrendingUp,
+                  },
+                  {
+                    value: 'category',
+                    label: dict.pages.blog.filters.category,
+                    icon: Tag,
+                  },
                 ].map(({ value, label, icon: Icon }) => (
                   <Button
                     key={value}
-                    onClick={() => handleSortChange(value as BlogFilterState['sortBy'])}
-                    variant={localFilters.sortBy === value ? 'default' : 'outline'}
+                    onClick={() =>
+                      handleSortChange(value as BlogFilterState['sortBy'])
+                    }
+                    variant={
+                      localFilters.sortBy === value ? 'default' : 'outline'
+                    }
                     className="w-full justify-start gap-4"
                   >
                     <Icon className="w-4 h-4" />
@@ -169,9 +193,13 @@ export function MobileFilters({
                   variant="outline"
                   className="w-full justify-between"
                 >
-                  <span className="font-medium">{dict.pages.blog.filters.order}</span>
+                  <span className="font-medium">
+                    {dict.pages.blog.filters.order}
+                  </span>
                   <span className="text-sm">
-                    {localFilters.sortOrder === 'asc' ? dict.pages.blog.filters.orderAsc : dict.pages.blog.filters.orderDesc}
+                    {localFilters.sortOrder === 'asc'
+                      ? dict.pages.blog.filters.orderAsc
+                      : dict.pages.blog.filters.orderDesc}
                   </span>
                 </Button>
               </div>
@@ -216,7 +244,11 @@ export function MobileFilters({
 
               {localFilters.selectedTags.length > 1 && (
                 <p className="mt-2 text-xs text-muted-foreground">
-                  {dict.pages.blog.filters.showingPosts} {localFilters.tagOperator === 'AND' ? dict.pages.blog.filters.showingPostsAll : dict.pages.blog.filters.showingPostsAny} of the selected tags
+                  {dict.pages.blog.filters.showingPosts}{' '}
+                  {localFilters.tagOperator === 'AND'
+                    ? dict.pages.blog.filters.showingPostsAll
+                    : dict.pages.blog.filters.showingPostsAny}{' '}
+                  of the selected tags
                 </p>
               )}
             </div>
@@ -232,10 +264,7 @@ export function MobileFilters({
               >
                 {dict.pages.blog.filters.clearAll}
               </Button>
-              <Button
-                onClick={applyFilters}
-                className="flex-1"
-              >
+              <Button onClick={applyFilters} className="flex-1">
                 {dict.pages.blog.filters.applyFilters}
               </Button>
             </div>

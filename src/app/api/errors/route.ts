@@ -23,7 +23,7 @@ interface ErrorReport {
 export async function POST(request: NextRequest) {
   try {
     const errorReport: ErrorReport = await request.json()
-    
+
     // Validate the error report
     if (!errorReport.error || !errorReport.error.message) {
       return NextResponse.json(
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       severity: errorReport.error.severity || 'unknown',
       category: errorReport.error.category || 'unknown',
       url: errorReport.url,
-      userAgent: errorReport.userAgent
+      userAgent: errorReport.userAgent,
     })
 
     // In production, you would forward to services like:
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     // - LogRocket
     // - Datadog
     // - Custom logging service
-    
+
     if (process.env.NODE_ENV === 'production') {
       // Example: Forward to external service
       // await forwardToExternalService(errorReport)
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     )
   } catch (error) {
     console.error('Failed to process error report:', error)
-    
+
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -80,7 +80,6 @@ async function forwardToExternalService(errorReport: ErrorReport) {
   //     body: JSON.stringify(errorReport)
   //   })
   // }
-
   // Example: Send to custom logging service
   // if (process.env.LOGGING_ENDPOINT) {
   //   await fetch(process.env.LOGGING_ENDPOINT, {

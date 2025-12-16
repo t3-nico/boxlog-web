@@ -99,7 +99,8 @@ export function Footer({ locale, dict }: FooterProps) {
         <div className="mt-16 border-t border-border pt-8 sm:mt-20 lg:mt-24">
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
             <p className="text-sm leading-6 text-muted-foreground">
-              &copy; {new Date().getFullYear()} BoxLog, Inc. All rights reserved.
+              &copy; {new Date().getFullYear()} BoxLog, Inc. All rights
+              reserved.
             </p>
             <div className="flex gap-x-6">
               <Link

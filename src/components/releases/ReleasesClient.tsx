@@ -54,13 +54,13 @@ interface ReleasesClientProps {
   locale: string
 }
 
-export function ReleasesClient({ 
-  initialReleases, 
-  initialTags, 
+export function ReleasesClient({
+  initialReleases,
+  initialTags,
   featuredReleases,
   upcomingReleases,
   dict,
-  locale
+  locale,
 }: ReleasesClientProps) {
   // フィルター状態
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -70,12 +70,14 @@ export function ReleasesClient({
 
   // フィルター関数
   const filteredReleases = useMemo(() => {
-    return initialReleases.filter(release => {
+    return initialReleases.filter((release) => {
       // タグフィルター
-      if (selectedTags.length > 0 && !selectedTags.some(tag => release.frontMatter.tags.includes(tag))) {
+      if (
+        selectedTags.length > 0 &&
+        !selectedTags.some((tag) => release.frontMatter.tags.includes(tag))
+      ) {
         return false
       }
-
 
       // 破壊的変更フィルター
       if (showBreakingOnly && !release.frontMatter.breaking) {
@@ -93,18 +95,14 @@ export function ReleasesClient({
 
   // フィルターハンドラー
   const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) 
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     )
   }
 
   const handleTypeToggle = (type: string) => {
-    setSelectedTypes(prev => 
-      prev.includes(type) 
-        ? prev.filter(t => t !== type)
-        : [...prev, type]
+    setSelectedTypes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     )
   }
 
@@ -132,8 +130,12 @@ export function ReleasesClient({
                   showFeaturedOnly={showFeaturedOnly}
                   onTagToggle={handleTagToggle}
                   onTypeToggle={handleTypeToggle}
-                  onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
-                  onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
+                  onBreakingToggle={() =>
+                    setShowBreakingOnly(!showBreakingOnly)
+                  }
+                  onFeaturedToggle={() =>
+                    setShowFeaturedOnly(!showFeaturedOnly)
+                  }
                   onClearFilters={handleClearFilters}
                   dict={dict}
                   locale={locale}
@@ -141,7 +143,6 @@ export function ReleasesClient({
 
                 {/* Upcoming Releases Compact */}
                 <UpcomingReleasesCompact upcomingReleases={upcomingReleases} />
-
 
                 {/* RSS Feed */}
                 <div className="bg-white rounded-xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -155,7 +156,11 @@ export function ReleasesClient({
                     href="/releases/feed.xml"
                     className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors dark:border-gray-600 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
                   >
-                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      className="w-4 h-4 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M3.429 2.857A1.429 1.429 0 002 4.286v11.428A1.429 1.429 0 003.429 17h13.142A1.429 1.429 0 0018 15.714V4.286A1.429 1.429 0 0016.571 2.857H3.429zM4 6.857v2.286H6.286V6.857H4zm8.571 0h2.286v2.286h-2.286V6.857zM4 10.571v2.286h2.286v-2.286H4zm4.571-3.714v2.286h2.286V6.857H8.571zm4.572 3.714v2.286h2.286v-2.286h-2.286zM8.571 10.571v2.286h2.286v-2.286H8.571z" />
                     </svg>
                     {dict.releases.rss.link}
@@ -187,7 +192,8 @@ export function ReleasesClient({
                 <Heading as="h2" size="2xl">
                   {dict.releases.history.title}
                   <span className="ml-2 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    ({filteredReleases.length}{dict.releases.history.count})
+                    ({filteredReleases.length}
+                    {dict.releases.history.count})
                   </span>
                 </Heading>
               </div>
@@ -195,8 +201,8 @@ export function ReleasesClient({
               {filteredReleases.length > 0 ? (
                 <div className="space-y-8">
                   {filteredReleases.map((release, index) => (
-                    <ReleaseCard 
-                      key={release.frontMatter.version} 
+                    <ReleaseCard
+                      key={release.frontMatter.version}
                       release={release}
                       priority={index < 3}
                       dict={dict}
@@ -207,8 +213,18 @@ export function ReleasesClient({
               ) : initialReleases.length === 0 ? (
                 <div className="text-center py-16">
                   <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 dark:bg-gray-700">
-                    <svg className="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <svg
+                      className="w-12 h-12 text-gray-400 dark:text-gray-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
                     </svg>
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">
@@ -221,8 +237,18 @@ export function ReleasesClient({
               ) : (
                 <div className="text-center py-16">
                   <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 dark:bg-blue-900/30">
-                    <svg className="w-12 h-12 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    <svg
+                      className="w-12 h-12 text-blue-600 dark:text-blue-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
                     </svg>
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">

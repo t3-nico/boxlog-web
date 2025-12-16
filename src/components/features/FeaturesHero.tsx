@@ -16,32 +16,28 @@ export function FeaturesHero({ dict }: FeaturesHeroProps) {
             <span className="w-2 h-2 bg-neutral-500 rounded-full mr-2"></span>
             {dict.pages.features.hero.badge}
           </div>
-          
+
           <Heading as="h1" size="4xl" className="mb-6">
             <span className="bg-gradient-to-r from-neutral-700 to-neutral-900 dark:from-neutral-200 dark:to-neutral-50 bg-clip-text text-transparent">
               {dict.pages.features.hero.headline}
             </span>
           </Heading>
-          
+
           <Text size="xl" variant="muted" className="mb-8 max-w-3xl mx-auto">
             {dict.pages.features.hero.description}
           </Text>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
-              <a href="/signup">
-                {dict.pages.features.hero.startTrial}
-              </a>
+              <a href="/signup">{dict.pages.features.hero.startTrial}</a>
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <a href="/demo">
-                {dict.pages.features.hero.scheduleDemo}
-              </a>
+              <a href="/demo">{dict.pages.features.hero.scheduleDemo}</a>
             </Button>
           </div>
         </div>
       </Container>
-      
+
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-32 w-80 h-80 bg-neutral-200 rounded-full opacity-20 blur-3xl dark:bg-neutral-600 dark:opacity-10"></div>

@@ -24,13 +24,13 @@ export function useSearch() {
 
     setLoading(true)
     setError(null)
-    
+
     try {
       const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
       if (!response.ok) {
         throw new Error('Search failed')
       }
-      
+
       const data = await response.json()
       setResults(data.results || [])
     } catch (err) {
@@ -51,6 +51,6 @@ export function useSearch() {
     loading,
     error,
     search,
-    clearResults
+    clearResults,
   }
 }

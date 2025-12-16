@@ -10,12 +10,12 @@ export function GoogleAnalytics() {
   useEffect(() => {
     // Initialize consent first
     ConsentManager.initConsent()
-    
+
     // Check if user has previously granted consent
     if (ConsentManager.hasConsent()) {
       ConsentManager.grantConsent()
     }
-    
+
     // Initialize GA4 if enabled
     if (GA4_CONFIG.enabled) {
       initGA()
@@ -67,7 +67,7 @@ export function GoogleAnalytics() {
               allow_ad_personalization_signals: false,
               cookie_flags: 'SameSite=None;Secure'
             });
-          `
+          `,
         }}
       />
     </>

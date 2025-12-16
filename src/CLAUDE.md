@@ -3,6 +3,7 @@
 ## 📍 この文書の位置づけ
 
 **レベル1**: 実装の基本・コーディング規約
+
 - 上位: `/CLAUDE.md`（意思決定プロトコル）
 - 下位: `/src/{ディレクトリ}/CLAUDE.md`（領域特化ルール）
 
@@ -13,14 +14,17 @@
 ## 🎯 基本原則
 
 ### 1. 公式優先
+
 - Next.js 14公式 > プロジェクトルール > 個人の好み
 - 不明な場合は公式ドキュメントを確認（推測禁止）
 
 ### 2. 既存実装の再利用
+
 - 新規実装前に必ず既存コードを検索
 - 同じ問題には同じ解決策を使用
 
 ### 3. Server Components優先
+
 - デフォルトはServer Components
 - `'use client'`は必要最小限に
 
@@ -29,6 +33,7 @@
 ## 📁 ファイル配置ルール
 
 ### ディレクトリ構造
+
 ```
 src/
 ├── app/                    # Next.js App Router（ページ・レイアウト）
@@ -67,16 +72,17 @@ src/
 ```
 
 ### ファイル命名規則
+
 ```typescript
 // ✅ 推奨
-components/blog/PostCard.tsx        // PascalCase（コンポーネント）
-lib/blog.ts                         // kebab-case（ユーティリティ）
-hooks/useLocale.ts                  // camelCase with "use" prefix
+components / blog / PostCard.tsx // PascalCase（コンポーネント）
+lib / blog.ts // kebab-case（ユーティリティ）
+hooks / useLocale.ts // camelCase with "use" prefix
 
 // ❌ 禁止
-components/blog/postCard.tsx        // camelCaseは不可
-lib/Blog.ts                         // PascalCaseは不可
-hooks/Locale.ts                     // "use"プレフィックスなし
+components / blog / postCard.tsx // camelCaseは不可
+lib / Blog.ts // PascalCaseは不可
+hooks / Locale.ts // "use"プレフィックスなし
 ```
 
 ---
@@ -110,6 +116,7 @@ hooks/Locale.ts                     // "use"プレフィックスなし
 ### 利用可能なセマンティックトークン
 
 #### shadcn/ui基本トークン
+
 - `bg-background`, `text-foreground`
 - `bg-card`, `text-card-foreground`
 - `bg-primary`, `text-primary-foreground`
@@ -121,11 +128,13 @@ hooks/Locale.ts                     // "use"プレフィックスなし
 - `ring-ring`
 
 #### カスタムニュートラルトークン（RGB形式）
+
 - `--bg-primary`, `--bg-secondary`, `--bg-tertiary`
 - `--text-primary`, `--text-secondary`, `--text-tertiary`
 - `--border-primary`, `--border-secondary`
 
 #### セマンティックカラー
+
 - `--error-color`, `--error-bg`
 - `--success-color`, `--success-bg`
 - `--warning-color`, `--warning-bg`
@@ -133,10 +142,12 @@ hooks/Locale.ts                     // "use"プレフィックスなし
 - `--link-color`, `--link-hover`
 
 #### タグカラー
+
 - `--tag-neutral-bg`, `--tag-neutral-text`, `--tag-neutral-hover`
 - `--tag-accent-bg`, `--tag-accent-text`, `--tag-accent-hover`
 
 #### リリースタイプカラー
+
 - `--release-new-bg`, `--release-new-text`, `--release-new-border`
 - `--release-improvement-bg`, `--release-improvement-text`, `--release-improvement-border`
 - `--release-bugfix-bg`, `--release-bugfix-text`, `--release-bugfix-border`
@@ -147,11 +158,11 @@ hooks/Locale.ts                     // "use"プレフィックスなし
 
 ```typescript
 // ✅ 推奨: 8の倍数使用
-className="p-4 gap-6 space-y-8 mt-12 mb-16"
+className = 'p-4 gap-6 space-y-8 mt-12 mb-16'
 // 4 = 16px, 6 = 24px, 8 = 32px, 12 = 48px, 16 = 64px
 
 // ❌ 禁止: 8の倍数以外
-className="p-3 gap-5 space-y-7 mt-11"
+className = 'p-3 gap-5 space-y-7 mt-11'
 ```
 
 ### レスポンシブデザイン
@@ -549,6 +560,7 @@ describe('PostCard', () => {
 ## 🚫 禁止事項まとめ
 
 ### コード記述
+
 - ❌ `any`, `unknown`型
 - ❌ `style`属性、カラーコード
 - ❌ Tailwindクラスの直接指定（`bg-blue-500`等）
@@ -564,6 +576,7 @@ describe('PostCard', () => {
 - ❌ `'use client'`の過剰使用
 
 ### 判断
+
 - ❌ 推測での実装
 - ❌ 2022年以前の情報を参考にする
 - ❌ 公式ドキュメントを確認せずに実装

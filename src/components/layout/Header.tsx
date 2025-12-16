@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Dialog, DialogPanel, Popover, PopoverButton, PopoverPanel, PopoverGroup } from '@headlessui/react'
+import {
+  Dialog,
+  DialogPanel,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  PopoverGroup,
+} from '@headlessui/react'
 import { Menu, X, ChevronDown, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
@@ -37,7 +44,10 @@ export function Header({ locale, dict }: HeaderProps) {
         isScrolled && 'shadow-sm'
       )}
     >
-      <nav className="mx-auto flex max-w-screen-2xl items-center justify-between p-4 lg:px-8" aria-label="Global">
+      <nav
+        className="mx-auto flex max-w-screen-2xl items-center justify-between p-4 lg:px-8"
+        aria-label="Global"
+      >
         {/* Logo */}
         <div className="flex lg:flex-1">
           <Link href={`/${locale}`} className="-m-1.5 p-1.5">
@@ -60,12 +70,15 @@ export function Header({ locale, dict }: HeaderProps) {
 
         {/* Desktop navigation */}
         <PopoverGroup className="hidden lg:flex lg:gap-x-8">
-          {navigation.main.map((item) => (
+          {navigation.main.map((item) =>
             item.items ? (
               <Popover key={item.name} className="relative">
                 <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-foreground hover:text-foreground/80 outline-none">
                   {item.name}
-                  <ChevronDown className="h-4 w-4 flex-none text-muted-foreground" aria-hidden="true" />
+                  <ChevronDown
+                    className="h-4 w-4 flex-none text-muted-foreground"
+                    aria-hidden="true"
+                  />
                 </PopoverButton>
 
                 <PopoverPanel
@@ -86,7 +99,9 @@ export function Header({ locale, dict }: HeaderProps) {
                             {subItem.name}
                             <span className="absolute inset-0" />
                           </Link>
-                          <p className="mt-1 text-muted-foreground">{subItem.description}</p>
+                          <p className="mt-1 text-muted-foreground">
+                            {subItem.description}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -102,7 +117,7 @@ export function Header({ locale, dict }: HeaderProps) {
                 {item.name}
               </Link>
             )
-          ))}
+          )}
         </PopoverGroup>
 
         {/* Right side actions */}
@@ -124,11 +139,19 @@ export function Header({ locale, dict }: HeaderProps) {
       </nav>
 
       {/* Mobile menu */}
-      <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+      <Dialog
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+        className="lg:hidden"
+      >
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border">
           <div className="flex items-center justify-between">
-            <Link href={`/${locale}`} className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              href={`/${locale}`}
+              className="-m-1.5 p-1.5"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               <span className="sr-only">BoxLog</span>
               <span className="text-lg font-bold">BoxLog</span>
             </Link>
@@ -145,7 +168,7 @@ export function Header({ locale, dict }: HeaderProps) {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-border">
               <div className="space-y-2 py-6">
-                {navigation.main.map((item) => (
+                {navigation.main.map((item) =>
                   item.items ? (
                     <div key={item.name} className="space-y-2">
                       <div className="px-3 py-2 text-base font-semibold leading-7 text-foreground">
@@ -160,7 +183,9 @@ export function Header({ locale, dict }: HeaderProps) {
                             className="block rounded-lg py-2 px-3 text-sm leading-7 text-foreground hover:bg-accent"
                           >
                             <div className="font-semibold">{subItem.name}</div>
-                            <div className="text-xs text-muted-foreground">{subItem.description}</div>
+                            <div className="text-xs text-muted-foreground">
+                              {subItem.description}
+                            </div>
                           </Link>
                         ))}
                       </div>
@@ -175,7 +200,7 @@ export function Header({ locale, dict }: HeaderProps) {
                       {item.name}
                     </Link>
                   )
-                ))}
+                )}
               </div>
 
               <div className="py-6 space-y-2">
@@ -189,7 +214,10 @@ export function Header({ locale, dict }: HeaderProps) {
                 </div>
 
                 <Button variant="outline" className="w-full" asChild>
-                  <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href={`/${locale}/contact`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     {dict.common.contact || 'Contact'}
                   </Link>
                 </Button>

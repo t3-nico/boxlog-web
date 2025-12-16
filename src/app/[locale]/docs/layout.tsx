@@ -21,9 +21,7 @@ export default function DocsLayout({
           </aside>
 
           {/* Main Content - Table of Contents moved to page level */}
-          <main className="flex-1 min-w-0 px-6 lg:px-8 py-8">
-            {children}
-          </main>
+          <main className="flex-1 min-w-0 px-6 lg:px-8 py-8">{children}</main>
         </div>
       </Container>
 

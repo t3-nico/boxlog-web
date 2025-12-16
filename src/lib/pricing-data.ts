@@ -35,10 +35,10 @@ export const pricingPlans: PricingPlan[] = [
       'Basic API access',
       'Email support',
       'Standard templates',
-      'Basic analytics'
+      'Basic analytics',
     ],
     ctaText: 'Start Free Trial',
-    ctaHref: '/signup?plan=starter'
+    ctaHref: '/signup?plan=starter',
   },
   {
     id: 'pro',
@@ -56,10 +56,10 @@ export const pricingPlans: PricingPlan[] = [
       'Advanced analytics',
       'Integrations',
       'Custom workflows',
-      'Team collaboration tools'
+      'Team collaboration tools',
     ],
     ctaText: 'Start Free Trial',
-    ctaHref: '/signup?plan=pro'
+    ctaHref: '/signup?plan=pro',
   },
   {
     id: 'enterprise',
@@ -77,11 +77,11 @@ export const pricingPlans: PricingPlan[] = [
       'SSO & SAML',
       'Audit logs',
       'Custom contracts',
-      'Dedicated account manager'
+      'Dedicated account manager',
     ],
     ctaText: 'Contact Sales',
-    ctaHref: '/contact?plan=enterprise'
-  }
+    ctaHref: '/contact?plan=enterprise',
+  },
 ]
 
 export const detailedFeatures: PricingFeature[] = [
@@ -89,109 +89,117 @@ export const detailedFeatures: PricingFeature[] = [
     name: 'Team members',
     starter: '5 members',
     pro: '25 members',
-    enterprise: 'Unlimited'
+    enterprise: 'Unlimited',
   },
   {
     name: 'Storage',
     starter: '10GB',
     pro: '100GB',
-    enterprise: 'Unlimited'
+    enterprise: 'Unlimited',
   },
   {
     name: 'API requests',
     starter: '1,000/month',
     pro: '10,000/month',
-    enterprise: 'Unlimited'
+    enterprise: 'Unlimited',
   },
   {
     name: 'Projects',
     starter: '3 projects',
     pro: '25 projects',
-    enterprise: 'Unlimited'
+    enterprise: 'Unlimited',
   },
   {
     name: 'Custom workflows',
     starter: false,
     pro: true,
-    enterprise: true
+    enterprise: true,
   },
   {
     name: 'Advanced analytics',
     starter: false,
     pro: true,
-    enterprise: true
+    enterprise: true,
   },
   {
     name: 'Priority support',
     starter: false,
     pro: true,
-    enterprise: true
+    enterprise: true,
   },
   {
     name: '24/7 dedicated support',
     starter: false,
     pro: false,
-    enterprise: true
+    enterprise: true,
   },
   {
     name: 'SSO & SAML',
     starter: false,
     pro: false,
-    enterprise: true
+    enterprise: true,
   },
   {
     name: 'Audit logs',
     starter: false,
     pro: false,
-    enterprise: true
+    enterprise: true,
   },
   {
     name: 'Custom contracts',
     starter: false,
     pro: false,
-    enterprise: true
+    enterprise: true,
   },
   {
     name: 'Dedicated account manager',
     starter: false,
     pro: false,
-    enterprise: true
-  }
+    enterprise: true,
+  },
 ]
 
 export const faqItems: FAQItem[] = [
   {
     question: 'Can I switch plans at any time?',
-    answer: 'Yes, you can upgrade or downgrade your plan at any time. Changes will be prorated and reflected in your next billing cycle.'
+    answer:
+      'Yes, you can upgrade or downgrade your plan at any time. Changes will be prorated and reflected in your next billing cycle.',
   },
   {
     question: 'What happens if I exceed my plan limits?',
-    answer: 'We\'ll notify you when you\'re approaching your limits. You can upgrade your plan or purchase additional resources as needed.'
+    answer:
+      "We'll notify you when you're approaching your limits. You can upgrade your plan or purchase additional resources as needed.",
   },
   {
     question: 'Is there a free trial available?',
-    answer: 'Yes, we offer a 14-day free trial for all paid plans. No credit card required to start your trial.'
+    answer:
+      'Yes, we offer a 14-day free trial for all paid plans. No credit card required to start your trial.',
   },
   {
     question: 'How does annual billing work?',
-    answer: 'Annual plans are billed once per year and include a 20% discount compared to monthly billing. You can switch between monthly and annual billing at any time.'
+    answer:
+      'Annual plans are billed once per year and include a 20% discount compared to monthly billing. You can switch between monthly and annual billing at any time.',
   },
   {
     question: 'What payment methods do you accept?',
-    answer: 'We accept all major credit cards (Visa, MasterCard, American Express) and PayPal. Enterprise customers can also pay via bank transfer.'
+    answer:
+      'We accept all major credit cards (Visa, MasterCard, American Express) and PayPal. Enterprise customers can also pay via bank transfer.',
   },
   {
     question: 'Can I cancel my subscription?',
-    answer: 'Yes, you can cancel your subscription at any time. You\'ll continue to have access to your plan features until the end of your billing period.'
+    answer:
+      "Yes, you can cancel your subscription at any time. You'll continue to have access to your plan features until the end of your billing period.",
   },
   {
     question: 'Do you offer refunds?',
-    answer: 'We offer a 30-day money-back guarantee for annual plans. Monthly subscriptions can be cancelled at any time without penalty.'
+    answer:
+      'We offer a 30-day money-back guarantee for annual plans. Monthly subscriptions can be cancelled at any time without penalty.',
   },
   {
     question: 'Is my data secure?',
-    answer: 'Absolutely. We use enterprise-grade security measures including encryption at rest and in transit, regular security audits, and SOC 2 Type II compliance.'
-  }
+    answer:
+      'Absolutely. We use enterprise-grade security measures including encryption at rest and in transit, regular security audits, and SOC 2 Type II compliance.',
+  },
 ]
 
 export const savingsText = 'Save 20% with annual billing'

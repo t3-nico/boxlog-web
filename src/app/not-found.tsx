@@ -3,7 +3,8 @@ import { generateSEOMetadata } from '@/lib/metadata'
 
 export const metadata = generateSEOMetadata({
   title: 'Page Not Found - 404 Error',
-  description: 'The page you are looking for could not be found. Return to our homepage or browse our available content.',
+  description:
+    'The page you are looking for could not be found. Return to our homepage or browse our available content.',
   url: '/404',
   noindex: true,
 })

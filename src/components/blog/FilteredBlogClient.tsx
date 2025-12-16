@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Heading, Text } from '@/components/ui/typography'
 import { PostCard } from '@/components/blog/PostCard'
-import { BlogFilters, type BlogFilterState } from '@/components/blog/BlogFilters'
+import {
+  BlogFilters,
+  type BlogFilterState,
+} from '@/components/blog/BlogFilters'
 import { BlogPagination } from '@/components/blog/BlogPagination'
 import { BlogSkeleton } from '@/components/blog/BlogSkeleton'
 // import { searchBlogPosts } from '@/lib/blog' // サーバー専用関数のため削除
@@ -20,16 +23,22 @@ interface FilteredBlogClientProps {
   dict: Dictionary
 }
 
-export function FilteredBlogClient({ initialPosts, tags, locale, dict }: FilteredBlogClientProps) {
+export function FilteredBlogClient({
+  initialPosts,
+  tags,
+  locale,
+  dict,
+}: FilteredBlogClientProps) {
   const searchParams = useSearchParams()
-  const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState<BlogPostMeta[]>(initialPosts)
+  const [filteredAndSortedPosts, setFilteredAndSortedPosts] =
+    useState<BlogPostMeta[]>(initialPosts)
   const [isProcessing, setIsProcessing] = useState(false)
   const [filters, setFilters] = useState<BlogFilterState>({
     selectedTags: [],
     searchQuery: '',
     sortBy: 'date',
     sortOrder: 'desc',
-    tagOperator: 'OR'
+    tagOperator: 'OR',
   })
 
   const currentPage = Number(searchParams?.get('page')) || 1
@@ -47,7 +56,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
       searchQuery: searchParam || '',
       sortBy: (sortParam as BlogFilterState['sortBy']) || 'date',
       sortOrder: (orderParam as BlogFilterState['sortOrder']) || 'desc',
-      tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR'
+      tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR',
     }
 
     setFilters(initialFilters)
@@ -63,16 +72,28 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
         // 検索クエリによるフィルタリング（クライアント側実装）
         if (filters.searchQuery) {
           const searchTerm = filters.searchQuery.toLowerCase()
-          filtered = filtered.filter(post => {
-            const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
-            const descriptionMatch = post.frontMatter.description?.toLowerCase().includes(searchTerm)
-            const tagMatch = post.frontMatter.tags.some(tag => 
+          filtered = filtered.filter((post) => {
+            const titleMatch = post.frontMatter.title
+              .toLowerCase()
+              .includes(searchTerm)
+            const descriptionMatch = post.frontMatter.description
+              ?.toLowerCase()
+              .includes(searchTerm)
+            const tagMatch = post.frontMatter.tags.some((tag) =>
               tag.toLowerCase().includes(searchTerm)
             )
-            const categoryMatch = post.frontMatter.category.toLowerCase().includes(searchTerm)
+            const categoryMatch = post.frontMatter.category
+              .toLowerCase()
+              .includes(searchTerm)
             const excerptMatch = post.excerpt.toLowerCase().includes(searchTerm)
 
-            return titleMatch || descriptionMatch || tagMatch || categoryMatch || excerptMatch
+            return (
+              titleMatch ||
+              descriptionMatch ||
+              tagMatch ||
+              categoryMatch ||
+              excerptMatch
+            )
           })
         }
 
@@ -80,13 +101,17 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
         if (filters.selectedTags.length > 0) {
           if (filters.tagOperator === 'AND') {
             // すべてのタグが含まれる記事のみ
-            filtered = filtered.filter(post =>
-              filters.selectedTags.every(tag => post.frontMatter.tags?.includes(tag))
+            filtered = filtered.filter((post) =>
+              filters.selectedTags.every((tag) =>
+                post.frontMatter.tags?.includes(tag)
+              )
             )
           } else {
             // いずれかのタグが含まれる記事
-            filtered = filtered.filter(post =>
-              filters.selectedTags.some(tag => post.frontMatter.tags?.includes(tag))
+            filtered = filtered.filter((post) =>
+              filters.selectedTags.some((tag) =>
+                post.frontMatter.tags?.includes(tag)
+              )
             )
           }
         }
@@ -97,14 +122,20 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
 
           switch (filters.sortBy) {
             case 'date':
-              comparison = new Date(a.frontMatter.publishedAt).getTime() - new Date(b.frontMatter.publishedAt).getTime()
+              comparison =
+                new Date(a.frontMatter.publishedAt).getTime() -
+                new Date(b.frontMatter.publishedAt).getTime()
               break
             case 'popularity':
               // タグ数でポピュラリティを判定（タグが多い = より多くのトピックに関連）
-              comparison = (a.frontMatter.tags?.length || 0) - (b.frontMatter.tags?.length || 0)
+              comparison =
+                (a.frontMatter.tags?.length || 0) -
+                (b.frontMatter.tags?.length || 0)
               break
             case 'category':
-              comparison = a.frontMatter.category.localeCompare(b.frontMatter.category)
+              comparison = a.frontMatter.category.localeCompare(
+                b.frontMatter.category
+              )
               break
           }
 
@@ -126,7 +157,10 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
   const totalPosts = filteredAndSortedPosts.length
   const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE)
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE
-  const currentPosts = filteredAndSortedPosts.slice(startIndex, startIndex + POSTS_PER_PAGE)
+  const currentPosts = filteredAndSortedPosts.slice(
+    startIndex,
+    startIndex + POSTS_PER_PAGE
+  )
 
   const handleFiltersChange = (newFilters: BlogFilterState) => {
     setFilters(newFilters)
@@ -137,19 +171,20 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
       {/* フィルター情報 */}
       <div className="flex flex-wrap gap-4 text-sm text-neutral-600 dark:text-neutral-400 mb-6">
         <span>
-          {locale === 'jp' 
+          {locale === 'jp'
             ? `${totalPosts}件の記事が見つかりました`
-            : `${totalPosts} article${totalPosts !== 1 ? 's' : ''} found`
-          }
+            : `${totalPosts} article${totalPosts !== 1 ? 's' : ''} found`}
         </span>
         {filters.selectedTags.length > 0 && (
           <span>
-            • {locale === 'jp' ? 'フィルター: ' : 'Filtered by: '}{filters.selectedTags.join(', ')}
+            • {locale === 'jp' ? 'フィルター: ' : 'Filtered by: '}
+            {filters.selectedTags.join(', ')}
           </span>
         )}
         {filters.searchQuery && (
           <span>
-            • {locale === 'jp' ? '検索: ' : 'Search: '}&quot;{filters.searchQuery}&quot;
+            • {locale === 'jp' ? '検索: ' : 'Search: '}&quot;
+            {filters.searchQuery}&quot;
           </span>
         )}
       </div>
@@ -187,24 +222,38 @@ export function FilteredBlogClient({ initialPosts, tags, locale, dict }: Filtere
           ) : (
             <div className="text-center py-16">
               <div className="w-24 h-24 bg-neutral-100 dark:bg-neutral-700 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-12 h-12 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  className="w-12 h-12 text-neutral-400 dark:text-neutral-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </div>
               <Heading as="h3" size="lg" className="mb-2">
-                {locale === 'jp' ? '記事が見つかりませんでした' : 'No Articles Found'}
+                {locale === 'jp'
+                  ? '記事が見つかりませんでした'
+                  : 'No Articles Found'}
               </Heading>
               <Text variant="muted" className="mb-4">
                 Try adjusting your filters or search terms
               </Text>
               <button
-                onClick={() => setFilters({
-                  selectedTags: [],
-                  searchQuery: '',
-                  sortBy: 'date',
-                  sortOrder: 'desc',
-                  tagOperator: 'OR'
-                })}
+                onClick={() =>
+                  setFilters({
+                    selectedTags: [],
+                    searchQuery: '',
+                    sortBy: 'date',
+                    sortOrder: 'desc',
+                    tagOperator: 'OR',
+                  })
+                }
                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
               >
                 Clear All Filters

@@ -38,48 +38,51 @@ export function OfflineError({ onRetry, className }: OfflineErrorProps) {
   }
 
   return (
-    <div className={`min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center ${className}`}>
+    <div
+      className={`min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center ${className}`}
+    >
       <Container>
         <div className="max-w-md mx-auto text-center">
           {/* Offline illustration */}
           <div className="w-24 h-24 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-8">
             <WifiOff className="w-12 h-12 text-neutral-500" />
           </div>
-          
+
           <Heading as="h1" size="2xl" className="mb-4">
-            {isOnline ? 'Network Error' : 'You\'re Offline'}
+            {isOnline ? 'Network Error' : "You're Offline"}
           </Heading>
-          
+
           <Text variant="muted" className="mb-8">
-            {isOnline 
+            {isOnline
               ? 'Unable to connect to our servers. Please check your connection and try again.'
-              : 'Check your internet connection and try again.'
-            }
+              : 'Check your internet connection and try again.'}
           </Text>
-          
+
           <div className="space-y-4">
-            <Button 
-              onClick={handleRetry} 
+            <Button
+              onClick={handleRetry}
               className="w-full"
               disabled={!isOnline}
             >
               {isOnline ? 'Try again' : 'Waiting for connection...'}
             </Button>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => window.location.href = '/'}
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => (window.location.href = '/')}
               className="w-full"
             >
               Go to homepage
             </Button>
           </div>
-          
+
           {/* Connection status */}
           <div className="mt-8 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
             <div className="flex items-center justify-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-red-500'}`} />
+              <div
+                className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-red-500'}`}
+              />
               <Text size="sm" variant="muted">
                 {isOnline ? 'Connection restored' : 'No internet connection'}
               </Text>

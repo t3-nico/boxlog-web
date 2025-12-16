@@ -28,9 +28,7 @@ export default function Error({
         </Button>
 
         <Button variant="outline" asChild className="w-full sm:w-auto sm:ml-4">
-          <a href="/">
-            Go home
-          </a>
+          <a href="/">Go home</a>
         </Button>
       </div>
 

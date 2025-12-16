@@ -34,7 +34,8 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   name: 'YourSaaS',
   title: 'YourSaaS - Modern SaaS Platform for Scalable Applications',
-  description: 'Build, deploy, and scale your SaaS applications with YourSaaS. Comprehensive tools for authentication, user management, billing, and more.',
+  description:
+    'Build, deploy, and scale your SaaS applications with YourSaaS. Comprehensive tools for authentication, user management, billing, and more.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yoursaas.com',
   ogImage: '/og-image.png',
   creator: 'YourSaaS Team',
@@ -49,10 +50,10 @@ export const siteConfig: SiteConfig = {
     'React',
     'Next.js',
     'TypeScript',
-    'Modern Development'
+    'Modern Development',
   ],
   locale: 'ja',
-  alternateLocales: ['en', 'ja']
+  alternateLocales: ['en', 'ja'],
 }
 
 /**
@@ -87,25 +88,27 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
     tags = [],
     locale = siteConfig.locale,
     alternateLocales = siteConfig.alternateLocales,
-    noindex = false
+    noindex = false,
   } = data
 
-  const pageTitle = title 
-    ? `${title} | ${siteConfig.name}`
-    : siteConfig.title
+  const pageTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.title
 
   const pageUrl = url ? `${siteConfig.url}${url}` : siteConfig.url
-  const pageImage = image 
+  const pageImage = image
     ? `${siteConfig.url}${image}`
     : `${siteConfig.url}/api/og?title=${encodeURIComponent(title || siteConfig.title)}`
 
-  const allKeywords = [...siteConfig.keywords, ...keywords, ...tags].filter(Boolean)
+  const allKeywords = [...siteConfig.keywords, ...keywords, ...tags].filter(
+    Boolean
+  )
 
   return {
     title: pageTitle,
     description,
     keywords: allKeywords.join(', '),
-    authors: authors?.map(name => ({ name })) || [{ name: siteConfig.creator }],
+    authors: authors?.map((name) => ({ name })) || [
+      { name: siteConfig.creator },
+    ],
     creator: siteConfig.creator,
     publisher: siteConfig.name,
     robots: {
@@ -181,10 +184,10 @@ export function generateArticleMetadata(data: {
   type: 'blog' | 'docs' | 'release'
 }): Metadata {
   const { type, slug, publishedAt, updatedAt, authors, tags, category } = data
-  
+
   const urlPath = `/${type}/${slug}`
   const section = category || type
-  
+
   return generateSEOMetadata({
     ...data,
     url: urlPath,
@@ -203,7 +206,7 @@ export function generateArticleMetadata(data: {
  */
 export function generateStructuredData(type: string, data: any) {
   const baseUrl = siteConfig.url
-  
+
   switch (type) {
     case 'organization':
       return {
@@ -249,7 +252,9 @@ export function generateStructuredData(type: string, data: any) {
         '@type': data.articleType || 'Article',
         headline: data.title,
         description: data.description,
-        image: data.image ? `${baseUrl}${data.image}` : `${baseUrl}/api/og?title=${encodeURIComponent(data.title)}`,
+        image: data.image
+          ? `${baseUrl}${data.image}`
+          : `${baseUrl}/api/og?title=${encodeURIComponent(data.title)}`,
         datePublished: data.publishedAt,
         dateModified: data.updatedAt || data.publishedAt,
         author: {
@@ -278,7 +283,9 @@ export function generateStructuredData(type: string, data: any) {
         '@type': 'TechArticle',
         headline: data.title,
         description: data.description,
-        image: data.image ? `${baseUrl}${data.image}` : `${baseUrl}/api/og?title=${encodeURIComponent(data.title)}`,
+        image: data.image
+          ? `${baseUrl}${data.image}`
+          : `${baseUrl}/api/og?title=${encodeURIComponent(data.title)}`,
         datePublished: data.publishedAt,
         dateModified: data.updatedAt || data.publishedAt,
         author: {
@@ -324,9 +331,8 @@ export function generateStructuredData(type: string, data: any) {
 /**
  * Generate breadcrumb data
  */
-export function generateBreadcrumbs(items: Array<{ name: string; url: string }>) {
-  return [
-    { name: 'ホーム', url: '/' },
-    ...items,
-  ]
+export function generateBreadcrumbs(
+  items: Array<{ name: string; url: string }>
+) {
+  return [{ name: 'ホーム', url: '/' }, ...items]
 }

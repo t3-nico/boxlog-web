@@ -4,8 +4,10 @@
 
 export const GA4_CONFIG = {
   measurementId: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || '',
-  enabled: process.env.NODE_ENV === 'production' && !!process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID,
-  debug: process.env.NODE_ENV === 'development'
+  enabled:
+    process.env.NODE_ENV === 'production' &&
+    !!process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID,
+  debug: process.env.NODE_ENV === 'development',
 }
 
 // Custom event types for type safety
@@ -33,33 +35,33 @@ export const GA_EVENTS = {
   PAGE_VIEW: 'page_view',
   NAVIGATION: 'navigation',
   EXTERNAL_LINK_CLICK: 'external_link_click',
-  
+
   // User engagement events
   SEARCH: 'search',
   CONTACT_FORM_SUBMIT: 'contact_form_submit',
   NEWSLETTER_SIGNUP: 'newsletter_signup',
   DOCUMENTATION_VIEW: 'documentation_view',
   BLOG_POST_VIEW: 'blog_post_view',
-  
+
   // Product events
   FEATURE_VIEW: 'feature_view',
   PRICING_VIEW: 'pricing_view',
   PLAN_SELECT: 'plan_select',
-  
+
   // Conversion events
   SIGN_UP_START: 'sign_up_start',
   SIGN_UP_COMPLETE: 'sign_up_complete',
   LOGIN_START: 'login_start',
   LOGIN_COMPLETE: 'login_complete',
-  
+
   // Error events
   ERROR_404: 'error_404',
   ERROR_500: 'error_500',
   API_ERROR: 'api_error',
-  
+
   // Performance events
   PERFORMANCE_METRIC: 'performance_metric',
-  PAGE_LOAD_TIME: 'page_load_time'
+  PAGE_LOAD_TIME: 'page_load_time',
 } as const
 
 /**
@@ -68,7 +70,9 @@ export const GA_EVENTS = {
 export function initGA(): void {
   if (!GA4_CONFIG.enabled) {
     if (GA4_CONFIG.debug) {
-      console.log('[Analytics] GA4 disabled - missing measurement ID or not in production')
+      console.log(
+        '[Analytics] GA4 disabled - missing measurement ID or not in production'
+      )
     }
     return
   }
@@ -97,7 +101,10 @@ export function initGA(): void {
   document.head.appendChild(script2)
 
   if (GA4_CONFIG.debug) {
-    console.log('[Analytics] GA4 initialized with ID:', GA4_CONFIG.measurementId)
+    console.log(
+      '[Analytics] GA4 initialized with ID:',
+      GA4_CONFIG.measurementId
+    )
   }
 }
 
@@ -113,10 +120,10 @@ export function trackPageView(data: GAPageView): void {
   }
 
   if (typeof window !== 'undefined' && 'gtag' in window) {
-    (window as any).gtag('config', GA4_CONFIG.measurementId, {
+    ;(window as any).gtag('config', GA4_CONFIG.measurementId, {
       page_title: data.page_title,
       page_location: data.page_location,
-      page_path: data.page_path
+      page_path: data.page_path,
     })
   }
 }
@@ -124,7 +131,10 @@ export function trackPageView(data: GAPageView): void {
 /**
  * Track a custom event
  */
-export function trackEvent(eventName: string, parameters?: Record<string, any>): void {
+export function trackEvent(
+  eventName: string,
+  parameters?: Record<string, any>
+): void {
   if (!GA4_CONFIG.enabled) {
     if (GA4_CONFIG.debug) {
       console.log('[Analytics] Event (debug):', eventName, parameters)
@@ -133,11 +143,11 @@ export function trackEvent(eventName: string, parameters?: Record<string, any>):
   }
 
   if (typeof window !== 'undefined' && 'gtag' in window) {
-    (window as any).gtag('event', eventName, {
+    ;(window as any).gtag('event', eventName, {
       event_category: parameters?.category || 'engagement',
       event_label: parameters?.label,
       value: parameters?.value,
-      ...parameters
+      ...parameters,
     })
   }
 }
@@ -151,7 +161,7 @@ export const Analytics = {
     trackPageView({
       page_title: title,
       page_location: window.location.href,
-      page_path: path || window.location.pathname
+      page_path: path || window.location.pathname,
     })
   },
 
@@ -160,7 +170,7 @@ export const Analytics = {
     trackEvent(GA_EVENTS.NAVIGATION, {
       category: 'navigation',
       destination,
-      source
+      source,
     })
   },
 
@@ -168,7 +178,7 @@ export const Analytics = {
     trackEvent(GA_EVENTS.EXTERNAL_LINK_CLICK, {
       category: 'outbound',
       url,
-      text
+      text,
     })
   },
 
@@ -177,7 +187,7 @@ export const Analytics = {
     trackEvent(GA_EVENTS.SEARCH, {
       category: 'engagement',
       search_term: query,
-      results_count: results
+      results_count: results,
     })
   },
 
@@ -185,14 +195,14 @@ export const Analytics = {
     trackEvent(GA_EVENTS.CONTACT_FORM_SUBMIT, {
       category: 'form',
       success,
-      method
+      method,
     })
   },
 
   newsletter: (email_domain?: string) => {
     trackEvent(GA_EVENTS.NEWSLETTER_SIGNUP, {
       category: 'conversion',
-      email_domain
+      email_domain,
     })
   },
 
@@ -201,7 +211,7 @@ export const Analytics = {
     trackEvent(GA_EVENTS.DOCUMENTATION_VIEW, {
       category: 'content',
       page,
-      section
+      section,
     })
   },
 
@@ -210,7 +220,7 @@ export const Analytics = {
       category: 'content',
       title,
       content_category: category,
-      reading_time
+      reading_time,
     })
   },
 
@@ -218,14 +228,14 @@ export const Analytics = {
   featureView: (feature_name: string) => {
     trackEvent(GA_EVENTS.FEATURE_VIEW, {
       category: 'product',
-      feature_name
+      feature_name,
     })
   },
 
   pricingView: (plan?: string) => {
     trackEvent(GA_EVENTS.PRICING_VIEW, {
       category: 'product',
-      plan
+      plan,
     })
   },
 
@@ -233,7 +243,7 @@ export const Analytics = {
     trackEvent(GA_EVENTS.PLAN_SELECT, {
       category: 'conversion',
       plan_name,
-      value: plan_price
+      value: plan_price,
     })
   },
 
@@ -241,14 +251,14 @@ export const Analytics = {
   error404: (path: string) => {
     trackEvent(GA_EVENTS.ERROR_404, {
       category: 'error',
-      page_path: path
+      page_path: path,
     })
   },
 
   error500: (error_message?: string) => {
     trackEvent(GA_EVENTS.ERROR_500, {
       category: 'error',
-      error_message
+      error_message,
     })
   },
 
@@ -257,7 +267,7 @@ export const Analytics = {
       category: 'error',
       endpoint,
       status_code,
-      error_message
+      error_message,
     })
   },
 
@@ -267,7 +277,7 @@ export const Analytics = {
       category: 'performance',
       metric_name,
       value,
-      unit
+      unit,
     })
   },
 
@@ -275,9 +285,9 @@ export const Analytics = {
     trackEvent(GA_EVENTS.PAGE_LOAD_TIME, {
       category: 'performance',
       value: Math.round(load_time),
-      page_path
+      page_path,
     })
-  }
+  },
 }
 
 /**
@@ -290,13 +300,15 @@ export const EcommerceAnalytics = {
       category: 'ecommerce',
       currency: 'USD',
       value: plan_price,
-      items: [{
-        item_id: plan_name.toLowerCase().replace(/\s+/g, '_'),
-        item_name: plan_name,
-        category: 'subscription',
-        price: plan_price,
-        quantity: 1
-      }]
+      items: [
+        {
+          item_id: plan_name.toLowerCase().replace(/\s+/g, '_'),
+          item_name: plan_name,
+          category: 'subscription',
+          price: plan_price,
+          quantity: 1,
+        },
+      ],
     })
   },
 
@@ -306,13 +318,15 @@ export const EcommerceAnalytics = {
       transaction_id,
       currency: 'USD',
       value: plan_price,
-      items: [{
-        item_id: plan_name.toLowerCase().replace(/\s+/g, '_'),
-        item_name: plan_name,
-        category: 'subscription',
-        price: plan_price,
-        quantity: 1
-      }]
+      items: [
+        {
+          item_id: plan_name.toLowerCase().replace(/\s+/g, '_'),
+          item_name: plan_name,
+          category: 'subscription',
+          price: plan_price,
+          quantity: 1,
+        },
+      ],
     })
   },
 
@@ -321,9 +335,9 @@ export const EcommerceAnalytics = {
       category: 'ecommerce',
       transaction_id,
       currency: 'USD',
-      value: refund_amount
+      value: refund_amount,
     })
-  }
+  },
 }
 
 /**
@@ -333,18 +347,18 @@ export const ConsentManager = {
   // Grant consent for analytics
   grantConsent: () => {
     if (typeof window !== 'undefined' && 'gtag' in window) {
-      (window as any).gtag('consent', 'update', {
+      ;(window as any).gtag('consent', 'update', {
         analytics_storage: 'granted',
         ad_storage: 'denied', // Keep ads denied for privacy
         functionality_storage: 'granted',
         personalization_storage: 'denied',
-        security_storage: 'granted'
+        security_storage: 'granted',
       })
     }
-    
+
     // Store consent in localStorage
     localStorage.setItem('analytics_consent', 'granted')
-    
+
     if (GA4_CONFIG.debug) {
       console.log('[Analytics] Consent granted')
     }
@@ -353,17 +367,17 @@ export const ConsentManager = {
   // Revoke consent
   revokeConsent: () => {
     if (typeof window !== 'undefined' && 'gtag' in window) {
-      (window as any).gtag('consent', 'update', {
+      ;(window as any).gtag('consent', 'update', {
         analytics_storage: 'denied',
         ad_storage: 'denied',
         functionality_storage: 'denied',
         personalization_storage: 'denied',
-        security_storage: 'granted'
+        security_storage: 'granted',
       })
     }
-    
+
     localStorage.setItem('analytics_consent', 'denied')
-    
+
     if (GA4_CONFIG.debug) {
       console.log('[Analytics] Consent revoked')
     }
@@ -379,16 +393,16 @@ export const ConsentManager = {
   initConsent: () => {
     if (typeof window !== 'undefined' && 'gtag' in window) {
       // Set default consent to denied
-      (window as any).gtag('consent', 'default', {
+      ;(window as any).gtag('consent', 'default', {
         analytics_storage: 'denied',
         ad_storage: 'denied',
         functionality_storage: 'denied',
         personalization_storage: 'denied',
         security_storage: 'granted',
-        wait_for_update: 500
+        wait_for_update: 500,
       })
     }
-  }
+  },
 }
 
 export default Analytics

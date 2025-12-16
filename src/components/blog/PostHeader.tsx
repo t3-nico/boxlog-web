@@ -11,12 +11,14 @@ interface PostHeaderProps {
 }
 
 export function PostHeader({ frontMatter, locale = 'en' }: PostHeaderProps) {
-  const formattedDate = new Date(frontMatter.publishedAt).toLocaleDateString(locale === 'jp' ? 'ja-JP' : 'en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-
+  const formattedDate = new Date(frontMatter.publishedAt).toLocaleDateString(
+    locale === 'jp' ? 'ja-JP' : 'en-US',
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }
+  )
 
   return (
     <header className="py-16 bg-neutral-50 dark:bg-neutral-900">
@@ -25,9 +27,7 @@ export function PostHeader({ frontMatter, locale = 'en' }: PostHeaderProps) {
           {/* Date */}
           <div className="mb-4">
             <div className="text-neutral-600 dark:text-neutral-400">
-              <time dateTime={frontMatter.publishedAt}>
-                {formattedDate}
-              </time>
+              <time dateTime={frontMatter.publishedAt}>{formattedDate}</time>
             </div>
           </div>
 

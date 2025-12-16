@@ -8,7 +8,7 @@ export enum ErrorSeverity {
   LOW = 'low',
   MEDIUM = 'medium',
   HIGH = 'high',
-  CRITICAL = 'critical'
+  CRITICAL = 'critical',
 }
 
 // Error categories
@@ -22,7 +22,7 @@ export enum ErrorCategory {
   USER_INPUT = 'user_input',
   EXTERNAL_API = 'external_api',
   DATABASE = 'database',
-  PERFORMANCE = 'performance'
+  PERFORMANCE = 'performance',
 }
 
 // Error context interface
@@ -54,7 +54,7 @@ export class AppError extends Error {
     isOperational: boolean = true
   ) {
     super(message)
-    
+
     this.name = 'AppError'
     this.severity = severity
     this.category = category
@@ -62,7 +62,8 @@ export class AppError extends Error {
       ...context,
       timestamp: new Date().toISOString(),
       url: typeof window !== 'undefined' ? window.location.href : undefined,
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined
+      userAgent:
+        typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
     }
     this.code = code || this.generateErrorCode()
     this.isOperational = isOperational
@@ -88,7 +89,7 @@ export class AppError extends Error {
       code: this.code,
       context: this.context,
       stack: this.stack,
-      isOperational: this.isOperational
+      isOperational: this.isOperational,
     }
   }
 }
@@ -104,7 +105,9 @@ class ConsoleLogger implements ErrorLogger {
   log(error: AppError | Error): void {
     if (error instanceof AppError) {
       const emoji = this.getSeverityEmoji(error.severity)
-      console.group(`${emoji} ${error.category.toUpperCase()} Error [${error.code}]`)
+      console.group(
+        `${emoji} ${error.category.toUpperCase()} Error [${error.code}]`
+      )
       console.error('Message:', error.message)
       console.error('Context:', error.context)
       if (error.stack) {
@@ -121,11 +124,16 @@ class ConsoleLogger implements ErrorLogger {
 
   private getSeverityEmoji(severity: ErrorSeverity): string {
     switch (severity) {
-      case ErrorSeverity.LOW: return '💡'
-      case ErrorSeverity.MEDIUM: return '⚠️'
-      case ErrorSeverity.HIGH: return '❌'
-      case ErrorSeverity.CRITICAL: return '🚨'
-      default: return '❓'
+      case ErrorSeverity.LOW:
+        return '💡'
+      case ErrorSeverity.MEDIUM:
+        return '⚠️'
+      case ErrorSeverity.HIGH:
+        return '❌'
+      case ErrorSeverity.CRITICAL:
+        return '🚨'
+      default:
+        return '❓'
     }
   }
 }
@@ -142,15 +150,18 @@ class LocalStorageLogger implements ErrorLogger {
       const errors = this.getStoredErrors()
       const errorLog = {
         timestamp: new Date().toISOString(),
-        error: error instanceof AppError ? error.toJSON() : {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        }
+        error:
+          error instanceof AppError
+            ? error.toJSON()
+            : {
+                name: error.name,
+                message: error.message,
+                stack: error.stack,
+              },
       }
 
       errors.unshift(errorLog)
-      
+
       // Keep only the most recent errors
       if (errors.length > this.maxErrors) {
         errors.splice(this.maxErrors)
@@ -197,13 +208,16 @@ class RemoteLogger implements ErrorLogger {
 
     const errorData = {
       timestamp: new Date().toISOString(),
-      error: error instanceof AppError ? error.toJSON() : {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
-      },
+      error:
+        error instanceof AppError
+          ? error.toJSON()
+          : {
+              name: error.name,
+              message: error.message,
+              stack: error.stack,
+            },
       url: window.location.href,
-      userAgent: window.navigator.userAgent
+      userAgent: window.navigator.userAgent,
     }
 
     await this.sendWithRetry(errorData, 0)
@@ -214,9 +228,9 @@ class RemoteLogger implements ErrorLogger {
       const response = await fetch(this.endpoint, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       })
 
       if (!response.ok) {
@@ -224,10 +238,17 @@ class RemoteLogger implements ErrorLogger {
       }
     } catch (error) {
       if (attempt < this.maxRetries) {
-        await new Promise(resolve => setTimeout(resolve, this.retryDelay * (attempt + 1)))
+        await new Promise((resolve) =>
+          setTimeout(resolve, this.retryDelay * (attempt + 1))
+        )
         return this.sendWithRetry(data, attempt + 1)
       } else {
-        console.error('Failed to send error log after', this.maxRetries, 'attempts:', error)
+        console.error(
+          'Failed to send error log after',
+          this.maxRetries,
+          'attempts:',
+          error
+        )
       }
     }
   }
@@ -271,10 +292,10 @@ export class ErrorHandler {
         ErrorSeverity.HIGH,
         ErrorCategory.SYSTEM,
         undefined,
-        { 
+        {
           component: 'Global',
           action: 'unhandledrejection',
-          metadata: { reason: event.reason }
+          metadata: { reason: event.reason },
         }
       )
       this.handleError(error)
@@ -293,8 +314,8 @@ export class ErrorHandler {
           metadata: {
             filename: event.filename,
             lineno: event.lineno,
-            colno: event.colno
-          }
+            colno: event.colno,
+          },
         }
       )
       this.handleError(error)
@@ -307,19 +328,20 @@ export class ErrorHandler {
 
   handleError(error: Error | AppError): void {
     // Convert regular errors to AppError if needed
-    const appError = error instanceof AppError 
-      ? error 
-      : new AppError(
-          error.message,
-          ErrorSeverity.MEDIUM,
-          ErrorCategory.SYSTEM,
-          undefined,
-          {},
-          false
-        )
+    const appError =
+      error instanceof AppError
+        ? error
+        : new AppError(
+            error.message,
+            ErrorSeverity.MEDIUM,
+            ErrorCategory.SYSTEM,
+            undefined,
+            {},
+            false
+          )
 
     // Log to all registered loggers
-    this.loggers.forEach(logger => {
+    this.loggers.forEach((logger) => {
       try {
         logger.log(appError)
       } catch (loggerError) {
@@ -338,7 +360,7 @@ export class ErrorHandler {
     // 1. Show user-friendly error page
     // 2. Attempt recovery
     // 3. Send immediate alerts
-    
+
     if (typeof window !== 'undefined') {
       // Show user notification for critical errors
       const message = 'A critical error occurred. Please refresh the page.'
@@ -351,7 +373,11 @@ export class ErrorHandler {
   }
 
   // Utility methods for creating specific error types
-  createValidationError(message: string, field?: string, context?: ErrorContext): AppError {
+  createValidationError(
+    message: string,
+    field?: string,
+    context?: ErrorContext
+  ): AppError {
     return new AppError(
       message,
       ErrorSeverity.LOW,
@@ -361,7 +387,11 @@ export class ErrorHandler {
     )
   }
 
-  createNetworkError(message: string, url?: string, context?: ErrorContext): AppError {
+  createNetworkError(
+    message: string,
+    url?: string,
+    context?: ErrorContext
+  ): AppError {
     return new AppError(
       message,
       ErrorSeverity.MEDIUM,
@@ -398,10 +428,10 @@ export class ErrorHandler {
     threshold: number = 1000
   ): T {
     const start = performance.now()
-    
+
     try {
       const result = operation()
-      
+
       // Check if it's a Promise
       if (result instanceof Promise) {
         return result.then(
@@ -430,7 +460,7 @@ export class ErrorHandler {
     threshold: number
   ): void {
     const duration = performance.now() - start
-    
+
     if (duration > threshold) {
       const error = new AppError(
         `Operation "${operationName}" took ${duration.toFixed(2)}ms (threshold: ${threshold}ms)`,
@@ -451,16 +481,17 @@ export class ErrorHandler {
     try {
       return await operation()
     } catch (error) {
-      const appError = error instanceof AppError
-        ? error
-        : new AppError(
-            error instanceof Error ? error.message : 'Unknown error',
-            ErrorSeverity.MEDIUM,
-            ErrorCategory.SYSTEM,
-            undefined,
-            context
-          )
-      
+      const appError =
+        error instanceof AppError
+          ? error
+          : new AppError(
+              error instanceof Error ? error.message : 'Unknown error',
+              ErrorSeverity.MEDIUM,
+              ErrorCategory.SYSTEM,
+              undefined,
+              context
+            )
+
       this.handleError(appError)
       throw appError
     }
@@ -471,18 +502,34 @@ export class ErrorHandler {
 const errorHandler = new ErrorHandler()
 
 // Export utility functions
-export const handleError = (error: Error | AppError) => errorHandler.handleError(error)
-export const createValidationError = (message: string, field?: string, context?: ErrorContext) => 
-  errorHandler.createValidationError(message, field, context)
-export const createNetworkError = (message: string, url?: string, context?: ErrorContext) => 
-  errorHandler.createNetworkError(message, url, context)
-export const createAuthenticationError = (message: string, context?: ErrorContext) => 
-  errorHandler.createAuthenticationError(message, context)
-export const createBusinessLogicError = (message: string, context?: ErrorContext) => 
-  errorHandler.createBusinessLogicError(message, context)
-export const measurePerformance = <T>(operation: () => T, operationName: string, threshold?: number) => 
-  errorHandler.measurePerformance(operation, operationName, threshold)
-export const withErrorHandling = <T>(operation: () => Promise<T>, context?: ErrorContext) => 
-  errorHandler.withErrorHandling(operation, context)
+export const handleError = (error: Error | AppError) =>
+  errorHandler.handleError(error)
+export const createValidationError = (
+  message: string,
+  field?: string,
+  context?: ErrorContext
+) => errorHandler.createValidationError(message, field, context)
+export const createNetworkError = (
+  message: string,
+  url?: string,
+  context?: ErrorContext
+) => errorHandler.createNetworkError(message, url, context)
+export const createAuthenticationError = (
+  message: string,
+  context?: ErrorContext
+) => errorHandler.createAuthenticationError(message, context)
+export const createBusinessLogicError = (
+  message: string,
+  context?: ErrorContext
+) => errorHandler.createBusinessLogicError(message, context)
+export const measurePerformance = <T>(
+  operation: () => T,
+  operationName: string,
+  threshold?: number
+) => errorHandler.measurePerformance(operation, operationName, threshold)
+export const withErrorHandling = <T>(
+  operation: () => Promise<T>,
+  context?: ErrorContext
+) => errorHandler.withErrorHandling(operation, context)
 
 export default errorHandler

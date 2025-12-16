@@ -4,8 +4,16 @@ import { generateSEOMetadata } from '@/lib/metadata'
 
 export const metadata = generateSEOMetadata({
   title: 'Security - Platform Security & Compliance',
-  description: 'Learn about our security practices, infrastructure protection, and compliance certifications. We prioritize the security of your data.',
-  keywords: ['security', 'data protection', 'compliance', 'encryption', 'SOC 2', 'ISO 27001'],
+  description:
+    'Learn about our security practices, infrastructure protection, and compliance certifications. We prioritize the security of your data.',
+  keywords: [
+    'security',
+    'data protection',
+    'compliance',
+    'encryption',
+    'SOC 2',
+    'ISO 27001',
+  ],
   url: '/security',
 })
 
@@ -16,10 +24,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+  return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
 export default function SecurityPage({ params }: PageProps) {
@@ -39,10 +44,11 @@ export default function SecurityPage({ params }: PageProps) {
               How we protect your data and maintain platform security
             </Text>
             <Text size="sm" variant="muted">
-              Last updated: {new Date(lastUpdated).toLocaleDateString('en-US', {
+              Last updated:{' '}
+              {new Date(lastUpdated).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
               })}
             </Text>
           </div>
@@ -53,19 +59,20 @@ export default function SecurityPage({ params }: PageProps) {
       <section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto prose prose-lg max-w-none">
-
             {/* Introduction */}
             <div className="mb-12">
               <Heading as="h2" size="2xl" className="mb-6">
                 Our Commitment to Security
               </Heading>
               <Text className="mb-4 leading-relaxed">
-                Security is at the core of everything we do. We implement industry-leading security practices
-                to protect your data and ensure the integrity of our platform.
+                Security is at the core of everything we do. We implement
+                industry-leading security practices to protect your data and
+                ensure the integrity of our platform.
               </Text>
               <Text className="mb-4 leading-relaxed">
-                This page outlines our security measures, compliance certifications, and best practices
-                that help keep your information safe.
+                This page outlines our security measures, compliance
+                certifications, and best practices that help keep your
+                information safe.
               </Text>
             </div>
 
@@ -95,7 +102,8 @@ export default function SecurityPage({ params }: PageProps) {
                   Cloud Infrastructure
                 </Heading>
                 <Text className="mb-4 leading-relaxed">
-                  Our infrastructure is hosted on industry-leading cloud providers:
+                  Our infrastructure is hosted on industry-leading cloud
+                  providers:
                 </Text>
                 <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
                   <li>Multi-region deployment for high availability</li>
@@ -134,7 +142,8 @@ export default function SecurityPage({ params }: PageProps) {
                   Secure Development
                 </Heading>
                 <Text className="mb-4 leading-relaxed">
-                  We follow secure coding practices throughout our development lifecycle:
+                  We follow secure coding practices throughout our development
+                  lifecycle:
                 </Text>
                 <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
                   <li>Security code reviews for all changes</li>
@@ -177,7 +186,8 @@ export default function SecurityPage({ params }: PageProps) {
                     SOC 2 Type II
                   </Heading>
                   <Text className="text-gray-700">
-                    Annual audits verify our security, availability, and confidentiality controls.
+                    Annual audits verify our security, availability, and
+                    confidentiality controls.
                   </Text>
                 </div>
 
@@ -186,7 +196,8 @@ export default function SecurityPage({ params }: PageProps) {
                     GDPR Compliant
                   </Heading>
                   <Text className="text-gray-700">
-                    Full compliance with EU General Data Protection Regulation requirements.
+                    Full compliance with EU General Data Protection Regulation
+                    requirements.
                   </Text>
                 </div>
 
@@ -195,7 +206,8 @@ export default function SecurityPage({ params }: PageProps) {
                     ISO 27001
                   </Heading>
                   <Text className="text-gray-700">
-                    Information security management system certified to international standards.
+                    Information security management system certified to
+                    international standards.
                   </Text>
                 </div>
 
@@ -204,7 +216,8 @@ export default function SecurityPage({ params }: PageProps) {
                     HIPAA Ready
                   </Heading>
                   <Text className="text-gray-700">
-                    Infrastructure and processes ready for healthcare compliance requirements.
+                    Infrastructure and processes ready for healthcare compliance
+                    requirements.
                   </Text>
                 </div>
               </div>
@@ -237,7 +250,8 @@ export default function SecurityPage({ params }: PageProps) {
                   Data Residency
                 </Heading>
                 <Text className="mb-4 leading-relaxed">
-                  We offer data residency options to meet your compliance requirements:
+                  We offer data residency options to meet your compliance
+                  requirements:
                 </Text>
                 <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
                   <li>Choose your preferred data region</li>
@@ -259,7 +273,8 @@ export default function SecurityPage({ params }: PageProps) {
                   24/7 Security Monitoring
                 </Heading>
                 <Text className="mb-4 leading-relaxed">
-                  Our security operations center monitors the platform continuously:
+                  Our security operations center monitors the platform
+                  continuously:
                 </Text>
                 <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
                   <li>Real-time threat detection</li>
@@ -311,7 +326,8 @@ export default function SecurityPage({ params }: PageProps) {
                 Vulnerability Disclosure Program
               </Heading>
               <Text className="mb-4 leading-relaxed">
-                We welcome responsible disclosure of security vulnerabilities. If you discover a security issue:
+                We welcome responsible disclosure of security vulnerabilities.
+                If you discover a security issue:
               </Text>
               <div className="bg-gray-50 rounded-lg p-6 mb-4">
                 <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -322,7 +338,8 @@ export default function SecurityPage({ params }: PageProps) {
                 </ul>
               </div>
               <Text className="mb-4 leading-relaxed">
-                We commit to responding within 48 hours and will keep you updated on our progress.
+                We commit to responding within 48 hours and will keep you
+                updated on our progress.
               </Text>
             </div>
 
@@ -336,15 +353,19 @@ export default function SecurityPage({ params }: PageProps) {
               </Text>
               <div className="bg-gray-50 rounded-lg p-6">
                 <div className="space-y-2">
-                  <Text className="font-medium text-gray-900">Security Team</Text>
-                  <Text className="text-gray-700">Email: security@boxlog.com</Text>
+                  <Text className="font-medium text-gray-900">
+                    Security Team
+                  </Text>
                   <Text className="text-gray-700">
-                    For urgent security matters, please include [URGENT] in your subject line.
+                    Email: security@boxlog.com
+                  </Text>
+                  <Text className="text-gray-700">
+                    For urgent security matters, please include [URGENT] in your
+                    subject line.
                   </Text>
                 </div>
               </div>
             </div>
-
           </div>
         </Container>
       </section>

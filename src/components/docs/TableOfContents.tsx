@@ -17,17 +17,19 @@ export function TableOfContents() {
   useEffect(() => {
     const generateToc = () => {
       const headings = Array.from(
-        document.querySelectorAll('main h1, main h2, main h3, main h4, main h5, main h6')
+        document.querySelectorAll(
+          'main h1, main h2, main h3, main h4, main h5, main h6'
+        )
       ) as HTMLHeadingElement[]
 
       const tocItems: TocItem[] = headings
-        .filter(heading => heading.id) // Only include headings with IDs
-        .map(heading => ({
+        .filter((heading) => heading.id) // Only include headings with IDs
+        .map((heading) => ({
           id: heading.id,
           title: heading.textContent || '',
           level: parseInt(heading.tagName.charAt(1), 10),
         }))
-        .filter(item => item.level >= 2 && item.level <= 3) // Only h2 and h3
+        .filter((item) => item.level >= 2 && item.level <= 3) // Only h2 and h3
 
       setToc(tocItems)
     }
@@ -38,7 +40,7 @@ export function TableOfContents() {
     // Observe for dynamic content changes
     const observer = new MutationObserver(generateToc)
     const mainElement = document.querySelector('main')
-    
+
     if (mainElement) {
       observer.observe(mainElement, {
         childList: true,
@@ -55,8 +57,8 @@ export function TableOfContents() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visibleEntries = entries.filter(entry => entry.isIntersecting)
-        
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
+
         if (visibleEntries.length > 0) {
           // Get the entry that's most visible (highest intersection ratio)
           const mostVisible = visibleEntries.reduce((max, entry) =>
@@ -92,7 +94,7 @@ export function TableOfContents() {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       })
 
       // Update URL hash without triggering scroll
@@ -109,8 +111,10 @@ export function TableOfContents() {
         <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
           On This Page
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400">No headings found</p>
-        
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          No headings found
+        </p>
+
         {/* Helpful Links */}
         <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
           <div className="space-y-3">
@@ -148,7 +152,7 @@ export function TableOfContents() {
       <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
         On This Page
       </div>
-      
+
       <nav className="space-y-1">
         {toc.map((item) => (
           <Button
@@ -180,8 +184,18 @@ export function TableOfContents() {
               href="#"
               className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
             >
-              <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              <svg
+                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
               </svg>
               Edit this page
             </a>
@@ -189,8 +203,18 @@ export function TableOfContents() {
               href="#"
               className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
             >
-              <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              <svg
+                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
+                />
               </svg>
               Report an issue
             </a>
@@ -198,8 +222,18 @@ export function TableOfContents() {
               href="#"
               className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
             >
-              <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8" />
+              <svg
+                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8"
+                />
               </svg>
               Give feedback
             </a>

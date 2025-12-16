@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
-    
+
     // Validate the incoming data
     const requiredFields = ['name', 'value', 'id', 'url']
     for (const field of requiredFields) {
@@ -20,10 +20,10 @@ export async function POST(request: NextRequest) {
     // 1. Store in a database
     // 2. Send to analytics service (e.g., Google Analytics, DataDog)
     // 3. Alert if metrics are poor
-    
+
     // Example: Store in database
     // await storeWebVital(data)
-    
+
     // Example: Send to external analytics
     // await sendToAnalyticsService(data)
 
