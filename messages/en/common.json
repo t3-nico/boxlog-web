@@ -1,0 +1,83 @@
+{
+  "common": {
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "features": "Features",
+      "pricing": "Pricing",
+      "blog": "Blog",
+      "docs": "Documentation",
+      "contact": "Contact",
+      "releases": "Releases",
+      "tags": "Tags"
+    },
+    "actions": {
+      "search": "Search",
+      "login": "Login",
+      "signup": "Sign up",
+      "getStarted": "Get Started",
+      "learnMore": "Learn More",
+      "readMore": "Read More",
+      "viewAll": "View All",
+      "backToHome": "Back to Home",
+      "tryAgain": "Try again",
+      "close": "Close",
+      "submit": "Submit",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "states": {
+      "loading": "Loading...",
+      "error": "Error",
+      "notFound": "Not Found"
+    },
+    "labels": {
+      "language": "Language",
+      "theme": "Theme",
+      "menu": "Menu"
+    },
+    "metadata": {
+      "siteName": "BoxLog",
+      "siteDescription": "A modern SaaS platform built with Next.js and Tailwind CSS"
+    }
+  },
+  "footer": {
+    "sections": {
+      "product": "Product",
+      "company": "Company",
+      "resources": "Resources",
+      "legal": "Legal"
+    },
+    "links": {
+      "integrations": "Integrations",
+      "careers": "Careers",
+      "partners": "Partners",
+      "helpCenter": "Help Center",
+      "guides": "Guides",
+      "community": "Community",
+      "status": "Status",
+      "security": "Security",
+      "api": "API"
+    },
+    "legal": {
+      "copyright": "All rights reserved.",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "cookiePolicy": "Cookie Policy"
+    }
+  },
+  "errors": {
+    "general": {
+      "title": "Something went wrong",
+      "description": "We encountered an unexpected error. Please try again or contact support if the problem persists."
+    },
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+    },
+    "network": {
+      "title": "Connection problem",
+      "description": "Unable to connect to the server. Please check your internet connection and try again."
+    }
+  }
+}

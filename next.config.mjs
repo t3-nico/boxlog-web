@@ -1,4 +1,7 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
+import createNextIntlPlugin from 'next-intl/plugin'
+
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -41,7 +44,7 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     // Add explicit file extensions for better module resolution
     config.resolve.extensions = ['.tsx', '.ts', '.jsx', '.js', '.json']
-    
+
     // Only apply optimizations in production
     if (!dev && !isServer) {
       // Enhanced code splitting optimization
@@ -98,4 +101,4 @@ const nextConfig = {
   poweredByHeader: false,
 }
 
-export default withBundleAnalyzer(nextConfig)
+export default withNextIntl(withBundleAnalyzer(nextConfig))

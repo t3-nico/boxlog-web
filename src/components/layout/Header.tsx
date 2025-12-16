@@ -1,26 +1,40 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { Menu, X, ChevronDown, Search } from 'lucide-react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
-import type { Dictionary } from '@/lib/i18n'
-import { getNavigationConfig } from '@/lib/navigation'
+import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 
 interface HeaderProps {
   locale: string
-  dict: Dictionary
 }
 
-export function Header({ locale, dict }: HeaderProps) {
+export function Header({ locale }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const navigation = getNavigationConfig(dict)
+  const t = useTranslations('common')
+
+  const navigation = {
+    main: [
+      { name: t('navigation.features'), href: '/features' },
+      { name: t('navigation.pricing'), href: '/pricing' },
+      {
+        name: 'Resources',
+        items: [
+          { name: t('navigation.blog'), href: '/blog', description: 'Read our latest articles and tutorials' },
+          { name: t('navigation.docs'), href: '/docs', description: 'Documentation and guides' },
+          { name: t('navigation.releases'), href: '/releases', description: 'Latest updates and changelog' },
+        ]
+      },
+      { name: t('navigation.about'), href: '/about' },
+    ],
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +55,7 @@ export function Header({ locale, dict }: HeaderProps) {
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between p-4 lg:px-8" aria-label="Global">
         {/* Logo */}
         <div className="flex lg:flex-1">
-          <Link href={`/${locale}`} className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">BoxLog</span>
             <span className="text-lg font-bold">BoxLog</span>
           </Link>
@@ -78,7 +92,7 @@ export function Header({ locale, dict }: HeaderProps) {
                     {item.items.map((subItem) => (
                       <DropdownMenuPrimitive.Item key={subItem.name} asChild>
                         <Link
-                          href={`/${locale}${subItem.href}`}
+                          href={subItem.href}
                           className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-accent outline-none cursor-pointer"
                         >
                           <div className="flex-auto">
@@ -96,7 +110,7 @@ export function Header({ locale, dict }: HeaderProps) {
             ) : (
               <Link
                 key={item.name}
-                href={`/${locale}${item.href}`}
+                href={item.href!}
                 className="text-sm font-semibold leading-6 text-foreground hover:text-foreground/80"
               >
                 {item.name}
@@ -109,15 +123,15 @@ export function Header({ locale, dict }: HeaderProps) {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-2">
           <Button variant="ghost" size="icon" className="h-8 w-8">
             <Search className="h-4 w-4" />
-            <span className="sr-only">{dict.common.search}</span>
+            <span className="sr-only">{t('actions.search')}</span>
           </Button>
 
           <LanguageSwitcher currentLocale={locale} />
           <ThemeToggle />
 
           <Button variant="ghost" size="sm" asChild>
-            <Link href={`/${locale}/contact`}>
-              {dict.common.contact || 'Contact'}
+            <Link href="/contact">
+              {t('navigation.contact')}
             </Link>
           </Button>
         </div>
@@ -129,7 +143,7 @@ export function Header({ locale, dict }: HeaderProps) {
           <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/20 lg:hidden" />
           <DialogPrimitive.Content className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border lg:hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right duration-300">
             <div className="flex items-center justify-between">
-              <Link href={`/${locale}`} className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
                 <span className="sr-only">BoxLog</span>
                 <span className="text-lg font-bold">BoxLog</span>
               </Link>
@@ -152,7 +166,7 @@ export function Header({ locale, dict }: HeaderProps) {
                           {item.items.map((subItem) => (
                             <Link
                               key={subItem.name}
-                              href={`/${locale}${subItem.href}`}
+                              href={subItem.href}
                               onClick={() => setMobileMenuOpen(false)}
                               className="block rounded-lg py-2 px-3 text-sm leading-7 text-foreground hover:bg-accent"
                             >
@@ -165,7 +179,7 @@ export function Header({ locale, dict }: HeaderProps) {
                     ) : (
                       <Link
                         key={item.name}
-                        href={`/${locale}${item.href}`}
+                        href={item.href!}
                         onClick={() => setMobileMenuOpen(false)}
                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-accent"
                       >
@@ -179,15 +193,15 @@ export function Header({ locale, dict }: HeaderProps) {
                   <div className="flex items-center gap-2 px-3">
                     <Button variant="ghost" size="icon" className="h-8 w-8">
                       <Search className="h-4 w-4" />
-                      <span className="sr-only">{dict.common.search}</span>
+                      <span className="sr-only">{t('actions.search')}</span>
                     </Button>
                     <LanguageSwitcher currentLocale={locale} />
                     <ThemeToggle />
                   </div>
 
                   <Button variant="outline" className="w-full" asChild>
-                    <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
-                      {dict.common.contact || 'Contact'}
+                    <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                      {t('navigation.contact')}
                     </Link>
                   </Button>
                 </div>

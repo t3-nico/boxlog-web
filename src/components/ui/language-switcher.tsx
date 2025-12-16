@@ -3,13 +3,18 @@
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { locales, type Locale, getLocaleConfig, isValidLocale } from '@/lib/i18n'
 import { Globe } from '@/lib/icons'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter, usePathname } from '@/i18n/navigation'
+import { routing, type Locale } from '@/i18n/routing'
 
 interface LanguageSwitcherProps {
   className?: string
   currentLocale?: string
+}
+
+const localeNames: Record<Locale, { name: string; nativeName: string }> = {
+  en: { name: 'English', nativeName: 'English' },
+  ja: { name: 'Japanese', nativeName: '日本語' },
 }
 
 export function LanguageSwitcher({ className, currentLocale: providedLocale }: LanguageSwitcherProps) {
@@ -17,29 +22,15 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
   const pathname = usePathname()
   const [mounted, setMounted] = React.useState(false)
 
-  // Extract current locale from pathname
-  const pathSegments = pathname.split('/').filter(Boolean)
-  const currentLocale = (providedLocale || pathSegments[0] || 'en') as Locale
-  const validCurrentLocale = isValidLocale(currentLocale) ? currentLocale : 'en'
+  const currentLocale = (providedLocale || 'en') as Locale
+  const validCurrentLocale = routing.locales.includes(currentLocale) ? currentLocale : routing.defaultLocale
 
   React.useEffect(() => {
     setMounted(true)
   }, [])
 
   const handleLocaleChange = (newLocale: Locale) => {
-    // Get the path without the current locale
-    const pathWithoutLocale = pathname.startsWith(`/${validCurrentLocale}`) 
-      ? pathname.slice(`/${validCurrentLocale}`.length) || '/'
-      : pathname
-    
-    // Create new path with the new locale
-    const newPath = `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
-    
-    // Set locale cookie for persistence
-    document.cookie = `locale=${newLocale}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=lax`
-    
-    // Navigate to the new path
-    router.push(newPath)
+    router.replace(pathname, { locale: newLocale })
   }
 
   if (!mounted) {
@@ -55,8 +46,6 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
     )
   }
 
-  const currentConfig = getLocaleConfig(validCurrentLocale)
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -70,15 +59,15 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {locales.map((locale) => (
+        {routing.locales.map((locale) => (
           <DropdownMenuItem
-            key={locale.code}
-            onClick={() => handleLocaleChange(locale.code)}
-            className={`cursor-pointer ${validCurrentLocale === locale.code ? 'bg-accent' : ''}`}
+            key={locale}
+            onClick={() => handleLocaleChange(locale)}
+            className={`cursor-pointer ${validCurrentLocale === locale ? 'bg-accent' : ''}`}
           >
             <span className="flex items-center gap-2">
-              <span className="text-sm font-medium">{locale.nativeName}</span>
-              {validCurrentLocale === locale.code && (
+              <span className="text-sm font-medium">{localeNames[locale].nativeName}</span>
+              {validCurrentLocale === locale && (
                 <span className="text-xs text-muted-foreground">✓</span>
               )}
             </span>

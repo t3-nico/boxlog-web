@@ -1,32 +1,28 @@
 import { Button } from '@/components/ui/button'
-import { getDictionary } from '@/lib/i18n'
+import { Link } from '@/i18n/navigation'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { routing, type Locale } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
-import Link from 'next/link'
 import type { Metadata } from 'next'
 
 interface PageProps {
-  params: {
-    locale: string
-  }
+  params: Promise<{ locale: string }>
 }
 
-export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return generateSEOMetadata({
-    title: dict.pages.home.title,
-    description: dict.pages.home.subtitle,
+    title: t('hero.title'),
+    description: t('hero.subtitle'),
     url: `/${locale}`,
     locale: locale,
-    keywords: locale === 'jp'
+    keywords: locale === 'ja'
       ? ['SaaS', 'プラットフォーム', 'ビジネス', '生産性', '自動化', 'Next.js', 'TypeScript']
       : ['SaaS', 'platform', 'business', 'productivity', 'automation', 'Next.js', 'TypeScript'],
     type: 'website'
@@ -34,8 +30,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Home({ params }: PageProps) {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const tCommon = await getTranslations({ locale, namespace: 'common' })
 
   return (
     <div className="bg-background">
@@ -59,20 +58,20 @@ export default async function Home({ params }: PageProps) {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h1 className="text-5xl font-semibold tracking-tight text-balance sm:text-7xl">
-                {dict.pages.home.title}
+                {t('hero.title')}
               </h1>
               <p className="mt-8 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8">
-                {dict.pages.home.subtitle}
+                {t('hero.subtitle')}
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Button size="lg" asChild>
-                  <Link href={`/${locale}/contact`}>
-                    {dict.pages.home.cta || 'Get started'}
+                  <Link href="/contact">
+                    {t('hero.cta')}
                   </Link>
                 </Button>
                 <Button variant="ghost" size="lg" asChild>
-                  <Link href={`/${locale}/about`}>
-                    {dict.common.learnMore || 'Learn more'} <span aria-hidden="true">→</span>
+                  <Link href="/about">
+                    {tCommon('actions.learnMore')} <span aria-hidden="true">→</span>
                   </Link>
                 </Button>
               </div>
