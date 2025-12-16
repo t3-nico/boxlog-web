@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
 import { Container } from '@/components/ui/container'
 import { ReleaseHeader } from '@/components/releases/ReleaseHeader'
-import { ChangeTypeSection } from '@/components/releases/ChangeTypeList'
 import { ReleaseCard } from '@/components/releases/ReleaseCard'
 import { getRelease, getAllReleaseMetas, getRelatedReleases, changeTypes } from '@/lib/releases'
 
@@ -200,7 +200,7 @@ const mdxComponents = {
 }
 
 export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
-  const { locale, version } = params
+  const { version } = params
   const release = await getRelease(version)
   
   if (!release) {
@@ -303,12 +303,12 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   </div>
                   
                   <div className="flex items-center gap-4">
-                    <a
+                    <Link
                       href="/releases"
                       className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                     >
                       View all releases
-                    </a>
+                    </Link>
                     
                     <a
                       href={`https://github.com/yoursaas/platform/releases/tag/v${release.frontMatter.version}`}
@@ -350,7 +350,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 </div>
 
                 <div className="mt-8 text-center">
-                  <a
+                  <Link
                     href="/releases"
                     className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
@@ -358,7 +358,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                     View all releases
-                  </a>
+                  </Link>
                 </div>
               </div>
             </Container>
@@ -387,7 +387,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   Contact Support
                 </a>
                 
-                <a
+                <Link
                   href="/feedback"
                   className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >
@@ -395,7 +395,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                   Send Feedback
-                </a>
+                </Link>
               </div>
             </div>
           </Container>

@@ -3,6 +3,7 @@
 ## 📍 この文書の位置づけ
 
 **レベル2**: 領域特化ルール（UIコンポーネント）
+
 - 上位: `/src/CLAUDE.md`（実装の基本）
 - 上位: `/CLAUDE.md`（意思決定プロトコル）
 
@@ -432,6 +433,7 @@ describe('PostCard', () => {
 ### shadcn/ui基盤コンポーネント（常に最優先）
 
 #### Button
+
 ```typescript
 import { Button } from '@/components/ui/button'
 
@@ -444,6 +446,7 @@ import { Button } from '@/components/ui/button'
 ```
 
 #### Card
+
 ```typescript
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -462,6 +465,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 ```
 
 #### Dialog
+
 ```typescript
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
@@ -480,6 +484,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 ```
 
 #### Badge
+
 ```typescript
 import { Badge } from '@/components/ui/badge'
 
@@ -490,6 +495,7 @@ import { Badge } from '@/components/ui/badge'
 ```
 
 #### Alert
+
 ```typescript
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
@@ -505,6 +511,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 ```
 
 #### Toast (Sonner)
+
 ```typescript
 import { toast } from 'sonner'
 
@@ -520,6 +527,7 @@ toast.warning('Warning message')
 ## 🚫 よくある間違いと修正例
 
 ### ❌ 間違い: カラーコード直接指定
+
 ```typescript
 <div className="bg-blue-500 text-white border-gray-300">
   Content
@@ -527,6 +535,7 @@ toast.warning('Warning message')
 ```
 
 ### ✅ 修正: セマンティックトークン使用
+
 ```typescript
 <div className="bg-primary text-primary-foreground border-border">
   Content
@@ -536,6 +545,7 @@ toast.warning('Warning message')
 ---
 
 ### ❌ 間違い: カスタムボタン実装
+
 ```typescript
 function CustomButton({ children }: { children: React.ReactNode }) {
   return (
@@ -547,6 +557,7 @@ function CustomButton({ children }: { children: React.ReactNode }) {
 ```
 
 ### ✅ 修正: shadcn/ui Button使用
+
 ```typescript
 import { Button } from '@/components/ui/button'
 
@@ -556,6 +567,7 @@ import { Button } from '@/components/ui/button'
 ---
 
 ### ❌ 間違い: 不必要なClient Component
+
 ```typescript
 'use client'
 
@@ -565,6 +577,7 @@ export function PostCard({ post }: PostCardProps) {
 ```
 
 ### ✅ 修正: Server Component（デフォルト）
+
 ```typescript
 // 'use client'を削除
 export function PostCard({ post }: PostCardProps) {
@@ -575,6 +588,7 @@ export function PostCard({ post }: PostCardProps) {
 ---
 
 ### ❌ 間違い: デフォルトエクスポート
+
 ```typescript
 export default function PostCard({ post }: PostCardProps) {
   return <article>...</article>
@@ -582,6 +596,7 @@ export default function PostCard({ post }: PostCardProps) {
 ```
 
 ### ✅ 修正: 名前付きエクスポート
+
 ```typescript
 export function PostCard({ post }: PostCardProps) {
   return <article>...</article>

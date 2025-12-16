@@ -9,7 +9,7 @@ export function useLocale(): Locale {
   useEffect(() => {
     // Get locale from localStorage or browser language
     const storedLocale = localStorage.getItem('locale')
-    
+
     if (storedLocale && isValidLocale(storedLocale)) {
       setLocale(storedLocale as Locale)
     } else {
@@ -30,10 +30,12 @@ export function setLocale(newLocale: Locale) {
   if (isValidLocale(newLocale)) {
     localStorage.setItem('locale', newLocale)
     // Trigger a storage event to update other components
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: 'locale',
-      newValue: newLocale,
-      storageArea: localStorage
-    }))
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: 'locale',
+        newValue: newLocale,
+        storageArea: localStorage,
+      })
+    )
   }
 }

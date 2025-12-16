@@ -1,7 +1,5 @@
-import React from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
 import { ShareButton } from './ShareButton'
 
 // Local type definitions and utilities
@@ -44,7 +42,7 @@ interface ReleaseHeaderProps {
   version: string
 }
 
-export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
+export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
   const versionType = getVersionType(frontMatter.version)
   
   const versionBadgeStyles = {
@@ -91,9 +89,9 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
         <nav className="mb-8" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">
             <li>
-              <a href="/" className="hover:text-gray-700 transition-colors dark:hover:text-gray-300">
+              <Link href="/" className="hover:text-gray-700 transition-colors dark:hover:text-gray-300">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -101,9 +99,9 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               </svg>
             </li>
             <li>
-              <a href="/releases" className="hover:text-gray-700 transition-colors dark:hover:text-gray-300">
+              <Link href="/releases" className="hover:text-gray-700 transition-colors dark:hover:text-gray-300">
                 Release Notes
-              </a>
+              </Link>
             </li>
             <li>
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -261,7 +259,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
             View Changes
           </a>
           
-          <a
+          <Link
             href="/releases"
             className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
           >
@@ -269,7 +267,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Releases
-          </a>
+          </Link>
 
           <ShareButton 
             title={frontMatter.title}

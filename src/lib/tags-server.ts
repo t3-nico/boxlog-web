@@ -33,7 +33,7 @@ export interface UnifiedTagData {
 // Get document metadata
 async function getAllDocMetas(): Promise<TaggedContent[]> {
   const docsDirectory = path.join(process.cwd(), 'content/docs')
-  
+
   if (!fs.existsSync(docsDirectory)) {
     return []
   }
@@ -41,18 +41,18 @@ async function getAllDocMetas(): Promise<TaggedContent[]> {
   const getAllMdxFiles = (dir: string): string[] => {
     const files: string[] = []
     const items = fs.readdirSync(dir)
-    
+
     for (const item of items) {
       const fullPath = path.join(dir, item)
       const stat = fs.statSync(fullPath)
-      
+
       if (stat.isDirectory()) {
         files.push(...getAllMdxFiles(fullPath))
       } else if (item.endsWith('.mdx') || item.endsWith('.md')) {
         files.push(fullPath)
       }
     }
-    
+
     return files
   }
 
@@ -63,20 +63,23 @@ async function getAllDocMetas(): Promise<TaggedContent[]> {
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8')
       const { data: frontMatter } = matter(fileContents)
-      
+
       // Skip draft content
       if (frontMatter.draft) continue
-      
+
       // Generate slug from file path
       const relativePath = path.relative(docsDirectory, filePath)
       const slug = relativePath.replace(/\.(mdx?|md)$/, '').replace(/\\/g, '/')
-      
+
       docMetas.push({
         type: 'doc',
         slug: slug,
         title: frontMatter.title || 'Untitled',
         description: frontMatter.description || '',
-        date: frontMatter.publishedAt || frontMatter.updatedAt || new Date().toISOString(),
+        date:
+          frontMatter.publishedAt ||
+          frontMatter.updatedAt ||
+          new Date().toISOString(),
         tags: frontMatter.tags || [],
         category: frontMatter.category,
         featured: frontMatter.featured || false,
@@ -86,7 +89,9 @@ async function getAllDocMetas(): Promise<TaggedContent[]> {
     }
   }
 
-  return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  return docMetas.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  )
 }
 
 // Get tags and usage counts from all content types
@@ -94,28 +99,28 @@ export async function getAllTags(): Promise<TagCount[]> {
   const [blogPosts, releases, docs] = await Promise.all([
     getAllBlogPostMetas(),
     getAllReleaseMetas(),
-    getAllDocMetas()
+    getAllDocMetas(),
   ])
 
   const tagCounts = new Map<string, number>()
 
   // Aggregate blog post tags
-  blogPosts.forEach(post => {
-    post.frontMatter.tags.forEach(tag => {
+  blogPosts.forEach((post) => {
+    post.frontMatter.tags.forEach((tag) => {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
     })
   })
 
   // Aggregate release tags
-  releases.forEach(release => {
-    release.frontMatter.tags.forEach(tag => {
+  releases.forEach((release) => {
+    release.frontMatter.tags.forEach((tag) => {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
     })
   })
 
   // Aggregate document tags
-  docs.forEach(doc => {
-    doc.tags.forEach(tag => {
+  docs.forEach((doc) => {
+    doc.tags.forEach((tag) => {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
     })
   })
@@ -129,16 +134,18 @@ export async function getAllTags(): Promise<TagCount[]> {
 export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
   const [blogPosts, releases, docs] = await Promise.all([
     getAllBlogPostMetas(),
-    getAllReleaseMetas(), 
-    getAllDocMetas()
+    getAllReleaseMetas(),
+    getAllDocMetas(),
   ])
 
   const normalizedTag = tag.toLowerCase()
 
   // Filter blog posts
   const blogContent: TaggedContent[] = blogPosts
-    .filter(post => post.frontMatter.tags.some(t => t.toLowerCase() === normalizedTag))
-    .map(post => ({
+    .filter((post) =>
+      post.frontMatter.tags.some((t) => t.toLowerCase() === normalizedTag)
+    )
+    .map((post) => ({
       type: 'blog' as const,
       slug: post.slug,
       title: post.frontMatter.title,
@@ -151,8 +158,10 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
 
   // Filter releases
   const releaseContent: TaggedContent[] = releases
-    .filter(release => release.frontMatter.tags.some(t => t.toLowerCase() === normalizedTag))
-    .map(release => ({
+    .filter((release) =>
+      release.frontMatter.tags.some((t) => t.toLowerCase() === normalizedTag)
+    )
+    .map((release) => ({
       type: 'release' as const,
       slug: release.frontMatter.version,
       title: release.frontMatter.title,
@@ -165,14 +174,18 @@ export async function getContentByTag(tag: string): Promise<UnifiedTagData> {
     }))
 
   // Filter documents
-  const docContent: TaggedContent[] = docs.filter(doc => doc.tags.some(t => t.toLowerCase() === normalizedTag))
+  const docContent: TaggedContent[] = docs.filter((doc) =>
+    doc.tags.some((t) => t.toLowerCase() === normalizedTag)
+  )
 
-  const totalCount = blogContent.length + releaseContent.length + docContent.length
+  const totalCount =
+    blogContent.length + releaseContent.length + docContent.length
 
   // Get original tag name (first matching found)
-  const originalTag = [...blogContent, ...releaseContent, ...docContent]
-    .flatMap(content => content.tags)
-    .find(t => t.toLowerCase() === normalizedTag) || tag
+  const originalTag =
+    [...blogContent, ...releaseContent, ...docContent]
+      .flatMap((content) => content.tags)
+      .find((t) => t.toLowerCase() === normalizedTag) || tag
 
   return {
     tag: originalTag,
@@ -190,15 +203,22 @@ export async function getPopularTags(limit: number = 10): Promise<TagCount[]> {
 }
 
 // Get related tags (commonly used together)
-export async function getRelatedTags(currentTag: string, limit: number = 5): Promise<string[]> {
+export async function getRelatedTags(
+  currentTag: string,
+  limit: number = 5
+): Promise<string[]> {
   const contentByTag = await getContentByTag(currentTag)
-  const allContent = [...contentByTag.blog, ...contentByTag.releases, ...contentByTag.docs]
-  
+  const allContent = [
+    ...contentByTag.blog,
+    ...contentByTag.releases,
+    ...contentByTag.docs,
+  ]
+
   const relatedTagCounts = new Map<string, number>()
   const normalizedCurrentTag = currentTag.toLowerCase()
-  
-  allContent.forEach(content => {
-    content.tags.forEach(tag => {
+
+  allContent.forEach((content) => {
+    content.tags.forEach((tag) => {
       if (tag.toLowerCase() !== normalizedCurrentTag) {
         relatedTagCounts.set(tag, (relatedTagCounts.get(tag) || 0) + 1)
       }
@@ -216,7 +236,7 @@ export async function getTagsByCategory(): Promise<Record<string, TagCount[]>> {
   const [blogPosts, releases, docs] = await Promise.all([
     getAllBlogPostMetas(),
     getAllReleaseMetas(),
-    getAllDocMetas()
+    getAllDocMetas(),
   ])
 
   const categorizedTags: Record<string, Map<string, number>> = {
@@ -226,29 +246,32 @@ export async function getTagsByCategory(): Promise<Record<string, TagCount[]>> {
   }
 
   // Aggregate blog tags
-  blogPosts.forEach(post => {
-    post.frontMatter.tags.forEach(tag => {
+  blogPosts.forEach((post) => {
+    post.frontMatter.tags.forEach((tag) => {
       categorizedTags.blog.set(tag, (categorizedTags.blog.get(tag) || 0) + 1)
     })
   })
 
   // Aggregate release tags
-  releases.forEach(release => {
-    release.frontMatter.tags.forEach(tag => {
-      categorizedTags.releases.set(tag, (categorizedTags.releases.get(tag) || 0) + 1)
+  releases.forEach((release) => {
+    release.frontMatter.tags.forEach((tag) => {
+      categorizedTags.releases.set(
+        tag,
+        (categorizedTags.releases.get(tag) || 0) + 1
+      )
     })
   })
 
   // Aggregate document tags
-  docs.forEach(doc => {
-    doc.tags.forEach(tag => {
+  docs.forEach((doc) => {
+    doc.tags.forEach((tag) => {
       categorizedTags.docs.set(tag, (categorizedTags.docs.get(tag) || 0) + 1)
     })
   })
 
   // Convert Map to TagCount[]
   const result: Record<string, TagCount[]> = {}
-  
+
   Object.entries(categorizedTags).forEach(([category, tagMap]) => {
     result[category] = Array.from(tagMap.entries())
       .map(([tag, count]) => ({ tag, count }))

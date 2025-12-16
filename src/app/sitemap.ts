@@ -9,12 +9,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const locales = ['en', 'jp']
 
   // Helper function to create pages for both locales
-  const createLocalizedPages = (path: string, options: {
-    lastModified: Date,
-    changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never',
-    priority: number
-  }) => {
-    return locales.map(locale => ({
+  const createLocalizedPages = (
+    path: string,
+    options: {
+      lastModified: Date
+      changeFrequency:
+        | 'always'
+        | 'hourly'
+        | 'daily'
+        | 'weekly'
+        | 'monthly'
+        | 'yearly'
+        | 'never'
+      priority: number
+    }
+  ) => {
+    return locales.map((locale) => ({
       url: `${baseUrl}/${locale}${path}`,
       lastModified: options.lastModified,
       changeFrequency: options.changeFrequency,
@@ -89,10 +99,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     // Blog posts for both locales
     const blogPosts = await getAllBlogPostMetas()
-    const blogPages = blogPosts.flatMap((post) => 
-      locales.map(locale => ({
+    const blogPages = blogPosts.flatMap((post) =>
+      locales.map((locale) => ({
         url: `${baseUrl}/${locale}/blog/${post.slug}`,
-        lastModified: new Date(post.frontMatter.updatedAt || post.frontMatter.publishedAt),
+        lastModified: new Date(
+          post.frontMatter.updatedAt || post.frontMatter.publishedAt
+        ),
         changeFrequency: 'monthly' as const,
         priority: post.frontMatter.featured ? 0.8 : 0.6,
       }))
@@ -100,8 +112,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Release notes for both locales
     const releases = await getAllReleaseMetas()
-    const releasePages = releases.flatMap((release) => 
-      locales.map(locale => ({
+    const releasePages = releases.flatMap((release) =>
+      locales.map((locale) => ({
         url: `${baseUrl}/${locale}/releases/${release.frontMatter.version}`,
         lastModified: new Date(release.frontMatter.date),
         changeFrequency: 'yearly' as const,
@@ -112,13 +124,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Documentation pages for both locales
     const docPaths = [
       '/docs/introduction',
-      '/docs/installation', 
+      '/docs/installation',
       '/docs/quickstart',
       '/docs/api-reference/authentication',
       '/docs/guides/quick-start',
     ]
-    const docPages = docPaths.flatMap(path => 
-      locales.map(locale => ({
+    const docPages = docPaths.flatMap((path) =>
+      locales.map((locale) => ({
         url: `${baseUrl}/${locale}${path}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
@@ -128,8 +140,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Tag pages for both locales
     const tags = await getAllTags()
-    const tagPages = tags.slice(0, 50).flatMap((tag) => 
-      locales.map(locale => ({
+    const tagPages = tags.slice(0, 50).flatMap((tag) =>
+      locales.map((locale) => ({
         url: `${baseUrl}/${locale}/tags/${encodeURIComponent(tag.tag.toLowerCase())}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
@@ -144,7 +156,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...docPages,
       ...tagPages,
     ]
-  } catch (error) {
+  } catch {
     return staticPages
   }
 }

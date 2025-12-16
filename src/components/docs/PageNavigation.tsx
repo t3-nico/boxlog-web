@@ -7,7 +7,10 @@ interface PageNavigationProps {
   nextPage?: ContentData
 }
 
-export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) {
+export function PageNavigation({
+  previousPage,
+  nextPage,
+}: PageNavigationProps) {
   if (!previousPage && !nextPage) {
     return null
   }
@@ -25,7 +28,9 @@ export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) 
               <div className="flex items-center">
                 <ChevronLeft className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-400 mr-3" />
                 <div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Previous</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                    Previous
+                  </div>
                   <div className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {previousPage.frontMatter.title}
                   </div>
@@ -44,7 +49,9 @@ export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) 
             >
               <div className="flex items-center text-right">
                 <div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Next</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                    Next
+                  </div>
                   <div className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {nextPage.frontMatter.title}
                   </div>

@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote/rsc'
 
 export interface ReleaseFrontMatter {
   version: string
@@ -49,32 +48,37 @@ export const changeTypes: ChangeType[] = [
     id: 'new-features',
     label: 'New Features',
     icon: '🎉',
-    color: 'bg-[rgb(var(--release-new-bg))] text-[rgb(var(--release-new-text))] border-[rgb(var(--release-new-border))]'
+    color:
+      'bg-[rgb(var(--release-new-bg))] text-[rgb(var(--release-new-text))] border-[rgb(var(--release-new-border))]',
   },
   {
     id: 'improvements',
     label: 'Improvements',
     icon: '🔧',
-    color: 'bg-[rgb(var(--release-improvement-bg))] text-[rgb(var(--release-improvement-text))] border-[rgb(var(--release-improvement-border))]'
+    color:
+      'bg-[rgb(var(--release-improvement-bg))] text-[rgb(var(--release-improvement-text))] border-[rgb(var(--release-improvement-border))]',
   },
   {
     id: 'bug-fixes',
     label: 'Bug Fixes',
     icon: '🐛',
-    color: 'bg-[rgb(var(--release-bugfix-bg))] text-[rgb(var(--release-bugfix-text))] border-[rgb(var(--release-bugfix-border))]'
+    color:
+      'bg-[rgb(var(--release-bugfix-bg))] text-[rgb(var(--release-bugfix-text))] border-[rgb(var(--release-bugfix-border))]',
   },
   {
     id: 'breaking-changes',
     label: 'Breaking Changes',
     icon: '⚠️',
-    color: 'bg-[rgb(var(--release-breaking-bg))] text-[rgb(var(--release-breaking-text))] border-[rgb(var(--release-breaking-border))]'
+    color:
+      'bg-[rgb(var(--release-breaking-bg))] text-[rgb(var(--release-breaking-text))] border-[rgb(var(--release-breaking-border))]',
   },
   {
     id: 'security-updates',
     label: 'Security Updates',
     icon: '🔒',
-    color: 'bg-[rgb(var(--release-security-bg))] text-[rgb(var(--release-security-text))] border-[rgb(var(--release-security-border))]'
-  }
+    color:
+      'bg-[rgb(var(--release-security-bg))] text-[rgb(var(--release-security-text))] border-[rgb(var(--release-security-border))]',
+  },
 ]
 
 // セマンティックバージョニングでソート
@@ -86,7 +90,7 @@ export function sortVersions(versions: string[]): string[] {
       return {
         major: parts[0] || 0,
         minor: parts[1] || 0,
-        patch: parts[2] || 0
+        patch: parts[2] || 0,
       }
     }
 
@@ -114,19 +118,19 @@ export function calculateReleaseTime(content: string): number {
 // 全てのリリースノートメタデータを取得
 export async function getAllReleaseMetas(): Promise<ReleasePostMeta[]> {
   const releasesDirectory = path.join(process.cwd(), 'content', 'releases')
-  
+
   if (!fs.existsSync(releasesDirectory)) {
     return []
   }
 
   const filenames = fs.readdirSync(releasesDirectory)
-  const mdxFiles = filenames.filter(name => name.endsWith('.mdx'))
+  const mdxFiles = filenames.filter((name) => name.endsWith('.mdx'))
 
-  const releases = mdxFiles.map(filename => {
+  const releases = mdxFiles.map((filename) => {
     const filePath = path.join(releasesDirectory, filename)
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(fileContents)
-    
+
     const frontMatter = data as ReleaseFrontMatter
     const slug = filename.replace(/\.mdx$/, '')
     const readingTime = calculateReleaseTime(content)
@@ -135,7 +139,7 @@ export async function getAllReleaseMetas(): Promise<ReleasePostMeta[]> {
       frontMatter,
       slug,
       content,
-      readingTime
+      readingTime,
     }
   })
 
@@ -143,7 +147,10 @@ export async function getAllReleaseMetas(): Promise<ReleasePostMeta[]> {
   releases.sort((a, b) => {
     const versions = [a.frontMatter.version, b.frontMatter.version]
     const sorted = sortVersions(versions)
-    return sorted.indexOf(a.frontMatter.version) - sorted.indexOf(b.frontMatter.version)
+    return (
+      sorted.indexOf(a.frontMatter.version) -
+      sorted.indexOf(b.frontMatter.version)
+    )
   })
 
   return releases
@@ -154,14 +161,14 @@ export async function getRelease(version: string): Promise<ReleasePost | null> {
   try {
     const releasesDirectory = path.join(process.cwd(), 'content', 'releases')
     const filePath = path.join(releasesDirectory, `${version}.mdx`)
-    
+
     if (!fs.existsSync(filePath)) {
       return null
     }
 
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(fileContents)
-    
+
     const frontMatter = data as ReleaseFrontMatter
     const readingTime = calculateReleaseTime(content)
 
@@ -169,19 +176,19 @@ export async function getRelease(version: string): Promise<ReleasePost | null> {
       frontMatter,
       content,
       slug: version,
-      readingTime
+      readingTime,
     }
-  } catch (error) {
+  } catch {
     return null
   }
 }
 
 // タグ別リリースノート取得
-export async function getReleasesByTag(tag: string): Promise<ReleasePostMeta[]> {
+export async function getReleasesByTag(
+  tag: string
+): Promise<ReleasePostMeta[]> {
   const allReleases = await getAllReleaseMetas()
-  return allReleases.filter(release => 
-    release.frontMatter.tags.includes(tag)
-  )
+  return allReleases.filter((release) => release.frontMatter.tags.includes(tag))
 }
 
 // 全タグとその数を取得
@@ -189,8 +196,8 @@ export async function getAllReleaseTags(): Promise<TagCount[]> {
   const allReleases = await getAllReleaseMetas()
   const tagCounts = new Map<string, number>()
 
-  allReleases.forEach(release => {
-    release.frontMatter.tags.forEach(tag => {
+  allReleases.forEach((release) => {
+    release.frontMatter.tags.forEach((tag) => {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
     })
   })
@@ -203,54 +210,60 @@ export async function getAllReleaseTags(): Promise<TagCount[]> {
 // 注目リリース取得
 export async function getFeaturedReleases(): Promise<ReleasePostMeta[]> {
   const allReleases = await getAllReleaseMetas()
-  return allReleases.filter(release => release.frontMatter.featured)
+  return allReleases.filter((release) => release.frontMatter.featured)
 }
 
 // 関連リリース取得
 export async function getRelatedReleases(
-  currentVersion: string, 
+  currentVersion: string,
   limit: number = 3
 ): Promise<ReleasePostMeta[]> {
   const allReleases = await getAllReleaseMetas()
-  const currentRelease = allReleases.find(r => r.frontMatter.version === currentVersion)
-  
+  const currentRelease = allReleases.find(
+    (r) => r.frontMatter.version === currentVersion
+  )
+
   if (!currentRelease) {
     return []
   }
 
   // タグベースでの関連性スコア計算
   const relatedReleases = allReleases
-    .filter(release => release.frontMatter.version !== currentVersion)
-    .map(release => {
-      const commonTags = release.frontMatter.tags.filter(tag =>
+    .filter((release) => release.frontMatter.version !== currentVersion)
+    .map((release) => {
+      const commonTags = release.frontMatter.tags.filter((tag) =>
         currentRelease.frontMatter.tags.includes(tag)
       )
-      
+
       return {
         ...release,
-        score: commonTags.length
+        score: commonTags.length,
       }
     })
-    .filter(release => release.score > 0)
+    .filter((release) => release.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
 
-  return relatedReleases.map(({ score, ...release }) => release)
+  return relatedReleases.map(({ score: _score, ...release }) => release)
 }
 
 // リリースノート検索
-export async function searchReleases(query: string): Promise<ReleasePostMeta[]> {
+export async function searchReleases(
+  query: string
+): Promise<ReleasePostMeta[]> {
   const allReleases = await getAllReleaseMetas()
   const lowercaseQuery = query.toLowerCase()
 
-  return allReleases.filter(release => {
+  return allReleases.filter((release) => {
     const searchText = [
       release.frontMatter.title,
       release.frontMatter.description,
       release.frontMatter.version,
       ...release.frontMatter.tags,
-      release.content
-    ].join(' ').toLowerCase()
+      release.content,
+    ]
+      .join(' ')
+      .toLowerCase()
 
     return searchText.includes(lowercaseQuery)
   })
@@ -258,33 +271,39 @@ export async function searchReleases(query: string): Promise<ReleasePostMeta[]> 
 
 // プレリリース・ベータ版の判定
 export function isPrerelease(version: string): boolean {
-  return version.includes('beta') || 
-         version.includes('alpha') || 
-         version.includes('rc') ||
-         version.includes('pre')
+  return (
+    version.includes('beta') ||
+    version.includes('alpha') ||
+    version.includes('rc') ||
+    version.includes('pre')
+  )
 }
 
 // バージョンタイプの判定
-export function getVersionType(version: string): 'major' | 'minor' | 'patch' | 'prerelease' {
+export function getVersionType(
+  version: string
+): 'major' | 'minor' | 'patch' | 'prerelease' {
   if (isPrerelease(version)) {
     return 'prerelease'
   }
 
   const cleanVersion = version.replace(/^v/, '')
   const parts = cleanVersion.split('.').map(Number)
-  
+
   if (parts[2] > 0) return 'patch'
   if (parts[1] > 0) return 'minor'
   return 'major'
 }
 
 // 次期リリース予定の取得（モック）
-export async function getUpcomingReleases(): Promise<{
-  version: string
-  expectedDate: string
-  features: string[]
-  status: 'planning' | 'development' | 'testing' | 'review'
-}[]> {
+export async function getUpcomingReleases(): Promise<
+  {
+    version: string
+    expectedDate: string
+    features: string[]
+    status: 'planning' | 'development' | 'testing' | 'review'
+  }[]
+> {
   // 実際のプロダクションでは外部APIやデータベースから取得
   return [
     {
@@ -293,9 +312,9 @@ export async function getUpcomingReleases(): Promise<{
       features: [
         'Advanced Team Analytics',
         'Real-time Collaboration',
-        'Enhanced Mobile Experience'
+        'Enhanced Mobile Experience',
       ],
-      status: 'testing'
+      status: 'testing',
     },
     {
       version: 'v2.3.0',
@@ -303,10 +322,10 @@ export async function getUpcomingReleases(): Promise<{
       features: [
         'AI-Powered Insights',
         'Custom Integrations API',
-        'Advanced Security Features'
+        'Advanced Security Features',
       ],
-      status: 'development'
-    }
+      status: 'development',
+    },
   ]
 }
 
@@ -320,7 +339,7 @@ export function generateReleaseTimeline(releases: ReleasePostMeta[]): {
 }[] {
   const timeline = new Map<string, Map<string, ReleasePostMeta[]>>()
 
-  releases.forEach(release => {
+  releases.forEach((release) => {
     const date = new Date(release.frontMatter.date)
     const year = date.getFullYear().toString()
     const month = date.toLocaleDateString('ja-JP', { month: 'long' })
@@ -343,10 +362,22 @@ export function generateReleaseTimeline(releases: ReleasePostMeta[]): {
       months: Array.from(monthsMap.entries())
         .map(([month, releases]) => ({ month, releases }))
         .sort((a, b) => {
-          const monthOrder = ['January', 'February', 'March', 'April', 'May', 'June',
-                            'July', 'August', 'September', 'October', 'November', 'December']
+          const monthOrder = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+          ]
           return monthOrder.indexOf(b.month) - monthOrder.indexOf(a.month)
-        })
+        }),
     }))
     .sort((a, b) => parseInt(b.year) - parseInt(a.year))
 }

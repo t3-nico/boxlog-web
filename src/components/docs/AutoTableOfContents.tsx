@@ -51,7 +51,10 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
   )
 }
 
-export function AutoTableOfContents({ content, className = '' }: AutoTableOfContentsProps) {
+export function AutoTableOfContents({
+  content,
+  className = '',
+}: AutoTableOfContentsProps) {
   const [toc, setToc] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>('')
   const [isLoaded, setIsLoaded] = useState(false)
@@ -62,7 +65,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
       const tocItems = generateTableOfContents(content)
       setToc(tocItems)
       setIsLoaded(true)
-    } catch (error) {
+    } catch {
       setIsLoaded(true)
     }
   }, [content])
@@ -74,8 +77,8 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
     const observer = new IntersectionObserver(
       (entries) => {
         // 画面内に見える見出し要素をフィルタリング
-        const visibleEntries = entries.filter(entry => entry.isIntersecting)
-        
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
+
         if (visibleEntries.length > 0) {
           // 最も上に見える要素を選択
           const topEntry = visibleEntries.reduce((top, entry) => {
@@ -86,7 +89,9 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
           setActiveId(topEntry.target.id)
         } else {
           // 見える要素がない場合、最も上に近い要素を探す
-          const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+          const allHeadings = document.querySelectorAll(
+            'h1, h2, h3, h4, h5, h6'
+          )
           let activeElement: Element | null = null
           let minDistance = Infinity
 
@@ -180,7 +185,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       })
 
       // URLハッシュを更新（履歴には追加しない）
@@ -198,11 +203,15 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
           On This Page
         </div>
         {!isLoaded ? (
-          <div className="text-sm text-gray-500 dark:text-gray-400">Loading...</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            Loading...
+          </div>
         ) : (
-          <div className="text-sm text-gray-500 dark:text-gray-400">No headings found</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            No headings found
+          </div>
         )}
-        
+
         {/* Helpful Links */}
         <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
           <div className="space-y-4">
@@ -214,8 +223,18 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
                 href="#"
                 className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
               >
-                <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                <svg
+                  className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  />
                 </svg>
                 Edit this page
               </a>
@@ -223,8 +242,18 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
                 href="#"
                 className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
               >
-                <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                <svg
+                  className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
                 </svg>
                 Report an issue
               </a>
@@ -232,8 +261,18 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
                 href="#"
                 className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
               >
-                <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8" />
+                <svg
+                  className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8"
+                  />
                 </svg>
                 Give feedback
               </a>
@@ -249,7 +288,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
       <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
         On This Page
       </div>
-      
+
       <nav className="space-y-1">
         <TocList
           items={toc}
@@ -269,8 +308,18 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               href="#"
               className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
             >
-              <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              <svg
+                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
               </svg>
               Edit this page
             </a>
@@ -278,8 +327,18 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               href="#"
               className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
             >
-              <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              <svg
+                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
+                />
               </svg>
               Report an issue
             </a>
@@ -287,8 +346,18 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               href="#"
               className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
             >
-              <svg className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8" />
+              <svg
+                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8"
+                />
               </svg>
               Give feedback
             </a>
@@ -302,13 +371,13 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 // 階層化された目次をフラットなリストに変換
 function flattenTocItems(items: TocItem[]): TocItem[] {
   const flattened: TocItem[] = []
-  
+
   for (const item of items) {
     flattened.push(item)
     if (item.children) {
       flattened.push(...flattenTocItems(item.children))
     }
   }
-  
+
   return flattened
 }

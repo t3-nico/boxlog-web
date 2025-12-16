@@ -25,30 +25,30 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               <div className="mb-4 text-9xl font-bold text-neutral-200 dark:text-neutral-800">
                 !
               </div>
-              
+
               <Heading as="h2" size="xl" className="mb-4">
                 Something went wrong
               </Heading>
-              
+
               <Text variant="muted" className="mb-8">
-                An unexpected error occurred. This has been automatically reported 
-                to our team and we&apos;re working to fix it.
+                An unexpected error occurred. This has been automatically
+                reported to our team and we&apos;re working to fix it.
               </Text>
-              
+
               <div className="space-y-4">
                 <Button onClick={reset} className="w-full">
                   Try again
                 </Button>
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   className="w-full"
-                  onClick={() => window.location.href = '/'}
+                  onClick={() => (window.location.href = '/')}
                 >
                   Go home
                 </Button>
               </div>
-              
+
               {/* Error details for development */}
               {process.env.NODE_ENV === 'development' && (
                 <div className="mt-8 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg text-left">

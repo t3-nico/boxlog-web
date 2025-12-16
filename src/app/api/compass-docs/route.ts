@@ -17,10 +17,13 @@ export async function GET(request: NextRequest) {
     const query = searchParams.get('q')
 
     const compassRoot = join(process.cwd(), 'compass')
-    
+
     // Compassディレクトリが存在するかチェック
     if (!existsSync(compassRoot)) {
-      return NextResponse.json({ error: 'Compass directory not found' }, { status: 404 })
+      return NextResponse.json(
+        { error: 'Compass directory not found' },
+        { status: 404 }
+      )
     }
 
     const patterns = [
@@ -29,7 +32,7 @@ export async function GET(request: NextRequest) {
       'architecture/**/*.md',
       'design-system/**/*.md',
       'resources/**/*.md',
-      'README.md'
+      'README.md',
     ]
 
     const docs: CompassDoc[] = []
@@ -37,14 +40,17 @@ export async function GET(request: NextRequest) {
     for (const pattern of patterns) {
       try {
         const files = await glob(pattern, { cwd: compassRoot })
-        
+
         for (const file of files) {
           try {
             const fullPath = join(compassRoot, file)
             if (!existsSync(fullPath)) continue
-            
+
             const content = readFileSync(fullPath, 'utf-8')
-            const title = extractTitle(content) || file.split('/').pop()?.replace('.md', '') || 'Untitled'
+            const title =
+              extractTitle(content) ||
+              file.split('/').pop()?.replace('.md', '') ||
+              'Untitled'
             const category = getCategoryFromPath(file)
 
             docs.push({
@@ -52,7 +58,7 @@ export async function GET(request: NextRequest) {
               title,
               path: `compass/${file}`,
               content: content.slice(0, 500), // 検索用に最初の500文字
-              category
+              category,
             })
           } catch (error) {
             console.warn(`Failed to read compass doc: ${file}`, error)
@@ -67,27 +73,32 @@ export async function GET(request: NextRequest) {
     let filteredDocs = docs
     if (query) {
       const lowercaseQuery = query.toLowerCase()
-      filteredDocs = docs.filter(doc => 
-        doc.title.toLowerCase().includes(lowercaseQuery) ||
-        doc.content.toLowerCase().includes(lowercaseQuery) ||
-        doc.path.toLowerCase().includes(lowercaseQuery)
-      ).sort((a, b) => {
-        // タイトルマッチを優先
-        const aInTitle = a.title.toLowerCase().includes(lowercaseQuery)
-        const bInTitle = b.title.toLowerCase().includes(lowercaseQuery)
-        
-        if (aInTitle && !bInTitle) return -1
-        if (!aInTitle && bInTitle) return 1
-        
-        return a.title.localeCompare(b.title)
-      })
+      filteredDocs = docs
+        .filter(
+          (doc) =>
+            doc.title.toLowerCase().includes(lowercaseQuery) ||
+            doc.content.toLowerCase().includes(lowercaseQuery) ||
+            doc.path.toLowerCase().includes(lowercaseQuery)
+        )
+        .sort((a, b) => {
+          // タイトルマッチを優先
+          const aInTitle = a.title.toLowerCase().includes(lowercaseQuery)
+          const bInTitle = b.title.toLowerCase().includes(lowercaseQuery)
+
+          if (aInTitle && !bInTitle) return -1
+          if (!aInTitle && bInTitle) return 1
+
+          return a.title.localeCompare(b.title)
+        })
     }
 
     return NextResponse.json({ docs: filteredDocs })
-
   } catch (error) {
     console.error('Failed to load compass docs:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
   }
 }
 
