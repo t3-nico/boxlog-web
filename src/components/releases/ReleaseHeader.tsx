@@ -1,8 +1,5 @@
-import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
 import { ShareButton } from './ShareButton'
 
 // Local type definitions and utilities
@@ -45,7 +42,7 @@ interface ReleaseHeaderProps {
   version: string
 }
 
-export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
+export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
   const versionType = getVersionType(frontMatter.version)
   
   const versionBadgeStyles = {
