@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import type { AIMetadata } from '@/types/content'
 
 export interface BlogPostFrontMatter {
   title: string
@@ -15,6 +16,8 @@ export interface BlogPostFrontMatter {
   draft?: boolean
   featured?: boolean
   readingTime?: number
+  // AI/RAG用メタデータ
+  ai?: AIMetadata
 }
 
 export interface BlogPost {
