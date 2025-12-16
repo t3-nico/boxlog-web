@@ -262,7 +262,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
             View Changes
           </a>
           
-          <a
+          <Link
             href="/releases"
             className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
           >
@@ -270,7 +270,7 @@ export function ReleaseHeader({ frontMatter, version }: ReleaseHeaderProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Releases
-          </a>
+          </Link>
 
           <ShareButton 
             title={frontMatter.title}
