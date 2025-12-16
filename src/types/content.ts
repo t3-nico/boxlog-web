@@ -1,19 +1,18 @@
 import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 
 /**
- * AI検索・RAG用のメタデータ
+ * AI検索・RAG用のメタデータ（簡略化版）
  * チャットボットやベクトル検索で使用される追加情報
+ *
+ * 重複を避けるための設計方針:
+ * - keywords → 既存の `tags` フィールドを流用（ここでは定義しない）
+ * - aiSummary → 既存の `description` フィールドを流用（ここでは定義しない）
  */
 export interface AIMetadata {
   /**
-   * 検索用キーワード（日本語・英語両方を含める）
-   * 例: ["インストール", "install", "npm", "セットアップ"]
-   */
-  keywords?: string[]
-
-  /**
    * このドキュメントで回答できる想定質問
    * RAGでの関連性判断に使用
+   * ※ 手動で記述する唯一の必須フィールド
    * 例: ["BoxLogをインストールする方法は？", "How to install BoxLog?"]
    */
   relatedQuestions?: string[]
@@ -29,12 +28,6 @@ export interface AIMetadata {
    * 例: ["/docs/getting-started/quick-start", "/docs/api/configuration"]
    */
   relatedDocs?: string[]
-
-  /**
-   * AI用の要約（200文字程度）
-   * ベクトル埋め込み時の追加コンテキストとして使用
-   */
-  aiSummary?: string
 
   /**
    * コンテンツのチャンク戦略
