@@ -15,7 +15,6 @@
     "analyze": "ANALYZE=true npm run build",
     "type-check": "tsc --noEmit",
     "build:production": "NODE_ENV=production npm run build",
-    "test:lighthouse": "lhci autorun",
     "audit:accessibility": "node src/scripts/accessibility-audit.js",
     "test:a11y": "npm run build && npm run audit:accessibility",
     "audit:performance": "node src/scripts/performance-audit.js",
