@@ -87,7 +87,6 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
     section,
     tags = [],
     locale = siteConfig.locale,
-    alternateLocales = siteConfig.alternateLocales,
     noindex = false,
   } = data
 

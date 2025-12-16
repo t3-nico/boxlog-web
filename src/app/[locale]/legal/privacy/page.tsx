@@ -27,8 +27,7 @@ export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
-export default function PrivacyPolicyPage({ params }: PageProps) {
-  const { locale } = params
+export default function PrivacyPolicyPage({ params: _params }: PageProps) {
   const lastUpdated = '2024-01-15'
 
   return (

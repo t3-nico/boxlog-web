@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { Input } from '@/components/ui/input'
@@ -9,55 +10,21 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Highlight } from '@/lib/highlight'
 
-// Mock data - replace with actual search API in real implementation
-const MOCK_RESULTS = [
-  {
-    id: '1',
-    title: 'Authentication API - YourSaaS Docs',
-    description:
-      'Complete guide to YourSaaS authentication system. Learn how to implement secure user authentication, session management, and access control.',
-    url: '/docs/api-reference/authentication',
-    type: 'docs',
-    breadcrumbs: ['Documentation', 'API Reference', 'Authentication'],
-    lastModified: '2024-01-25',
-  },
-  {
-    id: '2',
-    title: '5-Minute Quickstart Guide',
-    description:
-      'Build your first YourSaaS application in just 5 minutes. This quickstart guide will have you creating users, handling authentication, and making API calls.',
-    url: '/docs/guides/quick-start',
-    type: 'docs',
-    breadcrumbs: ['Documentation', 'Guides', 'Quick Start'],
-    lastModified: '2024-01-28',
-  },
-  {
-    id: '3',
-    title: 'Complete Guide to Building SaaS Applications with Next.js 14',
-    description:
-      'Next.js 14 provides many innovative features for SaaS application development. Learn how to build production-ready SaaS applications.',
-    url: '/blog/nextjs-saas-guide',
-    type: 'blog',
-    breadcrumbs: ['Blog', 'Tutorial'],
-    lastModified: '2024-01-20',
-  },
-  {
-    id: '4',
-    title: 'Release v2.1.0 - Enhanced Security Features',
-    description:
-      'New security enhancements including MFA support, advanced audit logging, and improved API rate limiting.',
-    url: '/releases/v2.1.0',
-    type: 'release',
-    breadcrumbs: ['Releases', 'v2.1.0'],
-    lastModified: '2024-01-15',
-  },
-]
+interface SearchResultItem {
+  id: string
+  title: string
+  description: string
+  url: string
+  type: 'docs' | 'blog' | 'release'
+  breadcrumbs: string[]
+  lastModified: string
+}
 
 function SearchResults() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<typeof MOCK_RESULTS>([])
+  const [results, setResults] = useState<SearchResultItem[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState<
     'all' | 'docs' | 'blog' | 'release'
@@ -76,7 +43,7 @@ function SearchResults() {
           setResults(data.results || [])
           setIsLoading(false)
         })
-        .catch((error) => {
+        .catch((_error) => {
           setResults([])
           setIsLoading(false)
         })
@@ -287,12 +254,12 @@ function SearchResults() {
                     <div className="flex items-start gap-4 mb-3">
                       {getTypeIcon(result.type)}
                       <div className="flex-1 min-w-0">
-                        <a
+                        <Link
                           href={result.url}
                           className="text-lg font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] hover:underline block truncate"
                         >
                           <Highlight text={result.title} query={query} />
-                        </a>
+                        </Link>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge
                             variant="outline"
@@ -317,12 +284,12 @@ function SearchResults() {
                       <span className="text-xs text-[rgb(var(--text-tertiary))]">
                         最終更新: {result.lastModified}
                       </span>
-                      <a
+                      <Link
                         href={result.url}
                         className="text-xs text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
                       >
                         詳細を見る →
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 ))}

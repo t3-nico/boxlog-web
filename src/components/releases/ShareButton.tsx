@@ -17,7 +17,7 @@ export function ShareButton({ title, version }: ShareButtonProps) {
     if (navigator.share) {
       try {
         await navigator.share({ title: fullTitle, url })
-      } catch (err) {
+      } catch {
         // User cancelled share
         console.log('Share cancelled')
       }

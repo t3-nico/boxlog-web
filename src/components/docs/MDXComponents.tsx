@@ -7,8 +7,6 @@ import { generateAnchorId } from '@/lib/toc'
 
 // カスタムコードブロックコンポーネント
 function CodeBlock({ children, className, ...props }: any) {
-  const language = className?.replace('language-', '') || 'text'
-
   return (
     <div className="relative group">
       <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -288,17 +286,13 @@ export const mdxComponents: MDXComponents = {
   ),
 
   // コード
-  code: ({ children, className, ...props }: any) => {
+  code: ({ children, className }: any) => {
     if (className) {
-      return (
-        <CodeBlock className={className} {...props}>
-          {children}
-        </CodeBlock>
-      )
+      return <CodeBlock className={className}>{children}</CodeBlock>
     }
-    return <InlineCode {...props}>{children}</InlineCode>
+    return <InlineCode>{children}</InlineCode>
   },
-  pre: ({ children, ...props }: any) => <div className="my-6">{children}</div>,
+  pre: ({ children }: any) => <div className="my-6">{children}</div>,
 
   // 引用
   blockquote: ({ children, ...props }) => (
@@ -324,7 +318,7 @@ export const mdxComponents: MDXComponents = {
   ),
 
   // 画像
-  img: ({ src, alt, title, ...props }) => (
+  img: ({ src, alt, title }) => (
     <div className="relative my-6 rounded-lg overflow-hidden">
       <Image
         src={src || '/placeholder.png'}

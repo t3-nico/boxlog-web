@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import {
   getAllContent,
@@ -40,7 +41,7 @@ export async function generateStaticParams(): Promise<PageParams[]> {
     }
 
     return params
-  } catch (error) {
+  } catch {
     return []
   }
 }
@@ -50,7 +51,6 @@ export async function generateMetadata({
   params,
 }: DocPageProps): Promise<Metadata> {
   try {
-    const slug = params.slug.join('/')
     const category = params.slug[0] as any
     const contentSlug = params.slug.slice(1).join('/')
 
@@ -85,7 +85,7 @@ export async function generateMetadata({
         description: frontMatter.description,
       },
     }
-  } catch (error) {
+  } catch {
     return {
       title: 'Documentation - YourSaaS',
       description: 'YourSaaS documentation and guides',
@@ -115,14 +115,13 @@ async function getAdjacentPages(slug: string): Promise<{
           ? allContent[currentIndex + 1]
           : undefined,
     }
-  } catch (error) {
+  } catch {
     return {}
   }
 }
 
 // Main page component
 export default async function DocPage({ params }: DocPageProps) {
-  const { locale } = params
   try {
     const slug = params.slug.join('/')
     const category = params.slug[0] as any
@@ -222,7 +221,7 @@ export default async function DocPage({ params }: DocPageProps) {
         </aside>
       </div>
     )
-  } catch (error) {
+  } catch {
     // Error page
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -233,12 +232,12 @@ export default async function DocPage({ params }: DocPageProps) {
           <Text variant="muted" className="mb-6">
             We encountered an error while loading this page.
           </Text>
-          <a
+          <Link
             href="/docs"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Back to Documentation
-          </a>
+          </Link>
         </div>
       </div>
     )

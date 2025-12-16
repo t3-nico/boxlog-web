@@ -1,5 +1,4 @@
 import { getAllContent } from '@/lib/mdx'
-import type { ContentData } from '@/types/content'
 
 export interface SearchIndexItem {
   id: string
@@ -278,7 +277,7 @@ export class SearchHistory {
     try {
       const stored = localStorage.getItem(this.storageKey)
       return stored ? JSON.parse(stored) : []
-    } catch (error) {
+    } catch {
       return []
     }
   }
@@ -286,8 +285,8 @@ export class SearchHistory {
   static clear(): void {
     try {
       localStorage.removeItem(this.storageKey)
-    } catch (error) {
-      console.error('Failed to clear search history:', error)
+    } catch (_error) {
+      console.error('Failed to clear search history:', _error)
     }
   }
 }

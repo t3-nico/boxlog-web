@@ -65,7 +65,7 @@ export function AutoTableOfContents({
       const tocItems = generateTableOfContents(content)
       setToc(tocItems)
       setIsLoaded(true)
-    } catch (error) {
+    } catch {
       setIsLoaded(true)
     }
   }, [content])

@@ -71,7 +71,7 @@ export async function getMDXContent(
       slug,
       path: filePath,
     }
-  } catch (error) {
+  } catch {
     return null
   }
 }

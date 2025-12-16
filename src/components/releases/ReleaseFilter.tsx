@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Filter,
@@ -41,8 +41,8 @@ export function ReleaseFilter({
   showFeaturedOnly,
   onTagToggle,
   onTypeToggle,
-  onBreakingToggle,
-  onFeaturedToggle,
+  onBreakingToggle: _onBreakingToggle,
+  onFeaturedToggle: _onFeaturedToggle,
   onClearFilters,
   dict,
   locale,
@@ -152,7 +152,7 @@ function TagFilter({
   onTagToggle,
   maxDisplay = 10,
   dict,
-  locale,
+  locale: _locale,
 }: TagFilterProps) {
   const [showAll, setShowAll] = useState(false)
   const displayTags = showAll ? tags : tags.slice(0, maxDisplay)
@@ -264,7 +264,7 @@ export function FilterSummary({
   onFeaturedToggle,
   onClearAll,
   dict,
-  locale,
+  locale: _locale,
 }: FilterSummaryProps) {
   const hasFilters =
     selectedTags.length > 0 ||

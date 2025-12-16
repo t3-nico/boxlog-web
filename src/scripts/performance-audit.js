@@ -191,7 +191,7 @@ const performanceChecks = {
             }
           })
         }
-      } catch (error) {
+      } catch {
         // Ignore files that can't be read
       }
     }

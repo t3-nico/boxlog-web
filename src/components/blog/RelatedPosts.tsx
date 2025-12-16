@@ -14,7 +14,7 @@ interface RelatedPostsProps {
 
 export function RelatedPosts({
   posts,
-  currentSlug,
+  currentSlug: _currentSlug,
   locale = 'en',
 }: RelatedPostsProps) {
   if (posts.length === 0) {

@@ -71,7 +71,7 @@ export function ChangeTypeList({
   onTypeToggle,
   showAll = true,
   dict,
-  locale,
+  locale: _locale,
 }: ChangeTypeListProps) {
   const changeTypes = getChangeTypes(dict)
 

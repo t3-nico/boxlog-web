@@ -27,8 +27,7 @@ export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
-export default function SecurityPage({ params }: PageProps) {
-  const { locale } = params
+export default function SecurityPage({ params: _params }: PageProps) {
   const lastUpdated = '2024-01-15'
 
   return (

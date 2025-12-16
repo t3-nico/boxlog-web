@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { type NavigationItem, type NavigationSection } from '@/lib/navigation'
 import {
@@ -25,7 +24,7 @@ import {
   Shield,
 } from 'lucide-react'
 
-function getPageIcon(href: string, title: string) {
+function getPageIcon(href: string, _title: string) {
   // ホームページ
   if (href === '/docs' || href === '/docs/') return Home
 

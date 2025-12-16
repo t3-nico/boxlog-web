@@ -60,7 +60,7 @@ interface ReleaseCardProps {
 
 export function ReleaseCard({
   release,
-  priority = false,
+  priority: _priority = false,
   compact = false,
   dict,
   locale,

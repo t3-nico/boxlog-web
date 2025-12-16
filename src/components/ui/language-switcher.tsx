@@ -8,12 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  locales,
-  type Locale,
-  getLocaleConfig,
-  isValidLocale,
-} from '@/lib/i18n'
+import { locales, type Locale, isValidLocale } from '@/lib/i18n'
 import { Globe } from '@/lib/icons'
 import { useRouter, usePathname } from 'next/navigation'
 
@@ -67,8 +62,6 @@ export function LanguageSwitcher({
       </Button>
     )
   }
-
-  const currentConfig = getLocaleConfig(validCurrentLocale)
 
   return (
     <DropdownMenu>

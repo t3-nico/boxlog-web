@@ -1,5 +1,3 @@
-import type { Metadata } from 'next'
-
 // This layout is shared across locales, so metadata should be handled in individual pages
 // Remove static metadata to avoid conflicts with page-level generateMetadata
 

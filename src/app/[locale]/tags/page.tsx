@@ -3,8 +3,6 @@ import Link from 'next/link'
 import { Search, TrendingUp, Hash } from 'lucide-react'
 import { getAllTags as getAllBlogTags } from '@/lib/blog'
 import { getAllReleaseTags } from '@/lib/releases'
-import { getDictionary } from '@/lib/i18n'
-
 interface TagsPageProps {
   params: {
     locale: string
@@ -17,9 +15,7 @@ export const metadata: Metadata = {
     'Explore content by tags. Find blog posts, releases, and documentation organized by topics.',
 }
 
-export default async function TagsPage({ params }: TagsPageProps) {
-  const dict = getDictionary(params.locale as 'en' | 'jp')
-
+export default async function TagsPage({ params: _params }: TagsPageProps) {
   const [blogTags, releaseTags] = await Promise.all([
     getAllBlogTags(),
     getAllReleaseTags(),

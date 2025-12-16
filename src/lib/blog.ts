@@ -1,9 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
 
 export interface BlogPostFrontMatter {
   title: string
@@ -143,7 +140,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
       excerpt,
       readingTime,
     }
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -206,7 +203,7 @@ export async function getRelatedPosts(
     .sort((a, b) => b.score - a.score)
     .slice(0, maxPosts)
 
-  return relatedPosts.map(({ score, ...post }) => post)
+  return relatedPosts.map(({ score: _score, ...post }) => post)
 }
 
 // Get all tags

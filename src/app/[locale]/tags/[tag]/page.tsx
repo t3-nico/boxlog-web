@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, FileText, Megaphone, BookOpen } from 'lucide-react'
+import { ArrowLeft, FileText, Megaphone } from 'lucide-react'
 import { getBlogPostsByTag, getAllTags as getAllBlogTags } from '@/lib/blog'
 import { getReleasesByTag, getAllReleaseTags } from '@/lib/releases'
 import { PostCard } from '@/components/blog/PostCard'

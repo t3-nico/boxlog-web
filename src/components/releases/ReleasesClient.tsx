@@ -57,7 +57,7 @@ interface ReleasesClientProps {
 export function ReleasesClient({
   initialReleases,
   initialTags,
-  featuredReleases,
+  featuredReleases: _featuredReleases,
   upcomingReleases,
   dict,
   locale,

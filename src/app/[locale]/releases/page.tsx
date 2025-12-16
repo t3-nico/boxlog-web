@@ -1,15 +1,10 @@
-import React from 'react'
 import type { Metadata } from 'next'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import { ReleaseCard } from '@/components/releases/ReleaseCard'
 import {
   getAllReleaseMetas,
   getAllReleaseTags,
   getFeaturedReleases,
-  generateReleaseTimeline,
-  ReleasePostMeta,
-  TagCount,
 } from '@/lib/releases'
 import { ReleasesClient } from '@/components/releases/ReleasesClient'
 import { getDictionary } from '@/lib/i18n'

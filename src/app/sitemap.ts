@@ -156,7 +156,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...docPages,
       ...tagPages,
     ]
-  } catch (error) {
+  } catch {
     return staticPages
   }
 }

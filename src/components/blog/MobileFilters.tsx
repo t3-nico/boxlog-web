@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { X, Filter, Search, Calendar, TrendingUp, Tag } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import {
   Sheet,
   SheetContent,
@@ -36,7 +35,7 @@ export function MobileFilters({
   onClearFilters,
   activeFiltersCount,
   dict,
-  locale,
+  locale: _locale,
 }: MobileFiltersProps) {
   const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters)
 

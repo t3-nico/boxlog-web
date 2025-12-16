@@ -24,7 +24,7 @@ export function PostCard({
   const [imageError, setImageError] = useState(false)
 
   // Function to determine tag color
-  const getTagColor = (tag: string, index: number) => {
+  const getTagColor = (tag: string, _index: number) => {
     const colors = [
       'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800',
       'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-200 dark:hover:bg-green-800',
@@ -101,7 +101,7 @@ export function PostCard({
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {post.frontMatter.tags.map((tag, index) => (
+            {post.frontMatter.tags.map((tag, _index) => (
               <button
                 key={tag}
                 onClick={(e) => {
@@ -111,7 +111,7 @@ export function PostCard({
                 }}
                 className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors hover:opacity-80 ${getTagColor(
                   tag,
-                  index
+                  _index
                 )}`}
               >
                 #{tag}
@@ -178,7 +178,7 @@ export function PostCard({
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">
-              {post.frontMatter.tags.map((tag, index) => (
+              {post.frontMatter.tags.map((tag, _index) => (
                 <button
                   key={tag}
                   onClick={(e) => {
@@ -188,7 +188,7 @@ export function PostCard({
                   }}
                   className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors hover:opacity-80 ${getTagColor(
                     tag,
-                    index
+                    _index
                   )}`}
                 >
                   #{tag}

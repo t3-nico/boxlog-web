@@ -6,17 +6,8 @@ import { Container } from '@/components/ui/container'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { ShareButton } from '@/components/blog/ShareButton'
 import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
-} from '@/components/ui/breadcrumb'
 import { getBlogPost, getAllBlogPostMetas, getRelatedPosts } from '@/lib/blog'
 import { generateSEOMetadata } from '@/lib/metadata'
-import { getDictionary } from '@/lib/i18n'
 import Link from 'next/link'
 
 interface BlogPostPageProps {
@@ -32,7 +23,6 @@ export async function generateMetadata({
 }: BlogPostPageProps): Promise<Metadata> {
   const { locale, slug } = params
   const post = await getBlogPost(slug)
-  const dict = await getDictionary(locale as 'en' | 'jp')
 
   if (!post) {
     return generateSEOMetadata({
@@ -257,7 +247,7 @@ const mdxComponents = {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { locale, slug } = params
+  const { slug } = params
   const post = await getBlogPost(slug)
 
   if (!post) {
@@ -288,8 +278,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   // Remove description-like paragraph at the beginning (first paragraph after title)
   const lines = processedContent.split('\n')
-  let processedLines = []
-  let skipNext = false
+  const processedLines: string[] = []
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim()
@@ -457,13 +446,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         }
 
                         return (
-                          <a
+                          <Link
                             key={tag}
                             href={`/blog/tag/${encodeURIComponent(tag)}`}
                             className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${getTagColor(tag)}`}
                           >
                             #{tag}
-                          </a>
+                          </Link>
                         )
                       })}
                     </div>

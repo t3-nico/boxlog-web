@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Link from 'next/link'
 import { ErrorLayout } from '@/components/errors/ErrorLayout'
 import { Button } from '@/components/ui/button'
 
@@ -28,7 +29,7 @@ export default function Error({
         </Button>
 
         <Button variant="outline" asChild className="w-full sm:w-auto sm:ml-4">
-          <a href="/">Go home</a>
+          <Link href="/">Go home</Link>
         </Button>
       </div>
 

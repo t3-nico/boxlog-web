@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
 import { Container } from '@/components/ui/container'
 import { ReleaseHeader } from '@/components/releases/ReleaseHeader'
-import { ChangeTypeSection } from '@/components/releases/ChangeTypeList'
 import { ReleaseCard } from '@/components/releases/ReleaseCard'
 import {
   getRelease,
@@ -292,7 +292,7 @@ const mdxComponents = {
 }
 
 export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
-  const { locale, version } = params
+  const { version } = params
   const release = await getRelease(version)
 
   if (!release) {
@@ -402,12 +402,12 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <a
+                    <Link
                       href="/releases"
                       className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                     >
                       View all releases
-                    </a>
+                    </Link>
 
                     <a
                       href={`https://github.com/yoursaas/platform/releases/tag/v${release.frontMatter.version}`}
@@ -449,7 +449,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 </div>
 
                 <div className="mt-8 text-center">
-                  <a
+                  <Link
                     href="/releases"
                     className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                   >
@@ -467,7 +467,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                       />
                     </svg>
                     View all releases
-                  </a>
+                  </Link>
                 </div>
               </div>
             </Container>
@@ -507,7 +507,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   Contact Support
                 </a>
 
-                <a
+                <Link
                   href="/feedback"
                   className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >
@@ -525,7 +525,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                     />
                   </svg>
                   Send Feedback
-                </a>
+                </Link>
               </div>
             </div>
           </Container>

@@ -58,8 +58,8 @@ async function getAllDocMetas() {
         category: frontMatter.category,
         featured: frontMatter.featured || false,
       })
-    } catch (error) {
-      console.error('Failed to process document:', filePath, error)
+    } catch (err) {
+      console.error('Failed to process document:', filePath, err)
     }
   }
 
@@ -181,7 +181,7 @@ export async function GET(request: NextRequest) {
     })
 
     return NextResponse.json({ results: results.slice(0, 50) })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Search failed' }, { status: 500 })
   }
 }

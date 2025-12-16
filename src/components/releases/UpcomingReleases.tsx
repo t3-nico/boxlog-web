@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import {
   Clock,
   Calendar,
@@ -78,12 +79,12 @@ export function UpcomingReleases({
           <p className="text-sm text-gray-600">
             リリース予定は変更される場合があります
           </p>
-          <a
+          <Link
             href="/roadmap"
             className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors dark:text-blue-400 dark:hover:text-blue-300"
           >
             ロードマップを見る →
-          </a>
+          </Link>
         </div>
       </div>
     </div>
@@ -295,13 +296,13 @@ export function UpcomingReleasesCompact({
           )}
         </div>
 
-        <a
+        <Link
           href="/releases"
           className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium mt-2 dark:text-blue-400 dark:hover:text-blue-300"
         >
           詳細を見る
           <ChevronRight className="w-3 h-3 ml-1" />
-        </a>
+        </Link>
       </div>
     </div>
   )

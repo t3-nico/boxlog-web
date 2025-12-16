@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote/rsc'
 
 export interface ReleaseFrontMatter {
   version: string
@@ -179,7 +178,7 @@ export async function getRelease(version: string): Promise<ReleasePost | null> {
       slug: version,
       readingTime,
     }
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -245,7 +244,7 @@ export async function getRelatedReleases(
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
 
-  return relatedReleases.map(({ score, ...release }) => release)
+  return relatedReleases.map(({ score: _score, ...release }) => release)
 }
 
 // リリースノート検索
