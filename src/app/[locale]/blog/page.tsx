@@ -13,25 +13,33 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+  return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale } = params
   const dict = await getDictionary(locale as 'en' | 'jp')
-  
+
   return generateSEOMetadata({
     title: dict.pages.blog.title,
     description: dict.pages.blog.subtitle,
     url: `/${locale}/blog`,
     locale: locale,
-    keywords: locale === 'jp' 
-      ? ['ブログ', '記事', 'SaaS', '開発', '技術', 'Next.js', 'TypeScript']
-      : ['blog', 'articles', 'SaaS', 'development', 'technology', 'Next.js', 'TypeScript'],
-    type: 'website'
+    keywords:
+      locale === 'jp'
+        ? ['ブログ', '記事', 'SaaS', '開発', '技術', 'Next.js', 'TypeScript']
+        : [
+            'blog',
+            'articles',
+            'SaaS',
+            'development',
+            'technology',
+            'Next.js',
+            'TypeScript',
+          ],
+    type: 'website',
   })
 }
 
@@ -40,7 +48,7 @@ export default async function BlogPage({ params }: PageProps) {
   const dict = await getDictionary(locale as 'en' | 'jp')
   const [allPosts, allTags] = await Promise.all([
     getAllBlogPostMetas(),
-    getAllTagNames()
+    getAllTagNames(),
   ])
 
   return (

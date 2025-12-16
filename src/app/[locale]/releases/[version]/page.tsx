@@ -5,7 +5,6 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
 import { Container } from '@/components/ui/container'
 import { ReleaseHeader } from '@/components/releases/ReleaseHeader'
-import { ChangeTypeSection } from '@/components/releases/ChangeTypeList'
 import { ReleaseCard } from '@/components/releases/ReleaseCard'
 import { getRelease, getAllReleaseMetas, getRelatedReleases, changeTypes } from '@/lib/releases'
 
@@ -201,7 +200,7 @@ const mdxComponents = {
 }
 
 export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
-  const { locale, version } = params
+  const { version } = params
   const release = await getRelease(version)
   
   if (!release) {

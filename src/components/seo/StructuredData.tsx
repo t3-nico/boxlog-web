@@ -5,7 +5,7 @@ import { generateStructuredData } from '@/lib/metadata'
  */
 export function StructuredData({ type, data }: { type: string; data: any }) {
   const structuredData = generateStructuredData(type, data)
-  
+
   if (!structuredData) return null
 
   return (

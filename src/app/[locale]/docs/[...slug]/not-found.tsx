@@ -16,19 +16,17 @@ export default async function NotFound() {
         <div className="text-9xl font-bold text-neutral-200 dark:text-neutral-800 mb-4">
           404
         </div>
-        
+
         <Heading as="h2" size="xl" className="mb-4">
           {dict.errors.notFound.title}
         </Heading>
-        
+
         <Text variant="muted" className="mb-8">
           {dict.errors.notFound.description}
         </Text>
-        
+
         <Button asChild className="w-full">
-          <Link href={`/${locale}`}>
-            {dict.errors.notFound.goHome}
-          </Link>
+          <Link href={`/${locale}`}>{dict.errors.notFound.goHome}</Link>
         </Button>
       </div>
     </div>

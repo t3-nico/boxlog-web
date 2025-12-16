@@ -3,8 +3,6 @@ import Link from 'next/link'
 import { Search, TrendingUp, Hash } from 'lucide-react'
 import { getAllTags as getAllBlogTags } from '@/lib/blog'
 import { getAllReleaseTags } from '@/lib/releases'
-import { getDictionary } from '@/lib/i18n'
-
 interface TagsPageProps {
   params: {
     locale: string
@@ -13,37 +11,47 @@ interface TagsPageProps {
 
 export const metadata: Metadata = {
   title: 'Tags - Browse by Topic',
-  description: 'Explore content by tags. Find blog posts, releases, and documentation organized by topics.',
+  description:
+    'Explore content by tags. Find blog posts, releases, and documentation organized by topics.',
 }
 
-export default async function TagsPage({ params }: TagsPageProps) {
-  const dict = getDictionary(params.locale as 'en' | 'jp')
-
+export default async function TagsPage({ params: _params }: TagsPageProps) {
   const [blogTags, releaseTags] = await Promise.all([
     getAllBlogTags(),
-    getAllReleaseTags()
+    getAllReleaseTags(),
   ])
 
   // Combine and deduplicate tags
-  const allTagsMap = new Map<string, { count: number; blogCount: number; releaseCount: number }>()
+  const allTagsMap = new Map<
+    string,
+    { count: number; blogCount: number; releaseCount: number }
+  >()
 
-  blogTags.forEach(t => {
+  blogTags.forEach((t) => {
     const existing = allTagsMap.get(t.tag)
     if (existing) {
       existing.blogCount += t.count
       existing.count += t.count
     } else {
-      allTagsMap.set(t.tag, { count: t.count, blogCount: t.count, releaseCount: 0 })
+      allTagsMap.set(t.tag, {
+        count: t.count,
+        blogCount: t.count,
+        releaseCount: 0,
+      })
     }
   })
 
-  releaseTags.forEach(t => {
+  releaseTags.forEach((t) => {
     const existing = allTagsMap.get(t.tag)
     if (existing) {
       existing.releaseCount += t.count
       existing.count += t.count
     } else {
-      allTagsMap.set(t.tag, { count: t.count, blogCount: 0, releaseCount: t.count })
+      allTagsMap.set(t.tag, {
+        count: t.count,
+        blogCount: 0,
+        releaseCount: t.count,
+      })
     }
   })
 
@@ -71,7 +79,8 @@ export default async function TagsPage({ params }: TagsPageProps) {
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-500 dark:text-neutral-400">
-              Browse {totalTags} topics covering {totalContent} pieces of content. Find everything from tutorials to release notes.
+              Browse {totalTags} topics covering {totalContent} pieces of
+              content. Find everything from tutorials to release notes.
             </p>
 
             {/* Search Bar - placeholder for future */}
@@ -137,9 +146,7 @@ export default async function TagsPage({ params }: TagsPageProps) {
                         </h3>
                       </div>
                       <div className="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
-                        {tag.blogCount > 0 && (
-                          <span>{tag.blogCount} blog</span>
-                        )}
+                        {tag.blogCount > 0 && <span>{tag.blogCount} blog</span>}
                         {tag.releaseCount > 0 && (
                           <span>{tag.releaseCount} release</span>
                         )}

@@ -52,7 +52,7 @@ export interface CategoryInfo {
   order: number
 }
 
-export type ContentCategory = 
+export type ContentCategory =
   | 'getting-started'
   | 'api-reference'
   | 'guides'

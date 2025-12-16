@@ -11,13 +11,12 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+  return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale } = params
   const dict = await getDictionary(locale as 'en' | 'jp')
 
@@ -26,10 +25,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: dict.pages.home.subtitle,
     url: `/${locale}`,
     locale: locale,
-    keywords: locale === 'jp'
-      ? ['SaaS', 'プラットフォーム', 'ビジネス', '生産性', '自動化', 'Next.js', 'TypeScript']
-      : ['SaaS', 'platform', 'business', 'productivity', 'automation', 'Next.js', 'TypeScript'],
-    type: 'website'
+    keywords:
+      locale === 'jp'
+        ? [
+            'SaaS',
+            'プラットフォーム',
+            'ビジネス',
+            '生産性',
+            '自動化',
+            'Next.js',
+            'TypeScript',
+          ]
+        : [
+            'SaaS',
+            'platform',
+            'business',
+            'productivity',
+            'automation',
+            'Next.js',
+            'TypeScript',
+          ],
+    type: 'website',
   })
 }
 
@@ -72,7 +88,8 @@ export default async function Home({ params }: PageProps) {
                 </Button>
                 <Button variant="ghost" size="lg" asChild>
                   <Link href={`/${locale}/about`}>
-                    {dict.common.learnMore || 'Learn more'} <span aria-hidden="true">→</span>
+                    {dict.common.learnMore || 'Learn more'}{' '}
+                    <span aria-hidden="true">→</span>
                   </Link>
                 </Button>
               </div>
@@ -83,7 +100,9 @@ export default async function Home({ params }: PageProps) {
               <div className="-m-2 rounded-xl bg-muted/50 p-2 ring-1 ring-inset ring-border lg:-m-4 lg:rounded-2xl lg:p-4">
                 <div className="relative aspect-[16/9] w-full rounded-md bg-muted shadow-2xl ring-1 ring-border">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-muted-foreground text-sm">App Screenshot Placeholder</p>
+                    <p className="text-muted-foreground text-sm">
+                      App Screenshot Placeholder
+                    </p>
                   </div>
                 </div>
               </div>

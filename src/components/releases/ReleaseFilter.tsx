@@ -1,8 +1,15 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Filter, ChevronDown, CheckCircle, Star, AlertTriangle, X } from 'lucide-react'
+import {
+  Filter,
+  ChevronDown,
+  CheckCircle,
+  Star,
+  AlertTriangle,
+  X,
+} from 'lucide-react'
 // Local type definition
 interface TagCount {
   tag: string
@@ -34,18 +41,19 @@ export function ReleaseFilter({
   showFeaturedOnly,
   onTagToggle,
   onTypeToggle,
-  onBreakingToggle,
-  onFeaturedToggle,
+  onBreakingToggle: _onBreakingToggle,
+  onFeaturedToggle: _onFeaturedToggle,
   onClearFilters,
   dict,
   locale,
 }: ReleaseFilterProps) {
   const [isExpanded, setIsExpanded] = useState(false)
-  
-  const hasActiveFilters = selectedTags.length > 0 || 
-                          selectedTypes.length > 0 || 
-                          showBreakingOnly ||
-                          showFeaturedOnly
+
+  const hasActiveFilters =
+    selectedTags.length > 0 ||
+    selectedTypes.length > 0 ||
+    showBreakingOnly ||
+    showFeaturedOnly
 
   return (
     <div className="bg-[rgb(var(--bg-primary))] border border-[rgb(var(--border-primary))] rounded-xl overflow-hidden">
@@ -56,12 +64,16 @@ export function ReleaseFilter({
             <div className="w-8 h-8 bg-[rgb(var(--info-bg))] rounded-lg flex items-center justify-center">
               <Filter className="w-4 h-4 text-[rgb(var(--info-color))]" />
             </div>
-            <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]"> 
+            <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]">
               {dict.releases.filters.title}
             </h3>
             {hasActiveFilters && (
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]">
-                {selectedTags.length + selectedTypes.length + (showBreakingOnly ? 1 : 0) + (showFeaturedOnly ? 1 : 0)} active
+                {selectedTags.length +
+                  selectedTypes.length +
+                  (showBreakingOnly ? 1 : 0) +
+                  (showFeaturedOnly ? 1 : 0)}{' '}
+                active
               </span>
             )}
           </div>
@@ -107,7 +119,9 @@ export function ReleaseFilter({
           {/* Tags */}
           {tags.length > 0 && (
             <div>
-              <h4 className="text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">{dict.releases.filters.tags}</h4>
+              <h4 className="text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">
+                {dict.releases.filters.tags}
+              </h4>
               <TagFilter
                 tags={tags}
                 selectedTags={selectedTags}
@@ -132,7 +146,14 @@ interface TagFilterProps {
   locale: string
 }
 
-function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, dict, locale }: TagFilterProps) {
+function TagFilter({
+  tags,
+  selectedTags,
+  onTagToggle,
+  maxDisplay = 10,
+  dict,
+  locale: _locale,
+}: TagFilterProps) {
   const [showAll, setShowAll] = useState(false)
   const displayTags = showAll ? tags : tags.slice(0, maxDisplay)
 
@@ -151,15 +172,17 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, dict, loc
                 onChange={() => onTagToggle(tagItem.tag)}
                 className="w-4 h-4 text-[rgb(var(--info-color))] border-[rgb(var(--border-primary))] rounded focus:ring-[rgb(var(--focus-ring))] bg-[rgb(var(--bg-primary))]"
               />
-              <span className={`ml-3 text-sm transition-colors ${
-                selectedTags.includes(tagItem.tag) 
-                  ? 'text-[rgb(var(--text-primary))] font-medium' 
-                  : 'text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]'
-              }`}>
+              <span
+                className={`ml-3 text-sm transition-colors ${
+                  selectedTags.includes(tagItem.tag)
+                    ? 'text-[rgb(var(--text-primary))] font-medium'
+                    : 'text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]'
+                }`}
+              >
                 #{tagItem.tag}
               </span>
             </div>
-            <span className="text-xs text-[rgb(var(--text-tertiary))]"> 
+            <span className="text-xs text-[rgb(var(--text-tertiary))]">
               {tagItem.count}
             </span>
           </label>
@@ -173,7 +196,12 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, dict, loc
           size="sm"
           className="text-sm text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] h-auto p-1"
         >
-          {showAll ? dict.releases.filters.showLess : dict.releases.filters.showMore.replace('{count}', String(tags.length - maxDisplay))}
+          {showAll
+            ? dict.releases.filters.showLess
+            : dict.releases.filters.showMore.replace(
+                '{count}',
+                String(tags.length - maxDisplay)
+              )}
         </Button>
       )}
     </div>
@@ -236,12 +264,13 @@ export function FilterSummary({
   onFeaturedToggle,
   onClearAll,
   dict,
-  locale,
+  locale: _locale,
 }: FilterSummaryProps) {
-  const hasFilters = selectedTags.length > 0 || 
-                    selectedTypes.length > 0 || 
-                    showBreakingOnly ||
-                    showFeaturedOnly
+  const hasFilters =
+    selectedTags.length > 0 ||
+    selectedTypes.length > 0 ||
+    showBreakingOnly ||
+    showFeaturedOnly
 
   if (!hasFilters) return null
 
@@ -250,11 +279,13 @@ export function FilterSummary({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-[rgb(var(--info-color))]" />
-          <span className="text-sm font-medium text-[rgb(var(--info-color))]"> 
-            {dict.releases.filters.resultsFound.replace('{count}', String(resultCount)).replace('{total}', String(totalCount))}
+          <span className="text-sm font-medium text-[rgb(var(--info-color))]">
+            {dict.releases.filters.resultsFound
+              .replace('{count}', String(resultCount))
+              .replace('{total}', String(totalCount))}
           </span>
         </div>
-        
+
         <Button
           onClick={onClearAll}
           variant="ghost"

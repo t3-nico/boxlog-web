@@ -11,27 +11,44 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+  return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale } = params
   const dict = await getDictionary(locale as 'en' | 'jp')
 
   return generateSEOMetadata({
     title: dict.common.about,
-    description: locale === 'jp'
-      ? '私たちのミッション、チーム、価値観について学んでください。誰もがより良い未来を築けるような技術を創造しています。'
-      : 'Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.',
+    description:
+      locale === 'jp'
+        ? '私たちのミッション、チーム、価値観について学んでください。誰もがより良い未来を築けるような技術を創造しています。'
+        : 'Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.',
     url: `/${locale}/about`,
     locale: locale,
-    keywords: locale === 'jp'
-      ? ['概要', '会社', 'チーム', 'ミッション', 'ビジョン', '価値観', 'SaaSプラットフォーム']
-      : ['about', 'company', 'team', 'mission', 'vision', 'values', 'SaaS platform'],
-    type: 'website'
+    keywords:
+      locale === 'jp'
+        ? [
+            '概要',
+            '会社',
+            'チーム',
+            'ミッション',
+            'ビジョン',
+            '価値観',
+            'SaaSプラットフォーム',
+          ]
+        : [
+            'about',
+            'company',
+            'team',
+            'mission',
+            'vision',
+            'values',
+            'SaaS platform',
+          ],
+    type: 'website',
   })
 }
 

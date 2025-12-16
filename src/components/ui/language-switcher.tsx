@@ -2,8 +2,13 @@
 
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { locales, type Locale, getLocaleConfig, isValidLocale } from '@/lib/i18n'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { locales, type Locale, isValidLocale } from '@/lib/i18n'
 import { Globe } from '@/lib/icons'
 import { useRouter, usePathname } from 'next/navigation'
 
@@ -12,7 +17,10 @@ interface LanguageSwitcherProps {
   currentLocale?: string
 }
 
-export function LanguageSwitcher({ className, currentLocale: providedLocale }: LanguageSwitcherProps) {
+export function LanguageSwitcher({
+  className,
+  currentLocale: providedLocale,
+}: LanguageSwitcherProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [mounted, setMounted] = React.useState(false)
@@ -28,16 +36,16 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
 
   const handleLocaleChange = (newLocale: Locale) => {
     // Get the path without the current locale
-    const pathWithoutLocale = pathname.startsWith(`/${validCurrentLocale}`) 
+    const pathWithoutLocale = pathname.startsWith(`/${validCurrentLocale}`)
       ? pathname.slice(`/${validCurrentLocale}`.length) || '/'
       : pathname
-    
+
     // Create new path with the new locale
     const newPath = `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
-    
+
     // Set locale cookie for persistence
     document.cookie = `locale=${newLocale}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=lax`
-    
+
     // Navigate to the new path
     router.push(newPath)
   }
@@ -54,8 +62,6 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
       </Button>
     )
   }
-
-  const currentConfig = getLocaleConfig(validCurrentLocale)
 
   return (
     <DropdownMenu>

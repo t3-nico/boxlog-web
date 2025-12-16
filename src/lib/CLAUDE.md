@@ -3,6 +3,7 @@
 ## 📍 この文書の位置づけ
 
 **レベル2**: 領域特化ルール（共通処理・ユーティリティ）
+
 - 上位: `/src/CLAUDE.md`（実装の基本）
 - 上位: `/CLAUDE.md`（意思決定プロトコル）
 
@@ -13,14 +14,17 @@
 ## 🎯 基本原則
 
 ### 1. Pure Function優先
+
 - 副作用のない純粋関数を優先
 - テスト可能性を重視
 
 ### 2. 型安全性
+
 - 戻り値・引数の型を明示的に定義
 - `any`型禁止
 
 ### 3. 既存ライブラリの活用
+
 - 車輪の再発明を避ける
 - date-fns, zod等の実績あるライブラリを活用
 
@@ -68,6 +72,7 @@ export function cn(...inputs: ClassValue[]) {
 ```
 
 **使用例**:
+
 ```typescript
 import { cn } from '@/lib/utils'
 
@@ -97,8 +102,12 @@ export interface Dictionary {
   // ...
 }
 
-const en: Dictionary = { /* ... */ }
-const jp: Dictionary = { /* ... */ }
+const en: Dictionary = {
+  /* ... */
+}
+const jp: Dictionary = {
+  /* ... */
+}
 
 export const dictionaries = { en, jp }
 
@@ -130,19 +139,20 @@ export function formatLocalizedDate(
 ): string {
   const localeMap = {
     en: 'en-US',
-    jp: 'ja-JP'
+    jp: 'ja-JP',
   }
 
   return new Intl.DateTimeFormat(localeMap[locale], {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    ...options
+    ...options,
   }).format(date)
 }
 ```
 
 **使用例**:
+
 ```typescript
 import { getDictionary } from '@/lib/i18n'
 
@@ -186,7 +196,7 @@ export function getMdxFile<T extends MdxFrontmatter>(
 
   return {
     frontmatter: data as T,
-    content
+    content,
   }
 }
 
@@ -210,6 +220,7 @@ export function getAllMdxFiles<T extends MdxFrontmatter>(
 ```
 
 **使用例**:
+
 ```typescript
 import { getAllMdxFiles } from '@/lib/mdx'
 
@@ -233,7 +244,7 @@ export function generateBasicMetadata({
   title,
   description,
   path,
-  locale = 'en'
+  locale = 'en',
 }: {
   title: string
   description: string
@@ -250,8 +261,8 @@ export function generateBasicMetadata({
       canonical: fullUrl,
       languages: {
         en: `${siteUrl}/en${path}`,
-        ja: `${siteUrl}/jp${path}`
-      }
+        ja: `${siteUrl}/jp${path}`,
+      },
     },
     openGraph: {
       title,
@@ -259,13 +270,13 @@ export function generateBasicMetadata({
       url: fullUrl,
       siteName: 'YourSaaS',
       locale: locale === 'jp' ? 'ja_JP' : 'en_US',
-      type: 'website'
+      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title,
-      description
-    }
+      description,
+    },
   }
 }
 
@@ -279,7 +290,7 @@ export function generateBlogMetadata({
   date,
   coverImage,
   tags,
-  locale = 'en'
+  locale = 'en',
 }: {
   title: string
   excerpt: string
@@ -299,8 +310,8 @@ export function generateBlogMetadata({
       canonical: fullUrl,
       languages: {
         en: `${siteUrl}/en/blog/${slug}`,
-        ja: `${siteUrl}/jp/blog/${slug}`
-      }
+        ja: `${siteUrl}/jp/blog/${slug}`,
+      },
     },
     openGraph: {
       title,
@@ -315,26 +326,31 @@ export function generateBlogMetadata({
           url: coverImage,
           width: 1200,
           height: 630,
-          alt: title
-        }
-      ]
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: excerpt,
-      images: [coverImage]
+      images: [coverImage],
     },
-    keywords: tags
+    keywords: tags,
   }
 }
 ```
 
 **使用例**:
+
 ```typescript
 import { generateBlogMetadata } from '@/lib/metadata'
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const post = await getPostBySlug(params.slug)
   return generateBlogMetadata({ ...post, locale: 'en' })
 }
@@ -391,18 +407,15 @@ export function filterByTags(
   }
 
   if (logic === 'AND') {
-    return items.filter((item) =>
-      tags.every((tag) => item.tags.includes(tag))
-    )
+    return items.filter((item) => tags.every((tag) => item.tags.includes(tag)))
   }
 
-  return items.filter((item) =>
-    tags.some((tag) => item.tags.includes(tag))
-  )
+  return items.filter((item) => tags.some((tag) => item.tags.includes(tag)))
 }
 ```
 
 **使用例**:
+
 ```typescript
 import { searchContent, filterByTags } from '@/lib/search'
 
@@ -433,7 +446,10 @@ export class AppError extends Error {
 /**
  * エラーログ記録
  */
-export function logError(error: Error, context?: Record<string, unknown>): void {
+export function logError(
+  error: Error,
+  context?: Record<string, unknown>
+): void {
   if (process.env.NODE_ENV === 'development') {
     console.error('Error:', error.message)
     console.error('Stack:', error.stack)
@@ -449,10 +465,7 @@ export function logError(error: Error, context?: Record<string, unknown>): void 
 /**
  * 安全なJSON解析
  */
-export function safeJsonParse<T>(
-  json: string,
-  fallback: T
-): T {
+export function safeJsonParse<T>(json: string, fallback: T): T {
   try {
     return JSON.parse(json) as T
   } catch (error) {
@@ -463,6 +476,7 @@ export function safeJsonParse<T>(
 ```
 
 **使用例**:
+
 ```typescript
 import { AppError, logError, safeJsonParse } from '@/lib/error-handler'
 
@@ -549,22 +563,31 @@ interface PostFrontmatter {
 /**
  * すべてのブログ記事を取得（SSG用）
  */
-export async function getAllPosts(): Promise<Array<PostFrontmatter & { slug: string }>> {
+export async function getAllPosts(): Promise<
+  Array<PostFrontmatter & { slug: string }>
+> {
   return getAllMdxFiles<PostFrontmatter>('content/blog')
 }
 
 /**
  * スラッグから記事を取得
  */
-export async function getPostBySlug(slug: string): Promise<PostFrontmatter & { slug: string; content: string }> {
-  const { frontmatter, content } = getMdxFile<PostFrontmatter>('content/blog', slug)
+export async function getPostBySlug(
+  slug: string
+): Promise<PostFrontmatter & { slug: string; content: string }> {
+  const { frontmatter, content } = getMdxFile<PostFrontmatter>(
+    'content/blog',
+    slug
+  )
   return { ...frontmatter, slug, content }
 }
 
 /**
  * カテゴリーでフィルタリング
  */
-export async function getPostsByCategory(category: string): Promise<Array<PostFrontmatter & { slug: string }>> {
+export async function getPostsByCategory(
+  category: string
+): Promise<Array<PostFrontmatter & { slug: string }>> {
   const posts = await getAllPosts()
   return posts.filter((post) => post.category === category)
 }
@@ -572,7 +595,9 @@ export async function getPostsByCategory(category: string): Promise<Array<PostFr
 /**
  * タグでフィルタリング
  */
-export async function getPostsByTag(tag: string): Promise<Array<PostFrontmatter & { slug: string }>> {
+export async function getPostsByTag(
+  tag: string
+): Promise<Array<PostFrontmatter & { slug: string }>> {
   const posts = await getAllPosts()
   return posts.filter((post) => post.tags.includes(tag))
 }
@@ -590,10 +615,19 @@ import { z } from 'zod'
  * お問い合わせフォームスキーマ
  */
 export const contactFormSchema = z.object({
-  name: z.string().min(1, 'お名前を入力してください').max(50, 'お名前は50文字以内で入力してください'),
+  name: z
+    .string()
+    .min(1, 'お名前を入力してください')
+    .max(50, 'お名前は50文字以内で入力してください'),
   email: z.string().email('有効なメールアドレスを入力してください'),
-  subject: z.string().min(1, '件名を入力してください').max(100, '件名は100文字以内で入力してください'),
-  message: z.string().min(10, 'メッセージは10文字以上で入力してください').max(1000, 'メッセージは1000文字以内で入力してください')
+  subject: z
+    .string()
+    .min(1, '件名を入力してください')
+    .max(100, '件名は100文字以内で入力してください'),
+  message: z
+    .string()
+    .min(10, 'メッセージは10文字以上で入力してください')
+    .max(1000, 'メッセージは1000文字以内で入力してください'),
 })
 
 export type ContactFormData = z.infer<typeof contactFormSchema>
@@ -616,6 +650,7 @@ export function validateUrl(url: string): boolean {
 ```
 
 **使用例**:
+
 ```typescript
 import { contactFormSchema } from '@/lib/validation'
 
@@ -624,7 +659,7 @@ export async function handleSubmit(formData: FormData) {
     name: formData.get('name'),
     email: formData.get('email'),
     subject: formData.get('subject'),
-    message: formData.get('message')
+    message: formData.get('message'),
   }
 
   const result = contactFormSchema.safeParse(data)
@@ -675,6 +710,7 @@ export function formatRelativeTime(
 ```
 
 **使用例**:
+
 ```typescript
 import { formatDate, formatRelativeTime } from '@/lib/date-utils'
 
@@ -687,12 +723,14 @@ const timeAgo = formatRelativeTime(post.date, 'jp')
 ## 🚫 禁止事項
 
 ### コード記述
+
 - ❌ `any`型の使用
 - ❌ グローバル変数の使用
 - ❌ 副作用のある関数（可能な限り純粋関数に）
 - ❌ ハードコードされた値（環境変数または定数ファイル使用）
 
 ### 判断
+
 - ❌ 既存ライブラリで実現可能なのに独自実装
 - ❌ エラーハンドリングの省略
 

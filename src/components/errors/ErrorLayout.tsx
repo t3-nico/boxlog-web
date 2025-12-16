@@ -14,7 +14,7 @@ export function ErrorLayout({
   title,
   description,
   showBackButton = true,
-  children
+  children,
 }: ErrorLayoutProps) {
   return (
     <div className="grid min-h-screen grid-cols-1 grid-rows-[1fr_auto_1fr] bg-white lg:grid-cols-[max(50%,36rem)_1fr] dark:bg-neutral-900">
@@ -63,13 +63,23 @@ export function ErrorLayout({
       <footer className="self-end lg:col-span-2 lg:col-start-1 lg:row-start-3">
         <div className="border-t border-neutral-100 bg-neutral-50 py-10 dark:border-neutral-800 dark:bg-neutral-800/50">
           <nav className="mx-auto flex w-full max-w-7xl items-center gap-x-4 px-6 text-sm text-neutral-600 lg:px-8 dark:text-neutral-400">
-            <Link href="/contact" className="hover:text-neutral-900 dark:hover:text-neutral-300">
+            <Link
+              href="/contact"
+              className="hover:text-neutral-900 dark:hover:text-neutral-300"
+            >
               Contact support
             </Link>
-            <svg viewBox="0 0 2 2" aria-hidden="true" className="h-0.5 w-0.5 fill-neutral-300 dark:fill-neutral-600">
+            <svg
+              viewBox="0 0 2 2"
+              aria-hidden="true"
+              className="h-0.5 w-0.5 fill-neutral-300 dark:fill-neutral-600"
+            >
               <circle r={1} cx={1} cy={1} />
             </svg>
-            <Link href="/docs" className="hover:text-neutral-900 dark:hover:text-neutral-300">
+            <Link
+              href="/docs"
+              className="hover:text-neutral-900 dark:hover:text-neutral-300"
+            >
               Documentation
             </Link>
           </nav>

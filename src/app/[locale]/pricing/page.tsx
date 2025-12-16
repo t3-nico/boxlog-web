@@ -11,13 +11,12 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+  return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale } = params
   const dict = await getDictionary(locale as 'en' | 'jp')
 
@@ -26,10 +25,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: dict.pages.pricing.subtitle,
     url: `/${locale}/pricing`,
     locale: locale,
-    keywords: locale === 'jp'
-      ? ['料金', 'プラン', 'サブスクリプション', 'SaaS料金', 'チームプラン', 'エンタープライズ']
-      : ['pricing', 'plans', 'subscription', 'SaaS pricing', 'team plans', 'enterprise'],
-    type: 'website'
+    keywords:
+      locale === 'jp'
+        ? [
+            '料金',
+            'プラン',
+            'サブスクリプション',
+            'SaaS料金',
+            'チームプラン',
+            'エンタープライズ',
+          ]
+        : [
+            'pricing',
+            'plans',
+            'subscription',
+            'SaaS pricing',
+            'team plans',
+            'enterprise',
+          ],
+    type: 'website',
   })
 }
 

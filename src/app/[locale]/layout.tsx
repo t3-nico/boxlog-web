@@ -4,15 +4,12 @@ import { getDictionary } from '@/lib/i18n'
 import { Toaster } from 'sonner'
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+  return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode
   params: Promise<{ locale: string }>

@@ -11,13 +11,12 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'jp' }
-  ]
+  return [{ locale: 'en' }, { locale: 'jp' }]
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale } = params
   const dict = await getDictionary(locale as 'en' | 'jp')
 
@@ -26,10 +25,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: dict.pages.contact.subtitle,
     url: `/${locale}/contact`,
     locale: locale,
-    keywords: locale === 'jp'
-      ? ['お問い合わせ', 'サポート', 'ヘルプ', '質問', 'カスタマーサービス']
-      : ['contact', 'support', 'help', 'inquiry', 'customer service'],
-    type: 'website'
+    keywords:
+      locale === 'jp'
+        ? ['お問い合わせ', 'サポート', 'ヘルプ', '質問', 'カスタマーサービス']
+        : ['contact', 'support', 'help', 'inquiry', 'customer service'],
+    type: 'website',
   })
 }
 

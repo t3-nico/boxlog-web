@@ -3,6 +3,7 @@
 ## 📍 この文書の位置づけ
 
 **レベル2**: 領域特化ルール（カスタムフック）
+
 - 上位: `/src/CLAUDE.md`（実装の基本）
 - 上位: `/CLAUDE.md`（意思決定プロトコル）
 
@@ -13,6 +14,7 @@
 ## 🎯 カスタムフック基本原則
 
 ### 1. 命名規則
+
 - **必須**: `use`プレフィックス
 - **形式**: `useCamelCase`
 
@@ -24,12 +26,13 @@ useTheme.ts
 useMediaQuery.ts
 
 // ❌ 禁止
-Locale.ts           // "use"プレフィックスなし
-use-locale.ts       // kebab-caseは不可
-UseLocale.ts        // PascalCaseは不可
+Locale.ts // "use"プレフィックスなし
+use - locale.ts // kebab-caseは不可
+UseLocale.ts // PascalCaseは不可
 ```
 
 ### 2. Client Component専用
+
 - すべてのカスタムフックは`'use client'`ディレクティブ必須
 - React Hooksルールに従う
 
@@ -45,6 +48,7 @@ export function useLocale() {
 ```
 
 ### 3. 型安全性
+
 - 戻り値の型を明示的に定義
 - `any`型禁止
 
@@ -104,6 +108,7 @@ export function useLocale(): Locale {
 ```
 
 **使用例**:
+
 ```typescript
 'use client'
 
@@ -184,12 +189,13 @@ export function useSearch(): UseSearchReturn {
     loading,
     error,
     search,
-    clearResults
+    clearResults,
   }
 }
 ```
 
 **使用例**:
+
 ```typescript
 'use client'
 
@@ -250,6 +256,7 @@ export function useToggle(initialValue = false): UseToggleReturn {
 ```
 
 **使用例**:
+
 ```typescript
 export function MyComponent() {
   const { value, toggle } = useToggle()
@@ -311,6 +318,7 @@ export function useFetch<T>(url: string): UseFetchReturn<T> {
 ```
 
 **使用例**:
+
 ```typescript
 export function MyComponent() {
   const { data, loading, error } = useFetch<{ title: string }>('/api/data')
@@ -360,6 +368,7 @@ export function useMediaQuery(query: string): boolean {
 ```
 
 **使用例**:
+
 ```typescript
 export function MyComponent() {
   const isMobile = useMediaQuery('(max-width: 640px)')
@@ -430,6 +439,7 @@ export function useLocalStorage<T>(
 ```
 
 **使用例**:
+
 ```typescript
 export function MyComponent() {
   const { value, setValue } = useLocalStorage('theme', 'light')
@@ -470,6 +480,7 @@ export function useDebounce<T>(value: T, delay: number): T {
 ```
 
 **使用例**:
+
 ```typescript
 export function SearchComponent() {
   const [query, setQuery] = useState('')
@@ -550,6 +561,7 @@ describe('useToggle', () => {
 ## 🚫 よくある間違いと修正例
 
 ### ❌ 間違い: 'use client'ディレクティブなし
+
 ```typescript
 import { useState } from 'react'
 
@@ -560,6 +572,7 @@ export function useToggle() {
 ```
 
 ### ✅ 修正: 'use client'追加
+
 ```typescript
 'use client'
 
@@ -574,6 +587,7 @@ export function useToggle() {
 ---
 
 ### ❌ 間違い: 型定義なし
+
 ```typescript
 export function useSearch() {
   const [results, setResults] = useState([])
@@ -583,6 +597,7 @@ export function useSearch() {
 ```
 
 ### ✅ 修正: 明示的な型定義
+
 ```typescript
 interface SearchResult {
   id: string
@@ -606,6 +621,7 @@ export function useSearch(): UseSearchReturn {
 ---
 
 ### ❌ 間違い: useCallback未使用（不必要な再レンダリング）
+
 ```typescript
 export function useSearch() {
   const search = async (query: string) => {
@@ -616,6 +632,7 @@ export function useSearch() {
 ```
 
 ### ✅ 修正: useCallbackでメモ化
+
 ```typescript
 export function useSearch() {
   const search = useCallback(async (query: string) => {

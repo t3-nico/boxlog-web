@@ -33,10 +33,10 @@ export function getTagColor(tag: string): string {
   for (let i = 0; i < tag.length; i++) {
     hash = tag.charCodeAt(i) + ((hash << 5) - hash)
   }
-  
+
   // アクセントカラーを一部のタグにのみ適用（約20%の割合）
   const useAccent = Math.abs(hash) % 5 === 0
-  
+
   if (useAccent) {
     return 'bg-[rgb(var(--tag-accent-bg))] text-[rgb(var(--tag-accent-text))] hover:bg-[rgb(var(--tag-accent-hover))]'
   } else {
