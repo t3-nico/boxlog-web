@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import type { AIMetadata } from '@/types/content'
 
 export interface ReleaseFrontMatter {
   version: string
@@ -14,6 +15,8 @@ export interface ReleaseFrontMatter {
   author?: string
   authorAvatar?: string
   coverImage?: string
+  // AI/RAG用メタデータ
+  ai?: AIMetadata
 }
 
 export interface ReleasePostMeta {

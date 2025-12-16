@@ -1,60 +1,39 @@
 import type { Metadata } from 'next'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import { getDictionary } from '@/lib/i18n'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
 
 interface PageProps {
-  params: {
-    locale: string
-  }
+  params: Promise<{ locale: string }>
 }
 
-export async function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'jp' }]
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return generateSEOMetadata({
-    title: dict.common.about,
-    description:
-      locale === 'jp'
-        ? '私たちのミッション、チーム、価値観について学んでください。誰もがより良い未来を築けるような技術を創造しています。'
-        : 'Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.',
+    title: t('about.title'),
+    description: t('about.subtitle'),
     url: `/${locale}/about`,
     locale: locale,
-    keywords:
-      locale === 'jp'
-        ? [
-            '概要',
-            '会社',
-            'チーム',
-            'ミッション',
-            'ビジョン',
-            '価値観',
-            'SaaSプラットフォーム',
-          ]
-        : [
-            'about',
-            'company',
-            'team',
-            'mission',
-            'vision',
-            'values',
-            'SaaS platform',
-          ],
-    type: 'website',
+    keywords: locale === 'ja'
+      ? ['概要', '会社', 'チーム', 'ミッション', 'ビジョン', '価値観', 'SaaSプラットフォーム']
+      : ['about', 'company', 'team', 'mission', 'vision', 'values', 'SaaS platform'],
+    type: 'website'
   })
 }
 
 export default async function AboutPage({ params }: PageProps) {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return (
     <div className="min-h-screen">
@@ -62,12 +41,10 @@ export default async function AboutPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-6">
-              {dict.common.about}
+              {t('about.title')}
             </Heading>
             <Text size="xl" variant="muted">
-              {locale === 'jp'
-                ? '私たちのミッション、チーム、価値観について学んでください。'
-                : 'Learn about our mission, team, and values.'}
+              {t('about.subtitle')}
             </Text>
           </div>
         </Container>

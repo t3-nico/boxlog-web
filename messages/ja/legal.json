@@ -1,0 +1,48 @@
+{
+  "legal": {
+    "privacy": {
+      "title": "プライバシーポリシー",
+      "subtitle": "情報の収集、利用、保護に関する方針",
+      "lastUpdated": "最終更新"
+    },
+    "terms": {
+      "title": "利用規約",
+      "description": "BoxLogサービスをご利用いただく上での規約",
+      "lastUpdated": "最終更新"
+    },
+    "security": {
+      "title": "セキュリティ",
+      "description": "データの保護とプラットフォームセキュリティの確保について"
+    },
+    "cookieConsent": {
+      "title": "クッキーの使用について",
+      "description": "私たちは、ブラウジング体験の向上、サイトトラフィックの分析、コンテンツのパーソナライズのためにクッキーを使用しています。「すべて許可」をクリックすることで、クッキーの使用に同意したものとみなされます。",
+      "learnMore": "詳細を見る",
+      "customize": "カスタマイズ",
+      "essentialOnly": "必須のみ",
+      "acceptAll": "すべて許可",
+      "preferencesTitle": "クッキー設定",
+      "savePreferences": "設定を保存",
+      "cookies": {
+        "essential": {
+          "title": "必須クッキー",
+          "description": "これらのクッキーはウェブサイトの機能に必要なもので、無効にすることはできません。",
+          "required": "必須"
+        },
+        "analytics": {
+          "title": "分析クッキー",
+          "description": "訪問者がウェブサイトをどのように利用しているかを理解するのに役立ちます（Google Analytics）。"
+        },
+        "functional": {
+          "title": "機能性クッキー",
+          "description": "パーソナライズされた体験のために、お客様の設定や環境設定を記憶します。"
+        },
+        "marketing": {
+          "title": "マーケティングクッキー",
+          "description": "現在使用していません。プライバシーを優先し、広告のための追跡は行いません。",
+          "disabled": "無効"
+        }
+      }
+    }
+  }
+}

@@ -1,30 +1,43 @@
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages, setRequestLocale } from 'next-intl/server'
+import { notFound } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { getDictionary } from '@/lib/i18n'
+import { routing, type Locale } from '@/i18n/routing'
 import { Toaster } from 'sonner'
 
-export async function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'jp' }]
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
 export default async function LocaleLayout({
   children,
-  params,
+  params
 }: {
   children: React.ReactNode
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const dict = getDictionary(locale as 'en' | 'jp')
+
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as Locale)) {
+    notFound()
+  }
+
+  // Enable static rendering
+  setRequestLocale(locale)
+
+  // Providing all messages to the client side
+  const messages = await getMessages()
 
   return (
-    <>
-      <Header locale={locale} dict={dict} />
+    <NextIntlClientProvider messages={messages}>
+      <Header locale={locale} />
       <main id="main-content" role="main">
         {children}
       </main>
-      <Footer locale={locale} dict={dict} />
+      <Footer locale={locale} />
       <Toaster richColors position="top-right" />
-    </>
+    </NextIntlClientProvider>
   )
 }

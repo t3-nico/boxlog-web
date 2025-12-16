@@ -1,0 +1,167 @@
+{
+  "marketing": {
+    "hero": {
+      "title": "Modern SaaS Platform for Scalable Applications",
+      "subtitle": "Build, deploy, and scale your SaaS applications with BoxLog.",
+      "cta": "Start Building Today"
+    },
+    "features": {
+      "title": "Powerful Features for Modern SaaS",
+      "subtitle": "Everything you need to build and scale your SaaS application",
+      "badge": "Features",
+      "headline": "Everything you need to scale your business",
+      "description": "From powerful APIs to advanced analytics, BoxLog provides all the tools you need to build, deploy, and scale your applications with confidence.",
+      "startTrial": "Start Free Trial",
+      "scheduleDemo": "Schedule Demo",
+      "grid": {
+        "title": "Powerful features for modern teams",
+        "subtitle": "Everything you need to build, deploy, and scale your applications in one integrated platform."
+      },
+      "items": {
+        "apiIntegration": {
+          "title": "API Integration",
+          "description": "Connect with 100+ third-party services and build custom integrations with our powerful REST API."
+        },
+        "realTimeAnalytics": {
+          "title": "Real-time Analytics",
+          "description": "Get detailed insights into your application performance with comprehensive analytics and reporting."
+        },
+        "advancedSecurity": {
+          "title": "Advanced Security",
+          "description": "Enterprise-grade security with SSL encryption, two-factor authentication, and compliance certifications."
+        },
+        "workflowAutomation": {
+          "title": "Workflow Automation",
+          "description": "Streamline your processes with powerful automation tools and custom workflow builders."
+        },
+        "teamCollaboration": {
+          "title": "Team Collaboration",
+          "description": "Work together seamlessly with real-time collaboration, comments, and team management features."
+        },
+        "mobileOptimized": {
+          "title": "Mobile Optimized",
+          "description": "Fully responsive design that works perfectly on all devices and screen sizes."
+        }
+      }
+    },
+    "about": {
+      "title": "About Us",
+      "subtitle": "Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.",
+      "hero": {
+        "title": "About Us",
+        "description": "BoxLog is an innovative SaaS platform that supports corporate growth through the power of technology. Our mission is to realize a world where everyone can create a better future.",
+        "contactButton": "Contact Us",
+        "teamButton": "Meet the Team"
+      },
+      "mission": {
+        "title": "Our Mission",
+        "content": "Empowering Innovation Through Technology",
+        "description": "We believe that technology should be accessible, powerful, and intuitive. Our mission is to create tools that empower businesses to innovate, grow, and succeed in the digital age."
+      },
+      "vision": {
+        "title": "Our Vision",
+        "content": "A World Where Everyone Can Create",
+        "description": "We envision a future where advanced technology is within everyone's reach, enabling individuals and organizations to build solutions that make a positive impact on the world."
+      },
+      "values": {
+        "title": "Our Values",
+        "subtitle": "These values guide our decision-making and actions",
+        "items": {
+          "customerFirst": {
+            "title": "Customer First",
+            "description": "Our customers' success is our success. We always develop products and provide services from the customer's perspective."
+          },
+          "innovation": {
+            "title": "Innovation",
+            "description": "We continue to follow the latest technology trends and provide innovative solutions that lead the industry."
+          },
+          "transparency": {
+            "title": "Transparency",
+            "description": "We value open and transparent communication and build trust relationships."
+          },
+          "excellence": {
+            "title": "Excellence",
+            "description": "We continuously improve and learn to provide high-quality products and services."
+          }
+        }
+      },
+      "cta": {
+        "title": "Let's Create the Future Together",
+        "description": "Unlock your business potential with our platform. Start today and take the first step toward digital transformation.",
+        "startButton": "Start Free",
+        "featuresButton": "View Features"
+      }
+    },
+    "pricing": {
+      "title": "Simple, Transparent Pricing",
+      "subtitle": "Choose the plan that fits your needs",
+      "hero": {
+        "title": "Simple, transparent pricing",
+        "subtitle": "Choose the perfect plan for your team. All plans include a 14-day free trial.",
+        "description": "Start free, scale as you grow. Cancel anytime.",
+        "trialNote": "No credit card required."
+      },
+      "trustIndicators": {
+        "trial": {
+          "title": "14-day free trial",
+          "description": "No credit card required to get started"
+        },
+        "security": {
+          "title": "Secure & compliant",
+          "description": "SOC 2 Type II certified and GDPR compliant"
+        },
+        "support": {
+          "title": "24/7 support",
+          "description": "Expert support when you need it most"
+        }
+      },
+      "cta": {
+        "title": "Ready to get started?",
+        "description": "Join thousands of teams who trust our platform to scale their business. Start your free trial today.",
+        "startButton": "Start Free Trial",
+        "salesButton": "Talk to Sales"
+      }
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "subtitle": "Have questions? We'd love to hear from you. Our expert team will respond quickly.",
+      "form": {
+        "title": "Contact Us",
+        "subtitle": "If you have any questions or inquiries, please feel free to contact us. Our expert staff will respond promptly.",
+        "name": {
+          "label": "Name",
+          "placeholder": "John Doe",
+          "required": "Please enter your name",
+          "maxLength": "Name must be 50 characters or less"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "example@email.com",
+          "invalid": "Please enter a valid email address"
+        },
+        "subject": {
+          "label": "Subject",
+          "placeholder": "Please enter the subject of your inquiry",
+          "required": "Please enter a subject",
+          "maxLength": "Subject must be 100 characters or less"
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Please provide details about your inquiry (minimum 10 characters)",
+          "minLength": "Message must be at least 10 characters",
+          "maxLength": "Message must be 1000 characters or less",
+          "charCount": "characters"
+        },
+        "submit": "Send Message",
+        "submitting": "Sending...",
+        "submitError": "Failed to send message. Please try again later.",
+        "success": {
+          "title": "Message Sent Successfully",
+          "description": "Thank you for your inquiry. We will respond within 2 business days.",
+          "newMessage": "Send New Message"
+        },
+        "privacyNotice": "By submitting this form, you agree to our"
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { getTagColor } from '@/lib/tags-client'
 import { ChevronRight, AlertTriangle, Star } from 'lucide-react'
 import type { Dictionary } from '@/lib/i18n'
@@ -27,24 +27,20 @@ interface ReleasePostMeta {
 
 // Local utility functions
 function isPrerelease(version: string): boolean {
-  return (
-    version.includes('beta') ||
-    version.includes('alpha') ||
-    version.includes('rc') ||
-    version.includes('pre')
-  )
+  return version.includes('beta') || 
+         version.includes('alpha') || 
+         version.includes('rc') ||
+         version.includes('pre')
 }
 
-function getVersionType(
-  version: string
-): 'major' | 'minor' | 'patch' | 'prerelease' {
+function getVersionType(version: string): 'major' | 'minor' | 'patch' | 'prerelease' {
   if (isPrerelease(version)) {
     return 'prerelease'
   }
 
   const cleanVersion = version.replace(/^v/, '')
   const parts = cleanVersion.split('.').map(Number)
-
+  
   if (parts[2] > 0) return 'patch'
   if (parts[1] > 0) return 'minor'
   return 'major'
@@ -58,52 +54,41 @@ interface ReleaseCardProps {
   locale?: string
 }
 
-export function ReleaseCard({
-  release,
-  priority: _priority = false,
-  compact = false,
-  dict,
-  locale,
-}: ReleaseCardProps) {
+export function ReleaseCard({ release, priority: _priority = false, compact = false, dict, locale }: ReleaseCardProps) {
   const { frontMatter } = release
   const versionType = getVersionType(frontMatter.version)
-
+  
   const versionBadgeStyles = {
-    major:
-      'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/40',
-    minor:
-      'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/40',
-    patch:
-      'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/40',
-    prerelease:
-      'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:hover:bg-yellow-900/40',
+    major: 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/40',
+    minor: 'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/40', 
+    patch: 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/40',
+    prerelease: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:hover:bg-yellow-900/40'
   }
+
 
   const formatDate = (dateString: string) => {
     const localeCode = locale === 'jp' ? 'ja-JP' : 'en-US'
     return new Date(dateString).toLocaleDateString(localeCode, {
       year: 'numeric',
       month: 'long',
-      day: 'numeric',
+      day: 'numeric'
     })
   }
 
   if (compact) {
     return (
       <Link
-        href={`/${locale || 'en'}/releases/${frontMatter.version}`}
+        href={`/releases/${frontMatter.version}`}
         className="group block"
       >
         <article className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200 dark:border-gray-700 dark:hover:border-blue-600">
           <div className="flex items-center gap-4">
             <div className="flex-shrink-0">
-              <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${versionBadgeStyles[versionType]}`}
-              >
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${versionBadgeStyles[versionType]}`}>
                 v{frontMatter.version}
               </span>
             </div>
-
+            
             <div className="min-w-0 flex-1">
               <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors dark:text-gray-100 dark:group-hover:text-blue-400">
                 {frontMatter.title}
@@ -121,7 +106,7 @@ export function ReleaseCard({
                 {dict?.releases.breaking || 'Breaking'}
               </span>
             )}
-
+            
             {frontMatter.featured && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
                 <Star className="w-3 h-3 mr-1" />
@@ -138,16 +123,11 @@ export function ReleaseCard({
 
   return (
     <article className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300 dark:bg-gray-900 dark:border-gray-700 dark:hover:border-blue-600">
-      <Link
-        href={`/${locale || 'en'}/releases/${frontMatter.version}`}
-        className="block"
-      >
+      <Link href={`/releases/${frontMatter.version}`} className="block">
         <div className="p-6">
           {/* Version Badge */}
           <div className="mb-3">
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${versionBadgeStyles[versionType]}`}
-            >
+            <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${versionBadgeStyles[versionType]}`}>
               v{frontMatter.version}
             </span>
           </div>
@@ -163,9 +143,9 @@ export function ReleaseCard({
               {frontMatter.tags.map((tag) => (
                 <span
                   key={tag}
-                  className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${getTagColor(
-                    tag
-                  )}`}
+                  className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                    getTagColor(tag)
+                  }`}
                 >
                   #{tag}
                 </span>
@@ -181,7 +161,7 @@ export function ReleaseCard({
                 {dict?.releases.featured || 'Featured'}
               </span>
             )}
-
+            
             {frontMatter.breaking && (
               <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
                 <AlertTriangle className="w-3 h-3 mr-1" />

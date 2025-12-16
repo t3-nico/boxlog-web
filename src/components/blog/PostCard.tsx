@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { Heading } from '@/components/ui/typography'
 import { BlogPostMeta } from '@/lib/blog'
@@ -15,16 +15,11 @@ interface PostCardProps {
   locale?: string
 }
 
-export function PostCard({
-  post,
-  priority = false,
-  layout = 'horizontal',
-  locale = 'en',
-}: PostCardProps) {
+export function PostCard({ post, priority = false, layout = 'horizontal', locale = 'en' }: PostCardProps) {
   const [imageError, setImageError] = useState(false)
-
+  
   // Function to determine tag color
-  const getTagColor = (tag: string, _index: number) => {
+  const getTagColor = (tag: string) => {
     const colors = [
       'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800',
       'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-200 dark:hover:bg-green-800',
@@ -46,23 +41,19 @@ export function PostCard({
     const colorIndex = Math.abs(hash) % colors.length
     return colors[colorIndex]
   }
-
+  
   const formattedDate = formatLocalizedDate(
     new Date(post.frontMatter.publishedAt),
     locale as 'en' | 'jp'
   )
+
 
   if (layout === 'vertical') {
     // Vertical layout (for featured articles): image on top, content below
     return (
       <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
         {/* Cover image */}
-        <Link
-          href={
-            locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`
-          }
-          className="block"
-        >
+        <Link href={`/blog/${post.slug}`} className="block">
           {post.frontMatter.coverImage && !imageError ? (
             <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
               <Image
@@ -85,11 +76,7 @@ export function PostCard({
         {/* Content */}
         <div className="p-6">
           {/* Title */}
-          <Link
-            href={
-              locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`
-            }
-          >
+          <Link href={`/blog/${post.slug}`}>
             <Heading
               as="h2"
               size="xl"
@@ -101,7 +88,7 @@ export function PostCard({
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {post.frontMatter.tags.map((tag, _index) => (
+            {post.frontMatter.tags.map((tag) => (
               <button
                 key={tag}
                 onClick={(e) => {
@@ -109,10 +96,9 @@ export function PostCard({
                   // タグクリック処理をここに追加
                   console.log('Tag clicked:', tag)
                 }}
-                className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors hover:opacity-80 ${getTagColor(
-                  tag,
-                  _index
-                )}`}
+                className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors hover:opacity-80 ${
+                  getTagColor(tag)
+                }`}
               >
                 #{tag}
               </button>
@@ -121,7 +107,9 @@ export function PostCard({
 
           {/* Meta information */}
           <div className="text-sm text-gray-500 dark:text-gray-400">
-            <time dateTime={post.frontMatter.publishedAt}>{formattedDate}</time>
+            <time dateTime={post.frontMatter.publishedAt}>
+              {formattedDate}
+            </time>
           </div>
         </div>
       </article>
@@ -133,12 +121,7 @@ export function PostCard({
     <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
       <div className="flex gap-6">
         {/* Left side: Cover image */}
-        <Link
-          href={
-            locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`
-          }
-          className="w-80 flex-shrink-0"
-        >
+        <Link href={`/blog/${post.slug}`} className="w-80 flex-shrink-0">
           {post.frontMatter.coverImage && !imageError ? (
             <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
               <Image
@@ -162,11 +145,7 @@ export function PostCard({
         <div className="flex-1">
           <div className="my-1">
             {/* Title */}
-            <Link
-              href={
-                locale === 'jp' ? `/jp/blog/${post.slug}` : `/blog/${post.slug}`
-              }
-            >
+            <Link href={`/blog/${post.slug}`}>
               <Heading
                 as="h2"
                 size="lg"
@@ -178,7 +157,7 @@ export function PostCard({
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">
-              {post.frontMatter.tags.map((tag, _index) => (
+              {post.frontMatter.tags.map((tag) => (
                 <button
                   key={tag}
                   onClick={(e) => {
@@ -186,10 +165,9 @@ export function PostCard({
                     // タグクリック処理をここに追加
                     console.log('Tag clicked:', tag)
                   }}
-                  className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors hover:opacity-80 ${getTagColor(
-                    tag,
-                    _index
-                  )}`}
+                  className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors hover:opacity-80 ${
+                    getTagColor(tag)
+                  }`}
                 >
                   #{tag}
                 </button>

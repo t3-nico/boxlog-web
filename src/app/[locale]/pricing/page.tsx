@@ -1,55 +1,39 @@
 import type { Metadata } from 'next'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import { getDictionary } from '@/lib/i18n'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
 
 interface PageProps {
-  params: {
-    locale: string
-  }
+  params: Promise<{ locale: string }>
 }
 
-export async function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'jp' }]
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return generateSEOMetadata({
-    title: dict.pages.pricing.title,
-    description: dict.pages.pricing.subtitle,
+    title: t('pricing.title'),
+    description: t('pricing.subtitle'),
     url: `/${locale}/pricing`,
     locale: locale,
-    keywords:
-      locale === 'jp'
-        ? [
-            '料金',
-            'プラン',
-            'サブスクリプション',
-            'SaaS料金',
-            'チームプラン',
-            'エンタープライズ',
-          ]
-        : [
-            'pricing',
-            'plans',
-            'subscription',
-            'SaaS pricing',
-            'team plans',
-            'enterprise',
-          ],
-    type: 'website',
+    keywords: locale === 'ja'
+      ? ['料金', 'プラン', 'サブスクリプション', 'SaaS料金', 'チームプラン', 'エンタープライズ']
+      : ['pricing', 'plans', 'subscription', 'SaaS pricing', 'team plans', 'enterprise'],
+    type: 'website'
   })
 }
 
 export default async function PricingPage({ params }: PageProps) {
-  const { locale } = params
-  const dict = await getDictionary(locale as 'en' | 'jp')
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return (
     <div className="min-h-screen">
@@ -57,10 +41,10 @@ export default async function PricingPage({ params }: PageProps) {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <Heading as="h1" size="4xl" className="mb-6">
-              {dict.pages.pricing.title}
+              {t('pricing.title')}
             </Heading>
             <Text size="xl" variant="muted">
-              {dict.pages.pricing.subtitle}
+              {t('pricing.subtitle')}
             </Text>
           </div>
         </Container>
