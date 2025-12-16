@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { routing, type Locale } from '@/i18n/routing'
+import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
 import type { Metadata } from 'next'
 

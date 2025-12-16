@@ -13,7 +13,7 @@ interface RelatedPostsProps {
   locale?: string
 }
 
-export function RelatedPosts({ posts, currentSlug, locale = 'en' }: RelatedPostsProps) {
+export function RelatedPosts({ posts, currentSlug: _currentSlug, locale = 'en' }: RelatedPostsProps) {
   const t = useTranslations('blog.relatedPosts')
 
   if (posts.length === 0) {

@@ -19,7 +19,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
   const [imageError, setImageError] = useState(false)
   
   // Function to determine tag color
-  const getTagColor = (tag: string, index: number) => {
+  const getTagColor = (tag: string) => {
     const colors = [
       'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800',
       'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-200 dark:hover:bg-green-800',
@@ -32,7 +32,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
       'bg-orange-100 text-orange-800 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800',
       'bg-cyan-100 text-cyan-800 hover:bg-cyan-200 dark:bg-cyan-900 dark:text-cyan-200 dark:hover:bg-cyan-800',
     ]
-    
+
     // Use tag name hash to determine color (same tag always gets same color)
     let hash = 0
     for (let i = 0; i < tag.length; i++) {
@@ -88,7 +88,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {post.frontMatter.tags.map((tag, index) => (
+            {post.frontMatter.tags.map((tag) => (
               <button
                 key={tag}
                 onClick={(e) => {
@@ -97,7 +97,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                   console.log('Tag clicked:', tag)
                 }}
                 className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors hover:opacity-80 ${
-                  getTagColor(tag, index)
+                  getTagColor(tag)
                 }`}
               >
                 #{tag}
@@ -157,7 +157,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">
-              {post.frontMatter.tags.map((tag, index) => (
+              {post.frontMatter.tags.map((tag) => (
                 <button
                   key={tag}
                   onClick={(e) => {
@@ -166,7 +166,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                     console.log('Tag clicked:', tag)
                   }}
                   className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors hover:opacity-80 ${
-                    getTagColor(tag, index)
+                    getTagColor(tag)
                   }`}
                 >
                   #{tag}

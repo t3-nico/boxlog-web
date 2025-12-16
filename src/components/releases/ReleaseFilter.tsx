@@ -34,8 +34,8 @@ export function ReleaseFilter({
   showFeaturedOnly,
   onTagToggle,
   onTypeToggle,
-  onBreakingToggle,
-  onFeaturedToggle,
+  onBreakingToggle: _onBreakingToggle,
+  onFeaturedToggle: _onFeaturedToggle,
   onClearFilters,
   locale,
 }: ReleaseFilterProps) {
@@ -129,7 +129,7 @@ interface TagFilterProps {
   locale: string
 }
 
-function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, locale }: TagFilterProps) {
+function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, locale: _locale }: TagFilterProps) {
   const t = useTranslations('releases.filters')
   const [showAll, setShowAll] = useState(false)
   const displayTags = showAll ? tags : tags.slice(0, maxDisplay)
@@ -231,7 +231,7 @@ export function FilterSummary({
   onBreakingToggle,
   onFeaturedToggle,
   onClearAll,
-  locale,
+  locale: _locale,
 }: FilterSummaryProps) {
   const t = useTranslations('releases.filters')
   const hasFilters = selectedTags.length > 0 ||

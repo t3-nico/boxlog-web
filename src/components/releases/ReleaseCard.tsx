@@ -54,7 +54,7 @@ interface ReleaseCardProps {
   locale?: string
 }
 
-export function ReleaseCard({ release, priority = false, compact = false, dict, locale }: ReleaseCardProps) {
+export function ReleaseCard({ release, priority: _priority = false, compact = false, dict, locale }: ReleaseCardProps) {
   const { frontMatter } = release
   const versionType = getVersionType(frontMatter.version)
   

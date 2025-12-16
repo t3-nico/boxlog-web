@@ -52,7 +52,7 @@ export interface ChangeTypeListProps {
   locale: string
 }
 
-export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true, locale }: ChangeTypeListProps) {
+export function ChangeTypeList({ selectedTypes, onTypeToggle, showAll = true, locale: _locale }: ChangeTypeListProps) {
   const t = useTranslations('releases.changeTypes')
 
   const changeTypes = changeTypeData.map((type: any) => ({

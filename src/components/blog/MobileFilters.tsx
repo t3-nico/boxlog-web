@@ -28,7 +28,7 @@ export function MobileFilters({
   onFiltersChange,
   onClearFilters,
   activeFiltersCount,
-  locale
+  locale: _locale
 }: MobileFiltersProps) {
   const t = useTranslations('blog.filters')
   const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters)

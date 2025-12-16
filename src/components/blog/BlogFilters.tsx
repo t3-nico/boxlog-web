@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Search, X, Filter, ChevronDown, Calendar, TrendingUp, Tag, Menu } from 'lucide-react'
+import { Search, X, Filter, Calendar, TrendingUp, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { MobileFilters } from './MobileFilters'
 import { useTranslations } from 'next-intl'
