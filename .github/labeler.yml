@@ -1,0 +1,110 @@
+# PR Auto Labeler Configuration
+# ファイルパスに基づいてラベルを自動付与
+# 参考: https://github.com/actions/labeler
+
+# =====================================
+# 領域ラベル（area:）
+# =====================================
+
+area:frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**'
+          - 'src/components/**'
+
+area:blog:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**/blog/**'
+          - 'src/components/blog/**'
+          - 'src/lib/blog.ts'
+          - 'content/blog/**'
+
+area:releases:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**/releases/**'
+          - 'src/components/releases/**'
+          - 'content/releases/**'
+
+area:docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**/docs/**'
+          - 'content/docs/**'
+
+area:marketing:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**/page.tsx'
+          - 'src/components/marketing/**'
+
+area:i18n:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'messages/**'
+          - 'src/i18n/**'
+
+# =====================================
+# 技術スタックラベル（tech:）
+# =====================================
+
+tech:tailwind:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tailwind.config.*'
+          - 'src/styles/**'
+          - 'postcss.config.*'
+
+tech:nextjs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'next.config.*'
+          - 'src/middleware.ts'
+          - 'src/app/**'
+
+tech:mdx:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/lib/mdx.ts'
+          - 'content/**/*.mdx'
+          - 'content/**/*.md'
+
+# =====================================
+# 変更対象ラベル（scope:）
+# =====================================
+
+scope:component:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/components/**/*.tsx'
+
+scope:hook:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/hooks/**'
+
+scope:util:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/lib/**'
+
+# =====================================
+# ツールラベル（tool:）
+# =====================================
+
+tool:ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
+          - '.github/actions/**'
+
+# =====================================
+# ドキュメントラベル
+# =====================================
+
+type:docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'docs/**'

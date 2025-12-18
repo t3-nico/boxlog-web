@@ -1,0 +1,87 @@
+name: Bundle Size Check
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+
+# セキュリティ: 最小権限の原則
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  bundle-size:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and analyze bundle
+        run: npm run build
+        env:
+          ANALYZE: true
+
+      - name: Get bundle stats
+        id: bundle
+        run: |
+          # .next/analyze フォルダのサイズを取得
+          if [ -d ".next" ]; then
+            TOTAL_SIZE=$(du -sh .next | cut -f1)
+            echo "total_size=$TOTAL_SIZE" >> $GITHUB_OUTPUT
+          else
+            echo "total_size=N/A" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const comment = `## Bundle Size Check
+
+            Build Size: \`${{ steps.bundle.outputs.total_size }}\`
+
+            [View Details](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+            <sub>BoxLog Web Bundle Analysis</sub>`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existingComment = comments.find(c => c.body.includes('Bundle Size Check'));
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: comment,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment,
+              });
+            }
