@@ -87,78 +87,57 @@ import { cn } from '@/lib/utils'
 
 ---
 
-### 2. 国際化（i18n）
+### 2. 国際化（next-intl）
+
+next-intl を使用した国際化システム。翻訳は `messages/{locale}/*.json` に配置。
+
+**設定ファイル**:
 
 ```typescript
-// lib/i18n.ts
-export type Locale = 'en' | 'jp'
+// src/i18n/routing.ts
+export const routing = defineRouting({
+  locales: ['en', 'ja'],
+  defaultLocale: 'en',
+})
 
-export interface Dictionary {
-  common: {
-    home: string
-    about: string
-    // ...
-  }
-  // ...
-}
+export type Locale = (typeof routing.locales)[number]
+```
 
-const en: Dictionary = {
-  /* ... */
-}
-const jp: Dictionary = {
-  /* ... */
-}
+**Server Component での使用**:
 
-export const dictionaries = { en, jp }
+```typescript
+import { getTranslations } from 'next-intl/server'
 
-/**
- * ロケールに応じた翻訳辞書を取得
- */
-export function getDictionary(locale: Locale = 'en'): Dictionary {
-  if (!isValidLocale(locale)) {
-    console.warn(`Invalid locale '${locale}', falling back to 'en'`)
-    return dictionaries.en
-  }
-  return dictionaries[locale] || dictionaries.en
-}
-
-/**
- * ロケールの妥当性検証
- */
-export function isValidLocale(locale: string): locale is Locale {
-  return locale === 'en' || locale === 'jp'
-}
-
-/**
- * ローカライズされた日付フォーマット
- */
-export function formatLocalizedDate(
-  date: Date,
-  locale: Locale = 'en',
-  options?: Intl.DateTimeFormatOptions
-): string {
-  const localeMap = {
-    en: 'en-US',
-    jp: 'ja-JP',
-  }
-
-  return new Intl.DateTimeFormat(localeMap[locale], {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    ...options,
-  }).format(date)
+export default async function Page() {
+  const t = await getTranslations('common')
+  return <h1>{t('navigation.home')}</h1>
 }
 ```
 
-**使用例**:
+**Client Component での使用**:
 
 ```typescript
-import { getDictionary } from '@/lib/i18n'
+'use client'
 
-export default async function Page({ params }: { params: { locale: Locale } }) {
-  const dict = await getDictionary(params.locale)
-  return <h1>{dict.common.home}</h1>
+import { useTranslations } from 'next-intl'
+
+export function MyComponent() {
+  const t = useTranslations('common')
+  return <h1>{t('navigation.home')}</h1>
+}
+```
+
+**日付のローカライズ**:
+
+```typescript
+// Intl.DateTimeFormat を直接使用
+const formatDate = (dateString: string, locale: string) => {
+  const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US'
+  return new Date(dateString).toLocaleDateString(localeCode, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
 }
 ```
 
@@ -186,10 +165,7 @@ interface MdxFrontmatter {
 /**
  * MDXファイルを読み込み
  */
-export function getMdxFile<T extends MdxFrontmatter>(
-  dir: string,
-  slug: string
-): { frontmatter: T; content: string } {
+export function getMdxFile<T extends MdxFrontmatter>(dir: string, slug: string): { frontmatter: T; content: string } {
   const filePath = path.join(process.cwd(), dir, `${slug}.mdx`)
   const fileContent = readFileSync(filePath, 'utf8')
   const { data, content } = matter(fileContent)
@@ -203,9 +179,7 @@ export function getMdxFile<T extends MdxFrontmatter>(
 /**
  * ディレクトリ内のすべてのMDXファイルを取得
  */
-export function getAllMdxFiles<T extends MdxFrontmatter>(
-  dir: string
-): Array<T & { slug: string }> {
+export function getAllMdxFiles<T extends MdxFrontmatter>(dir: string): Array<T & { slug: string }> {
   const dirPath = path.join(process.cwd(), dir)
   const files = readdirSync(dirPath).filter((file) => file.endsWith('.mdx'))
 
@@ -249,7 +223,7 @@ export function generateBasicMetadata({
   title: string
   description: string
   path: string
-  locale?: 'en' | 'jp'
+  locale?: 'en' | 'ja'
 }): Metadata {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yoursaas.com'
   const fullUrl = `${siteUrl}/${locale}${path}`
@@ -269,7 +243,7 @@ export function generateBasicMetadata({
       description,
       url: fullUrl,
       siteName: 'YourSaaS',
-      locale: locale === 'jp' ? 'ja_JP' : 'en_US',
+      locale: locale === 'ja' ? 'ja_JP' : 'en_US',
       type: 'website',
     },
     twitter: {
@@ -298,7 +272,7 @@ export function generateBlogMetadata({
   date: string
   coverImage: string
   tags: string[]
-  locale?: 'en' | 'jp'
+  locale?: 'en' | 'ja'
 }): Metadata {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yoursaas.com'
   const fullUrl = `${siteUrl}/${locale}/blog/${slug}`
@@ -318,7 +292,7 @@ export function generateBlogMetadata({
       description: excerpt,
       url: fullUrl,
       siteName: 'YourSaaS',
-      locale: locale === 'jp' ? 'ja_JP' : 'en_US',
+      locale: locale === 'ja' ? 'ja_JP' : 'en_US',
       type: 'article',
       publishedTime: date,
       images: [
@@ -346,11 +320,7 @@ export function generateBlogMetadata({
 ```typescript
 import { generateBlogMetadata } from '@/lib/metadata'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}) {
+export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = await getPostBySlug(params.slug)
   return generateBlogMetadata({ ...post, locale: 'en' })
 }
@@ -373,10 +343,7 @@ interface SearchableItem {
 /**
  * 全文検索（簡易版）
  */
-export function searchContent(
-  items: SearchableItem[],
-  query: string
-): SearchableItem[] {
+export function searchContent(items: SearchableItem[], query: string): SearchableItem[] {
   const normalizedQuery = query.toLowerCase().trim()
 
   if (!normalizedQuery) {
@@ -386,9 +353,7 @@ export function searchContent(
   return items.filter((item) => {
     const titleMatch = item.title.toLowerCase().includes(normalizedQuery)
     const contentMatch = item.content.toLowerCase().includes(normalizedQuery)
-    const tagMatch = item.tags.some((tag) =>
-      tag.toLowerCase().includes(normalizedQuery)
-    )
+    const tagMatch = item.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery))
 
     return titleMatch || contentMatch || tagMatch
   })
@@ -397,11 +362,7 @@ export function searchContent(
 /**
  * タグフィルタリング
  */
-export function filterByTags(
-  items: SearchableItem[],
-  tags: string[],
-  logic: 'AND' | 'OR' = 'OR'
-): SearchableItem[] {
+export function filterByTags(items: SearchableItem[], tags: string[], logic: 'AND' | 'OR' = 'OR'): SearchableItem[] {
   if (tags.length === 0) {
     return items
   }
@@ -446,10 +407,7 @@ export class AppError extends Error {
 /**
  * エラーログ記録
  */
-export function logError(
-  error: Error,
-  context?: Record<string, unknown>
-): void {
+export function logError(error: Error, context?: Record<string, unknown>): void {
   if (process.env.NODE_ENV === 'development') {
     console.error('Error:', error.message)
     console.error('Stack:', error.stack)
@@ -523,7 +481,7 @@ import { isValidLocale, formatLocalizedDate } from './i18n'
 describe('i18n', () => {
   it('validates locale correctly', () => {
     expect(isValidLocale('en')).toBe(true)
-    expect(isValidLocale('jp')).toBe(true)
+    expect(isValidLocale('ja')).toBe(true)
     expect(isValidLocale('fr')).toBe(false)
   })
 
@@ -535,7 +493,7 @@ describe('i18n', () => {
 
   it('formats date correctly for Japanese', () => {
     const date = new Date('2025-01-23')
-    const result = formatLocalizedDate(date, 'jp')
+    const result = formatLocalizedDate(date, 'ja')
     expect(result).toContain('2025')
   })
 })
@@ -563,31 +521,22 @@ interface PostFrontmatter {
 /**
  * すべてのブログ記事を取得（SSG用）
  */
-export async function getAllPosts(): Promise<
-  Array<PostFrontmatter & { slug: string }>
-> {
+export async function getAllPosts(): Promise<Array<PostFrontmatter & { slug: string }>> {
   return getAllMdxFiles<PostFrontmatter>('content/blog')
 }
 
 /**
  * スラッグから記事を取得
  */
-export async function getPostBySlug(
-  slug: string
-): Promise<PostFrontmatter & { slug: string; content: string }> {
-  const { frontmatter, content } = getMdxFile<PostFrontmatter>(
-    'content/blog',
-    slug
-  )
+export async function getPostBySlug(slug: string): Promise<PostFrontmatter & { slug: string; content: string }> {
+  const { frontmatter, content } = getMdxFile<PostFrontmatter>('content/blog', slug)
   return { ...frontmatter, slug, content }
 }
 
 /**
  * カテゴリーでフィルタリング
  */
-export async function getPostsByCategory(
-  category: string
-): Promise<Array<PostFrontmatter & { slug: string }>> {
+export async function getPostsByCategory(category: string): Promise<Array<PostFrontmatter & { slug: string }>> {
   const posts = await getAllPosts()
   return posts.filter((post) => post.category === category)
 }
@@ -595,9 +544,7 @@ export async function getPostsByCategory(
 /**
  * タグでフィルタリング
  */
-export async function getPostsByTag(
-  tag: string
-): Promise<Array<PostFrontmatter & { slug: string }>> {
+export async function getPostsByTag(tag: string): Promise<Array<PostFrontmatter & { slug: string }>> {
   const posts = await getAllPosts()
   return posts.filter((post) => post.tags.includes(tag))
 }
@@ -615,15 +562,9 @@ import { z } from 'zod'
  * お問い合わせフォームスキーマ
  */
 export const contactFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'お名前を入力してください')
-    .max(50, 'お名前は50文字以内で入力してください'),
+  name: z.string().min(1, 'お名前を入力してください').max(50, 'お名前は50文字以内で入力してください'),
   email: z.string().email('有効なメールアドレスを入力してください'),
-  subject: z
-    .string()
-    .min(1, '件名を入力してください')
-    .max(100, '件名は100文字以内で入力してください'),
+  subject: z.string().min(1, '件名を入力してください').max(100, '件名は100文字以内で入力してください'),
   message: z
     .string()
     .min(10, 'メッセージは10文字以上で入力してください')
@@ -684,13 +625,9 @@ import { ja, enUS } from 'date-fns/locale'
 /**
  * 日付をフォーマット
  */
-export function formatDate(
-  date: string | Date,
-  formatStr: string = 'PPP',
-  locale: 'en' | 'jp' = 'en'
-): string {
+export function formatDate(date: string | Date, formatStr: string = 'PPP', locale: 'en' | 'ja' = 'en'): string {
   const dateObj = typeof date === 'string' ? parseISO(date) : date
-  const localeObj = locale === 'jp' ? ja : enUS
+  const localeObj = locale === 'ja' ? ja : enUS
 
   return format(dateObj, formatStr, { locale: localeObj })
 }
@@ -698,12 +635,9 @@ export function formatDate(
 /**
  * 相対時間表示（「3日前」等）
  */
-export function formatRelativeTime(
-  date: string | Date,
-  locale: 'en' | 'jp' = 'en'
-): string {
+export function formatRelativeTime(date: string | Date, locale: 'en' | 'ja' = 'en'): string {
   const dateObj = typeof date === 'string' ? parseISO(date) : date
-  const localeObj = locale === 'jp' ? ja : enUS
+  const localeObj = locale === 'ja' ? ja : enUS
 
   return formatDistanceToNow(dateObj, { addSuffix: true, locale: localeObj })
 }
@@ -714,8 +648,8 @@ export function formatRelativeTime(
 ```typescript
 import { formatDate, formatRelativeTime } from '@/lib/date-utils'
 
-const publishedDate = formatDate(post.date, 'yyyy-MM-dd', 'jp')
-const timeAgo = formatRelativeTime(post.date, 'jp')
+const publishedDate = formatDate(post.date, 'yyyy-MM-dd', 'ja')
+const timeAgo = formatRelativeTime(post.date, 'ja')
 ```
 
 ---

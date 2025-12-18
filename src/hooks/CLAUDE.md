@@ -83,20 +83,24 @@ export function useSearch() {
 'use client'
 
 import { useState, useEffect } from 'react'
-import { type Locale, defaultLocale, isValidLocale } from '@/lib/i18n'
+import { routing, type Locale } from '@/i18n/routing'
+
+function isValidLocale(locale: string): locale is Locale {
+  return routing.locales.includes(locale as Locale)
+}
 
 export function useLocale(): Locale {
-  const [locale, setLocale] = useState<Locale>(defaultLocale)
+  const [locale, setLocale] = useState<Locale>(routing.defaultLocale)
 
   useEffect(() => {
     const storedLocale = localStorage.getItem('locale')
 
     if (storedLocale && isValidLocale(storedLocale)) {
-      setLocale(storedLocale as Locale)
+      setLocale(storedLocale)
     } else {
       const browserLang = navigator.language.split('-')[0]
-      if (browserLang === 'ja' || browserLang === 'jp') {
-        setLocale('jp')
+      if (browserLang === 'ja') {
+        setLocale('ja')
       } else {
         setLocale('en')
       }
@@ -397,10 +401,7 @@ interface UseLocalStorageReturn<T> {
   removeValue: () => void
 }
 
-export function useLocalStorage<T>(
-  key: string,
-  initialValue: T
-): UseLocalStorageReturn<T> {
+export function useLocalStorage<T>(key: string, initialValue: T): UseLocalStorageReturn<T> {
   const [value, setValue] = useState<T>(initialValue)
 
   // Read from localStorage on mount
