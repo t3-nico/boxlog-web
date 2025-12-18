@@ -1,0 +1,23 @@
+{
+  "search": {
+    "placeholder": "Search articles, tags, documentation...",
+    "recentSearches": "Recent Searches",
+    "popularTags": "Popular Tags",
+    "popularPages": "Popular Pages",
+    "searchResultsFor": "Search results for",
+    "pressEnterToSearch": "Press Enter to search",
+    "searchFor": "Search for",
+    "findResultsAcross": "Find results across all content",
+    "previewResults": "Preview results:",
+    "relatedTags": "Related tags:",
+    "articles": "articles",
+    "tags": "Tags",
+    "docs": "Docs",
+    "blog": "Blog",
+    "release": "Release",
+    "toSelect": "to select",
+    "toNavigate": "to navigate",
+    "toClose": "to close",
+    "poweredBy": "Powered by BoxLog Search"
+  }
+}
