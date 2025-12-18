@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { getAllBlogPostMetas } from '@/lib/blog'
 import { getAllReleaseMetas } from '@/lib/releases'
 import fs from 'fs'
-import path from 'path'
 import matter from 'gray-matter'
+import { NextRequest, NextResponse } from 'next/server'
+import path from 'path'
 
 // Get document metadata
 async function getAllDocMetas() {
@@ -31,8 +31,18 @@ async function getAllDocMetas() {
     return files
   }
 
+  interface DocMeta {
+    slug: string
+    title: string
+    description: string
+    date: string
+    tags: string[]
+    category: string | undefined
+    featured: boolean
+  }
+
   const mdxFiles = getAllMdxFiles(docsDirectory)
-  const docMetas: any[] = []
+  const docMetas: DocMeta[] = []
 
   for (const filePath of mdxFiles) {
     try {
@@ -50,10 +60,7 @@ async function getAllDocMetas() {
         slug: slug,
         title: frontMatter.title || 'Untitled',
         description: frontMatter.description || '',
-        date:
-          frontMatter.publishedAt ||
-          frontMatter.updatedAt ||
-          new Date().toISOString(),
+        date: frontMatter.publishedAt || frontMatter.updatedAt || new Date().toISOString(),
         tags: frontMatter.tags || [],
         category: frontMatter.category,
         featured: frontMatter.featured || false,
@@ -63,9 +70,7 @@ async function getAllDocMetas() {
     }
   }
 
-  return docMetas.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
+  return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
 export async function GET(request: NextRequest) {
@@ -88,16 +93,9 @@ export async function GET(request: NextRequest) {
 
     // Search blog posts
     for (const post of blogPosts) {
-      const titleMatch = post.frontMatter.title
-        .toLowerCase()
-        .includes(searchTerm)
-      const descriptionMatch =
-        post.frontMatter.description?.toLowerCase().includes(searchTerm) ||
-        false
-      const tagMatch =
-        post.frontMatter.tags?.some((tag) =>
-          tag.toLowerCase().includes(searchTerm)
-        ) || false
+      const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
+      const descriptionMatch = post.frontMatter.description?.toLowerCase().includes(searchTerm) || false
+      const tagMatch = post.frontMatter.tags?.some((tag) => tag.toLowerCase().includes(searchTerm)) || false
 
       if (titleMatch || descriptionMatch || tagMatch) {
         results.push({
@@ -115,16 +113,9 @@ export async function GET(request: NextRequest) {
 
     // Search releases
     for (const release of releases) {
-      const titleMatch = release.frontMatter.title
-        .toLowerCase()
-        .includes(searchTerm)
-      const descriptionMatch =
-        release.frontMatter.description?.toLowerCase().includes(searchTerm) ||
-        false
-      const tagMatch =
-        release.frontMatter.tags?.some((tag) =>
-          tag.toLowerCase().includes(searchTerm)
-        ) || false
+      const titleMatch = release.frontMatter.title.toLowerCase().includes(searchTerm)
+      const descriptionMatch = release.frontMatter.description?.toLowerCase().includes(searchTerm) || false
+      const tagMatch = release.frontMatter.tags?.some((tag) => tag.toLowerCase().includes(searchTerm)) || false
 
       if (titleMatch || descriptionMatch || tagMatch) {
         results.push({
@@ -133,10 +124,7 @@ export async function GET(request: NextRequest) {
           description: release.frontMatter.description || '',
           url: `/releases/${release.frontMatter.version || release.slug}`,
           type: 'release',
-          breadcrumbs: [
-            'Releases',
-            release.frontMatter.version || release.slug,
-          ],
+          breadcrumbs: ['Releases', release.frontMatter.version || release.slug],
           lastModified: release.frontMatter.date,
           tags: release.frontMatter.tags || [],
         })
@@ -146,12 +134,8 @@ export async function GET(request: NextRequest) {
     // Search documents
     for (const doc of docs) {
       const titleMatch = doc.title.toLowerCase().includes(searchTerm)
-      const descriptionMatch =
-        doc.description?.toLowerCase().includes(searchTerm) || false
-      const tagMatch =
-        doc.tags?.some((tag: string) =>
-          tag.toLowerCase().includes(searchTerm)
-        ) || false
+      const descriptionMatch = doc.description?.toLowerCase().includes(searchTerm) || false
+      const tagMatch = doc.tags?.some((tag: string) => tag.toLowerCase().includes(searchTerm)) || false
 
       if (titleMatch || descriptionMatch || tagMatch) {
         results.push({
@@ -175,9 +159,7 @@ export async function GET(request: NextRequest) {
       if (aTitleMatch && !bTitleMatch) return -1
       if (!aTitleMatch && bTitleMatch) return 1
 
-      return (
-        new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
-      )
+      return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
     })
 
     return NextResponse.json({ results: results.slice(0, 50) })

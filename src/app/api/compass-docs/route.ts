@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { readFileSync, existsSync } from 'fs'
-import { join } from 'path'
+import { existsSync, readFileSync } from 'fs'
 import { glob } from 'glob'
+import { NextRequest, NextResponse } from 'next/server'
+import { join } from 'path'
 
 export interface CompassDoc {
   id: string
@@ -20,10 +20,7 @@ export async function GET(request: NextRequest) {
 
     // Compassディレクトリが存在するかチェック
     if (!existsSync(compassRoot)) {
-      return NextResponse.json(
-        { error: 'Compass directory not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Compass directory not found' }, { status: 404 })
     }
 
     const patterns = [
@@ -47,10 +44,7 @@ export async function GET(request: NextRequest) {
             if (!existsSync(fullPath)) continue
 
             const content = readFileSync(fullPath, 'utf-8')
-            const title =
-              extractTitle(content) ||
-              file.split('/').pop()?.replace('.md', '') ||
-              'Untitled'
+            const title = extractTitle(content) || file.split('/').pop()?.replace('.md', '') || 'Untitled'
             const category = getCategoryFromPath(file)
 
             docs.push({
@@ -95,16 +89,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ docs: filteredDocs })
   } catch (error) {
     console.error('Failed to load compass docs:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 
 function extractTitle(content: string): string | null {
   const titleMatch = content.match(/^#\s+(.+)$/m)
-  return titleMatch ? titleMatch[1].trim() : null
+  return titleMatch?.[1]?.trim() ?? null
 }
 
 function getCategoryFromPath(filePath: string): string {

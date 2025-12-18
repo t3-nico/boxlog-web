@@ -8,9 +8,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
 
     const title = searchParams.get('title') || 'YourSaaS'
-    const description =
-      searchParams.get('description') ||
-      'Modern SaaS Platform for Scalable Applications'
+    const description = searchParams.get('description') || 'Modern SaaS Platform for Scalable Applications'
     const type = searchParams.get('type') || 'default'
     const category = searchParams.get('category')
     const author = searchParams.get('author')
@@ -51,8 +49,7 @@ export async function GET(request: NextRequest) {
       },
     }
 
-    const config =
-      typeConfig[type as keyof typeof typeConfig] || typeConfig.default
+    const config = typeConfig[type as keyof typeof typeConfig] || typeConfig.default
 
     return new ImageResponse(
       <div

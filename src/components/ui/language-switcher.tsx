@@ -1,11 +1,11 @@
 'use client'
 
-import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Globe } from '@/lib/icons'
-import { useRouter, usePathname } from '@/i18n/navigation'
+import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
+import { Globe } from '@/lib/icons'
+import * as React from 'react'
 
 interface LanguageSwitcherProps {
   className?: string
@@ -35,12 +35,7 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
 
   if (!mounted) {
     return (
-      <Button
-        variant="outline"
-        size="sm"
-        className={`h-8 w-8 p-0 ${className}`}
-        disabled
-      >
+      <Button variant="outline" size="sm" className={`h-8 w-8 p-0 ${className}`} disabled>
         <Globe className="h-4 w-4" />
       </Button>
     )
@@ -49,12 +44,7 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className={`h-8 w-8 p-0 ${className}`}
-          aria-label="Change language"
-        >
+        <Button variant="outline" size="sm" className={`h-8 w-8 p-0 ${className}`} aria-label="Change language">
           <Globe className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
@@ -67,9 +57,7 @@ export function LanguageSwitcher({ className, currentLocale: providedLocale }: L
           >
             <span className="flex items-center gap-2">
               <span className="text-sm font-medium">{localeNames[locale].nativeName}</span>
-              {validCurrentLocale === locale && (
-                <span className="text-xs text-muted-foreground">✓</span>
-              )}
+              {validCurrentLocale === locale && <span className="text-muted-foreground text-xs">✓</span>}
             </span>
           </DropdownMenuItem>
         ))}

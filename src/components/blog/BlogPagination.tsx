@@ -17,12 +17,7 @@ interface BlogPaginationProps {
   className?: string
 }
 
-export function BlogPagination({
-  currentPage,
-  totalPages,
-  basePath,
-  className,
-}: BlogPaginationProps) {
+export function BlogPagination({ currentPage, totalPages, basePath, className }: BlogPaginationProps) {
   if (totalPages <= 1) return null
 
   const generatePageUrl = (page: number) => {
@@ -35,11 +30,7 @@ export function BlogPagination({
     const range: number[] = []
     const rangeWithDots: (number | string)[] = []
 
-    for (
-      let i = Math.max(2, currentPage - delta);
-      i <= Math.min(totalPages - 1, currentPage + delta);
-      i++
-    ) {
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
       range.push(i)
     }
 
@@ -69,11 +60,7 @@ export function BlogPagination({
           {currentPage > 1 ? (
             <PaginationPrevious href={generatePageUrl(currentPage - 1)} />
           ) : (
-            <PaginationPrevious
-              href="#"
-              className="pointer-events-none opacity-50"
-              aria-disabled="true"
-            />
+            <PaginationPrevious href="#" className="pointer-events-none opacity-50" aria-disabled="true" />
           )}
         </PaginationItem>
 
@@ -91,10 +78,7 @@ export function BlogPagination({
 
           return (
             <PaginationItem key={pageNumber}>
-              <PaginationLink
-                href={generatePageUrl(pageNumber)}
-                isActive={isCurrentPage}
-              >
+              <PaginationLink href={generatePageUrl(pageNumber)} isActive={isCurrentPage}>
                 {pageNumber}
               </PaginationLink>
             </PaginationItem>
@@ -105,11 +89,7 @@ export function BlogPagination({
           {currentPage < totalPages ? (
             <PaginationNext href={generatePageUrl(currentPage + 1)} />
           ) : (
-            <PaginationNext
-              href="#"
-              className="pointer-events-none opacity-50"
-              aria-disabled="true"
-            />
+            <PaginationNext href="#" className="pointer-events-none opacity-50" aria-disabled="true" />
           )}
         </PaginationItem>
       </PaginationContent>

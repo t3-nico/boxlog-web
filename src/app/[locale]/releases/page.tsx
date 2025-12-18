@@ -1,16 +1,11 @@
-import React from 'react'
-import type { Metadata } from 'next'
+import { ReleasesClient } from '@/components/releases/ReleasesClient'
 import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
-import {
-  getAllReleaseMetas,
-  getAllReleaseTags,
-  getFeaturedReleases,
-} from '@/lib/releases'
-import { ReleasesClient } from '@/components/releases/ReleasesClient'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
+import { getAllReleaseMetas, getAllReleaseTags, getFeaturedReleases } from '@/lib/releases'
+import type { Metadata } from 'next'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 interface PageProps {
   params: Promise<{ locale: string }>
@@ -26,15 +21,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return generateSEOMetadata({
     title: t('navigation.releases'),
-    description: locale === 'ja'
-      ? '最新のリリースノートと更新情報'
-      : 'Latest release notes and updates',
+    description: locale === 'ja' ? '最新のリリースノートと更新情報' : 'Latest release notes and updates',
     url: `/${locale}/releases`,
     locale: locale,
-    keywords: locale === 'ja'
-      ? ['リリースノート', '更新', '新機能', 'バグ修正', 'BoxLog']
-      : ['release notes', 'updates', 'new features', 'bug fixes', 'BoxLog'],
-    type: 'website'
+    keywords:
+      locale === 'ja'
+        ? ['リリースノート', '更新', '新機能', 'バグ修正', 'BoxLog']
+        : ['release notes', 'updates', 'new features', 'bug fixes', 'BoxLog'],
+    type: 'website',
   })
 }
 
@@ -48,7 +42,7 @@ export default async function ReleasesPage({ params }: PageProps) {
   const [allReleases, allTags, featuredReleases] = await Promise.all([
     getAllReleaseMetas(),
     getAllReleaseTags(),
-    getFeaturedReleases()
+    getFeaturedReleases(),
   ])
 
   const isJa = locale === 'ja'
@@ -56,9 +50,9 @@ export default async function ReleasesPage({ params }: PageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <section className="bg-gradient-to-br from-gray-50 to-white py-16 dark:from-gray-800 dark:to-gray-900">
         <Container>
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="mx-auto max-w-4xl text-center">
             <Heading as="h1" size="4xl" className="mb-4">
               {t('navigation.releases')}
             </Heading>

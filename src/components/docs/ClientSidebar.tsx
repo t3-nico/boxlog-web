@@ -1,28 +1,28 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { type NavigationItem, type NavigationSection } from '@/lib/navigation'
 import {
-  ExternalLink,
-  Rocket,
-  User,
-  Building,
   BarChart3,
-  FileText,
-  Search,
   Bell,
-  Puzzle,
-  Code,
-  Radio,
-  BookOpen,
   Book,
-  Home,
-  Settings,
-  Key,
+  BookOpen,
+  Building,
+  Code,
   CreditCard,
+  ExternalLink,
+  FileText,
+  Home,
+  Key,
+  Puzzle,
+  Radio,
+  Rocket,
+  Search,
+  Settings,
   Shield,
+  User,
 } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 function getPageIcon(href: string, _title: string) {
   // ホームページ
@@ -79,11 +79,7 @@ interface NavigationItemProps {
   currentPath: string
 }
 
-function NavigationItemComponent({
-  item,
-  level,
-  currentPath,
-}: NavigationItemProps) {
+function NavigationItemComponent({ item, level, currentPath }: NavigationItemProps) {
   const hasChildren = item.items && item.items.length > 0
   const hasHref = Boolean(item.href)
   const paddingLeft = `${(level + 1) * 8}px`
@@ -91,14 +87,14 @@ function NavigationItemComponent({
 
   return (
     <div>
-      <div className="flex items-center group">
+      <div className="group flex items-center">
         {hasHref ? (
           <Link
             href={item.href!}
-            className={`flex items-center flex-1 text-sm rounded-md transition-colors ${
+            className={`flex flex-1 items-center rounded-md text-sm transition-colors ${
               isActive
-                ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 font-medium'
-                : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
+                ? 'bg-blue-50 font-medium text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
+                : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-200'
             }`}
             style={{
               paddingLeft,
@@ -111,21 +107,21 @@ function NavigationItemComponent({
               const IconComponent = getPageIcon(item.href!, item.title)
               return (
                 <>
-                  <IconComponent className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <IconComponent className="mr-2 h-4 w-4 flex-shrink-0" />
                   <span className="flex-1">{item.title}</span>
                 </>
               )
             })()}
             {item.badge && (
-              <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
+              <span className="ml-2 rounded bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                 {item.badge}
               </span>
             )}
-            {item.external && <ExternalLink className="w-3 h-3 ml-1" />}
+            {item.external && <ExternalLink className="ml-1 h-3 w-3" />}
           </Link>
         ) : (
           <span
-            className="flex items-center flex-1 text-sm text-gray-900 dark:text-gray-100 font-medium"
+            className="flex flex-1 items-center text-sm font-medium text-gray-900 dark:text-gray-100"
             style={{
               paddingLeft,
               paddingRight: '8px',
@@ -137,7 +133,7 @@ function NavigationItemComponent({
               const IconComponent = getPageIcon('', item.title)
               return (
                 <>
-                  <IconComponent className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <IconComponent className="mr-2 h-4 w-4 flex-shrink-0" />
                   <span className="flex-1">{item.title}</span>
                 </>
               )
@@ -170,12 +166,12 @@ export function ClientSidebar({ navigation }: ClientSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex h-full flex-col">
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto space-y-6">
+      <nav className="flex-1 space-y-6 overflow-y-auto">
         {navigation.map((section) => (
           <div key={section.title}>
-            <div className="pl-2 pr-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-default">
+            <div className="cursor-default py-2 pr-3 pl-2 text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
               {section.title}
             </div>
 

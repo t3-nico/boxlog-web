@@ -223,7 +223,7 @@ interface PostCardProps {
     date: string
     excerpt: string
   }
-  locale: 'en' | 'jp'
+  locale: 'en' | 'ja'
 }
 
 export function PostCard({ post, locale }: PostCardProps) {
@@ -289,7 +289,6 @@ import { PostCard } from '@/components/blog/PostCard'
 
 // 4. 内部ライブラリ・ユーティリティ
 import { getAllPosts } from '@/lib/blog'
-import { getDictionary } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 // 5. 型定義
@@ -364,16 +363,31 @@ export async function getServerSideProps() {
 ## 🌍 多言語対応（next-intl）
 
 ```typescript
-// ✅ 推奨: next-intl使用
-import { getDictionary } from '@/lib/i18n'
+// ✅ 推奨: Server Component での next-intl 使用
+import { getTranslations } from 'next-intl/server'
 
-export default async function Page({ params }: { params: { locale: 'en' | 'jp' } }) {
-  const dict = await getDictionary(params.locale)
+export default async function Page() {
+  const t = await getTranslations('marketing')
 
   return (
     <div>
-      <h1>{dict.title}</h1>
-      <p>{dict.description}</p>
+      <h1>{t('hero.title')}</h1>
+      <p>{t('hero.description')}</p>
+    </div>
+  )
+}
+
+// ✅ 推奨: Client Component での next-intl 使用
+'use client'
+
+import { useTranslations } from 'next-intl'
+
+export function MyComponent() {
+  const t = useTranslations('common')
+
+  return (
+    <div>
+      <h1>{t('navigation.home')}</h1>
     </div>
   )
 }
@@ -387,6 +401,22 @@ export default function Page() {
     </div>
   )
 }
+```
+
+### 翻訳ファイルの構造
+
+```
+messages/
+├── en/
+│   ├── common.json    # 共通翻訳
+│   ├── legal.json     # 法的文書
+│   ├── marketing.json # マーケティング
+│   └── search.json    # 検索機能
+└── ja/
+    ├── common.json
+    ├── legal.json
+    ├── marketing.json
+    └── search.json
 ```
 
 ---

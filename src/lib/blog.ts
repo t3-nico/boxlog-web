@@ -1,7 +1,7 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import type { AIMetadata } from '@/types/content'
+import fs from 'fs'
+import matter from 'gray-matter'
+import path from 'path'
 
 export interface BlogPostFrontMatter {
   title: string
@@ -46,10 +46,7 @@ export function calculateReadingTime(content: string): number {
 }
 
 // Generate article excerpt
-export function generateExcerpt(
-  content: string,
-  maxLength: number = 160
-): string {
+export function generateExcerpt(content: string, maxLength: number = 160): string {
   // Remove Markdown syntax and HTML tags
   const cleanContent = content
     .replace(/#{1,6}\s+/g, '') // Headers
@@ -104,11 +101,7 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
   // Exclude drafts and sort by publish date (descending)
   return posts
     .filter((post) => !post.frontMatter.draft)
-    .sort(
-      (a, b) =>
-        new Date(b.frontMatter.publishedAt).getTime() -
-        new Date(a.frontMatter.publishedAt).getTime()
-    )
+    .sort((a, b) => new Date(b.frontMatter.publishedAt).getTime() - new Date(a.frontMatter.publishedAt).getTime())
 }
 
 // Get individual article
@@ -151,28 +144,17 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 // Get articles by tag
 export async function getBlogPostsByTag(tag: string): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
-  return allPosts.filter((post) =>
-    post.frontMatter.tags.some(
-      (postTag) => postTag.toLowerCase() === tag.toLowerCase()
-    )
-  )
+  return allPosts.filter((post) => post.frontMatter.tags.some((postTag) => postTag.toLowerCase() === tag.toLowerCase()))
 }
 
 // Get articles by category
-export async function getBlogPostsByCategory(
-  category: string
-): Promise<BlogPostMeta[]> {
+export async function getBlogPostsByCategory(category: string): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
-  return allPosts.filter(
-    (post) => post.frontMatter.category.toLowerCase() === category.toLowerCase()
-  )
+  return allPosts.filter((post) => post.frontMatter.category.toLowerCase() === category.toLowerCase())
 }
 
 // Get related articles
-export async function getRelatedPosts(
-  currentSlug: string,
-  maxPosts: number = 3
-): Promise<BlogPostMeta[]> {
+export async function getRelatedPosts(currentSlug: string, maxPosts: number = 3): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   const currentPost = allPosts.find((post) => post.slug === currentSlug)
 
@@ -195,9 +177,7 @@ export async function getRelatedPosts(
       }
 
       // Add score based on common tags
-      const commonTags = post.frontMatter.tags.filter((tag) =>
-        currentTags.includes(tag)
-      ).length
+      const commonTags = post.frontMatter.tags.filter((tag) => currentTags.includes(tag)).length
       score += commonTags * 5
 
       return { ...post, score }
@@ -232,9 +212,7 @@ export async function getAllTagNames(): Promise<string[]> {
 }
 
 // Get all categories
-export async function getAllCategories(): Promise<
-  { category: string; count: number }[]
-> {
+export async function getAllCategories(): Promise<{ category: string; count: number }[]> {
   const allPosts = await getAllBlogPostMetas()
   const categoryCounts: Record<string, number> = {}
 
@@ -250,14 +228,8 @@ export async function getAllCategories(): Promise<
 
 // Search articles
 export async function searchBlogPosts(query: string): Promise<BlogPostMeta[]>
-export async function searchBlogPosts(
-  posts: BlogPostMeta[],
-  query: string
-): Promise<BlogPostMeta[]>
-export async function searchBlogPosts(
-  queryOrPosts: string | BlogPostMeta[],
-  query?: string
-): Promise<BlogPostMeta[]> {
+export async function searchBlogPosts(posts: BlogPostMeta[], query: string): Promise<BlogPostMeta[]>
+export async function searchBlogPosts(queryOrPosts: string | BlogPostMeta[], query?: string): Promise<BlogPostMeta[]> {
   let allPosts: BlogPostMeta[]
   let searchTerm: string
 
@@ -275,24 +247,12 @@ export async function searchBlogPosts(
 
   return allPosts.filter((post) => {
     const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
-    const descriptionMatch = post.frontMatter.description
-      ?.toLowerCase()
-      .includes(searchTerm)
-    const tagMatch = post.frontMatter.tags.some((tag) =>
-      tag.toLowerCase().includes(searchTerm)
-    )
-    const categoryMatch = post.frontMatter.category
-      .toLowerCase()
-      .includes(searchTerm)
+    const descriptionMatch = post.frontMatter.description?.toLowerCase().includes(searchTerm)
+    const tagMatch = post.frontMatter.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
+    const categoryMatch = post.frontMatter.category.toLowerCase().includes(searchTerm)
     const excerptMatch = post.excerpt.toLowerCase().includes(searchTerm)
 
-    return (
-      titleMatch ||
-      descriptionMatch ||
-      tagMatch ||
-      categoryMatch ||
-      excerptMatch
-    )
+    return titleMatch || descriptionMatch || tagMatch || categoryMatch || excerptMatch
   })
 }
 
@@ -303,9 +263,7 @@ export async function getFeaturedPosts(): Promise<BlogPostMeta[]> {
 }
 
 // Get latest articles
-export async function getRecentPosts(
-  limit: number = 5
-): Promise<BlogPostMeta[]> {
+export async function getRecentPosts(limit: number = 5): Promise<BlogPostMeta[]> {
   const allPosts = await getAllBlogPostMetas()
   return allPosts.slice(0, limit)
 }

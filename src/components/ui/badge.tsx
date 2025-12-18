@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
+import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -9,23 +9,17 @@ const badgeVariants = cva(
     variants: {
       variant: {
         // Default - neutral primary style
-        default:
-          'border-transparent bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover',
+        default: 'border-transparent bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover',
         // Secondary - lighter neutral style
-        secondary:
-          'border-transparent bg-bg-tertiary text-text-primary hover:bg-bg-secondary',
+        secondary: 'border-transparent bg-bg-tertiary text-text-primary hover:bg-bg-secondary',
         // Destructive - semantic error color
-        destructive:
-          'border-transparent bg-semantic-error-bg text-semantic-error-text hover:opacity-80',
+        destructive: 'border-transparent bg-semantic-error-bg text-semantic-error-text hover:opacity-80',
         // Outline - neutral outline style
-        outline:
-          'border-border-primary text-text-primary hover:bg-bg-secondary',
+        outline: 'border-border-primary text-text-primary hover:bg-bg-secondary',
         // Success - semantic success color
-        success:
-          'border-transparent bg-semantic-success-bg text-semantic-success-text hover:opacity-80',
+        success: 'border-transparent bg-semantic-success-bg text-semantic-success-text hover:opacity-80',
         // Warning - semantic warning color
-        warning:
-          'border-transparent bg-semantic-warning-bg text-semantic-warning-text hover:opacity-80',
+        warning: 'border-transparent bg-semantic-warning-bg text-semantic-warning-text hover:opacity-80',
       },
     },
     defaultVariants: {
@@ -34,15 +28,10 @@ const badgeVariants = cva(
   }
 )
 
-export interface BadgeProps
-  extends
-    React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
-  return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  )
+  return <div className={cn(badgeVariants({ variant }), className)} {...props} />
 }
 
 export { Badge, badgeVariants }

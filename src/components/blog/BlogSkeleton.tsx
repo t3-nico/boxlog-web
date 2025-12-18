@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
 import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/lib/utils'
 
 interface BlogSkeletonProps {
   className?: string
@@ -17,10 +17,10 @@ export function BlogSkeleton({ className }: BlogSkeletonProps) {
 
 export function BlogCardSkeleton() {
   return (
-    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
-      <div className="flex flex-col md:flex-row gap-6">
+    <div className="rounded-xl border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-800">
+      <div className="flex flex-col gap-6 md:flex-row">
         {/* 画像スケルトン */}
-        <Skeleton className="w-full md:w-48 h-32 rounded-lg flex-shrink-0" />
+        <Skeleton className="h-32 w-full flex-shrink-0 rounded-lg md:w-48" />
 
         {/* コンテンツスケルトン */}
         <div className="flex-1 space-y-4">
@@ -34,7 +34,7 @@ export function BlogCardSkeleton() {
           </div>
 
           {/* メタデータ */}
-          <div className="flex flex-wrap gap-4 items-center pt-2">
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <Skeleton className="h-4 w-24" />
             <Skeleton className="h-4 w-16" />
             <Skeleton className="h-4 w-20" />
@@ -43,7 +43,7 @@ export function BlogCardSkeleton() {
           {/* タグ */}
           <div className="flex flex-wrap gap-2 pt-2">
             {[...Array(3)].map((_, i) => (
-              <Skeleton key={i} className="h-6 rounded-full w-16" />
+              <Skeleton key={i} className="h-6 w-16 rounded-full" />
             ))}
           </div>
         </div>
@@ -54,7 +54,7 @@ export function BlogCardSkeleton() {
 
 export function BlogGridSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {[...Array(6)].map((_, i) => (
         <BlogVerticalCardSkeleton key={i} />
       ))}
@@ -64,12 +64,12 @@ export function BlogGridSkeleton() {
 
 export function BlogVerticalCardSkeleton() {
   return (
-    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+    <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
       {/* 画像スケルトン */}
-      <Skeleton className="w-full h-48" />
+      <Skeleton className="h-48 w-full" />
 
       {/* コンテンツスケルトン */}
-      <div className="p-6 space-y-4">
+      <div className="space-y-4 p-6">
         {/* タイトル */}
         <Skeleton className="h-6 w-4/5" />
 
@@ -80,7 +80,7 @@ export function BlogVerticalCardSkeleton() {
         </div>
 
         {/* メタデータ */}
-        <div className="flex justify-between items-center pt-2">
+        <div className="flex items-center justify-between pt-2">
           <Skeleton className="h-4 w-20" />
           <Skeleton className="h-4 w-16" />
         </div>
@@ -88,7 +88,7 @@ export function BlogVerticalCardSkeleton() {
         {/* タグ */}
         <div className="flex flex-wrap gap-2">
           {[...Array(2)].map((_, i) => (
-            <Skeleton key={i} className="h-5 rounded-full w-12" />
+            <Skeleton key={i} className="h-5 w-12 rounded-full" />
           ))}
         </div>
       </div>
@@ -98,9 +98,9 @@ export function BlogVerticalCardSkeleton() {
 
 export function FiltersSkeleton() {
   return (
-    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
+    <div className="rounded-xl border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-800">
       {/* ヘッダー */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <Skeleton className="h-5 w-16" />
         <Skeleton className="h-4 w-4" />
       </div>
@@ -116,7 +116,7 @@ export function FiltersSkeleton() {
         <Skeleton className="h-4 w-16" />
         <div className="flex flex-wrap gap-2">
           {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-8 rounded-lg w-20" />
+            <Skeleton key={i} className="h-8 w-20 rounded-lg" />
           ))}
         </div>
       </div>
@@ -126,7 +126,7 @@ export function FiltersSkeleton() {
         <Skeleton className="h-4 w-24" />
         <div className="flex flex-wrap gap-2">
           {[...Array(8)].map((_, i) => (
-            <Skeleton key={i} className="h-8 rounded-lg w-16" />
+            <Skeleton key={i} className="h-8 w-16 rounded-lg" />
           ))}
         </div>
       </div>

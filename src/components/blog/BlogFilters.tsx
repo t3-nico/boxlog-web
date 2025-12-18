@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Search, X, Filter, Calendar, TrendingUp, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { MobileFilters } from './MobileFilters'
+import { Calendar, Filter, Search, Tag, TrendingUp, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
+import { MobileFilters } from './MobileFilters'
 
 interface BlogFiltersProps {
   tags: string[]
@@ -28,7 +28,7 @@ const defaultFilters: BlogFilterState = {
   searchQuery: '',
   sortBy: 'date',
   sortOrder: 'desc',
-  tagOperator: 'OR'
+  tagOperator: 'OR',
 }
 
 export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFiltersProps) {
@@ -52,7 +52,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
       searchQuery: searchParam || '',
       sortBy: (sortParam as BlogFilterState['sortBy']) || 'date',
       sortOrder: (orderParam as BlogFilterState['sortOrder']) || 'desc',
-      tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR'
+      tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR',
     }
 
     setFilters(initialFilters)
@@ -61,43 +61,49 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
   }, [searchParams])
 
   // フィルター状態をURLに反映
-  const updateURL = useCallback((newFilters: BlogFilterState) => {
-    const params = new URLSearchParams()
-    
-    if (newFilters.selectedTags.length > 0) {
-      params.set('tags', newFilters.selectedTags.join(','))
-    }
-    if (newFilters.searchQuery) {
-      params.set('search', newFilters.searchQuery)
-    }
-    if (newFilters.sortBy !== 'date') {
-      params.set('sort', newFilters.sortBy)
-    }
-    if (newFilters.sortOrder !== 'desc') {
-      params.set('order', newFilters.sortOrder)
-    }
-    if (newFilters.tagOperator !== 'OR') {
-      params.set('operator', newFilters.tagOperator)
-    }
+  const updateURL = useCallback(
+    (newFilters: BlogFilterState) => {
+      const params = new URLSearchParams()
 
-    const paramString = params.toString()
-    const newUrl = paramString ? `/blog?${paramString}` : '/blog'
-    router.push(newUrl, { scroll: false })
-  }, [router])
+      if (newFilters.selectedTags.length > 0) {
+        params.set('tags', newFilters.selectedTags.join(','))
+      }
+      if (newFilters.searchQuery) {
+        params.set('search', newFilters.searchQuery)
+      }
+      if (newFilters.sortBy !== 'date') {
+        params.set('sort', newFilters.sortBy)
+      }
+      if (newFilters.sortOrder !== 'desc') {
+        params.set('order', newFilters.sortOrder)
+      }
+      if (newFilters.tagOperator !== 'OR') {
+        params.set('operator', newFilters.tagOperator)
+      }
+
+      const paramString = params.toString()
+      const newUrl = paramString ? `/blog?${paramString}` : '/blog'
+      router.push(newUrl, { scroll: false })
+    },
+    [router]
+  )
 
   // フィルター状態の更新
-  const updateFilters = useCallback((newFilters: BlogFilterState) => {
-    setFilters(newFilters)
-    updateURL(newFilters)
-    onFiltersChange?.(newFilters)
-  }, [updateURL, onFiltersChange])
+  const updateFilters = useCallback(
+    (newFilters: BlogFilterState) => {
+      setFilters(newFilters)
+      updateURL(newFilters)
+      onFiltersChange?.(newFilters)
+    },
+    [updateURL, onFiltersChange]
+  )
 
   // タグの選択/選択解除
   const toggleTag = (tag: string) => {
     const newSelectedTags = filters.selectedTags.includes(tag)
-      ? filters.selectedTags.filter(t => t !== tag)
+      ? filters.selectedTags.filter((t) => t !== tag)
       : [...filters.selectedTags, tag]
-    
+
     updateFilters({ ...filters, selectedTags: newSelectedTags })
   }
 
@@ -135,17 +141,20 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
   return (
     <>
       {/* デスクトップ版 */}
-      <div className={cn('hidden lg:block bg-[rgb(var(--bg-primary))] rounded-xl border border-[rgb(var(--border-primary))]', className)}>
+      <div
+        className={cn(
+          'hidden rounded-xl border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] lg:block',
+          className
+        )}
+      >
         {/* フィルターヘッダー */}
-        <div className="p-4 border-b border-[rgb(var(--border-primary))]">
+        <div className="border-b border-[rgb(var(--border-primary))] p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Filter className="w-5 h-5 text-[rgb(var(--text-tertiary))]" />
-              <h3 className="font-medium text-[rgb(var(--text-primary))]">
-                {t('title')}
-              </h3>
+              <Filter className="h-5 w-5 text-[rgb(var(--text-tertiary))]" />
+              <h3 className="font-medium text-[rgb(var(--text-primary))]">{t('title')}</h3>
               {activeFiltersCount > 0 && (
-                <span className="px-2 py-1 text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] rounded-full">
+                <span className="rounded-full bg-[rgb(var(--info-bg))] px-2 py-1 text-xs font-medium text-[rgb(var(--info-color))]">
                   {activeFiltersCount}
                 </span>
               )}
@@ -153,12 +162,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
 
             <div className="flex items-center gap-2">
               {activeFiltersCount > 0 && (
-                <Button
-                  onClick={clearFilters}
-                  variant="ghost"
-                  size="sm"
-                  className="text-xs h-auto p-1"
-                >
+                <Button onClick={clearFilters} variant="ghost" size="sm" className="h-auto p-1 text-xs">
                   {t('clearAll')}
                 </Button>
               )}
@@ -167,130 +171,128 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           </div>
         </div>
 
-      {/* フィルター内容 */}
-      {isExpanded && (
-        <div className="p-4 space-y-6">
-          {/* 検索 */}
-          <div>
-            <label htmlFor="search" className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-2">
-              {t('searchArticles')}
-            </label>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[rgb(var(--text-tertiary))]" />
-              <input
-                id="search"
-                type="text"
-                value={filters.searchQuery}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder={t('searchPlaceholder')}
-                className="w-full pl-10 pr-4 py-2 border border-[rgb(var(--border-primary))] rounded-lg bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] placeholder-[rgb(var(--text-tertiary))] focus:ring-2 focus:ring-[rgb(var(--focus-ring))] focus:border-[rgb(var(--focus-ring))] transition-colors"
-              />
-              {filters.searchQuery && (
-                <Button
-                  onClick={() => handleSearchChange('')}
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 h-auto w-auto p-0"
-                  aria-label="Clear search"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
-          </div>
-
-          {/* ソート */}
-          <div>
-            <label className="block text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">
-              {t('sortBy')}
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { value: 'date', label: t('date'), icon: Calendar },
-                { value: 'popularity', label: t('popularity'), icon: TrendingUp },
-                { value: 'category', label: t('category'), icon: Tag }
-              ].map(({ value, label, icon: Icon }) => (
-                <Button
-                  key={value}
-                  onClick={() => handleSortChange(value as BlogFilterState['sortBy'])}
-                  variant={filters.sortBy === value ? "default" : "outline"}
-                  size="sm"
-                  className={cn(
-                    'inline-flex items-center gap-2',
-                    filters.sortBy === value
-                      ? 'bg-[rgb(var(--info-bg))] border-[rgb(var(--info-color))] text-[rgb(var(--info-color))]'
-                      : ''
-                  )}
-                >
-                  <Icon className="w-4 h-4" />
-                  {label}
-                </Button>
-              ))}
-
-              <Button
-                onClick={toggleSortOrder}
-                variant="outline"
-                size="sm"
-                className="inline-flex items-center gap-2"
-                aria-label={`Sort ${filters.sortOrder === 'asc' ? 'ascending' : 'descending'}`}
-              >
-                {filters.sortOrder === 'asc' ? '↑' : '↓'}
-                {filters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
-              </Button>
-            </div>
-          </div>
-
-          {/* タグフィルター */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <label className="text-sm font-medium text-[rgb(var(--text-secondary))]">
-                {t('filterByTags')}
+        {/* フィルター内容 */}
+        {isExpanded && (
+          <div className="space-y-6 p-4">
+            {/* 検索 */}
+            <div>
+              <label htmlFor="search" className="mb-2 block text-sm font-medium text-[rgb(var(--text-secondary))]">
+                {t('searchArticles')}
               </label>
-              {filters.selectedTags.length > 1 && (
-                <Button
-                  onClick={toggleTagOperator}
-                  variant="ghost"
-                  size="sm"
-                  className="px-2 py-1 h-auto text-xs bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] hover:bg-[rgb(var(--tag-neutral-hover))] hover:text-[rgb(var(--text-primary))]"
-                  title={`Currently using ${filters.tagOperator} logic`}
-                >
-                  {filters.tagOperator}
-                </Button>
-              )}
-            </div>
-            
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => {
-                const isSelected = filters.selectedTags.includes(tag)
-                return (
+              <div className="relative">
+                <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-[rgb(var(--text-tertiary))]" />
+                <input
+                  id="search"
+                  type="text"
+                  value={filters.searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  placeholder={t('searchPlaceholder')}
+                  className="w-full rounded-lg border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] py-2 pr-4 pl-10 text-[rgb(var(--text-primary))] placeholder-[rgb(var(--text-tertiary))] transition-colors focus:border-[rgb(var(--focus-ring))] focus:ring-2 focus:ring-[rgb(var(--focus-ring))]"
+                />
+                {filters.searchQuery && (
                   <Button
-                    key={tag}
-                    onClick={() => toggleTag(tag)}
-                    variant={isSelected ? "default" : "outline"}
+                    onClick={() => handleSearchChange('')}
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-1/2 right-3 h-auto w-auto -translate-y-1/2 transform p-0"
+                    aria-label="Clear search"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* ソート */}
+            <div>
+              <label className="mb-3 block text-sm font-medium text-[rgb(var(--text-secondary))]">{t('sortBy')}</label>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { value: 'date', label: t('date'), icon: Calendar },
+                  { value: 'popularity', label: t('popularity'), icon: TrendingUp },
+                  { value: 'category', label: t('category'), icon: Tag },
+                ].map(({ value, label, icon: Icon }) => (
+                  <Button
+                    key={value}
+                    onClick={() => handleSortChange(value as BlogFilterState['sortBy'])}
+                    variant={filters.sortBy === value ? 'default' : 'outline'}
                     size="sm"
                     className={cn(
                       'inline-flex items-center gap-2',
-                      isSelected
-                        ? 'bg-[rgb(var(--info-bg))] border-[rgb(var(--info-color))] text-[rgb(var(--info-color))]'
+                      filters.sortBy === value
+                        ? 'border-[rgb(var(--info-color))] bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]'
                         : ''
                     )}
                   >
-                    <span>#</span>
-                    {tag}
-                    {isSelected && <X className="w-3 h-3" />}
+                    <Icon className="h-4 w-4" />
+                    {label}
                   </Button>
-                )
-              })}
+                ))}
+
+                <Button
+                  onClick={toggleSortOrder}
+                  variant="outline"
+                  size="sm"
+                  className="inline-flex items-center gap-2"
+                  aria-label={`Sort ${filters.sortOrder === 'asc' ? 'ascending' : 'descending'}`}
+                >
+                  {filters.sortOrder === 'asc' ? '↑' : '↓'}
+                  {filters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
+                </Button>
+              </div>
             </div>
-            
-            {filters.selectedTags.length > 1 && (
-              <p className="mt-2 text-xs text-[rgb(var(--text-tertiary))]">
-                {t('showingPostsMessage', { match: filters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny') })}
-              </p>
-            )}
+
+            {/* タグフィルター */}
+            <div>
+              <div className="mb-3 flex items-center justify-between">
+                <label className="text-sm font-medium text-[rgb(var(--text-secondary))]">{t('filterByTags')}</label>
+                {filters.selectedTags.length > 1 && (
+                  <Button
+                    onClick={toggleTagOperator}
+                    variant="ghost"
+                    size="sm"
+                    className="h-auto bg-[rgb(var(--tag-neutral-bg))] px-2 py-1 text-xs text-[rgb(var(--tag-neutral-text))] hover:bg-[rgb(var(--tag-neutral-hover))] hover:text-[rgb(var(--text-primary))]"
+                    title={`Currently using ${filters.tagOperator} logic`}
+                  >
+                    {filters.tagOperator}
+                  </Button>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => {
+                  const isSelected = filters.selectedTags.includes(tag)
+                  return (
+                    <Button
+                      key={tag}
+                      onClick={() => toggleTag(tag)}
+                      variant={isSelected ? 'default' : 'outline'}
+                      size="sm"
+                      className={cn(
+                        'inline-flex items-center gap-2',
+                        isSelected
+                          ? 'border-[rgb(var(--info-color))] bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]'
+                          : ''
+                      )}
+                    >
+                      <span>#</span>
+                      {tag}
+                      {isSelected && <X className="h-3 w-3" />}
+                    </Button>
+                  )
+                })}
+              </div>
+
+              {filters.selectedTags.length > 1 && (
+                <p className="mt-2 text-xs text-[rgb(var(--text-tertiary))]">
+                  {t('showingPostsMessage', {
+                    match: filters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny'),
+                  })}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
 
       {/* モバイル版フィルターボタン */}
@@ -298,14 +300,12 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
         <Button
           onClick={() => setIsMobileOpen(true)}
           variant="outline"
-          className="w-full flex items-center justify-center gap-2"
+          className="flex w-full items-center justify-center gap-2"
         >
-          <Filter className="w-4 h-4 text-[rgb(var(--text-tertiary))]" />
-          <span className="font-medium text-[rgb(var(--text-primary))]">
-            {t('title')}
-          </span>
+          <Filter className="h-4 w-4 text-[rgb(var(--text-tertiary))]" />
+          <span className="font-medium text-[rgb(var(--text-primary))]">{t('title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="px-2 py-1 text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] rounded-full">
+            <span className="rounded-full bg-[rgb(var(--info-bg))] px-2 py-1 text-xs font-medium text-[rgb(var(--info-color))]">
               {activeFiltersCount}
             </span>
           )}

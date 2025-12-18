@@ -1,16 +1,10 @@
+import type { ContentCategory, ContentCollection, ContentData, FrontMatter, SerializedContent } from '@/types/content'
 import fs from 'fs'
-import path from 'path'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
-import remarkGfm from 'remark-gfm'
+import path from 'path'
 import rehypeHighlight from 'rehype-highlight'
-import type {
-  FrontMatter,
-  ContentData,
-  SerializedContent,
-  ContentCollection,
-  ContentCategory,
-} from '@/types/content'
+import remarkGfm from 'remark-gfm'
 
 const CONTENT_PATH = path.join(process.cwd(), 'content/docs')
 
@@ -31,9 +25,7 @@ export async function getMDXFiles(dir: string): Promise<string[]> {
 /**
  * MDXファイルを読み込んでフロントマターとコンテンツを解析
  */
-export async function getMDXContent(
-  filePath: string
-): Promise<ContentData | null> {
+export async function getMDXContent(filePath: string): Promise<ContentData | null> {
   try {
     const fullPath = path.join(CONTENT_PATH, filePath)
 
@@ -81,7 +73,7 @@ export async function getMDXContent(
 /**
  * MDXコンテンツをシリアライズ（レンダリング用）
  */
-export async function serializeMDX(content: string): Promise<any> {
+export async function serializeMDX(content: string) {
   return await serialize(content, {
     mdxOptions: {
       remarkPlugins: [remarkGfm],
@@ -94,9 +86,7 @@ export async function serializeMDX(content: string): Promise<any> {
 /**
  * 指定されたスラッグのMDXコンテンツを取得してシリアライズ
  */
-export async function getSerializedContent(
-  slug: string
-): Promise<SerializedContent | null> {
+export async function getSerializedContent(slug: string): Promise<SerializedContent | null> {
   const filePath = `${slug}.mdx`
   const content = await getMDXContent(filePath)
 
@@ -115,9 +105,7 @@ export async function getSerializedContent(
 /**
  * MDXコンテンツを直接返す（next-mdx-remote/rsc用）
  */
-export async function getMDXContentForRSC(
-  slug: string
-): Promise<{ content: string; frontMatter: FrontMatter } | null> {
+export async function getMDXContentForRSC(slug: string): Promise<{ content: string; frontMatter: FrontMatter } | null> {
   const filePath = `${slug}.mdx`
   const content = await getMDXContent(filePath)
 
@@ -192,10 +180,7 @@ export async function getContentByCategory(): Promise<ContentCollection> {
 /**
  * 指定されたカテゴリーのコンテンツを取得
  */
-export async function getContentBySlug(
-  category: ContentCategory,
-  slug: string
-): Promise<SerializedContent | null> {
+export async function getContentBySlug(category: ContentCategory, slug: string): Promise<SerializedContent | null> {
   const filePath = `${category}/${slug}.mdx`
   return await getSerializedContent(filePath)
 }
@@ -211,11 +196,7 @@ export async function getRelatedContent(
   const allContent = await getAllContent()
 
   const relatedContent = allContent
-    .filter(
-      (content) =>
-        content.frontMatter.category === category &&
-        content.slug !== currentSlug
-    )
+    .filter((content) => content.frontMatter.category === category && content.slug !== currentSlug)
     .slice(0, limit)
 
   return relatedContent
@@ -243,19 +224,11 @@ export async function searchContent(query: string): Promise<ContentData[]> {
 /**
  * パンくずリスト用のパス情報を生成
  */
-export function generateBreadcrumbs(
-  slug: string
-): Array<{ title: string; href: string; clickable?: boolean }> {
+export function generateBreadcrumbs(slug: string): Array<{ title: string; href: string; clickable?: boolean }> {
   const breadcrumbs = []
 
   // Getting Startedセクションのページの場合
-  const gettingStartedPages = [
-    'introduction',
-    'installation',
-    'quickstart',
-    'configuration',
-    'first-steps',
-  ]
+  const gettingStartedPages = ['introduction', 'installation', 'quickstart', 'configuration', 'first-steps']
   if (gettingStartedPages.includes(slug)) {
     breadcrumbs.push({
       title: 'Getting Started',
@@ -282,8 +255,10 @@ export function generateBreadcrumbs(
 
   let currentPath = '/docs'
   for (let i = 0; i < parts.length; i++) {
-    currentPath += `/${parts[i]}`
-    const title = parts[i]
+    const part = parts[i]
+    if (!part) continue
+    currentPath += `/${part}`
+    const title = part
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')

@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 
 interface CopyCodeButtonProps {
   code: string
@@ -24,7 +24,7 @@ export function CopyCodeButton({ code }: CopyCodeButtonProps) {
     <Button
       variant="ghost"
       size="sm"
-      className="px-2 py-1 h-auto text-xs bg-gray-700 dark:bg-gray-600 text-gray-300 dark:text-gray-200 rounded hover:bg-gray-600 dark:hover:bg-gray-500"
+      className="h-auto rounded bg-gray-700 px-2 py-1 text-xs text-gray-300 hover:bg-gray-600 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500"
       onClick={handleCopy}
     >
       {copied ? 'Copied!' : 'Copy'}

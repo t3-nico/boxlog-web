@@ -1,12 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import { Link } from '@/i18n/navigation'
-import Image from 'next/image'
 import { Heading } from '@/components/ui/typography'
+import { Link } from '@/i18n/navigation'
 import { BlogPostMeta } from '@/lib/blog'
-import { formatLocalizedDate } from '@/lib/i18n'
 import { ImageIcon } from 'lucide-react'
+import Image from 'next/image'
+import { useState } from 'react'
 
 interface PostCardProps {
   post: BlogPostMeta
@@ -17,7 +16,7 @@ interface PostCardProps {
 
 export function PostCard({ post, priority = false, layout = 'horizontal', locale = 'en' }: PostCardProps) {
   const [imageError, setImageError] = useState(false)
-  
+
   // Function to determine tag color
   const getTagColor = (tag: string) => {
     const colors = [
@@ -41,17 +40,22 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
     const colorIndex = Math.abs(hash) % colors.length
     return colors[colorIndex]
   }
-  
-  const formattedDate = formatLocalizedDate(
-    new Date(post.frontMatter.publishedAt),
-    locale as 'en' | 'jp'
-  )
 
+  const formatDate = (dateString: string) => {
+    const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US'
+    return new Date(dateString).toLocaleDateString(localeCode, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
+
+  const formattedDate = formatDate(post.frontMatter.publishedAt)
 
   if (layout === 'vertical') {
     // Vertical layout (for featured articles): image on top, content below
     return (
-      <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
+      <article className="group overflow-hidden rounded-2xl bg-white dark:bg-gray-800">
         {/* Cover image */}
         <Link href={`/blog/${post.slug}`} className="block">
           {post.frontMatter.coverImage && !imageError ? (
@@ -60,15 +64,15 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                 src={post.frontMatter.coverImage}
                 alt={post.frontMatter.title}
                 fill
-                className="object-cover rounded-lg"
+                className="rounded-lg object-cover"
                 onError={() => setImageError(true)}
                 priority={priority}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
           ) : (
-            <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg transition-all duration-300 hover:opacity-40">
-              <ImageIcon className="w-12 h-12 text-gray-600 dark:text-gray-300" />
+            <div className="flex aspect-[380/214] items-center justify-center rounded-lg bg-gray-100 transition-all duration-300 hover:opacity-40 dark:bg-gray-700">
+              <ImageIcon className="h-12 w-12 text-gray-600 dark:text-gray-300" />
             </div>
           )}
         </Link>
@@ -77,17 +81,13 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
         <div className="p-6">
           {/* Title */}
           <Link href={`/blog/${post.slug}`}>
-            <Heading
-              as="h2"
-              size="xl"
-              className="mb-3 hover:underline transition-colors line-clamp-2 cursor-pointer"
-            >
+            <Heading as="h2" size="xl" className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline">
               {post.frontMatter.title}
             </Heading>
           </Link>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="mb-4 flex flex-wrap gap-2">
             {post.frontMatter.tags.map((tag) => (
               <button
                 key={tag}
@@ -96,9 +96,9 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                   // タグクリック処理をここに追加
                   console.log('Tag clicked:', tag)
                 }}
-                className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors hover:opacity-80 ${
-                  getTagColor(tag)
-                }`}
+                className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors hover:opacity-80 ${getTagColor(
+                  tag
+                )}`}
               >
                 #{tag}
               </button>
@@ -107,9 +107,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
 
           {/* Meta information */}
           <div className="text-sm text-gray-500 dark:text-gray-400">
-            <time dateTime={post.frontMatter.publishedAt}>
-              {formattedDate}
-            </time>
+            <time dateTime={post.frontMatter.publishedAt}>{formattedDate}</time>
           </div>
         </div>
       </article>
@@ -118,7 +116,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
 
   // Horizontal layout (for regular articles): image on left, content on right
   return (
-    <article className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden">
+    <article className="group overflow-hidden rounded-2xl bg-white dark:bg-gray-800">
       <div className="flex gap-6">
         {/* Left side: Cover image */}
         <Link href={`/blog/${post.slug}`} className="w-80 flex-shrink-0">
@@ -128,15 +126,15 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                 src={post.frontMatter.coverImage}
                 alt={post.frontMatter.title}
                 fill
-                className="object-cover rounded-lg"
+                className="rounded-lg object-cover"
                 onError={() => setImageError(true)}
                 priority={priority}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
               />
             </div>
           ) : (
-            <div className="aspect-[380/214] bg-gray-100 dark:bg-gray-700 flex items-center justify-center rounded-lg transition-all duration-300 hover:opacity-40">
-              <ImageIcon className="w-8 h-8 text-gray-600 dark:text-gray-300" />
+            <div className="flex aspect-[380/214] items-center justify-center rounded-lg bg-gray-100 transition-all duration-300 hover:opacity-40 dark:bg-gray-700">
+              <ImageIcon className="h-8 w-8 text-gray-600 dark:text-gray-300" />
             </div>
           )}
         </Link>
@@ -146,17 +144,13 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
           <div className="my-1">
             {/* Title */}
             <Link href={`/blog/${post.slug}`}>
-              <Heading
-                as="h2"
-                size="lg"
-                className="mb-3 hover:underline transition-colors line-clamp-2 cursor-pointer"
-              >
+              <Heading as="h2" size="lg" className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline">
                 {post.frontMatter.title}
               </Heading>
             </Link>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-3">
+            <div className="mb-3 flex flex-wrap gap-2">
               {post.frontMatter.tags.map((tag) => (
                 <button
                   key={tag}
@@ -165,9 +159,9 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
                     // タグクリック処理をここに追加
                     console.log('Tag clicked:', tag)
                   }}
-                  className={`inline-flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors hover:opacity-80 ${
-                    getTagColor(tag)
-                  }`}
+                  className={`inline-flex items-center rounded-md px-2 py-1 text-sm font-medium transition-colors hover:opacity-80 ${getTagColor(
+                    tag
+                  )}`}
                 >
                   #{tag}
                 </button>
@@ -176,9 +170,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
 
             {/* Meta information */}
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              <time dateTime={post.frontMatter.publishedAt}>
-                {formattedDate}
-              </time>
+              <time dateTime={post.frontMatter.publishedAt}>{formattedDate}</time>
             </div>
           </div>
         </div>

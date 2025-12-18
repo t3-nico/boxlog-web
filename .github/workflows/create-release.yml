@@ -1,0 +1,143 @@
+name: Create Release
+
+# 手動トリガー - GitHub Actions UIから実行
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'リリースタイプ'
+        required: true
+        default: 'content'
+        type: choice
+        options:
+          - content # ブログ・ドキュメント更新
+          - patch # バグ修正 (0.0.x)
+          - minor # 機能追加 (0.x.0)
+          - major # 破壊的変更 (x.0.0)
+      release_title:
+        description: 'リリースタイトル（例: Blog更新、ドキュメント追加）'
+        required: true
+        type: string
+      release_notes:
+        description: 'リリースノート（マークダウン可）'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest release version
+        id: latest
+        run: |
+          # 最新のタグを取得（なければv0.0.0）
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+
+          # バージョン番号を抽出
+          VERSION=${LATEST_TAG#v}
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+
+          echo "major=$MAJOR" >> $GITHUB_OUTPUT
+          echo "minor=$MINOR" >> $GITHUB_OUTPUT
+          echo "patch=$PATCH" >> $GITHUB_OUTPUT
+
+      - name: Calculate new version
+        id: version
+        run: |
+          MAJOR=${{ steps.latest.outputs.major }}
+          MINOR=${{ steps.latest.outputs.minor }}
+          PATCH=${{ steps.latest.outputs.patch }}
+
+          case "${{ inputs.release_type }}" in
+            content)
+              # コンテンツ更新はパッチバージョンを上げる
+              NEW_PATCH=$((PATCH + 1))
+              NEW_VERSION="v${MAJOR}.${MINOR}.${NEW_PATCH}"
+              ;;
+            patch)
+              NEW_PATCH=$((PATCH + 1))
+              NEW_VERSION="v${MAJOR}.${MINOR}.${NEW_PATCH}"
+              ;;
+            minor)
+              NEW_MINOR=$((MINOR + 1))
+              NEW_VERSION="v${MAJOR}.${NEW_MINOR}.0"
+              ;;
+            major)
+              NEW_MAJOR=$((MAJOR + 1))
+              NEW_VERSION="v${NEW_MAJOR}.0.0"
+              ;;
+          esac
+
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Generate release body
+        id: body
+        run: |
+          # リリースノート生成
+          RELEASE_TYPE="${{ inputs.release_type }}"
+          TITLE="${{ inputs.release_title }}"
+          NOTES="${{ inputs.release_notes }}"
+          PREV_TAG="${{ steps.latest.outputs.latest_tag }}"
+          NEW_TAG="${{ steps.version.outputs.new_version }}"
+
+          # タイプに応じたラベル
+          case "$RELEASE_TYPE" in
+            content) TYPE_LABEL="📝 Content Update" ;;
+            patch)   TYPE_LABEL="🐛 Bug Fix" ;;
+            minor)   TYPE_LABEL="✨ New Feature" ;;
+            major)   TYPE_LABEL="🚀 Major Release" ;;
+          esac
+
+          # ボディを構築
+          {
+            echo "## $TYPE_LABEL: $TITLE"
+            echo ""
+            if [ -n "$NOTES" ]; then
+              echo "$NOTES"
+              echo ""
+            fi
+            echo "---"
+            echo ""
+            echo "**Full Changelog**: ${{ github.server_url }}/${{ github.repository }}/compare/${PREV_TAG}...${NEW_TAG}"
+          } > release_body.md
+
+          cat release_body.md
+
+      - name: Create tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.version.outputs.new_version }}
+          git push origin ${{ steps.version.outputs.new_version }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.new_version }}
+          name: '${{ steps.version.outputs.new_version }} - ${{ inputs.release_title }}'
+          body_path: release_body.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "✅ Release created successfully!"
+          echo "Version: ${{ steps.version.outputs.new_version }}"
+          echo "Title: ${{ inputs.release_title }}"
+          echo "View at: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ steps.version.outputs.new_version }}"

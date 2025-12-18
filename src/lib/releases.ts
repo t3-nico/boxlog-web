@@ -1,7 +1,7 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import type { AIMetadata } from '@/types/content'
+import fs from 'fs'
+import matter from 'gray-matter'
+import path from 'path'
 
 export interface ReleaseFrontMatter {
   version: string
@@ -150,10 +150,7 @@ export async function getAllReleaseMetas(): Promise<ReleasePostMeta[]> {
   releases.sort((a, b) => {
     const versions = [a.frontMatter.version, b.frontMatter.version]
     const sorted = sortVersions(versions)
-    return (
-      sorted.indexOf(a.frontMatter.version) -
-      sorted.indexOf(b.frontMatter.version)
-    )
+    return sorted.indexOf(a.frontMatter.version) - sorted.indexOf(b.frontMatter.version)
   })
 
   return releases
@@ -187,9 +184,7 @@ export async function getRelease(version: string): Promise<ReleasePost | null> {
 }
 
 // タグ別リリースノート取得
-export async function getReleasesByTag(
-  tag: string
-): Promise<ReleasePostMeta[]> {
+export async function getReleasesByTag(tag: string): Promise<ReleasePostMeta[]> {
   const allReleases = await getAllReleaseMetas()
   return allReleases.filter((release) => release.frontMatter.tags.includes(tag))
 }
@@ -217,14 +212,9 @@ export async function getFeaturedReleases(): Promise<ReleasePostMeta[]> {
 }
 
 // 関連リリース取得
-export async function getRelatedReleases(
-  currentVersion: string,
-  limit: number = 3
-): Promise<ReleasePostMeta[]> {
+export async function getRelatedReleases(currentVersion: string, limit: number = 3): Promise<ReleasePostMeta[]> {
   const allReleases = await getAllReleaseMetas()
-  const currentRelease = allReleases.find(
-    (r) => r.frontMatter.version === currentVersion
-  )
+  const currentRelease = allReleases.find((r) => r.frontMatter.version === currentVersion)
 
   if (!currentRelease) {
     return []
@@ -234,9 +224,7 @@ export async function getRelatedReleases(
   const relatedReleases = allReleases
     .filter((release) => release.frontMatter.version !== currentVersion)
     .map((release) => {
-      const commonTags = release.frontMatter.tags.filter((tag) =>
-        currentRelease.frontMatter.tags.includes(tag)
-      )
+      const commonTags = release.frontMatter.tags.filter((tag) => currentRelease.frontMatter.tags.includes(tag))
 
       return {
         ...release,
@@ -251,9 +239,7 @@ export async function getRelatedReleases(
 }
 
 // リリースノート検索
-export async function searchReleases(
-  query: string
-): Promise<ReleasePostMeta[]> {
+export async function searchReleases(query: string): Promise<ReleasePostMeta[]> {
   const allReleases = await getAllReleaseMetas()
   const lowercaseQuery = query.toLowerCase()
 
@@ -274,18 +260,11 @@ export async function searchReleases(
 
 // プレリリース・ベータ版の判定
 export function isPrerelease(version: string): boolean {
-  return (
-    version.includes('beta') ||
-    version.includes('alpha') ||
-    version.includes('rc') ||
-    version.includes('pre')
-  )
+  return version.includes('beta') || version.includes('alpha') || version.includes('rc') || version.includes('pre')
 }
 
 // バージョンタイプの判定
-export function getVersionType(
-  version: string
-): 'major' | 'minor' | 'patch' | 'prerelease' {
+export function getVersionType(version: string): 'major' | 'minor' | 'patch' | 'prerelease' {
   if (isPrerelease(version)) {
     return 'prerelease'
   }
@@ -293,8 +272,8 @@ export function getVersionType(
   const cleanVersion = version.replace(/^v/, '')
   const parts = cleanVersion.split('.').map(Number)
 
-  if (parts[2] > 0) return 'patch'
-  if (parts[1] > 0) return 'minor'
+  if ((parts[2] ?? 0) > 0) return 'patch'
+  if ((parts[1] ?? 0) > 0) return 'minor'
   return 'major'
 }
 
@@ -312,21 +291,13 @@ export async function getUpcomingReleases(): Promise<
     {
       version: 'v2.2.0',
       expectedDate: '2024-02-15',
-      features: [
-        'Advanced Team Analytics',
-        'Real-time Collaboration',
-        'Enhanced Mobile Experience',
-      ],
+      features: ['Advanced Team Analytics', 'Real-time Collaboration', 'Enhanced Mobile Experience'],
       status: 'testing',
     },
     {
       version: 'v2.3.0',
       expectedDate: '2024-03-20',
-      features: [
-        'AI-Powered Insights',
-        'Custom Integrations API',
-        'Advanced Security Features',
-      ],
+      features: ['AI-Powered Insights', 'Custom Integrations API', 'Advanced Security Features'],
       status: 'development',
     },
   ]

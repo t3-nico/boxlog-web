@@ -1,10 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { type Locale, defaultLocale, isValidLocale } from '@/lib/i18n'
+import { routing, type Locale } from '@/i18n/routing'
+import { useEffect, useState } from 'react'
+
+function isValidLocale(locale: string): locale is Locale {
+  return routing.locales.includes(locale as Locale)
+}
 
 export function useLocale(): Locale {
-  const [locale, setLocale] = useState<Locale>(defaultLocale)
+  const [locale, setLocale] = useState<Locale>(routing.defaultLocale)
 
   useEffect(() => {
     // Get locale from localStorage or browser language
@@ -15,8 +19,8 @@ export function useLocale(): Locale {
     } else {
       // Detect from browser language
       const browserLang = navigator.language.split('-')[0]
-      if (browserLang === 'ja' || browserLang === 'jp') {
-        setLocale('jp')
+      if (browserLang === 'ja') {
+        setLocale('ja')
       } else {
         setLocale('en')
       }

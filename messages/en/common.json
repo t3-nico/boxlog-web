@@ -1,5 +1,102 @@
 {
   "common": {
+    "dates": {
+      "format": "MM/DD/YYYY"
+    },
+    "reload": "Reload Page",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "undo": "Undo",
+    "skipToMainContent": "Skip to main content",
+    "createNewEvent": "Create new event",
+    "view": "View",
+    "toast": {
+      "eventDeleted": "Event deleted"
+    },
+    "selectedCount": "{count} selected",
+    "plan": {
+      "created": "\"{title}\" created",
+      "createFailed": "Failed to create: {error}",
+      "updated": "Updated",
+      "updateFailed": "Failed to update",
+      "deleted": "Deleted",
+      "deleteFailed": "Failed to delete: {error}",
+      "bulkUpdated": "{count} plans updated",
+      "bulkUpdateFailed": "Failed to bulk update: {error}",
+      "bulkDeleted": "{count} plans deleted",
+      "bulkDeleteFailed": "Failed to bulk delete: {error}",
+      "tagsAdded": "Tags added",
+      "tagsAddFailed": "Failed to add tags: {error}",
+      "statusChanged": "Status changed to {status}",
+      "open": "Open",
+      "delete": {
+        "confirmTitle": "Delete this plan?",
+        "confirmTitleWithName": "Delete {name}?",
+        "description": "This action cannot be undone. The plan will be permanently deleted and removed from calendar.",
+        "warningIrreversible": "This action cannot be undone",
+        "afterDeletion": "After deletion",
+        "willBeDeleted": "The plan will be permanently deleted",
+        "willBeRemovedFromCalendar": "It will be removed from calendar",
+        "confirm": "Delete",
+        "deleting": "Deleting..."
+      }
+    },
+    "inbox": {
+      "selected": "{count} selected",
+      "clear": "Clear",
+      "changeStatus": "Change Status",
+      "status": "Status",
+      "statusBacklog": "Backlog",
+      "statusReady": "Ready",
+      "statusActive": "Active",
+      "statusWait": "Wait",
+      "statusDone": "Done",
+      "statusCancel": "Cancel",
+      "dueDate": "Due Date",
+      "archive": "Archive",
+      "delete": "Delete",
+      "statusChangedCount": "Status changed for {count} plans",
+      "statusChangeFailed": "Failed to change status",
+      "archivedCount": "{count} plans archived",
+      "archiveFailed": "Failed to archive",
+      "deleteConfirm": "Delete {count} plans? This action cannot be undone.",
+      "deleteConfirmTitle": "Delete {count} plans?",
+      "deleteConfirmDescription": "This will permanently delete the selected {count} plans. This action cannot be undone.",
+      "deletedCount": "{count} plans deleted",
+      "deleteFailed": "Failed to delete",
+      "selectDate": "Please select a date",
+      "dueDateSetCount": "Due date set for {count} plans",
+      "dueDateSetFailed": "Failed to set due date",
+      "dueDateClearedCount": "Due date cleared for {count} plans",
+      "dueDateClearFailed": "Failed to clear due date",
+      "bulkDueDate": "Set Due Date",
+      "bulkDueDateDescription": "Set due date for {count} plans",
+      "dateSelected": "Selected date will be set as the due date",
+      "selectDateHint": "Select a date from the calendar",
+      "cancel": "Cancel",
+      "processing": "Processing...",
+      "clearDueDate": "Clear Due Date",
+      "setDueDate": "Set Due Date",
+      "bulkAddTags": "Add Tags",
+      "bulkAddTagsDescription": "Add tags to {count} plans",
+      "searchTags": "Search tags...",
+      "noTagsFound": "No tags found",
+      "noTags": "No tags available",
+      "addTags": "Add Tags",
+      "view": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "deleteConfirmTitle": "Delete \"{name}\"?",
+        "deleteConfirmDescription": "This view configuration will be deleted. This action cannot be undone.",
+        "deleteConfirm": "Delete"
+      }
+    },
+    "moreActions": "More actions",
     "navigation": {
       "home": "Home",
       "about": "About",
@@ -14,6 +111,20 @@
       "blogDescription": "Read our latest articles and tutorials",
       "docsDescription": "Documentation and guides",
       "releasesDescription": "Latest updates and changelog"
+    },
+    "states": {
+      "loading": "Loading...",
+      "error": "Error",
+      "notFound": "Not Found"
+    },
+    "labels": {
+      "language": "Language",
+      "theme": "Theme",
+      "menu": "Menu"
+    },
+    "metadata": {
+      "siteName": "BoxLog",
+      "siteDescription": "A modern SaaS platform built with Next.js and Tailwind CSS"
     },
     "actions": {
       "search": "Search",
@@ -34,20 +145,244 @@
       "shareOn": "Share on {platform}",
       "urlCopied": "URL copied to clipboard",
       "urlCopyFailed": "Failed to copy URL"
+    }
+  },
+  "table": {
+    "rowsPerPage": "Rows per page",
+    "items": "{start}-{end} of {total}",
+    "firstPage": "First page",
+    "previousPage": "Previous page",
+    "page": "{current} / {total}",
+    "nextPage": "Next page",
+    "lastPage": "Last page",
+    "title": "Table View",
+    "description": "Display tasks in table format",
+    "comingSoon": "Task table component coming soon...",
+    "willDisplay": "This will display tasks in a table format",
+    "headers": {
+      "reviewNumber": "Review number",
+      "purchaseDate": "Purchase date",
+      "customer": "Customer",
+      "amount": "Amount"
     },
-    "states": {
-      "loading": "Loading...",
-      "error": "Error",
-      "notFound": "Not Found"
+    "actions": {
+      "view": "View",
+      "edit": "Edit"
     },
-    "labels": {
-      "language": "Language",
-      "theme": "Theme",
-      "menu": "Menu"
+    "stats": {
+      "totalRevenue": "Total revenue",
+      "plansSold": "plans sold",
+      "pageviews": "Pageviews"
     },
-    "metadata": {
-      "siteName": "BoxLog",
-      "siteDescription": "A modern SaaS platform built with Next.js and Tailwind CSS"
+    "sections": {
+      "recentReviews": "Recent reviews"
+    },
+    "details": {
+      "summary": "Summary",
+      "paymentMethod": "Payment method",
+      "customer": "Customer",
+      "event": "Event",
+      "amount": "Amount",
+      "amountAfterExchange": "Amount after exchange rate",
+      "fee": "Fee",
+      "net": "Net",
+      "transactionId": "Transaction ID",
+      "cardNumber": "Card number",
+      "cardType": "Card type",
+      "cardExpiry": "Card expiry",
+      "owner": "Owner",
+      "emailAddress": "Email address",
+      "address": "Address",
+      "country": "Country",
+      "cvc": "CVC",
+      "cvcStatus": "Passed successfully"
+    },
+    "status": {
+      "successful": "Successful"
+    },
+    "buttons": {
+      "refund": "Refund",
+      "resendInvoice": "Resend Invoice"
+    },
+    "backLinks": {
+      "box": "Box",
+      "reviews": "Reviews"
+    }
+  },
+  "aria": {
+    "clearSelection": "Clear selection",
+    "openMenu": "Open menu",
+    "closeSidebar": "Close sidebar",
+    "cardMenu": "Card menu",
+    "closeModal": "Close modal",
+    "closeFilterMenu": "Close filter menu",
+    "changeColor": "Change color",
+    "unread": "Unread",
+    "notifications": "Notifications",
+    "close": "Close",
+    "previousPlan": "Previous plan",
+    "nextPlan": "Next plan",
+    "options": "Options",
+    "selectAll": "Select all",
+    "tagColor": "Tag color",
+    "closeSettings": "Close settings",
+    "weeklyCalendar": "Weekly calendar",
+    "previous": "Previous",
+    "next": "Next",
+    "selectColor": "Select {color}"
+  },
+  "status": {
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "time": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "thisWeek": "This Week",
+    "nextWeek": "Next Week",
+    "thisMonth": "This Month",
+    "nextMonth": "Next Month",
+    "daysAgo": " days ago",
+    "weeksAgo": " weeks ago",
+    "monthsAgo": " months ago"
+  },
+  "reminder": {
+    "label": "Reminder",
+    "none": "None",
+    "atStart": "At start time",
+    "min10": "10 minutes before",
+    "min30": "30 minutes before",
+    "hour1": "1 hour before",
+    "day1": "1 day before",
+    "week1": "1 week before",
+    "custom": "Custom"
+  },
+  "recurrence": {
+    "label": "Repeat",
+    "none": "Repeat",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "weekdays": "Weekdays"
+  },
+  "language": {
+    "current": "Current Language",
+    "switch": "Switch Language",
+    "english": "English",
+    "japanese": "Japanese"
+  },
+  "search": {
+    "shortcut": "⌘K"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidUuid": "Please enter a valid ID",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidUrl": "Please enter a valid URL",
+    "invalidColorCode": "Please enter a valid color code (#RRGGBB)",
+    "futureDate": "Please enter a future date",
+    "title": {
+      "required": "Title is required",
+      "maxLength": "Title must be {max} characters or less",
+      "noNewlines": "Title cannot contain only newlines or spaces"
+    },
+    "description": {
+      "maxLength": "Description must be {max} characters or less"
+    },
+    "password": {
+      "minLength": "Password must be at least {min} characters",
+      "maxLength": "Password must be {max} characters or less",
+      "lowercase": "Password must contain a lowercase letter",
+      "uppercase": "Password must contain an uppercase letter",
+      "number": "Password must contain a number"
+    },
+    "email": {
+      "maxLength": "Email address is too long"
+    },
+    "pagination": {
+      "pageMin": "Page number must be at least 1",
+      "limitMin": "Limit must be at least 1",
+      "limitMax": "Limit must be {max} or less"
+    },
+    "search": {
+      "maxLength": "Search query must be {max} characters or less"
+    },
+    "file": {
+      "maxSize": "File size must be {max}MB or less"
+    },
+    "tag": {
+      "nameRequired": "Tag name is required",
+      "nameMaxLength": "Tag name must be {max} characters or less"
+    },
+    "recaptcha": {
+      "required": "reCAPTCHA token is required"
+    },
+    "username": {
+      "required": "Username is required",
+      "maxLength": "Username must be {max} characters or less"
+    }
+  },
+  "errors": {
+    "generic": "An error occurred",
+    "general": {
+      "title": "Something went wrong",
+      "description": "We encountered an unexpected error. Please try again or contact support if the problem persists."
+    },
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+      "goHome": "Back to Home"
+    },
+    "network": {
+      "title": "Connection problem",
+      "description": "Unable to connect to the server. Please check your internet connection and try again."
+    },
+    "storage": {
+      "imageOnly": "Only image files can be uploaded",
+      "fileTooLarge": "File size must be 5MB or less",
+      "uploadFailed": "Upload failed",
+      "listFailed": "Failed to get file list",
+      "deleteFailed": "Failed to delete"
+    },
+    "mfa": {
+      "enrollFailed": "Enrollment error",
+      "dataNotFound": "Could not retrieve MFA data",
+      "setupFailed": "Failed to start 2FA setup",
+      "enterCode": "Please enter a 6-digit code",
+      "codeLength": "Code must be 6 digits",
+      "challengeFailed": "Challenge error",
+      "verifyFailed": "Verification error",
+      "codeInvalid": "Invalid code. Please try again.",
+      "verificationFailed": "Code verification failed. Please try again",
+      "factorListFailed": "Factor retrieval error",
+      "noFactorFound": "No valid MFA factor found",
+      "noVerifiedFactor": "No verified MFA factor found",
+      "disableFailed": "Disable error",
+      "disableGeneralFailed": "Failed to disable 2FA",
+      "disablePrompt": "Enter your 6-digit authenticator code to disable 2FA:",
+      "enabled": "2FA has been enabled!",
+      "disabled": "2FA has been disabled"
+    },
+    "auth": {
+      "wrongPassword": "Incorrect password",
+      "emailUpdateFailed": "Failed to update email address",
+      "emailNotFound": "Email address not found",
+      "userIdNotFound": "User ID not found",
+      "profileUpdateFailed": "Failed to update profile"
+    },
+    "calendar": {
+      "invalidDateFormat": "Invalid date format",
+      "invalidTimeFormat": "Invalid time format",
+      "timeOutOfRange": "Time is out of range"
     }
   },
   "footer": {
@@ -73,20 +408,6 @@
       "privacyPolicy": "Privacy Policy",
       "termsOfService": "Terms of Service",
       "cookiePolicy": "Cookie Policy"
-    }
-  },
-  "errors": {
-    "general": {
-      "title": "Something went wrong",
-      "description": "We encountered an unexpected error. Please try again or contact support if the problem persists."
-    },
-    "notFound": {
-      "title": "Page Not Found",
-      "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
-    },
-    "network": {
-      "title": "Connection problem",
-      "description": "Unable to connect to the server. Please check your internet connection and try again."
     }
   },
   "blog": {
@@ -128,6 +449,8 @@
     }
   },
   "releases": {
+    "featured": "Featured",
+    "breaking": "Breaking",
     "filters": {
       "title": "Filters",
       "clearAll": "Clear all",

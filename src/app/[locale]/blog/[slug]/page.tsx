@@ -1,20 +1,35 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import Image from 'next/image'
-import { Container } from '@/components/ui/container'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { ShareButton } from '@/components/blog/ShareButton'
 import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
-import { getBlogPost, getAllBlogPostMetas, getRelatedPosts } from '@/lib/blog'
-import { generateSEOMetadata } from '@/lib/metadata'
-import { setRequestLocale, getTranslations } from 'next-intl/server'
-import { routing } from '@/i18n/routing'
+import { Container } from '@/components/ui/container'
 import { Link } from '@/i18n/navigation'
+import { routing } from '@/i18n/routing'
+import { getAllBlogPostMetas, getBlogPost, getRelatedPosts } from '@/lib/blog'
+import { generateSEOMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 interface BlogPostPageProps {
   params: Promise<{ locale: string; slug: string }>
 }
+
+type HeadingProps = ComponentPropsWithoutRef<'h1'> & { children?: ReactNode }
+type ParagraphProps = ComponentPropsWithoutRef<'p'>
+type AnchorProps = ComponentPropsWithoutRef<'a'> & { href?: string }
+type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>
+type CodeProps = ComponentPropsWithoutRef<'code'>
+type PreProps = ComponentPropsWithoutRef<'pre'>
+type ListProps = ComponentPropsWithoutRef<'ul'>
+type OrderedListProps = ComponentPropsWithoutRef<'ol'>
+type ListItemProps = ComponentPropsWithoutRef<'li'>
+type ImageProps = ComponentPropsWithoutRef<'img'> & { src?: string; alt?: string }
+type TableProps = ComponentPropsWithoutRef<'table'>
+type ThProps = ComponentPropsWithoutRef<'th'>
+type TdProps = ComponentPropsWithoutRef<'td'>
 
 // Generate metadata
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
@@ -24,9 +39,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   if (!post) {
     return generateSEOMetadata({
       title: locale === 'ja' ? '記事が見つかりません' : 'Article Not Found',
-      description: locale === 'ja' ? 'お探しの記事は見つかりませんでした。' : 'The article you are looking for could not be found.',
+      description:
+        locale === 'ja'
+          ? 'お探しの記事は見つかりませんでした。'
+          : 'The article you are looking for could not be found.',
       url: `/${locale}/blog/${slug}`,
-      locale: locale
+      locale: locale,
     })
   }
 
@@ -44,7 +62,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     tags: frontMatter.tags,
     keywords: frontMatter.tags,
     image: frontMatter.coverImage,
-    section: frontMatter.category
+    section: frontMatter.category,
   })
 }
 
@@ -64,53 +82,80 @@ export async function generateStaticParams() {
 
 // MDX components
 const mdxComponents = {
-  h1: (props: any) => {
-    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
-    return <h1 id={id} className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
+  h1: (props: HeadingProps) => {
+    const id =
+      props.children
+        ?.toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '') || ''
+    return (
+      <h1 id={id} className="mt-8 mb-4 text-3xl font-bold text-gray-900 first:mt-0 dark:text-gray-100" {...props} />
+    )
   },
-  h2: (props: any) => {
-    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
-    return <h2 id={id} className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4" {...props} />
+  h2: (props: HeadingProps) => {
+    const id =
+      props.children
+        ?.toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '') || ''
+    return <h2 id={id} className="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100" {...props} />
   },
-  h3: (props: any) => {
-    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
-    return <h3 id={id} className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
+  h3: (props: HeadingProps) => {
+    const id =
+      props.children
+        ?.toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '') || ''
+    return <h3 id={id} className="mt-6 mb-3 text-xl font-bold text-gray-900 dark:text-gray-100" {...props} />
   },
-  h4: (props: any) => {
-    const id = props.children?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || ''
-    return <h4 id={id} className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
+  h4: (props: HeadingProps) => {
+    const id =
+      props.children
+        ?.toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '') || ''
+    return <h4 id={id} className="mt-6 mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100" {...props} />
   },
-  p: (props: any) => (
-    <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" {...props} />
-  ),
-  a: (props: any) => (
+  p: (props: ParagraphProps) => <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300" {...props} />,
+  a: (props: AnchorProps) => (
     <a
-      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2"
+      className="text-blue-600 underline underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props}
     />
   ),
-  blockquote: (props: any) => (
-    <blockquote className="border-l-4 border-blue-500 dark:border-blue-400 pl-4 py-2 my-6 bg-blue-50 dark:bg-blue-900 text-gray-700 dark:text-gray-300 italic rounded-r-lg" {...props} />
+  blockquote: (props: BlockquoteProps) => (
+    <blockquote
+      className="my-6 rounded-r-lg border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-gray-700 italic dark:border-blue-400 dark:bg-blue-900 dark:text-gray-300"
+      {...props}
+    />
   ),
-  code: (props: any) => (
-    <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded text-sm font-mono" {...props} />
+  code: (props: CodeProps) => (
+    <code
+      className="rounded bg-gray-100 px-2 py-1 font-mono text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+      {...props}
+    />
   ),
-  pre: (props: any) => (
-    <pre className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm" {...props} />
+  pre: (props: PreProps) => (
+    <pre
+      className="my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 dark:bg-gray-800"
+      {...props}
+    />
   ),
-  ul: (props: any) => (
-    <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
+  ul: (props: ListProps) => (
+    <ul className="mb-4 list-inside list-disc space-y-2 text-gray-700 dark:text-gray-300" {...props} />
   ),
-  ol: (props: any) => (
-    <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
+  ol: (props: OrderedListProps) => (
+    <ol className="mb-4 list-inside list-decimal space-y-2 text-gray-700 dark:text-gray-300" {...props} />
   ),
-  li: (props: any) => (
-    <li className="leading-relaxed" {...props} />
-  ),
-  img: (props: any) => (
-    <div className="relative my-6 rounded-lg overflow-hidden shadow-lg">
+  li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
+  img: (props: ImageProps) => (
+    <div className="relative my-6 overflow-hidden rounded-lg shadow-lg">
       <Image
         className="rounded-lg shadow-lg"
         loading="lazy"
@@ -118,27 +163,44 @@ const mdxComponents = {
         height={600}
         style={{ width: '100%', height: 'auto' }}
         alt={props.alt || 'Blog post image'}
+        src={props.src || ''}
+      />
+    </div>
+  ),
+  table: (props: TableProps) => (
+    <div className="my-6 overflow-x-auto">
+      <table
+        className="min-w-full divide-y divide-gray-200 rounded-lg border border-gray-200 dark:divide-gray-700 dark:border-gray-700"
         {...props}
       />
     </div>
   ),
-  table: (props: any) => (
-    <div className="overflow-x-auto my-6">
-      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg" {...props} />
-    </div>
+  th: (props: ThProps) => (
+    <th
+      className="bg-gray-50 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase dark:bg-gray-800 dark:text-gray-400"
+      {...props}
+    />
   ),
-  th: (props: any) => (
-    <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" {...props} />
+  td: (props: TdProps) => (
+    <td
+      className="border-t border-gray-200 px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:border-gray-700 dark:text-gray-100"
+      {...props}
+    />
   ),
-  td: (props: any) => (
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 border-t border-gray-200 dark:border-gray-700" {...props} />
-  ),
-  Callout: ({ type = 'info', children }: { type?: 'info' | 'warning' | 'error' | 'success', children: React.ReactNode }) => {
+  Callout: ({
+    type = 'info',
+    children,
+  }: {
+    type?: 'info' | 'warning' | 'error' | 'success'
+    children: React.ReactNode
+  }) => {
     const styles = {
       info: 'bg-blue-50 dark:bg-blue-900 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200',
-      warning: 'bg-yellow-50 dark:bg-yellow-900 border-yellow-200 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200',
+      warning:
+        'bg-yellow-50 dark:bg-yellow-900 border-yellow-200 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200',
       error: 'bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700 text-red-800 dark:text-red-200',
-      success: 'bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200',
+      success:
+        'bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200',
     }
 
     const icons = {
@@ -149,9 +211,9 @@ const mdxComponents = {
     }
 
     return (
-      <div className={`border-l-4 p-4 my-6 rounded-r-lg ${styles[type]}`}>
+      <div className={`my-6 rounded-r-lg border-l-4 p-4 ${styles[type]}`}>
         <div className="flex items-start">
-          <span className="text-lg mr-3 flex-shrink-0">{icons[type]}</span>
+          <span className="mr-3 flex-shrink-0 text-lg">{icons[type]}</span>
           <div className="prose prose-sm max-w-none">{children}</div>
         </div>
       </div>
@@ -177,7 +239,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   processedContent = processedContent.replace(titlePattern, '')
 
   if (post.frontMatter.description) {
-    const descPattern = new RegExp(`^${post.frontMatter.description.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`, 'gm')
+    const descPattern = new RegExp(
+      `^${post.frontMatter.description.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`,
+      'gm'
+    )
     processedContent = processedContent.replace(descPattern, '')
   }
 
@@ -187,7 +252,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const processedLines = []
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim()
+    const currentLine = lines[i]
+    if (currentLine === undefined) continue
+    const line = currentLine.trim()
 
     if (processedLines.length === 0 && line === '') continue
 
@@ -195,7 +262,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       continue
     }
 
-    processedLines.push(lines[i])
+    processedLines.push(currentLine)
   }
 
   processedContent = processedLines.join('\n')
@@ -226,57 +293,53 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div className="min-h-screen">
-        <article className="py-8 bg-white dark:bg-gray-900">
+        <article className="bg-white py-8 dark:bg-gray-900">
           <Container>
-            <div className="flex gap-8 justify-center">
+            <div className="flex justify-center gap-8">
               <div className="w-[700px] flex-shrink-0 pt-16">
                 <div className="mb-8">
                   <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
                     <Link
                       href="/"
-                      className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+                      className="text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-400"
                     >
                       Home
                     </Link>
                     <span className="text-gray-300 dark:text-gray-700">/</span>
                     <Link
                       href="/blog"
-                      className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+                      className="text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-400"
                     >
                       Blog
                     </Link>
                     <span className="text-gray-300 dark:text-gray-700">/</span>
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">
-                      {post.frontMatter.title}
-                    </span>
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">{post.frontMatter.title}</span>
                   </nav>
                 </div>
 
-                <time className="text-sm text-gray-500 dark:text-gray-400 mb-2 block" dateTime={post.frontMatter.publishedAt}>
+                <time
+                  className="mb-2 block text-sm text-gray-500 dark:text-gray-400"
+                  dateTime={post.frontMatter.publishedAt}
+                >
                   {new Date(post.frontMatter.publishedAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
-                    day: 'numeric'
+                    day: 'numeric',
                   })}
                 </time>
 
-                <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
-                  {post.frontMatter.title}
-                </h1>
+                <h1 className="mb-8 text-4xl font-bold text-gray-900 dark:text-gray-100">{post.frontMatter.title}</h1>
 
                 {post.frontMatter.coverImage && (
-                  <div className="relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg mb-8">
+                  <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
                     <Image
                       src={post.frontMatter.coverImage}
                       alt={post.frontMatter.title}
                       fill
-                      className="object-cover rounded-xl"
+                      className="rounded-xl object-cover"
                       priority
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                     />
@@ -284,18 +347,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 )}
 
                 <div className="prose prose-lg max-w-none">
-                  <MDXRemote
-                    source={processedContent}
-                    components={mdxComponents}
-                  />
+                  <MDXRemote source={processedContent} components={mdxComponents} />
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                </div>
+                <div className="mt-8 border-t border-gray-200 pt-6 dark:border-gray-700"></div>
 
                 <div className="mt-6 space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Tags Used</h3>
+                    <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100">Tags Used</h3>
                     <div className="flex flex-wrap gap-2">
                       {post.frontMatter.tags.map((tag) => {
                         const getTagColor = (tag: string) => {
@@ -324,7 +383,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                           <Link
                             key={tag}
                             href={`/tags/${encodeURIComponent(tag)}`}
-                            className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors ${getTagColor(tag)}`}
+                            className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors ${getTagColor(tag)}`}
                           >
                             #{tag}
                           </Link>
@@ -334,14 +393,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">{t('title')}</h3>
+                    <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100">{t('title')}</h3>
                     <ShareButton title={post.frontMatter.title} slug={slug} />
                   </div>
                 </div>
               </div>
 
-              <aside className="w-[240px] flex-shrink-0 hidden xl:block">
-                <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pl-6 pt-16">
+              <aside className="hidden w-[240px] flex-shrink-0 xl:block">
+                <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pt-16 pl-6">
                   <ClientTableOfContents content={post.content} />
                 </div>
               </aside>

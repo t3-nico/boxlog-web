@@ -13,11 +13,7 @@ const performanceChecks = {
   // Check bundle sizes
   analyzeBundleSizes: () => {
     const issues = []
-    const buildManifestPath = path.join(
-      process.cwd(),
-      '.next',
-      'build-manifest.json'
-    )
+    const buildManifestPath = path.join(process.cwd(), '.next', 'build-manifest.json')
 
     if (!fs.existsSync(buildManifestPath)) {
       issues.push({
@@ -134,10 +130,7 @@ const performanceChecks = {
         const relativePath = path.relative(process.cwd(), filePath)
 
         // Check for useEffect without dependencies
-        if (
-          content.includes('useEffect(') &&
-          !content.includes('useCallback')
-        ) {
+        if (content.includes('useEffect(') && !content.includes('useCallback')) {
           const useEffectMatches = content.match(/useEffect\([^,]+\)/g)
           if (useEffectMatches && useEffectMatches.length > 0) {
             issues.push({
@@ -160,10 +153,7 @@ const performanceChecks = {
         }
 
         // Check for console.log in production code
-        if (
-          content.includes('console.log') ||
-          content.includes('console.warn')
-        ) {
+        if (content.includes('console.log') || content.includes('console.warn')) {
           issues.push({
             type: 'performance-pattern',
             message: `Console statements found in ${relativePath} - remove for production`,
@@ -173,15 +163,10 @@ const performanceChecks = {
         }
 
         // Check for large imports
-        const importMatches = content.match(
-          /import\s+.*\s+from\s+['"][^'"]+['"]/g
-        )
+        const importMatches = content.match(/import\s+.*\s+from\s+['"][^'"]+['"]/g)
         if (importMatches) {
           importMatches.forEach((importLine) => {
-            if (
-              importLine.includes('lodash') &&
-              !importLine.includes('lodash/')
-            ) {
+            if (importLine.includes('lodash') && !importLine.includes('lodash/')) {
               issues.push({
                 type: 'performance-pattern',
                 message: `Full lodash import in ${relativePath} - use specific imports`,
@@ -203,11 +188,7 @@ const performanceChecks = {
         const fullPath = path.join(dir, item)
         const stat = fs.statSync(fullPath)
 
-        if (
-          stat.isDirectory() &&
-          !item.startsWith('.') &&
-          item !== 'node_modules'
-        ) {
+        if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules') {
           traverseDirectory(fullPath)
         } else if (stat.isFile() && /\.(ts|tsx|js|jsx)$/.test(item)) {
           checkFile(fullPath)
@@ -225,23 +206,19 @@ const performanceChecks = {
     const configPath = path.join(process.cwd(), 'next.config.js')
     const configPathMjs = path.join(process.cwd(), 'next.config.mjs')
 
-    const configExists =
-      fs.existsSync(configPath) || fs.existsSync(configPathMjs)
+    const configExists = fs.existsSync(configPath) || fs.existsSync(configPathMjs)
 
     if (!configExists) {
       issues.push({
         type: 'next-config',
-        message:
-          'No Next.js configuration found - consider adding optimizations',
+        message: 'No Next.js configuration found - consider adding optimizations',
         severity: 'info',
       })
       return issues
     }
 
     try {
-      const actualConfigPath = fs.existsSync(configPath)
-        ? configPath
-        : configPathMjs
+      const actualConfigPath = fs.existsSync(configPath) ? configPath : configPathMjs
       const configContent = fs.readFileSync(actualConfigPath, 'utf8')
 
       // Check for image optimization
@@ -257,17 +234,13 @@ const performanceChecks = {
       if (!configContent.includes('experimental')) {
         issues.push({
           type: 'next-config',
-          message:
-            'Consider enabling experimental features for better performance',
+          message: 'Consider enabling experimental features for better performance',
           severity: 'info',
         })
       }
 
       // Check for bundle analyzer
-      if (
-        !configContent.includes('bundle-analyzer') &&
-        !configContent.includes('ANALYZE')
-      ) {
+      if (!configContent.includes('bundle-analyzer') && !configContent.includes('ANALYZE')) {
         issues.push({
           type: 'next-config',
           message: 'Bundle analyzer not configured for size monitoring',
@@ -314,12 +287,10 @@ const performanceChecks = {
           let suggestion = ''
           switch (dep) {
             case 'moment':
-              suggestion =
-                ' - consider date-fns or dayjs for smaller bundle size'
+              suggestion = ' - consider date-fns or dayjs for smaller bundle size'
               break
             case 'lodash':
-              suggestion =
-                ' - ensure tree-shaking is working or use specific imports'
+              suggestion = ' - ensure tree-shaking is working or use specific imports'
               break
             case 'jquery':
               suggestion = ' - generally unnecessary in React applications'
@@ -342,8 +313,7 @@ const performanceChecks = {
       if (allDeps['axios'] && allDeps['fetch']) {
         issues.push({
           type: 'dependency-analysis',
-          message:
-            'Multiple HTTP clients detected (axios + fetch) - consider using one',
+          message: 'Multiple HTTP clients detected (axios + fetch) - consider using one',
           severity: 'info',
         })
       }
@@ -386,9 +356,7 @@ function runPerformanceAudit() {
     const info = allIssues.filter((issue) => issue.severity === 'info')
 
     console.log(`\n📈 Summary: ${totalIssues} issues found`)
-    console.log(
-      `   ${errors.length} error(s), ${warnings.length} warning(s), ${info.length} info`
-    )
+    console.log(`   ${errors.length} error(s), ${warnings.length} warning(s), ${info.length} info`)
 
     // Group issues by type
     const issuesByType = {}
@@ -402,12 +370,7 @@ function runPerformanceAudit() {
     Object.entries(issuesByType).forEach(([type, issues]) => {
       console.log(`\n📋 ${type.toUpperCase().replace('-', ' ')}`)
       issues.forEach((issue) => {
-        const icon =
-          issue.severity === 'error'
-            ? '❌'
-            : issue.severity === 'warning'
-              ? '⚠️'
-              : 'ℹ️'
+        const icon = issue.severity === 'error' ? '❌' : issue.severity === 'warning' ? '⚠️' : 'ℹ️'
         console.log(`   ${icon} ${issue.message}`)
         if (issue.file) console.log(`      File: ${issue.file}`)
         if (issue.size) console.log(`      Size: ${issue.size}KB`)

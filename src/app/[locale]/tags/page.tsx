@@ -1,10 +1,10 @@
-import type { Metadata } from 'next'
-import { Search, TrendingUp, Hash } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
+import { routing } from '@/i18n/routing'
 import { getAllTags as getAllBlogTags } from '@/lib/blog'
 import { getAllReleaseTags } from '@/lib/releases'
+import { Hash, Search, TrendingUp } from 'lucide-react'
+import type { Metadata } from 'next'
 import { setRequestLocale } from 'next-intl/server'
-import { routing } from '@/i18n/routing'
-import { Link } from '@/i18n/navigation'
 
 interface TagsPageProps {
   params: Promise<{ locale: string }>
@@ -23,15 +23,12 @@ export default async function TagsPage({ params }: TagsPageProps) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  const [blogTags, releaseTags] = await Promise.all([
-    getAllBlogTags(),
-    getAllReleaseTags()
-  ])
+  const [blogTags, releaseTags] = await Promise.all([getAllBlogTags(), getAllReleaseTags()])
 
   // Combine and deduplicate tags
   const allTagsMap = new Map<string, { count: number; blogCount: number; releaseCount: number }>()
 
-  blogTags.forEach(t => {
+  blogTags.forEach((t) => {
     const existing = allTagsMap.get(t.tag)
     if (existing) {
       existing.blogCount += t.count
@@ -41,7 +38,7 @@ export default async function TagsPage({ params }: TagsPageProps) {
     }
   })
 
-  releaseTags.forEach(t => {
+  releaseTags.forEach((t) => {
     const existing = allTagsMap.get(t.tag)
     if (existing) {
       existing.releaseCount += t.count
@@ -79,13 +76,13 @@ export default async function TagsPage({ params }: TagsPageProps) {
             </p>
 
             {/* Search Bar */}
-            <div className="mt-10 mx-auto max-w-xl">
+            <div className="mx-auto mt-10 max-w-xl">
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+                <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-neutral-400" />
                 <input
                   type="text"
                   placeholder="Search tags..."
-                  className="w-full rounded-lg border border-neutral-200 bg-white py-3 pl-12 pr-4 text-neutral-900 placeholder-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-neutral-100 dark:focus:ring-neutral-100"
+                  className="w-full rounded-lg border border-neutral-200 bg-white py-3 pr-4 pl-12 text-neutral-900 placeholder-neutral-400 focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-neutral-100 dark:focus:ring-neutral-100"
                 />
               </div>
             </div>
@@ -93,20 +90,12 @@ export default async function TagsPage({ params }: TagsPageProps) {
             {/* Stats */}
             <div className="mt-12 flex flex-wrap items-center justify-center gap-8">
               <div className="text-center">
-                <div className="text-3xl font-semibold text-neutral-900 dark:text-white">
-                  {totalTags}
-                </div>
-                <div className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-                  Total Tags
-                </div>
+                <div className="text-3xl font-semibold text-neutral-900 dark:text-white">{totalTags}</div>
+                <div className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">Total Tags</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-neutral-900 dark:text-white">
-                  {totalContent}
-                </div>
-                <div className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-                  Tagged Items
-                </div>
+                <div className="text-3xl font-semibold text-neutral-900 dark:text-white">{totalContent}</div>
+                <div className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">Tagged Items</div>
               </div>
             </div>
           </div>
@@ -120,9 +109,7 @@ export default async function TagsPage({ params }: TagsPageProps) {
           <div className="mb-16">
             <div className="mb-8 flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-neutral-900 dark:text-white" />
-              <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">
-                Popular Tags
-              </h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">Popular Tags</h2>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -141,12 +128,8 @@ export default async function TagsPage({ params }: TagsPageProps) {
                         </h3>
                       </div>
                       <div className="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
-                        {tag.blogCount > 0 && (
-                          <span>{tag.blogCount} blog</span>
-                        )}
-                        {tag.releaseCount > 0 && (
-                          <span>{tag.releaseCount} release</span>
-                        )}
+                        {tag.blogCount > 0 && <span>{tag.blogCount} blog</span>}
+                        {tag.releaseCount > 0 && <span>{tag.releaseCount} release</span>}
                       </div>
                     </div>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-100 text-sm font-semibold text-neutral-900 dark:bg-neutral-700 dark:text-white">
@@ -160,9 +143,7 @@ export default async function TagsPage({ params }: TagsPageProps) {
 
           {/* All Tags */}
           <div>
-            <h2 className="mb-8 text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">
-              All Tags
-            </h2>
+            <h2 className="mb-8 text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">All Tags</h2>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {allTags.map((tag) => (
@@ -173,13 +154,9 @@ export default async function TagsPage({ params }: TagsPageProps) {
                 >
                   <div className="flex items-center gap-2">
                     <Hash className="h-4 w-4 text-neutral-400 dark:text-neutral-500" />
-                    <span className="font-medium text-neutral-900 dark:text-white">
-                      {tag.tag}
-                    </span>
+                    <span className="font-medium text-neutral-900 dark:text-white">{tag.tag}</span>
                   </div>
-                  <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    {tag.count}
-                  </span>
+                  <span className="text-sm text-neutral-500 dark:text-neutral-400">{tag.count}</span>
                 </Link>
               ))}
             </div>

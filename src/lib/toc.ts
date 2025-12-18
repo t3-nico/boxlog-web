@@ -28,8 +28,11 @@ export function extractHeadings(content: string): TocItem[] {
   let match
 
   while ((match = headingRegex.exec(content)) !== null) {
-    const level = match[1].length
-    const title = match[2].trim()
+    const levelMatch = match[1]
+    const titleMatch = match[2]
+    if (!levelMatch || !titleMatch) continue
+    const level = levelMatch.length
+    const title = titleMatch.trim()
 
     // コードブロック内の見出しを除外
     const beforeMatch = content.substring(0, match.index)
@@ -67,7 +70,9 @@ export function buildTocTree(headings: TocItem[]): TocItem[] {
     }
 
     // 適切な親を見つける
-    while (stack.length > 0 && stack[stack.length - 1].level >= heading.level) {
+    while (stack.length > 0) {
+      const top = stack[stack.length - 1]
+      if (!top || top.level < heading.level) break
       stack.pop()
     }
 
@@ -75,10 +80,12 @@ export function buildTocTree(headings: TocItem[]): TocItem[] {
       tree.push(item)
     } else {
       const parent = stack[stack.length - 1]
-      if (!parent.children) {
-        parent.children = []
+      if (parent) {
+        if (!parent.children) {
+          parent.children = []
+        }
+        parent.children.push(item)
       }
-      parent.children.push(item)
     }
 
     stack.push(item)

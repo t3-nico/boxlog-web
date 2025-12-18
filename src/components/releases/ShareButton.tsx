@@ -1,8 +1,8 @@
 'use client'
 
-import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Share2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface ShareButtonProps {
   title: string
@@ -34,7 +34,7 @@ export function ShareButton({ title, version }: ShareButtonProps) {
 
   return (
     <Button onClick={handleShare} variant="outline" className="gap-2">
-      <Share2 className="w-4 h-4" />
+      <Share2 className="h-4 w-4" />
       Share
     </Button>
   )

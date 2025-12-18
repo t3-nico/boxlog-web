@@ -1,12 +1,27 @@
+import { ReleaseCard } from '@/components/releases/ReleaseCard'
+import { ReleaseHeader } from '@/components/releases/ReleaseHeader'
+import { Container } from '@/components/ui/container'
+import { changeTypes, getAllReleaseMetas, getRelatedReleases, getRelease } from '@/lib/releases'
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
-import { Container } from '@/components/ui/container'
-import { ReleaseHeader } from '@/components/releases/ReleaseHeader'
-import { ReleaseCard } from '@/components/releases/ReleaseCard'
-import { getRelease, getAllReleaseMetas, getRelatedReleases, changeTypes } from '@/lib/releases'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import type { ComponentPropsWithoutRef } from 'react'
+
+type HeadingProps = ComponentPropsWithoutRef<'h1'>
+type ParagraphProps = ComponentPropsWithoutRef<'p'>
+type AnchorProps = ComponentPropsWithoutRef<'a'> & { href?: string }
+type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>
+type CodeProps = ComponentPropsWithoutRef<'code'>
+type PreProps = ComponentPropsWithoutRef<'pre'>
+type ListProps = ComponentPropsWithoutRef<'ul'>
+type OrderedListProps = ComponentPropsWithoutRef<'ol'>
+type ListItemProps = ComponentPropsWithoutRef<'li'>
+type ImageProps = ComponentPropsWithoutRef<'img'> & { src?: string; alt?: string }
+type TableProps = ComponentPropsWithoutRef<'table'>
+type ThProps = ComponentPropsWithoutRef<'th'>
+type TdProps = ComponentPropsWithoutRef<'td'>
 
 interface ReleasePageProps {
   params: {
@@ -18,7 +33,7 @@ interface ReleasePageProps {
 // Generate metadata
 export async function generateMetadata({ params }: ReleasePageProps): Promise<Metadata> {
   const release = await getRelease(params.version)
-  
+
   if (!release) {
     return {
       title: 'Release not found',
@@ -40,14 +55,16 @@ export async function generateMetadata({ params }: ReleasePageProps): Promise<Me
       publishedTime: releaseDate,
       authors: frontMatter.author ? [frontMatter.author] : undefined,
       tags: frontMatter.tags,
-      images: frontMatter.coverImage ? [
-        {
-          url: frontMatter.coverImage,
-          width: 1200,
-          height: 630,
-          alt: frontMatter.title,
-        }
-      ] : undefined,
+      images: frontMatter.coverImage
+        ? [
+            {
+              url: frontMatter.coverImage,
+              width: 1200,
+              height: 630,
+              alt: frontMatter.title,
+            },
+          ]
+        : undefined,
     },
     twitter: {
       card: 'summary_large_image',
@@ -57,98 +74,111 @@ export async function generateMetadata({ params }: ReleasePageProps): Promise<Me
     },
     alternates: {
       canonical: `/releases/${params.version}`,
-    }
+    },
   }
 }
 
 // Generate static paths
 export async function generateStaticParams() {
   const releases = await getAllReleaseMetas()
-  const locales = ['en', 'jp']
+  const locales = ['en', 'ja']
   const params = []
-  
+
   for (const locale of locales) {
     for (const release of releases) {
       params.push({ locale, version: release.frontMatter.version })
     }
   }
-  
+
   return params
 }
 
 // MDX Components
 const mdxComponents = {
-  h1: (props: any) => (
-    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 first:mt-0" {...props} />
+  h1: (props: HeadingProps) => (
+    <h1 className="mt-8 mb-4 text-3xl font-bold text-gray-900 first:mt-0 dark:text-gray-100" {...props} />
   ),
-  h2: (props: any) => (
-    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700" {...props} />
-  ),
-  h3: (props: any) => (
-    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
-  ),
-  h4: (props: any) => (
-    <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props} />
-  ),
-  p: (props: any) => (
-    <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" {...props} />
-  ),
-  a: (props: any) => (
-    <a 
-      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2" 
-      target={props.href?.startsWith('http') ? '_blank' : undefined}
-      rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-      {...props} 
+  h2: (props: HeadingProps) => (
+    <h2
+      className="mt-8 mb-4 border-b border-gray-200 pb-2 text-2xl font-bold text-gray-900 dark:border-gray-700 dark:text-gray-100"
+      {...props}
     />
   ),
-  blockquote: (props: any) => (
-    <blockquote className="border-l-4 border-blue-500 dark:border-blue-400 pl-4 py-2 my-6 bg-blue-50 dark:bg-blue-900 text-gray-700 dark:text-gray-300 italic rounded-r-lg" {...props} />
+  h3: (props: HeadingProps) => (
+    <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900 dark:text-gray-100" {...props} />
   ),
-  code: (props: any) => (
-    <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded text-sm font-mono" {...props} />
+  h4: (props: HeadingProps) => (
+    <h4 className="mt-6 mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100" {...props} />
   ),
-  pre: (props: any) => (
-    <pre className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm" {...props} />
+  p: (props: ParagraphProps) => <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300" {...props} />,
+  a: (props: AnchorProps) => (
+    <a
+      className="text-blue-600 underline underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+      target={props.href?.startsWith('http') ? '_blank' : undefined}
+      rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+      {...props}
+    />
   ),
-  ul: (props: any) => (
-    <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
+  blockquote: (props: BlockquoteProps) => (
+    <blockquote
+      className="my-6 rounded-r-lg border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-gray-700 italic dark:border-blue-400 dark:bg-blue-900 dark:text-gray-300"
+      {...props}
+    />
   ),
-  ol: (props: any) => (
-    <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300" {...props} />
+  code: (props: CodeProps) => (
+    <code
+      className="rounded bg-gray-100 px-2 py-1 font-mono text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+      {...props}
+    />
   ),
-  li: (props: any) => (
-    <li className="leading-relaxed" {...props} />
+  pre: (props: PreProps) => (
+    <pre
+      className="my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 dark:bg-gray-800"
+      {...props}
+    />
   ),
-  img: (props: any) => (
+  ul: (props: ListProps) => (
+    <ul className="mb-4 list-inside list-disc space-y-2 text-gray-700 dark:text-gray-300" {...props} />
+  ),
+  ol: (props: OrderedListProps) => (
+    <ol className="mb-4 list-inside list-decimal space-y-2 text-gray-700 dark:text-gray-300" {...props} />
+  ),
+  li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
+  img: (props: ImageProps) => (
     <Image
-      className="rounded-lg shadow-lg my-6 max-w-full h-auto"
+      className="my-6 h-auto max-w-full rounded-lg shadow-lg"
       width={800}
       height={600}
       loading="lazy"
       alt={props.alt || 'Release image'}
+      src={props.src || ''}
+    />
+  ),
+  table: (props: TableProps) => (
+    <div className="my-6 overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200 rounded-lg border border-gray-200" {...props} />
+    </div>
+  ),
+  th: (props: ThProps) => (
+    <th
+      className="bg-gray-50 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
       {...props}
     />
   ),
-  table: (props: any) => (
-    <div className="overflow-x-auto my-6">
-      <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg" {...props} />
-    </div>
-  ),
-  th: (props: any) => (
-    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...props} />
-  ),
-  td: (props: any) => (
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-t border-gray-200" {...props} />
+  td: (props: TdProps) => (
+    <td className="border-t border-gray-200 px-6 py-4 text-sm whitespace-nowrap text-gray-900" {...props} />
   ),
 
   // Release notes specific components
-  ChangeLog: ({ type, children }: { type: string, children: React.ReactNode }) => {
-    const changeType = changeTypes.find(ct => ct.id === type)
+  ChangeLog: ({ type, children }: { type: string; children: React.ReactNode }) => {
+    const changeType = changeTypes.find((ct) => ct.id === type)
     if (!changeType) return <div>{children}</div>
 
     return (
-      <div className={`border-l-4 p-4 my-6 rounded-r-lg ${changeType.color.replace('text-', 'border-').replace('bg-', 'bg-').replace('border-', 'border-l-')}`}>
-        <div className="flex items-center gap-2 mb-2">
+      <div
+        className={`my-6 rounded-r-lg border-l-4 p-4 ${changeType.color.replace('text-', 'border-').replace('bg-', 'bg-').replace('border-', 'border-l-')}`}
+      >
+        <div className="mb-2 flex items-center gap-2">
           <span className="text-lg" role="img" aria-label={changeType.label}>
             {changeType.icon}
           </span>
@@ -161,10 +191,20 @@ const mdxComponents = {
 
   // Warning component
   Warning: ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 my-6">
+    <div className="my-6 rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-700 dark:bg-yellow-900">
       <div className="flex items-start">
-        <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L5.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+        <svg
+          className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-yellow-600 dark:text-yellow-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L5.35 16.5c-.77.833.192 2.5 1.732 2.5z"
+          />
         </svg>
         <div className="prose prose-sm max-w-none text-yellow-800 dark:text-yellow-200">{children}</div>
       </div>
@@ -173,10 +213,20 @@ const mdxComponents = {
 
   // Info component
   Info: ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 my-6">
+    <div className="my-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-900">
       <div className="flex items-start">
-        <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <svg
+          className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-blue-600 dark:text-blue-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
         </svg>
         <div className="prose prose-sm max-w-none text-blue-800 dark:text-blue-200">{children}</div>
       </div>
@@ -185,13 +235,23 @@ const mdxComponents = {
 
   // Migration guide
   Migration: ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-purple-50 dark:bg-purple-900 border border-purple-200 dark:border-purple-700 rounded-lg p-4 my-6">
+    <div className="my-6 rounded-lg border border-purple-200 bg-purple-50 p-4 dark:border-purple-700 dark:bg-purple-900">
       <div className="flex items-start">
-        <svg className="w-5 h-5 text-purple-600 dark:text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+        <svg
+          className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-purple-600 dark:text-purple-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+          />
         </svg>
         <div>
-          <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Migration Information</h4>
+          <h4 className="mb-2 font-semibold text-purple-800 dark:text-purple-200">Migration Information</h4>
           <div className="prose prose-sm max-w-none text-purple-700 dark:text-purple-300">{children}</div>
         </div>
       </div>
@@ -202,7 +262,7 @@ const mdxComponents = {
 export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
   const { version } = params
   const release = await getRelease(version)
-  
+
   if (!release) {
     notFound()
   }
@@ -236,10 +296,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
   return (
     <>
       {/* Structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div className="min-h-screen">
         {/* Release header */}
@@ -247,15 +304,15 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
         {/* Cover image */}
         {release.frontMatter.coverImage && (
-          <section className="py-8 bg-gray-50 dark:bg-gray-800">
+          <section className="bg-gray-50 py-8 dark:bg-gray-800">
             <Container>
-              <div className="max-w-4xl mx-auto">
+              <div className="mx-auto max-w-4xl">
                 <Image
                   src={release.frontMatter.coverImage}
                   alt={release.frontMatter.title}
                   width={1200}
                   height={630}
-                  className="w-full h-auto rounded-xl shadow-lg"
+                  className="h-auto w-full rounded-xl shadow-lg"
                   priority
                 />
               </div>
@@ -264,57 +321,52 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
         )}
 
         {/* Release content */}
-        <article id="changes" className="py-16 bg-white dark:bg-gray-900">
+        <article id="changes" className="bg-white py-16 dark:bg-gray-900">
           <Container>
-            <div className="max-w-4xl mx-auto">
+            <div className="mx-auto max-w-4xl">
               <div className="prose prose-lg max-w-none">
-                <MDXRemote 
-                  source={release.content} 
-                  components={mdxComponents}
-                />
+                <MDXRemote source={release.content} components={mdxComponents} />
               </div>
 
               {/* Release end marker */}
-              <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+              <div className="mt-16 border-t border-gray-200 pt-8 dark:border-gray-700">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                    <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
                   </div>
                 </div>
               </div>
 
               {/* Release information footer */}
-              <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="mt-8 rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                    <p className="mb-1 text-sm text-gray-600 dark:text-gray-400">
                       This release takes approximately <strong>{release.readingTime} minutes</strong> to read
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       Release date: {new Date(release.frontMatter.date).toLocaleDateString('en-US')}
                       {release.frontMatter.author && (
-                        <span className="ml-4">
-                          Release manager: {release.frontMatter.author}
-                        </span>
+                        <span className="ml-4">Release manager: {release.frontMatter.author}</span>
                       )}
                     </p>
                   </div>
-                  
+
                   <div className="flex items-center gap-4">
                     <Link
                       href="/releases"
-                      className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
+                      className="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     >
                       View all releases
                     </Link>
-                    
+
                     <a
                       href={`https://github.com/yoursaas/platform/releases/tag/v${release.frontMatter.version}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-gray-600 hover:text-gray-800 font-medium"
+                      className="text-sm font-medium text-gray-600 hover:text-gray-800"
                     >
                       View on GitHub
                     </a>
@@ -327,34 +379,26 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
         {/* Related releases */}
         {relatedReleases.length > 0 && (
-          <section className="py-16 bg-gray-50">
+          <section className="bg-gray-50 py-16">
             <Container>
-              <div className="max-w-6xl mx-auto">
+              <div className="mx-auto max-w-6xl">
                 <div className="mb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    Related Releases
-                  </h2>
-                  <p className="text-gray-600">
-                    Other updates related to this release
-                  </p>
+                  <h2 className="mb-4 text-2xl font-bold text-gray-900">Related Releases</h2>
+                  <p className="text-gray-600">Other updates related to this release</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {relatedReleases.map((relatedRelease) => (
-                    <ReleaseCard 
-                      key={relatedRelease.frontMatter.version}
-                      release={relatedRelease}
-                      compact={true}
-                    />
+                    <ReleaseCard key={relatedRelease.frontMatter.version} release={relatedRelease} compact={true} />
                   ))}
                 </div>
 
                 <div className="mt-8 text-center">
                   <Link
                     href="/releases"
-                    className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                     View all releases
@@ -366,33 +410,41 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
         )}
 
         {/* Feedback & Support */}
-        <section className="py-16 bg-blue-50 border-t border-blue-100">
+        <section className="border-t border-blue-100 bg-blue-50 py-16">
           <Container>
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Share Your Feedback
-              </h2>
-              <p className="text-gray-600 mb-8">
+            <div className="mx-auto max-w-4xl text-center">
+              <h2 className="mb-4 text-2xl font-bold text-gray-900">Share Your Feedback</h2>
+              <p className="mb-8 text-gray-600">
                 If you have any questions or feedback about this new feature, please feel free to share it with us.
               </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+              <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <a
                   href="mailto:support@yoursaas.com"
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700"
                 >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
                   </svg>
                   Contact Support
                 </a>
-                
+
                 <Link
                   href="/feedback"
-                  className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center rounded-lg border border-gray-300 px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50"
                 >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                    />
                   </svg>
                   Send Feedback
                 </Link>
