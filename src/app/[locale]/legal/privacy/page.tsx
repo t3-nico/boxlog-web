@@ -1,130 +1,176 @@
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { generateSEOMetadata } from '@/lib/metadata'
-import { setRequestLocale } from 'next-intl/server'
-import { routing } from '@/i18n/routing'
+import type { Locale } from '@/i18n/routing'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata = generateSEOMetadata({
-  title: 'Privacy Policy - Data Protection & Privacy',
-  description: 'Learn how BoxLog collects, uses, and protects your personal information. Our comprehensive privacy policy explains your rights and our commitments.',
-  keywords: ['privacy policy', 'data protection', 'GDPR', 'personal information', 'cookies', 'user rights'],
-  url: '/privacy',
-})
+/**
+ * メタデータ生成（SEO対策・i18n対応）
+ */
+export async function generateMetadata({ params }: { params: Promise<{ locale?: Locale }> }): Promise<Metadata> {
+  const { locale = 'ja' } = await params
+  const t = await getTranslations({ locale })
+
+  return {
+    title: `${t('legal.privacy.title')} - BoxLog`,
+    description: t('legal.privacy.description'),
+  }
+}
 
 interface PageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale?: Locale }>
 }
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
-}
-
+/**
+ * プライバシーポリシーページ（Server Component）
+ */
 export default async function PrivacyPolicyPage({ params }: PageProps) {
-  const { locale } = await params
-  setRequestLocale(locale)
+  // i18n翻訳取得（URLからロケール取得、デフォルトはja）
+  const { locale = 'ja' } = await params
+  const t = await getTranslations({ locale })
 
-  const lastUpdated = '2024-01-15'
+  // 最終更新日（実際のプロジェクトでは、CMSや設定ファイルから取得）
+  const lastUpdated = '2025-10-15'
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <Heading as="h1" size="4xl" className="mb-6">
-              Privacy Policy
-            </Heading>
-            <Text size="xl" variant="muted" className="mb-4">
-              How we collect, use, and protect your information
-            </Text>
-            <Text size="sm" variant="muted">
-              Last updated: {new Date(lastUpdated).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </Text>
+    <div className="container mx-auto max-w-4xl p-4 md:p-8">
+      {/* ヘッダー */}
+      <div className="mb-8">
+        <h1 className="mb-2 text-3xl font-bold">{t('legal.privacy.title')}</h1>
+        <p className="text-muted-foreground">{t('legal.privacy.description')}</p>
+        <p className="text-muted-foreground mt-2 text-sm">
+          {t('legal.lastUpdated')}: {lastUpdated}
+        </p>
+      </div>
+
+      {/* コンテンツ */}
+      <div className="space-y-8">
+        {/* 1. はじめに */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.introduction.title')}</h2>
+          <p className="text-foreground leading-relaxed">{t('legal.privacy.sections.introduction.content')}</p>
+        </section>
+
+        {/* 2. 収集する情報 */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.dataCollection.title')}</h2>
+          <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
+            <li>{t('legal.privacy.sections.dataCollection.accountInfo')}</li>
+            <li>{t('legal.privacy.sections.dataCollection.usageData')}</li>
+            <li>{t('legal.privacy.sections.dataCollection.technicalData')}</li>
+            <li>{t('legal.privacy.sections.dataCollection.cookies')}</li>
+          </ul>
+        </section>
+
+        {/* 3. 情報の利用目的 */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.dataUsage.title')}</h2>
+          <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
+            <li>{t('legal.privacy.sections.dataUsage.serviceProvision')}</li>
+            <li>{t('legal.privacy.sections.dataUsage.userSupport')}</li>
+            <li>{t('legal.privacy.sections.dataUsage.security')}</li>
+            <li>{t('legal.privacy.sections.dataUsage.analytics')}</li>
+            <li>{t('legal.privacy.sections.dataUsage.communication')}</li>
+          </ul>
+        </section>
+
+        {/* 4. 第三者提供 */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.dataSharing.title')}</h2>
+          <p className="text-foreground mb-3 leading-relaxed">{t('legal.privacy.sections.dataSharing.intro')}</p>
+          <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
+            <li>{t('legal.privacy.sections.dataSharing.supabase')}</li>
+            <li>{t('legal.privacy.sections.dataSharing.vercel')}</li>
+            <li>{t('legal.privacy.sections.dataSharing.sentry')}</li>
+          </ul>
+          <p className="text-muted-foreground mt-3 text-sm">{t('legal.privacy.sections.dataSharing.note')}</p>
+        </section>
+
+        {/* 5. データ保持期間 */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.dataRetention.title')}</h2>
+          <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
+            <li>{t('legal.privacy.sections.dataRetention.active')}</li>
+            <li>{t('legal.privacy.sections.dataRetention.deleted')}</li>
+            <li>{t('legal.privacy.sections.dataRetention.legal')}</li>
+          </ul>
+        </section>
+
+        {/* 6. ユーザーの権利 */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.userRights.title')}</h2>
+          <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
+            <li>{t('legal.privacy.sections.userRights.access')}</li>
+            <li>{t('legal.privacy.sections.userRights.correction')}</li>
+            <li>{t('legal.privacy.sections.userRights.deletion')}</li>
+            <li>{t('legal.privacy.sections.userRights.portability')}</li>
+            <li>{t('legal.privacy.sections.userRights.objection')}</li>
+          </ul>
+          <p className="text-muted-foreground mt-3 text-sm">{t('legal.privacy.sections.userRights.contact')}</p>
+        </section>
+
+        {/* 7. セキュリティ対策 */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.security.title')}</h2>
+          <p className="text-foreground mb-3 leading-relaxed">{t('legal.privacy.sections.security.measures')}</p>
+          <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
+            <li>{t('legal.privacy.sections.security.encryption')}</li>
+            <li>{t('legal.privacy.sections.security.access')}</li>
+            <li>{t('legal.privacy.sections.security.monitoring')}</li>
+          </ul>
+        </section>
+
+        {/* 8. Cookieについて */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.cookies.title')}</h2>
+          <p className="text-foreground mb-3 leading-relaxed">{t('legal.privacy.sections.cookies.intro')}</p>
+          <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
+            <li>{t('legal.privacy.sections.cookies.essential')}</li>
+            <li>{t('legal.privacy.sections.cookies.analytics')}</li>
+            <li>{t('legal.privacy.sections.cookies.preference')}</li>
+          </ul>
+          <p className="text-muted-foreground mt-3 text-sm">{t('legal.privacy.sections.cookies.control')}</p>
+        </section>
+
+        {/* 9. 未成年者について */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.children.title')}</h2>
+          <p className="text-foreground leading-relaxed">{t('legal.privacy.sections.children.content')}</p>
+        </section>
+
+        {/* 10. ポリシーの変更 */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.changes.title')}</h2>
+          <p className="text-foreground leading-relaxed">{t('legal.privacy.sections.changes.content')}</p>
+        </section>
+
+        {/* 11. お問い合わせ */}
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">{t('legal.privacy.sections.contact.title')}</h2>
+          <p className="text-foreground mb-4 leading-relaxed">{t('legal.privacy.sections.contact.content')}</p>
+          <div className="bg-surface-container rounded-xl p-4">
+            <p className="text-foreground">
+              <strong>Email:</strong> {t('legal.contact.email')}
+            </p>
+            <p className="text-foreground">
+              <strong>Website:</strong> {t('legal.contact.website')}
+            </p>
           </div>
-        </Container>
-      </section>
+        </section>
+      </div>
 
-      {/* Content */}
-      <section className="py-16">
-        <Container>
-          <div className="max-w-4xl mx-auto prose prose-lg max-w-none">
-
-            {/* Introduction */}
-            <div className="mb-12">
-              <Heading as="h2" size="2xl" className="mb-6">
-                Introduction
-              </Heading>
-              <Text className="mb-4 leading-relaxed">
-                At BoxLog (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;), we respect your privacy and are committed to protecting your personal data.
-                This privacy policy explains how we collect, use, disclose, and safeguard your information when you visit our
-                website and use our services.
-              </Text>
-              <Text className="mb-4 leading-relaxed">
-                This policy applies to all information collected through our website, mobile applications, and any related
-                services, sales, marketing, or events (collectively, the &quot;Services&quot;).
-              </Text>
-            </div>
-
-            {/* Information We Collect */}
-            <div className="mb-12">
-              <Heading as="h2" size="2xl" className="mb-6">
-                Information We Collect
-              </Heading>
-
-              <div className="mb-8">
-                <Heading as="h3" size="xl" className="mb-4 text-gray-900">
-                  Personal Information You Provide
-                </Heading>
-                <Text className="mb-4 leading-relaxed">
-                  We collect personal information that you voluntarily provide when:
-                </Text>
-                <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
-                  <li>Registering for an account</li>
-                  <li>Subscribing to our newsletter</li>
-                  <li>Contacting us with inquiries</li>
-                  <li>Participating in surveys or promotions</li>
-                  <li>Using our services or features</li>
-                </ul>
-              </div>
-
-              <div className="mb-8">
-                <Heading as="h3" size="xl" className="mb-4 text-gray-900">
-                  Automatically Collected Information
-                </Heading>
-                <Text className="mb-4 leading-relaxed">
-                  When you visit our Services, we automatically collect certain information:
-                </Text>
-                <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
-                  <li>Device information (IP address, browser type, operating system)</li>
-                  <li>Usage data (pages viewed, time spent, click patterns)</li>
-                  <li>Cookies and similar tracking technologies</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Contact Information */}
-            <div className="mb-12">
-              <Heading as="h2" size="2xl" className="mb-6">
-                Contact Us
-              </Heading>
-              <Text className="mb-4 leading-relaxed">
-                If you have questions about this privacy policy or our data practices, please contact us:
-              </Text>
-              <div className="bg-gray-50 rounded-lg p-6">
-                <div className="space-y-2">
-                  <Text className="font-medium text-gray-900">BoxLog Privacy Team</Text>
-                  <Text className="text-gray-700">Email: privacy@boxlog.com</Text>
-                </div>
-              </div>
-            </div>
-
+      {/* 法的レビュー警告 */}
+      <div className="bg-destructive/10 border-destructive mt-12 rounded-xl border-2 p-6">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl">⚠️</span>
+          <div>
+            <p className="text-destructive font-bold">{t('legal.reviewWarning.title')}</p>
+            <p className="text-muted-foreground mt-1 text-sm">{t('legal.reviewWarning.description')}</p>
+            <ul className="text-muted-foreground mt-2 list-inside list-disc text-sm">
+              <li>{t('legal.reviewWarning.items.lawyer')}</li>
+              <li>{t('legal.reviewWarning.items.update')}</li>
+            </ul>
           </div>
-        </Container>
-      </section>
+        </div>
+      </div>
     </div>
   )
 }
