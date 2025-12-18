@@ -61,7 +61,7 @@ export const siteConfig: SiteConfig = {
  */
 function formatLocaleForOpenGraph(locale: string): string {
   switch (locale) {
-    case 'jp':
+    case 'ja':
       return 'ja_JP'
     case 'en':
       return 'en_US'
@@ -97,17 +97,13 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
     ? `${siteConfig.url}${image}`
     : `${siteConfig.url}/api/og?title=${encodeURIComponent(title || siteConfig.title)}`
 
-  const allKeywords = [...siteConfig.keywords, ...keywords, ...tags].filter(
-    Boolean
-  )
+  const allKeywords = [...siteConfig.keywords, ...keywords, ...tags].filter(Boolean)
 
   return {
     title: pageTitle,
     description,
     keywords: allKeywords.join(', '),
-    authors: authors?.map((name) => ({ name })) || [
-      { name: siteConfig.creator },
-    ],
+    authors: authors?.map((name) => ({ name })) || [{ name: siteConfig.creator }],
     creator: siteConfig.creator,
     publisher: siteConfig.name,
     robots: {
@@ -130,7 +126,7 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
       },
     },
     openGraph: {
-      type: type as any,
+      type: type as 'website' | 'article',
       locale: formatLocaleForOpenGraph(locale),
       url: pageUrl,
       title: pageTitle,
@@ -200,10 +196,34 @@ export function generateArticleMetadata(data: {
   })
 }
 
+type StructuredDataValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | StructuredDataValue[]
+  | { [key: string]: StructuredDataValue }
+type StructuredDataInput = {
+  title?: string
+  description?: string
+  image?: string
+  publishedAt?: string
+  updatedAt?: string
+  author?: string
+  url?: string
+  tags?: string[]
+  category?: string
+  articleType?: string
+  dependencies?: string[]
+  items?: Array<{ name: string; url: string }>
+  [key: string]: StructuredDataValue
+}
+
 /**
  * Generate structured data (JSON-LD)
  */
-export function generateStructuredData(type: string, data: any) {
+export function generateStructuredData(type: string, data: StructuredDataInput) {
   const baseUrl = siteConfig.url
 
   switch (type) {
@@ -253,7 +273,7 @@ export function generateStructuredData(type: string, data: any) {
         description: data.description,
         image: data.image
           ? `${baseUrl}${data.image}`
-          : `${baseUrl}/api/og?title=${encodeURIComponent(data.title)}`,
+          : `${baseUrl}/api/og?title=${encodeURIComponent(data.title ?? '')}`,
         datePublished: data.publishedAt,
         dateModified: data.updatedAt || data.publishedAt,
         author: {
@@ -272,7 +292,7 @@ export function generateStructuredData(type: string, data: any) {
           '@type': 'WebPage',
           '@id': `${baseUrl}${data.url}`,
         },
-        keywords: data.tags?.join(', '),
+        keywords: Array.isArray(data.tags) ? data.tags.join(', ') : undefined,
         articleSection: data.category,
       }
 
@@ -284,7 +304,7 @@ export function generateStructuredData(type: string, data: any) {
         description: data.description,
         image: data.image
           ? `${baseUrl}${data.image}`
-          : `${baseUrl}/api/og?title=${encodeURIComponent(data.title)}`,
+          : `${baseUrl}/api/og?title=${encodeURIComponent(data.title ?? '')}`,
         datePublished: data.publishedAt,
         dateModified: data.updatedAt || data.publishedAt,
         author: {
@@ -312,7 +332,7 @@ export function generateStructuredData(type: string, data: any) {
       return {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
-        itemListElement: data.items.map((item: any, index: number) => ({
+        itemListElement: (data.items as Array<{ name: string; url: string }>).map((item, index: number) => ({
           '@type': 'ListItem',
           position: index + 1,
           name: item.name,
@@ -330,8 +350,6 @@ export function generateStructuredData(type: string, data: any) {
 /**
  * Generate breadcrumb data
  */
-export function generateBreadcrumbs(
-  items: Array<{ name: string; url: string }>
-) {
+export function generateBreadcrumbs(items: Array<{ name: string; url: string }>) {
   return [{ name: 'ホーム', url: '/' }, ...items]
 }
