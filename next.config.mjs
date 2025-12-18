@@ -9,20 +9,141 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+
+  // セキュリティヘッダー設定
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          // HSTS（HTTP Strict Transport Security）- MITM攻撃防止
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          // CSP（Content Security Policy）
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: https: blob:",
+              "font-src 'self' data:",
+              "connect-src 'self' https://vercel.live https://vitals.vercel-insights.com",
+              "frame-src 'self' https://vercel.live",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+              'upgrade-insecure-requests',
+            ].join('; '),
+          },
+          // Clickjacking対策
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          // MIME type sniffing防止
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          // XSS対策（レガシーブラウザ用）
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          // リファラー情報制御
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          // ブラウザAPI使用制限
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+          },
+        ],
+      },
+      // 静的ファイルのキャッシュ設定
+      {
+        source: '/robots.txt',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
+        source: '/sitemap.xml',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // フォントファイル（1年キャッシュ）
+      {
+        source: '/:path*.woff2',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ]
+  },
+
   // Turbopack configuration (default bundler in Next.js 16)
   turbopack: {
     // Turbopack handles optimization automatically
   },
-  // Performance optimizations
+
+  // ビルド最適化
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    // 本番環境でconsole.log/info/debugを削除、error/warnは残す
+    removeConsole:
+      process.env.NODE_ENV === 'production'
+        ? { exclude: ['error', 'warn'] }
+        : false,
   },
+
   experimental: {
-    optimizePackageImports: ['@/components', '@/lib', 'lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+    // Next.js 15 Router Cache再有効化
+    staleTimes: {
+      dynamic: 30, // 動的ルート: 30秒キャッシュ
+      static: 180, // 静的ルート: 3分キャッシュ
+    },
+    optimizePackageImports: [
+      '@/components',
+      '@/lib',
+      'lucide-react',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-tooltip',
+      'clsx',
+      'class-variance-authority',
+    ],
   },
+
   images: {
-    formats: ['image/webp', 'image/avif'],
-    minimumCacheTTL: 31536000, // 1 year
+    formats: ['image/avif', 'image/webp'], // AVIFを優先（より高圧縮）
+    minimumCacheTTL: 2592000, // 30日
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
@@ -40,6 +161,7 @@ const nextConfig = {
       },
     ],
   },
+
   // Simplified webpack configuration
   webpack: (config, { dev, isServer }) => {
     // Add explicit file extensions for better module resolution
@@ -98,6 +220,7 @@ const nextConfig = {
 
     return config
   },
+
   poweredByHeader: false,
 }
 
