@@ -59,9 +59,7 @@ function cleanupConsoleStatements(filePath) {
     // Only write if changes were made
     if (removedCount > 0) {
       fs.writeFileSync(filePath, cleanedContent)
-      console.log(
-        `✅ Cleaned ${removedCount} console statement(s) from ${path.relative(process.cwd(), filePath)}`
-      )
+      console.log(`✅ Cleaned ${removedCount} console statement(s) from ${path.relative(process.cwd(), filePath)}`)
     }
 
     return removedCount

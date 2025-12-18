@@ -1,17 +1,11 @@
 'use client'
 
-import { useEffect } from 'react'
-import Link from 'next/link'
 import { ErrorLayout } from '@/components/errors/ErrorLayout'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { useEffect } from 'react'
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     // Log the error to an error reporting service
     console.error('Application error:', error)
@@ -28,10 +22,8 @@ export default function Error({
           Try again
         </Button>
 
-        <Button variant="outline" asChild className="w-full sm:w-auto sm:ml-4">
-          <Link href="/">
-            Go home
-          </Link>
+        <Button variant="outline" asChild className="w-full sm:ml-4 sm:w-auto">
+          <Link href="/">Go home</Link>
         </Button>
       </div>
 
@@ -41,7 +33,7 @@ export default function Error({
           <summary className="cursor-pointer text-sm text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300">
             Error details (dev only)
           </summary>
-          <pre className="mt-2 p-4 bg-neutral-100 dark:bg-neutral-800 rounded text-xs overflow-auto text-red-600 dark:text-red-400">
+          <pre className="mt-2 overflow-auto rounded bg-neutral-100 p-4 text-xs text-red-600 dark:bg-neutral-800 dark:text-red-400">
             {error.message}
             {error.stack && (
               <>

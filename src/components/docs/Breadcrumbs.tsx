@@ -1,5 +1,3 @@
-import Link from 'next/link'
-import { generateBreadcrumbs } from '@/lib/mdx'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,6 +6,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { generateBreadcrumbs } from '@/lib/mdx'
+import Link from 'next/link'
 
 interface BreadcrumbsProps {
   slug: string

@@ -1,7 +1,7 @@
 'use client'
 
-import { Twitter, Github, Youtube } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
+import { Github, Twitter, Youtube } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 interface FooterProps {
@@ -50,9 +50,7 @@ export function Footer({ locale: _locale }: FooterProps) {
             <Link href="/" className="flex items-center">
               <span className="text-2xl font-bold">BoxLog</span>
             </Link>
-            <p className="text-sm leading-6 text-balance text-muted-foreground">
-              {t('marketing.hero.subtitle')}
-            </p>
+            <p className="text-muted-foreground text-sm leading-6 text-balance">{t('marketing.hero.subtitle')}</p>
             <div className="flex gap-x-6">
               {socialLinks.map((item) => (
                 <a
@@ -73,13 +71,13 @@ export function Footer({ locale: _locale }: FooterProps) {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             {/* Product */}
             <div>
-              <h3 className="text-sm font-semibold leading-6">{t('footer.sections.product')}</h3>
+              <h3 className="text-sm leading-6 font-semibold">{t('footer.sections.product')}</h3>
               <ul role="list" className="mt-6 space-y-4">
                 {navigation.product.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -90,13 +88,13 @@ export function Footer({ locale: _locale }: FooterProps) {
 
             {/* Company */}
             <div>
-              <h3 className="text-sm font-semibold leading-6">{t('footer.sections.company')}</h3>
+              <h3 className="text-sm leading-6 font-semibold">{t('footer.sections.company')}</h3>
               <ul role="list" className="mt-6 space-y-4">
                 {navigation.company.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -108,21 +106,21 @@ export function Footer({ locale: _locale }: FooterProps) {
         </div>
 
         {/* Copyright */}
-        <div className="mt-16 border-t border-border pt-8 sm:mt-20 lg:mt-24">
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
-            <p className="text-sm leading-6 text-muted-foreground">
+        <div className="border-border mt-16 border-t pt-8 sm:mt-20 lg:mt-24">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-muted-foreground text-sm leading-6">
               &copy; {new Date().getFullYear()} BoxLog, Inc. {t('footer.legal.copyright')}
             </p>
             <div className="flex gap-x-6">
               <Link
                 href="/legal/privacy"
-                className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
               >
                 {t('footer.legal.privacyPolicy')}
               </Link>
               <Link
                 href="/legal/terms"
-                className="text-sm leading-6 text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
               >
                 {t('footer.legal.termsOfService')}
               </Link>

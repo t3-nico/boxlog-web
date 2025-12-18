@@ -32,8 +32,7 @@ const accessibilityRules = {
           issues.push({
             type: 'empty-alt',
             element: 'img',
-            message:
-              'Image has empty alt attribute but may need descriptive text',
+            message: 'Image has empty alt attribute but may need descriptive text',
             line: `Image ${index + 1}: ${src}`,
             severity: 'warning',
           })
@@ -117,9 +116,7 @@ const accessibilityRules = {
   // Check color contrast (basic check for common patterns)
   checkBasicContrast: (document) => {
     const issues = []
-    const elements = document.querySelectorAll(
-      '[style*="color"], [class*="text-"]'
-    )
+    const elements = document.querySelectorAll('[style*="color"], [class*="text-"]')
 
     // This is a simplified check - in a real audit you'd compute actual contrast ratios
     elements.forEach((element, index) => {
@@ -127,10 +124,7 @@ const accessibilityRules = {
       const className = element.getAttribute('class')
 
       // Check for potential low contrast patterns
-      if (
-        style?.includes('color: gray') ||
-        className?.includes('text-gray-400')
-      ) {
+      if (style?.includes('color: gray') || className?.includes('text-gray-400')) {
         issues.push({
           type: 'potential-contrast',
           element: element.tagName.toLowerCase(),
@@ -147,9 +141,7 @@ const accessibilityRules = {
   // Check for interactive elements without proper focus indicators
   checkFocusIndicators: (document) => {
     const issues = []
-    const interactiveElements = document.querySelectorAll(
-      'button, a, input, textarea, select, [tabindex]'
-    )
+    const interactiveElements = document.querySelectorAll('button, a, input, textarea, select, [tabindex]')
 
     interactiveElements.forEach((element, index) => {
       const className = element.getAttribute('class') || ''
@@ -263,9 +255,7 @@ function runAccessibilityAudit() {
   const htmlFiles = findHTMLFiles(serverDir)
 
   if (htmlFiles.length === 0) {
-    console.log(
-      '❌ No HTML files found. Make sure to run "npm run build" first.\n'
-    )
+    console.log('❌ No HTML files found. Make sure to run "npm run build" first.\n')
     return
   }
 
@@ -286,17 +276,13 @@ function runAccessibilityAudit() {
 
   results.forEach((result) => {
     if (result.error) {
-      console.log(
-        `❌ Error analyzing ${path.basename(result.file)}: ${result.error}`
-      )
+      console.log(`❌ Error analyzing ${path.basename(result.file)}: ${result.error}`)
       return
     }
 
     const relativePath = path.relative(process.cwd(), result.file)
     const errors = result.issues.filter((issue) => issue.severity === 'error')
-    const warnings = result.issues.filter(
-      (issue) => issue.severity === 'warning'
-    )
+    const warnings = result.issues.filter((issue) => issue.severity === 'warning')
 
     if (result.issues.length === 0) {
       console.log(`✅ ${relativePath} - No issues found`)
@@ -313,16 +299,12 @@ function runAccessibilityAudit() {
   })
 
   console.log('\n' + '='.repeat(50))
-  console.log(
-    `📈 Summary: ${totalIssues} total issues found across ${results.length} files`
-  )
+  console.log(`📈 Summary: ${totalIssues} total issues found across ${results.length} files`)
 
   if (totalIssues === 0) {
     console.log('🎉 Congratulations! No accessibility issues found.')
   } else {
-    console.log(
-      '💡 Review the issues above to improve accessibility compliance.'
-    )
+    console.log('💡 Review the issues above to improve accessibility compliance.')
   }
 
   console.log('\n✨ Audit complete!')

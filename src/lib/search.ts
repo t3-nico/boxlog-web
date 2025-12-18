@@ -120,17 +120,11 @@ function calculateScore(item: SearchIndexItem, query: string): number {
   }
 
   // タグマッチ
-  const matchingTags = item.tags.filter((tag) =>
-    tag.toLowerCase().includes(queryLower)
-  )
+  const matchingTags = item.tags.filter((tag) => tag.toLowerCase().includes(queryLower))
   score += matchingTags.length * 30
 
   // コンテンツマッチ（低スコア）
-  const contentMatches = (
-    item.content
-      .toLowerCase()
-      .match(new RegExp(escapeRegExp(queryLower), 'g')) || []
-  ).length
+  const contentMatches = (item.content.toLowerCase().match(new RegExp(escapeRegExp(queryLower), 'g')) || []).length
   score += contentMatches * 5
 
   // カテゴリマッチ
@@ -144,10 +138,7 @@ function calculateScore(item: SearchIndexItem, query: string): number {
 /**
  * 検索実行
  */
-export function searchContent(
-  query: string,
-  maxResults: number = 10
-): SearchResult[] {
+export function searchContent(query: string, maxResults: number = 10): SearchResult[] {
   if (!query.trim() || searchIndex.length === 0) {
     return []
   }
@@ -194,24 +185,15 @@ export function searchContent(
 /**
  * カテゴリ別検索
  */
-export function searchByCategory(
-  query: string,
-  category: string,
-  maxResults: number = 5
-): SearchResult[] {
+export function searchByCategory(query: string, category: string, maxResults: number = 5): SearchResult[] {
   const allResults = searchContent(query, 100)
-  return allResults
-    .filter((result) => result.category === category)
-    .slice(0, maxResults)
+  return allResults.filter((result) => result.category === category).slice(0, maxResults)
 }
 
 /**
  * 検索候補を取得
  */
-export function getSearchSuggestions(
-  query: string,
-  maxSuggestions: number = 5
-): string[] {
+export function getSearchSuggestions(query: string, maxSuggestions: number = 5): string[] {
   if (!query.trim() || searchIndex.length === 0) {
     return []
   }

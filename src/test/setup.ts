@@ -56,8 +56,7 @@ class IntersectionObserverMock {
   rootMargin = ''
   thresholds = []
 }
-global.IntersectionObserver =
-  IntersectionObserverMock as unknown as typeof IntersectionObserver
+global.IntersectionObserver = IntersectionObserverMock as unknown as typeof IntersectionObserver
 
 // matchMedia polyfill
 Object.defineProperty(window, 'matchMedia', {

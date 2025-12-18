@@ -1,9 +1,9 @@
 'use client'
 
-import * as React from 'react'
-import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
-import { Sun, Moon } from '@/lib/icons'
+import { Moon, Sun } from '@/lib/icons'
+import { useTheme } from 'next-themes'
+import * as React from 'react'
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
@@ -28,11 +28,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       className="h-8 w-8 p-0"
     >
-      {theme === 'dark' ? (
-        <Moon className="h-4 w-4" />
-      ) : (
-        <Sun className="h-4 w-4" />
-      )}
+      {theme === 'dark' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
     </Button>
   )
 }

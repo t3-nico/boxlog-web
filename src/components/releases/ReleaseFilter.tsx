@@ -1,16 +1,16 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Filter, ChevronDown, CheckCircle, Star, AlertTriangle, X } from 'lucide-react'
+import { AlertTriangle, CheckCircle, ChevronDown, Filter, Star, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
+import { ChangeTypeList } from './ChangeTypeList'
 
 // Local type definition
 interface TagCount {
   tag: string
   count: number
 }
-import { ChangeTypeList } from './ChangeTypeList'
 
 interface ReleaseFilterProps {
   tags: TagCount[]
@@ -42,51 +42,35 @@ export function ReleaseFilter({
   const t = useTranslations('releases.filters')
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const hasActiveFilters = selectedTags.length > 0 ||
-                          selectedTypes.length > 0 ||
-                          showBreakingOnly ||
-                          showFeaturedOnly
+  const hasActiveFilters = selectedTags.length > 0 || selectedTypes.length > 0 || showBreakingOnly || showFeaturedOnly
 
   return (
-    <div className="bg-[rgb(var(--bg-primary))] border border-[rgb(var(--border-primary))] rounded-xl overflow-hidden">
+    <div className="overflow-hidden rounded-xl border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))]">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-[rgb(var(--border-primary))]">
+      <div className="border-b border-[rgb(var(--border-primary))] px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-[rgb(var(--info-bg))] rounded-lg flex items-center justify-center">
-              <Filter className="w-4 h-4 text-[rgb(var(--info-color))]" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[rgb(var(--info-bg))]">
+              <Filter className="h-4 w-4 text-[rgb(var(--info-color))]" />
             </div>
-            <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]">
-              {t('title')}
-            </h3>
+            <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]">{t('title')}</h3>
             {hasActiveFilters && (
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]">
-                {selectedTags.length + selectedTypes.length + (showBreakingOnly ? 1 : 0) + (showFeaturedOnly ? 1 : 0)} active
+              <span className="inline-flex items-center rounded-full bg-[rgb(var(--info-bg))] px-2.5 py-0.5 text-xs font-medium text-[rgb(var(--info-color))]">
+                {selectedTags.length + selectedTypes.length + (showBreakingOnly ? 1 : 0) + (showFeaturedOnly ? 1 : 0)}{' '}
+                active
               </span>
             )}
           </div>
 
           <div className="flex items-center gap-2">
             {hasActiveFilters && (
-              <Button
-                onClick={onClearFilters}
-                variant="ghost"
-                size="sm"
-                className="text-sm h-auto p-1"
-              >
+              <Button onClick={onClearFilters} variant="ghost" size="sm" className="h-auto p-1 text-sm">
                 {t('clearAll')}
               </Button>
             )}
 
-            <Button
-              onClick={() => setIsExpanded(!isExpanded)}
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-            >
-              <ChevronDown
-                className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-              />
+            <Button onClick={() => setIsExpanded(!isExpanded)} variant="ghost" size="icon" className="lg:hidden">
+              <ChevronDown className={`h-5 w-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
             </Button>
           </div>
         </div>
@@ -94,25 +78,15 @@ export function ReleaseFilter({
 
       {/* Filter Content */}
       <div className={`lg:block ${isExpanded ? 'block' : 'hidden'}`}>
-        <div className="p-6 space-y-6">
+        <div className="space-y-6 p-6">
           {/* Change Types */}
-          <ChangeTypeList
-            selectedTypes={selectedTypes}
-            onTypeToggle={onTypeToggle}
-            showAll={true}
-            locale={locale}
-          />
+          <ChangeTypeList selectedTypes={selectedTypes} onTypeToggle={onTypeToggle} showAll={true} locale={locale} />
 
           {/* Tags */}
           {tags.length > 0 && (
             <div>
-              <h4 className="text-sm font-medium text-[rgb(var(--text-secondary))] mb-3">{t('tags')}</h4>
-              <TagFilter
-                tags={tags}
-                selectedTags={selectedTags}
-                onTagToggle={onTagToggle}
-                locale={locale}
-              />
+              <h4 className="mb-3 text-sm font-medium text-[rgb(var(--text-secondary))]">{t('tags')}</h4>
+              <TagFilter tags={tags} selectedTags={selectedTags} onTagToggle={onTagToggle} locale={locale} />
             </div>
           )}
         </div>
@@ -138,28 +112,25 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, locale: _
     <div className="space-y-4">
       <div className="space-y-2">
         {displayTags.map((tagItem) => (
-          <label
-            key={tagItem.tag}
-            className="flex items-center justify-between cursor-pointer group"
-          >
+          <label key={tagItem.tag} className="group flex cursor-pointer items-center justify-between">
             <div className="flex items-center">
               <input
                 type="checkbox"
                 checked={selectedTags.includes(tagItem.tag)}
                 onChange={() => onTagToggle(tagItem.tag)}
-                className="w-4 h-4 text-[rgb(var(--info-color))] border-[rgb(var(--border-primary))] rounded focus:ring-[rgb(var(--focus-ring))] bg-[rgb(var(--bg-primary))]"
+                className="h-4 w-4 rounded border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] text-[rgb(var(--info-color))] focus:ring-[rgb(var(--focus-ring))]"
               />
-              <span className={`ml-3 text-sm transition-colors ${
-                selectedTags.includes(tagItem.tag)
-                  ? 'text-[rgb(var(--text-primary))] font-medium'
-                  : 'text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]'
-              }`}>
+              <span
+                className={`ml-3 text-sm transition-colors ${
+                  selectedTags.includes(tagItem.tag)
+                    ? 'font-medium text-[rgb(var(--text-primary))]'
+                    : 'text-[rgb(var(--text-secondary))] group-hover:text-[rgb(var(--text-primary))]'
+                }`}
+              >
                 #{tagItem.tag}
               </span>
             </div>
-            <span className="text-xs text-[rgb(var(--text-tertiary))]">
-              {tagItem.count}
-            </span>
+            <span className="text-xs text-[rgb(var(--text-tertiary))]">{tagItem.count}</span>
           </label>
         ))}
       </div>
@@ -169,7 +140,7 @@ function TagFilter({ tags, selectedTags, onTagToggle, maxDisplay = 10, locale: _
           onClick={() => setShowAll(!showAll)}
           variant="ghost"
           size="sm"
-          className="text-sm text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] h-auto p-1"
+          className="h-auto p-1 text-sm text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))]"
         >
           {showAll ? t('showLess') : t('showMore', { count: tags.length - maxDisplay })}
         </Button>
@@ -188,16 +159,11 @@ export function CompactReleaseFilter({
 }) {
   const t = useTranslations('releases.filters')
   return (
-    <Button
-      onClick={onOpenFilter}
-      variant="outline"
-      size="sm"
-      className="inline-flex items-center gap-2"
-    >
-      <Filter className="w-4 h-4" />
+    <Button onClick={onOpenFilter} variant="outline" size="sm" className="inline-flex items-center gap-2">
+      <Filter className="h-4 w-4" />
       {t('title')}
       {hasActiveFilters && (
-        <span className="inline-flex items-center justify-center w-2 h-2 bg-[rgb(var(--info-color))] rounded-full"></span>
+        <span className="inline-flex h-2 w-2 items-center justify-center rounded-full bg-[rgb(var(--info-color))]"></span>
       )}
     </Button>
   )
@@ -234,18 +200,15 @@ export function FilterSummary({
   locale: _locale,
 }: FilterSummaryProps) {
   const t = useTranslations('releases.filters')
-  const hasFilters = selectedTags.length > 0 ||
-                    selectedTypes.length > 0 ||
-                    showBreakingOnly ||
-                    showFeaturedOnly
+  const hasFilters = selectedTags.length > 0 || selectedTypes.length > 0 || showBreakingOnly || showFeaturedOnly
 
   if (!hasFilters) return null
 
   return (
-    <div className="bg-[rgb(var(--info-bg))] border border-[rgb(var(--info-color))] rounded-lg p-4">
-      <div className="flex items-center justify-between mb-3">
+    <div className="rounded-lg border border-[rgb(var(--info-color))] bg-[rgb(var(--info-bg))] p-4">
+      <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <CheckCircle className="w-5 h-5 text-[rgb(var(--info-color))]" />
+          <CheckCircle className="h-5 w-5 text-[rgb(var(--info-color))]" />
           <span className="text-sm font-medium text-[rgb(var(--info-color))]">
             {t('resultsFound', { count: resultCount, total: totalCount })}
           </span>
@@ -255,7 +218,7 @@ export function FilterSummary({
           onClick={onClearAll}
           variant="ghost"
           size="sm"
-          className="text-sm text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))] h-auto p-1"
+          className="h-auto p-1 text-sm text-[rgb(var(--info-color))] hover:text-[rgb(var(--link-hover))]"
         >
           {t('clearAll')}
         </Button>
@@ -264,31 +227,21 @@ export function FilterSummary({
       <div className="flex flex-wrap gap-2">
         {/* Quick Filters */}
         {showFeaturedOnly && (
-          <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
-            <Star className="w-4 h-4 mr-1" />
+          <span className="inline-flex items-center gap-1 rounded-full border border-[rgb(var(--info-color))] bg-[rgb(var(--bg-primary))] px-3 py-1 text-sm">
+            <Star className="mr-1 h-4 w-4" />
             {t('featuredReleases')}
-            <Button
-              onClick={onFeaturedToggle}
-              variant="ghost"
-              size="icon"
-              className="ml-1 h-auto w-auto p-0"
-            >
-              <X className="w-3 h-3" />
+            <Button onClick={onFeaturedToggle} variant="ghost" size="icon" className="ml-1 h-auto w-auto p-0">
+              <X className="h-3 w-3" />
             </Button>
           </span>
         )}
 
         {showBreakingOnly && (
-          <span className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm">
-            <AlertTriangle className="w-4 h-4 mr-1" />
+          <span className="inline-flex items-center gap-1 rounded-full border border-[rgb(var(--info-color))] bg-[rgb(var(--bg-primary))] px-3 py-1 text-sm">
+            <AlertTriangle className="mr-1 h-4 w-4" />
             {t('breakingChanges')}
-            <Button
-              onClick={onBreakingToggle}
-              variant="ghost"
-              size="icon"
-              className="ml-1 h-auto w-auto p-0"
-            >
-              <X className="w-3 h-3" />
+            <Button onClick={onBreakingToggle} variant="ghost" size="icon" className="ml-1 h-auto w-auto p-0">
+              <X className="h-3 w-3" />
             </Button>
           </span>
         )}
@@ -297,16 +250,11 @@ export function FilterSummary({
         {selectedTypes.map((type) => (
           <span
             key={type}
-            className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm"
+            className="inline-flex items-center gap-1 rounded-full border border-[rgb(var(--info-color))] bg-[rgb(var(--bg-primary))] px-3 py-1 text-sm"
           >
             {type}
-            <Button
-              onClick={() => onTypeRemove(type)}
-              variant="ghost"
-              size="icon"
-              className="ml-1 h-auto w-auto p-0"
-            >
-              <X className="w-3 h-3" />
+            <Button onClick={() => onTypeRemove(type)} variant="ghost" size="icon" className="ml-1 h-auto w-auto p-0">
+              <X className="h-3 w-3" />
             </Button>
           </span>
         ))}
@@ -315,16 +263,11 @@ export function FilterSummary({
         {selectedTags.map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-3 py-1 bg-[rgb(var(--bg-primary))] border border-[rgb(var(--info-color))] rounded-full text-sm"
+            className="inline-flex items-center gap-1 rounded-full border border-[rgb(var(--info-color))] bg-[rgb(var(--bg-primary))] px-3 py-1 text-sm"
           >
             #{tag}
-            <Button
-              onClick={() => onTagRemove(tag)}
-              variant="ghost"
-              size="icon"
-              className="ml-1 h-auto w-auto p-0"
-            >
-              <X className="w-3 h-3" />
+            <Button onClick={() => onTagRemove(tag)} variant="ghost" size="icon" className="ml-1 h-auto w-auto p-0">
+              <X className="h-3 w-3" />
             </Button>
           </span>
         ))}

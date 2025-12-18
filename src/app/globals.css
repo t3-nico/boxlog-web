@@ -139,7 +139,7 @@
   /* Surface 段階的レイヤー（暗い順） */
   --surface-bright: oklch(0.24 0 0);
   --surface: oklch(0.22 0 0);
-  --surface-container: oklch(0.20 0 0);
+  --surface-container: oklch(0.2 0 0);
   --surface-container-high: oklch(0.18 0 0);
   --surface-dim: oklch(0.16 0 0);
 
@@ -501,7 +501,7 @@ select:focus-visible {
 
   /* Touch targets */
   .touch-target {
-    @apply min-h-[48px] min-w-[48px] flex items-center justify-center;
+    @apply flex min-h-[48px] min-w-[48px] items-center justify-center;
   }
 
   /* Visibility */

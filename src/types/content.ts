@@ -112,9 +112,4 @@ export interface CategoryInfo {
   order: number
 }
 
-export type ContentCategory =
-  | 'getting-started'
-  | 'api-reference'
-  | 'guides'
-  | 'examples'
-  | 'resources'
+export type ContentCategory = 'getting-started' | 'api-reference' | 'guides' | 'examples' | 'resources'

@@ -1,9 +1,9 @@
+import { Footer } from '@/components/layout/Footer'
+import { Header } from '@/components/layout/Header'
+import { routing, type Locale } from '@/i18n/routing'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { routing, type Locale } from '@/i18n/routing'
 import { Toaster } from 'sonner'
 
 export function generateStaticParams() {
@@ -12,7 +12,7 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode
   params: Promise<{ locale: string }>

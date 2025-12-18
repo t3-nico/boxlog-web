@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
-import { X, Filter, Search, Calendar, TrendingUp, Tag } from 'lucide-react'
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import { Calendar, Filter, Search, Tag, TrendingUp, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import type { BlogFilterState } from './BlogFilters'
 
 interface MobileFiltersProps {
@@ -28,7 +28,7 @@ export function MobileFilters({
   onFiltersChange,
   onClearFilters,
   activeFiltersCount,
-  locale: _locale
+  locale: _locale,
 }: MobileFiltersProps) {
   const t = useTranslations('blog.filters')
   const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters)
@@ -42,7 +42,7 @@ export function MobileFilters({
   // タグの選択/選択解除
   const toggleTag = (tag: string) => {
     const newSelectedTags = localFilters.selectedTags.includes(tag)
-      ? localFilters.selectedTags.filter(t => t !== tag)
+      ? localFilters.selectedTags.filter((t) => t !== tag)
       : [...localFilters.selectedTags, tag]
 
     setLocalFilters({ ...localFilters, selectedTags: newSelectedTags })
@@ -77,7 +77,7 @@ export function MobileFilters({
       searchQuery: '',
       sortBy: 'date',
       sortOrder: 'desc',
-      tagOperator: 'OR'
+      tagOperator: 'OR',
     }
     setLocalFilters(defaultFilters)
     onClearFilters()
@@ -87,14 +87,12 @@ export function MobileFilters({
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent side="bottom" className="h-[90vh] p-0">
-        <div className="flex flex-col h-full">
+        <div className="flex h-full flex-col">
           {/* ヘッダー */}
-          <SheetHeader className="p-6 border-b flex-shrink-0">
+          <SheetHeader className="flex-shrink-0 border-b p-6">
             <div className="flex items-center gap-4">
-              <Filter className="w-5 h-5 text-muted-foreground" />
-              <SheetTitle className="text-lg font-semibold">
-                {t('title')}
-              </SheetTitle>
+              <Filter className="text-muted-foreground h-5 w-5" />
+              <SheetTitle className="text-lg font-semibold">{t('title')}</SheetTitle>
               {activeFiltersCount > 0 && (
                 <Badge variant="default" className="ml-auto">
                   {activeFiltersCount}
@@ -104,27 +102,27 @@ export function MobileFilters({
           </SheetHeader>
 
           {/* コンテンツ */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="flex-1 space-y-6 overflow-y-auto p-6">
             {/* 検索 */}
             <div>
-              <label htmlFor="mobile-search" className="block text-sm font-medium text-muted-foreground mb-2">
+              <label htmlFor="mobile-search" className="text-muted-foreground mb-2 block text-sm font-medium">
                 {t('searchArticles')}
               </label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform" />
                 <Input
                   id="mobile-search"
                   type="text"
                   value={localFilters.searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   placeholder={t('searchPlaceholder')}
-                  className="pl-10 pr-10"
+                  className="pr-10 pl-10"
                 />
                 {localFilters.searchQuery && (
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8"
+                    className="absolute top-1/2 right-1 h-8 w-8 -translate-y-1/2 transform"
                     onClick={() => handleSearchChange('')}
                     aria-label={t('clearSearch')}
                   >
@@ -136,14 +134,12 @@ export function MobileFilters({
 
             {/* ソート */}
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-3">
-                {t('sortBy')}
-              </label>
+              <label className="text-muted-foreground mb-3 block text-sm font-medium">{t('sortBy')}</label>
               <div className="space-y-2">
                 {[
                   { value: 'date', label: t('date'), icon: Calendar },
                   { value: 'popularity', label: t('popularity'), icon: TrendingUp },
-                  { value: 'category', label: t('category'), icon: Tag }
+                  { value: 'category', label: t('category'), icon: Tag },
                 ].map(({ value, label, icon: Icon }) => (
                   <Button
                     key={value}
@@ -151,42 +147,28 @@ export function MobileFilters({
                     variant={localFilters.sortBy === value ? 'default' : 'outline'}
                     className="w-full justify-start gap-4"
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="h-4 w-4" />
                     <span className="font-medium">{label}</span>
                     {localFilters.sortBy === value && (
-                      <span className="ml-auto text-sm">
-                        {localFilters.sortOrder === 'asc' ? '↑' : '↓'}
-                      </span>
+                      <span className="ml-auto text-sm">{localFilters.sortOrder === 'asc' ? '↑' : '↓'}</span>
                     )}
                   </Button>
                 ))}
 
                 {/* ソート順切り替え */}
-                <Button
-                  onClick={toggleSortOrder}
-                  variant="outline"
-                  className="w-full justify-between"
-                >
+                <Button onClick={toggleSortOrder} variant="outline" className="w-full justify-between">
                   <span className="font-medium">{t('order')}</span>
-                  <span className="text-sm">
-                    {localFilters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
-                  </span>
+                  <span className="text-sm">{localFilters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}</span>
                 </Button>
               </div>
             </div>
 
             {/* タグフィルター */}
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <label className="text-sm font-medium text-muted-foreground">
-                  {t('filterByTags')}
-                </label>
+              <div className="mb-3 flex items-center justify-between">
+                <label className="text-muted-foreground text-sm font-medium">{t('filterByTags')}</label>
                 {localFilters.selectedTags.length > 1 && (
-                  <Button
-                    onClick={toggleTagOperator}
-                    variant="secondary"
-                    size="sm"
-                  >
+                  <Button onClick={toggleTagOperator} variant="secondary" size="sm">
                     {localFilters.tagOperator}
                   </Button>
                 )}
@@ -205,34 +187,29 @@ export function MobileFilters({
                     >
                       <span>#</span>
                       <span className="truncate">{tag}</span>
-                      {isSelected && <X className="w-3 h-3 flex-shrink-0" />}
+                      {isSelected && <X className="h-3 w-3 flex-shrink-0" />}
                     </Button>
                   )
                 })}
               </div>
 
               {localFilters.selectedTags.length > 1 && (
-                <p className="mt-2 text-xs text-muted-foreground">
-                  {t('showingPostsMessage', { match: localFilters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny') })}
+                <p className="text-muted-foreground mt-2 text-xs">
+                  {t('showingPostsMessage', {
+                    match: localFilters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny'),
+                  })}
                 </p>
               )}
             </div>
           </div>
 
           {/* フッター */}
-          <div className="p-6 border-t space-y-3 flex-shrink-0">
+          <div className="flex-shrink-0 space-y-3 border-t p-6">
             <div className="flex gap-4">
-              <Button
-                onClick={clearAllFilters}
-                variant="outline"
-                className="flex-1"
-              >
+              <Button onClick={clearAllFilters} variant="outline" className="flex-1">
                 {t('clearAll')}
               </Button>
-              <Button
-                onClick={applyFilters}
-                className="flex-1"
-              >
+              <Button onClick={applyFilters} className="flex-1">
                 {t('applyFilters')}
               </Button>
             </div>

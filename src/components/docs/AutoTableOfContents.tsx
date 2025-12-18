@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { TocItem, generateTableOfContents, truncateHeading } from '@/lib/toc'
+import { useEffect, useState } from 'react'
 
 interface AutoTableOfContentsProps {
   content: string
@@ -24,26 +24,19 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
           <Button
             onClick={() => onItemClick(item.id)}
             variant="ghost"
-            className={`block w-full text-left py-1 px-2 h-auto justify-start ${
+            className={`block h-auto w-full justify-start px-2 py-1 text-left ${
               level === 0 ? 'font-medium' : 'text-sm'
             } ${
               activeId === item.id
-                ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+                ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
                 : 'hover:text-foreground'
             }`}
             title={item.title}
           >
-            <span className="line-clamp-2">
-              {truncateHeading(item.title, level === 0 ? 40 : 35)}
-            </span>
+            <span className="line-clamp-2">{truncateHeading(item.title, level === 0 ? 40 : 35)}</span>
           </Button>
           {item.children && item.children.length > 0 && (
-            <TocList
-              items={item.children}
-              level={level + 1}
-              activeId={activeId}
-              onItemClick={onItemClick}
-            />
+            <TocList items={item.children} level={level + 1} activeId={activeId} onItemClick={onItemClick} />
           )}
         </li>
       ))}
@@ -51,10 +44,7 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
   )
 }
 
-export function AutoTableOfContents({
-  content,
-  className = '',
-}: AutoTableOfContentsProps) {
+export function AutoTableOfContents({ content, className = '' }: AutoTableOfContentsProps) {
   const [toc, setToc] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>('')
   const [isLoaded, setIsLoaded] = useState(false)
@@ -89,9 +79,7 @@ export function AutoTableOfContents({
           setActiveId(topEntry.target.id)
         } else {
           // 見える要素がない場合、最も上に近い要素を探す
-          const allHeadings = document.querySelectorAll(
-            'h1, h2, h3, h4, h5, h6'
-          )
+          const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
           let activeElement: Element | null = null
           let minDistance = Infinity
 
@@ -199,32 +187,28 @@ export function AutoTableOfContents({
   if (!isLoaded || toc.length === 0) {
     return (
       <div className={`space-y-4 ${className}`}>
-        <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+        <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
           On This Page
         </div>
         {!isLoaded ? (
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            Loading...
-          </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">Loading...</div>
         ) : (
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            No headings found
-          </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">No headings found</div>
         )}
 
         {/* Helpful Links */}
-        <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+        <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
           <div className="space-y-4">
-            <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
               Helpful Links
             </div>
             <div className="space-y-2">
               <a
                 href="#"
-                className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
+                className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
               >
                 <svg
-                  className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -240,10 +224,10 @@ export function AutoTableOfContents({
               </a>
               <a
                 href="#"
-                className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
+                className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
               >
                 <svg
-                  className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -259,10 +243,10 @@ export function AutoTableOfContents({
               </a>
               <a
                 href="#"
-                className="flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors group"
+                className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
               >
                 <svg
-                  className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -285,31 +269,22 @@ export function AutoTableOfContents({
 
   return (
     <div className={`space-y-4 ${className}`}>
-      <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+      <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
         On This Page
       </div>
 
       <nav className="space-y-1">
-        <TocList
-          items={toc}
-          activeId={activeId}
-          onItemClick={handleItemClick}
-        />
+        <TocList items={toc} activeId={activeId} onItemClick={handleItemClick} />
       </nav>
 
       {/* Helpful Links */}
       <div className="border-t border-gray-200 pt-4">
         <div className="space-y-4">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Helpful Links
-          </div>
+          <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase">Helpful Links</div>
           <div className="space-y-2">
-            <a
-              href="#"
-              className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
-            >
+            <a href="#" className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900">
               <svg
-                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -323,12 +298,9 @@ export function AutoTableOfContents({
               </svg>
               Edit this page
             </a>
-            <a
-              href="#"
-              className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
-            >
+            <a href="#" className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900">
               <svg
-                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -342,12 +314,9 @@ export function AutoTableOfContents({
               </svg>
               Report an issue
             </a>
-            <a
-              href="#"
-              className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group"
-            >
+            <a href="#" className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900">
               <svg
-                className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
