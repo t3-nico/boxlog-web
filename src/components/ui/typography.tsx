@@ -2,19 +2,10 @@ import React from 'react'
 
 export interface HeadingProps {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  size?:
-    | 'xs'
-    | 'sm'
-    | 'md'
-    | 'lg'
-    | 'xl'
-    | '2xl'
-    | '3xl'
-    | '4xl'
-    | '5xl'
-    | '6xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl'
   children: React.ReactNode
   className?: string
+  id?: string
 }
 
 export interface TextProps {
@@ -25,12 +16,7 @@ export interface TextProps {
   className?: string
 }
 
-export function Heading({
-  as: Component = 'h1',
-  size = 'xl',
-  children,
-  className = '',
-}: HeadingProps) {
+export function Heading({ as: Component = 'h1', size = 'xl', children, className = '', id }: HeadingProps) {
   const sizeClasses = {
     xs: 'text-xs',
     sm: 'text-sm',
@@ -45,19 +31,13 @@ export function Heading({
   }
 
   return (
-    <Component className={`font-bold ${sizeClasses[size]} ${className}`}>
+    <Component id={id} className={`font-bold ${sizeClasses[size]} ${className}`}>
       {children}
     </Component>
   )
 }
 
-export function Text({
-  as: Component = 'p',
-  size = 'md',
-  variant = 'default',
-  children,
-  className = '',
-}: TextProps) {
+export function Text({ as: Component = 'p', size = 'md', variant = 'default', children, className = '' }: TextProps) {
   const sizeClasses = {
     xs: 'text-xs',
     sm: 'text-sm',
@@ -72,11 +52,5 @@ export function Text({
     light: 'text-neutral-500 dark:text-neutral-500',
   }
 
-  return (
-    <Component
-      className={`${sizeClasses[size]} ${variantClasses[variant]} ${className}`}
-    >
-      {children}
-    </Component>
-  )
+  return <Component className={`${sizeClasses[size]} ${variantClasses[variant]} ${className}`}>{children}</Component>
 }

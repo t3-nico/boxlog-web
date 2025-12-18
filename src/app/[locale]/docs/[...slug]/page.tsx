@@ -1,18 +1,14 @@
-import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import {
-  getAllContent,
-  getMDXContentForRSC,
-  getRelatedContent,
-} from '@/lib/mdx'
-import { mdxComponents } from '@/components/docs/MDXComponents'
 import { Breadcrumbs } from '@/components/docs/Breadcrumbs'
-import { PageNavigation } from '@/components/docs/PageNavigation'
 import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
+import { mdxComponents } from '@/components/docs/MDXComponents'
+import { PageNavigation } from '@/components/docs/PageNavigation'
 import { Heading, Text } from '@/components/ui/typography'
+import { getAllContent, getMDXContentForRSC, getRelatedContent } from '@/lib/mdx'
 import { ContentData } from '@/types/content'
+import { Metadata } from 'next'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 interface PageParams {
   locale: string
@@ -27,7 +23,7 @@ interface DocPageProps {
 export async function generateStaticParams(): Promise<PageParams[]> {
   try {
     const allContent = await getAllContent()
-    const locales = ['en', 'jp']
+    const locales = ['en', 'ja']
 
     const params: PageParams[] = []
 
@@ -47,11 +43,9 @@ export async function generateStaticParams(): Promise<PageParams[]> {
 }
 
 // Generate metadata
-export async function generateMetadata({
-  params,
-}: DocPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
   try {
-    const category = params.slug[0] as any
+    const category = params.slug[0]
     const contentSlug = params.slug.slice(1).join('/')
 
     const content = await getMDXContentForRSC(`${category}/${contentSlug}`)
@@ -100,9 +94,7 @@ async function getAdjacentPages(slug: string): Promise<{
 }> {
   try {
     const allContent = await getAllContent()
-    const currentIndex = allContent.findIndex(
-      (content) => content.slug === slug
-    )
+    const currentIndex = allContent.findIndex((content) => content.slug === slug)
 
     if (currentIndex === -1) {
       return {}
@@ -110,10 +102,7 @@ async function getAdjacentPages(slug: string): Promise<{
 
     return {
       previousPage: currentIndex > 0 ? allContent[currentIndex - 1] : undefined,
-      nextPage:
-        currentIndex < allContent.length - 1
-          ? allContent[currentIndex + 1]
-          : undefined,
+      nextPage: currentIndex < allContent.length - 1 ? allContent[currentIndex + 1] : undefined,
     }
   } catch {
     return {}
@@ -124,7 +113,7 @@ async function getAdjacentPages(slug: string): Promise<{
 export default async function DocPage({ params }: DocPageProps) {
   try {
     const slug = params.slug.join('/')
-    const category = params.slug[0] as any
+    const category = params.slug[0]
     const contentSlug = params.slug.slice(1).join('/')
 
     // Get MDX content
@@ -139,7 +128,7 @@ export default async function DocPage({ params }: DocPageProps) {
       content = await getMDXContentForRSC(`${category}/${contentSlug}`)
     }
 
-    if (!content && !contentSlug) {
+    if (!content && !contentSlug && category) {
       // Single file format
       content = await getMDXContentForRSC(category)
     }
@@ -154,16 +143,12 @@ export default async function DocPage({ params }: DocPageProps) {
     const { previousPage, nextPage } = await getAdjacentPages(slug)
 
     // Get related content
-    const relatedContent = await getRelatedContent(
-      frontMatter.category,
-      slug,
-      3
-    )
+    const relatedContent = await getRelatedContent(frontMatter.category, slug, 3)
 
     return (
       <div className="flex">
         {/* Main Content */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="max-w-4xl">
             {/* Breadcrumb navigation */}
             <Breadcrumbs slug={slug} title={frontMatter.title} />
@@ -175,16 +160,16 @@ export default async function DocPage({ params }: DocPageProps) {
 
             {/* Related content */}
             {relatedContent.length > 0 && (
-              <aside className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+              <aside className="mt-12 border-t border-gray-200 pt-8 dark:border-gray-700">
                 <Heading as="h2" size="xl" className="mb-6">
                   Related Articles
                 </Heading>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {relatedContent.map((related) => (
                     <a
                       key={related.slug}
                       href={`/docs/${related.slug}`}
-                      className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors bg-white dark:bg-gray-800"
+                      className="block rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-500 dark:hover:bg-blue-900"
                     >
                       <Heading as="h3" size="lg" className="mb-2">
                         {related.frontMatter.title}
@@ -192,11 +177,11 @@ export default async function DocPage({ params }: DocPageProps) {
                       <Text size="sm" variant="muted" className="line-clamp-2">
                         {related.frontMatter.description}
                       </Text>
-                      <div className="flex items-center gap-2 mt-3">
+                      <div className="mt-3 flex items-center gap-2">
                         {related.frontMatter.tags?.slice(0, 2).map((tag) => (
                           <span
                             key={tag}
-                            className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                            className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-300"
                           >
                             {tag}
                           </span>
@@ -214,7 +199,7 @@ export default async function DocPage({ params }: DocPageProps) {
         </div>
 
         {/* Right Sidebar - Table of Contents */}
-        <aside className="w-[240px] flex-shrink-0 hidden xl:block">
+        <aside className="hidden w-[240px] flex-shrink-0 xl:block">
           <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pl-6">
             <ClientTableOfContents content={mdxContent} />
           </div>
@@ -224,7 +209,7 @@ export default async function DocPage({ params }: DocPageProps) {
   } catch {
     // Error page
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <Heading as="h1" size="3xl" className="mb-4">
             Something went wrong
@@ -234,7 +219,7 @@ export default async function DocPage({ params }: DocPageProps) {
           </Text>
           <Link
             href="/docs"
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
           >
             Back to Documentation
           </Link>

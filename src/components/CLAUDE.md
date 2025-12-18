@@ -162,7 +162,7 @@ interface PostCardProps {
     category: string
     date: string
   }
-  locale: 'en' | 'jp'
+  locale: 'en' | 'ja'
 }
 
 export function PostCard({ post, locale }: PostCardProps) {

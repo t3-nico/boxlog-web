@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { Heading, Text } from '@/components/ui/typography'
-import { PostCard } from '@/components/blog/PostCard'
 import { BlogFilters, type BlogFilterState } from '@/components/blog/BlogFilters'
 import { BlogPagination } from '@/components/blog/BlogPagination'
 import { BlogSkeleton } from '@/components/blog/BlogSkeleton'
-import { useTranslations } from 'next-intl'
+import { PostCard } from '@/components/blog/PostCard'
+import { Heading, Text } from '@/components/ui/typography'
 import type { BlogPostMeta } from '@/lib/blog'
+import { useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 const POSTS_PER_PAGE = 12
 
@@ -28,7 +28,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
     searchQuery: '',
     sortBy: 'date',
     sortOrder: 'desc',
-    tagOperator: 'OR'
+    tagOperator: 'OR',
   })
 
   const currentPage = Number(searchParams?.get('page')) || 1
@@ -46,7 +46,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
       searchQuery: searchParam || '',
       sortBy: (sortParam as BlogFilterState['sortBy']) || 'date',
       sortOrder: (orderParam as BlogFilterState['sortOrder']) || 'desc',
-      tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR'
+      tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR',
     }
 
     setFilters(initialFilters)
@@ -62,12 +62,10 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
         // 検索クエリによるフィルタリング（クライアント側実装）
         if (filters.searchQuery) {
           const searchTerm = filters.searchQuery.toLowerCase()
-          filtered = filtered.filter(post => {
+          filtered = filtered.filter((post) => {
             const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
             const descriptionMatch = post.frontMatter.description?.toLowerCase().includes(searchTerm)
-            const tagMatch = post.frontMatter.tags.some(tag => 
-              tag.toLowerCase().includes(searchTerm)
-            )
+            const tagMatch = post.frontMatter.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
             const categoryMatch = post.frontMatter.category.toLowerCase().includes(searchTerm)
             const excerptMatch = post.excerpt.toLowerCase().includes(searchTerm)
 
@@ -79,13 +77,13 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
         if (filters.selectedTags.length > 0) {
           if (filters.tagOperator === 'AND') {
             // すべてのタグが含まれる記事のみ
-            filtered = filtered.filter(post =>
-              filters.selectedTags.every(tag => post.frontMatter.tags?.includes(tag))
+            filtered = filtered.filter((post) =>
+              filters.selectedTags.every((tag) => post.frontMatter.tags?.includes(tag))
             )
           } else {
             // いずれかのタグが含まれる記事
-            filtered = filtered.filter(post =>
-              filters.selectedTags.some(tag => post.frontMatter.tags?.includes(tag))
+            filtered = filtered.filter((post) =>
+              filters.selectedTags.some((tag) => post.frontMatter.tags?.includes(tag))
             )
           }
         }
@@ -134,12 +132,11 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
   return (
     <>
       {/* フィルター情報 */}
-      <div className="flex flex-wrap gap-4 text-sm text-neutral-600 dark:text-neutral-400 mb-6">
+      <div className="mb-6 flex flex-wrap gap-4 text-sm text-neutral-600 dark:text-neutral-400">
         <span>
           {totalPosts === 1
             ? t('list.articlesFound', { count: totalPosts })
-            : t('list.articlesFoundPlural', { count: totalPosts })
-          }
+            : t('list.articlesFoundPlural', { count: totalPosts })}
         </span>
         {filters.selectedTags.length > 0 && (
           <span>
@@ -153,7 +150,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* 記事一覧 */}
         <div className="lg:col-span-2">
           {isProcessing ? (
@@ -178,16 +175,26 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
                   <BlogPagination
                     currentPage={currentPage}
                     totalPages={totalPages}
-                    basePath={locale === 'jp' ? '/jp/blog' : '/blog'}
+                    basePath={locale === 'ja' ? '/ja/blog' : '/blog'}
                   />
                 </div>
               )}
             </>
           ) : (
-            <div className="text-center py-16">
-              <div className="w-24 h-24 bg-neutral-100 dark:bg-neutral-700 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-12 h-12 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <div className="py-16 text-center">
+              <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-700">
+                <svg
+                  className="h-12 w-12 text-neutral-400 dark:text-neutral-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </div>
               <Heading as="h3" size="lg" className="mb-2">
@@ -197,14 +204,16 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
                 {t('list.noArticlesHint')}
               </Text>
               <button
-                onClick={() => setFilters({
-                  selectedTags: [],
-                  searchQuery: '',
-                  sortBy: 'date',
-                  sortOrder: 'desc',
-                  tagOperator: 'OR'
-                })}
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
+                onClick={() =>
+                  setFilters({
+                    selectedTags: [],
+                    searchQuery: '',
+                    sortBy: 'date',
+                    sortOrder: 'desc',
+                    tagOperator: 'OR',
+                  })
+                }
+                className="inline-flex items-center rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
               >
                 {t('list.clearAllFilters')}
               </button>
@@ -215,11 +224,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
         {/* サイドバー */}
         <div className="lg:col-span-1">
           <div className="sticky top-24">
-            <BlogFilters
-              tags={tags}
-              onFiltersChange={handleFiltersChange}
-              locale={locale}
-            />
+            <BlogFilters tags={tags} onFiltersChange={handleFiltersChange} locale={locale} />
           </div>
         </div>
       </div>

@@ -1,9 +1,18 @@
 import { generateStructuredData } from '@/lib/metadata'
 
+type StructuredDataValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | StructuredDataValue[]
+  | { [key: string]: StructuredDataValue }
+
 /**
  * Component for rendering structured data
  */
-export function StructuredData({ type, data }: { type: string; data: any }) {
+export function StructuredData({ type, data }: { type: string; data: Record<string, StructuredDataValue> }) {
   const structuredData = generateStructuredData(type, data)
 
   if (!structuredData) return null

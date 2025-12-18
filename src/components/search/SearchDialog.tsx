@@ -1,28 +1,23 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Highlight } from '@/lib/highlight'
-import { Search, Clock, Tag, FileText, Edit, Package, X } from 'lucide-react'
-import type { Dictionary } from '@/lib/i18n'
+import { Clock, Edit, FileText, Package, Search, Tag, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
 interface SearchDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  dict: Dictionary
   locale: string
 }
 
 // Mock data (in actual implementation, fetch from external source)
-const RECENT_SEARCHES = [
-  'API Authentication',
-  'Release v2.1.0',
-  'Next.js Guide',
-]
+const RECENT_SEARCHES = ['API Authentication', 'Release v2.1.0', 'Next.js Guide']
 
 const getQuickLinks = (locale: string) => [
   {
@@ -59,20 +54,24 @@ interface PopularTag {
 
 // タグの色を決める関数（neutral系のみ使用）
 const getTagColor = (index: number): string => {
-  const colors = ['neutral-100', 'neutral-200', 'neutral-300']
-  return colors[index % colors.length]
+  const colors = ['neutral-100', 'neutral-200', 'neutral-300'] as const
+  return colors[index % colors.length] ?? 'neutral-100'
 }
 
-export function SearchDialog({
-  open,
-  onOpenChange,
-  dict,
-  locale,
-}: SearchDialogProps) {
+export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) {
+  const t = useTranslations('search')
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
+  interface PreviewResult {
+    url: string
+    type: string
+    title: string
+    description: string
+    breadcrumbs?: string[]
+    category?: string
+  }
   const [popularTags, setPopularTags] = useState<PopularTag[]>([])
-  const [previewResults, setPreviewResults] = useState<any[]>([])
+  const [previewResults, setPreviewResults] = useState<PreviewResult[]>([])
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
   const QUICK_LINKS = getQuickLinks(locale)
@@ -86,7 +85,7 @@ export function SearchDialog({
           throw new Error('Failed to fetch tags')
         }
         const allTags = await response.json()
-        const topTags = allTags.slice(0, 8).map((tag: any, index: number) => ({
+        const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }, index: number) => ({
           name: tag.tag,
           count: tag.count,
           color: getTagColor(index),
@@ -116,9 +115,9 @@ export function SearchDialog({
       }, 300) // 300ms debounce
 
       return () => clearTimeout(timeoutId)
-    } else {
-      setPreviewResults([])
     }
+    setPreviewResults([])
+    return
   }, [query])
 
   useEffect(() => {
@@ -200,24 +199,19 @@ export function SearchDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden bg-white shadow-2xl border-0 dark:bg-gray-900 dark:border dark:border-gray-700 [&>button]:hidden">
+      <DialogContent className="max-w-2xl gap-0 overflow-hidden border-0 bg-white p-0 shadow-2xl dark:border dark:border-gray-700 dark:bg-gray-900 [&>button]:hidden">
         {/* 検索ヘッダー */}
-        <div className="flex items-center gap-4 p-4 border-b border-gray-100 dark:border-gray-700">
-          <Search className="h-5 w-5 text-gray-400 flex-shrink-0 dark:text-gray-500" />
+        <div className="flex items-center gap-4 border-b border-gray-100 p-4 dark:border-gray-700">
+          <Search className="h-5 w-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
           <Input
             ref={inputRef}
-            placeholder={dict.search.placeholder}
+            placeholder={t('placeholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="border-0 shadow-none text-base text-gray-900 placeholder:text-gray-400 focus-visible:ring-0 focus:outline-none bg-transparent dark:text-gray-100 dark:placeholder:text-gray-500 flex-1"
+            className="flex-1 border-0 bg-transparent text-base text-gray-900 shadow-none placeholder:text-gray-400 focus:outline-none focus-visible:ring-0 dark:text-gray-100 dark:placeholder:text-gray-500"
           />
-          <Button
-            onClick={() => onOpenChange(false)}
-            variant="ghost"
-            size="icon"
-            className="h-5 w-5 flex-shrink-0"
-          >
+          <Button onClick={() => onOpenChange(false)} variant="ghost" size="icon" className="h-5 w-5 flex-shrink-0">
             <X className="h-4 w-4" />
           </Button>
         </div>
@@ -225,12 +219,12 @@ export function SearchDialog({
         {/* 検索内容 */}
         <div className="max-h-96 overflow-y-auto">
           {!query ? (
-            <div className="p-4 space-y-6">
+            <div className="space-y-6 p-4">
               {/* 最近の検索 */}
               {RECENT_SEARCHES.length > 0 && (
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
-                    {dict.search.recentSearches}
+                  <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
+                    {t('recentSearches')}
                   </h3>
                   <div className="space-y-1">
                     {RECENT_SEARCHES.map((search, index) => (
@@ -238,9 +232,9 @@ export function SearchDialog({
                         key={index}
                         onClick={() => setQuery(search)}
                         variant="ghost"
-                        className="flex items-center gap-4 w-full p-2 h-auto justify-start"
+                        className="flex h-auto w-full items-center justify-start gap-4 p-2"
                       >
-                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <Clock className="text-muted-foreground h-4 w-4" />
                         <span className="text-sm">{search}</span>
                       </Button>
                     ))}
@@ -250,8 +244,8 @@ export function SearchDialog({
 
               {/* 人気タグ */}
               <div>
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
-                  {dict.search.popularTags}
+                <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
+                  {t('popularTags')}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {popularTags.map((tag, index) => (
@@ -272,8 +266,8 @@ export function SearchDialog({
 
               {/* クイックリンク */}
               <div>
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 dark:text-gray-500">
-                  {dict.search.popularPages}
+                <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
+                  {t('popularPages')}
                 </h3>
                 <div className="space-y-1">
                   {QUICK_LINKS.map((link, index) => (
@@ -284,28 +278,22 @@ export function SearchDialog({
                         router.push(link.href)
                       }}
                       variant="ghost"
-                      className={`flex items-start gap-4 w-full p-4 h-auto justify-start ${
+                      className={`flex h-auto w-full items-start justify-start gap-4 p-4 ${
                         selectedIndex === index
-                          ? 'bg-blue-50 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-700'
+                          ? 'border border-blue-200 bg-blue-50 dark:border-blue-700 dark:bg-blue-900/30'
                           : ''
                       }`}
                     >
                       <div className="mt-0.5">{getTypeIcon(link.type)}</div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
                           {link.title}
                         </div>
-                        <div className="text-xs text-gray-500 mt-0.5 dark:text-gray-400">
-                          {link.description}
-                        </div>
+                        <div className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{link.description}</div>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Badge variant="outline" className="text-xs px-2 py-1">
-                          {link.type === 'docs'
-                            ? dict.search.docs
-                            : link.type === 'blog'
-                              ? dict.search.blog
-                              : dict.search.release}
+                        <Badge variant="outline" className="px-2 py-1 text-xs">
+                          {link.type === 'docs' ? t('docs') : link.type === 'blog' ? t('blog') : t('release')}
                         </Badge>
                       </div>
                     </Button>
@@ -314,14 +302,14 @@ export function SearchDialog({
               </div>
             </div>
           ) : (
-            <div className="p-4 space-y-4">
-              <div className="flex items-center justify-between mb-4">
+            <div className="space-y-4 p-4">
+              <div className="mb-4 flex items-center justify-between">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {dict.search.searchResultsFor} &ldquo;
+                  {t('searchResultsFor')} &ldquo;
                   <span className="font-medium">{query}</span>&rdquo;
                 </p>
                 <Badge variant="outline" className="text-xs">
-                  {dict.search.pressEnterToSearch}
+                  {t('pressEnterToSearch')}
                 </Badge>
               </div>
 
@@ -329,27 +317,23 @@ export function SearchDialog({
               <Button
                 onClick={() => handleSearch(query)}
                 variant="ghost"
-                className="flex items-center gap-4 w-full p-4 h-auto justify-start bg-blue-50 hover:bg-blue-100 border border-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/40 dark:border-blue-700"
+                className="flex h-auto w-full items-center justify-start gap-4 border border-blue-200 bg-blue-50 p-4 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900/30 dark:hover:bg-blue-900/40"
               >
                 <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <div className="text-left">
                   <div className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                    {dict.search.searchFor} &ldquo;
+                    {t('searchFor')} &ldquo;
                     <Highlight text={query} query={query} />
                     &rdquo;
                   </div>
-                  <div className="text-xs text-blue-700 dark:text-blue-300">
-                    {dict.search.findResultsAcross}
-                  </div>
+                  <div className="text-xs text-blue-700 dark:text-blue-300">{t('findResultsAcross')}</div>
                 </div>
               </Button>
 
               {/* プレビュー検索結果 */}
               {previewResults.length > 0 && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">
-                    {dict.search.previewResults}
-                  </p>
+                  <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">{t('previewResults')}</p>
                   <div className="space-y-2">
                     {previewResults.map((result, index) => (
                       <Button
@@ -359,49 +343,41 @@ export function SearchDialog({
                           router.push(result.url)
                         }}
                         variant="ghost"
-                        className="flex items-start gap-4 w-full p-4 h-auto justify-start border border-gray-100 dark:border-gray-700"
+                        className="flex h-auto w-full items-start justify-start gap-4 border border-gray-100 p-4 dark:border-gray-700"
                       >
                         <div className="mt-0.5">{getTypeIcon(result.type)}</div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs font-medium text-gray-500 uppercase tracking-wide dark:text-gray-400">
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-1 flex items-center gap-2">
+                            <span className="text-xs font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400">
                               {result.breadcrumbs?.[0] ||
                                 (result.type === 'docs'
-                                  ? dict.search.docs
+                                  ? t('docs')
                                   : result.type === 'blog'
-                                    ? dict.search.blog
+                                    ? t('blog')
                                     : result.type === 'tags'
-                                      ? dict.search.tags
-                                      : dict.search.release)}
+                                      ? t('tags')
+                                      : t('release'))}
                             </span>
                             <span className="text-xs text-gray-400">•</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
-                              {result.breadcrumbs?.[1] ||
-                                result.category ||
-                                'General'}
+                              {result.breadcrumbs?.[1] || result.category || 'General'}
                             </span>
                           </div>
-                          <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
+                          <div className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
                             <Highlight text={result.title} query={query} />
                           </div>
-                          <div className="text-xs text-gray-500 mt-0.5 line-clamp-2 dark:text-gray-400">
-                            <Highlight
-                              text={result.description}
-                              query={query}
-                            />
+                          <div className="mt-0.5 line-clamp-2 text-xs text-gray-500 dark:text-gray-400">
+                            <Highlight text={result.description} query={query} />
                           </div>
                         </div>
-                        <Badge
-                          variant="outline"
-                          className="text-xs px-2 py-1 self-start"
-                        >
+                        <Badge variant="outline" className="self-start px-2 py-1 text-xs">
                           {result.type === 'docs'
-                            ? dict.search.docs
+                            ? t('docs')
                             : result.type === 'blog'
-                              ? dict.search.blog
+                              ? t('blog')
                               : result.type === 'tags'
-                                ? dict.search.tags
-                                : dict.search.release}
+                                ? t('tags')
+                                : t('release')}
                         </Badge>
                       </Button>
                     ))}
@@ -411,46 +387,39 @@ export function SearchDialog({
 
               {/* タグ検索候補 */}
               {(() => {
-                const matchedTags = popularTags.filter((tag) =>
-                  tag.name.toLowerCase().includes(query.toLowerCase())
-                )
+                const matchedTags = popularTags.filter((tag) => tag.name.toLowerCase().includes(query.toLowerCase()))
 
                 if (matchedTags.length > 0) {
                   return (
                     <div>
-                      <p className="text-xs text-gray-500 mb-2 dark:text-gray-400">
-                        {dict.search.relatedTags}
-                      </p>
+                      <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">{t('relatedTags')}</p>
                       <div className="space-y-1">
                         {matchedTags.map((tag, index) => (
                           <Button
                             key={index}
                             onClick={() => handleTagClick(tag.name)}
                             variant="ghost"
-                            className="flex items-center gap-4 w-full p-2 h-auto justify-start"
+                            className="flex h-auto w-full items-center justify-start gap-4 p-2"
                           >
                             <div className="mt-0.5">
-                              <Tag className="h-4 w-4 text-muted-foreground" />
+                              <Tag className="text-muted-foreground h-4 w-4" />
                             </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs font-medium text-gray-500 uppercase tracking-wide dark:text-gray-400">
-                                  {dict.search.tags}
+                            <div className="min-w-0 flex-1">
+                              <div className="mb-1 flex items-center gap-2">
+                                <span className="text-xs font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                                  {t('tags')}
                                 </span>
                                 <span className="text-xs text-gray-400">•</span>
                                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                                  {tag.count} {dict.search.articles}
+                                  {tag.count} {t('articles')}
                                 </span>
                               </div>
-                              <div className="text-sm font-medium text-gray-900 truncate dark:text-gray-100">
+                              <div className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
                                 <Highlight text={tag.name} query={query} />
                               </div>
                             </div>
-                            <Badge
-                              variant="outline"
-                              className="text-xs px-2 py-1 self-start"
-                            >
-                              {dict.search.tags}
+                            <Badge variant="outline" className="self-start px-2 py-1 text-xs">
+                              {t('tags')}
                             </Badge>
                           </Button>
                         ))}
@@ -465,31 +434,29 @@ export function SearchDialog({
         </div>
 
         {/* フッター */}
-        <div className="p-4 border-t bg-gray-50/50 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400">
+        <div className="border-t bg-gray-50/50 p-4 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
-                <kbd className="px-2 py-1 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                <kbd className="rounded border border-gray-200 bg-white px-2 py-1 font-mono text-xs dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
                   Enter
                 </kbd>
-                <span>{dict.search.toSelect}</span>
+                <span>{t('toSelect')}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="px-2 py-1 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                <kbd className="rounded border border-gray-200 bg-white px-2 py-1 font-mono text-xs dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
                   ↑↓
                 </kbd>
-                <span>{dict.search.toNavigate}</span>
+                <span>{t('toNavigate')}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="px-2 py-1 bg-white border border-gray-200 rounded text-xs font-mono dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                <kbd className="rounded border border-gray-200 bg-white px-2 py-1 font-mono text-xs dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
                   Esc
                 </kbd>
-                <span>{dict.search.toClose}</span>
+                <span>{t('toClose')}</span>
               </div>
             </div>
-            <span className="text-gray-400 dark:text-gray-500">
-              {dict.search.poweredBy}
-            </span>
+            <span className="text-gray-400 dark:text-gray-500">{t('poweredBy')}</span>
           </div>
         </div>
       </DialogContent>

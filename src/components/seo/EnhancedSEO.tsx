@@ -19,14 +19,7 @@ interface SEOProps {
 export function generateEnhancedMetadata({
   title = 'YourSaaS - Modern SaaS Platform',
   description = 'A modern SaaS platform built with Next.js and Tailwind CSS for optimal performance and user experience.',
-  keywords = [
-    'SaaS',
-    'Next.js',
-    'Tailwind CSS',
-    'React',
-    'TypeScript',
-    'Modern Web',
-  ],
+  keywords = ['SaaS', 'Next.js', 'Tailwind CSS', 'React', 'TypeScript', 'Modern Web'],
   image = '/images/og-default.jpg',
   noIndex = false,
   canonical,
@@ -39,10 +32,7 @@ export function generateEnhancedMetadata({
   url,
 }: SEOProps): Metadata {
   // Get current URL for canonical and OG
-  const baseUrl =
-    process.env.NODE_ENV === 'production'
-      ? 'https://yoursaas.com'
-      : 'http://localhost:3000'
+  const baseUrl = process.env.NODE_ENV === 'production' ? 'https://yoursaas.com' : 'http://localhost:3000'
   const currentUrl = canonical || url || baseUrl
 
   const siteTitle = 'YourSaaS'
@@ -135,12 +125,8 @@ export function generateEnhancedMetadata({
         { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
         { url: '/favicon.ico', sizes: 'any' },
       ],
-      apple: [
-        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-      ],
-      other: [
-        { rel: 'mask-icon', url: '/safari-pinned-tab.svg', color: '#171717' },
-      ],
+      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+      other: [{ rel: 'mask-icon', url: '/safari-pinned-tab.svg', color: '#171717' }],
     },
 
     // Manifest
@@ -157,18 +143,15 @@ export function generateEnhancedMetadata({
 }
 
 // JSON-LD 構造化データのコンポーネント
+type SchemaValue = string | number | boolean | null | SchemaValue[] | { [key: string]: SchemaValue }
+
 interface StructuredDataProps {
-  type:
-    | 'Organization'
-    | 'WebSite'
-    | 'Article'
-    | 'Product'
-    | 'SoftwareApplication'
-  data: Record<string, any>
+  type: 'Organization' | 'WebSite' | 'Article' | 'Product' | 'SoftwareApplication'
+  data: Record<string, SchemaValue>
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
-  const baseStructure: Record<string, any> = {
+  const baseStructure: Record<string, SchemaValue> = {
     '@context': 'https://schema.org',
     '@type': type,
     ...data,
@@ -197,12 +180,7 @@ export function StructuredData({ type, data }: StructuredDataProps) {
     }
   }
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(baseStructure) }}
-    />
-  )
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(baseStructure) }} />
 }
 
 // パンくずリスト用のコンポーネント
@@ -211,11 +189,7 @@ interface BreadcrumbItem {
   url: string
 }
 
-export function BreadcrumbStructuredData({
-  items,
-}: {
-  items: BreadcrumbItem[]
-}) {
+export function BreadcrumbStructuredData({ items }: { items: BreadcrumbItem[] }) {
   const breadcrumbData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -227,12 +201,7 @@ export function BreadcrumbStructuredData({
     })),
   }
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
-    />
-  )
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
 }
 
 // FAQ用の構造化データ
@@ -255,12 +224,7 @@ export function FAQStructuredData({ faqs }: { faqs: FAQItem[] }) {
     })),
   }
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
-    />
-  )
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }} />
 }
 
 // 記事用の構造化データ
@@ -306,10 +270,5 @@ export function ArticleStructuredData({
     ...(category && { category }),
   }
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(articleData) }}
-    />
-  )
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleData) }} />
 }

@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
-import Link from 'next/link'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
+import { Input } from '@/components/ui/input'
+import { Heading, Text } from '@/components/ui/typography'
 import { Highlight } from '@/lib/highlight'
+import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense, useEffect, useState } from 'react'
 
 interface SearchResultItem {
   id: string
@@ -26,9 +26,7 @@ function SearchResults() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResultItem[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedFilter, setSelectedFilter] = useState<
-    'all' | 'docs' | 'blog' | 'release'
-  >('all')
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'docs' | 'blog' | 'release'>('all')
 
   useEffect(() => {
     const q = searchParams.get('q') || ''
@@ -60,20 +58,13 @@ function SearchResults() {
   }
 
   const filteredResults =
-    selectedFilter === 'all'
-      ? results
-      : results.filter((result) => result.type === selectedFilter)
+    selectedFilter === 'all' ? results : results.filter((result) => result.type === selectedFilter)
 
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'docs':
         return (
-          <svg
-            className="h-4 w-4 text-[rgb(var(--info-color))]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="h-4 w-4 text-[rgb(var(--info-color))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -134,7 +125,7 @@ function SearchResults() {
 
   return (
     <Container className="py-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto max-w-4xl">
         {/* 検索ヘッダー */}
         <div className="mb-8">
           <Heading as="h1" size="3xl" className="mb-6">
@@ -142,10 +133,10 @@ function SearchResults() {
           </Heading>
 
           {/* 検索ボックス */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="mb-6 flex items-center gap-4">
             <div className="relative flex-1">
               <svg
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[rgb(var(--text-tertiary))]"
+                className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-[rgb(var(--text-tertiary))]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -163,7 +154,7 @@ function SearchResults() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch(query)}
-                className="pl-10 pr-4 py-3 text-base border-[rgb(var(--border-primary))] focus:border-[rgb(var(--focus-ring))] focus:ring-[rgb(var(--focus-ring))]"
+                className="border-[rgb(var(--border-primary))] py-3 pr-4 pl-10 text-base focus:border-[rgb(var(--focus-ring))] focus:ring-[rgb(var(--focus-ring))]"
               />
             </div>
             <Button onClick={() => handleSearch(query)} className="px-6 py-3">
@@ -173,10 +164,8 @@ function SearchResults() {
 
           {/* フィルター */}
           {query && (
-            <div className="flex items-center gap-4 mb-6">
-              <Text className="text-sm text-[rgb(var(--text-secondary))] mr-2">
-                フィルター:
-              </Text>
+            <div className="mb-6 flex items-center gap-4">
+              <Text className="mr-2 text-sm text-[rgb(var(--text-secondary))]">フィルター:</Text>
               <div className="flex gap-2">
                 {[
                   { key: 'all', label: 'すべて', count: results.length },
@@ -198,11 +187,11 @@ function SearchResults() {
                 ].map((filter) => (
                   <button
                     key={filter.key}
-                    onClick={() => setSelectedFilter(filter.key as any)}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                    onClick={() => setSelectedFilter(filter.key as typeof selectedFilter)}
+                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                       selectedFilter === filter.key
-                        ? 'bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] border border-[rgb(var(--info-color))]'
-                        : 'bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] hover:bg-[rgb(var(--tag-neutral-hover))] border border-transparent'
+                        ? 'border border-[rgb(var(--info-color))] bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]'
+                        : 'border border-transparent bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] hover:bg-[rgb(var(--tag-neutral-hover))]'
                     }`}
                   >
                     {filter.label} ({filter.count})
@@ -218,15 +207,12 @@ function SearchResults() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <Text className="text-[rgb(var(--text-secondary))]">
-                「<span className="font-medium">{query}</span>」の検索結果:{' '}
-                {filteredResults.length}件
+                「<span className="font-medium">{query}</span>」の検索結果: {filteredResults.length}件
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[rgb(var(--focus-ring))]"></div>
-                  <Text className="text-sm text-[rgb(var(--text-tertiary))]">
-                    検索中...
-                  </Text>
+                  <div className="h-4 w-4 animate-spin rounded-full border-b-2 border-[rgb(var(--focus-ring))]"></div>
+                  <Text className="text-sm text-[rgb(var(--text-tertiary))]">検索中...</Text>
                 </div>
               )}
             </div>
@@ -236,11 +222,11 @@ function SearchResults() {
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="border border-[rgb(var(--border-primary))] rounded-lg p-6 bg-[rgb(var(--bg-primary))] animate-pulse"
+                    className="animate-pulse rounded-lg border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] p-6"
                   >
-                    <div className="h-4 bg-[rgb(var(--bg-secondary))] rounded w-3/4 mb-3"></div>
-                    <div className="h-3 bg-[rgb(var(--bg-secondary))] rounded w-full mb-2"></div>
-                    <div className="h-3 bg-[rgb(var(--bg-secondary))] rounded w-2/3"></div>
+                    <div className="mb-3 h-4 w-3/4 rounded bg-[rgb(var(--bg-secondary))]"></div>
+                    <div className="mb-2 h-3 w-full rounded bg-[rgb(var(--bg-secondary))]"></div>
+                    <div className="h-3 w-2/3 rounded bg-[rgb(var(--bg-secondary))]"></div>
                   </div>
                 ))}
               </div>
@@ -249,27 +235,20 @@ function SearchResults() {
                 {filteredResults.map((result) => (
                   <div
                     key={result.id}
-                    className="border border-[rgb(var(--border-primary))] rounded-lg p-6 bg-[rgb(var(--bg-primary))] hover:shadow-md transition-shadow"
+                    className="rounded-lg border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] p-6 transition-shadow hover:shadow-md"
                   >
-                    <div className="flex items-start gap-4 mb-3">
+                    <div className="mb-3 flex items-start gap-4">
                       {getTypeIcon(result.type)}
-                      <div className="flex-1 min-w-0">
+                      <div className="min-w-0 flex-1">
                         <Link
                           href={result.url}
-                          className="text-lg font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] hover:underline block truncate"
+                          className="block truncate text-lg font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] hover:underline"
                         >
                           <Highlight text={result.title} query={query} />
                         </Link>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Badge
-                            variant="outline"
-                            className={`text-xs px-2 py-1 ${getTypeBadgeColor(result.type)}`}
-                          >
-                            {result.type === 'docs'
-                              ? 'ドキュメント'
-                              : result.type === 'blog'
-                                ? 'ブログ'
-                                : 'リリース'}
+                        <div className="mt-1 flex items-center gap-2">
+                          <Badge variant="outline" className={`px-2 py-1 text-xs ${getTypeBadgeColor(result.type)}`}>
+                            {result.type === 'docs' ? 'ドキュメント' : result.type === 'blog' ? 'ブログ' : 'リリース'}
                           </Badge>
                           <span className="text-xs text-[rgb(var(--text-tertiary))]">
                             {result.breadcrumbs.join(' › ')}
@@ -277,16 +256,14 @@ function SearchResults() {
                         </div>
                       </div>
                     </div>
-                    <p className="text-[rgb(var(--text-secondary))] text-sm mb-3 line-clamp-2">
+                    <p className="mb-3 line-clamp-2 text-sm text-[rgb(var(--text-secondary))]">
                       <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-[rgb(var(--text-tertiary))]">
-                        最終更新: {result.lastModified}
-                      </span>
+                      <span className="text-xs text-[rgb(var(--text-tertiary))]">最終更新: {result.lastModified}</span>
                       <Link
                         href={result.url}
-                        className="text-xs text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] font-medium"
+                        className="text-xs font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))]"
                       >
                         詳細を見る →
                       </Link>
@@ -295,9 +272,9 @@ function SearchResults() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-16">
+              <div className="py-16 text-center">
                 <svg
-                  className="h-16 w-16 text-[rgb(var(--text-tertiary))] mx-auto mb-4"
+                  className="mx-auto mb-4 h-16 w-16 text-[rgb(var(--text-tertiary))]"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -328,9 +305,9 @@ function SearchResults() {
             )}
           </div>
         ) : (
-          <div className="text-center py-16">
+          <div className="py-16 text-center">
             <svg
-              className="h-16 w-16 text-[rgb(var(--text-tertiary))] mx-auto mb-4"
+              className="mx-auto mb-4 h-16 w-16 text-[rgb(var(--text-tertiary))]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -349,13 +326,13 @@ function SearchResults() {
               ドキュメント、ブログ記事、リリースノートを横断検索できます。
             </Text>
             <div className="flex justify-center gap-2">
-              <Badge variant="outline" className="text-sm px-3 py-1">
+              <Badge variant="outline" className="px-3 py-1 text-sm">
                 ドキュメント
               </Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1">
+              <Badge variant="outline" className="px-3 py-1 text-sm">
                 ブログ
               </Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1">
+              <Badge variant="outline" className="px-3 py-1 text-sm">
                 リリース
               </Badge>
             </div>
@@ -372,9 +349,9 @@ export default function SearchPage() {
       <Suspense
         fallback={
           <Container className="py-8">
-            <div className="max-w-4xl mx-auto">
+            <div className="mx-auto max-w-4xl">
               <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[rgb(var(--focus-ring))]"></div>
+                <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-[rgb(var(--focus-ring))]"></div>
               </div>
             </div>
           </Container>

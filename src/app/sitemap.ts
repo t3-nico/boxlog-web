@@ -1,27 +1,20 @@
-import { MetadataRoute } from 'next'
 import { getAllBlogPostMetas } from '@/lib/blog'
-import { getAllReleaseMetas } from '@/lib/releases'
-import { getAllTags } from '@/lib/tags-server'
 import { getAllContent } from '@/lib/mdx'
 import { siteConfig } from '@/lib/metadata'
+import { getAllReleaseMetas } from '@/lib/releases'
+import { getAllTags } from '@/lib/tags-server'
+import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url
-  const locales = ['en', 'jp']
+  const locales = ['en', 'ja']
 
   // Helper function to create pages for both locales
   const createLocalizedPages = (
     path: string,
     options: {
       lastModified: Date
-      changeFrequency:
-        | 'always'
-        | 'hourly'
-        | 'daily'
-        | 'weekly'
-        | 'monthly'
-        | 'yearly'
-        | 'never'
+      changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
       priority: number
     }
   ) => {
@@ -103,9 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const blogPages = blogPosts.flatMap((post) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/blog/${post.slug}`,
-        lastModified: new Date(
-          post.frontMatter.updatedAt || post.frontMatter.publishedAt
-        ),
+        lastModified: new Date(post.frontMatter.updatedAt || post.frontMatter.publishedAt),
         changeFrequency: 'monthly' as const,
         priority: post.frontMatter.featured ? 0.8 : 0.6,
       }))
@@ -127,9 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const docPages = allDocs.flatMap((doc) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/docs/${doc.slug}`,
-        lastModified: doc.frontMatter.updatedAt
-          ? new Date(doc.frontMatter.updatedAt)
-          : new Date(),
+        lastModified: doc.frontMatter.updatedAt ? new Date(doc.frontMatter.updatedAt) : new Date(),
         changeFrequency: 'weekly' as const,
         priority: doc.frontMatter.featured ? 0.8 : 0.6,
       }))
@@ -146,13 +135,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     )
 
-    return [
-      ...staticPages,
-      ...blogPages,
-      ...releasePages,
-      ...docPages,
-      ...tagPages,
-    ]
+    return [...staticPages, ...blogPages, ...releasePages, ...docPages, ...tagPages]
   } catch {
     return staticPages
   }
