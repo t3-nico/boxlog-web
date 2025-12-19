@@ -132,7 +132,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
   return (
     <>
       {/* フィルター情報 */}
-      <div className="mb-6 flex flex-wrap gap-4 text-sm text-neutral-600 dark:text-neutral-400">
+      <div className="text-muted-foreground mb-6 flex flex-wrap gap-4 text-sm">
         <span>
           {totalPosts === 1
             ? t('list.articlesFound', { count: totalPosts })
@@ -182,13 +182,8 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
             </>
           ) : (
             <div className="py-16 text-center">
-              <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-700">
-                <svg
-                  className="h-12 w-12 text-neutral-400 dark:text-neutral-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+              <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
+                <svg className="text-muted-foreground h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -213,7 +208,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
                     tagOperator: 'OR',
                   })
                 }
-                className="inline-flex items-center rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
+                className="bg-primary/10 text-primary hover:bg-primary/20 inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
               >
                 {t('list.clearAllFilters')}
               </button>
