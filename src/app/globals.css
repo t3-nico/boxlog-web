@@ -138,6 +138,45 @@
   /* Button colors */
   --signup-btn-bg: oklch(0.2 0 0);
   --signup-btn-text: oklch(1 0 0);
+
+  /* ============================================
+   * 追加セマンティックカラー（コンポーネント用）
+   * ============================================ */
+
+  /* Code block */
+  --code-bg: oklch(0.94 0 0);
+  --code-text: oklch(0.35 0 0);
+  --code-block-bg: oklch(0.2 0 0);
+  --code-block-text: oklch(0.9 0 0);
+
+  /* Breadcrumb */
+  --breadcrumb-text: oklch(0.55 0 0);
+  --breadcrumb-hover: oklch(0.35 0 0);
+  --breadcrumb-separator: oklch(0.75 0 0);
+  --breadcrumb-current: oklch(0.25 0 0);
+
+  /* Progress bar */
+  --progress-bg: oklch(0.92 0 0);
+  --progress-fill-low: oklch(0.62 0.18 260);
+  --progress-fill-mid: oklch(0.7 0.15 68);
+  --progress-fill-high: oklch(0.58 0.16 149);
+
+  /* Status colors */
+  --status-active-bg: oklch(0.58 0.16 149 / 15%);
+  --status-active-text: oklch(0.45 0.14 149);
+  --status-pending-bg: oklch(0.7 0.15 68 / 15%);
+  --status-pending-text: oklch(0.5 0.12 68);
+  --status-completed-bg: oklch(0.58 0.16 149 / 15%);
+  --status-completed-text: oklch(0.45 0.14 149);
+
+  /* Link colors */
+  --link: oklch(0.58 0.18 260);
+  --link-hover: oklch(0.48 0.2 260);
+
+  /* Kbd (keyboard) */
+  --kbd-bg: oklch(0.98 0 0);
+  --kbd-border: oklch(0.88 0 0);
+  --kbd-text: oklch(0.35 0 0);
 }
 
 /* ダークモード（CSS変数上書き） */
@@ -265,6 +304,45 @@
   /* Button colors - dark mode */
   --signup-btn-bg: oklch(1 0 0);
   --signup-btn-text: oklch(0.2 0 0);
+
+  /* ============================================
+   * 追加セマンティックカラー（コンポーネント用）- dark mode
+   * ============================================ */
+
+  /* Code block - dark mode */
+  --code-bg: oklch(0.28 0 0);
+  --code-text: oklch(0.85 0 0);
+  --code-block-bg: oklch(0.18 0 0);
+  --code-block-text: oklch(0.9 0 0);
+
+  /* Breadcrumb - dark mode */
+  --breadcrumb-text: oklch(0.6 0 0);
+  --breadcrumb-hover: oklch(0.8 0 0);
+  --breadcrumb-separator: oklch(0.45 0 0);
+  --breadcrumb-current: oklch(0.9 0 0);
+
+  /* Progress bar - dark mode */
+  --progress-bg: oklch(0.3 0 0);
+  --progress-fill-low: oklch(0.58 0.16 260);
+  --progress-fill-mid: oklch(0.65 0.13 68);
+  --progress-fill-high: oklch(0.55 0.14 149);
+
+  /* Status colors - dark mode */
+  --status-active-bg: oklch(0.55 0.14 149 / 20%);
+  --status-active-text: oklch(0.75 0.12 149);
+  --status-pending-bg: oklch(0.65 0.13 68 / 20%);
+  --status-pending-text: oklch(0.8 0.1 68);
+  --status-completed-bg: oklch(0.55 0.14 149 / 20%);
+  --status-completed-text: oklch(0.75 0.12 149);
+
+  /* Link colors - dark mode */
+  --link: oklch(0.7 0.14 260);
+  --link-hover: oklch(0.8 0.12 260);
+
+  /* Kbd (keyboard) - dark mode */
+  --kbd-bg: oklch(0.28 0 0);
+  --kbd-border: oklch(0.4 0 0);
+  --kbd-text: oklch(0.8 0 0);
 }
 
 /* Tailwindへのマッピング（@theme inline） */
@@ -350,6 +428,75 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Release type colors */
+  --color-release-new-bg: var(--release-new-bg);
+  --color-release-new-text: var(--release-new-text);
+  --color-release-new-border: var(--release-new-border);
+  --color-release-improvement-bg: var(--release-improvement-bg);
+  --color-release-improvement-text: var(--release-improvement-text);
+  --color-release-improvement-border: var(--release-improvement-border);
+  --color-release-bugfix-bg: var(--release-bugfix-bg);
+  --color-release-bugfix-text: var(--release-bugfix-text);
+  --color-release-bugfix-border: var(--release-bugfix-border);
+  --color-release-breaking-bg: var(--release-breaking-bg);
+  --color-release-breaking-text: var(--release-breaking-text);
+  --color-release-breaking-border: var(--release-breaking-border);
+  --color-release-security-bg: var(--release-security-bg);
+  --color-release-security-text: var(--release-security-text);
+  --color-release-security-border: var(--release-security-border);
+
+  /* Tag colors */
+  --color-tag-neutral-bg: var(--tag-neutral-bg);
+  --color-tag-neutral-text: var(--tag-neutral-text);
+  --color-tag-neutral-hover: var(--tag-neutral-hover);
+  --color-tag-accent-bg: var(--tag-accent-bg);
+  --color-tag-accent-text: var(--tag-accent-text);
+  --color-tag-accent-hover: var(--tag-accent-hover);
+
+  /* Search highlight */
+  --color-highlight-bg: var(--highlight-bg);
+  --color-highlight-text: var(--highlight-text);
+
+  /* Icon backgrounds */
+  --color-icon-bg-primary: var(--icon-bg-primary);
+  --color-icon-bg-secondary: var(--icon-bg-secondary);
+  --color-icon-bg-tertiary: var(--icon-bg-tertiary);
+
+  /* Code block */
+  --color-code-bg: var(--code-bg);
+  --color-code-text: var(--code-text);
+  --color-code-block-bg: var(--code-block-bg);
+  --color-code-block-text: var(--code-block-text);
+
+  /* Breadcrumb */
+  --color-breadcrumb-text: var(--breadcrumb-text);
+  --color-breadcrumb-hover: var(--breadcrumb-hover);
+  --color-breadcrumb-separator: var(--breadcrumb-separator);
+  --color-breadcrumb-current: var(--breadcrumb-current);
+
+  /* Progress bar */
+  --color-progress-bg: var(--progress-bg);
+  --color-progress-fill-low: var(--progress-fill-low);
+  --color-progress-fill-mid: var(--progress-fill-mid);
+  --color-progress-fill-high: var(--progress-fill-high);
+
+  /* Status colors */
+  --color-status-active-bg: var(--status-active-bg);
+  --color-status-active-text: var(--status-active-text);
+  --color-status-pending-bg: var(--status-pending-bg);
+  --color-status-pending-text: var(--status-pending-text);
+  --color-status-completed-bg: var(--status-completed-bg);
+  --color-status-completed-text: var(--status-completed-text);
+
+  /* Link colors */
+  --color-link: var(--link);
+  --color-link-hover: var(--link-hover);
+
+  /* Kbd (keyboard) */
+  --color-kbd-bg: var(--kbd-bg);
+  --color-kbd-border: var(--kbd-border);
+  --color-kbd-text: var(--kbd-text);
 }
 
 @theme {
