@@ -1,27 +1,57 @@
+import { cva, type VariantProps } from 'class-variance-authority'
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+/**
+ * インプットバリアント定義（boxlog-appと同期）
+ *
+ * ## サイズ設計（8pxグリッド準拠）
+ *
+ * | size    | 高さ  | 用途                                         |
+ * |---------|-------|----------------------------------------------|
+ * | sm      | 32px  | コンパクトUI、テーブル内                     |
+ * | default | 40px  | 標準的なフォーム                             |
+ * | lg      | 48px  | 主要な入力、ランディング                     |
+ */
+const inputVariants = cva(
+  [
+    // 基本スタイル
+    'w-full min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none',
+    'border-input bg-input',
+    // テキスト
+    'placeholder:text-muted-foreground',
+    'selection:bg-primary selection:text-primary-foreground',
+    // ファイル入力
+    'file:text-foreground file:inline-flex file:border-0 file:bg-transparent file:font-medium',
+    // フォーカス
+    'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+    // 無効状態
+    'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
+  ].join(' '),
+  {
+    variants: {
+      size: {
+        // sm: 32px高さ - コンパクトUI
+        sm: 'h-8 px-3 text-sm file:h-6 file:text-xs',
+        // default: 40px高さ - 標準
+        default: 'h-10 px-4 text-base md:text-sm file:h-7 file:text-sm',
+        // lg: 48px高さ - 主要な入力
+        lg: 'h-12 px-5 text-lg file:h-8 file:text-base',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  }
+)
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
-  return (
-    <input
-      type={type}
-      className={cn(
-        // デザインシステム統合: 8pxグリッド + タイポグラフィ + フォーカス
-        'h-md border-input-border bg-input-bg text-body-md text-input-text flex w-full rounded-md border px-3 py-2 transition-all duration-200 ease-in-out',
-        'file:text-body-md file:border-0 file:bg-transparent file:font-medium',
-        'placeholder:text-input-placeholder',
-        'focus-visible:border-input-focus focus-visible:shadow-focus focus-visible:outline-none',
-        'disabled:bg-bg-secondary disabled:text-text-disabled disabled:cursor-not-allowed disabled:opacity-50',
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  )
+export interface InputProps extends Omit<React.ComponentProps<'input'>, 'size'>, VariantProps<typeof inputVariants> {}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, size, ...props }, ref) => {
+  return <input type={type} data-slot="input" className={cn(inputVariants({ size }), className)} ref={ref} {...props} />
 })
+
 Input.displayName = 'Input'
 
-export { Input }
+export { Input, inputVariants }

@@ -236,7 +236,7 @@ export function ReleasesClient({
                   <Text variant="muted" className="mb-4">
                     {t('noResults.description')}
                   </Text>
-                  <Button onClick={handleClearFilters} variant="default" className="bg-blue-600 hover:bg-blue-700">
+                  <Button onClick={handleClearFilters} variant="primary">
                     {t('noResults.clearFilters')}
                   </Button>
                 </div>

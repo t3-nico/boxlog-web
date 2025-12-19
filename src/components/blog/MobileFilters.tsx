@@ -94,7 +94,7 @@ export function MobileFilters({
               <Filter className="text-muted-foreground h-5 w-5" />
               <SheetTitle className="text-lg font-semibold">{t('title')}</SheetTitle>
               {activeFiltersCount > 0 && (
-                <Badge variant="default" className="ml-auto">
+                <Badge variant="primary" className="ml-auto">
                   {activeFiltersCount}
                 </Badge>
               )}
@@ -144,7 +144,7 @@ export function MobileFilters({
                   <Button
                     key={value}
                     onClick={() => handleSortChange(value as BlogFilterState['sortBy'])}
-                    variant={localFilters.sortBy === value ? 'default' : 'outline'}
+                    variant={localFilters.sortBy === value ? 'primary' : 'outline'}
                     className="w-full justify-start gap-4"
                   >
                     <Icon className="h-4 w-4" />
@@ -168,7 +168,7 @@ export function MobileFilters({
               <div className="mb-3 flex items-center justify-between">
                 <label className="text-muted-foreground text-sm font-medium">{t('filterByTags')}</label>
                 {localFilters.selectedTags.length > 1 && (
-                  <Button onClick={toggleTagOperator} variant="secondary" size="sm">
+                  <Button onClick={toggleTagOperator} variant="outline" size="sm">
                     {localFilters.tagOperator}
                   </Button>
                 )}
@@ -181,7 +181,7 @@ export function MobileFilters({
                     <Button
                       key={tag}
                       onClick={() => toggleTag(tag)}
-                      variant={isSelected ? 'default' : 'outline'}
+                      variant={isSelected ? 'primary' : 'outline'}
                       className="justify-center gap-2"
                       size="sm"
                     >

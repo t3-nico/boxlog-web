@@ -386,6 +386,14 @@
     }
   },
   "footer": {
+    "description": "Modern productivity tools that help you organize, track, and achieve your goals.",
+    "cta": {
+      "label": "Get started",
+      "title": "Boost your productivity. Start using BoxLog today.",
+      "description": "Organize your tasks, track your time, and achieve your goals with BoxLog's powerful productivity tools.",
+      "primaryButton": "Get started",
+      "secondaryButton": "Learn more"
+    },
     "sections": {
       "product": "Product",
       "company": "Company",
@@ -407,7 +415,9 @@
       "copyright": "All rights reserved.",
       "privacyPolicy": "Privacy Policy",
       "termsOfService": "Terms of Service",
-      "cookiePolicy": "Cookie Policy"
+      "cookies": "Cookie Policy",
+      "security": "Security",
+      "tokushoho": "Commercial Transaction Act"
     }
   },
   "blog": {

@@ -1,56 +1,158 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { Loader2 } from 'lucide-react'
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+/**
+ * ボタンバリアント定義（boxlog-appと同期）
+ *
+ * ## バリアント設計（Material Design 3 準拠）
+ *
+ * | variant     | 用途                                         | 例                           |
+ * |-------------|----------------------------------------------|------------------------------|
+ * | primary     | 主要CTA、画面で最も重要なアクション          | 保存、送信、作成、購入       |
+ * | outline     | 副次アクション、primaryとペアで使用          | キャンセル、戻る、詳細       |
+ * | ghost       | アイコンボタン、ツールバー、軽量な操作       | 閉じる、メニュー、設定       |
+ * | text        | テキストリンク風、インライン操作             | 詳細を見る、もっと見る       |
+ * | destructive | 破壊的アクション、確認ダイアログ内           | 削除、解除、退会             |
+ *
+ * ## サイズ設計（8pxグリッド準拠）
+ *
+ * | size    | 高さ  | 用途                                         |
+ * |---------|-------|----------------------------------------------|
+ * | sm      | 24px  | コンパクトUI、テーブル内、ドロップダウン     |
+ * | default | 32px  | 標準的なアクション、ほとんどの場面           |
+ * | lg      | 40px  | 主要なCTA、フォーム送信、ランディング        |
+ */
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-lg transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:shadow-focus disabled:pointer-events-none disabled:opacity-50',
+  [
+    // 基本レイアウト
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium',
+    // トランジション
+    'transition-colors',
+    // フォーカス状態（アクセシビリティ）
+    'outline-none',
+    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+    // 無効状態
+    'disabled:pointer-events-none disabled:opacity-50',
+    'aria-disabled:pointer-events-none aria-disabled:opacity-50',
+  ].join(' '),
   {
     variants: {
       variant: {
-        // Primary button - 最重要アクション (Neutral system + Elevation)
-        default:
-          'elevation-1 bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover hover:elevation-2 hover:-translate-y-0.5 active:bg-btn-primary-active active:elevation-1 active:translate-y-0 animate-button-press',
-        // Secondary button - 二次アクション (Neutral system + Elevation)
-        secondary:
-          'elevation-0 bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover hover:elevation-1 active:bg-btn-secondary-active active:elevation-0 border border-border-primary',
-        // Ghost button - 軽いアクション (Neutral system)
-        ghost:
-          'elevation-0 bg-btn-ghost text-btn-ghost-text hover:bg-btn-ghost-hover hover:elevation-1 active:bg-btn-ghost-active active:elevation-0',
-        // Destructive - エラー・削除系アクション (セマンティックカラー)
-        destructive:
-          'elevation-1 bg-semantic-error-bg text-semantic-error-text hover:bg-destructive/90 hover:elevation-2 border border-destructive',
-        // Outline variant - アウトライン表示
-        outline:
-          'elevation-0 border border-border-primary bg-bg-primary hover:bg-bg-secondary hover:elevation-1 text-text-primary',
-        // Link style - リンク風
-        link: 'text-text-secondary underline-offset-4 hover:underline hover:text-text-primary',
+        // 主要CTA - 最も強調されるボタン
+        primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover active:bg-primary-hover',
+        // 副次アクション - ボーダー付きの控えめなボタン
+        outline: [
+          'border border-input bg-background text-foreground shadow-sm',
+          'hover:bg-state-hover active:bg-state-hover',
+        ].join(' '),
+        // アイコンボタン・ツールバー - 背景なし、ホバーで背景出現
+        ghost: 'text-foreground hover:bg-state-hover active:bg-state-hover',
+        // テキストリンク風 - 下線スタイル
+        text: 'text-primary underline-offset-4 hover:underline',
+        // 破壊的アクション - 削除、解除など
+        destructive: [
+          'bg-destructive text-white shadow-sm',
+          'hover:bg-destructive-hover active:bg-destructive-hover',
+          'focus-visible:outline-destructive',
+          'dark:bg-destructive/60',
+        ].join(' '),
       },
       size: {
-        // 8pxグリッド準拠のサイズ + 新しいタイポグラフィ
-        default: 'h-md px-4 py-2 text-button-md', // 40px height
-        sm: 'h-sm px-3 py-1 text-button-sm rounded-md', // 32px height
-        lg: 'h-lg px-6 py-3 text-button-lg rounded-lg', // 48px height
-        icon: 'h-md w-md', // 40px square
+        // sm: 24px高さ、12pxパディング
+        sm: [
+          'h-6 px-3 text-xs',
+          "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:shrink-0",
+        ].join(' '),
+        // default: 32px高さ、16pxパディング
+        default: [
+          'h-8 px-4 text-sm',
+          "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
+        ].join(' '),
+        // lg: 40px高さ、24pxパディング
+        lg: [
+          'h-10 px-6 text-base',
+          "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 [&_svg]:shrink-0",
+        ].join(' '),
+        // アイコンボタン: 正方形
+        'icon-sm': [
+          'size-6',
+          "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:shrink-0",
+        ].join(' '),
+        icon: ['size-8', "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0"].join(' '),
+        'icon-lg': [
+          'size-10',
+          "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 [&_svg]:shrink-0",
+        ].join(' '),
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'primary',
       size: 'default',
     },
   }
 )
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+export interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
+  /** 子要素にスタイルを委譲する（Linkなどで使用） */
   asChild?: boolean
+  /** ローディング状態 */
+  isLoading?: boolean
+  /** ローディング中に表示するテキスト */
+  loadingText?: string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      isLoading = false,
+      loadingText,
+      onClick,
+      children,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button'
-    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (props['aria-disabled'] || isLoading) {
+        e.preventDefault()
+        return
+      }
+      onClick?.(e)
+    }
+
+    const content = isLoading ? (
+      <>
+        <Loader2 className="animate-spin motion-reduce:animate-none" aria-hidden="true" />
+        {loadingText ?? children}
+      </>
+    ) : (
+      children
+    )
+
+    return (
+      <Comp
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }))}
+        onClick={asChild ? onClick : handleClick}
+        disabled={isLoading || disabled}
+        aria-busy={isLoading || undefined}
+        ref={ref}
+        {...props}
+      >
+        {content}
+      </Comp>
+    )
   }
 )
 Button.displayName = 'Button'

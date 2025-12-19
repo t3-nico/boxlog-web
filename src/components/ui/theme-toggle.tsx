@@ -1,9 +1,20 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Moon, Sun } from '@/lib/icons'
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { ChevronDown, Monitor, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import * as React from 'react'
+
+const themeOptions = [
+  { value: 'light', label: 'Light', icon: Sun },
+  { value: 'dark', label: 'Dark', icon: Moon },
+  { value: 'system', label: 'System', icon: Monitor },
+] as const
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
@@ -13,22 +24,46 @@ export function ThemeToggle() {
     setMounted(true)
   }, [])
 
+  const currentTheme = themeOptions.find((t) => t.value === theme) || themeOptions[2]
+  const CurrentIcon = currentTheme.icon
+
   if (!mounted) {
     return (
-      <Button variant="outline" size="sm" className="h-8 w-8 p-0" disabled>
-        <Sun className="h-4 w-4" />
-      </Button>
+      <button
+        className="border-border text-muted-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm"
+        disabled
+      >
+        <Sun className="size-4" />
+        <ChevronDown className="size-3" />
+      </button>
     )
   }
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="h-8 w-8 p-0"
-    >
-      {theme === 'dark' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-    </Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
+          aria-label="Change theme"
+        >
+          <CurrentIcon className="size-4" />
+          <ChevronDown className="size-3" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {themeOptions.map((option) => (
+          <DropdownMenuCheckboxItem
+            key={option.value}
+            checked={theme === option.value}
+            onCheckedChange={() => setTheme(option.value)}
+          >
+            <span className="flex items-center gap-2">
+              <option.icon className="size-4" />
+              {option.label}
+            </span>
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

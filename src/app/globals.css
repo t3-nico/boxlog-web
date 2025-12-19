@@ -49,6 +49,18 @@
   --accent: var(--state-active);
   --accent-foreground: var(--state-active-foreground);
 
+  /* ============================================
+   * State Layer（Material Design 3準拠）
+   * ホバー・フォーカス・選択状態用
+   * ============================================ */
+  --state-hover: oklch(from var(--foreground) l c h / 10%);
+  --state-focus: oklch(from var(--foreground) l c h / 12%);
+  --state-selected: oklch(from var(--foreground) l c h / 12%);
+
+  /* 塗りボタン用ホバートークン（90%不透明度） */
+  --primary-hover: oklch(from var(--primary) l c h / 90%);
+  --destructive-hover: oklch(from var(--destructive) l c h / 90%);
+
   /* Semantic Colors */
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
@@ -164,6 +176,18 @@
   --accent: var(--state-active);
   --accent-foreground: var(--state-active-foreground);
 
+  /* ============================================
+   * State Layer（Material Design 3準拠）
+   * ホバー・フォーカス・選択状態用
+   * ============================================ */
+  --state-hover: oklch(from var(--foreground) l c h / 10%);
+  --state-focus: oklch(from var(--foreground) l c h / 12%);
+  --state-selected: oklch(from var(--foreground) l c h / 12%);
+
+  /* 塗りボタン用ホバートークン（90%不透明度） */
+  --primary-hover: oklch(from var(--primary) l c h / 90%);
+  --destructive-hover: oklch(from var(--destructive) l c h / 90%);
+
   /* Semantic Colors */
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
@@ -246,6 +270,26 @@
 /* Tailwindへのマッピング（@theme inline） */
 @theme inline {
   /* ============================================
+   * ステートレイヤー（M3準拠）
+   * foregroundベースの半透明オーバーレイ
+   * boxlog-appと同期
+   * ============================================ */
+  --color-state-hover: oklch(from var(--foreground) l c h / 10%);
+  --color-state-focus: oklch(from var(--foreground) l c h / 12%);
+  --color-state-pressed: oklch(from var(--foreground) l c h / 12%);
+  --color-state-selected: oklch(from var(--foreground) l c h / 12%);
+  --color-state-dragged: oklch(from var(--foreground) l c h / 16%);
+  --color-state-active: var(--state-active);
+  --color-state-active-foreground: var(--state-active-foreground);
+
+  /* 塗りボタン用ホバー（背景色を暗くする方式） */
+  --color-primary-hover: oklch(from var(--primary) l c h / 90%);
+  --color-destructive-hover: oklch(from var(--destructive) l c h / 90%);
+  --color-warning-hover: oklch(from var(--warning) l c h / 90%);
+  --color-success-hover: oklch(from var(--success) l c h / 90%);
+  --color-info-hover: oklch(from var(--info) l c h / 90%);
+
+  /* ============================================
    * Surface トークン（M3準拠）
    * ============================================ */
   --color-surface-dim: var(--surface-dim);
@@ -287,6 +331,15 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* ============================================
+   * State Layer（Material Design 3準拠）
+   * ============================================ */
+  --color-state-hover: var(--state-hover);
+  --color-state-focus: var(--state-focus);
+  --color-state-selected: var(--state-selected);
+  --color-primary-hover: var(--primary-hover);
+  --color-destructive-hover: var(--destructive-hover);
 
   /* Sidebar */
   --color-sidebar-background: var(--sidebar-background);
@@ -376,6 +429,7 @@ body {
     'Hiragino Kaku Gothic ProN',
     Meiryo,
     sans-serif;
+  font-size: 1rem; /* 16px - GAFA業界標準ベースサイズ */
   font-feature-settings: 'cv11', 'ss01';
   font-variation-settings: 'opsz' 32;
   line-height: 1.6;
@@ -397,17 +451,6 @@ canvas,
 svg {
   max-width: 100%;
   height: auto;
-}
-
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: var(--background);
-  height: 64px;
-  contain: layout;
 }
 
 /* Accessibility - focus states */

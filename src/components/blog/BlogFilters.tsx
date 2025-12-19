@@ -215,7 +215,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                   <Button
                     key={value}
                     onClick={() => handleSortChange(value as BlogFilterState['sortBy'])}
-                    variant={filters.sortBy === value ? 'default' : 'outline'}
+                    variant={filters.sortBy === value ? 'primary' : 'outline'}
                     size="sm"
                     className={cn(
                       'inline-flex items-center gap-2',
@@ -266,7 +266,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                     <Button
                       key={tag}
                       onClick={() => toggleTag(tag)}
-                      variant={isSelected ? 'default' : 'outline'}
+                      variant={isSelected ? 'primary' : 'outline'}
                       size="sm"
                       className={cn(
                         'inline-flex items-center gap-2',
