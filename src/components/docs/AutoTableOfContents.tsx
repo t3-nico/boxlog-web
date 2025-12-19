@@ -26,11 +26,7 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
             variant="ghost"
             className={`block h-auto w-full justify-start px-2 py-1 text-left ${
               level === 0 ? 'font-medium' : 'text-sm'
-            } ${
-              activeId === item.id
-                ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
-                : 'hover:text-foreground'
-            }`}
+            } ${activeId === item.id ? 'bg-accent text-accent-foreground' : 'hover:text-foreground'}`}
             title={item.title}
           >
             <span className="line-clamp-2">{truncateHeading(item.title, level === 0 ? 40 : 35)}</span>
@@ -187,25 +183,21 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
   if (!isLoaded || toc.length === 0) {
     return (
       <div className={`space-y-4 ${className}`}>
-        <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
-          On This Page
-        </div>
+        <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">On This Page</div>
         {!isLoaded ? (
-          <div className="text-sm text-gray-500 dark:text-gray-400">Loading...</div>
+          <div className="text-muted-foreground text-sm">Loading...</div>
         ) : (
-          <div className="text-sm text-gray-500 dark:text-gray-400">No headings found</div>
+          <div className="text-muted-foreground text-sm">No headings found</div>
         )}
 
         {/* Helpful Links */}
-        <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
+        <div className="border-border border-t pt-4">
           <div className="space-y-4">
-            <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
-              Helpful Links
-            </div>
+            <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Helpful Links</div>
             <div className="space-y-2">
               <a
                 href="#"
-                className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
               >
                 <svg
                   className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
@@ -224,7 +216,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               </a>
               <a
                 href="#"
-                className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
               >
                 <svg
                   className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
@@ -243,7 +235,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               </a>
               <a
                 href="#"
-                className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
               >
                 <svg
                   className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
@@ -269,20 +261,21 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
   return (
     <div className={`space-y-4 ${className}`}>
-      <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
-        On This Page
-      </div>
+      <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">On This Page</div>
 
       <nav className="space-y-1">
         <TocList items={toc} activeId={activeId} onItemClick={handleItemClick} />
       </nav>
 
       {/* Helpful Links */}
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-border border-t pt-4">
         <div className="space-y-4">
-          <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase">Helpful Links</div>
+          <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Helpful Links</div>
           <div className="space-y-2">
-            <a href="#" className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900">
+            <a
+              href="#"
+              className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
+            >
               <svg
                 className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                 fill="none"
@@ -298,7 +291,10 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               </svg>
               Edit this page
             </a>
-            <a href="#" className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900">
+            <a
+              href="#"
+              className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
+            >
               <svg
                 className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                 fill="none"
@@ -314,7 +310,10 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               </svg>
               Report an issue
             </a>
-            <a href="#" className="group flex items-center text-sm text-gray-600 transition-colors hover:text-gray-900">
+            <a
+              href="#"
+              className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
+            >
               <svg
                 className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                 fill="none"

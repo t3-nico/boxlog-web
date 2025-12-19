@@ -93,8 +93,8 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
             href={item.href!}
             className={`flex flex-1 items-center rounded-md text-sm transition-colors ${
               isActive
-                ? 'bg-blue-50 font-medium text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
-                : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-200'
+                ? 'bg-accent text-accent-foreground font-medium'
+                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
             }`}
             style={{
               paddingLeft,
@@ -113,7 +113,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
               )
             })()}
             {item.badge && (
-              <span className="ml-2 rounded bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+              <span className="bg-primary/10 text-primary ml-2 rounded px-1.5 py-0.5 text-xs font-medium">
                 {item.badge}
               </span>
             )}
@@ -121,7 +121,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
           </Link>
         ) : (
           <span
-            className="flex flex-1 items-center text-sm font-medium text-gray-900 dark:text-gray-100"
+            className="text-foreground flex flex-1 items-center text-sm font-medium"
             style={{
               paddingLeft,
               paddingRight: '8px',
@@ -171,7 +171,7 @@ export function ClientSidebar({ navigation }: ClientSidebarProps) {
       <nav className="flex-1 space-y-6 overflow-y-auto">
         {navigation.map((section) => (
           <div key={section.title}>
-            <div className="cursor-default py-2 pr-3 pl-2 text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
+            <div className="text-muted-foreground cursor-default py-2 pr-3 pl-2 text-xs font-semibold tracking-wider uppercase">
               {section.title}
             </div>
 
