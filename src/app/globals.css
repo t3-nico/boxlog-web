@@ -270,6 +270,26 @@
 /* Tailwindへのマッピング（@theme inline） */
 @theme inline {
   /* ============================================
+   * ステートレイヤー（M3準拠）
+   * foregroundベースの半透明オーバーレイ
+   * boxlog-appと同期
+   * ============================================ */
+  --color-state-hover: oklch(from var(--foreground) l c h / 10%);
+  --color-state-focus: oklch(from var(--foreground) l c h / 12%);
+  --color-state-pressed: oklch(from var(--foreground) l c h / 12%);
+  --color-state-selected: oklch(from var(--foreground) l c h / 12%);
+  --color-state-dragged: oklch(from var(--foreground) l c h / 16%);
+  --color-state-active: var(--state-active);
+  --color-state-active-foreground: var(--state-active-foreground);
+
+  /* 塗りボタン用ホバー（背景色を暗くする方式） */
+  --color-primary-hover: oklch(from var(--primary) l c h / 90%);
+  --color-destructive-hover: oklch(from var(--destructive) l c h / 90%);
+  --color-warning-hover: oklch(from var(--warning) l c h / 90%);
+  --color-success-hover: oklch(from var(--success) l c h / 90%);
+  --color-info-hover: oklch(from var(--info) l c h / 90%);
+
+  /* ============================================
    * Surface トークン（M3準拠）
    * ============================================ */
   --color-surface-dim: var(--surface-dim);
