@@ -52,12 +52,7 @@ interface ReleasesClientProps {
   locale: string
 }
 
-export function ReleasesClient({
-  initialReleases,
-  initialTags,
-  upcomingReleases,
-  locale,
-}: ReleasesClientProps) {
+export function ReleasesClient({ initialReleases, initialTags, upcomingReleases, locale }: ReleasesClientProps) {
   const t = useTranslations('releases')
   // フィルター状態
   const [selectedTags, setSelectedTags] = useState<string[]>([])
