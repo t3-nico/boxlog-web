@@ -172,44 +172,34 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'docs':
-        return <FileText className="h-4 w-4 text-blue-500" />
+        return <FileText className="text-info h-4 w-4" />
       case 'blog':
-        return <Edit className="h-4 w-4 text-green-500" />
+        return <Edit className="text-success h-4 w-4" />
       case 'release':
-        return <Package className="h-4 w-4 text-purple-500" />
+        return <Package className="text-primary h-4 w-4" />
       default:
-        return <FileText className="h-4 w-4 text-gray-500" />
+        return <FileText className="text-muted-foreground h-4 w-4" />
     }
   }
 
-  const getTagColorClass = (color: string) => {
-    const colorMap = {
-      'neutral-100':
-        'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700',
-      'neutral-200':
-        'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600',
-      'neutral-300':
-        'bg-neutral-300 text-neutral-800 hover:bg-neutral-400 dark:bg-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-500',
-    }
-    return (
-      colorMap[color as keyof typeof colorMap] ||
-      'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700'
-    )
+  const getTagColorClass = (_color: string) => {
+    // セマンティックカラーを使用
+    return 'bg-tag-neutral-bg text-tag-neutral-text hover:bg-tag-neutral-hover'
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl gap-0 overflow-hidden border-0 bg-white p-0 shadow-2xl dark:border dark:border-gray-700 dark:bg-gray-900 [&>button]:hidden">
+      <DialogContent className="bg-popover border-border max-w-2xl gap-0 overflow-hidden p-0 shadow-2xl [&>button]:hidden">
         {/* 検索ヘッダー */}
-        <div className="flex items-center gap-4 border-b border-gray-100 p-4 dark:border-gray-700">
-          <Search className="h-5 w-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+        <div className="border-border flex items-center gap-4 border-b p-4">
+          <Search className="text-muted-foreground h-5 w-5 flex-shrink-0" />
           <Input
             ref={inputRef}
             placeholder={t('placeholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 border-0 bg-transparent text-base text-gray-900 shadow-none placeholder:text-gray-400 focus:outline-none focus-visible:ring-0 dark:text-gray-100 dark:placeholder:text-gray-500"
+            className="text-foreground placeholder:text-muted-foreground flex-1 border-0 bg-transparent text-base shadow-none focus:outline-none focus-visible:ring-0"
           />
           <Button onClick={() => onOpenChange(false)} variant="ghost" size="icon" className="h-5 w-5 flex-shrink-0">
             <X className="h-4 w-4" />
@@ -223,7 +213,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               {/* 最近の検索 */}
               {RECENT_SEARCHES.length > 0 && (
                 <div>
-                  <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
+                  <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
                     {t('recentSearches')}
                   </h3>
                   <div className="space-y-1">
@@ -244,7 +234,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
               {/* 人気タグ */}
               <div>
-                <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
+                <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
                   {t('popularTags')}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -266,7 +256,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
               {/* クイックリンク */}
               <div>
-                <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
+                <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
                   {t('popularPages')}
                 </h3>
                 <div className="space-y-1">
@@ -279,17 +269,13 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                       }}
                       variant="ghost"
                       className={`flex h-auto w-full items-start justify-start gap-4 p-4 ${
-                        selectedIndex === index
-                          ? 'border border-blue-200 bg-blue-50 dark:border-blue-700 dark:bg-blue-900/30'
-                          : ''
+                        selectedIndex === index ? 'bg-state-active border-primary/30 border' : ''
                       }`}
                     >
                       <div className="mt-0.5">{getTypeIcon(link.type)}</div>
                       <div className="min-w-0 flex-1">
-                        <div className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
-                          {link.title}
-                        </div>
-                        <div className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{link.description}</div>
+                        <div className="text-foreground truncate text-sm font-medium">{link.title}</div>
+                        <div className="text-muted-foreground mt-0.5 text-xs">{link.description}</div>
                       </div>
                       <div className="flex items-center gap-1">
                         <Badge variant="outline" className="px-2 py-1 text-xs">
@@ -304,7 +290,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           ) : (
             <div className="space-y-4 p-4">
               <div className="mb-4 flex items-center justify-between">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-muted-foreground text-sm">
                   {t('searchResultsFor')} &ldquo;
                   <span className="font-medium">{query}</span>&rdquo;
                 </p>
@@ -317,23 +303,23 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               <Button
                 onClick={() => handleSearch(query)}
                 variant="ghost"
-                className="flex h-auto w-full items-center justify-start gap-4 border border-blue-200 bg-blue-50 p-4 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900/30 dark:hover:bg-blue-900/40"
+                className="bg-state-active border-primary/30 hover:bg-state-hover flex h-auto w-full items-center justify-start gap-4 border p-4"
               >
-                <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <Search className="text-primary h-4 w-4" />
                 <div className="text-left">
-                  <div className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                  <div className="text-foreground text-sm font-medium">
                     {t('searchFor')} &ldquo;
                     <Highlight text={query} query={query} />
                     &rdquo;
                   </div>
-                  <div className="text-xs text-blue-700 dark:text-blue-300">{t('findResultsAcross')}</div>
+                  <div className="text-muted-foreground text-xs">{t('findResultsAcross')}</div>
                 </div>
               </Button>
 
               {/* プレビュー検索結果 */}
               {previewResults.length > 0 && (
                 <div>
-                  <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">{t('previewResults')}</p>
+                  <p className="text-muted-foreground mb-2 text-xs">{t('previewResults')}</p>
                   <div className="space-y-2">
                     {previewResults.map((result, index) => (
                       <Button
@@ -343,12 +329,12 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                           router.push(result.url)
                         }}
                         variant="ghost"
-                        className="flex h-auto w-full items-start justify-start gap-4 border border-gray-100 p-4 dark:border-gray-700"
+                        className="border-border flex h-auto w-full items-start justify-start gap-4 border p-4"
                       >
                         <div className="mt-0.5">{getTypeIcon(result.type)}</div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-1 flex items-center gap-2">
-                            <span className="text-xs font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                            <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
                               {result.breadcrumbs?.[0] ||
                                 (result.type === 'docs'
                                   ? t('docs')
@@ -358,15 +344,15 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                                       ? t('tags')
                                       : t('release'))}
                             </span>
-                            <span className="text-xs text-gray-400">•</span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                            <span className="text-muted-foreground/50 text-xs">•</span>
+                            <span className="text-muted-foreground text-xs">
                               {result.breadcrumbs?.[1] || result.category || 'General'}
                             </span>
                           </div>
-                          <div className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
+                          <div className="text-foreground truncate text-sm font-medium">
                             <Highlight text={result.title} query={query} />
                           </div>
-                          <div className="mt-0.5 line-clamp-2 text-xs text-gray-500 dark:text-gray-400">
+                          <div className="text-muted-foreground mt-0.5 line-clamp-2 text-xs">
                             <Highlight text={result.description} query={query} />
                           </div>
                         </div>
@@ -392,7 +378,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                 if (matchedTags.length > 0) {
                   return (
                     <div>
-                      <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">{t('relatedTags')}</p>
+                      <p className="text-muted-foreground mb-2 text-xs">{t('relatedTags')}</p>
                       <div className="space-y-1">
                         {matchedTags.map((tag, index) => (
                           <Button
@@ -406,15 +392,15 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="mb-1 flex items-center gap-2">
-                                <span className="text-xs font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                                <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
                                   {t('tags')}
                                 </span>
-                                <span className="text-xs text-gray-400">•</span>
-                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                <span className="text-muted-foreground/50 text-xs">•</span>
+                                <span className="text-muted-foreground text-xs">
                                   {tag.count} {t('articles')}
                                 </span>
                               </div>
-                              <div className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
+                              <div className="text-foreground truncate text-sm font-medium">
                                 <Highlight text={tag.name} query={query} />
                               </div>
                             </div>
@@ -434,29 +420,29 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
         </div>
 
         {/* フッター */}
-        <div className="border-t bg-gray-50/50 p-4 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400">
+        <div className="bg-surface-container text-muted-foreground border-border border-t p-4 text-xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
-                <kbd className="rounded border border-gray-200 bg-white px-2 py-1 font-mono text-xs dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                <kbd className="bg-kbd-bg border-kbd-border text-kbd-text rounded border px-2 py-1 font-mono text-xs">
                   Enter
                 </kbd>
                 <span>{t('toSelect')}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="rounded border border-gray-200 bg-white px-2 py-1 font-mono text-xs dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                <kbd className="bg-kbd-bg border-kbd-border text-kbd-text rounded border px-2 py-1 font-mono text-xs">
                   ↑↓
                 </kbd>
                 <span>{t('toNavigate')}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="rounded border border-gray-200 bg-white px-2 py-1 font-mono text-xs dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                <kbd className="bg-kbd-bg border-kbd-border text-kbd-text rounded border px-2 py-1 font-mono text-xs">
                   Esc
                 </kbd>
                 <span>{t('toClose')}</span>
               </div>
             </div>
-            <span className="text-gray-400 dark:text-gray-500">{t('poweredBy')}</span>
+            <span className="text-muted-foreground/70">{t('poweredBy')}</span>
           </div>
         </div>
       </DialogContent>
