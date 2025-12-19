@@ -429,6 +429,7 @@ body {
     'Hiragino Kaku Gothic ProN',
     Meiryo,
     sans-serif;
+  font-size: 1rem; /* 16px - GAFA業界標準ベースサイズ */
   font-feature-settings: 'cv11', 'ss01';
   font-variation-settings: 'opsz' 32;
   line-height: 1.6;

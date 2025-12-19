@@ -184,52 +184,102 @@ export function Footer({ locale }: FooterProps) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-border mt-12 border-t pt-8 md:flex md:items-center md:justify-between">
-          <div className="flex items-center gap-x-6 md:order-2">
-            {socialLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <span className="sr-only">{item.name}</span>
-                <item.icon aria-hidden="true" className="size-5" />
-              </a>
-            ))}
-
-            {/* Settings */}
-            <div className="ml-4 flex items-center gap-x-3">
-              <ThemeToggle />
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
-                    aria-label="Change language"
-                  >
-                    <Globe className="size-4" />
-                    <span>{localeLabels[locale as Locale]}</span>
-                    <ChevronDown className="size-3" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {routing.locales.map((loc) => (
-                    <DropdownMenuCheckboxItem
-                      key={loc}
-                      checked={locale === loc}
-                      onCheckedChange={() => handleLocaleChange(loc)}
+        <div className="border-border mt-12 border-t pt-8">
+          {/* Mobile: SNS row + Copyright/Settings row */}
+          <div className="space-y-6 md:hidden">
+            {/* SNS icons */}
+            <div className="flex items-center justify-center gap-x-6">
+              {socialLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon aria-hidden="true" className="size-5" />
+                </a>
+              ))}
+            </div>
+            {/* Copyright left, Settings right */}
+            <div className="flex items-center justify-between">
+              <p className="text-muted-foreground text-sm">&copy; {new Date().getFullYear()} BoxLog, Inc.</p>
+              <div className="flex items-center gap-x-3">
+                <ThemeToggle />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
+                      aria-label="Change language"
                     >
-                      {localeLabels[loc]}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                      <Globe className="size-4" />
+                      <span>{localeLabels[locale as Locale]}</span>
+                      <ChevronDown className="size-3" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {routing.locales.map((loc) => (
+                      <DropdownMenuCheckboxItem
+                        key={loc}
+                        checked={locale === loc}
+                        onCheckedChange={() => handleLocaleChange(loc)}
+                      >
+                        {localeLabels[loc]}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
-          <p className="text-muted-foreground mt-8 text-sm md:order-1 md:mt-0">
-            &copy; {new Date().getFullYear()} BoxLog, Inc. {tFooter('legal.copyright')}
-          </p>
+
+          {/* Desktop: SNS + Settings right, Copyright left */}
+          <div className="hidden md:flex md:items-center md:justify-between">
+            <p className="text-muted-foreground text-sm">
+              &copy; {new Date().getFullYear()} BoxLog, Inc. {tFooter('legal.copyright')}
+            </p>
+            <div className="flex items-center gap-x-6">
+              {socialLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon aria-hidden="true" className="size-5" />
+                </a>
+              ))}
+              <div className="ml-4 flex items-center gap-x-3">
+                <ThemeToggle />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
+                      aria-label="Change language"
+                    >
+                      <Globe className="size-4" />
+                      <span>{localeLabels[locale as Locale]}</span>
+                      <ChevronDown className="size-3" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {routing.locales.map((loc) => (
+                      <DropdownMenuCheckboxItem
+                        key={loc}
+                        checked={locale === loc}
+                        onCheckedChange={() => handleLocaleChange(loc)}
+                      >
+                        {localeLabels[loc]}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
