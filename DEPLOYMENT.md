@@ -257,20 +257,21 @@ SENTRY_DSN=https://production@sentry.io/project
 }
 ```
 
-## 🧪 デプロイ前テスト
+## デプロイ前チェック
 
 ### 自動テストパイプライン
 
-1. **テストスイート実行**
+1. **品質チェック実行**
    ```bash
-   npm run test
-   npm run type-check
    npm run lint
+   npm run type-check
+   npm run build
    ```
 
-2. **パフォーマンステスト**
+2. **監査**
    ```bash
-   npm run test:lighthouse
+   npm run audit:accessibility   # アクセシビリティ監査
+   npm run audit:performance     # パフォーマンス監査
    ```
 
 3. **セキュリティスキャン**

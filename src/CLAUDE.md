@@ -1,6 +1,6 @@
 # /src/CLAUDE.md - 実装リファレンス
 
-## 📍 この文書の位置づけ
+## この文書の位置づけ
 
 **レベル1**: 実装の基本・コーディング規約
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 🎯 基本原則
+## 基本原則
 
 ### 1. 公式優先
 
@@ -30,7 +30,7 @@
 
 ---
 
-## 📁 ファイル配置ルール
+## ファイル配置ルール
 
 ### ディレクトリ構造
 
@@ -46,28 +46,23 @@ src/
 │   ├── blog/             # ブログ関連コンポーネント
 │   ├── docs/             # ドキュメント関連コンポーネント
 │   ├── releases/         # リリース関連コンポーネント
-│   ├── features/         # 機能紹介コンポーネント
 │   ├── seo/              # SEO関連コンポーネント
-│   ├── analytics/        # 分析関連コンポーネント
-│   ├── privacy/          # プライバシー関連コンポーネント
 │   └── errors/           # エラー関連コンポーネント
 ├── hooks/                # カスタムフック
-│   ├── useLocale.ts     # ロケール管理
 │   └── useSearch.ts     # 検索機能
+├── i18n/                 # 国際化設定（next-intl）
+│   ├── routing.ts       # ルーティング設定
+│   ├── request.ts       # メッセージローダー
+│   └── navigation.ts    # ナビゲーション関数
 ├── lib/                  # 共通処理・ユーティリティ
-│   ├── analytics.ts     # アナリティクス
 │   ├── blog.ts          # ブログデータ取得
-│   ├── i18n.ts          # 国際化
 │   ├── mdx.ts           # MDX処理
 │   ├── metadata.ts      # メタデータ生成
 │   ├── releases.ts      # リリースデータ取得
 │   ├── search.ts        # 検索ロジック
-│   ├── theme-utils.ts   # テーマユーティリティ
 │   ├── toc.ts           # 目次生成
-│   ├── utils.ts         # 汎用ユーティリティ
-│   └── navigation.ts    # ナビゲーション設定
+│   └── utils.ts         # 汎用ユーティリティ
 ├── types/                # 型定義
-├── utils/                # ユーティリティ
 └── middleware.ts         # ミドルウェア
 ```
 
@@ -77,7 +72,7 @@ src/
 // ✅ 推奨
 components / blog / PostCard.tsx // PascalCase（コンポーネント）
 lib / blog.ts // kebab-case（ユーティリティ）
-hooks / useLocale.ts // camelCase with "use" prefix
+hooks / useSearch.ts // camelCase with "use" prefix
 
 // ❌ 禁止
 components / blog / postCard.tsx // camelCaseは不可
@@ -87,7 +82,7 @@ hooks / Locale.ts // "use"プレフィックスなし
 
 ---
 
-## 🎨 スタイリング規約
+## スタイリング規約
 
 ### 必須: globals.css のセマンティックトークン使用
 
@@ -186,7 +181,7 @@ className = 'p-3 gap-5 space-y-7 mt-11'
 
 ---
 
-## 🧩 コンポーネント開発
+## コンポーネント開発
 
 ### エクスポート規則
 
@@ -270,7 +265,7 @@ export function PostCard({ post }: PostCardProps) {
 
 ---
 
-## 📦 インポート順序
+## インポート順序
 
 ```typescript
 // 1. React/Next.js関連
@@ -300,7 +295,7 @@ import './styles.css'
 
 ---
 
-## 🔧 データフェッチング
+## データフェッチング
 
 ### SSG優先（99%のケース）
 
@@ -360,7 +355,7 @@ export async function getServerSideProps() {
 
 ---
 
-## 🌍 多言語対応（next-intl）
+## 多言語対応（next-intl）
 
 ```typescript
 // ✅ 推奨: Server Component での next-intl 使用
@@ -421,7 +416,7 @@ messages/
 
 ---
 
-## 🖼️ 画像最適化
+## 画像最適化
 
 ```typescript
 // ✅ 推奨: next/image使用
@@ -457,7 +452,7 @@ import Image from 'next/image'
 
 ---
 
-## ⚡ パフォーマンス最適化
+## パフォーマンス最適化
 
 ### Core Web Vitals対策
 
@@ -501,7 +496,7 @@ import * as dateFns from 'date-fns'
 
 ---
 
-## 🔍 SEO対策
+## SEO対策
 
 ### Metadata API使用
 
@@ -562,32 +557,7 @@ export function BlogPostSchema({ post }: { post: Post }) {
 
 ---
 
-## 🧪 テスト
-
-```typescript
-// ✅ 推奨: Vitest + React Testing Library
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { PostCard } from './PostCard'
-
-describe('PostCard', () => {
-  it('renders post title', () => {
-    const post = {
-      title: 'Test Post',
-      slug: 'test-post',
-      date: '2025-01-23',
-      excerpt: 'Test excerpt',
-    }
-
-    render(<PostCard post={post} locale="en" />)
-    expect(screen.getByText('Test Post')).toBeDefined()
-  })
-})
-```
-
----
-
-## 🚫 禁止事項まとめ
+## 禁止事項まとめ
 
 ### コード記述
 
@@ -613,15 +583,16 @@ describe('PostCard', () => {
 
 ---
 
-## 📖 関連ドキュメント
+## 関連ドキュメント
 
 - **上位**: `/CLAUDE.md` - 意思決定プロトコル
 - **下位**:
   - `/src/components/CLAUDE.md` - UIコンポーネント
   - `/src/hooks/CLAUDE.md` - カスタムフック
   - `/src/lib/CLAUDE.md` - 共通処理
+  - `/src/i18n/CLAUDE.md` - 国際化
   - `/content/CLAUDE.md` - コンテンツ管理（MDX）
 
 ---
 
-**📖 最終更新**: 2025年1月 | **バージョン**: v1.1
+**最終更新**: 2025年1月 | **バージョン**: v2.0

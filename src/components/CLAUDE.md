@@ -1,6 +1,6 @@
 # /src/components/CLAUDE.md - UIコンポーネント実装ガイド
 
-## 📍 この文書の位置づけ
+## この文書の位置づけ
 
 **レベル2**: 領域特化ルール（UIコンポーネント）
 
@@ -11,9 +11,9 @@
 
 ---
 
-## 🎯 コンポーネント開発の絶対的優先順位
+## コンポーネント開発の絶対的優先順位
 
-### 🥇 第一選択: shadcn/ui
+### 第一選択: shadcn/ui
 
 ```bash
 # shadcn/ui コンポーネント追加
@@ -42,7 +42,7 @@ export function MyComponent() {
 }
 ```
 
-### 🥈 第二選択: shadcn/ui組み合わせ
+### 第二選択: shadcn/ui組み合わせ
 
 ```typescript
 // ✅ 推奨: 複数のshadcn/uiコンポーネントを組み合わせて拡張
@@ -62,7 +62,7 @@ export function PostCard({ post }: PostCardProps) {
 }
 ```
 
-### 🥉 最後の手段: カスタム実装
+### 最後の手段: カスタム実装
 
 ```typescript
 // ⚠️ 例外的に許可: shadcn/uiで対応できない場合のみ
@@ -92,11 +92,11 @@ export function CustomComponent() {
 
 ---
 
-## 📁 コンポーネントディレクトリ構造
+## コンポーネントディレクトリ構造
 
 ```
 src/components/
-├── ui/                      # 🥇 shadcn/ui基盤コンポーネント（最優先）
+├── ui/                      # shadcn/ui基盤コンポーネント（最優先）
 │   ├── button.tsx
 │   ├── card.tsx
 │   ├── dialog.tsx
@@ -142,7 +142,7 @@ src/components/
 
 ---
 
-## 🧩 コンポーネント設計パターン
+## コンポーネント設計パターン
 
 ### パターン1: Server Component（デフォルト）
 
@@ -297,7 +297,7 @@ export function BlogFilters({
 
 ---
 
-## 🎨 スタイリング実装例
+## スタイリング実装例
 
 ### セマンティックトークンの使用
 
@@ -385,50 +385,7 @@ export function BlogFilters({
 
 ---
 
-## 🧪 コンポーネントテスト
-
-```typescript
-// components/blog/PostCard.test.tsx
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { PostCard } from './PostCard'
-
-describe('PostCard', () => {
-  const mockPost = {
-    title: 'Test Post',
-    slug: 'test-post',
-    excerpt: 'This is a test excerpt',
-    coverImage: '/images/test.jpg',
-    category: 'Technology',
-    date: '2025-01-23',
-  }
-
-  it('renders post title', () => {
-    render(<PostCard post={mockPost} locale="en" />)
-    expect(screen.getByText('Test Post')).toBeDefined()
-  })
-
-  it('renders post excerpt', () => {
-    render(<PostCard post={mockPost} locale="en" />)
-    expect(screen.getByText('This is a test excerpt')).toBeDefined()
-  })
-
-  it('renders category badge', () => {
-    render(<PostCard post={mockPost} locale="en" />)
-    expect(screen.getByText('Technology')).toBeDefined()
-  })
-
-  it('has correct link href', () => {
-    render(<PostCard post={mockPost} locale="en" />)
-    const link = screen.getByRole('link')
-    expect(link.getAttribute('href')).toBe('/en/blog/test-post')
-  })
-})
-```
-
----
-
-## 📚 既存コンポーネント利用ガイド
+## 既存コンポーネント利用ガイド
 
 ### shadcn/ui基盤コンポーネント（常に最優先）
 
@@ -524,7 +481,7 @@ toast.warning('Warning message')
 
 ---
 
-## 🚫 よくある間違いと修正例
+## よくある間違いと修正例
 
 ### ❌ 間違い: カラーコード直接指定
 
@@ -605,7 +562,7 @@ export function PostCard({ post }: PostCardProps) {
 
 ---
 
-## 🎓 実装前チェックリスト
+## 実装前チェックリスト
 
 - [ ] shadcn/uiで対応できないか確認したか？
 - [ ] セマンティックトークンを使用しているか？
@@ -618,12 +575,12 @@ export function PostCard({ post }: PostCardProps) {
 
 ---
 
-## 📖 関連ドキュメント
+## 関連ドキュメント
 
 - **上位**: `/src/CLAUDE.md` - 実装の基本
 - **上位**: `/CLAUDE.md` - 意思決定プロトコル
-- **参考**: `docs/design-system/STYLE_GUIDE.md` - デザインシステム
+- **参考**: `docs/design-system/CLAUDE.md` - デザインシステム
 
 ---
 
-**📖 最終更新**: 2025年1月 | **バージョン**: v1.1
+**最終更新**: 2025年1月 | **バージョン**: v2.0

@@ -2,11 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with the BoxLog Web project.
 
-## 🗣️ Communication Language
+## Communication Language
 
 **IMPORTANT: Always respond in Japanese (日本語) unless specifically requested otherwise by the user.**
 
-## 🎯 開発方針
+## 開発方針
 
 ### デザイン原則
 - **Neutral-Centric**: ニュートラルカラー中心のUI
@@ -17,20 +17,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ### 開発アプローチ
 - **設計**: 一貫性のある設計原則に従う
 - **実装**: 既存パターンの再利用を優先
-- **スタイリング**: Tailwind CSS + shadcn/uiを使用
+- **スタイリング**: Tailwind CSS v4 + shadcn/uiを使用
 - **ドキュメント**: 新機能・重要な決定は適切に記録
 
-## 📁 Project Architecture
+## Project Architecture
 
 ### Tech Stack
 - **Framework**: Next.js 16 with App Router and Server Components
 - **Language**: TypeScript with strict mode
-- **Styling**: Tailwind CSS + shadcn/ui
+- **Styling**: Tailwind CSS v4 + shadcn/ui
 - **UI Components**: shadcn/ui + Radix UI primitives
 - **Content**: MDX for blog posts, docs, and releases
 - **Internationalization**: next-intl with English and Japanese locales
 - **Theme**: next-themes with system/dark/light mode support
-- **Testing**: Vitest with React Testing Library
 
 ### Key Features
 - **Performance**: Bundle splitting, Core Web Vitals 90+
@@ -43,12 +42,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ```
 src/
 ├── app/                    # Next.js App Router
+│   └── [locale]/           # 多言語対応ルート
 ├── components/
 │   ├── ui/                 # shadcn/ui components
-│   ├── layout/            # Header, Footer
+│   ├── layout/             # Header, Footer
 │   └── ...
-├── lib/                   # Utilities and helpers
+├── i18n/                   # 国際化設定（next-intl）
+│   ├── routing.ts          # ルーティング設定
+│   ├── request.ts          # メッセージローダー
+│   └── navigation.ts       # ナビゲーション関数
+├── lib/                    # Utilities and helpers
 └── ...
+
+messages/
+├── en/                     # 英語翻訳ファイル
+└── ja/                     # 日本語翻訳ファイル
 ```
 
 ## Development Commands
@@ -62,28 +70,29 @@ npm run lint       # ESLint実行
 npm run type-check # TypeScript型チェック
 ```
 
-### Testing & Quality Assurance
+### Quality Assurance
 ```bash
-npm run test       # Vitest テスト実行
-npm run test:ui    # Vitest UI interface
-npm run test:run   # テスト一回実行 (CI mode)
-npm run test:watch # テスト監視モード
+npm run lint:fix            # ESLint自動修正
+npm run format              # Prettier実行
+npm run format:check        # Prettierチェック
+npm run audit:accessibility # アクセシビリティ監査
+npm run audit:performance   # パフォーマンス監査
 ```
 
 ### Analysis & Optimization
 ```bash
 npm run analyze              # バンドルアナライザー
 npm run build:production    # プロダクションビルド
-npm run test:lighthouse     # Lighthouse CI テスト
+npm run prepare:production  # 本番準備（lint + 型チェック + ビルド）
 ```
 
 
-## 🧩 Component Development Guidelines
+## Component Development Guidelines
 
 ### Component Priority (必須)
-1. **🥇 shadcn/ui (第一選択)**: Button, Dialog, Command, Select, Input
-2. **🥈 shadcn/ui組み合わせ**: 複数コンポーネントでの拡張
-3. **🥉 カスタム実装 (最後の手段)**: 既存で対応できない場合のみ
+1. **shadcn/ui (第一選択)**: Button, Dialog, Command, Select, Input
+2. **shadcn/ui組み合わせ**: 複数コンポーネントでの拡張
+3. **カスタム実装 (最後の手段)**: 既存で対応できない場合のみ
 
 ### 実装例
 ```typescript
@@ -99,31 +108,58 @@ const CustomButton = ({ children }) => (
 )
 ```
 
-## 🌍 Internationalization
+## Internationalization
 
 ### 対応言語
-- **English**: `/en/*` routes
-- **Japanese**: `/jp/*` routes
+- **English**: `/` または `/en/*` routes（デフォルト）
+- **Japanese**: `/ja/*` routes
+
+### ルーティング設定
+```typescript
+// src/i18n/routing.ts
+export const routing = defineRouting({
+  locales: ['en', 'ja'],
+  defaultLocale: 'en',
+  localePrefix: 'as-needed',  // デフォルト言語では/enを省略
+})
+```
 
 ### 実装パターン
+
+#### Server Component
 ```typescript
-// ページでのdictionary使用
-import { getDictionary } from '@/lib/i18n'
+import { getTranslations } from 'next-intl/server'
 
-export default async function Page({ params: { locale } }) {
-  const dict = getDictionary(locale)
-  return <h1>{dict.title}</h1>
-}
-
-// 新規翻訳追加
-// src/lib/i18n.ts に追加
-export const dictionaries = {
-  en: { newKey: 'New Text' },
-  jp: { newKey: '新しいテキスト' }
+export default async function Page() {
+  const t = await getTranslations('common')
+  return <h1>{t('navigation.home')}</h1>
 }
 ```
 
-## 🎨 Web版特有の機能
+#### Client Component
+```typescript
+'use client'
+import { useTranslations } from 'next-intl'
+
+export function Navigation() {
+  const t = useTranslations('common')
+  return <nav>{t('navigation.home')}</nav>
+}
+```
+
+### 翻訳ファイル構造
+```
+messages/
+├── en/
+│   ├── common.json    # 共通UI翻訳
+│   ├── legal.json     # 法的文書
+│   ├── marketing.json # マーケティング
+│   └── search.json    # 検索機能
+└── ja/
+    └── (同構造)
+```
+
+## Web版特有の機能
 
 ### Content Management
 - **MDX Files**: `content/` ディレクトリ
@@ -139,12 +175,12 @@ export const dictionaries = {
 
 ### PWA機能
 - **Service Worker**: `public/sw.js`
-- **Manifest**: `public/manifest.json`  
+- **Manifest**: `public/manifest.json`
 - **Offline**: `public/offline.html`
 
-## 📋 重要な開発ルール
+## 重要な開発ルール
 
-### 🎯 Development Workflow
+### Development Workflow
 - **統一パターン**: 既存の実装パターンを優先的に再利用
 - **必須**: コミット前に `npm run lint` 実行
 - **テーマ**: ライト・ダークモード両方で動作確認
@@ -154,6 +190,6 @@ export const dictionaries = {
 
 ---
 
-**📖 このドキュメントについて**: Web版BoxLogの完全開発ガイド
+**このドキュメントについて**: Web版BoxLogの完全開発ガイド
 **最終更新**: 2025年1月
-**バージョン**: v2.1
+**バージョン**: v3.0

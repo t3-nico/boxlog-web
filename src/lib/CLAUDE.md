@@ -1,6 +1,6 @@
 # /src/lib/CLAUDE.md - 共通処理・ユーティリティ実装ガイド
 
-## 📍 この文書の位置づけ
+## この文書の位置づけ
 
 **レベル2**: 領域特化ルール（共通処理・ユーティリティ）
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 🎯 基本原則
+## 基本原則
 
 ### 1. Pure Function優先
 
@@ -30,30 +30,28 @@
 
 ---
 
-## 📁 lib/ディレクトリ構造
+## lib/ディレクトリ構造
 
 ```
 src/lib/
 ├── utils.ts              # 汎用ユーティリティ（cn関数等）
-├── i18n.ts               # 国際化（多言語対応）
 ├── blog.ts               # ブログデータ取得
 ├── releases.ts           # リリースデータ取得
 ├── mdx.ts                # MDX処理
 ├── metadata.ts           # メタデータ生成
 ├── search.ts             # 検索ロジック
-├── analytics.ts          # アナリティクス
-├── theme-utils.ts        # テーマユーティリティ
 ├── toc.ts                # 目次生成
-├── navigation.ts         # ナビゲーション設定
 ├── tags-server.ts        # タグ処理（サーバー）
 ├── tags-client.ts        # タグ処理（クライアント）
-├── error-handler.ts      # エラーハンドリング
-└── features-data.ts      # 機能データ
+└── cookie-consent.ts     # Cookie同意管理
+
+# ※ 国際化（i18n）は src/i18n/ ディレクトリで管理
+# 詳細は src/i18n/CLAUDE.md を参照
 ```
 
 ---
 
-## 🧩 主要ユーティリティ実装パターン
+## 主要ユーティリティ実装パターン
 
 ### 1. cn関数（クラス名マージ）
 
@@ -448,60 +446,7 @@ try {
 
 ---
 
-## 🧪 ユーティリティテスト
-
-```typescript
-// lib/utils.test.ts
-import { describe, it, expect } from 'vitest'
-import { cn } from './utils'
-
-describe('cn', () => {
-  it('merges class names correctly', () => {
-    const result = cn('base-class', 'additional-class')
-    expect(result).toBe('base-class additional-class')
-  })
-
-  it('handles conditional classes', () => {
-    const result = cn('base-class', true && 'active', false && 'inactive')
-    expect(result).toBe('base-class active')
-  })
-
-  it('merges conflicting Tailwind classes', () => {
-    const result = cn('p-4', 'p-8')
-    expect(result).toBe('p-8')
-  })
-})
-```
-
-```typescript
-// lib/i18n.test.ts
-import { describe, it, expect } from 'vitest'
-import { isValidLocale, formatLocalizedDate } from './i18n'
-
-describe('i18n', () => {
-  it('validates locale correctly', () => {
-    expect(isValidLocale('en')).toBe(true)
-    expect(isValidLocale('ja')).toBe(true)
-    expect(isValidLocale('fr')).toBe(false)
-  })
-
-  it('formats date correctly for English', () => {
-    const date = new Date('2025-01-23')
-    const result = formatLocalizedDate(date, 'en')
-    expect(result).toContain('2025')
-  })
-
-  it('formats date correctly for Japanese', () => {
-    const date = new Date('2025-01-23')
-    const result = formatLocalizedDate(date, 'ja')
-    expect(result).toContain('2025')
-  })
-})
-```
-
----
-
-## 📚 実装パターン別ガイド
+## 実装パターン別ガイド
 
 ### パターン1: データ取得（SSG対応）
 
@@ -654,7 +599,7 @@ const timeAgo = formatRelativeTime(post.date, 'ja')
 
 ---
 
-## 🚫 禁止事項
+## 禁止事項
 
 ### コード記述
 
@@ -670,7 +615,7 @@ const timeAgo = formatRelativeTime(post.date, 'ja')
 
 ---
 
-## 🎓 実装前チェックリスト
+## 実装前チェックリスト
 
 - [ ] 型定義は明示的か？
 - [ ] Pure Functionとして実装できるか？
@@ -681,13 +626,14 @@ const timeAgo = formatRelativeTime(post.date, 'ja')
 
 ---
 
-## 📖 関連ドキュメント
+## 関連ドキュメント
 
 - **上位**: `/src/CLAUDE.md` - 実装の基本
 - **上位**: `/CLAUDE.md` - 意思決定プロトコル
+- **参考**: `/src/i18n/CLAUDE.md` - 国際化ガイド
 - **参考**: [date-fns公式](https://date-fns.org/)
 - **参考**: [Zod公式](https://zod.dev/)
 
 ---
 
-**📖 最終更新**: 2025年1月 | **バージョン**: v1.1
+**最終更新**: 2025年1月 | **バージョン**: v2.0

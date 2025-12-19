@@ -48,22 +48,14 @@ interface UpcomingRelease {
 interface ReleasesClientProps {
   initialReleases: ReleasePostMeta[]
   initialTags: TagCount[]
-  featuredReleases: ReleasePostMeta[]
   upcomingReleases: UpcomingRelease[]
   locale: string
 }
 
-export function ReleasesClient({
-  initialReleases,
-  initialTags,
-  featuredReleases: _featuredReleases,
-  upcomingReleases,
-  locale,
-}: ReleasesClientProps) {
+export function ReleasesClient({ initialReleases, initialTags, upcomingReleases, locale }: ReleasesClientProps) {
   const t = useTranslations('releases')
   // フィルター状態
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [showBreakingOnly, setShowBreakingOnly] = useState(false)
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false)
 
@@ -94,13 +86,8 @@ export function ReleasesClient({
     setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]))
   }
 
-  const handleTypeToggle = (type: string) => {
-    setSelectedTypes((prev) => (prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]))
-  }
-
   const handleClearFilters = () => {
     setSelectedTags([])
-    setSelectedTypes([])
     setShowBreakingOnly(false)
     setShowFeaturedOnly(false)
   }
@@ -117,11 +104,9 @@ export function ReleasesClient({
                 <ReleaseFilter
                   tags={initialTags}
                   selectedTags={selectedTags}
-                  selectedTypes={selectedTypes}
                   showBreakingOnly={showBreakingOnly}
                   showFeaturedOnly={showFeaturedOnly}
                   onTagToggle={handleTagToggle}
-                  onTypeToggle={handleTypeToggle}
                   onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                   onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                   onClearFilters={handleClearFilters}
@@ -157,13 +142,11 @@ export function ReleasesClient({
               {/* Filter Summary */}
               <FilterSummary
                 selectedTags={selectedTags}
-                selectedTypes={selectedTypes}
                 showBreakingOnly={showBreakingOnly}
                 showFeaturedOnly={showFeaturedOnly}
                 resultCount={filteredReleases.length}
                 totalCount={initialReleases.length}
                 onTagRemove={handleTagToggle}
-                onTypeRemove={handleTypeToggle}
                 onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
                 onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
                 onClearAll={handleClearFilters}
