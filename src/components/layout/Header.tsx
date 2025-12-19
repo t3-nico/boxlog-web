@@ -1,10 +1,10 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
@@ -58,34 +58,24 @@ export function Header() {
         <div className="hidden lg:flex lg:items-center lg:gap-x-1">
           {navigation.main.map((item) =>
             item.items ? (
-              <DropdownMenuPrimitive.Root key={item.name}>
-                <DropdownMenuPrimitive.Trigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-md px-3 py-2 text-base font-medium transition-colors outline-none">
+              <DropdownMenu key={item.name}>
+                <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-md px-3 py-2 text-base font-medium transition-colors outline-none">
                   {item.name}
                   <ChevronDown className="size-4" aria-hidden="true" />
-                </DropdownMenuPrimitive.Trigger>
-
-                <DropdownMenuPrimitive.Portal>
-                  <DropdownMenuPrimitive.Content
-                    className="bg-popover border-border data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 z-50 w-56 overflow-hidden rounded-md border p-1 shadow-md"
-                    sideOffset={8}
-                    align="start"
-                  >
-                    {item.items.map((subItem) => (
-                      <DropdownMenuPrimitive.Item key={subItem.name} asChild>
-                        <Link
-                          href={subItem.href}
-                          className="hover:bg-state-hover focus:bg-state-hover relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none"
-                        >
-                          <div className="flex-auto">
-                            <span className="text-foreground block font-medium">{subItem.name}</span>
-                            <p className="text-muted-foreground text-xs">{subItem.description}</p>
-                          </div>
-                        </Link>
-                      </DropdownMenuPrimitive.Item>
-                    ))}
-                  </DropdownMenuPrimitive.Content>
-                </DropdownMenuPrimitive.Portal>
-              </DropdownMenuPrimitive.Root>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" sideOffset={8} className="w-56">
+                  {item.items.map((subItem) => (
+                    <DropdownMenuItem key={subItem.name} asChild className="cursor-pointer">
+                      <Link href={subItem.href}>
+                        <div className="flex-auto">
+                          <span className="text-foreground block font-medium">{subItem.name}</span>
+                          <p className="text-muted-foreground text-xs">{subItem.description}</p>
+                        </div>
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Link
                 key={item.name}
