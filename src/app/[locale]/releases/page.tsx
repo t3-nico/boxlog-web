@@ -44,9 +44,9 @@ export default async function ReleasesPage({ params }: PageProps) {
   const isJa = locale === 'ja'
 
   return (
-    <div className="min-h-screen">
+    <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-50 to-white py-16 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-16">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
             <Heading as="h1" size="4xl" className="mb-4">

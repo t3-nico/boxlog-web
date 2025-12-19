@@ -13,20 +13,20 @@ export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) 
   }
 
   return (
-    <div className="mt-12 border-t border-gray-200 pt-8 dark:border-gray-700">
+    <div className="border-border mt-12 border-t pt-8">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Previous Page */}
         <div className="flex justify-start">
           {previousPage && (
             <Link
               href={`/docs/${previousPage.slug}`}
-              className="group flex max-w-sm items-center rounded-lg border border-gray-200 p-4 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-800"
+              className="group border-border bg-card hover:border-foreground hover:bg-muted flex max-w-sm items-center rounded-lg border p-4 transition-colors"
             >
               <div className="flex items-center">
-                <ChevronLeft className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-400" />
+                <ChevronLeft className="text-muted-foreground group-hover:text-foreground mr-3 h-5 w-5" />
                 <div>
-                  <div className="mb-1 text-sm text-gray-500 dark:text-gray-400">Previous</div>
-                  <div className="font-medium text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-100 dark:group-hover:text-blue-400">
+                  <div className="text-muted-foreground mb-1 text-sm">Previous</div>
+                  <div className="text-foreground group-hover:text-primary font-medium transition-colors">
                     {previousPage.frontMatter.title}
                   </div>
                 </div>
@@ -40,16 +40,16 @@ export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) 
           {nextPage && (
             <Link
               href={`/docs/${nextPage.slug}`}
-              className="group flex max-w-sm items-center rounded-lg border border-gray-200 p-4 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-800"
+              className="group border-border bg-card hover:border-foreground hover:bg-muted flex max-w-sm items-center rounded-lg border p-4 transition-colors"
             >
               <div className="flex items-center text-right">
                 <div>
-                  <div className="mb-1 text-sm text-gray-500 dark:text-gray-400">Next</div>
-                  <div className="font-medium text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-100 dark:group-hover:text-blue-400">
+                  <div className="text-muted-foreground mb-1 text-sm">Next</div>
+                  <div className="text-foreground group-hover:text-primary font-medium transition-colors">
                     {nextPage.frontMatter.title}
                   </div>
                 </div>
-                <ChevronRight className="ml-3 h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-400" />
+                <ChevronRight className="text-muted-foreground group-hover:text-foreground ml-3 h-5 w-5" />
               </div>
             </Link>
           )}

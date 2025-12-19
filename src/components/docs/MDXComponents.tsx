@@ -55,7 +55,7 @@ function CodeBlock({ children, className, ...props }: CodeBlockProps) {
         <CopyCodeButton code={codeString} />
       </div>
       <pre
-        className={`hljs ${className || ''} overflow-x-auto rounded-lg bg-gray-900 p-4 text-gray-100 dark:bg-gray-800 dark:text-gray-200`}
+        className={`hljs ${className || ''} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}
         {...props}
       >
         <code>{children}</code>
@@ -67,10 +67,7 @@ function CodeBlock({ children, className, ...props }: CodeBlockProps) {
 // インラインコード
 function InlineCode({ children, ...props }: InlineCodeProps) {
   return (
-    <code
-      className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-800 dark:bg-gray-800 dark:text-gray-200"
-      {...props}
-    >
+    <code className="bg-code-bg text-code-text rounded px-1.5 py-0.5 font-mono text-sm" {...props}>
       {children}
     </code>
   )
@@ -85,12 +82,10 @@ function Alert({
   children: React.ReactNode
 }) {
   const styles = {
-    info: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200',
-    warning:
-      'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-200',
-    error: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-700 text-red-800 dark:text-red-200',
-    success:
-      'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200',
+    info: 'bg-info/10 border-info/30 text-info',
+    warning: 'bg-warning/10 border-warning/30 text-warning',
+    error: 'bg-destructive/10 border-destructive/30 text-destructive',
+    success: 'bg-success/10 border-success/30 text-success',
   }
 
   const icons = {
@@ -146,7 +141,7 @@ function Alert({
 function Table({ children, ...props }: TableProps) {
   return (
     <div className="my-6 overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700" {...props}>
+      <table className="divide-border min-w-full divide-y" {...props}>
         {children}
       </table>
     </div>
@@ -156,7 +151,7 @@ function Table({ children, ...props }: TableProps) {
 function Th({ children, ...props }: ThProps) {
   return (
     <th
-      className="bg-gray-50 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase dark:bg-gray-800 dark:text-gray-400"
+      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
       {...props}
     >
       {children}
@@ -166,10 +161,7 @@ function Th({ children, ...props }: ThProps) {
 
 function Td({ children, ...props }: TdProps) {
   return (
-    <td
-      className="border-b border-gray-200 px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:border-gray-700 dark:text-gray-100"
-      {...props}
-    >
+    <td className="border-border text-foreground border-b px-6 py-4 text-sm whitespace-nowrap" {...props}>
       {children}
     </td>
   )
@@ -185,7 +177,7 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-600 underline hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+        className="text-link hover:text-link-hover underline"
         {...props}
       >
         {children}
@@ -202,11 +194,7 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
   }
 
   return (
-    <Link
-      href={href || '#'}
-      className="text-blue-600 underline hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-      {...props}
-    >
+    <Link href={href || '#'} className="text-link hover:text-link-hover underline" {...props}>
       {children}
     </Link>
   )
@@ -289,7 +277,7 @@ export const mdxComponents: MDXComponents = {
     </ol>
   ),
   li: ({ children, ...props }) => (
-    <li className="text-gray-700 dark:text-gray-300" {...props}>
+    <li className="text-foreground/90" {...props}>
       {children}
     </li>
   ),
@@ -305,10 +293,7 @@ export const mdxComponents: MDXComponents = {
 
   // 引用
   blockquote: ({ children, ...props }) => (
-    <blockquote
-      className="my-6 border-l-4 border-gray-300 pl-4 text-gray-600 italic dark:border-gray-600 dark:text-gray-400"
-      {...props}
-    >
+    <blockquote className="border-border text-muted-foreground my-6 border-l-4 pl-4 italic" {...props}>
       {children}
     </blockquote>
   ),
@@ -322,7 +307,7 @@ export const mdxComponents: MDXComponents = {
   a: CustomLink,
 
   // 水平線
-  hr: ({ ...props }) => <hr className="my-8 border-gray-200 dark:border-gray-700" {...props} />,
+  hr: ({ ...props }) => <hr className="border-border my-8" {...props} />,
 
   // 画像
   img: ({ src, alt, title }) => (

@@ -35,9 +35,11 @@ const buttonVariants = cva(
     // フォーカス状態（アクセシビリティ）
     'outline-none',
     'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
-    // 無効状態
+    // 無効状態（aria-disabled推奨、disabled属性も対応）
     'disabled:pointer-events-none disabled:opacity-50',
     'aria-disabled:pointer-events-none aria-disabled:opacity-50',
+    // バリデーションエラー状態
+    'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
   ].join(' '),
   {
     variants: {
@@ -46,7 +48,7 @@ const buttonVariants = cva(
         primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover active:bg-primary-hover',
         // 副次アクション - ボーダー付きの控えめなボタン
         outline: [
-          'border border-input bg-background text-foreground shadow-sm',
+          'border border-border bg-background text-foreground shadow-sm',
           'hover:bg-state-hover active:bg-state-hover',
         ].join(' '),
         // アイコンボタン・ツールバー - 背景なし、ホバーで背景出現

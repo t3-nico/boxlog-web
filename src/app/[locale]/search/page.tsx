@@ -345,7 +345,7 @@ function SearchResults() {
 
 export default function SearchPage() {
   return (
-    <div className="min-h-screen bg-[rgb(var(--bg-secondary))]">
+    <div className="bg-background min-h-screen">
       <Suspense
         fallback={
           <Container className="py-8">

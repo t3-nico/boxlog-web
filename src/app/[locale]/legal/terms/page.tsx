@@ -31,7 +31,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
   const lastUpdated = '2025-10-15'
 
   return (
-    <div className="container mx-auto max-w-4xl p-4 md:p-8">
+    <div className="bg-background container mx-auto min-h-screen max-w-4xl p-4 md:p-8">
       {/* ヘッダー */}
       <div className="mb-8">
         <h1 className="mb-2 text-3xl font-bold">{t('legal.terms.title')}</h1>

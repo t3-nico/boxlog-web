@@ -21,7 +21,7 @@ export function RelatedPosts({ posts, currentSlug: _currentSlug, locale = 'en' }
   }
 
   return (
-    <section className="bg-gray-50 py-16 dark:bg-gray-800">
+    <section className="bg-surface-container py-16">
       <Container>
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
@@ -43,7 +43,7 @@ export function RelatedPosts({ posts, currentSlug: _currentSlug, locale = 'en' }
           <div className="mt-12 text-center">
             <Link
               href="/blog"
-              className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-gray-700"
+              className="border-border bg-card text-foreground hover:border-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 text-sm font-medium transition-colors"
             >
               {t('viewAll')}
               <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

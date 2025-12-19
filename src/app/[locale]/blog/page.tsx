@@ -40,9 +40,9 @@ export default async function BlogPage({ params }: PageProps) {
   const [allPosts, allTags] = await Promise.all([getAllBlogPostMetas(), getAllTagNames()])
 
   return (
-    <div className="min-h-screen">
+    <div className="bg-background min-h-screen">
       {/* Header */}
-      <section className="bg-gradient-to-br from-neutral-50 to-white py-16 dark:from-neutral-800 dark:to-neutral-900">
+      <section className="py-16">
         <Container>
           <div className="mx-auto max-w-6xl">
             <Heading as="h1" size="3xl" className="mb-4">
@@ -56,7 +56,7 @@ export default async function BlogPage({ params }: PageProps) {
       </section>
 
       {/* Main content */}
-      <section className="bg-neutral-50 py-16 dark:bg-neutral-800">
+      <section className="py-16">
         <Container>
           <div className="mx-auto max-w-6xl">
             <FilteredBlogClient initialPosts={allPosts} tags={allTags} locale={locale} />
