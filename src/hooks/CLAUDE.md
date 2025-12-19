@@ -1,6 +1,6 @@
 # /src/hooks/CLAUDE.md - カスタムフック実装ガイド
 
-## 📍 この文書の位置づけ
+## この文書の位置づけ
 
 **レベル2**: 領域特化ルール（カスタムフック）
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 🎯 カスタムフック基本原則
+## カスタムフック基本原則
 
 ### 1. 命名規則
 
@@ -74,7 +74,7 @@ export function useSearch() {
 
 ---
 
-## 📁 既存カスタムフック
+## 既存カスタムフック
 
 ### useLocale - ロケール管理
 
@@ -223,7 +223,7 @@ export function SearchComponent() {
 
 ---
 
-## 🧩 カスタムフック実装パターン
+## カスタムフック実装パターン
 
 ### パターン1: State管理フック
 
@@ -500,66 +500,7 @@ export function SearchComponent() {
 
 ---
 
-## 🧪 カスタムフックテスト
-
-```typescript
-// hooks/useToggle.test.ts
-import { describe, it, expect } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
-import { useToggle } from './useToggle'
-
-describe('useToggle', () => {
-  it('initializes with false by default', () => {
-    const { result } = renderHook(() => useToggle())
-    expect(result.current.value).toBe(false)
-  })
-
-  it('initializes with provided value', () => {
-    const { result } = renderHook(() => useToggle(true))
-    expect(result.current.value).toBe(true)
-  })
-
-  it('toggles value', () => {
-    const { result } = renderHook(() => useToggle())
-
-    act(() => {
-      result.current.toggle()
-    })
-
-    expect(result.current.value).toBe(true)
-
-    act(() => {
-      result.current.toggle()
-    })
-
-    expect(result.current.value).toBe(false)
-  })
-
-  it('sets value to true', () => {
-    const { result } = renderHook(() => useToggle())
-
-    act(() => {
-      result.current.setTrue()
-    })
-
-    expect(result.current.value).toBe(true)
-  })
-
-  it('sets value to false', () => {
-    const { result } = renderHook(() => useToggle(true))
-
-    act(() => {
-      result.current.setFalse()
-    })
-
-    expect(result.current.value).toBe(false)
-  })
-})
-```
-
----
-
-## 🚫 よくある間違いと修正例
+## よくある間違いと修正例
 
 ### ❌ 間違い: 'use client'ディレクティブなし
 
@@ -646,7 +587,7 @@ export function useSearch() {
 
 ---
 
-## 🎓 実装前チェックリスト
+## 実装前チェックリスト
 
 - [ ] ファイル名は`use`プレフィックスで始まるか？
 - [ ] `'use client'`ディレクティブを追加したか？
@@ -655,11 +596,10 @@ export function useSearch() {
 - [ ] 既存のフックで代替できないか確認したか？
 - [ ] useCallbackでメモ化が必要な関数はメモ化したか？
 - [ ] エラーハンドリングを実装したか？
-- [ ] テストを書いたか？
 
 ---
 
-## 📖 関連ドキュメント
+## 関連ドキュメント
 
 - **上位**: `/src/CLAUDE.md` - 実装の基本
 - **上位**: `/CLAUDE.md` - 意思決定プロトコル
@@ -667,4 +607,4 @@ export function useSearch() {
 
 ---
 
-**📖 最終更新**: 2025年1月 | **バージョン**: v1.1
+**最終更新**: 2025年1月 | **バージョン**: v2.0

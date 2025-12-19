@@ -6,7 +6,7 @@ BoxLog Web（マーケティングサイト）のCI/CDシステム
 
 | ワークフロー     | ファイル                               | トリガー       | 役割                            |
 | ---------------- | -------------------------------------- | -------------- | ------------------------------- |
-| **CI Pipeline**  | [`ci.yml`](ci.yml)                     | Push/PR (main) | lint + typecheck + test + build |
+| **CI Pipeline**  | [`ci.yml`](ci.yml)                     | Push/PR (main) | lint + typecheck + build |
 | **Lighthouse**   | [`lighthouse.yml`](lighthouse.yml)     | Push (main)    | パフォーマンス・SEO監視         |
 | **Bundle Check** | [`bundle-check.yml`](bundle-check.yml) | PR作成時       | バンドルサイズ監視              |
 | **PR Labeler**   | [`pr-labeler.yml`](pr-labeler.yml)     | PR作成/更新時  | 自動ラベル付与                  |
@@ -17,7 +17,6 @@ BoxLog Web（マーケティングサイト）のCI/CDシステム
 
 - ESLint + Prettier
 - TypeScript型チェック
-- ユニットテスト
 
 **Phase 2: Build Check**
 
@@ -61,12 +60,11 @@ Vercel GitHubインテグレーションによる自動デプロイ：
 - 最小権限の原則（permissions）
 - concurrencyによる重複実行防止
 
-## ローカルテスト
+## ローカル品質チェック
 
 ```bash
 npm run lint          # ESLint
 npm run format:check  # Prettier
 npm run type-check    # TypeScript
-npm run test:run      # ユニットテスト
 npm run build         # ビルド確認
 ```
