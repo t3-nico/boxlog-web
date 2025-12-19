@@ -1,16 +1,16 @@
 # BoxLog マーケティングウェブサイト
 
-Next.js 14で構築された、モダンで高パフォーマンスなマーケティングウェブサイトです。包括的なアクセシビリティ対応（WCAG 2.1 AA準拠）、高度なパフォーマンス最適化、エンタープライズレベルのセキュリティを実現しています。
+Next.js 16で構築された、モダンで高パフォーマンスなマーケティングウェブサイトです。包括的なアクセシビリティ対応（WCAG 2.1 AA準拠）、高度なパフォーマンス最適化、エンタープライズレベルのセキュリティを実現しています。
 
-## 🚀 主な機能
+## 主な機能
 
 ### コア機能
-- **Next.js 14**: App RouterとServer Componentsを採用
+- **Next.js 16**: App RouterとServer Componentsを採用
 - **TypeScript**: 型安全性と開発体験の向上
-- **Tailwind CSS**: ユーティリティファーストのスタイリング
+- **Tailwind CSS v4**: ユーティリティファーストのスタイリング
 - **shadcn/ui**: 高品質なUIコンポーネント
 - **MDX**: Reactコンポーネントを含むリッチコンテンツ
-- **多言語対応**: 英語・日本語の完全サポート
+- **多言語対応**: next-intlによる英語・日本語の完全サポート
 
 ### パフォーマンス最適化
 - **Core Web Vitals**: リアルタイム監視と最適化
@@ -36,12 +36,12 @@ Next.js 14で構築された、モダンで高パフォーマンスなマーケ�
 - **レート制限**: 実装済み
 - **セキュリティヘッダー**: 本番環境向け設定
 
-## 📁 プロジェクト構造
+## プロジェクト構造
 
 ```
 src/
 ├── app/                    # Next.js App Router（ページ・レイアウト）
-│   ├── [locale]/           # 多言語対応ルート
+│   ├── [locale]/           # 多言語対応ルート（en/ja）
 │   ├── api/                # APIルート
 │   └── globals.css         # グローバルスタイル
 ├── components/             # Reactコンポーネント
@@ -50,12 +50,25 @@ src/
 │   ├── blog/               # ブログ関連
 │   ├── docs/               # ドキュメント関連
 │   └── releases/           # リリース関連
+├── i18n/                   # 国際化設定（next-intl）
+│   ├── routing.ts          # ルーティング設定
+│   ├── request.ts          # メッセージローダー
+│   └── navigation.ts       # ナビゲーション関数
 ├── lib/                    # ユーティリティライブラリ
-│   ├── i18n.ts             # 国際化
 │   ├── metadata.ts         # SEOメタデータ生成
+│   ├── mdx.ts              # MDX処理
 │   └── utils.ts            # 汎用ユーティリティ
 ├── hooks/                  # カスタムフック
 └── middleware.ts           # Next.jsミドルウェア
+
+messages/
+├── en/                     # 英語翻訳
+│   ├── common.json
+│   ├── legal.json
+│   ├── marketing.json
+│   └── search.json
+└── ja/                     # 日本語翻訳
+    └── (同構造)
 
 content/
 ├── blog/                   # ブログ記事（MDX）
@@ -63,7 +76,7 @@ content/
 └── releases/               # リリースノート（MDX）
 ```
 
-## 🛠 はじめに
+## はじめに
 
 ### 前提条件
 
@@ -97,7 +110,7 @@ content/
 5. **ブラウザで開く**
    [http://localhost:3000](http://localhost:3000)にアクセス
 
-## 📋 利用可能なスクリプト
+## 利用可能なスクリプト
 
 ### 開発
 
@@ -112,19 +125,29 @@ content/
 | スクリプト | 説明 |
 |-----------|------|
 | `npm run lint` | ESLint実行 |
+| `npm run lint:fix` | ESLint自動修正 |
 | `npm run type-check` | TypeScript型チェック |
-| `npm run test` | Vitestテスト実行 |
-| `npm run test:run` | テスト一回実行（CI用） |
-| `npm run test:ui` | Vitest UIインターフェース |
+| `npm run format` | Prettier実行 |
+| `npm run format:check` | Prettierチェック |
 
-### 分析・最適化
+### 分析・監査
 
 | スクリプト | 説明 |
 |-----------|------|
 | `npm run analyze` | バンドルサイズ分析 |
-| `npm run test:lighthouse` | Lighthouse CI テスト |
+| `npm run audit:accessibility` | アクセシビリティ監査 |
+| `npm run audit:performance` | パフォーマンス監査 |
+| `npm run test:a11y` | ビルド後アクセシビリティテスト |
+| `npm run test:performance` | ビルド後パフォーマンステスト |
 
-## 🔧 設定
+### 本番準備
+
+| スクリプト | 説明 |
+|-----------|------|
+| `npm run prepare:production` | console削除 + lint + 型チェック + ビルド |
+| `npm run cleanup:console` | console.log削除 |
+
+## 設定
 
 ### 環境変数
 
@@ -160,7 +183,7 @@ tags: ["タグ1", "タグ2"]
 コンテンツ本文...
 ```
 
-## 🚀 デプロイ
+## デプロイ
 
 ### Vercel（推奨）
 
@@ -180,7 +203,7 @@ npm run start
 
 詳細は[DEPLOYMENT.md](DEPLOYMENT.md)を参照してください。
 
-## 📊 パフォーマンス監視
+## パフォーマンス監視
 
 ### Core Web Vitals目標
 
@@ -196,7 +219,7 @@ npm run start
 npm run analyze
 ```
 
-## ♿ アクセシビリティ
+## アクセシビリティ
 
 WCAG 2.1 AA準拠を完全サポート：
 
@@ -208,22 +231,7 @@ WCAG 2.1 AA準拠を完全サポート：
 - フォーカス管理
 - モーション設定の尊重
 
-## 🧪 テスト
-
-```bash
-# 全テスト実行
-npm test
-
-# ウォッチモード
-npm run test:watch
-
-# Lighthouse テスト
-npm run test:lighthouse
-```
-
-詳細は[docs/TESTING_AND_CICD_GUIDE.md](docs/TESTING_AND_CICD_GUIDE.md)を参照してください。
-
-## 🔒 セキュリティ
+## セキュリティ
 
 ### セキュリティヘッダー
 - Content Security Policy (CSP)
@@ -239,7 +247,7 @@ npm run test:lighthouse
 - ファイルアップロード制限
 - レート制限
 
-## 🤝 コントリビューション
+## コントリビューション
 
 1. リポジトリをフォーク
 2. フィーチャーブランチを作成
@@ -261,22 +269,21 @@ npm run test:lighthouse
 - TypeScript strictモードの要件を遵守
 - アクセシビリティ準拠を維持
 - すべてのパフォーマンス指標をクリア
-- 新機能にはテストを追加
 - 必要に応じてドキュメントを更新
 
-## 📚 関連ドキュメント
+## 関連ドキュメント
 
 - [CLAUDE.md](CLAUDE.md) - Claude Code向け開発ガイド
 - [DEPLOYMENT.md](DEPLOYMENT.md) - デプロイガイド
-- [docs/TESTING_AND_CICD_GUIDE.md](docs/TESTING_AND_CICD_GUIDE.md) - テスト・CI/CDガイド
+- [docs/TESTING_AND_CICD_GUIDE.md](docs/TESTING_AND_CICD_GUIDE.md) - CI/CDガイド
 - [docs/PERFORMANCE_GUIDE.md](docs/PERFORMANCE_GUIDE.md) - パフォーマンスガイド
-- [docs/MULTILINGUAL_IMPLEMENTATION.md](docs/MULTILINGUAL_IMPLEMENTATION.md) - 多言語実装ガイド
+- [docs/DOCUMENTATION_GUIDE.md](docs/DOCUMENTATION_GUIDE.md) - ドキュメントガイド
 
-## 📄 ライセンス
+## ライセンス
 
 このプロジェクトはMITライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルを参照してください。
 
 ---
 
 **最終更新**: 2025年1月
-**バージョン**: v2.0
+**バージョン**: v3.0

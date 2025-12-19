@@ -1,195 +1,118 @@
-# テスト・CI/CDガイド
+# 品質管理・CI/CDガイド
 
-このドキュメントでは、BoxLog Webプロジェクトのテスト戦略、CI/CDワークフロー、開発プラクティスについて説明します。
+このドキュメントでは、BoxLog Webプロジェクトの品質管理戦略、CI/CDワークフロー、開発プラクティスについて説明します。
 
 ## 概要
 
-プロジェクトでは以下を使用した堅牢なテストと継続的インテグレーション/デプロイ（CI/CD）システムを実装しています：
-- **Vitest** - ユニット・統合テスト
-- **React Testing Library** - コンポーネントテスト
+プロジェクトでは以下を使用した品質管理と継続的インテグレーション/デプロイ（CI/CD）システムを実装しています：
+
+- **ESLint** - コード品質チェック
+- **TypeScript** - 型安全性の確保
+- **Prettier** - コードフォーマット
+- **アクセシビリティ監査** - WCAG 2.1 AA準拠確認
+- **パフォーマンス監査** - Core Web Vitals測定
 - **GitHub Actions** - 自動CI/CDパイプライン
-- **ESMモジュール** - モダンJavaScript互換性
+- **Husky + lint-staged** - プリコミットフック
 
-## テストインフラストラクチャ
+## 品質管理コマンド
 
-### テストフレームワークスタック
-
-- **Vitest** - ネイティブESMサポートの高速ユニットテストランナー
-- **React Testing Library** - コンポーネントテストユーティリティ
-- **jsdom** - ブラウザ環境シミュレーション
-- **@testing-library/user-event** - ユーザーインタラクションシミュレーション
-- **@testing-library/jest-dom** - カスタムJestマッチャー
-
-### テスト設定
-
-```typescript
-// vitest.config.ts
-export default defineConfig({
-  plugins: [react()],
-  test: {
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
-    globals: true,
-    css: true,
-  },
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src'),
-    },
-  },
-})
-```
-
-### テストコマンド
+### コマンド一覧
 
 | コマンド | 説明 |
 |---------|------|
-| `npm run test` | インタラクティブウォッチモードでテスト実行 |
-| `npm run test:run` | 全テスト一回実行（CI用） |
-| `npm run test:ui` | Vitest UIインターフェース起動 |
-| `npm run test:watch` | ウォッチモードでテスト実行 |
+| `npm run lint` | ESLintでコード品質チェック |
+| `npm run lint:fix` | ESLint自動修正 |
+| `npm run type-check` | TypeScript型チェック |
+| `npm run format` | Prettier実行 |
+| `npm run format:check` | Prettierチェック |
+| `npm run audit:accessibility` | アクセシビリティ監査 |
+| `npm run audit:performance` | パフォーマンス監査 |
+| `npm run test:a11y` | ビルド後アクセシビリティテスト |
+| `npm run test:performance` | ビルド後パフォーマンステスト |
 
-## テスト構造
+### 開発ワークフロー
 
-### 現在のテストカバレッジ
+```bash
+# 開発サーバー起動
+npm run dev
 
+# 品質チェック実行
+npm run lint && npm run type-check
+
+# 本番準備（推奨）
+npm run prepare:production
 ```
-src/components/__tests__/
-├── sample.test.tsx          # 基本テストセットアップ確認
-├── button.test.tsx          # Buttonコンポーネントテスト
-├── theme-toggle.test.tsx    # テーマ切替機能
-└── error-boundary.test.tsx  # エラーバウンダリ動作
-```
 
-**総テスト数**: 4テストファイル、17テスト
+## 監査システム
 
-### テストカテゴリ
+### アクセシビリティ監査
 
-#### 1. **コンポーネントテスト**
-- **Buttonコンポーネント**: バリアント、サイズ、アクセシビリティ、ユーザーインタラクション
-- **テーマトグル**: テーマ切替、マウント動作、アクセシビリティ
-- **エラーバウンダリ**: エラーハンドリング、フォールバックUI、リカバリーメカニズム
+`src/scripts/accessibility-audit.js` でWCAG 2.1 AA準拠を確認します。
 
-#### 2. **統合テスト**
-- 外部ライブラリ（next-themes）とのコンポーネント連携
-- エラー状態管理とリカバリー
-- ユーザーイベントシミュレーションとレスポンス
-
-#### 3. **アクセシビリティテスト**
-- 適切なARIA属性
+**チェック項目**:
+- 適切なalt属性
+- 色コントラスト比
 - キーボードナビゲーション
-- スクリーンリーダー互換性
+- ARIAラベル
+- フォーカス管理
 
-### テストの書き方
+```bash
+# アクセシビリティ監査のみ
+npm run audit:accessibility
 
-#### ベストプラクティス
-
-```typescript
-// 例: コンポーネントテスト構造
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import userEvent from '@testing-library/user-event'
-import { ComponentName } from '@/components/ui/component-name'
-
-describe('ComponentName', () => {
-  it('正しくレンダリングされる', () => {
-    render(<ComponentName />)
-    expect(screen.getByRole('button')).toBeInTheDocument()
-  })
-
-  it('ユーザーインタラクションを処理する', async () => {
-    const user = userEvent.setup()
-    const handleClick = vi.fn()
-
-    render(<ComponentName onClick={handleClick} />)
-
-    await user.click(screen.getByRole('button'))
-    expect(handleClick).toHaveBeenCalledOnce()
-  })
-})
+# ビルド後にテスト
+npm run test:a11y
 ```
 
-#### テストガイドライン
+### パフォーマンス監査
 
-1. **実装ではなく動作をテスト**
-   - ユーザーに見える動作に焦点を当てる
-   - コンポーネントの出力と副作用をテスト
-   - 内部状態や実装詳細のテストを避ける
+`src/scripts/performance-audit.js` でCore Web Vitalsを測定します。
 
-2. **適切なクエリを使用**
-   - `getByTestId()`より`getByRole()`を優先
-   - ユーザーインタラクションに合致するセマンティッククエリを使用
-   - React Testing Libraryのクエリ優先順位に従う
+**目標値**:
+| 指標 | 目標値 |
+|------|--------|
+| LCP (Largest Contentful Paint) | < 2.5秒 |
+| FID (First Input Delay) | < 100ms |
+| CLS (Cumulative Layout Shift) | < 0.1 |
 
-3. **外部依存関係のモック**
-   - 必要に応じてサードパーティライブラリをモック
-   - モジュールレベルのモックには`vi.mock()`を使用
-   - 現実的なモック実装を提供
+```bash
+# パフォーマンス監査のみ
+npm run audit:performance
 
-4. **アクセシビリティをテスト**
-   - 適切なARIA属性を検証
-   - キーボードナビゲーションをテスト
-   - スクリーンリーダー互換性を確保
+# ビルド後にテスト
+npm run test:performance
+```
 
 ## CI/CDパイプライン
 
 ### ワークフロー概要
 
-プロジェクトでは3つのメインGitHub Actionsワークフローを使用：
+プロジェクトではGitHub Actionsを使用したCI/CDパイプラインを実装しています。
 
-#### 1. **CIワークフロー** (`ci.yml`)
+#### CIワークフロー
+
 **トリガー**: `dev`/`main`へのpush、`dev`/`main`へのPR
 
 **ジョブ**:
-- **Testジョブ** (Node.js 18.x & 20.xマトリックス)
-  - 依存関係インストール (`npm ci`)
-  - リント実行 (`npm run lint`)
-  - 型チェック実行 (`npm run type-check`)
-  - **Vitestテスト実行** (`npm run test:run`)
-  - アプリケーションビルド (`npm run build`)
+- 依存関係インストール (`npm ci`)
+- リント実行 (`npm run lint`)
+- 型チェック実行 (`npm run type-check`)
+- アプリケーションビルド (`npm run build`)
+- アクセシビリティ監査
+- パフォーマンス監査
 
-- **Lighthouseジョブ** (テスト通過後)
-  - パフォーマンス監査
-  - SEO分析
-  - ベストプラクティス検証
+#### デプロイワークフロー
 
-- **アクセシビリティジョブ** (テスト通過後)
-  - WCAG準拠チェック
-  - スクリーンリーダー互換性
-  - 色コントラスト検証
-
-- **パフォーマンスジョブ** (テスト通過後)
-  - バンドルサイズ分析
-  - Core Web Vitals測定
-  - パフォーマンス回帰検出
-
-#### 2. **デプロイワークフロー** (`deploy.yml`)
 **トリガー**: `main`ブランチへのpush、手動ディスパッチ
 
 **ジョブ**:
-- **Deployジョブ**
-  - 本番ビルド準備
-  - Vercelデプロイ
-  - 環境設定
+- 本番ビルド準備
+- Vercelデプロイ
+- デプロイ後検証
 
-- **Post-Deployジョブ**
-  - 本番環境テスト
-  - ライブサイトのLighthouse監査
-  - アクセシビリティ検証
+### 品質ゲート
 
-#### 3. **PRプレビューワークフロー** (`pr-preview.yml`)
-**トリガー**: PRイベント（opened、synchronized、reopened）
-
-**ジョブ**:
-- **Previewジョブ**
-  - プレビューバージョンビルド
-  - Vercelプレビュー環境へデプロイ
-  - PRにプレビューURLをコメント
-
-### 自動品質ゲート
-
-#### テスト要件
-- すべてのVitestテストが通過（17/17）
+#### 必須要件
 - TypeScriptコンパイル成功
 - ESLintがエラーなしで通過
 - ビルドプロセス正常完了
@@ -206,45 +129,52 @@ describe('ComponentName', () => {
 - キーボードナビゲーション対応
 - スクリーンリーダー互換性
 
-### ブランチ保護ルール
+## プリコミットフック
 
-#### `main`ブランチ:
-- PRレビュー必須
-- ステータスチェック通過必須
-- ブランチが最新であること必須
-- 特定ロールへのpush制限
+Huskyとlint-stagedによるプリコミットフックが設定されています。
 
-#### `dev`ブランチ:
-- ステータスチェック通過必須
-- マージコミットとスカッシュマージを許可
-- ステージング環境への自動デプロイ
+```json
+// package.json
+{
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}
+```
+
+コミット時に自動的に:
+1. Prettierでフォーマット
+2. ESLintで修正可能なエラーを自動修正
 
 ## 開発ワークフロー
 
-### 1. **ローカル開発**
+### 1. ローカル開発
 
 ```bash
 # 開発サーバー起動
 npm run dev
 
-# ウォッチモードでテスト実行
-npm run test
-
-# 完全品質チェック実行
-npm run lint && npm run type-check && npm run test:run && npm run build
+# 品質チェック実行
+npm run lint && npm run type-check && npm run build
 ```
 
-### 2. **フィーチャー開発**
+### 2. フィーチャー開発
 
 ```bash
 # フィーチャーブランチ作成
 git checkout -b feat/your-feature-name
 
-# テスト付きでフィーチャー実装
-# ローカルテスト実行
-npm run test:run
+# フィーチャー実装
+# 品質チェック
+npm run lint && npm run type-check
 
-# 変更をコミット
+# 変更をコミット（lint-stagedが自動実行）
 git add .
 git commit -m "feat: フィーチャーの説明"
 
@@ -252,108 +182,61 @@ git commit -m "feat: フィーチャーの説明"
 git push origin feat/your-feature-name
 ```
 
-### 3. **プルリクエストプロセス**
+### 3. プルリクエストプロセス
 
 1. **PR作成** - `dev`ブランチをターゲット
 2. **自動チェック**が自動実行：
-   - CIパイプラインが全テスト実行
+   - CIパイプラインが品質チェック実行
    - プレビューデプロイ作成
    - 品質ゲート評価
 3. チームメンバーによる**コードレビュー**
 4. 承認とチェック成功後に**マージ**
 
-### 4. **リリースプロセス**
+### 4. リリースプロセス
 
 1. `dev`ブランチで**フィーチャー完了**
 2. `dev`から`main`への**リリースPR作成**
 3. ステージング環境での**本番テスト**
 4. `main`へのマージで**本番デプロイ**
-5. 自動テストによる**デプロイ後検証**
-
-## 監視とメンテナンス
-
-### テストメンテナンス
-
-#### 定期タスク
-- **週次**: テストカバレッジレポートレビュー
-- **月次**: テスト依存関係更新
-- **リリースごと**: 新機能の統合テスト追加
-- **四半期**: パフォーマンステストレビューと最適化
-
-#### テスト拡張領域
-1. **API統合テスト**
-   - ルートハンドラテスト
-   - データベース統合
-   - 外部サービスモック
-
-2. **E2Eテスト**（将来）
-   - ユーザージャーニーテスト
-   - クロスブラウザ互換性
-   - モバイルレスポンシブ
-
-3. **ビジュアル回帰テスト**（将来）
-   - コンポーネントビジュアル一貫性
-   - テーマ切替検証
-   - レスポンシブデザイン検証
-
-### CI/CD監視
-
-#### 主要メトリクス
-- **ビルド成功率**: 目標95%以上
-- **テスト実行時間**: 目標2分以内
-- **デプロイ頻度**: 追跡・最適化
-- **リカバリー時間**: インシデント対応監視
-
-#### アラート
-- ビルド失敗時に開発チームへ通知
-- パフォーマンス回帰でアラート発火
-- セキュリティ脆弱性でデプロイブロック
-- アクセシビリティ問題でマージ防止
+5. 自動監査による**デプロイ後検証**
 
 ## トラブルシューティング
 
 ### よくある問題
 
-#### 1. **CIでのテスト失敗**
+#### 1. ESLintエラー
+
 ```bash
-# ローカルテスト実行確認
-npm run test:run
+# 自動修正を試行
+npm run lint:fix
 
-# ESM互換性確認
-node --version  # 18.xまたは20.xであること
+# 手動で確認
+npm run lint
+```
 
-# 依存関係インストール確認
+#### 2. TypeScriptエラー
+
+```bash
+# 型チェック確認
+npm run type-check
+```
+
+#### 3. ビルド失敗
+
+```bash
+# 依存関係を再インストール
 rm -rf node_modules package-lock.json
 npm install
+
+# ビルド実行
+npm run build
 ```
-
-#### 2. **ビルド失敗**
-```bash
-# TypeScriptコンパイル確認
-npm run type-check
-
-# ESLintエラー確認
-npm run lint
-
-# 全依存関係確認
-npm audit --audit-level=moderate
-```
-
-#### 3. **ESMモジュール問題**
-- `package.json`に`"type": "module"`があることを確認
-- 設定ファイルでES import/export構文を使用
-- `vitest.config.ts`のパス解決を確認
-
-#### 4. **不安定なテスト**
-- ユーザーイベントには`user.setup()`を使用
-- 外部依存関係を適切にモック
-- 非同期操作には適切な`waitFor()`を追加
 
 ### ヘルプ
 
 #### ドキュメントリソース
-- [Vitestドキュメント](https://vitest.dev/)
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [ESLint](https://eslint.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [GitHub Actions](https://docs.github.com/en/actions)
 
 #### 内部リソース
@@ -363,23 +246,15 @@ npm audit --audit-level=moderate
 
 ## 将来のロードマップ
 
-### 短期（1-2ヶ月）
-- [ ] コンポーネントテストカバレッジを90%以上に拡張
-- [ ] APIルート統合テスト追加
-- [ ] ビジュアル回帰テスト実装
-- [ ] パフォーマンス予算設定
+### 短期
+- [ ] ユニットテストフレームワーク（Vitest）の導入検討
+- [ ] コンポーネントテストの実装
+- [ ] E2Eテスト（Playwright）の導入検討
 
-### 中期（3-6ヶ月）
-- [ ] Playwrightによる完全E2Eテストスイート
+### 中期
+- [ ] テストカバレッジレポート
 - [ ] 自動セキュリティスキャン
-- [ ] マルチ環境テスト（ステージング/本番）
-- [ ] テスト結果分析ダッシュボード
-
-### 長期（6ヶ月以上）
-- [ ] AI駆動テスト生成
-- [ ] カオスエンジニアリング実践
-- [ ] 高度なパフォーマンス監視
-- [ ] クロスプラットフォームテスト自動化
+- [ ] パフォーマンス予算設定
 
 ---
 
