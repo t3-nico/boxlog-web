@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import { AlertTriangle, CheckCircle, ChevronDown, Filter, Star, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import { ChangeTypeList } from './ChangeTypeList'
 
 // Local type definition
 interface TagCount {
@@ -15,11 +14,9 @@ interface TagCount {
 interface ReleaseFilterProps {
   tags: TagCount[]
   selectedTags: string[]
-  selectedTypes: string[]
   showBreakingOnly: boolean
   showFeaturedOnly: boolean
   onTagToggle: (tag: string) => void
-  onTypeToggle: (type: string) => void
   onBreakingToggle: () => void
   onFeaturedToggle: () => void
   onClearFilters: () => void
@@ -29,11 +26,9 @@ interface ReleaseFilterProps {
 export function ReleaseFilter({
   tags,
   selectedTags,
-  selectedTypes,
   showBreakingOnly,
   showFeaturedOnly,
   onTagToggle,
-  onTypeToggle,
   onBreakingToggle: _onBreakingToggle,
   onFeaturedToggle: _onFeaturedToggle,
   onClearFilters,
@@ -42,7 +37,7 @@ export function ReleaseFilter({
   const t = useTranslations('releases.filters')
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const hasActiveFilters = selectedTags.length > 0 || selectedTypes.length > 0 || showBreakingOnly || showFeaturedOnly
+  const hasActiveFilters = selectedTags.length > 0 || showBreakingOnly || showFeaturedOnly
 
   return (
     <div className="overflow-hidden rounded-xl border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))]">
@@ -56,8 +51,7 @@ export function ReleaseFilter({
             <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))]">{t('title')}</h3>
             {hasActiveFilters && (
               <span className="inline-flex items-center rounded-full bg-[rgb(var(--info-bg))] px-2.5 py-0.5 text-xs font-medium text-[rgb(var(--info-color))]">
-                {selectedTags.length + selectedTypes.length + (showBreakingOnly ? 1 : 0) + (showFeaturedOnly ? 1 : 0)}{' '}
-                active
+                {selectedTags.length + (showBreakingOnly ? 1 : 0) + (showFeaturedOnly ? 1 : 0)} active
               </span>
             )}
           </div>
@@ -79,9 +73,6 @@ export function ReleaseFilter({
       {/* Filter Content */}
       <div className={`lg:block ${isExpanded ? 'block' : 'hidden'}`}>
         <div className="space-y-6 p-6">
-          {/* Change Types */}
-          <ChangeTypeList selectedTypes={selectedTypes} onTypeToggle={onTypeToggle} showAll={true} locale={locale} />
-
           {/* Tags */}
           {tags.length > 0 && (
             <div>
@@ -172,13 +163,11 @@ export function CompactReleaseFilter({
 // Filter Summary
 interface FilterSummaryProps {
   selectedTags: string[]
-  selectedTypes: string[]
   showBreakingOnly: boolean
   showFeaturedOnly: boolean
   resultCount: number
   totalCount: number
   onTagRemove: (tag: string) => void
-  onTypeRemove: (type: string) => void
   onBreakingToggle: () => void
   onFeaturedToggle: () => void
   onClearAll: () => void
@@ -187,20 +176,18 @@ interface FilterSummaryProps {
 
 export function FilterSummary({
   selectedTags,
-  selectedTypes,
   showBreakingOnly,
   showFeaturedOnly,
   resultCount,
   totalCount,
   onTagRemove,
-  onTypeRemove,
   onBreakingToggle,
   onFeaturedToggle,
   onClearAll,
   locale: _locale,
 }: FilterSummaryProps) {
   const t = useTranslations('releases.filters')
-  const hasFilters = selectedTags.length > 0 || selectedTypes.length > 0 || showBreakingOnly || showFeaturedOnly
+  const hasFilters = selectedTags.length > 0 || showBreakingOnly || showFeaturedOnly
 
   if (!hasFilters) return null
 
@@ -245,19 +232,6 @@ export function FilterSummary({
             </Button>
           </span>
         )}
-
-        {/* Selected Types */}
-        {selectedTypes.map((type) => (
-          <span
-            key={type}
-            className="inline-flex items-center gap-1 rounded-full border border-[rgb(var(--info-color))] bg-[rgb(var(--bg-primary))] px-3 py-1 text-sm"
-          >
-            {type}
-            <Button onClick={() => onTypeRemove(type)} variant="ghost" size="icon" className="ml-1 h-auto w-auto p-0">
-              <X className="h-3 w-3" />
-            </Button>
-          </span>
-        ))}
 
         {/* Selected Tags */}
         {selectedTags.map((tag) => (

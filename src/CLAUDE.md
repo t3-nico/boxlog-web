@@ -49,7 +49,6 @@ src/
 │   ├── seo/              # SEO関連コンポーネント
 │   └── errors/           # エラー関連コンポーネント
 ├── hooks/                # カスタムフック
-│   ├── useLocale.ts     # ロケール管理
 │   └── useSearch.ts     # 検索機能
 ├── i18n/                 # 国際化設定（next-intl）
 │   ├── routing.ts       # ルーティング設定
@@ -73,7 +72,7 @@ src/
 // ✅ 推奨
 components / blog / PostCard.tsx // PascalCase（コンポーネント）
 lib / blog.ts // kebab-case（ユーティリティ）
-hooks / useLocale.ts // camelCase with "use" prefix
+hooks / useSearch.ts // camelCase with "use" prefix
 
 // ❌ 禁止
 components / blog / postCard.tsx // camelCaseは不可

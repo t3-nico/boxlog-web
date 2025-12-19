@@ -76,56 +76,6 @@ export function useSearch() {
 
 ## 既存カスタムフック
 
-### useLocale - ロケール管理
-
-```typescript
-// hooks/useLocale.ts
-'use client'
-
-import { useState, useEffect } from 'react'
-import { routing, type Locale } from '@/i18n/routing'
-
-function isValidLocale(locale: string): locale is Locale {
-  return routing.locales.includes(locale as Locale)
-}
-
-export function useLocale(): Locale {
-  const [locale, setLocale] = useState<Locale>(routing.defaultLocale)
-
-  useEffect(() => {
-    const storedLocale = localStorage.getItem('locale')
-
-    if (storedLocale && isValidLocale(storedLocale)) {
-      setLocale(storedLocale)
-    } else {
-      const browserLang = navigator.language.split('-')[0]
-      if (browserLang === 'ja') {
-        setLocale('ja')
-      } else {
-        setLocale('en')
-      }
-    }
-  }, [])
-
-  return locale
-}
-```
-
-**使用例**:
-
-```typescript
-'use client'
-
-import { useLocale } from '@/hooks/useLocale'
-
-export function MyComponent() {
-  const locale = useLocale()
-  return <div>Current locale: {locale}</div>
-}
-```
-
----
-
 ### useSearch - 検索機能
 
 ```typescript

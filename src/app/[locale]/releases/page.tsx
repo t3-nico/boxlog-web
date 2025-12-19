@@ -3,7 +3,7 @@ import { Container } from '@/components/ui/container'
 import { Heading, Text } from '@/components/ui/typography'
 import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
-import { getAllReleaseMetas, getAllReleaseTags, getFeaturedReleases } from '@/lib/releases'
+import { getAllReleaseMetas, getAllReleaseTags } from '@/lib/releases'
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
@@ -39,11 +39,7 @@ export default async function ReleasesPage({ params }: PageProps) {
   const t = await getTranslations({ locale, namespace: 'common' })
 
   // Fetch data server-side
-  const [allReleases, allTags, featuredReleases] = await Promise.all([
-    getAllReleaseMetas(),
-    getAllReleaseTags(),
-    getFeaturedReleases(),
-  ])
+  const [allReleases, allTags] = await Promise.all([getAllReleaseMetas(), getAllReleaseTags()])
 
   const isJa = locale === 'ja'
 
@@ -65,13 +61,7 @@ export default async function ReleasesPage({ params }: PageProps) {
       </section>
 
       {/* Main Releases Section - Client Component */}
-      <ReleasesClient
-        initialReleases={allReleases}
-        initialTags={allTags}
-        featuredReleases={featuredReleases}
-        upcomingReleases={[]}
-        locale={locale}
-      />
+      <ReleasesClient initialReleases={allReleases} initialTags={allTags} upcomingReleases={[]} locale={locale} />
     </div>
   )
 }
