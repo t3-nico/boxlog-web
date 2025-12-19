@@ -93,7 +93,7 @@ export function ReleasesClient({ initialReleases, initialTags, upcomingReleases,
   }
 
   return (
-    <section id="releases" className="bg-white py-16 dark:bg-gray-900">
+    <section id="releases" className="py-16">
       <Container>
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
@@ -117,7 +117,7 @@ export function ReleasesClient({ initialReleases, initialTags, upcomingReleases,
                 <UpcomingReleasesCompact upcomingReleases={upcomingReleases} />
 
                 {/* RSS Feed */}
-                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+                <div className="border-border bg-card rounded-xl border p-6">
                   <Heading as="h3" size="md" className="mb-4">
                     {t('rss.title')}
                   </Heading>
@@ -126,7 +126,7 @@ export function ReleasesClient({ initialReleases, initialTags, upcomingReleases,
                   </Text>
                   <a
                     href="/releases/feed.xml"
-                    className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                    className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-3 py-2 text-sm font-medium transition-colors"
                   >
                     <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M3.429 2.857A1.429 1.429 0 002 4.286v11.428A1.429 1.429 0 003.429 17h13.142A1.429 1.429 0 0018 15.714V4.286A1.429 1.429 0 0016.571 2.857H3.429zM4 6.857v2.286H6.286V6.857H4zm8.571 0h2.286v2.286h-2.286V6.857zM4 10.571v2.286h2.286v-2.286H4zm4.571-3.714v2.286h2.286V6.857H8.571zm4.572 3.714v2.286h2.286v-2.286h-2.286zM8.571 10.571v2.286h2.286v-2.286H8.571z" />
@@ -156,7 +156,7 @@ export function ReleasesClient({ initialReleases, initialTags, upcomingReleases,
               <div className="mb-8 flex items-center justify-between">
                 <Heading as="h2" size="2xl">
                   {t('history.title')}
-                  <span className="ml-2 text-lg font-normal text-gray-500 dark:text-gray-400">
+                  <span className="text-muted-foreground ml-2 text-lg font-normal">
                     ({filteredReleases.length}
                     {t('history.count')})
                   </span>
@@ -176,9 +176,9 @@ export function ReleasesClient({ initialReleases, initialTags, upcomingReleases,
                 </div>
               ) : initialReleases.length === 0 ? (
                 <div className="py-16 text-center">
-                  <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700">
+                  <div className="bg-icon-bg-primary mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
                     <svg
-                      className="h-12 w-12 text-gray-400 dark:text-gray-500"
+                      className="text-muted-foreground h-12 w-12"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -198,13 +198,8 @@ export function ReleasesClient({ initialReleases, initialTags, upcomingReleases,
                 </div>
               ) : (
                 <div className="py-16 text-center">
-                  <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
-                    <svg
-                      className="h-12 w-12 text-blue-600 dark:text-blue-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
+                  <div className="bg-icon-bg-secondary mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
+                    <svg className="text-info h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
