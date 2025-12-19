@@ -1,8 +1,6 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { LanguageSwitcher } from '@/components/ui/language-switcher'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
@@ -11,11 +9,7 @@ import { ChevronDown, Menu, Search, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
-interface HeaderProps {
-  locale: string
-}
-
-export function Header({ locale }: HeaderProps) {
+export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const t = useTranslations('common')
@@ -124,9 +118,6 @@ export function Header({ locale }: HeaderProps) {
             <span className="sr-only">{t('actions.search')}</span>
           </Button>
 
-          <LanguageSwitcher currentLocale={locale} />
-          <ThemeToggle />
-
           <Button variant="ghost" size="sm" asChild>
             <Link href="/contact">{t('navigation.contact')}</Link>
           </Button>
@@ -189,8 +180,6 @@ export function Header({ locale }: HeaderProps) {
                       <Search className="h-4 w-4" />
                       <span className="sr-only">{t('actions.search')}</span>
                     </Button>
-                    <LanguageSwitcher currentLocale={locale} />
-                    <ThemeToggle />
                   </div>
 
                   <Button variant="outline" className="w-full" asChild>

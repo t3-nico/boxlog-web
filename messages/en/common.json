@@ -386,6 +386,7 @@
     }
   },
   "footer": {
+    "description": "Modern productivity tools that help you organize, track, and achieve your goals.",
     "cta": {
       "label": "Get started",
       "title": "Boost your productivity. Start using BoxLog today.",

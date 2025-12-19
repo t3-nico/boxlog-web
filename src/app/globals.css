@@ -49,6 +49,18 @@
   --accent: var(--state-active);
   --accent-foreground: var(--state-active-foreground);
 
+  /* ============================================
+   * State Layer（Material Design 3準拠）
+   * ホバー・フォーカス・選択状態用
+   * ============================================ */
+  --state-hover: oklch(from var(--foreground) l c h / 10%);
+  --state-focus: oklch(from var(--foreground) l c h / 12%);
+  --state-selected: oklch(from var(--foreground) l c h / 12%);
+
+  /* 塗りボタン用ホバートークン（90%不透明度） */
+  --primary-hover: oklch(from var(--primary) l c h / 90%);
+  --destructive-hover: oklch(from var(--destructive) l c h / 90%);
+
   /* Semantic Colors */
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
@@ -163,6 +175,18 @@
   /* shadcn/ui互換エイリアス（accent → state-active） */
   --accent: var(--state-active);
   --accent-foreground: var(--state-active-foreground);
+
+  /* ============================================
+   * State Layer（Material Design 3準拠）
+   * ホバー・フォーカス・選択状態用
+   * ============================================ */
+  --state-hover: oklch(from var(--foreground) l c h / 10%);
+  --state-focus: oklch(from var(--foreground) l c h / 12%);
+  --state-selected: oklch(from var(--foreground) l c h / 12%);
+
+  /* 塗りボタン用ホバートークン（90%不透明度） */
+  --primary-hover: oklch(from var(--primary) l c h / 90%);
+  --destructive-hover: oklch(from var(--destructive) l c h / 90%);
 
   /* Semantic Colors */
   --destructive: oklch(0.6368 0.2078 25.3313);
@@ -288,6 +312,15 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
+  /* ============================================
+   * State Layer（Material Design 3準拠）
+   * ============================================ */
+  --color-state-hover: var(--state-hover);
+  --color-state-focus: var(--state-focus);
+  --color-state-selected: var(--state-selected);
+  --color-primary-hover: var(--primary-hover);
+  --color-destructive-hover: var(--destructive-hover);
+
   /* Sidebar */
   --color-sidebar-background: var(--sidebar-background);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -397,17 +430,6 @@ canvas,
 svg {
   max-width: 100%;
   height: auto;
-}
-
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: var(--background);
-  height: 64px;
-  contain: layout;
 }
 
 /* Accessibility - focus states */

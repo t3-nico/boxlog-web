@@ -1,6 +1,15 @@
 'use client'
 
-import { Link } from '@/i18n/navigation'
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { Link, usePathname, useRouter } from '@/i18n/navigation'
+import { routing, type Locale } from '@/i18n/routing'
+import { ChevronDown, Globe } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 // SNS Icons
@@ -34,8 +43,20 @@ interface FooterProps {
   locale: string
 }
 
-export function Footer({ locale: _locale }: FooterProps) {
+const localeLabels: Record<Locale, string> = {
+  en: 'English',
+  ja: '日本語',
+}
+
+export function Footer({ locale }: FooterProps) {
   const t = useTranslations()
+  const tFooter = useTranslations('footer')
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const handleLocaleChange = (newLocale: Locale) => {
+    router.replace(pathname, { locale: newLocale })
+  }
 
   const navigation = {
     product: [
@@ -78,57 +99,29 @@ export function Footer({ locale: _locale }: FooterProps) {
   ]
 
   return (
-    <footer className="bg-background border-t">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
-        {/* CTA Section */}
-        <div className="mx-auto max-w-2xl text-center">
-          <hgroup>
-            <h2 className="text-primary text-base/7 font-semibold">{t('footer.cta.label')}</h2>
-            <p className="text-foreground mt-2 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-              {t('footer.cta.title')}
-            </p>
-          </hgroup>
-          <p className="text-muted-foreground mx-auto mt-6 max-w-xl text-lg/8 text-pretty">
-            {t('footer.cta.description')}
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <Link
-              href="/pricing"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2.5 text-sm font-semibold shadow-sm transition-colors"
-            >
-              {t('footer.cta.primaryButton')}
-            </Link>
-            <Link
-              href="/docs"
-              className="text-foreground hover:bg-muted rounded-md px-4 py-2.5 text-sm font-semibold transition-colors"
-            >
-              {t('footer.cta.secondaryButton')}
-            </Link>
-          </div>
-        </div>
-
+    <footer className="bg-background border-border border-t">
+      <div className="mx-auto max-w-7xl px-6 pt-12 pb-8 lg:px-8">
         {/* Navigation Grid */}
-        <div className="border-border mt-24 border-t pt-12 xl:grid xl:grid-cols-3 xl:gap-8">
+        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           {/* Logo */}
           <div>
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="inline-block">
               <span className="text-foreground text-2xl font-bold">BoxLog</span>
             </Link>
-            <p className="text-muted-foreground mt-4 max-w-xs text-sm">{t('marketing.hero.subtitle')}</p>
           </div>
 
-          {/* Links */}
+          {/* Links Grid */}
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Product */}
               <div>
-                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.product')}</h3>
+                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.product')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.product.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                        className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
                       >
                         {item.name}
                       </Link>
@@ -138,13 +131,13 @@ export function Footer({ locale: _locale }: FooterProps) {
               </div>
               {/* Resources */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.resources')}</h3>
+                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.resources')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.resources.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                        className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
                       >
                         {item.name}
                       </Link>
@@ -156,13 +149,13 @@ export function Footer({ locale: _locale }: FooterProps) {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Company */}
               <div>
-                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.company')}</h3>
+                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.company')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.company.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                        className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
                       >
                         {item.name}
                       </Link>
@@ -172,13 +165,13 @@ export function Footer({ locale: _locale }: FooterProps) {
               </div>
               {/* Legal */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.legal')}</h3>
+                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.legal')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                        className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
                       >
                         {item.name}
                       </Link>
@@ -192,7 +185,7 @@ export function Footer({ locale: _locale }: FooterProps) {
 
         {/* Bottom Bar */}
         <div className="border-border mt-12 border-t pt-8 md:flex md:items-center md:justify-between">
-          <div className="flex gap-x-6 md:order-2">
+          <div className="flex items-center gap-x-6 md:order-2">
             {socialLinks.map((item) => (
               <a
                 key={item.name}
@@ -202,12 +195,40 @@ export function Footer({ locale: _locale }: FooterProps) {
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <span className="sr-only">{item.name}</span>
-                <item.icon aria-hidden="true" className="size-6" />
+                <item.icon aria-hidden="true" className="size-5" />
               </a>
             ))}
+
+            {/* Settings */}
+            <div className="ml-4 flex items-center gap-x-3">
+              <ThemeToggle />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
+                    aria-label="Change language"
+                  >
+                    <Globe className="size-4" />
+                    <span>{localeLabels[locale as Locale]}</span>
+                    <ChevronDown className="size-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {routing.locales.map((loc) => (
+                    <DropdownMenuCheckboxItem
+                      key={loc}
+                      checked={locale === loc}
+                      onCheckedChange={() => handleLocaleChange(loc)}
+                    >
+                      {localeLabels[loc]}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
-          <p className="text-muted-foreground mt-8 text-sm/6 md:order-1 md:mt-0">
-            &copy; {new Date().getFullYear()} BoxLog, Inc. {t('footer.legal.copyright')}
+          <p className="text-muted-foreground mt-8 text-sm md:order-1 md:mt-0">
+            &copy; {new Date().getFullYear()} BoxLog, Inc. {tFooter('legal.copyright')}
           </p>
         </div>
       </div>

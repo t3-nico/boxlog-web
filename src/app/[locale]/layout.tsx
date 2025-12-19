@@ -32,7 +32,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Header locale={locale} />
+      <Header />
       <main id="main-content" role="main">
         {children}
       </main>
