@@ -37,7 +37,7 @@ export default async function PricingPage({ params }: PageProps) {
   const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return (
-    <div className="min-h-screen">
+    <div className="bg-background min-h-screen">
       <section className="py-24">
         <Container>
           <div className="mx-auto max-w-4xl text-center">

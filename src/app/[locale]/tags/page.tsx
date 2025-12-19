@@ -56,33 +56,31 @@ export default async function TagsPage({ params }: TagsPageProps) {
   const totalContent = allTags.reduce((sum, t) => sum + t.count, 0)
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-900">
+    <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="border-b border-neutral-200 bg-gradient-to-br from-neutral-50 to-white py-24 dark:border-neutral-800 dark:from-neutral-800 dark:to-neutral-900">
+      <section className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center justify-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-100 dark:bg-neutral-800">
-                <Hash className="h-6 w-6 text-neutral-900 dark:text-neutral-100" />
+              <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-xl">
+                <Hash className="text-foreground h-6 w-6" />
               </div>
             </div>
 
-            <h1 className="text-5xl font-semibold tracking-tight text-neutral-900 sm:text-6xl dark:text-white">
-              Explore Tags
-            </h1>
+            <h1 className="text-foreground text-5xl font-semibold tracking-tight sm:text-6xl">Explore Tags</h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-500 dark:text-neutral-400">
+            <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-lg">
               Browse {totalTags} topics covering {totalContent} pieces of content.
             </p>
 
             {/* Search Bar */}
             <div className="mx-auto mt-10 max-w-xl">
               <div className="relative">
-                <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+                <Search className="text-muted-foreground absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search tags..."
-                  className="w-full rounded-lg border border-neutral-200 bg-white py-3 pr-4 pl-12 text-neutral-900 placeholder-neutral-400 focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-neutral-100 dark:focus:ring-neutral-100"
+                  className="border-border bg-card text-foreground placeholder-muted-foreground focus:border-foreground focus:ring-ring w-full rounded-lg border py-3 pr-4 pl-12 focus:ring-1 focus:outline-none"
                 />
               </div>
             </div>
@@ -90,12 +88,12 @@ export default async function TagsPage({ params }: TagsPageProps) {
             {/* Stats */}
             <div className="mt-12 flex flex-wrap items-center justify-center gap-8">
               <div className="text-center">
-                <div className="text-3xl font-semibold text-neutral-900 dark:text-white">{totalTags}</div>
-                <div className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">Total Tags</div>
+                <div className="text-foreground text-3xl font-semibold">{totalTags}</div>
+                <div className="text-muted-foreground mt-1 text-sm">Total Tags</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-neutral-900 dark:text-white">{totalContent}</div>
-                <div className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">Tagged Items</div>
+                <div className="text-foreground text-3xl font-semibold">{totalContent}</div>
+                <div className="text-muted-foreground mt-1 text-sm">Tagged Items</div>
               </div>
             </div>
           </div>
@@ -108,8 +106,8 @@ export default async function TagsPage({ params }: TagsPageProps) {
           {/* Popular Tags */}
           <div className="mb-16">
             <div className="mb-8 flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-neutral-900 dark:text-white" />
-              <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">Popular Tags</h2>
+              <TrendingUp className="text-foreground h-5 w-5" />
+              <h2 className="text-foreground text-2xl font-semibold tracking-tight">Popular Tags</h2>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -117,22 +115,20 @@ export default async function TagsPage({ params }: TagsPageProps) {
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className="group relative overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 transition-all hover:border-neutral-900 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-800 dark:hover:border-neutral-100"
+                  className="group border-border bg-card hover:border-foreground relative overflow-hidden rounded-xl border p-6 transition-all hover:shadow-lg"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="mb-2 flex items-center gap-2">
-                        <Hash className="h-5 w-5 text-neutral-400 dark:text-neutral-500" />
-                        <h3 className="text-lg font-semibold text-neutral-900 group-hover:text-neutral-900 dark:text-white dark:group-hover:text-white">
-                          {tag.tag}
-                        </h3>
+                        <Hash className="text-muted-foreground h-5 w-5" />
+                        <h3 className="text-foreground text-lg font-semibold">{tag.tag}</h3>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
+                      <div className="text-muted-foreground flex items-center gap-4 text-sm">
                         {tag.blogCount > 0 && <span>{tag.blogCount} blog</span>}
                         {tag.releaseCount > 0 && <span>{tag.releaseCount} release</span>}
                       </div>
                     </div>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-100 text-sm font-semibold text-neutral-900 dark:bg-neutral-700 dark:text-white">
+                    <div className="bg-muted text-foreground flex h-10 w-10 items-center justify-center rounded-lg text-sm font-semibold">
                       {tag.count}
                     </div>
                   </div>
@@ -143,20 +139,20 @@ export default async function TagsPage({ params }: TagsPageProps) {
 
           {/* All Tags */}
           <div>
-            <h2 className="mb-8 text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">All Tags</h2>
+            <h2 className="text-foreground mb-8 text-2xl font-semibold tracking-tight">All Tags</h2>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {allTags.map((tag) => (
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className="group flex items-center justify-between rounded-lg border border-neutral-200 bg-white px-4 py-3 transition-all hover:border-neutral-900 hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-800 dark:hover:border-neutral-100 dark:hover:bg-neutral-700"
+                  className="group border-border bg-card hover:border-foreground hover:bg-muted flex items-center justify-between rounded-lg border px-4 py-3 transition-all"
                 >
                   <div className="flex items-center gap-2">
-                    <Hash className="h-4 w-4 text-neutral-400 dark:text-neutral-500" />
-                    <span className="font-medium text-neutral-900 dark:text-white">{tag.tag}</span>
+                    <Hash className="text-muted-foreground h-4 w-4" />
+                    <span className="text-foreground font-medium">{tag.tag}</span>
                   </div>
-                  <span className="text-sm text-neutral-500 dark:text-neutral-400">{tag.count}</span>
+                  <span className="text-muted-foreground text-sm">{tag.count}</span>
                 </Link>
               ))}
             </div>

@@ -146,7 +146,7 @@ export default async function DocPage({ params }: DocPageProps) {
     const relatedContent = await getRelatedContent(frontMatter.category, slug, 3)
 
     return (
-      <div className="flex">
+      <div className="bg-background flex min-h-screen py-8">
         {/* Main Content */}
         <div className="min-w-0 flex-1">
           <div className="max-w-4xl">
@@ -160,7 +160,7 @@ export default async function DocPage({ params }: DocPageProps) {
 
             {/* Related content */}
             {relatedContent.length > 0 && (
-              <aside className="mt-12 border-t border-gray-200 pt-8 dark:border-gray-700">
+              <aside className="border-border mt-12 border-t pt-8">
                 <Heading as="h2" size="xl" className="mb-6">
                   Related Articles
                 </Heading>
@@ -169,7 +169,7 @@ export default async function DocPage({ params }: DocPageProps) {
                     <a
                       key={related.slug}
                       href={`/docs/${related.slug}`}
-                      className="block rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-500 dark:hover:bg-blue-900"
+                      className="border-border bg-card hover:border-foreground hover:bg-muted block rounded-lg border p-4 transition-colors"
                     >
                       <Heading as="h3" size="lg" className="mb-2">
                         {related.frontMatter.title}
@@ -179,10 +179,7 @@ export default async function DocPage({ params }: DocPageProps) {
                       </Text>
                       <div className="mt-3 flex items-center gap-2">
                         {related.frontMatter.tags?.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-300"
-                          >
+                          <span key={tag} className="bg-tag-neutral-bg text-tag-neutral-text rounded px-2 py-1 text-xs">
                             {tag}
                           </span>
                         ))}
@@ -219,7 +216,7 @@ export default async function DocPage({ params }: DocPageProps) {
           </Text>
           <Link
             href="/docs"
-            className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-4 py-2 transition-colors"
           >
             Back to Documentation
           </Link>

@@ -6,7 +6,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
   // サーバーサイドで動的にナビゲーションを生成
   const navigation = generateDocsNavigation()
   return (
-    <div className="min-h-screen bg-white pt-16 dark:bg-gray-900">
+    <div className="bg-background min-h-screen pt-16">
       <Container>
         <div className="flex">
           {/* Left Sidebar - Navigation */}

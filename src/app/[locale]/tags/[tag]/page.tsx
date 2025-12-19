@@ -84,16 +84,16 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
   const isJa = locale === 'ja'
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-900">
+    <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="border-b border-neutral-200 bg-gradient-to-br from-neutral-50 to-white py-24 dark:border-neutral-800 dark:from-neutral-800 dark:to-neutral-900">
+      <section className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
             {/* Breadcrumb */}
             <nav className="mb-8" aria-label="Breadcrumb">
-              <ol className="flex items-center space-x-2 text-sm text-neutral-500 dark:text-neutral-400">
+              <ol className="text-muted-foreground flex items-center space-x-2 text-sm">
                 <li>
-                  <Link href="/" className="hover:text-neutral-700 dark:hover:text-neutral-300">
+                  <Link href="/" className="hover:text-foreground">
                     {isJa ? 'ホーム' : 'Home'}
                   </Link>
                 </li>
@@ -106,20 +106,15 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
                     />
                   </svg>
                 </li>
-                <li className="font-medium text-neutral-900 dark:text-neutral-100">#{decodedTag}</li>
+                <li className="text-foreground font-medium">#{decodedTag}</li>
               </ol>
             </nav>
 
             {/* Tag Header */}
             <div className="text-center">
               <div className="mb-6 inline-flex items-center justify-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-100 dark:bg-neutral-800">
-                  <svg
-                    className="h-6 w-6 text-neutral-900 dark:text-neutral-100"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-xl">
+                  <svg className="text-foreground h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -133,14 +128,14 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
                 </h1>
               </div>
 
-              <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-500 dark:text-neutral-400">
+              <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-lg">
                 {totalCount} {totalCount === 1 ? 'item' : 'items'} tagged with "{decodedTag}"
               </p>
 
               {/* Stats */}
               <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
                 {blogPosts.length > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+                  <div className="text-muted-foreground flex items-center gap-2 text-sm">
                     <FileText className="h-4 w-4" />
                     <span>
                       {blogPosts.length} blog {blogPosts.length === 1 ? 'post' : 'posts'}
@@ -148,7 +143,7 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
                   </div>
                 )}
                 {releases.length > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+                  <div className="text-muted-foreground flex items-center gap-2 text-sm">
                     <Megaphone className="h-4 w-4" />
                     <span>
                       {releases.length} {releases.length === 1 ? 'release' : 'releases'}
@@ -161,7 +156,7 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
               <div className="mt-10">
                 <Link
                   href="/tags"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-900 hover:text-neutral-600 dark:text-neutral-400 dark:hover:text-neutral-300"
+                  className="text-foreground hover:text-muted-foreground inline-flex items-center gap-2 text-sm font-semibold"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   All Tags
@@ -181,12 +176,10 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
               {/* Blog Posts */}
               {blogPosts.length > 0 && (
                 <div>
-                  <h2 className="mb-8 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+                  <h2 className="text-foreground mb-8 text-3xl font-semibold tracking-tight">
                     <FileText className="mr-2 inline-block h-6 w-6" />
                     {isJa ? 'ブログ' : 'Blog'}
-                    <span className="ml-2 text-lg font-normal text-neutral-500 dark:text-neutral-400">
-                      ({blogPosts.length})
-                    </span>
+                    <span className="text-muted-foreground ml-2 text-lg font-normal">({blogPosts.length})</span>
                   </h2>
                   <div className="space-y-8">
                     {blogPosts.map((post, index) => (
@@ -199,12 +192,10 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
               {/* Releases */}
               {releases.length > 0 && (
                 <div>
-                  <h2 className="mb-8 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+                  <h2 className="text-foreground mb-8 text-3xl font-semibold tracking-tight">
                     <Megaphone className="mr-2 inline-block h-6 w-6" />
                     {isJa ? 'リリース' : 'Releases'}
-                    <span className="ml-2 text-lg font-normal text-neutral-500 dark:text-neutral-400">
-                      ({releases.length})
-                    </span>
+                    <span className="text-muted-foreground ml-2 text-lg font-normal">({releases.length})</span>
                   </h2>
                   <div className="space-y-6">
                     {releases.map((release) => (
@@ -219,8 +210,8 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
             <div className="lg:col-span-1">
               <div className="sticky top-8 space-y-8">
                 {/* Popular Tags */}
-                <div className="rounded-xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-800">
-                  <h3 className="mb-4 text-lg font-semibold text-neutral-900 dark:text-white">Popular Tags</h3>
+                <div className="border-border bg-card rounded-xl border p-6">
+                  <h3 className="text-foreground mb-4 text-lg font-semibold">Popular Tags</h3>
                   <div className="flex flex-wrap gap-2">
                     {allTags.slice(0, 10).map((tagItem) => (
                       <Link
@@ -228,8 +219,8 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
                         href={`/tags/${encodeURIComponent(tagItem.tag)}`}
                         className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors ${
                           tagItem.tag === decodedTag
-                            ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900'
-                            : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600'
+                            ? 'bg-foreground text-background'
+                            : 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                         }`}
                       >
                         #{tagItem.tag}

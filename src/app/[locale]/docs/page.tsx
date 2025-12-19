@@ -40,10 +40,10 @@ export default async function DocsPage({ params }: PageProps) {
   const isJa = locale === 'ja'
 
   return (
-    <div className="space-y-12">
+    <div className="bg-background min-h-screen space-y-12 py-12">
       {/* Header Section */}
       <div className="space-y-4">
-        <Heading as="h1" size="4xl" className="text-gray-900 dark:text-gray-100">
+        <Heading as="h1" size="4xl" className="text-foreground">
           {t('navigation.docs')}
         </Heading>
         <Text size="xl" variant="muted" className="max-w-3xl">
@@ -55,15 +55,10 @@ export default async function DocsPage({ params }: PageProps) {
 
       {/* Quick Start Cards */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-lg border border-gray-200 bg-white p-6 transition-colors hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600">
+        <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
           <div className="mb-4 flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900">
-              <svg
-                className="h-6 w-6 text-blue-600 dark:text-blue-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+            <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+              <svg className="text-primary h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
@@ -74,23 +69,15 @@ export default async function DocsPage({ params }: PageProps) {
           <Text variant="muted" className="mb-4">
             {isJa ? '数分でBoxLogを始めましょう' : 'Get started with BoxLog in minutes'}
           </Text>
-          <Link
-            href="/docs/quick-start"
-            className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-          >
+          <Link href="/docs/quick-start" className="text-primary hover:text-primary/80 font-medium">
             {isJa ? 'ガイドを読む →' : 'Read guide →'}
           </Link>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 transition-colors hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600">
+        <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
           <div className="mb-4 flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900">
-              <svg
-                className="h-6 w-6 text-green-600 dark:text-green-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+            <div className="bg-success/10 flex h-10 w-10 items-center justify-center rounded-lg">
+              <svg className="text-success h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -106,23 +93,15 @@ export default async function DocsPage({ params }: PageProps) {
           <Text variant="muted" className="mb-4">
             {isJa ? 'APIドキュメントを探索する' : 'Explore our API documentation'}
           </Text>
-          <Link
-            href="/docs/api"
-            className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-          >
+          <Link href="/docs/api" className="text-primary hover:text-primary/80 font-medium">
             {isJa ? 'ドキュメントを見る →' : 'View docs →'}
           </Link>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 transition-colors hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600">
+        <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
           <div className="mb-4 flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900">
-              <svg
-                className="h-6 w-6 text-purple-600 dark:text-purple-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+            <div className="bg-info/10 flex h-10 w-10 items-center justify-center rounded-lg">
+              <svg className="text-info h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -138,18 +117,15 @@ export default async function DocsPage({ params }: PageProps) {
           <Text variant="muted" className="mb-4">
             {isJa ? 'ステップバイステップのチュートリアル' : 'Step-by-step tutorials'}
           </Text>
-          <Link
-            href="/docs/guides"
-            className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-          >
+          <Link href="/docs/guides" className="text-primary hover:text-primary/80 font-medium">
             {isJa ? 'ガイドを見る →' : 'Browse guides →'}
           </Link>
         </div>
       </div>
 
       {/* Help Section */}
-      <div className="rounded-lg bg-gray-50 p-8 text-center dark:bg-gray-800">
-        <Heading as="h2" size="xl" className="mb-4 text-gray-900 dark:text-gray-100">
+      <div className="bg-muted rounded-lg p-8 text-center">
+        <Heading as="h2" size="xl" className="text-foreground mb-4">
           {isJa ? 'お困りですか？' : 'Need Help?'}
         </Heading>
         <Text variant="muted" className="mx-auto mb-6 max-w-2xl">

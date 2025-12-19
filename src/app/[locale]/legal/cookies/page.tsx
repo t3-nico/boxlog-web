@@ -25,7 +25,7 @@ export default async function CookieSettingsPage({ params }: PageProps) {
   const t = await getTranslations({ locale })
 
   return (
-    <div className="container mx-auto max-w-4xl p-4 md:p-8">
+    <div className="bg-background container mx-auto min-h-screen max-w-4xl p-4 md:p-8">
       {/* ページヘッダー */}
       <div className="mb-8">
         <h1 className="mb-2 text-3xl font-bold">{t('legal.cookies.page.title')}</h1>

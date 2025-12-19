@@ -89,9 +89,7 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || ''
-    return (
-      <h1 id={id} className="mt-8 mb-4 text-3xl font-bold text-gray-900 first:mt-0 dark:text-gray-100" {...props} />
-    )
+    return <h1 id={id} className="text-foreground mt-8 mb-4 text-3xl font-bold first:mt-0" {...props} />
   },
   h2: (props: HeadingProps) => {
     const id =
@@ -100,7 +98,7 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || ''
-    return <h2 id={id} className="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100" {...props} />
+    return <h2 id={id} className="text-foreground mt-8 mb-4 text-2xl font-bold" {...props} />
   },
   h3: (props: HeadingProps) => {
     const id =
@@ -109,7 +107,7 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || ''
-    return <h3 id={id} className="mt-6 mb-3 text-xl font-bold text-gray-900 dark:text-gray-100" {...props} />
+    return <h3 id={id} className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />
   },
   h4: (props: HeadingProps) => {
     const id =
@@ -118,12 +116,12 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || ''
-    return <h4 id={id} className="mt-6 mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100" {...props} />
+    return <h4 id={id} className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />
   },
-  p: (props: ParagraphProps) => <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300" {...props} />,
+  p: (props: ParagraphProps) => <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />,
   a: (props: AnchorProps) => (
     <a
-      className="text-blue-600 underline underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+      className="text-link hover:text-link-hover underline underline-offset-2"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props}
@@ -131,27 +129,19 @@ const mdxComponents = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="my-6 rounded-r-lg border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-gray-700 italic dark:border-blue-400 dark:bg-blue-900 dark:text-gray-300"
+      className="border-info bg-info/10 text-foreground/90 my-6 rounded-r-lg border-l-4 py-2 pl-4 italic"
       {...props}
     />
   ),
   code: (props: CodeProps) => (
-    <code
-      className="rounded bg-gray-100 px-2 py-1 font-mono text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-      {...props}
-    />
+    <code className="bg-code-bg text-code-text rounded px-2 py-1 font-mono text-sm" {...props} />
   ),
   pre: (props: PreProps) => (
-    <pre
-      className="my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 dark:bg-gray-800"
-      {...props}
-    />
+    <pre className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm" {...props} />
   ),
-  ul: (props: ListProps) => (
-    <ul className="mb-4 list-inside list-disc space-y-2 text-gray-700 dark:text-gray-300" {...props} />
-  ),
+  ul: (props: ListProps) => <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />,
   ol: (props: OrderedListProps) => (
-    <ol className="mb-4 list-inside list-decimal space-y-2 text-gray-700 dark:text-gray-300" {...props} />
+    <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2" {...props} />
   ),
   li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
   img: (props: ImageProps) => (
@@ -169,23 +159,17 @@ const mdxComponents = {
   ),
   table: (props: TableProps) => (
     <div className="my-6 overflow-x-auto">
-      <table
-        className="min-w-full divide-y divide-gray-200 rounded-lg border border-gray-200 dark:divide-gray-700 dark:border-gray-700"
-        {...props}
-      />
+      <table className="divide-border border-border min-w-full divide-y rounded-lg border" {...props} />
     </div>
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-gray-50 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase dark:bg-gray-800 dark:text-gray-400"
+      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
       {...props}
     />
   ),
   td: (props: TdProps) => (
-    <td
-      className="border-t border-gray-200 px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:border-gray-700 dark:text-gray-100"
-      {...props}
-    />
+    <td className="border-border text-foreground border-t px-6 py-4 text-sm whitespace-nowrap" {...props} />
   ),
   Callout: ({
     type = 'info',
@@ -195,12 +179,10 @@ const mdxComponents = {
     children: React.ReactNode
   }) => {
     const styles = {
-      info: 'bg-blue-50 dark:bg-blue-900 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200',
-      warning:
-        'bg-yellow-50 dark:bg-yellow-900 border-yellow-200 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200',
-      error: 'bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700 text-red-800 dark:text-red-200',
-      success:
-        'bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200',
+      info: 'bg-info/10 border-info/30 text-info',
+      warning: 'bg-warning/10 border-warning/30 text-warning',
+      error: 'bg-destructive/10 border-destructive/30 text-destructive',
+      success: 'bg-success/10 border-success/30 text-success',
     }
 
     const icons = {
@@ -295,35 +277,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="min-h-screen">
-        <article className="bg-white py-8 dark:bg-gray-900">
+      <div className="bg-background min-h-screen">
+        <article className="py-8">
           <Container>
             <div className="flex justify-center gap-8">
               <div className="w-[700px] flex-shrink-0 pt-16">
                 <div className="mb-8">
                   <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
-                    <Link
-                      href="/"
-                      className="text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-400"
-                    >
+                    <Link href="/" className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors">
                       Home
                     </Link>
-                    <span className="text-gray-300 dark:text-gray-700">/</span>
-                    <Link
-                      href="/blog"
-                      className="text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-400"
-                    >
+                    <span className="text-border">/</span>
+                    <Link href="/blog" className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors">
                       Blog
                     </Link>
-                    <span className="text-gray-300 dark:text-gray-700">/</span>
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">{post.frontMatter.title}</span>
+                    <span className="text-border">/</span>
+                    <span className="text-foreground font-semibold">{post.frontMatter.title}</span>
                   </nav>
                 </div>
 
-                <time
-                  className="mb-2 block text-sm text-gray-500 dark:text-gray-400"
-                  dateTime={post.frontMatter.publishedAt}
-                >
+                <time className="text-muted-foreground mb-2 block text-sm" dateTime={post.frontMatter.publishedAt}>
                   {new Date(post.frontMatter.publishedAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -331,7 +304,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   })}
                 </time>
 
-                <h1 className="mb-8 text-4xl font-bold text-gray-900 dark:text-gray-100">{post.frontMatter.title}</h1>
+                <h1 className="text-foreground mb-8 text-4xl font-bold">{post.frontMatter.title}</h1>
 
                 {post.frontMatter.coverImage && (
                   <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
@@ -350,50 +323,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <MDXRemote source={processedContent} components={mdxComponents} />
                 </div>
 
-                <div className="mt-8 border-t border-gray-200 pt-6 dark:border-gray-700"></div>
+                <div className="border-border mt-8 border-t pt-6"></div>
 
                 <div className="mt-6 space-y-6">
                   <div>
-                    <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100">Tags Used</h3>
+                    <h3 className="text-foreground mb-3 text-lg font-semibold">Tags Used</h3>
                     <div className="flex flex-wrap gap-2">
-                      {post.frontMatter.tags.map((tag) => {
-                        const getTagColor = (tag: string) => {
-                          const colors = [
-                            'bg-blue-100 text-blue-800 hover:bg-blue-200',
-                            'bg-green-100 text-green-800 hover:bg-green-200',
-                            'bg-purple-100 text-purple-800 hover:bg-purple-200',
-                            'bg-pink-100 text-pink-800 hover:bg-pink-200',
-                            'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
-                            'bg-indigo-100 text-indigo-800 hover:bg-indigo-200',
-                            'bg-red-100 text-red-800 hover:bg-red-200',
-                            'bg-teal-100 text-teal-800 hover:bg-teal-200',
-                            'bg-orange-100 text-orange-800 hover:bg-orange-200',
-                            'bg-cyan-100 text-cyan-800 hover:bg-cyan-200',
-                          ]
-
-                          let hash = 0
-                          for (let i = 0; i < tag.length; i++) {
-                            hash = tag.charCodeAt(i) + ((hash << 5) - hash)
-                          }
-                          const colorIndex = Math.abs(hash) % colors.length
-                          return colors[colorIndex]
-                        }
-
-                        return (
-                          <Link
-                            key={tag}
-                            href={`/tags/${encodeURIComponent(tag)}`}
-                            className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors ${getTagColor(tag)}`}
-                          >
-                            #{tag}
-                          </Link>
-                        )
-                      })}
+                      {post.frontMatter.tags.map((tag) => (
+                        <Link
+                          key={tag}
+                          href={`/tags/${encodeURIComponent(tag)}`}
+                          className="bg-tag-neutral-bg text-tag-neutral-text hover:bg-tag-neutral-hover inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors"
+                        >
+                          #{tag}
+                        </Link>
+                      ))}
                     </div>
                   </div>
 
                   <div>
-                    <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100">{t('title')}</h3>
+                    <h3 className="text-foreground mb-3 text-lg font-semibold">{t('title')}</h3>
                     <ShareButton title={post.frontMatter.title} slug={slug} />
                   </div>
                 </div>

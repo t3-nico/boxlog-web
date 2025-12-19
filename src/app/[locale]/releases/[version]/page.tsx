@@ -95,25 +95,16 @@ export async function generateStaticParams() {
 
 // MDX Components
 const mdxComponents = {
-  h1: (props: HeadingProps) => (
-    <h1 className="mt-8 mb-4 text-3xl font-bold text-gray-900 first:mt-0 dark:text-gray-100" {...props} />
-  ),
+  h1: (props: HeadingProps) => <h1 className="text-foreground mt-8 mb-4 text-3xl font-bold first:mt-0" {...props} />,
   h2: (props: HeadingProps) => (
-    <h2
-      className="mt-8 mb-4 border-b border-gray-200 pb-2 text-2xl font-bold text-gray-900 dark:border-gray-700 dark:text-gray-100"
-      {...props}
-    />
+    <h2 className="border-border text-foreground mt-8 mb-4 border-b pb-2 text-2xl font-bold" {...props} />
   ),
-  h3: (props: HeadingProps) => (
-    <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900 dark:text-gray-100" {...props} />
-  ),
-  h4: (props: HeadingProps) => (
-    <h4 className="mt-6 mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100" {...props} />
-  ),
-  p: (props: ParagraphProps) => <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300" {...props} />,
+  h3: (props: HeadingProps) => <h3 className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />,
+  h4: (props: HeadingProps) => <h4 className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />,
+  p: (props: ParagraphProps) => <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />,
   a: (props: AnchorProps) => (
     <a
-      className="text-blue-600 underline underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+      className="text-link hover:text-link-hover underline underline-offset-2"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props}
@@ -121,27 +112,19 @@ const mdxComponents = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="my-6 rounded-r-lg border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-gray-700 italic dark:border-blue-400 dark:bg-blue-900 dark:text-gray-300"
+      className="border-info bg-info/10 text-foreground/90 my-6 rounded-r-lg border-l-4 py-2 pl-4 italic"
       {...props}
     />
   ),
   code: (props: CodeProps) => (
-    <code
-      className="rounded bg-gray-100 px-2 py-1 font-mono text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-      {...props}
-    />
+    <code className="bg-code-bg text-code-text rounded px-2 py-1 font-mono text-sm" {...props} />
   ),
   pre: (props: PreProps) => (
-    <pre
-      className="my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 dark:bg-gray-800"
-      {...props}
-    />
+    <pre className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm" {...props} />
   ),
-  ul: (props: ListProps) => (
-    <ul className="mb-4 list-inside list-disc space-y-2 text-gray-700 dark:text-gray-300" {...props} />
-  ),
+  ul: (props: ListProps) => <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />,
   ol: (props: OrderedListProps) => (
-    <ol className="mb-4 list-inside list-decimal space-y-2 text-gray-700 dark:text-gray-300" {...props} />
+    <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2" {...props} />
   ),
   li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
   img: (props: ImageProps) => (
@@ -156,17 +139,17 @@ const mdxComponents = {
   ),
   table: (props: TableProps) => (
     <div className="my-6 overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200 rounded-lg border border-gray-200" {...props} />
+      <table className="divide-border border-border min-w-full divide-y rounded-lg border" {...props} />
     </div>
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-gray-50 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
       {...props}
     />
   ),
   td: (props: TdProps) => (
-    <td className="border-t border-gray-200 px-6 py-4 text-sm whitespace-nowrap text-gray-900" {...props} />
+    <td className="border-border text-foreground border-t px-6 py-4 text-sm whitespace-nowrap" {...props} />
   ),
 
   // Release notes specific components
@@ -191,10 +174,10 @@ const mdxComponents = {
 
   // Warning component
   Warning: ({ children }: { children: React.ReactNode }) => (
-    <div className="my-6 rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-700 dark:bg-yellow-900">
+    <div className="border-warning/30 bg-warning/10 my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-yellow-600 dark:text-yellow-400"
+          className="text-warning mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -206,17 +189,17 @@ const mdxComponents = {
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L5.35 16.5c-.77.833.192 2.5 1.732 2.5z"
           />
         </svg>
-        <div className="prose prose-sm max-w-none text-yellow-800 dark:text-yellow-200">{children}</div>
+        <div className="prose prose-sm text-warning max-w-none">{children}</div>
       </div>
     </div>
   ),
 
   // Info component
   Info: ({ children }: { children: React.ReactNode }) => (
-    <div className="my-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-900">
+    <div className="border-info/30 bg-info/10 my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-blue-600 dark:text-blue-400"
+          className="text-info mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -228,17 +211,17 @@ const mdxComponents = {
             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <div className="prose prose-sm max-w-none text-blue-800 dark:text-blue-200">{children}</div>
+        <div className="prose prose-sm text-info max-w-none">{children}</div>
       </div>
     </div>
   ),
 
   // Migration guide
   Migration: ({ children }: { children: React.ReactNode }) => (
-    <div className="my-6 rounded-lg border border-purple-200 bg-purple-50 p-4 dark:border-purple-700 dark:bg-purple-900">
+    <div className="border-primary/30 bg-primary/10 my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-purple-600 dark:text-purple-400"
+          className="text-primary mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -251,8 +234,8 @@ const mdxComponents = {
           />
         </svg>
         <div>
-          <h4 className="mb-2 font-semibold text-purple-800 dark:text-purple-200">Migration Information</h4>
-          <div className="prose prose-sm max-w-none text-purple-700 dark:text-purple-300">{children}</div>
+          <h4 className="text-primary mb-2 font-semibold">Migration Information</h4>
+          <div className="prose prose-sm text-primary/80 max-w-none">{children}</div>
         </div>
       </div>
     </div>
@@ -298,13 +281,13 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
       {/* Structured data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="min-h-screen">
+      <div className="bg-background min-h-screen">
         {/* Release header */}
         <ReleaseHeader frontMatter={release.frontMatter} version={params.version} />
 
         {/* Cover image */}
         {release.frontMatter.coverImage && (
-          <section className="bg-gray-50 py-8 dark:bg-gray-800">
+          <section className="py-8">
             <Container>
               <div className="mx-auto max-w-4xl">
                 <Image
@@ -321,7 +304,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
         )}
 
         {/* Release content */}
-        <article id="changes" className="bg-white py-16 dark:bg-gray-900">
+        <article id="changes" className="py-16">
           <Container>
             <div className="mx-auto max-w-4xl">
               <div className="prose prose-lg max-w-none">
@@ -329,24 +312,24 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               </div>
 
               {/* Release end marker */}
-              <div className="mt-16 border-t border-gray-200 pt-8 dark:border-gray-700">
+              <div className="border-border mt-16 border-t pt-8">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
-                    <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div className="bg-border h-2 w-2 rounded-full"></div>
+                    <div className="bg-border h-2 w-2 rounded-full"></div>
+                    <div className="bg-border h-2 w-2 rounded-full"></div>
                   </div>
                 </div>
               </div>
 
               {/* Release information footer */}
-              <div className="mt-8 rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+              <div className="bg-surface-container mt-8 rounded-xl p-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="mb-1 text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-muted-foreground mb-1 text-sm">
                       This release takes approximately <strong>{release.readingTime} minutes</strong> to read
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-muted-foreground text-sm">
                       Release date: {new Date(release.frontMatter.date).toLocaleDateString('en-US')}
                       {release.frontMatter.author && (
                         <span className="ml-4">Release manager: {release.frontMatter.author}</span>
@@ -355,10 +338,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <Link
-                      href="/releases"
-                      className="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-                    >
+                    <Link href="/releases" className="text-link hover:text-link-hover text-sm font-medium">
                       View all releases
                     </Link>
 
@@ -366,7 +346,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                       href={`https://github.com/yoursaas/platform/releases/tag/v${release.frontMatter.version}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium text-gray-600 hover:text-gray-800"
+                      className="text-muted-foreground hover:text-foreground text-sm font-medium"
                     >
                       View on GitHub
                     </a>
@@ -379,12 +359,12 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
         {/* Related releases */}
         {relatedReleases.length > 0 && (
-          <section className="bg-gray-50 py-16">
+          <section className="py-16">
             <Container>
               <div className="mx-auto max-w-6xl">
                 <div className="mb-8">
-                  <h2 className="mb-4 text-2xl font-bold text-gray-900">Related Releases</h2>
-                  <p className="text-gray-600">Other updates related to this release</p>
+                  <h2 className="text-foreground mb-4 text-2xl font-bold">Related Releases</h2>
+                  <p className="text-muted-foreground">Other updates related to this release</p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -396,7 +376,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 <div className="mt-8 text-center">
                   <Link
                     href="/releases"
-                    className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                    className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 text-sm font-medium transition-colors"
                   >
                     <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -410,18 +390,18 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
         )}
 
         {/* Feedback & Support */}
-        <section className="border-t border-blue-100 bg-blue-50 py-16">
+        <section className="py-16">
           <Container>
             <div className="mx-auto max-w-4xl text-center">
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">Share Your Feedback</h2>
-              <p className="mb-8 text-gray-600">
+              <h2 className="text-foreground mb-4 text-2xl font-bold">Share Your Feedback</h2>
+              <p className="text-muted-foreground mb-8">
                 If you have any questions or feedback about this new feature, please feel free to share it with us.
               </p>
 
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <a
                   href="mailto:support@yoursaas.com"
-                  className="inline-flex items-center rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
                 >
                   <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -436,7 +416,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
                 <Link
                   href="/feedback"
-                  className="inline-flex items-center rounded-lg border border-gray-300 px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                  className="border-border text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 font-medium transition-colors"
                 >
                   <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
