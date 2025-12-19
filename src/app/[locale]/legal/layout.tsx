@@ -3,11 +3,11 @@
  *
  * @description
  * 法的文書ページ（/legal/privacy, /legal/terms等）で使用。
- * ナビゲーションとフッターを含む軽量レイアウト。
+ * 親レイアウトの共通Header/Footerを使用し、ナビゲーションのみ追加。
  */
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import type { ReactNode } from 'react'
 
 import { useTranslations } from 'next-intl'
@@ -17,91 +17,64 @@ interface LegalLayoutProps {
 }
 
 export default function LegalLayout({ children }: LegalLayoutProps) {
-  return <LegalLayoutContent>{children}</LegalLayoutContent>
-}
-
-/**
- * 法的文書ページ共通コンテンツ
- * - Privacy Policy、Terms of Service、OSS Creditsで共有
- * - ナビゲーションリンク、最終更新日時を表示
- * - i18n対応（日本語/英語）
- */
-function LegalLayoutContent({ children }: LegalLayoutProps) {
   const t = useTranslations()
 
   return (
-    <div className="bg-background min-h-screen">
-      {/* ヘッダーナビゲーション */}
-      <header className="border-b-border bg-card border-b">
+    <div className="bg-background">
+      {/* 法的ページ内ナビゲーション */}
+      <nav className="border-border border-b">
         <div className="container mx-auto max-w-6xl px-4 py-4 md:px-8">
-          <nav className="flex flex-wrap items-center gap-4">
-            <Link href="/" className="text-muted-foreground text-sm transition-colors hover:underline">
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              href="/"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
+            >
               {t('legal.navigation.backToApp')}
             </Link>
-            <div className="border-l-border ml-auto flex flex-wrap gap-4 border-l pl-4">
-              <Link href="/legal/privacy" className="text-muted-foreground text-sm transition-colors hover:underline">
-                {t('legal.navigation.privacy')}
-              </Link>
-              <Link href="/legal/terms" className="text-muted-foreground text-sm transition-colors hover:underline">
-                {t('legal.navigation.terms')}
-              </Link>
-              <Link href="/legal/tokushoho" className="text-muted-foreground text-sm transition-colors hover:underline">
-                {t('legal.navigation.tokushoho')}
-              </Link>
-              <Link href="/legal/security" className="text-muted-foreground text-sm transition-colors hover:underline">
-                {t('legal.navigation.security')}
-              </Link>
-              <Link href="/legal/cookies" className="text-muted-foreground text-sm transition-colors hover:underline">
-                {t('legal.navigation.cookies')}
-              </Link>
+            <div className="border-border ml-auto flex flex-wrap gap-4 border-l pl-4">
               <Link
-                href="/legal/oss-credits"
-                className="text-muted-foreground text-sm transition-colors hover:underline"
+                href="/legal/privacy"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
               >
-                {t('legal.navigation.ossCredits')}
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
-
-      {/* メインコンテンツ */}
-      <main>{children}</main>
-
-      {/* フッター */}
-      <footer className="border-t-border bg-muted mt-16 border-t">
-        <div className="container mx-auto max-w-6xl px-4 py-8 md:px-8">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="text-muted-foreground text-sm">
-              <p className="mb-1">{t('legal.footer.copyright')}</p>
-              <p>{t('legal.footer.contact', { email: 'support@boxlog.app' })}</p>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/legal/privacy" className="text-muted-foreground text-sm transition-colors hover:underline">
                 {t('legal.navigation.privacy')}
               </Link>
-              <Link href="/legal/terms" className="text-muted-foreground text-sm transition-colors hover:underline">
+              <Link
+                href="/legal/terms"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
+              >
                 {t('legal.navigation.terms')}
               </Link>
-              <Link href="/legal/tokushoho" className="text-muted-foreground text-sm transition-colors hover:underline">
+              <Link
+                href="/legal/tokushoho"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
+              >
                 {t('legal.navigation.tokushoho')}
               </Link>
-              <Link href="/legal/security" className="text-muted-foreground text-sm transition-colors hover:underline">
+              <Link
+                href="/legal/security"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
+              >
                 {t('legal.navigation.security')}
               </Link>
-              <Link href="/legal/cookies" className="text-muted-foreground text-sm transition-colors hover:underline">
+              <Link
+                href="/legal/cookies"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
+              >
                 {t('legal.navigation.cookies')}
               </Link>
               <Link
                 href="/legal/oss-credits"
-                className="text-muted-foreground text-sm transition-colors hover:underline"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors hover:underline"
               >
                 {t('legal.navigation.ossCredits')}
               </Link>
             </div>
           </div>
         </div>
-      </footer>
+      </nav>
+
+      {/* メインコンテンツ */}
+      {children}
     </div>
   )
 }
