@@ -1,8 +1,34 @@
 'use client'
 
 import { Link } from '@/i18n/navigation'
-import { Github, Twitter, Youtube } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+
+// SNS Icons
+const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+    <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
+  </svg>
+)
+
+const GitHubIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+    <path
+      fillRule="evenodd"
+      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+      clipRule="evenodd"
+    />
+  </svg>
+)
+
+const YouTubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+    <path
+      fillRule="evenodd"
+      d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"
+      clipRule="evenodd"
+    />
+  </svg>
+)
 
 interface FooterProps {
   locale: string
@@ -13,119 +39,176 @@ export function Footer({ locale: _locale }: FooterProps) {
 
   const navigation = {
     product: [
-      { name: t('common.navigation.blog'), href: '/blog' },
-      { name: t('common.navigation.docs'), href: '/docs' },
+      { name: t('common.navigation.pricing'), href: '/pricing' },
       { name: t('common.navigation.releases'), href: '/releases' },
+    ],
+    resources: [
+      { name: t('common.navigation.docs'), href: '/docs' },
+      { name: t('common.navigation.blog'), href: '/blog' },
     ],
     company: [
       { name: t('common.navigation.about'), href: '/about' },
       { name: t('common.navigation.contact'), href: '/contact' },
     ],
+    legal: [
+      { name: t('footer.legal.termsOfService'), href: '/legal/terms' },
+      { name: t('footer.legal.privacyPolicy'), href: '/legal/privacy' },
+      { name: t('footer.legal.cookies'), href: '/legal/cookies' },
+      { name: t('footer.legal.security'), href: '/legal/security' },
+      { name: t('footer.legal.tokushoho'), href: '/legal/tokushoho' },
+    ],
   }
 
   const socialLinks = [
     {
-      name: 'Twitter',
-      href: 'https://twitter.com',
-      icon: Twitter,
+      name: 'X',
+      href: 'https://x.com/boxlog',
+      icon: XIcon,
     },
     {
       name: 'GitHub',
-      href: 'https://github.com',
-      icon: Github,
+      href: 'https://github.com/boxlog',
+      icon: GitHubIcon,
     },
     {
       name: 'YouTube',
-      href: 'https://youtube.com',
-      icon: Youtube,
+      href: 'https://youtube.com/@boxlog',
+      icon: YouTubeIcon,
     },
   ]
 
   return (
-    <footer className="bg-background">
-      <div className="mx-auto max-w-7xl px-6 pt-16 pb-8 sm:pt-24 lg:px-8 lg:pt-32">
-        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          {/* Brand section */}
-          <div className="space-y-8">
-            <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold">BoxLog</span>
+    <footer className="bg-background border-t">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
+        {/* CTA Section */}
+        <div className="mx-auto max-w-2xl text-center">
+          <hgroup>
+            <h2 className="text-primary text-base/7 font-semibold">{t('footer.cta.label')}</h2>
+            <p className="text-foreground mt-2 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+              {t('footer.cta.title')}
+            </p>
+          </hgroup>
+          <p className="text-muted-foreground mx-auto mt-6 max-w-xl text-lg/8 text-pretty">
+            {t('footer.cta.description')}
+          </p>
+          <div className="mt-8 flex justify-center gap-4">
+            <Link
+              href="/pricing"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2.5 text-sm font-semibold shadow-sm transition-colors"
+            >
+              {t('footer.cta.primaryButton')}
             </Link>
-            <p className="text-muted-foreground text-sm leading-6 text-balance">{t('marketing.hero.subtitle')}</p>
-            <div className="flex gap-x-6">
-              {socialLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
+            <Link
+              href="/docs"
+              className="text-foreground hover:bg-muted rounded-md px-4 py-2.5 text-sm font-semibold transition-colors"
+            >
+              {t('footer.cta.secondaryButton')}
+            </Link>
+          </div>
+        </div>
+
+        {/* Navigation Grid */}
+        <div className="border-border mt-24 border-t pt-12 xl:grid xl:grid-cols-3 xl:gap-8">
+          {/* Logo */}
+          <div>
+            <Link href="/" className="flex items-center">
+              <span className="text-foreground text-2xl font-bold">BoxLog</span>
+            </Link>
+            <p className="text-muted-foreground mt-4 max-w-xs text-sm">{t('marketing.hero.subtitle')}</p>
           </div>
 
-          {/* Navigation links */}
+          {/* Links */}
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-            {/* Product */}
-            <div>
-              <h3 className="text-sm leading-6 font-semibold">{t('footer.sections.product')}</h3>
-              <ul role="list" className="mt-6 space-y-4">
-                {navigation.product.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              {/* Product */}
+              <div>
+                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.product')}</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.product.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Resources */}
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.resources')}</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.resources.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-
-            {/* Company */}
-            <div>
-              <h3 className="text-sm leading-6 font-semibold">{t('footer.sections.company')}</h3>
-              <ul role="list" className="mt-6 space-y-4">
-                {navigation.company.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              {/* Company */}
+              <div>
+                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.company')}</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.company.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Legal */}
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-foreground text-sm/6 font-semibold">{t('footer.sections.legal')}</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.legal.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-muted-foreground hover:text-foreground text-sm/6 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-border mt-16 border-t pt-8 sm:mt-20 lg:mt-24">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-muted-foreground text-sm leading-6">
-              &copy; {new Date().getFullYear()} BoxLog, Inc. {t('footer.legal.copyright')}
-            </p>
-            <div className="flex gap-x-6">
-              <Link
-                href="/legal/privacy"
-                className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
+        {/* Bottom Bar */}
+        <div className="border-border mt-12 border-t pt-8 md:flex md:items-center md:justify-between">
+          <div className="flex gap-x-6 md:order-2">
+            {socialLinks.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                {t('footer.legal.privacyPolicy')}
-              </Link>
-              <Link
-                href="/legal/terms"
-                className="text-muted-foreground hover:text-foreground text-sm leading-6 transition-colors"
-              >
-                {t('footer.legal.termsOfService')}
-              </Link>
-            </div>
+                <span className="sr-only">{item.name}</span>
+                <item.icon aria-hidden="true" className="size-6" />
+              </a>
+            ))}
           </div>
+          <p className="text-muted-foreground mt-8 text-sm/6 md:order-1 md:mt-0">
+            &copy; {new Date().getFullYear()} BoxLog, Inc. {t('footer.legal.copyright')}
+          </p>
         </div>
       </div>
     </footer>
