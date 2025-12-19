@@ -47,9 +47,9 @@ export function Text({ as: Component = 'p', size = 'md', variant = 'default', ch
   }
 
   const variantClasses = {
-    default: 'text-neutral-900 dark:text-neutral-100',
-    muted: 'text-neutral-600 dark:text-neutral-400',
-    light: 'text-neutral-500 dark:text-neutral-500',
+    default: 'text-foreground',
+    muted: 'text-muted-foreground',
+    light: 'text-muted-foreground',
   }
 
   return <Component className={`${sizeClasses[size]} ${variantClasses[variant]} ${className}`}>{children}</Component>
