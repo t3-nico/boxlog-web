@@ -186,20 +186,62 @@ export async function getContentBySlug(category: ContentCategory, slug: string):
 }
 
 /**
- * 関連コンテンツを取得（同じカテゴリーから最大3件）
+ * 関連性スコアを計算
+ * - 共通タグ: 各タグにつき +2点
+ * - 同じカテゴリ: +1点
+ * - relatedDocsで指定されている: +5点
+ */
+function calculateRelevanceScore(current: ContentData, candidate: ContentData): number {
+  let score = 0
+  const currentTags = current.frontMatter.tags || []
+  const candidateTags = candidate.frontMatter.tags || []
+
+  // 共通タグのスコア
+  const commonTags = currentTags.filter((tag) => candidateTags.includes(tag))
+  score += commonTags.length * 2
+
+  // 同じカテゴリのスコア
+  if (current.frontMatter.category === candidate.frontMatter.category) {
+    score += 1
+  }
+
+  // relatedDocsで明示的に指定されている場合
+  const relatedDocs = current.frontMatter.ai?.relatedDocs || []
+  if (relatedDocs.some((doc) => doc.includes(candidate.slug))) {
+    score += 5
+  }
+
+  return score
+}
+
+/**
+ * 関連コンテンツを取得（スコアリングで関連性の高い順に取得）
  */
 export async function getRelatedContent(
-  category: string,
+  _category: string, // 後方互換性のため引数は残す
   currentSlug: string,
   limit: number = 3
 ): Promise<ContentData[]> {
   const allContent = await getAllContent()
 
-  const relatedContent = allContent
-    .filter((content) => content.frontMatter.category === category && content.slug !== currentSlug)
+  // 現在の記事を取得
+  const currentContent = allContent.find((content) => content.slug === currentSlug)
+  if (!currentContent) {
+    return []
+  }
+
+  // 自分自身を除外してスコアリング
+  const scoredContent = allContent
+    .filter((content) => content.slug !== currentSlug)
+    .map((content) => ({
+      content,
+      score: calculateRelevanceScore(currentContent, content),
+    }))
+    .filter(({ score }) => score > 0) // スコア0は除外
+    .sort((a, b) => b.score - a.score)
     .slice(0, limit)
 
-  return relatedContent
+  return scoredContent.map(({ content }) => content)
 }
 
 /**
