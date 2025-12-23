@@ -10,16 +10,16 @@ import { useState } from 'react'
 interface PostCardProps {
   post: BlogPostMeta
   priority?: boolean
-  layout?: 'horizontal' | 'vertical'
+  layout?: 'horizontal' | 'vertical' | 'list'
   locale?: string
 }
 
 export function PostCard({ post, priority = false, layout = 'horizontal', locale = 'en' }: PostCardProps) {
   const [imageError, setImageError] = useState(false)
 
-  // Function to determine tag color - using semantic tokens
+  // Function to determine tag color - using semantic tokens (M3準拠)
   const getTagColor = (_tag: string) => {
-    return 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+    return 'bg-muted text-muted-foreground hover:bg-state-hover'
   }
 
   const formatDate = (dateString: string) => {
@@ -32,6 +32,48 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
   }
 
   const formattedDate = formatDate(post.frontMatter.publishedAt)
+
+  // List layout (Claude blog style): date, category, title in a clean row
+  if (layout === 'list') {
+    return (
+      <article className="group py-6 first:pt-0">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
+          {/* 日付 */}
+          <div className="text-muted-foreground w-28 flex-shrink-0 text-sm">
+            <time dateTime={post.frontMatter.publishedAt}>{formattedDate}</time>
+          </div>
+
+          {/* タグ（最大3つ + 残り数） */}
+          <div className="flex w-44 flex-shrink-0 flex-wrap items-center gap-1.5">
+            {post.frontMatter.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="bg-muted text-muted-foreground inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium"
+              >
+                {tag}
+              </span>
+            ))}
+            {post.frontMatter.tags.length > 3 && (
+              <span className="text-muted-foreground text-xs">+{post.frontMatter.tags.length - 3}</span>
+            )}
+          </div>
+
+          {/* タイトル */}
+          <div className="flex-1">
+            <Link href={`/blog/${post.slug}`} className="group/link">
+              <Heading
+                as="h2"
+                size="md"
+                className="text-foreground group-hover/link:text-primary font-medium transition-colors"
+              >
+                {post.frontMatter.title}
+              </Heading>
+            </Link>
+          </div>
+        </div>
+      </article>
+    )
+  }
 
   if (layout === 'vertical') {
     // Vertical layout (for featured articles): image on top, content below
@@ -70,19 +112,12 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
           {/* Tags */}
           <div className="mb-4 flex flex-wrap gap-2">
             {post.frontMatter.tags.map((tag) => (
-              <button
+              <span
                 key={tag}
-                onClick={(e) => {
-                  e.preventDefault()
-                  // タグクリック処理をここに追加
-                  console.log('Tag clicked:', tag)
-                }}
-                className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors hover:opacity-80 ${getTagColor(
-                  tag
-                )}`}
+                className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
               >
                 #{tag}
-              </button>
+              </span>
             ))}
           </div>
 
@@ -133,19 +168,12 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
             {/* Tags */}
             <div className="mb-3 flex flex-wrap gap-2">
               {post.frontMatter.tags.map((tag) => (
-                <button
+                <span
                   key={tag}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    // タグクリック処理をここに追加
-                    console.log('Tag clicked:', tag)
-                  }}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-sm font-medium transition-colors hover:opacity-80 ${getTagColor(
-                    tag
-                  )}`}
+                  className={`inline-flex items-center rounded-md px-2 py-1 text-sm font-medium ${getTagColor(tag)}`}
                 >
                   #{tag}
-                </button>
+                </span>
               ))}
             </div>
 

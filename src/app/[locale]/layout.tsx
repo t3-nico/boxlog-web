@@ -1,5 +1,3 @@
-import { Footer } from '@/components/layout/Footer'
-import { Header } from '@/components/layout/Header'
 import { routing, type Locale } from '@/i18n/routing'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
@@ -32,11 +30,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Header />
-      <main id="main-content" role="main">
-        {children}
-      </main>
-      <Footer locale={locale} />
+      {children}
       <Toaster richColors position="top-right" />
     </NextIntlClientProvider>
   )
