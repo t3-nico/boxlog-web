@@ -19,10 +19,10 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      // Neutral system - select trigger similar to input styling
-      'border-input-border bg-input-bg text-input-text ring-offset-bg-primary flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm',
-      'data-[placeholder]:text-input-placeholder focus:ring-border-focus focus:border-input-focus focus:ring-2 focus:ring-offset-2 focus:outline-none',
-      'disabled:bg-bg-secondary disabled:text-text-disabled disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+      // セマンティックトークン - 入力系スタイル
+      'border-border bg-input text-foreground ring-offset-background flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm',
+      'data-[placeholder]:text-muted-foreground focus:ring-ring focus:border-ring focus:ring-2 focus:ring-offset-2 focus:outline-none',
+      'disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
       className
     )}
     {...props}
@@ -71,8 +71,8 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        // Neutral system - elevated dropdown content
-        'border-border-primary bg-bg-elevated text-text-primary relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border shadow-md',
+        // セマンティックトークン - ドロップダウンコンテンツ
+        'border-border bg-popover text-popover-foreground relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border shadow-md',
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]',
         position === 'popper' &&
@@ -105,8 +105,8 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      // Neutral system - select label
-      'text-text-secondary py-2 pr-2 pl-8 text-sm font-semibold',
+      // セマンティックトークン - ラベル
+      'text-muted-foreground py-2 pr-2 pl-8 text-sm font-semibold',
       className
     )}
     {...props}
@@ -121,10 +121,10 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      // Neutral system - select item with hover states
-      'text-text-primary relative flex w-full cursor-default items-center rounded-sm py-2 pr-2 pl-8 text-sm outline-none select-none',
-      'focus:bg-bg-secondary focus:text-text-primary hover:bg-bg-secondary',
-      'data-[disabled]:text-text-disabled data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      // セマンティックトークン - アイテム
+      'text-foreground relative flex w-full cursor-default items-center rounded-sm py-2 pr-2 pl-8 text-sm outline-none select-none',
+      'focus:bg-state-hover focus:text-foreground hover:bg-state-hover',
+      'data-[disabled]:text-muted-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className
     )}
     {...props}
@@ -147,8 +147,8 @@ const SelectSeparator = React.forwardRef<
   <SelectPrimitive.Separator
     ref={ref}
     className={cn(
-      // Neutral system - separator
-      'bg-border-primary -mx-1 my-1 h-px',
+      // セマンティックトークン - セパレーター
+      'bg-border -mx-1 my-1 h-px',
       className
     )}
     {...props}
