@@ -150,7 +150,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
         <div className="text-muted-foreground flex flex-wrap items-center gap-6">
           {/* Release Date */}
           <div className="flex items-center gap-2">
-            <div className="bg-icon-bg-secondary flex h-10 w-10 items-center justify-center rounded-lg">
+            <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
               <svg className="text-info h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -171,7 +171,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
           {/* Author */}
           {frontMatter.author && (
             <div className="flex items-center gap-2">
-              <div className="bg-icon-bg-primary flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg">
+              <div className="bg-muted flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg">
                 {frontMatter.authorAvatar ? (
                   <Image
                     src={frontMatter.authorAvatar}
@@ -200,7 +200,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
 
           {/* Version Statistics */}
           <div className="flex items-center gap-2">
-            <div className="bg-icon-bg-tertiary flex h-10 w-10 items-center justify-center rounded-lg">
+            <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
               <svg className="text-success h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
