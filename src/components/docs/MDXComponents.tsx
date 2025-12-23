@@ -3,7 +3,7 @@ import { generateAnchorId } from '@/lib/toc'
 import { MDXComponents } from 'mdx/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
 import { CopyCodeButton } from './CopyCodeButton'
 
 type CodeBlockProps = ComponentPropsWithoutRef<'pre'> & {
@@ -48,17 +48,32 @@ type PreComponentProps = ComponentPropsWithoutRef<'pre'> & {
 
 // カスタムコードブロックコンポーネント
 function CodeBlock({ children, className, ...props }: CodeBlockProps) {
-  const codeString = typeof children === 'string' ? children : String(children ?? '')
+  // childrenがReact要素（code要素）の場合、そのpropsからテキストを取得
+  let codeString = ''
+  let codeClassName = className || ''
+
+  if (children && typeof children === 'object' && 'props' in children) {
+    // <code>要素がchildrenとして渡された場合
+    const codeElement = children as ReactElement<{ children?: ReactNode; className?: string }>
+    codeString =
+      typeof codeElement.props.children === 'string'
+        ? codeElement.props.children
+        : String(codeElement.props.children ?? '')
+    codeClassName = codeElement.props.className || className || ''
+  } else {
+    codeString = typeof children === 'string' ? children : String(children ?? '')
+  }
+
   return (
     <div className="group relative">
       <div className="absolute top-3 right-3 opacity-0 transition-opacity group-hover:opacity-100">
         <CopyCodeButton code={codeString} />
       </div>
       <pre
-        className={`hljs ${className || ''} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}
+        className={`hljs ${codeClassName} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}
         {...props}
       >
-        <code>{children}</code>
+        <code className={codeClassName}>{codeString}</code>
       </pre>
     </div>
   )

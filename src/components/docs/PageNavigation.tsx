@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { ContentData } from '@/types/content'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
@@ -14,44 +15,34 @@ export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) 
 
   return (
     <div className="border-border mt-12 border-t pt-8">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="flex justify-between gap-4">
         {/* Previous Page */}
-        <div className="flex justify-start">
+        <div className="flex-1">
           {previousPage && (
-            <Link
-              href={`/docs/${previousPage.slug}`}
-              className="group border-border bg-card hover:border-foreground hover:bg-muted flex max-w-sm items-center rounded-lg border p-4 transition-colors"
-            >
-              <div className="flex items-center">
-                <ChevronLeft className="text-muted-foreground group-hover:text-foreground mr-3 h-5 w-5" />
-                <div>
-                  <div className="text-muted-foreground mb-1 text-sm">Previous</div>
-                  <div className="text-foreground group-hover:text-primary font-medium transition-colors">
-                    {previousPage.frontMatter.title}
-                  </div>
+            <Button variant="outline" size="lg" asChild className="h-auto w-full justify-start px-4 py-3">
+              <Link href={`/docs/${previousPage.slug}`}>
+                <ChevronLeft className="mr-2 size-4 shrink-0" />
+                <div className="text-left">
+                  <div className="text-muted-foreground text-xs">Previous</div>
+                  <div className="text-foreground text-sm font-medium">{previousPage.frontMatter.title}</div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </Button>
           )}
         </div>
 
         {/* Next Page */}
-        <div className="flex justify-end">
+        <div className="flex-1">
           {nextPage && (
-            <Link
-              href={`/docs/${nextPage.slug}`}
-              className="group border-border bg-card hover:border-foreground hover:bg-muted flex max-w-sm items-center rounded-lg border p-4 transition-colors"
-            >
-              <div className="flex items-center text-right">
-                <div>
-                  <div className="text-muted-foreground mb-1 text-sm">Next</div>
-                  <div className="text-foreground group-hover:text-primary font-medium transition-colors">
-                    {nextPage.frontMatter.title}
-                  </div>
+            <Button variant="outline" size="lg" asChild className="h-auto w-full justify-end px-4 py-3">
+              <Link href={`/docs/${nextPage.slug}`}>
+                <div className="text-right">
+                  <div className="text-muted-foreground text-xs">Next</div>
+                  <div className="text-foreground text-sm font-medium">{nextPage.frontMatter.title}</div>
                 </div>
-                <ChevronRight className="text-muted-foreground group-hover:text-foreground ml-3 h-5 w-5" />
-              </div>
-            </Link>
+                <ChevronRight className="ml-2 size-4 shrink-0" />
+              </Link>
+            </Button>
           )}
         </div>
       </div>
