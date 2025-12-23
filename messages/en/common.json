@@ -456,6 +456,10 @@
     },
     "share": {
       "title": "Share this article"
+    },
+    "view": {
+      "list": "List",
+      "grid": "Grid"
     }
   },
   "releases": {
@@ -469,7 +473,14 @@
       "showMore": "Show {count} more",
       "resultsFound": "{count} of {total} releases",
       "featuredReleases": "Featured releases",
-      "breakingChanges": "Breaking changes"
+      "breakingChanges": "Breaking changes",
+      "quickFilters": "Quick Filters",
+      "searchPlaceholder": "Search by version, title, or tags...",
+      "clearSearch": "Clear search"
+    },
+    "view": {
+      "list": "List",
+      "grid": "Grid"
     },
     "changeTypes": {
       "title": "Change Types",

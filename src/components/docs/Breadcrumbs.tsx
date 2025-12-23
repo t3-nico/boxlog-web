@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { generateBreadcrumbs } from '@/lib/mdx'
 import Link from 'next/link'
+import { Fragment } from 'react'
 
 interface BreadcrumbsProps {
   slug: string
@@ -20,20 +21,25 @@ export function Breadcrumbs({ slug, title }: BreadcrumbsProps) {
   return (
     <Breadcrumb className="mb-6">
       <BreadcrumbList>
-        {breadcrumbs.map((crumb, index) => (
-          <BreadcrumbItem key={`${crumb.href}-${index}`}>
-            {index === breadcrumbs.length - 1 ? (
-              <BreadcrumbPage>{title || crumb.title}</BreadcrumbPage>
-            ) : crumb.clickable === false ? (
-              <span className="text-muted-foreground">{crumb.title}</span>
-            ) : (
-              <BreadcrumbLink asChild>
-                <Link href={crumb.href}>{crumb.title}</Link>
-              </BreadcrumbLink>
-            )}
-            {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-          </BreadcrumbItem>
-        ))}
+        {breadcrumbs.map((crumb, index) => {
+          const isLast = index === breadcrumbs.length - 1
+          return (
+            <Fragment key={`${crumb.href}-${index}`}>
+              <BreadcrumbItem>
+                {isLast ? (
+                  <BreadcrumbPage>{title || crumb.title}</BreadcrumbPage>
+                ) : crumb.clickable === false ? (
+                  <span className="text-muted-foreground">{crumb.title}</span>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link href={crumb.href}>{crumb.title}</Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+              {!isLast && <BreadcrumbSeparator />}
+            </Fragment>
+          )
+        })}
       </BreadcrumbList>
     </Breadcrumb>
   )

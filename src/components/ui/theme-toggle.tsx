@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,26 +30,20 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <button
-        className="border-border text-muted-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm"
-        disabled
-      >
+      <Button variant="ghost" size="default" disabled>
         <Sun className="size-4" />
         <ChevronDown className="size-3" />
-      </button>
+      </Button>
     )
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button
-          className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
-          aria-label="Change theme"
-        >
+        <Button variant="ghost" size="default" aria-label="Change theme">
           <CurrentIcon className="size-4" />
           <ChevronDown className="size-3" />
-        </button>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {themeOptions.map((option) => (

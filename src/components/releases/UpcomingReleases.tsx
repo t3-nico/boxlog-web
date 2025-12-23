@@ -24,7 +24,7 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
       {/* Header */}
       <div className="border-border border-b px-6 py-4">
         <div className="flex items-center gap-4">
-          <div className="bg-icon-bg-secondary flex h-8 w-8 items-center justify-center rounded-lg">
+          <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-lg">
             <svg className="text-info h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -267,7 +267,7 @@ export function ReleaseTimeline() {
         <div className="space-y-8">
           {/* Current Release */}
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-icon-bg-tertiary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
               <Check className="text-success h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
@@ -282,7 +282,7 @@ export function ReleaseTimeline() {
 
           {/* Upcoming Releases */}
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-icon-bg-secondary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
               <Clock className="text-info h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
@@ -296,7 +296,7 @@ export function ReleaseTimeline() {
           </div>
 
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-icon-bg-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
               <Clipboard className="text-muted-foreground h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">

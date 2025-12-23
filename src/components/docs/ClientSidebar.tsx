@@ -1,5 +1,6 @@
 'use client'
 
+import { Input } from '@/components/ui/input'
 import { type NavigationItem, type NavigationSection } from '@/lib/navigation'
 import {
   BarChart3,
@@ -83,7 +84,9 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
   const hasChildren = item.items && item.items.length > 0
   const hasHref = Boolean(item.href)
   const paddingLeft = `${(level + 1) * 8}px`
-  const isActive = item.href === currentPath
+  // ロケールプレフィックス（/ja/, /en/）を除去してマッチング
+  const normalizedPath = currentPath.replace(/^\/(ja|en)/, '')
+  const isActive = item.href === normalizedPath || item.href === currentPath
 
   return (
     <div>
@@ -91,10 +94,10 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
         {hasHref ? (
           <Link
             href={item.href!}
-            className={`flex flex-1 items-center rounded-md text-sm transition-colors ${
+            className={`flex flex-1 items-center rounded-md text-sm transition-colors hover:bg-[var(--state-hover)] ${
               isActive
-                ? 'bg-accent text-accent-foreground font-medium'
-                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                ? 'text-foreground bg-[var(--state-selected)] font-medium'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
             style={{
               paddingLeft,
@@ -167,6 +170,12 @@ export function ClientSidebar({ navigation }: ClientSidebarProps) {
 
   return (
     <div className="flex h-full flex-col">
+      {/* Search */}
+      <div className="relative mb-4">
+        <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+        <Input type="search" placeholder="Search docs..." size="sm" className="pl-9" />
+      </div>
+
       {/* Navigation */}
       <nav className="flex-1 space-y-6 overflow-y-auto">
         {navigation.map((section) => (

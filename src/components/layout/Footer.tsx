@@ -1,15 +1,8 @@
 'use client'
 
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { Link, usePathname, useRouter } from '@/i18n/navigation'
-import { routing, type Locale } from '@/i18n/routing'
-import { ChevronDown, Globe } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 
 // SNS Icons
@@ -39,24 +32,9 @@ const YouTubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-interface FooterProps {
-  locale: string
-}
-
-const localeLabels: Record<Locale, string> = {
-  en: 'English',
-  ja: '日本語',
-}
-
-export function Footer({ locale }: FooterProps) {
+export function Footer() {
   const t = useTranslations()
   const tFooter = useTranslations('footer')
-  const router = useRouter()
-  const pathname = usePathname()
-
-  const handleLocaleChange = (newLocale: Locale) => {
-    router.replace(pathname, { locale: newLocale })
-  }
 
   const navigation = {
     product: [
@@ -115,7 +93,7 @@ export function Footer({ locale }: FooterProps) {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Product */}
               <div>
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.product')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.product')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.product.map((item) => (
                     <li key={item.name}>
@@ -131,7 +109,7 @@ export function Footer({ locale }: FooterProps) {
               </div>
               {/* Resources */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.resources')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.resources')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.resources.map((item) => (
                     <li key={item.name}>
@@ -149,7 +127,7 @@ export function Footer({ locale }: FooterProps) {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Company */}
               <div>
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.company')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.company')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.company.map((item) => (
                     <li key={item.name}>
@@ -165,7 +143,7 @@ export function Footer({ locale }: FooterProps) {
               </div>
               {/* Legal */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.legal')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.legal')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
@@ -207,29 +185,7 @@ export function Footer({ locale }: FooterProps) {
               <p className="text-muted-foreground text-sm">&copy; {new Date().getFullYear()} BoxLog, Inc.</p>
               <div className="flex items-center gap-x-3">
                 <ThemeToggle />
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                      className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
-                      aria-label="Change language"
-                    >
-                      <Globe className="size-4" />
-                      <span>{localeLabels[locale as Locale]}</span>
-                      <ChevronDown className="size-3" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {routing.locales.map((loc) => (
-                      <DropdownMenuCheckboxItem
-                        key={loc}
-                        checked={locale === loc}
-                        onCheckedChange={() => handleLocaleChange(loc)}
-                      >
-                        {localeLabels[loc]}
-                      </DropdownMenuCheckboxItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <LanguageSwitcher variant="full" />
               </div>
             </div>
           </div>
@@ -254,29 +210,7 @@ export function Footer({ locale }: FooterProps) {
               ))}
               <div className="ml-4 flex items-center gap-x-3">
                 <ThemeToggle />
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                      className="border-border text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors"
-                      aria-label="Change language"
-                    >
-                      <Globe className="size-4" />
-                      <span>{localeLabels[locale as Locale]}</span>
-                      <ChevronDown className="size-3" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {routing.locales.map((loc) => (
-                      <DropdownMenuCheckboxItem
-                        key={loc}
-                        checked={locale === loc}
-                        onCheckedChange={() => handleLocaleChange(loc)}
-                      >
-                        {localeLabels[loc]}
-                      </DropdownMenuCheckboxItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <LanguageSwitcher variant="full" />
               </div>
             </div>
           </div>

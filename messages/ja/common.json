@@ -135,9 +135,15 @@
     },
     "share": {
       "title": "この記事をシェア"
+    },
+    "view": {
+      "list": "リスト",
+      "grid": "グリッド"
     }
   },
   "releases": {
+    "featured": "注目",
+    "breaking": "破壊的変更",
     "filters": {
       "title": "フィルター",
       "clearAll": "すべてクリア",
@@ -146,7 +152,14 @@
       "showMore": "さらに{count}件表示",
       "resultsFound": "{total}件中{count}件のリリース",
       "featuredReleases": "注目のリリース",
-      "breakingChanges": "破壊的変更"
+      "breakingChanges": "破壊的変更",
+      "quickFilters": "クイックフィルター",
+      "searchPlaceholder": "バージョン、タイトル、タグで検索...",
+      "clearSearch": "検索をクリア"
+    },
+    "view": {
+      "list": "リスト",
+      "grid": "グリッド"
     },
     "changeTypes": {
       "title": "変更タイプ",

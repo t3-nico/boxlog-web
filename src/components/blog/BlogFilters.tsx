@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { Calendar, Filter, Search, Tag, TrendingUp, X } from 'lucide-react'
+import { Calendar, Filter, Tag, TrendingUp, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
@@ -107,11 +107,6 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
     updateFilters({ ...filters, selectedTags: newSelectedTags })
   }
 
-  // 検索クエリの更新
-  const handleSearchChange = (query: string) => {
-    updateFilters({ ...filters, searchQuery: query })
-  }
-
   // ソート設定の更新
   const handleSortChange = (sortBy: BlogFilterState['sortBy']) => {
     updateFilters({ ...filters, sortBy })
@@ -141,20 +136,15 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
   return (
     <>
       {/* デスクトップ版 */}
-      <div
-        className={cn(
-          'hidden rounded-xl border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] lg:block',
-          className
-        )}
-      >
+      <div className={cn('border-border bg-background hidden rounded-xl border lg:block', className)}>
         {/* フィルターヘッダー */}
-        <div className="border-b border-[rgb(var(--border-primary))] p-4">
+        <div className="border-border border-b p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Filter className="h-5 w-5 text-[rgb(var(--text-tertiary))]" />
-              <h3 className="font-medium text-[rgb(var(--text-primary))]">{t('title')}</h3>
+              <Filter className="text-muted-foreground h-5 w-5" />
+              <h3 className="text-foreground font-medium">{t('title')}</h3>
               {activeFiltersCount > 0 && (
-                <span className="rounded-full bg-[rgb(var(--info-bg))] px-2 py-1 text-xs font-medium text-[rgb(var(--info-color))]">
+                <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
                   {activeFiltersCount}
                 </span>
               )}
@@ -174,38 +164,9 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
         {/* フィルター内容 */}
         {isExpanded && (
           <div className="space-y-6 p-4">
-            {/* 検索 */}
-            <div>
-              <label htmlFor="search" className="mb-2 block text-sm font-medium text-[rgb(var(--text-secondary))]">
-                {t('searchArticles')}
-              </label>
-              <div className="relative">
-                <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-[rgb(var(--text-tertiary))]" />
-                <input
-                  id="search"
-                  type="text"
-                  value={filters.searchQuery}
-                  onChange={(e) => handleSearchChange(e.target.value)}
-                  placeholder={t('searchPlaceholder')}
-                  className="w-full rounded-lg border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] py-2 pr-4 pl-10 text-[rgb(var(--text-primary))] placeholder-[rgb(var(--text-tertiary))] transition-colors focus:border-[rgb(var(--focus-ring))] focus:ring-2 focus:ring-[rgb(var(--focus-ring))]"
-                />
-                {filters.searchQuery && (
-                  <Button
-                    onClick={() => handleSearchChange('')}
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-1/2 right-3 h-auto w-auto -translate-y-1/2 transform p-0"
-                    aria-label="Clear search"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-            </div>
-
             {/* ソート */}
             <div>
-              <label className="mb-3 block text-sm font-medium text-[rgb(var(--text-secondary))]">{t('sortBy')}</label>
+              <label className="text-muted-foreground mb-3 block text-sm font-medium">{t('sortBy')}</label>
               <div className="flex flex-wrap gap-2">
                 {[
                   { value: 'date', label: t('date'), icon: Calendar },
@@ -219,9 +180,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                     size="sm"
                     className={cn(
                       'inline-flex items-center gap-2',
-                      filters.sortBy === value
-                        ? 'border-[rgb(var(--info-color))] bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]'
-                        : ''
+                      filters.sortBy === value && 'bg-primary/10 text-primary border-primary'
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -234,7 +193,6 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                   variant="outline"
                   size="sm"
                   className="inline-flex items-center gap-2"
-                  aria-label={`Sort ${filters.sortOrder === 'asc' ? 'ascending' : 'descending'}`}
                 >
                   {filters.sortOrder === 'asc' ? '↑' : '↓'}
                   {filters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
@@ -245,14 +203,13 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
             {/* タグフィルター */}
             <div>
               <div className="mb-3 flex items-center justify-between">
-                <label className="text-sm font-medium text-[rgb(var(--text-secondary))]">{t('filterByTags')}</label>
+                <label className="text-muted-foreground text-sm font-medium">{t('filterByTags')}</label>
                 {filters.selectedTags.length > 1 && (
                   <Button
                     onClick={toggleTagOperator}
                     variant="ghost"
                     size="sm"
-                    className="h-auto bg-[rgb(var(--tag-neutral-bg))] px-2 py-1 text-xs text-[rgb(var(--tag-neutral-text))] hover:bg-[rgb(var(--tag-neutral-hover))] hover:text-[rgb(var(--text-primary))]"
-                    title={`Currently using ${filters.tagOperator} logic`}
+                    className="bg-muted text-muted-foreground hover:bg-state-hover h-auto px-2 py-1 text-xs"
                   >
                     {filters.tagOperator}
                   </Button>
@@ -270,9 +227,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                       size="sm"
                       className={cn(
                         'inline-flex items-center gap-2',
-                        isSelected
-                          ? 'border-[rgb(var(--info-color))] bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]'
-                          : ''
+                        isSelected && 'bg-primary/10 text-primary border-primary'
                       )}
                     >
                       <span>#</span>
@@ -284,7 +239,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
               </div>
 
               {filters.selectedTags.length > 1 && (
-                <p className="mt-2 text-xs text-[rgb(var(--text-tertiary))]">
+                <p className="text-muted-foreground mt-2 text-xs">
                   {t('showingPostsMessage', {
                     match: filters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny'),
                   })}
@@ -302,10 +257,10 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           variant="outline"
           className="flex w-full items-center justify-center gap-2"
         >
-          <Filter className="h-4 w-4 text-[rgb(var(--text-tertiary))]" />
-          <span className="font-medium text-[rgb(var(--text-primary))]">{t('title')}</span>
+          <Filter className="text-muted-foreground h-4 w-4" />
+          <span className="text-foreground font-medium">{t('title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="rounded-full bg-[rgb(var(--info-bg))] px-2 py-1 text-xs font-medium text-[rgb(var(--info-color))]">
+            <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
               {activeFiltersCount}
             </span>
           )}

@@ -1,0 +1,65 @@
+'use client'
+
+import { Button } from '@/components/ui/button'
+import { LanguageSwitcher } from '@/components/ui/language-switcher'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { Link } from '@/i18n/navigation'
+import { Menu, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+
+interface DocsHeaderProps {
+  onMobileMenuToggle?: () => void
+  mobileMenuOpen?: boolean
+}
+
+export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderProps) {
+  const t = useTranslations('common')
+
+  return (
+    <header className="bg-background border-border z-50 w-full flex-shrink-0 border-b">
+      <nav className="flex h-14 items-center justify-between gap-4 px-4 lg:px-6" aria-label="Docs navigation">
+        {/* Left: Logo + Back to home */}
+        <div className="flex items-center gap-3">
+          {/* Mobile menu toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onMobileMenuToggle}
+            className="lg:hidden"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+          </Button>
+
+          {/* Logo with Docs badge */}
+          <Link href="/docs" className="flex items-center gap-2">
+            <span className="text-foreground text-lg font-bold">BoxLog</span>
+            <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-xs font-medium">Docs</span>
+          </Link>
+
+          {/* Separator + Back to home (Desktop only) */}
+          <div className="hidden items-center gap-3 lg:flex">
+            <span className="text-border">/</span>
+            <Link href="/" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+              {t('navigation.home')}
+            </Link>
+          </div>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
+          {/* Login Button */}
+          <Button variant="outline" size="default" asChild className="hidden sm:inline-flex">
+            <Link href="/login">{t('actions.login')}</Link>
+          </Button>
+        </div>
+      </nav>
+    </header>
+  )
+}

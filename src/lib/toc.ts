@@ -7,11 +7,12 @@ export interface TocItem {
 
 /**
  * 文字列をアンカーIDに変換
+ * 日本語・中国語・韓国語などの非ASCII文字もサポート
  */
 export function generateAnchorId(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // 特殊文字を除去
+    .replace(/[^\p{L}\p{N}\s-]/gu, '') // Unicode文字・数字・スペース・ハイフン以外を除去
     .replace(/\s+/g, '-') // スペースをハイフンに
     .replace(/-+/g, '-') // 連続ハイフンを単一に
     .replace(/^-|-$/g, '') // 先頭・末尾のハイフンを除去

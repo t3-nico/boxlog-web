@@ -37,7 +37,10 @@ export function generateDocsNavigation(): NavigationSection[] {
     },
     {
       title: 'Guides',
-      items: [{ title: 'Best Practices', href: '/docs/guides/best-practices' }],
+      items: [
+        { title: 'Calendar Basics', href: '/docs/guides/calendar-basics' },
+        { title: 'Best Practices', href: '/docs/guides/best-practices' },
+      ],
     },
     {
       title: 'API Reference',

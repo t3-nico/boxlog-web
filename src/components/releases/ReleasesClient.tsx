@@ -2,12 +2,15 @@
 
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container'
+import { PillSwitcher } from '@/components/ui/pill-switcher'
 import { Heading, Text } from '@/components/ui/typography'
+import { Grid3X3, List, Search, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { ReleaseCard } from './ReleaseCard'
-import { FilterSummary, ReleaseFilter } from './ReleaseFilter'
-import { UpcomingReleasesCompact } from './UpcomingReleases'
+import { ReleaseFilter } from './ReleaseFilter'
+import { ReleasePagination } from './ReleasePagination'
 
 // Define types locally to avoid importing from server-only lib
 interface ReleaseFrontMatter {
@@ -36,50 +39,57 @@ interface TagCount {
   count: number
 }
 
-interface UpcomingRelease {
-  version: string
-  expectedDate: string
-  status: 'planning' | 'development' | 'testing' | 'review'
-  description: string
-  features: string[]
-  progress: number
-}
+type ViewMode = 'list' | 'grid'
+
+const RELEASES_PER_PAGE = 12
 
 interface ReleasesClientProps {
   initialReleases: ReleasePostMeta[]
   initialTags: TagCount[]
-  upcomingReleases: UpcomingRelease[]
   locale: string
 }
 
-export function ReleasesClient({ initialReleases, initialTags, upcomingReleases, locale }: ReleasesClientProps) {
+export function ReleasesClient({ initialReleases, initialTags, locale }: ReleasesClientProps) {
   const t = useTranslations('releases')
+  const searchParams = useSearchParams()
+
   // フィルター状態
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [showBreakingOnly, setShowBreakingOnly] = useState(false)
-  const [showFeaturedOnly, setShowFeaturedOnly] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
+
+  const currentPage = Number(searchParams?.get('page')) || 1
 
   // フィルター関数
   const filteredReleases = useMemo(() => {
     return initialReleases.filter((release) => {
+      // 検索クエリフィルター
+      if (searchQuery) {
+        const searchTerm = searchQuery.toLowerCase()
+        const titleMatch = release.frontMatter.title.toLowerCase().includes(searchTerm)
+        const descriptionMatch = release.frontMatter.description?.toLowerCase().includes(searchTerm)
+        const versionMatch = release.frontMatter.version.toLowerCase().includes(searchTerm)
+        const tagMatch = release.frontMatter.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
+
+        if (!titleMatch && !descriptionMatch && !versionMatch && !tagMatch) {
+          return false
+        }
+      }
+
       // タグフィルター
       if (selectedTags.length > 0 && !selectedTags.some((tag) => release.frontMatter.tags.includes(tag))) {
         return false
       }
 
-      // 破壊的変更フィルター
-      if (showBreakingOnly && !release.frontMatter.breaking) {
-        return false
-      }
-
-      // 注目リリースフィルター
-      if (showFeaturedOnly && !release.frontMatter.featured) {
-        return false
-      }
-
       return true
     })
-  }, [initialReleases, selectedTags, showBreakingOnly, showFeaturedOnly])
+  }, [initialReleases, selectedTags, searchQuery])
+
+  // ページネーション
+  const totalReleases = filteredReleases.length
+  const totalPages = Math.ceil(totalReleases / RELEASES_PER_PAGE)
+  const startIndex = (currentPage - 1) * RELEASES_PER_PAGE
+  const currentReleases = filteredReleases.slice(startIndex, startIndex + RELEASES_PER_PAGE)
 
   // フィルターハンドラー
   const handleTagToggle = (tag: string) => {
@@ -88,138 +98,157 @@ export function ReleasesClient({ initialReleases, initialTags, upcomingReleases,
 
   const handleClearFilters = () => {
     setSelectedTags([])
-    setShowBreakingOnly(false)
-    setShowFeaturedOnly(false)
+    setSearchQuery('')
+  }
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query)
   }
 
   return (
-    <section id="releases" className="py-16">
+    <section className="py-16">
       <Container>
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-8 space-y-8">
-                {/* Filters */}
-                <ReleaseFilter
-                  tags={initialTags}
-                  selectedTags={selectedTags}
-                  showBreakingOnly={showBreakingOnly}
-                  showFeaturedOnly={showFeaturedOnly}
-                  onTagToggle={handleTagToggle}
-                  onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
-                  onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
-                  onClearFilters={handleClearFilters}
-                  locale={locale}
-                />
-
-                {/* Upcoming Releases Compact */}
-                <UpcomingReleasesCompact upcomingReleases={upcomingReleases} />
-
-                {/* RSS Feed */}
-                <div className="border-border bg-card rounded-xl border p-6">
-                  <Heading as="h3" size="md" className="mb-4">
-                    {t('rss.title')}
-                  </Heading>
-                  <Text size="sm" variant="muted" className="mb-4">
-                    {t('rss.description')}
-                  </Text>
-                  <a
-                    href="/releases/feed.xml"
-                    className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-3 py-2 text-sm font-medium transition-colors"
-                  >
-                    <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M3.429 2.857A1.429 1.429 0 002 4.286v11.428A1.429 1.429 0 003.429 17h13.142A1.429 1.429 0 0018 15.714V4.286A1.429 1.429 0 0016.571 2.857H3.429zM4 6.857v2.286H6.286V6.857H4zm8.571 0h2.286v2.286h-2.286V6.857zM4 10.571v2.286h2.286v-2.286H4zm4.571-3.714v2.286h2.286V6.857H8.571zm4.572 3.714v2.286h2.286v-2.286h-2.286zM8.571 10.571v2.286h2.286v-2.286H8.571z" />
-                    </svg>
-                    {t('rss.link')}
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Main Content */}
-            <div className="lg:col-span-3">
-              {/* Filter Summary */}
-              <FilterSummary
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
+          {/* 左サイドバー: フィルター */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24">
+              <ReleaseFilter
+                tags={initialTags}
                 selectedTags={selectedTags}
-                showBreakingOnly={showBreakingOnly}
-                showFeaturedOnly={showFeaturedOnly}
-                resultCount={filteredReleases.length}
-                totalCount={initialReleases.length}
-                onTagRemove={handleTagToggle}
-                onBreakingToggle={() => setShowBreakingOnly(!showBreakingOnly)}
-                onFeaturedToggle={() => setShowFeaturedOnly(!showFeaturedOnly)}
-                onClearAll={handleClearFilters}
-                locale={locale}
+                onTagToggle={handleTagToggle}
+                onClearFilters={handleClearFilters}
               />
+            </div>
+          </div>
 
-              <div className="mb-8 flex items-center justify-between">
-                <Heading as="h2" size="2xl">
-                  {t('history.title')}
-                  <span className="text-muted-foreground ml-2 text-lg font-normal">
-                    ({filteredReleases.length}
-                    {t('history.count')})
-                  </span>
-                </Heading>
+          {/* 右側: リリース一覧 */}
+          <div className="lg:col-span-3">
+            {/* 検索ボックス + ビュー切り替え */}
+            <div className="mb-8 flex items-center gap-4">
+              <div className="relative flex-1">
+                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  placeholder={t('filters.searchPlaceholder')}
+                  className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+                />
+                {searchQuery && (
+                  <Button
+                    onClick={() => handleSearchChange('')}
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-1/2 right-2 h-7 w-7 -translate-y-1/2"
+                    aria-label={t('filters.clearSearch')}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
 
-              {filteredReleases.length > 0 ? (
-                <div className="space-y-8">
-                  {filteredReleases.map((release, index) => (
-                    <ReleaseCard
-                      key={release.frontMatter.version}
-                      release={release}
-                      priority={index < 3}
-                      locale={locale}
-                    />
-                  ))}
-                </div>
-              ) : initialReleases.length === 0 ? (
-                <div className="py-16 text-center">
-                  <div className="bg-icon-bg-primary mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
-                    <svg
-                      className="text-muted-foreground h-12 w-12"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      />
-                    </svg>
-                  </div>
-                  <Heading as="h3" size="lg" className="mb-2">
-                    {t('emptyState.title')}
-                  </Heading>
-                  <Text variant="muted">{t('emptyState.description')}</Text>
-                </div>
-              ) : (
-                <div className="py-16 text-center">
-                  <div className="bg-icon-bg-secondary mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
-                    <svg className="text-info h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-                  <Heading as="h3" size="lg" className="mb-2">
-                    {t('noResults.title')}
-                  </Heading>
-                  <Text variant="muted" className="mb-4">
-                    {t('noResults.description')}
-                  </Text>
-                  <Button onClick={handleClearFilters} variant="primary">
-                    {t('noResults.clearFilters')}
-                  </Button>
-                </div>
-              )}
+              <PillSwitcher
+                options={[
+                  { value: 'list', label: t('view.list'), icon: <List className="h-4 w-4" /> },
+                  { value: 'grid', label: t('view.grid'), icon: <Grid3X3 className="h-4 w-4" /> },
+                ]}
+                value={viewMode}
+                onValueChange={setViewMode}
+              />
             </div>
+
+            {currentReleases.length > 0 ? (
+              <>
+                {viewMode === 'list' ? (
+                  <div className="divide-border divide-y">
+                    {currentReleases.map((release, index) => (
+                      <ReleaseCard
+                        key={release.frontMatter.version}
+                        release={release}
+                        priority={currentPage === 1 && index < 3}
+                        layout="list"
+                        locale={locale}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {currentReleases.map((release, index) => (
+                      <ReleaseCard
+                        key={release.frontMatter.version}
+                        release={release}
+                        priority={currentPage === 1 && index < 3}
+                        layout="vertical"
+                        locale={locale}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* ページネーション */}
+                {totalPages > 1 && (
+                  <div className="mt-12">
+                    <ReleasePagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      basePath={locale === 'ja' ? '/ja/releases' : '/releases'}
+                    />
+                  </div>
+                )}
+              </>
+            ) : initialReleases.length === 0 ? (
+              <div className="py-16 text-center">
+                <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
+                  <svg
+                    className="text-muted-foreground h-12 w-12"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </div>
+                <Heading as="h3" size="lg" className="mb-2">
+                  {t('emptyState.title')}
+                </Heading>
+                <Text variant="muted">{t('emptyState.description')}</Text>
+              </div>
+            ) : (
+              <div className="py-16 text-center">
+                <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
+                  <svg
+                    className="text-muted-foreground h-12 w-12"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+                <Heading as="h3" size="lg" className="mb-2">
+                  {t('noResults.title')}
+                </Heading>
+                <Text variant="muted" className="mb-4">
+                  {t('noResults.description')}
+                </Text>
+                <button
+                  onClick={handleClearFilters}
+                  className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  {t('noResults.clearFilters')}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </Container>

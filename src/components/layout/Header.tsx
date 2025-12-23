@@ -108,14 +108,9 @@ export function Header() {
             <Button variant="primary" size="default" asChild>
               <Link href="/signup">{t('actions.signup')}</Link>
             </Button>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="text-muted-foreground hover:bg-state-hover hover:text-foreground inline-flex size-8 items-center justify-center rounded-md transition-colors"
-              aria-label="Open main menu"
-            >
+            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)} aria-label="Open main menu">
               <Menu className="size-5" aria-hidden="true" />
-            </button>
+            </Button>
           </div>
         </div>
       </nav>

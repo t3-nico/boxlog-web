@@ -220,7 +220,7 @@ export default async function UnifiedTagPage({ params }: TagPageProps) {
                         className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors ${
                           tagItem.tag === decodedTag
                             ? 'bg-foreground text-background'
-                            : 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                            : 'bg-muted text-muted-foreground hover:bg-state-hover hover:text-foreground'
                         }`}
                       >
                         #{tagItem.tag}

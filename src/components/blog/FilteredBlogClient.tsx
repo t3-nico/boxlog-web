@@ -4,11 +4,16 @@ import { BlogFilters, type BlogFilterState } from '@/components/blog/BlogFilters
 import { BlogPagination } from '@/components/blog/BlogPagination'
 import { BlogSkeleton } from '@/components/blog/BlogSkeleton'
 import { PostCard } from '@/components/blog/PostCard'
+import { Button } from '@/components/ui/button'
+import { PillSwitcher } from '@/components/ui/pill-switcher'
 import { Heading, Text } from '@/components/ui/typography'
 import type { BlogPostMeta } from '@/lib/blog'
+import { Grid3X3, List, Search, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+
+type ViewMode = 'list' | 'grid'
 
 const POSTS_PER_PAGE = 12
 
@@ -23,6 +28,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
   const searchParams = useSearchParams()
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState<BlogPostMeta[]>(initialPosts)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
   const [filters, setFilters] = useState<BlogFilterState>({
     selectedTags: [],
     searchQuery: '',
@@ -129,45 +135,85 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
     setFilters(newFilters)
   }
 
+  const handleSearchChange = (query: string) => {
+    setFilters((prev) => ({ ...prev, searchQuery: query }))
+  }
+
   return (
     <>
-      {/* フィルター情報 */}
-      <div className="text-muted-foreground mb-6 flex flex-wrap gap-4 text-sm">
-        <span>
-          {totalPosts === 1
-            ? t('list.articlesFound', { count: totalPosts })
-            : t('list.articlesFoundPlural', { count: totalPosts })}
-        </span>
-        {filters.selectedTags.length > 0 && (
-          <span>
-            • {t('list.filteredBy')}: {filters.selectedTags.join(', ')}
-          </span>
-        )}
-        {filters.searchQuery && (
-          <span>
-            • {t('list.searchTerm')}: &quot;{filters.searchQuery}&quot;
-          </span>
-        )}
-      </div>
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
+        {/* 左サイドバー: フィルター */}
+        <div className="lg:col-span-1">
+          <div className="sticky top-24">
+            <BlogFilters tags={tags} onFiltersChange={handleFiltersChange} locale={locale} />
+          </div>
+        </div>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {/* 記事一覧 */}
-        <div className="lg:col-span-2">
+        {/* 右側: 記事一覧 */}
+        <div className="lg:col-span-3">
+          {/* 検索ボックス + ビュー切り替え */}
+          <div className="mb-8 flex items-center gap-4">
+            <div className="relative flex-1">
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+              <input
+                type="text"
+                value={filters.searchQuery}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                placeholder={t('filters.searchPlaceholder')}
+                className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+              />
+              {filters.searchQuery && (
+                <Button
+                  onClick={() => handleSearchChange('')}
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-1/2 right-2 h-7 w-7 -translate-y-1/2"
+                  aria-label={t('filters.clearSearch')}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            <PillSwitcher
+              options={[
+                { value: 'list', label: t('view.list'), icon: <List className="h-4 w-4" /> },
+                { value: 'grid', label: t('view.grid'), icon: <Grid3X3 className="h-4 w-4" /> },
+              ]}
+              value={viewMode}
+              onValueChange={setViewMode}
+            />
+          </div>
+
           {isProcessing ? (
             <BlogSkeleton />
           ) : currentPosts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 gap-8">
-                {currentPosts.map((post, index) => (
-                  <PostCard
-                    key={post.slug}
-                    post={post}
-                    priority={currentPage === 1 && index < 3}
-                    layout="horizontal"
-                    locale={locale}
-                  />
-                ))}
-              </div>
+              {viewMode === 'list' ? (
+                <div className="divide-border divide-y">
+                  {currentPosts.map((post, index) => (
+                    <PostCard
+                      key={post.slug}
+                      post={post}
+                      priority={currentPage === 1 && index < 3}
+                      layout="list"
+                      locale={locale}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {currentPosts.map((post, index) => (
+                    <PostCard
+                      key={post.slug}
+                      post={post}
+                      priority={currentPage === 1 && index < 3}
+                      layout="vertical"
+                      locale={locale}
+                    />
+                  ))}
+                </div>
+              )}
 
               {/* ページネーション */}
               {totalPages > 1 && (
@@ -208,19 +254,12 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
                     tagOperator: 'OR',
                   })
                 }
-                className="bg-primary/10 text-primary hover:bg-primary/20 inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+                className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
               >
                 {t('list.clearAllFilters')}
               </button>
             </div>
           )}
-        </div>
-
-        {/* サイドバー */}
-        <div className="lg:col-span-1">
-          <div className="sticky top-24">
-            <BlogFilters tags={tags} onFiltersChange={handleFiltersChange} locale={locale} />
-          </div>
         </div>
       </div>
     </>
