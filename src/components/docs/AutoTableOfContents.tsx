@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { TocItem, generateTableOfContents, truncateHeading } from '@/lib/toc'
 import { useEffect, useState } from 'react'
 
@@ -18,19 +17,20 @@ interface TocListProps {
 
 function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
   return (
-    <ul className={`space-y-2 ${level > 0 ? 'ml-4' : ''}`}>
+    <ul className={`space-y-1 ${level > 0 ? 'ml-3' : ''}`}>
       {items.map((item) => (
         <li key={item.id}>
-          <Button
+          <button
             onClick={() => onItemClick(item.id)}
-            variant="ghost"
-            className={`block h-auto w-full justify-start px-2 py-1 text-left ${
-              level === 0 ? 'font-medium' : 'text-sm'
-            } ${activeId === item.id ? 'bg-accent text-accent-foreground' : 'hover:text-foreground'}`}
+            className={`-ml-2 block w-full rounded-md px-2 py-1.5 text-left text-sm transition-colors ${
+              activeId === item.id
+                ? 'text-foreground bg-[var(--state-selected)] font-medium'
+                : 'text-muted-foreground hover:text-foreground hover:bg-[var(--state-hover)]'
+            }`}
             title={item.title}
           >
             <span className="line-clamp-2">{truncateHeading(item.title, level === 0 ? 40 : 35)}</span>
-          </Button>
+          </button>
           {item.children && item.children.length > 0 && (
             <TocList items={item.children} level={level + 1} activeId={activeId} onItemClick={onItemClick} />
           )}
@@ -60,102 +60,50 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
   useEffect(() => {
     if (toc.length === 0) return
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // 画面内に見える見出し要素をフィルタリング
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
-
-        if (visibleEntries.length > 0) {
-          // 最も上に見える要素を選択
-          const topEntry = visibleEntries.reduce((top, entry) => {
-            const topRect = top.boundingClientRect
-            const entryRect = entry.boundingClientRect
-            return entryRect.top < topRect.top ? entry : top
-          })
-          setActiveId(topEntry.target.id)
-        } else {
-          // 見える要素がない場合、最も上に近い要素を探す
-          const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-          let activeElement: Element | null = null
-          let minDistance = Infinity
-
-          allHeadings.forEach((heading) => {
-            const rect = heading.getBoundingClientRect()
-            const distance = Math.abs(rect.top - 100) // ヘッダー高さを考慮
-            if (distance < minDistance && rect.top <= 200) {
-              minDistance = distance
-              activeElement = heading
-            }
-          })
-
-          if (activeElement && (activeElement as HTMLElement).id) {
-            setActiveId((activeElement as HTMLElement).id)
-          }
-        }
-      },
-      {
-        rootMargin: '-100px 0px -70% 0px',
-        threshold: [0, 0.1, 0.5, 1],
-      }
-    )
-
-    // すべての見出し要素を監視
     const flatTocItems = flattenTocItems(toc)
-    flatTocItems.forEach(({ id }) => {
-      const element = document.getElementById(id)
-      if (element) {
-        observer.observe(element)
-      }
-    })
+    const headingIds = flatTocItems.map((item) => item.id).filter(Boolean)
 
-    // 初期状態でアクティブな見出しを設定
-    const setInitialActive = () => {
-      const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-      let activeElement: Element | null = null
-      let minDistance = Infinity
+    const updateActiveHeading = () => {
+      const mainElement = document.getElementById('main-content')
+      const scrollTop = mainElement?.scrollTop ?? window.scrollY
+      const offset = 100 // ヘッダー高さを考慮
 
-      allHeadings.forEach((heading) => {
-        const rect = heading.getBoundingClientRect()
-        const distance = Math.abs(rect.top - 100)
-        if (distance < minDistance && rect.top <= 200) {
-          minDistance = distance
-          activeElement = heading
+      let currentActiveId = ''
+
+      // スクロール位置より上にある最後の見出しを探す
+      for (const id of headingIds) {
+        const element = document.getElementById(id)
+        if (!element) continue
+
+        const elementTop = mainElement
+          ? element.offsetTop - mainElement.offsetTop
+          : element.getBoundingClientRect().top + window.scrollY
+
+        if (elementTop <= scrollTop + offset) {
+          currentActiveId = id
+        } else {
+          break
         }
-      })
-
-      if (activeElement && (activeElement as HTMLElement).id) {
-        setActiveId((activeElement as HTMLElement).id)
       }
+
+      setActiveId(currentActiveId)
     }
 
-    // 少し遅延させてから初期設定
-    setTimeout(setInitialActive, 100)
+    // 初期設定
+    setTimeout(updateActiveHeading, 100)
 
-    // スクロールイベントも追加（バックアップ）
-    const handleScroll = () => {
-      const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-      let activeElement: Element | null = null
-      let minDistance = Infinity
-
-      allHeadings.forEach((heading) => {
-        const rect = heading.getBoundingClientRect()
-        const distance = Math.abs(rect.top - 100)
-        if (distance < minDistance && rect.top <= 200) {
-          minDistance = distance
-          activeElement = heading
-        }
-      })
-
-      if (activeElement && (activeElement as HTMLElement).id) {
-        setActiveId((activeElement as HTMLElement).id)
-      }
+    // main要素のスクロールを監視
+    const mainElement = document.getElementById('main-content')
+    if (mainElement) {
+      mainElement.addEventListener('scroll', updateActiveHeading, { passive: true })
     }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('scroll', updateActiveHeading, { passive: true })
 
     return () => {
-      observer.disconnect()
-      window.removeEventListener('scroll', handleScroll)
+      if (mainElement) {
+        mainElement.removeEventListener('scroll', updateActiveHeading)
+      }
+      window.removeEventListener('scroll', updateActiveHeading)
     }
   }, [toc])
 
@@ -163,14 +111,26 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
   const handleItemClick = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      const headerOffset = 100 // 固定ヘッダーの高さを考慮
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+      const mainElement = document.getElementById('main-content')
+      const headerOffset = 32 // py-8のパディング分
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      })
+      if (mainElement) {
+        // main要素内でスクロール
+        const elementPosition = element.offsetTop - headerOffset
+        mainElement.scrollTo({
+          top: elementPosition,
+          behavior: 'smooth',
+        })
+      } else {
+        // フォールバック: window スクロール
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        })
+      }
 
       // URLハッシュを更新（履歴には追加しない）
       if (history.replaceState) {
@@ -189,72 +149,6 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
         ) : (
           <div className="text-muted-foreground text-sm">No headings found</div>
         )}
-
-        {/* Helpful Links */}
-        <div className="border-border border-t pt-4">
-          <div className="space-y-4">
-            <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Helpful Links</div>
-            <div className="space-y-2">
-              <a
-                href="#"
-                className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
-              >
-                <svg
-                  className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                  />
-                </svg>
-                Edit this page
-              </a>
-              <a
-                href="#"
-                className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
-              >
-                <svg
-                  className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
-                  />
-                </svg>
-                Report an issue
-              </a>
-              <a
-                href="#"
-                className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
-              >
-                <svg
-                  className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8"
-                  />
-                </svg>
-                Give feedback
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     )
   }
@@ -267,70 +161,31 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
         <TocList items={toc} activeId={activeId} onItemClick={handleItemClick} />
       </nav>
 
-      {/* Helpful Links */}
+      {/* Links */}
       <div className="border-border border-t pt-4">
-        <div className="space-y-4">
-          <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Helpful Links</div>
-          <div className="space-y-2">
+        <div className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">Links</div>
+        <ul className="space-y-2">
+          <li>
             <a
-              href="#"
-              className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
+              href="https://github.com/boxlog/boxlog-web/issues/new"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
-              <svg
-                className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                />
-              </svg>
-              Edit this page
-            </a>
-            <a
-              href="#"
-              className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
-            >
-              <svg
-                className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
-                />
-              </svg>
               Report an issue
             </a>
+          </li>
+          <li>
             <a
-              href="#"
-              className="group text-muted-foreground hover:text-foreground flex items-center text-sm transition-colors"
+              href="https://github.com/boxlog/boxlog-web"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
-              <svg
-                className="mr-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v10a2 2 0 002 2h10a2 2 0 002-2V8"
-                />
-              </svg>
-              Give feedback
+              View source
             </a>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
   )
