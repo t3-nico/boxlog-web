@@ -27,7 +27,7 @@ const badgeVariants = cva(
         // 強調 - 主要なラベル
         primary: 'border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary-hover',
         // 控えめ - カウント表示など
-        secondary: 'border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-state-hover',
+        secondary: 'border-transparent bg-muted text-muted-foreground [a&]:hover:bg-state-hover',
         // 軽量 - ボーダー付き
         outline: 'border-border bg-background text-foreground [a&]:hover:bg-state-hover',
         // 成功 - 完了、プラス
