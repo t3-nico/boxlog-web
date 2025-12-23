@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import { Heading, Text } from '@/components/ui/typography'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
@@ -121,26 +120,6 @@ export default async function DocsPage({ params }: PageProps) {
             <Link href="/docs/guides" className="text-primary hover:text-primary/80 font-medium">
               {isJa ? 'ガイドを見る →' : 'Browse guides →'}
             </Link>
-          </div>
-        </div>
-
-        {/* Help Section */}
-        <div className="bg-muted rounded-lg p-8 text-center">
-          <Heading as="h2" size="xl" className="text-foreground mb-4">
-            {isJa ? 'お困りですか？' : 'Need Help?'}
-          </Heading>
-          <Text variant="muted" className="mx-auto mb-6 max-w-2xl">
-            {isJa
-              ? 'ドキュメントで答えが見つからない場合は、お気軽にお問い合わせください。'
-              : "Can't find what you're looking for? Reach out to us."}
-          </Text>
-          <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Button variant="outline" asChild>
-              <Link href="/docs/faq">{isJa ? 'よくある質問' : 'FAQ'}</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/contact">{t('navigation.contact')}</Link>
-            </Button>
           </div>
         </div>
       </div>
