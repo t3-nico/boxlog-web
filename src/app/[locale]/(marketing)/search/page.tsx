@@ -64,7 +64,7 @@ function SearchResults() {
     switch (type) {
       case 'docs':
         return (
-          <svg className="h-4 w-4 text-[rgb(var(--info-color))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="text-info h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -75,12 +75,7 @@ function SearchResults() {
         )
       case 'blog':
         return (
-          <svg
-            className="h-4 w-4 text-[rgb(var(--success-color))]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="text-success h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -91,12 +86,7 @@ function SearchResults() {
         )
       case 'release':
         return (
-          <svg
-            className="h-4 w-4 text-[rgb(var(--tag-accent-text))]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="text-primary h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -110,16 +100,16 @@ function SearchResults() {
     }
   }
 
-  const getTypeBadgeColor = (type: string) => {
+  const getTypeBadgeVariant = (type: string): 'info' | 'success' | 'primary' | 'secondary' => {
     switch (type) {
       case 'docs':
-        return 'bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))] border-[rgb(var(--info-color))]'
+        return 'info'
       case 'blog':
-        return 'bg-[rgb(var(--success-bg))] text-[rgb(var(--success-color))] border-[rgb(var(--success-color))]'
+        return 'success'
       case 'release':
-        return 'bg-[rgb(var(--tag-accent-bg))] text-[rgb(var(--tag-accent-text))] border-[rgb(var(--tag-accent-text))]'
+        return 'primary'
       default:
-        return 'bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] border-[rgb(var(--border-primary))]'
+        return 'secondary'
     }
   }
 
@@ -136,7 +126,7 @@ function SearchResults() {
           <div className="mb-6 flex items-center gap-4">
             <div className="relative flex-1">
               <svg
-                className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-[rgb(var(--text-tertiary))]"
+                className="text-muted-foreground absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -154,7 +144,7 @@ function SearchResults() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch(query)}
-                className="border-[rgb(var(--border-primary))] py-3 pr-4 pl-10 text-base focus:border-[rgb(var(--focus-ring))] focus:ring-[rgb(var(--focus-ring))]"
+                className="py-3 pr-4 pl-10 text-base"
               />
             </div>
             <Button onClick={() => handleSearch(query)} className="px-6 py-3">
@@ -165,7 +155,7 @@ function SearchResults() {
           {/* フィルター */}
           {query && (
             <div className="mb-6 flex items-center gap-4">
-              <Text className="mr-2 text-sm text-[rgb(var(--text-secondary))]">フィルター:</Text>
+              <Text className="text-muted-foreground mr-2 text-sm">フィルター:</Text>
               <div className="flex gap-2">
                 {[
                   { key: 'all', label: 'すべて', count: results.length },
@@ -190,8 +180,8 @@ function SearchResults() {
                     onClick={() => setSelectedFilter(filter.key as typeof selectedFilter)}
                     className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                       selectedFilter === filter.key
-                        ? 'border border-[rgb(var(--info-color))] bg-[rgb(var(--info-bg))] text-[rgb(var(--info-color))]'
-                        : 'border border-transparent bg-[rgb(var(--tag-neutral-bg))] text-[rgb(var(--tag-neutral-text))] hover:bg-[rgb(var(--tag-neutral-hover))]'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted text-muted-foreground hover:bg-state-hover hover:text-foreground'
                     }`}
                   >
                     {filter.label} ({filter.count})
@@ -206,13 +196,13 @@ function SearchResults() {
         {query ? (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <Text className="text-[rgb(var(--text-secondary))]">
+              <Text className="text-muted-foreground">
                 「<span className="font-medium">{query}</span>」の検索結果: {filteredResults.length}件
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 animate-spin rounded-full border-b-2 border-[rgb(var(--focus-ring))]"></div>
-                  <Text className="text-sm text-[rgb(var(--text-tertiary))]">検索中...</Text>
+                  <div className="border-primary h-4 w-4 animate-spin rounded-full border-b-2"></div>
+                  <Text className="text-muted-foreground text-sm">検索中...</Text>
                 </div>
               )}
             </div>
@@ -220,13 +210,10 @@ function SearchResults() {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="animate-pulse rounded-lg border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] p-6"
-                  >
-                    <div className="mb-3 h-4 w-3/4 rounded bg-[rgb(var(--bg-secondary))]"></div>
-                    <div className="mb-2 h-3 w-full rounded bg-[rgb(var(--bg-secondary))]"></div>
-                    <div className="h-3 w-2/3 rounded bg-[rgb(var(--bg-secondary))]"></div>
+                  <div key={i} className="border-border bg-card animate-pulse rounded-lg border p-6">
+                    <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
+                    <div className="bg-muted mb-2 h-3 w-full rounded"></div>
+                    <div className="bg-muted h-3 w-2/3 rounded"></div>
                   </div>
                 ))}
               </div>
@@ -235,36 +222,31 @@ function SearchResults() {
                 {filteredResults.map((result) => (
                   <div
                     key={result.id}
-                    className="rounded-lg border border-[rgb(var(--border-primary))] bg-[rgb(var(--bg-primary))] p-6 transition-shadow hover:shadow-md"
+                    className="border-border bg-card rounded-lg border p-6 transition-shadow hover:shadow-md"
                   >
                     <div className="mb-3 flex items-start gap-4">
                       {getTypeIcon(result.type)}
                       <div className="min-w-0 flex-1">
                         <Link
                           href={result.url}
-                          className="block truncate text-lg font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))] hover:underline"
+                          className="text-primary hover:text-primary-hover block truncate text-lg font-medium hover:underline"
                         >
                           <Highlight text={result.title} query={query} />
                         </Link>
                         <div className="mt-1 flex items-center gap-2">
-                          <Badge variant="outline" className={`px-2 py-1 text-xs ${getTypeBadgeColor(result.type)}`}>
+                          <Badge variant={getTypeBadgeVariant(result.type)} className="px-2 py-1 text-xs">
                             {result.type === 'docs' ? 'ドキュメント' : result.type === 'blog' ? 'ブログ' : 'リリース'}
                           </Badge>
-                          <span className="text-xs text-[rgb(var(--text-tertiary))]">
-                            {result.breadcrumbs.join(' › ')}
-                          </span>
+                          <span className="text-muted-foreground text-xs">{result.breadcrumbs.join(' › ')}</span>
                         </div>
                       </div>
                     </div>
-                    <p className="mb-3 line-clamp-2 text-sm text-[rgb(var(--text-secondary))]">
+                    <p className="text-muted-foreground mb-3 line-clamp-2 text-sm">
                       <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-[rgb(var(--text-tertiary))]">最終更新: {result.lastModified}</span>
-                      <Link
-                        href={result.url}
-                        className="text-xs font-medium text-[rgb(var(--link-color))] hover:text-[rgb(var(--link-hover))]"
-                      >
+                      <span className="text-muted-foreground text-xs">最終更新: {result.lastModified}</span>
+                      <Link href={result.url} className="text-primary hover:text-primary-hover text-xs font-medium">
                         詳細を見る →
                       </Link>
                     </div>
@@ -274,7 +256,7 @@ function SearchResults() {
             ) : (
               <div className="py-16 text-center">
                 <svg
-                  className="mx-auto mb-4 h-16 w-16 text-[rgb(var(--text-tertiary))]"
+                  className="text-muted-foreground mx-auto mb-4 h-16 w-16"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -307,7 +289,7 @@ function SearchResults() {
         ) : (
           <div className="py-16 text-center">
             <svg
-              className="mx-auto mb-4 h-16 w-16 text-[rgb(var(--text-tertiary))]"
+              className="text-muted-foreground mx-auto mb-4 h-16 w-16"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -351,7 +333,7 @@ export default function SearchPage() {
           <Container className="py-8">
             <div className="mx-auto max-w-4xl">
               <div className="flex items-center justify-center py-12">
-                <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-[rgb(var(--focus-ring))]"></div>
+                <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
               </div>
             </div>
           </Container>
