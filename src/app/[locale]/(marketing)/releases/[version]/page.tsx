@@ -369,7 +369,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {relatedReleases.map((relatedRelease) => (
-                    <ReleaseCard key={relatedRelease.frontMatter.version} release={relatedRelease} compact={true} />
+                    <ReleaseCard key={relatedRelease.frontMatter.version} release={relatedRelease} layout="vertical" />
                   ))}
                 </div>
 

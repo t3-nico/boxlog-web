@@ -2,7 +2,8 @@ import { Breadcrumbs } from '@/components/docs/Breadcrumbs'
 import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
 import { mdxComponents } from '@/components/docs/MDXComponents'
 import { PageNavigation } from '@/components/docs/PageNavigation'
-import { Heading, Text } from '@/components/ui/typography'
+import { Card, CardHeader, CardTitle } from '@/components/ui/card'
+import { Heading } from '@/components/ui/typography'
 import { getAllContent, getMDXContentForRSC, getRelatedContent } from '@/lib/mdx'
 import { ContentData } from '@/types/content'
 import { Metadata } from 'next'
@@ -16,7 +17,7 @@ interface PageParams {
 }
 
 interface DocPageProps {
-  params: PageParams
+  params: Promise<PageParams>
 }
 
 // Generate static parameters (SEO optimization)
@@ -45,8 +46,9 @@ export async function generateStaticParams(): Promise<PageParams[]> {
 // Generate metadata
 export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
   try {
-    const category = params.slug[0]
-    const contentSlug = params.slug.slice(1).join('/')
+    const { slug } = await params
+    const category = slug[0]
+    const contentSlug = slug.slice(1).join('/')
 
     const content = await getMDXContentForRSC(`${category}/${contentSlug}`)
 
@@ -112,9 +114,10 @@ async function getAdjacentPages(slug: string): Promise<{
 // Main page component
 export default async function DocPage({ params }: DocPageProps) {
   try {
-    const slug = params.slug.join('/')
-    const category = params.slug[0]
-    const contentSlug = params.slug.slice(1).join('/')
+    const { slug: slugArray } = await params
+    const slug = slugArray.join('/')
+    const category = slugArray[0]
+    const contentSlug = slugArray.slice(1).join('/')
 
     // Get MDX content
     let content
@@ -146,10 +149,10 @@ export default async function DocPage({ params }: DocPageProps) {
     const relatedContent = await getRelatedContent(frontMatter.category, slug, 3)
 
     return (
-      <div className="bg-background flex min-h-screen py-8">
+      <div className="flex">
         {/* Main Content */}
-        <div className="min-w-0 flex-1">
-          <div className="max-w-4xl">
+        <div className="min-w-0 flex-1 px-6 py-8 lg:px-8">
+          <div className="mx-auto max-w-3xl">
             {/* Breadcrumb navigation */}
             <Breadcrumbs slug={slug} title={frontMatter.title} />
 
@@ -162,29 +165,36 @@ export default async function DocPage({ params }: DocPageProps) {
             {relatedContent.length > 0 && (
               <aside className="border-border mt-12 border-t pt-8">
                 <Heading as="h2" size="xl" className="mb-6">
-                  Related Articles
+                  関連記事
                 </Heading>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {relatedContent.map((related) => (
-                    <a
-                      key={related.slug}
-                      href={`/docs/${related.slug}`}
-                      className="border-border bg-card hover:border-foreground hover:bg-muted block rounded-lg border p-4 transition-colors"
-                    >
-                      <Heading as="h3" size="lg" className="mb-2">
-                        {related.frontMatter.title}
-                      </Heading>
-                      <Text size="sm" variant="muted" className="line-clamp-2">
-                        {related.frontMatter.description}
-                      </Text>
-                      <div className="mt-3 flex items-center gap-2">
-                        {related.frontMatter.tags?.slice(0, 2).map((tag) => (
-                          <span key={tag} className="bg-tag-neutral-bg text-tag-neutral-text rounded px-2 py-1 text-xs">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </a>
+                    <Link key={related.slug} href={`/docs/${related.slug}`} className="block">
+                      <Card className="h-full gap-3 py-3 transition-colors hover:bg-[var(--state-hover)]">
+                        <CardHeader className="gap-1.5 px-4 py-0">
+                          <CardTitle className="line-clamp-2 text-sm">{related.frontMatter.title}</CardTitle>
+                          <div className="flex items-center gap-2">
+                            {related.frontMatter.updatedAt && (
+                              <time className="text-muted-foreground text-xs">
+                                {new Date(related.frontMatter.updatedAt).toLocaleDateString('ja-JP')}
+                              </time>
+                            )}
+                            {related.frontMatter.tags && related.frontMatter.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-1">
+                                {related.frontMatter.tags.slice(0, 2).map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="bg-muted text-muted-foreground rounded-full px-1.5 py-0.5 text-xs"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </CardHeader>
+                      </Card>
+                    </Link>
                   ))}
                 </div>
               </aside>
@@ -195,9 +205,9 @@ export default async function DocPage({ params }: DocPageProps) {
           </div>
         </div>
 
-        {/* Right Sidebar - Table of Contents */}
-        <aside className="hidden w-[240px] flex-shrink-0 xl:block">
-          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pl-6">
+        {/* Right Sidebar - Table of Contents (xl以上で表示、固定位置) */}
+        <aside className="hidden w-60 flex-shrink-0 xl:block">
+          <div className="sticky top-0 max-h-screen overflow-y-auto px-4 py-8">
             <ClientTableOfContents content={mdxContent} />
           </div>
         </aside>

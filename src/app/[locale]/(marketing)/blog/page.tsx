@@ -1,6 +1,5 @@
 import { FilteredBlogClient } from '@/components/blog/FilteredBlogClient'
 import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
 import { routing } from '@/i18n/routing'
 import { getAllBlogPostMetas, getAllTagNames } from '@/lib/blog'
 import { generateSEOMetadata } from '@/lib/metadata'
@@ -36,26 +35,10 @@ export default async function BlogPage({ params }: PageProps) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  const t = await getTranslations({ locale, namespace: 'common' })
   const [allPosts, allTags] = await Promise.all([getAllBlogPostMetas(), getAllTagNames()])
 
   return (
     <div className="bg-background min-h-screen">
-      {/* Header */}
-      <section className="py-16">
-        <Container>
-          <div className="mx-auto max-w-6xl">
-            <Heading as="h1" size="3xl" className="mb-4">
-              {t('navigation.blog')}
-            </Heading>
-            <Text size="lg" variant="muted">
-              {locale === 'ja' ? '最新の記事とチュートリアル' : 'Latest articles and tutorials'}
-            </Text>
-          </div>
-        </Container>
-      </section>
-
-      {/* Main content */}
       <section className="py-16">
         <Container>
           <div className="mx-auto max-w-6xl">

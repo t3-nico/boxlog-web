@@ -1,6 +1,5 @@
 import { ReleasesClient } from '@/components/releases/ReleasesClient'
 import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
 import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
 import { getAllReleaseMetas, getAllReleaseTags } from '@/lib/releases'
@@ -36,32 +35,14 @@ export default async function ReleasesPage({ params }: PageProps) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  const t = await getTranslations({ locale, namespace: 'common' })
-
   // Fetch data server-side
   const [allReleases, allTags] = await Promise.all([getAllReleaseMetas(), getAllReleaseTags()])
 
-  const isJa = locale === 'ja'
-
   return (
     <div className="bg-background min-h-screen">
-      {/* Hero Section */}
-      <section className="py-16">
-        <Container>
-          <div className="mx-auto max-w-4xl text-center">
-            <Heading as="h1" size="4xl" className="mb-4">
-              {t('navigation.releases')}
-            </Heading>
-
-            <Text size="lg" variant="muted" className="mb-8">
-              {isJa ? '最新のリリースノートと更新情報' : 'Latest release notes and updates'}
-            </Text>
-          </div>
-        </Container>
-      </section>
-
-      {/* Main Releases Section - Client Component */}
-      <ReleasesClient initialReleases={allReleases} initialTags={allTags} upcomingReleases={[]} locale={locale} />
+      <Container>
+        <ReleasesClient initialReleases={allReleases} initialTags={allTags} locale={locale} />
+      </Container>
     </div>
   )
 }
