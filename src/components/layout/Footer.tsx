@@ -93,7 +93,7 @@ export function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Product */}
               <div>
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.product')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.product')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.product.map((item) => (
                     <li key={item.name}>
@@ -109,7 +109,7 @@ export function Footer() {
               </div>
               {/* Resources */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.resources')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.resources')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.resources.map((item) => (
                     <li key={item.name}>
@@ -127,7 +127,7 @@ export function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Company */}
               <div>
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.company')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.company')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.company.map((item) => (
                     <li key={item.name}>
@@ -143,7 +143,7 @@ export function Footer() {
               </div>
               {/* Legal */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-sm font-semibold">{tFooter('sections.legal')}</h3>
+                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.legal')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
