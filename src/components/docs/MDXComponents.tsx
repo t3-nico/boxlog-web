@@ -47,7 +47,7 @@ type PreComponentProps = ComponentPropsWithoutRef<'pre'> & {
 }
 
 // カスタムコードブロックコンポーネント
-function CodeBlock({ children, className, ...props }: CodeBlockProps) {
+function CodeBlock({ children, className }: CodeBlockProps) {
   // childrenがReact要素（code要素）の場合、そのpropsからテキストを取得
   let codeString = ''
   let codeClassName = className || ''
@@ -64,16 +64,16 @@ function CodeBlock({ children, className, ...props }: CodeBlockProps) {
     codeString = typeof children === 'string' ? children : String(children ?? '')
   }
 
+  // 言語クラスを抽出（language-xxx形式）
+  const languageClass = codeClassName.match(/language-\w+/)?.[0] || ''
+
   return (
     <div className="group relative">
       <div className="absolute top-3 right-3 opacity-0 transition-opacity group-hover:opacity-100">
         <CopyCodeButton code={codeString} />
       </div>
-      <pre
-        className={`hljs ${codeClassName} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}
-        {...props}
-      >
-        <code className={codeClassName}>{codeString}</code>
+      <pre className={`hljs ${languageClass} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}>
+        <code className={languageClass}>{codeString}</code>
       </pre>
     </div>
   )
