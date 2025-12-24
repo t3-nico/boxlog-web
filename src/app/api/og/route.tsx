@@ -7,8 +7,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
 
-    const title = searchParams.get('title') || 'YourSaaS'
-    const description = searchParams.get('description') || 'Modern SaaS Platform for Scalable Applications'
+    const title = searchParams.get('title') || 'BoxLog'
+    const description = searchParams.get('description') || 'スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム'
     const type = searchParams.get('type') || 'default'
     const category = searchParams.get('category')
     const author = searchParams.get('author')
@@ -43,9 +43,9 @@ export async function GET(request: NextRequest) {
         label: 'Release Notes',
       },
       default: {
-        icon: '🔧',
+        icon: '📦',
         color: brandColors.primary,
-        label: 'YourSaaS',
+        label: 'BoxLog',
       },
     }
 
@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
                 lineHeight: '1.2',
               }}
             >
-              YourSaaS
+              BoxLog
             </div>
             <div
               style={{

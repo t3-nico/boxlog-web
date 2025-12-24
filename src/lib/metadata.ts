@@ -32,14 +32,14 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'YourSaaS',
-  title: 'YourSaaS - Modern SaaS Platform for Scalable Applications',
+  name: 'BoxLog',
+  title: 'BoxLog - スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム',
   description:
-    'Build, deploy, and scale your SaaS applications with YourSaaS. Comprehensive tools for authentication, user management, billing, and more.',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yoursaas.com',
+    'BoxLogで次世代のSaaSアプリケーションを構築、デプロイ、スケール。認証、ユーザー管理、請求処理など包括的なツールを提供します。',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://boxlog.app',
   ogImage: '/og-image.png',
-  creator: 'YourSaaS Team',
-  twitterHandle: '@yoursaas',
+  creator: 'BoxLog Team',
+  twitterHandle: '@boxlog_app',
   keywords: [
     'SaaS',
     'Software as a Service',
@@ -121,7 +121,7 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
       canonical: pageUrl,
       languages: {
         'en-US': `${siteConfig.url}/en${url || ''}`,
-        'ja-JP': `${siteConfig.url}/jp${url || ''}`,
+        'ja-JP': `${siteConfig.url}/ja${url || ''}`,
         'x-default': `${siteConfig.url}/en${url || ''}`,
       },
     },
@@ -236,15 +236,13 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
         logo: `${baseUrl}/logo.png`,
         description: siteConfig.description,
         sameAs: [
-          'https://twitter.com/yoursaas',
-          'https://github.com/yoursaas',
-          'https://linkedin.com/company/yoursaas',
+          'https://twitter.com/boxlog_app',
+          'https://github.com/boxlog',
         ],
         contactPoint: {
           '@type': 'ContactPoint',
-          telephone: '+1-555-0123',
           contactType: 'Customer Service',
-          email: 'support@yoursaas.com',
+          email: 'support@boxlog.app',
         },
       }
 

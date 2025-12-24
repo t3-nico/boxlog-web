@@ -23,7 +23,7 @@ const RECENT_SEARCHES = ['API Authentication', 'Release v2.1.0', 'Next.js Guide'
 const getQuickLinks = (locale: string) => [
   {
     title: 'Quick Start',
-    description: 'Get started with YourSaaS in 5 minutes',
+    description: 'BoxLogを5分で始める',
     href: `/${locale}/docs/quick-start`,
     type: 'docs',
   },
