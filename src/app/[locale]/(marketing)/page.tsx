@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
@@ -41,13 +42,13 @@ export default async function Home({ params }: PageProps) {
     <div className="bg-background">
       <div className="relative isolate">
         {/* Hero content */}
-        <div className="py-24 sm:py-32 lg:pb-40">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-5xl font-semibold tracking-tight text-balance sm:text-7xl">{t('hero.title')}</h1>
-              <p className="text-muted-foreground mt-8 text-lg font-medium text-pretty sm:text-xl/8">
-                {t('hero.subtitle')}
-              </p>
+        <section className="py-24 sm:py-32 lg:pb-40">
+          <Container>
+            <div className="mx-auto max-w-4xl text-center">
+              <h1 className="text-foreground text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+                {t('hero.title')}
+              </h1>
+              <p className="text-muted-foreground mt-6 text-lg sm:text-xl">{t('hero.subtitle')}</p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Button size="lg" asChild>
                   <Link href="/contact">{t('hero.cta')}</Link>
@@ -70,8 +71,8 @@ export default async function Home({ params }: PageProps) {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Container>
+        </section>
       </div>
     </div>
   )

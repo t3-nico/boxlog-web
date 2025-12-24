@@ -122,46 +122,90 @@ export function calculateReleaseTime(content: string): number {
 export async function getAllReleaseMetas(): Promise<ReleasePostMeta[]> {
   const releasesDirectory = path.join(process.cwd(), 'content', 'releases')
 
-  if (!fs.existsSync(releasesDirectory)) {
+  try {
+    if (!fs.existsSync(releasesDirectory)) {
+      console.warn(`[Releases] Releases directory not found: ${releasesDirectory}`)
+      return []
+    }
+
+    let filenames: string[]
+    try {
+      filenames = fs.readdirSync(releasesDirectory)
+    } catch (error) {
+      console.error(`[Releases] Failed to read releases directory: ${releasesDirectory}`, error)
+      return []
+    }
+
+    const mdxFiles = filenames.filter((name) => name.endsWith('.mdx'))
+    const releases: ReleasePostMeta[] = []
+    const errors: { file: string; error: unknown }[] = []
+
+    for (const filename of mdxFiles) {
+      const filePath = path.join(releasesDirectory, filename)
+      try {
+        const fileContents = fs.readFileSync(filePath, 'utf8')
+        const { data, content } = matter(fileContents)
+
+        const frontMatter = data as ReleaseFrontMatter
+
+        // Validate required frontmatter fields
+        if (!frontMatter.version) {
+          console.warn(`[Releases] Missing required 'version' in frontmatter: ${filePath}`)
+        }
+        if (!frontMatter.date) {
+          console.warn(`[Releases] Missing required 'date' in frontmatter: ${filePath}`)
+        }
+
+        const slug = filename.replace(/\.mdx$/, '')
+        const readingTime = calculateReleaseTime(content)
+
+        releases.push({
+          frontMatter,
+          slug,
+          content,
+          readingTime,
+        })
+      } catch (error) {
+        errors.push({ file: filePath, error })
+      }
+    }
+
+    // Log any errors that occurred during processing
+    if (errors.length > 0) {
+      console.error(`[Releases] Failed to process ${errors.length} release note(s):`)
+      errors.forEach(({ file, error }) => {
+        console.error(`  - ${file}:`, error instanceof Error ? error.message : error)
+      })
+    }
+
+    // バージョンでソート（最新が最初）
+    releases.sort((a, b) => {
+      const versionA = a.frontMatter.version || ''
+      const versionB = b.frontMatter.version || ''
+      const versions = [versionA, versionB]
+      const sorted = sortVersions(versions)
+      return sorted.indexOf(versionA) - sorted.indexOf(versionB)
+    })
+
+    return releases
+  } catch (error) {
+    console.error('[Releases] Unexpected error in getAllReleaseMetas:', error)
     return []
   }
-
-  const filenames = fs.readdirSync(releasesDirectory)
-  const mdxFiles = filenames.filter((name) => name.endsWith('.mdx'))
-
-  const releases = mdxFiles.map((filename) => {
-    const filePath = path.join(releasesDirectory, filename)
-    const fileContents = fs.readFileSync(filePath, 'utf8')
-    const { data, content } = matter(fileContents)
-
-    const frontMatter = data as ReleaseFrontMatter
-    const slug = filename.replace(/\.mdx$/, '')
-    const readingTime = calculateReleaseTime(content)
-
-    return {
-      frontMatter,
-      slug,
-      content,
-      readingTime,
-    }
-  })
-
-  // バージョンでソート（最新が最初）
-  releases.sort((a, b) => {
-    const versions = [a.frontMatter.version, b.frontMatter.version]
-    const sorted = sortVersions(versions)
-    return sorted.indexOf(a.frontMatter.version) - sorted.indexOf(b.frontMatter.version)
-  })
-
-  return releases
 }
 
 // 個別リリースノート取得
 export async function getRelease(version: string): Promise<ReleasePost | null> {
-  try {
-    const releasesDirectory = path.join(process.cwd(), 'content', 'releases')
-    const filePath = path.join(releasesDirectory, `${version}.mdx`)
+  // Validate version to prevent path traversal
+  if (!version || version.includes('..') || version.includes('/')) {
+    console.warn(`[Releases] Invalid version provided: ${version}`)
+    return null
+  }
 
+  const releasesDirectory = path.join(process.cwd(), 'content', 'releases')
+  const filePath = path.join(releasesDirectory, `${version}.mdx`)
+
+  try {
     if (!fs.existsSync(filePath)) {
       return null
     }
@@ -178,7 +222,8 @@ export async function getRelease(version: string): Promise<ReleasePost | null> {
       slug: version,
       readingTime,
     }
-  } catch {
+  } catch (error) {
+    console.error(`[Releases] Failed to read release: ${filePath}`, error instanceof Error ? error.message : error)
     return null
   }
 }

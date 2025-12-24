@@ -9,7 +9,7 @@ export function SecurityContent() {
   const t = useTranslations()
 
   return (
-    <div className="bg-background container mx-auto min-h-screen max-w-4xl p-4 md:p-8">
+    <div className="bg-background container mx-auto min-h-screen max-w-4xl px-4 py-12 md:px-8 md:py-16">
       {/* ページヘッダー */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-3">

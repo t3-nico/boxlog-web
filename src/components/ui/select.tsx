@@ -19,10 +19,13 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      // セマンティックトークン - 入力系スタイル
-      'border-border bg-input text-foreground ring-offset-background flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm',
-      'data-[placeholder]:text-muted-foreground focus:ring-ring focus:border-ring focus:ring-2 focus:ring-offset-2 focus:outline-none',
-      'disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+      // 基本スタイル（Input/Textareaと統一）
+      'border-input bg-input text-foreground flex h-10 w-full items-center justify-between rounded-md border px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
+      'data-[placeholder]:text-muted-foreground',
+      // フォーカス（Input/Textareaと統一）
+      'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+      // 無効状態
+      'disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
       className
     )}
     {...props}
