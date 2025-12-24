@@ -38,12 +38,14 @@ export function Footer() {
 
   const navigation = {
     product: [
+      { name: t('common.navigation.features'), href: '/features' },
       { name: t('common.navigation.pricing'), href: '/pricing' },
-      { name: t('common.navigation.releases'), href: '/releases' },
     ],
     resources: [
-      { name: t('common.navigation.docs'), href: '/docs' },
       { name: t('common.navigation.blog'), href: '/blog' },
+      { name: t('common.navigation.docs'), href: '/docs' },
+      { name: t('common.navigation.releases'), href: '/releases' },
+      { name: t('common.navigation.tags'), href: '/tags' },
     ],
     company: [
       { name: t('common.navigation.about'), href: '/about' },
