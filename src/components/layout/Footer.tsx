@@ -185,7 +185,7 @@ export function Footer() {
             {/* Copyright left, Settings right */}
             <div className="flex items-center justify-between">
               <p className="text-muted-foreground text-sm">&copy; {new Date().getFullYear()} BoxLog, Inc.</p>
-              <div className="flex items-center gap-x-3">
+              <div className="flex items-center gap-x-0">
                 <ThemeToggle />
                 <LanguageSwitcher variant="full" />
               </div>
@@ -210,7 +210,7 @@ export function Footer() {
                   <item.icon aria-hidden="true" className="size-5" />
                 </a>
               ))}
-              <div className="ml-4 flex items-center gap-x-3">
+              <div className="ml-4 flex items-center gap-x-0">
                 <ThemeToggle />
                 <LanguageSwitcher variant="full" />
               </div>
