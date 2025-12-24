@@ -2,27 +2,28 @@
 
 import { ErrorLayout } from '@/components/errors/ErrorLayout'
 import { Button } from '@/components/ui/button'
-import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect } from 'react'
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-  const t = useTranslations()
-
   useEffect(() => {
     // Log the error to an error reporting service
     console.error('Application error:', error)
   }, [error])
 
   return (
-    <ErrorLayout title={t('errors.general.title')} description={t('errors.general.description')} showBackButton={false}>
+    <ErrorLayout
+      title="Something went wrong"
+      description="We encountered an unexpected error. Please try again or contact support if the problem persists."
+      showBackButton={false}
+    >
       <div className="mt-10 space-y-4">
         <Button onClick={reset} className="w-full sm:w-auto">
-          {t('common.actions.tryAgain')}
+          Try again
         </Button>
 
         <Button variant="outline" asChild className="w-full sm:ml-4 sm:w-auto">
-          <Link href="/">{t('common.actions.backToHome')}</Link>
+          <Link href="/">Go home</Link>
         </Button>
       </div>
 
