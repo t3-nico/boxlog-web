@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Share2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 interface ShareButtonProps {
@@ -10,6 +11,8 @@ interface ShareButtonProps {
 }
 
 export function ShareButton({ title, version }: ShareButtonProps) {
+  const t = useTranslations('common.actions')
+
   const handleShare = async () => {
     const url = window.location.href
     const fullTitle = `${title} - v${version}`
@@ -19,15 +22,13 @@ export function ShareButton({ title, version }: ShareButtonProps) {
         await navigator.share({ title: fullTitle, url })
       } catch {
         // User cancelled share
-        console.log('Share cancelled')
       }
     } else {
       try {
         await navigator.clipboard.writeText(url)
-        toast.success('URL copied to clipboard')
-      } catch (err) {
-        console.error('Failed to copy URL:', err)
-        toast.error('Failed to copy URL')
+        toast.success(t('urlCopied'))
+      } catch {
+        toast.error(t('urlCopyFailed'))
       }
     }
   }
@@ -35,7 +36,7 @@ export function ShareButton({ title, version }: ShareButtonProps) {
   return (
     <Button onClick={handleShare} variant="outline" className="gap-2">
       <Share2 className="h-4 w-4" />
-      Share
+      {t('share')}
     </Button>
   )
 }
