@@ -29,7 +29,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords:
       locale === 'ja'
         ? ['機能', 'API統合', 'リアルタイム分析', 'セキュリティ', 'ワークフロー自動化', 'チームコラボレーション']
-        : ['features', 'API integration', 'real-time analytics', 'security', 'workflow automation', 'team collaboration'],
+        : [
+            'features',
+            'API integration',
+            'real-time analytics',
+            'security',
+            'workflow automation',
+            'team collaboration',
+          ],
     type: 'website',
   })
 }
@@ -131,7 +138,12 @@ export default async function FeaturesPage({ params }: PageProps) {
               {t('pricing.cta.description')}
             </Text>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button size="lg" variant="secondary" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary-foreground/20 text-primary bg-white hover:bg-white/90"
+                asChild
+              >
                 <Link href="/contact">{t('pricing.cta.startButton')}</Link>
               </Button>
               <Button

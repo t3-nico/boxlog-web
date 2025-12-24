@@ -118,13 +118,84 @@
   --release-security-text: oklch(0.4 0.15 300);
   --release-security-border: oklch(0.8 0.12 300);
 
-  /* Tag colors */
-  --tag-neutral-bg: oklch(0.96 0 0);
-  --tag-neutral-text: oklch(0.4 0 0);
-  --tag-neutral-hover: oklch(0.92 0 0);
-  --tag-accent-bg: oklch(0.94 0.04 260);
-  --tag-accent-text: oklch(0.45 0.18 270);
-  --tag-accent-hover: oklch(0.9 0.06 260);
+  /* Tag colors - カテゴリ別10色（boxlog-appと同期） */
+  /* Blue - 技術/フレームワーク */
+  --tag-blue-bg: oklch(0.94 0.04 250);
+  --tag-blue-text: oklch(0.48 0.18 250);
+  --tag-blue-hover: oklch(0.9 0.06 250);
+  --tag-blue-solid: oklch(0.6 0.18 250);
+  --tag-blue-border: oklch(0.8 0.1 250);
+
+  /* Green - 機能/領域 */
+  --tag-green-bg: oklch(0.94 0.04 160);
+  --tag-green-text: oklch(0.48 0.16 160);
+  --tag-green-hover: oklch(0.9 0.06 160);
+  --tag-green-solid: oklch(0.65 0.16 160);
+  --tag-green-border: oklch(0.8 0.1 160);
+
+  /* Red - セキュリティ/重要 */
+  --tag-red-bg: oklch(0.94 0.04 25);
+  --tag-red-text: oklch(0.55 0.18 25);
+  --tag-red-hover: oklch(0.9 0.06 25);
+  --tag-red-solid: oklch(0.62 0.2 25);
+  --tag-red-border: oklch(0.8 0.12 25);
+
+  /* Amber - ビジネス */
+  --tag-amber-bg: oklch(0.94 0.05 85);
+  --tag-amber-text: oklch(0.55 0.14 70);
+  --tag-amber-hover: oklch(0.9 0.07 85);
+  --tag-amber-solid: oklch(0.75 0.16 70);
+  --tag-amber-border: oklch(0.8 0.1 80);
+
+  /* Violet - ドキュメント */
+  --tag-violet-bg: oklch(0.94 0.04 290);
+  --tag-violet-text: oklch(0.52 0.18 290);
+  --tag-violet-hover: oklch(0.9 0.06 290);
+  --tag-violet-solid: oklch(0.6 0.2 290);
+  --tag-violet-border: oklch(0.8 0.1 290);
+
+  /* Pink - UI/デザイン */
+  --tag-pink-bg: oklch(0.94 0.04 350);
+  --tag-pink-text: oklch(0.55 0.18 350);
+  --tag-pink-hover: oklch(0.9 0.06 350);
+  --tag-pink-solid: oklch(0.7 0.18 350);
+  --tag-pink-border: oklch(0.8 0.1 350);
+
+  /* Cyan - データ/分析 */
+  --tag-cyan-bg: oklch(0.94 0.04 200);
+  --tag-cyan-text: oklch(0.5 0.14 200);
+  --tag-cyan-hover: oklch(0.9 0.06 200);
+  --tag-cyan-solid: oklch(0.7 0.14 200);
+  --tag-cyan-border: oklch(0.8 0.08 200);
+
+  /* Orange - 自動化/統合 */
+  --tag-orange-bg: oklch(0.94 0.05 50);
+  --tag-orange-text: oklch(0.55 0.16 45);
+  --tag-orange-hover: oklch(0.9 0.07 50);
+  --tag-orange-solid: oklch(0.7 0.18 45);
+  --tag-orange-border: oklch(0.8 0.12 50);
+
+  /* Gray - その他/未分類 */
+  --tag-gray-bg: oklch(0.96 0 0);
+  --tag-gray-text: oklch(0.4 0 0);
+  --tag-gray-hover: oklch(0.92 0 0);
+  --tag-gray-solid: oklch(0.55 0 0);
+  --tag-gray-border: oklch(0.85 0 0);
+
+  /* Indigo - SDK/開発ツール */
+  --tag-indigo-bg: oklch(0.94 0.04 270);
+  --tag-indigo-text: oklch(0.5 0.18 270);
+  --tag-indigo-hover: oklch(0.9 0.06 270);
+  --tag-indigo-solid: oklch(0.55 0.2 270);
+  --tag-indigo-border: oklch(0.8 0.1 270);
+
+  /* 後方互換エイリアス */
+  --tag-neutral-bg: var(--tag-gray-bg);
+  --tag-neutral-text: var(--tag-gray-text);
+  --tag-neutral-hover: var(--tag-gray-hover);
+  --tag-accent-bg: var(--tag-blue-bg);
+  --tag-accent-text: var(--tag-blue-text);
+  --tag-accent-hover: var(--tag-blue-hover);
 
   /* Search highlight */
   --highlight-bg: oklch(0.9 0.12 85);
@@ -284,13 +355,84 @@
   --release-security-text: oklch(0.85 0.1 300);
   --release-security-border: oklch(0.45 0.12 300);
 
-  /* Tag colors - dark mode */
-  --tag-neutral-bg: oklch(0.28 0 0);
-  --tag-neutral-text: oklch(0.85 0 0);
-  --tag-neutral-hover: oklch(0.35 0 0);
-  --tag-accent-bg: oklch(0.3 0.1 270);
-  --tag-accent-text: oklch(0.8 0.1 260);
-  --tag-accent-hover: oklch(0.38 0.12 270);
+  /* Tag colors - dark mode（カテゴリ別10色） */
+  /* Blue - 技術/フレームワーク */
+  --tag-blue-bg: oklch(0.3 0.08 250);
+  --tag-blue-text: oklch(0.8 0.12 250);
+  --tag-blue-hover: oklch(0.38 0.1 250);
+  --tag-blue-solid: oklch(0.55 0.16 250);
+  --tag-blue-border: oklch(0.45 0.1 250);
+
+  /* Green - 機能/領域 */
+  --tag-green-bg: oklch(0.3 0.06 160);
+  --tag-green-text: oklch(0.8 0.12 160);
+  --tag-green-hover: oklch(0.38 0.08 160);
+  --tag-green-solid: oklch(0.6 0.14 160);
+  --tag-green-border: oklch(0.45 0.08 160);
+
+  /* Red - セキュリティ/重要 */
+  --tag-red-bg: oklch(0.3 0.06 25);
+  --tag-red-text: oklch(0.85 0.12 25);
+  --tag-red-hover: oklch(0.38 0.08 25);
+  --tag-red-solid: oklch(0.58 0.18 25);
+  --tag-red-border: oklch(0.45 0.1 25);
+
+  /* Amber - ビジネス */
+  --tag-amber-bg: oklch(0.32 0.06 70);
+  --tag-amber-text: oklch(0.85 0.12 70);
+  --tag-amber-hover: oklch(0.4 0.08 70);
+  --tag-amber-solid: oklch(0.7 0.14 70);
+  --tag-amber-border: oklch(0.48 0.08 70);
+
+  /* Violet - ドキュメント */
+  --tag-violet-bg: oklch(0.3 0.08 290);
+  --tag-violet-text: oklch(0.8 0.12 290);
+  --tag-violet-hover: oklch(0.38 0.1 290);
+  --tag-violet-solid: oklch(0.55 0.18 290);
+  --tag-violet-border: oklch(0.45 0.1 290);
+
+  /* Pink - UI/デザイン */
+  --tag-pink-bg: oklch(0.3 0.06 350);
+  --tag-pink-text: oklch(0.85 0.12 350);
+  --tag-pink-hover: oklch(0.38 0.08 350);
+  --tag-pink-solid: oklch(0.65 0.16 350);
+  --tag-pink-border: oklch(0.45 0.08 350);
+
+  /* Cyan - データ/分析 */
+  --tag-cyan-bg: oklch(0.3 0.06 200);
+  --tag-cyan-text: oklch(0.82 0.1 200);
+  --tag-cyan-hover: oklch(0.38 0.08 200);
+  --tag-cyan-solid: oklch(0.65 0.12 200);
+  --tag-cyan-border: oklch(0.45 0.06 200);
+
+  /* Orange - 自動化/統合 */
+  --tag-orange-bg: oklch(0.32 0.06 50);
+  --tag-orange-text: oklch(0.85 0.12 50);
+  --tag-orange-hover: oklch(0.4 0.08 50);
+  --tag-orange-solid: oklch(0.65 0.16 50);
+  --tag-orange-border: oklch(0.48 0.1 50);
+
+  /* Gray - その他/未分類 */
+  --tag-gray-bg: oklch(0.28 0 0);
+  --tag-gray-text: oklch(0.85 0 0);
+  --tag-gray-hover: oklch(0.35 0 0);
+  --tag-gray-solid: oklch(0.5 0 0);
+  --tag-gray-border: oklch(0.4 0 0);
+
+  /* Indigo - SDK/開発ツール */
+  --tag-indigo-bg: oklch(0.3 0.08 270);
+  --tag-indigo-text: oklch(0.8 0.12 270);
+  --tag-indigo-hover: oklch(0.38 0.1 270);
+  --tag-indigo-solid: oklch(0.5 0.18 270);
+  --tag-indigo-border: oklch(0.45 0.1 270);
+
+  /* 後方互換エイリアス */
+  --tag-neutral-bg: var(--tag-gray-bg);
+  --tag-neutral-text: var(--tag-gray-text);
+  --tag-neutral-hover: var(--tag-gray-hover);
+  --tag-accent-bg: var(--tag-blue-bg);
+  --tag-accent-text: var(--tag-blue-text);
+  --tag-accent-hover: var(--tag-blue-hover);
 
   /* Search highlight - dark mode */
   --highlight-bg: oklch(0.45 0.1 70);
@@ -446,7 +588,68 @@
   --color-release-security-text: var(--release-security-text);
   --color-release-security-border: var(--release-security-border);
 
-  /* Tag colors */
+  /* Tag colors - カテゴリ別10色 */
+  --color-tag-blue-bg: var(--tag-blue-bg);
+  --color-tag-blue-text: var(--tag-blue-text);
+  --color-tag-blue-hover: var(--tag-blue-hover);
+  --color-tag-blue-solid: var(--tag-blue-solid);
+  --color-tag-blue-border: var(--tag-blue-border);
+
+  --color-tag-green-bg: var(--tag-green-bg);
+  --color-tag-green-text: var(--tag-green-text);
+  --color-tag-green-hover: var(--tag-green-hover);
+  --color-tag-green-solid: var(--tag-green-solid);
+  --color-tag-green-border: var(--tag-green-border);
+
+  --color-tag-red-bg: var(--tag-red-bg);
+  --color-tag-red-text: var(--tag-red-text);
+  --color-tag-red-hover: var(--tag-red-hover);
+  --color-tag-red-solid: var(--tag-red-solid);
+  --color-tag-red-border: var(--tag-red-border);
+
+  --color-tag-amber-bg: var(--tag-amber-bg);
+  --color-tag-amber-text: var(--tag-amber-text);
+  --color-tag-amber-hover: var(--tag-amber-hover);
+  --color-tag-amber-solid: var(--tag-amber-solid);
+  --color-tag-amber-border: var(--tag-amber-border);
+
+  --color-tag-violet-bg: var(--tag-violet-bg);
+  --color-tag-violet-text: var(--tag-violet-text);
+  --color-tag-violet-hover: var(--tag-violet-hover);
+  --color-tag-violet-solid: var(--tag-violet-solid);
+  --color-tag-violet-border: var(--tag-violet-border);
+
+  --color-tag-pink-bg: var(--tag-pink-bg);
+  --color-tag-pink-text: var(--tag-pink-text);
+  --color-tag-pink-hover: var(--tag-pink-hover);
+  --color-tag-pink-solid: var(--tag-pink-solid);
+  --color-tag-pink-border: var(--tag-pink-border);
+
+  --color-tag-cyan-bg: var(--tag-cyan-bg);
+  --color-tag-cyan-text: var(--tag-cyan-text);
+  --color-tag-cyan-hover: var(--tag-cyan-hover);
+  --color-tag-cyan-solid: var(--tag-cyan-solid);
+  --color-tag-cyan-border: var(--tag-cyan-border);
+
+  --color-tag-orange-bg: var(--tag-orange-bg);
+  --color-tag-orange-text: var(--tag-orange-text);
+  --color-tag-orange-hover: var(--tag-orange-hover);
+  --color-tag-orange-solid: var(--tag-orange-solid);
+  --color-tag-orange-border: var(--tag-orange-border);
+
+  --color-tag-gray-bg: var(--tag-gray-bg);
+  --color-tag-gray-text: var(--tag-gray-text);
+  --color-tag-gray-hover: var(--tag-gray-hover);
+  --color-tag-gray-solid: var(--tag-gray-solid);
+  --color-tag-gray-border: var(--tag-gray-border);
+
+  --color-tag-indigo-bg: var(--tag-indigo-bg);
+  --color-tag-indigo-text: var(--tag-indigo-text);
+  --color-tag-indigo-hover: var(--tag-indigo-hover);
+  --color-tag-indigo-solid: var(--tag-indigo-solid);
+  --color-tag-indigo-border: var(--tag-indigo-border);
+
+  /* 後方互換エイリアス */
   --color-tag-neutral-bg: var(--tag-neutral-bg);
   --color-tag-neutral-text: var(--tag-neutral-text);
   --color-tag-neutral-hover: var(--tag-neutral-hover);

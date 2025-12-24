@@ -158,7 +158,12 @@ export default async function AboutPage({ params }: PageProps) {
               {t('about.cta.description')}
             </Text>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button size="lg" variant="secondary" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary-foreground/20 text-primary bg-white hover:bg-white/90"
+                asChild
+              >
                 <Link href="/contact">{t('about.cta.startButton')}</Link>
               </Button>
               <Button

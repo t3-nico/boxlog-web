@@ -167,8 +167,10 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           <div className="space-y-6 p-4">
             {/* ソート */}
             <div>
-              <label className="text-muted-foreground mb-3 block text-sm font-medium">{t('sortBy')}</label>
-              <div className="flex flex-wrap gap-2">
+              <span id="desktop-sort-label" className="text-muted-foreground mb-3 block text-sm font-medium">
+                {t('sortBy')}
+              </span>
+              <div className="flex flex-wrap gap-2" role="group" aria-labelledby="desktop-sort-label">
                 {[
                   { value: 'date', label: t('date'), icon: Calendar },
                   { value: 'popularity', label: t('popularity'), icon: TrendingUp },
@@ -204,7 +206,9 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
             {/* タグフィルター */}
             <div>
               <div className="mb-3 flex items-center justify-between">
-                <label className="text-muted-foreground text-sm font-medium">{t('filterByTags')}</label>
+                <span id="desktop-tags-label" className="text-muted-foreground text-sm font-medium">
+                  {t('filterByTags')}
+                </span>
                 {filters.selectedTags.length > 1 && (
                   <Button
                     onClick={toggleTagOperator}
@@ -217,7 +221,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                 )}
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2" role="group" aria-labelledby="desktop-tags-label">
                 {tags.map((tag) => {
                   const isSelected = filters.selectedTags.includes(tag)
                   return (

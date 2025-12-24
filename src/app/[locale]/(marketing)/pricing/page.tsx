@@ -82,7 +82,7 @@ export default async function PricingPage({ params }: PageProps) {
               return (
                 <Card
                   key={planKey}
-                  className={`relative flex flex-col ${isPopular ? 'border-primary shadow-lg ring-2 ring-primary/20' : 'border-border'}`}
+                  className={`relative flex flex-col ${isPopular ? 'border-primary ring-primary/20 shadow-lg ring-2' : 'border-border'}`}
                 >
                   {isPopular && (
                     <Badge className="bg-primary text-primary-foreground absolute -top-3 left-1/2 -translate-x-1/2">
@@ -108,12 +108,7 @@ export default async function PricingPage({ params }: PageProps) {
                     </ul>
                   </CardContent>
                   <CardFooter>
-                    <Button
-                      className="w-full"
-                      variant={isPopular ? 'default' : 'outline'}
-                      size="lg"
-                      asChild
-                    >
+                    <Button className="w-full" variant={isPopular ? 'primary' : 'outline'} size="lg" asChild>
                       <Link href="/contact">{t(`pricing.plans.${planKey}.cta`)}</Link>
                     </Button>
                   </CardFooter>
@@ -157,7 +152,12 @@ export default async function PricingPage({ params }: PageProps) {
               {t('pricing.cta.description')}
             </Text>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button size="lg" variant="secondary" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary-foreground/20 text-primary bg-white hover:bg-white/90"
+                asChild
+              >
                 <Link href="/contact">{t('pricing.cta.startButton')}</Link>
               </Button>
               <Button
