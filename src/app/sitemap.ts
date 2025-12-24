@@ -90,32 +90,55 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   ]
 
+  // Track which content types were successfully loaded
+  const contentStatus = {
+    blog: false,
+    releases: false,
+    docs: false,
+    tags: false,
+  }
+
+  let blogPages: MetadataRoute.Sitemap = []
+  let releasePages: MetadataRoute.Sitemap = []
+  let docPages: MetadataRoute.Sitemap = []
+  let tagPages: MetadataRoute.Sitemap = []
+
+  // Blog posts for both locales
   try {
-    // Blog posts for both locales
     const blogPosts = await getAllBlogPostMetas()
-    const blogPages = blogPosts.flatMap((post) =>
+    blogPages = blogPosts.flatMap((post) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/blog/${post.slug}`,
-        lastModified: new Date(post.frontMatter.updatedAt || post.frontMatter.publishedAt),
+        lastModified: new Date(post.frontMatter.updatedAt || post.frontMatter.publishedAt || new Date()),
         changeFrequency: 'monthly' as const,
         priority: post.frontMatter.featured ? 0.8 : 0.6,
       }))
     )
+    contentStatus.blog = true
+  } catch (error) {
+    console.error('[Sitemap] Failed to load blog posts:', error instanceof Error ? error.message : error)
+  }
 
-    // Release notes for both locales
+  // Release notes for both locales
+  try {
     const releases = await getAllReleaseMetas()
-    const releasePages = releases.flatMap((release) =>
+    releasePages = releases.flatMap((release) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/releases/${release.frontMatter.version}`,
-        lastModified: new Date(release.frontMatter.date),
+        lastModified: new Date(release.frontMatter.date || new Date()),
         changeFrequency: 'yearly' as const,
         priority: 0.7,
       }))
     )
+    contentStatus.releases = true
+  } catch (error) {
+    console.error('[Sitemap] Failed to load releases:', error instanceof Error ? error.message : error)
+  }
 
-    // Documentation pages for both locales (dynamically from MDX files)
+  // Documentation pages for both locales (dynamically from MDX files)
+  try {
     const allDocs = await getAllContent()
-    const docPages = allDocs.flatMap((doc) =>
+    docPages = allDocs.flatMap((doc) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/docs/${doc.slug}`,
         lastModified: doc.frontMatter.updatedAt ? new Date(doc.frontMatter.updatedAt) : new Date(),
@@ -123,10 +146,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: doc.frontMatter.featured ? 0.8 : 0.6,
       }))
     )
+    contentStatus.docs = true
+  } catch (error) {
+    console.error('[Sitemap] Failed to load docs:', error instanceof Error ? error.message : error)
+  }
 
-    // Tag pages for both locales
+  // Tag pages for both locales
+  try {
     const tags = await getAllTags()
-    const tagPages = tags.slice(0, 50).flatMap((tag) =>
+    tagPages = tags.slice(0, 50).flatMap((tag) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/tags/${encodeURIComponent(tag.tag.toLowerCase())}`,
         lastModified: new Date(),
@@ -134,9 +162,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.5,
       }))
     )
-
-    return [...staticPages, ...blogPages, ...releasePages, ...docPages, ...tagPages]
-  } catch {
-    return staticPages
+    contentStatus.tags = true
+  } catch (error) {
+    console.error('[Sitemap] Failed to load tags:', error instanceof Error ? error.message : error)
   }
+
+  // Log overall status
+  const failedSources = Object.entries(contentStatus)
+    .filter(([, success]) => !success)
+    .map(([source]) => source)
+
+  if (failedSources.length > 0) {
+    console.warn(`[Sitemap] Some content sources failed: ${failedSources.join(', ')}`)
+  }
+
+  return [...staticPages, ...blogPages, ...releasePages, ...docPages, ...tagPages]
 }

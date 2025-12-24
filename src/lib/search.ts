@@ -29,21 +29,47 @@ export async function generateSearchIndex(): Promise<SearchIndexItem[]> {
   try {
     const allContent = await getAllContent()
 
-    const index: SearchIndexItem[] = allContent.map((content) => ({
-      id: content.slug,
-      title: content.frontMatter.title,
-      description: content.frontMatter.description || '',
-      content: stripMarkdown(content.content),
-      slug: content.slug,
-      category: content.frontMatter.category,
-      tags: content.frontMatter.tags || [],
-      href: `/docs/${content.slug}`,
-    }))
+    if (!allContent || allContent.length === 0) {
+      console.warn('[Search] No content found for search index generation')
+      return []
+    }
+
+    const index: SearchIndexItem[] = []
+    const errors: { slug: string; error: unknown }[] = []
+
+    for (const content of allContent) {
+      try {
+        if (!content.frontMatter?.title) {
+          console.warn(`[Search] Content missing title: ${content.slug}`)
+        }
+
+        index.push({
+          id: content.slug,
+          title: content.frontMatter?.title || 'Untitled',
+          description: content.frontMatter?.description || '',
+          content: stripMarkdown(content.content || ''),
+          slug: content.slug,
+          category: content.frontMatter?.category || 'general',
+          tags: content.frontMatter?.tags || [],
+          href: `/docs/${content.slug}`,
+        })
+      } catch (itemError) {
+        errors.push({ slug: content.slug, error: itemError })
+      }
+    }
+
+    if (errors.length > 0) {
+      console.error(`[Search] Failed to index ${errors.length} item(s):`)
+      errors.forEach(({ slug, error }) => {
+        console.error(`  - ${slug}:`, error instanceof Error ? error.message : error)
+      })
+    }
 
     searchIndex = index
+    console.log(`[Search] Successfully indexed ${index.length} document(s)`)
     return index
   } catch (error) {
-    console.error('Failed to generate search index:', error)
+    console.error('[Search] Failed to generate search index:', error instanceof Error ? error.message : error)
     return []
   }
 }
