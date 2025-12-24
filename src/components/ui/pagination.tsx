@@ -4,10 +4,15 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 import { ButtonProps, buttonVariants } from './button'
 
-const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
+interface PaginationProps extends React.ComponentProps<'nav'> {
+  /** aria-label for the navigation element */
+  ariaLabel?: string
+}
+
+const Pagination = ({ className, ariaLabel = 'pagination', ...props }: PaginationProps) => (
   <nav
     role="navigation"
-    aria-label="pagination"
+    aria-label={ariaLabel}
     className={cn('mx-auto flex w-full justify-center', className)}
     {...props}
   />
@@ -46,26 +51,55 @@ const PaginationLink = ({ className, isActive, size = 'icon', ...props }: Pagina
 )
 PaginationLink.displayName = 'PaginationLink'
 
-const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to previous page" size="default" className={cn('gap-1 pl-2.5', className)} {...props}>
+interface PaginationPreviousProps extends React.ComponentProps<typeof PaginationLink> {
+  /** Visible label text */
+  label?: string
+  /** aria-label for accessibility */
+  ariaLabel?: string
+}
+
+const PaginationPrevious = ({
+  className,
+  label = 'Previous',
+  ariaLabel = 'Go to previous page',
+  ...props
+}: PaginationPreviousProps) => (
+  <PaginationLink aria-label={ariaLabel} size="default" className={cn('gap-1 pl-2.5', className)} {...props}>
     <ChevronLeft className="h-4 w-4" />
-    <span>Previous</span>
+    <span>{label}</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
 
-const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to next page" size="default" className={cn('gap-1 pr-2.5', className)} {...props}>
-    <span>Next</span>
+interface PaginationNextProps extends React.ComponentProps<typeof PaginationLink> {
+  /** Visible label text */
+  label?: string
+  /** aria-label for accessibility */
+  ariaLabel?: string
+}
+
+const PaginationNext = ({
+  className,
+  label = 'Next',
+  ariaLabel = 'Go to next page',
+  ...props
+}: PaginationNextProps) => (
+  <PaginationLink aria-label={ariaLabel} size="default" className={cn('gap-1 pr-2.5', className)} {...props}>
+    <span>{label}</span>
     <ChevronRight className="h-4 w-4" />
   </PaginationLink>
 )
 PaginationNext.displayName = 'PaginationNext'
 
-const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
+interface PaginationEllipsisProps extends React.ComponentProps<'span'> {
+  /** Screen reader label */
+  srLabel?: string
+}
+
+const PaginationEllipsis = ({ className, srLabel = 'More pages', ...props }: PaginationEllipsisProps) => (
   <span aria-hidden className={cn('flex h-8 w-8 items-center justify-center', className)} {...props}>
     <MoreHorizontal className="h-4 w-4" />
-    <span className="sr-only">More pages</span>
+    <span className="sr-only">{srLabel}</span>
   </span>
 )
 PaginationEllipsis.displayName = 'PaginationEllipsis'

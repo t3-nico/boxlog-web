@@ -217,5 +217,20 @@
     "sidebar": {
       "searchPlaceholder": "ドキュメントを検索..."
     }
+  },
+  "aria": {
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "close": "閉じる",
+    "previous": "前へ",
+    "next": "次へ",
+    "mainNavigation": "メインナビゲーション",
+    "docsNavigation": "ドキュメントナビゲーション",
+    "navigationMenu": "ナビゲーションメニュー",
+    "goToPreviousPage": "前のページへ",
+    "goToNextPage": "次のページへ",
+    "morePages": "その他のページ",
+    "pagination": "ページネーション",
+    "more": "その他"
   }
 }

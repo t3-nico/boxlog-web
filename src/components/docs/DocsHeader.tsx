@@ -27,7 +27,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
     <header className="bg-background border-border z-50 w-full flex-shrink-0 border-b">
       <nav
         className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:px-6"
-        aria-label="Docs navigation"
+        aria-label={t('aria.docsNavigation')}
       >
         {/* Left: Mobile menu toggle + Logo */}
         <div className="flex items-center gap-3 lg:flex-1">
@@ -37,7 +37,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
             size="icon"
             onClick={onMobileMenuToggle}
             className="lg:hidden"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileMenuOpen ? t('aria.closeMenu') : t('aria.openMenu')}
           >
             {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </Button>

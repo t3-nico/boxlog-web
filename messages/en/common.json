@@ -213,6 +213,7 @@
   "aria": {
     "clearSelection": "Clear selection",
     "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "closeSidebar": "Close sidebar",
     "cardMenu": "Card menu",
     "closeModal": "Close modal",
@@ -230,7 +231,15 @@
     "weeklyCalendar": "Weekly calendar",
     "previous": "Previous",
     "next": "Next",
-    "selectColor": "Select {color}"
+    "selectColor": "Select {color}",
+    "mainNavigation": "Main navigation",
+    "docsNavigation": "Docs navigation",
+    "navigationMenu": "Navigation menu",
+    "goToPreviousPage": "Go to previous page",
+    "goToNextPage": "Go to next page",
+    "morePages": "More pages",
+    "pagination": "pagination",
+    "more": "More"
   },
   "status": {
     "loading": "Loading...",
