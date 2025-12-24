@@ -25,9 +25,12 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
 
   return (
     <header className="bg-background border-border z-50 w-full flex-shrink-0 border-b">
-      <nav className="flex h-14 items-center justify-between gap-4 px-4 lg:px-6" aria-label="Docs navigation">
-        {/* Left: Logo + Navigation */}
-        <div className="flex items-center gap-3">
+      <nav
+        className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:px-6"
+        aria-label="Docs navigation"
+      >
+        {/* Left: Mobile menu toggle + Logo */}
+        <div className="flex items-center gap-3 lg:flex-1">
           {/* Mobile menu toggle */}
           <Button
             variant="ghost"
@@ -44,36 +47,38 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
             <span className="text-foreground text-lg font-bold">BoxLog</span>
             <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-xs font-medium">Docs</span>
           </Link>
+        </div>
 
-          {/* Separator + Navigation (Desktop only) */}
-          <div className="hidden items-center gap-3 lg:flex">
-            <span className="text-border">/</span>
-            <Link href="/" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
-              {t('navigation.home')}
-            </Link>
-            <DropdownMenu>
-              <DropdownMenuTrigger className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm transition-colors outline-none">
-                {t('navigation.resources')}
-                <ChevronDown className="size-3" aria-hidden="true" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" sideOffset={8} className="w-56">
-                {resourcesItems.map((item) => (
-                  <DropdownMenuItem key={item.name} asChild className="cursor-pointer">
-                    <Link href={item.href}>
-                      <div className="flex-auto">
-                        <span className="text-foreground block font-medium">{item.name}</span>
-                        <p className="text-muted-foreground text-xs">{item.description}</p>
-                      </div>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+        {/* Center: Navigation (Desktop only) */}
+        <div className="hidden lg:flex lg:items-center lg:gap-x-1">
+          <Link
+            href="/"
+            className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-md px-3 py-2 text-base font-medium transition-colors"
+          >
+            {t('navigation.home')}
+          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-md px-3 py-2 text-base font-medium transition-colors outline-none">
+              {t('navigation.resources')}
+              <ChevronDown className="size-4" aria-hidden="true" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" sideOffset={8} className="w-56">
+              {resourcesItems.map((item) => (
+                <DropdownMenuItem key={item.name} asChild className="cursor-pointer">
+                  <Link href={item.href}>
+                    <div className="flex-auto">
+                      <span className="text-foreground block font-medium">{item.name}</span>
+                      <p className="text-muted-foreground text-xs">{item.description}</p>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-1 items-center justify-end gap-2">
           {/* Theme Toggle */}
           <ThemeToggle />
 
