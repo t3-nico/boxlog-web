@@ -5,7 +5,9 @@ import { PageNavigation } from '@/components/docs/PageNavigation'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { Heading, Text } from '@/components/ui/typography'
 import { getAllContent, getMDXContentForRSC, getRelatedContent } from '@/lib/mdx'
+import { getTagColor } from '@/lib/tags-client'
 import { ContentData } from '@/types/content'
+import { Tag } from 'lucide-react'
 import { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
@@ -160,6 +162,27 @@ export default async function DocPage({ params }: DocPageProps) {
             <article className="prose prose-gray dark:prose-invert max-w-none">
               <MDXRemote source={mdxContent} components={mdxComponents} />
             </article>
+
+            {/* Tags section */}
+            {frontMatter.tags && frontMatter.tags.length > 0 && (
+              <aside className="border-border mt-12 border-t pt-8">
+                <div className="mb-4 flex items-center gap-2">
+                  <Tag className="text-muted-foreground h-4 w-4" />
+                  <span className="text-muted-foreground text-sm font-medium">Tags</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {frontMatter.tags.map((tag) => (
+                    <Link
+                      key={tag}
+                      href={`/tags/${encodeURIComponent(tag)}`}
+                      className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${getTagColor(tag)}`}
+                    >
+                      #{tag}
+                    </Link>
+                  ))}
+                </div>
+              </aside>
+            )}
 
             {/* Related content */}
             {relatedContent.length > 0 && (

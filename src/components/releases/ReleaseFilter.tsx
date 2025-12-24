@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { getTagFilterColor } from '@/lib/tags-client'
 import { cn } from '@/lib/utils'
 import { Filter, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -67,16 +68,18 @@ export function ReleaseFilter({ tags, selectedTags, onTagToggle, onClearFilters 
                       <Button
                         key={tagItem.tag}
                         onClick={() => onTagToggle(tagItem.tag)}
-                        variant={isSelected ? 'primary' : 'outline'}
+                        variant="outline"
                         size="sm"
                         className={cn(
-                          'inline-flex items-center gap-2',
-                          isSelected && 'bg-primary/10 text-primary border-primary'
+                          'inline-flex items-center gap-2 border',
+                          getTagFilterColor(tagItem.tag, isSelected)
                         )}
                       >
                         <span>#</span>
                         {tagItem.tag}
-                        <span className="text-muted-foreground text-xs">({tagItem.count})</span>
+                        <span className={cn('text-xs', isSelected ? 'text-white/70' : 'opacity-60')}>
+                          ({tagItem.count})
+                        </span>
                         {isSelected && <X className="h-3 w-3" />}
                       </Button>
                     )
