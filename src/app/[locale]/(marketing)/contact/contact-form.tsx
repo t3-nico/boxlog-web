@@ -88,11 +88,17 @@ export function ContactForm() {
     setSubmitError(null)
 
     try {
-      // TODO: 実際のAPI送信処理をここに実装
-      console.log('Contact form submitted:', data, 'Attachment:', attachment)
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-      // 成功をシミュレート
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      if (!response.ok) {
+        throw new Error('Failed to submit')
+      }
 
       setIsSubmitted(true)
     } catch {
