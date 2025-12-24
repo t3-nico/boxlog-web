@@ -34,91 +34,145 @@ export interface UnifiedTagData {
 async function getAllDocMetas(): Promise<TaggedContent[]> {
   const docsDirectory = path.join(process.cwd(), 'content/docs')
 
-  if (!fs.existsSync(docsDirectory)) {
-    return []
-  }
+  try {
+    if (!fs.existsSync(docsDirectory)) {
+      console.warn(`[Tags] Docs directory not found: ${docsDirectory}`)
+      return []
+    }
 
-  const getAllMdxFiles = (dir: string): string[] => {
-    const files: string[] = []
-    const items = fs.readdirSync(dir)
+    const getAllMdxFiles = (dir: string): string[] => {
+      const files: string[] = []
+      try {
+        const items = fs.readdirSync(dir)
 
-    for (const item of items) {
-      const fullPath = path.join(dir, item)
-      const stat = fs.statSync(fullPath)
+        for (const item of items) {
+          const fullPath = path.join(dir, item)
+          try {
+            const stat = fs.statSync(fullPath)
 
-      if (stat.isDirectory()) {
-        files.push(...getAllMdxFiles(fullPath))
-      } else if (item.endsWith('.mdx') || item.endsWith('.md')) {
-        files.push(fullPath)
+            if (stat.isDirectory()) {
+              files.push(...getAllMdxFiles(fullPath))
+            } else if (item.endsWith('.mdx') || item.endsWith('.md')) {
+              files.push(fullPath)
+            }
+          } catch (statError) {
+            console.error(`[Tags] Failed to stat file: ${fullPath}`, statError)
+          }
+        }
+      } catch (readError) {
+        console.error(`[Tags] Failed to read directory: ${dir}`, readError)
+      }
+
+      return files
+    }
+
+    const mdxFiles = getAllMdxFiles(docsDirectory)
+    const docMetas: TaggedContent[] = []
+    const errors: { file: string; error: unknown }[] = []
+
+    for (const filePath of mdxFiles) {
+      try {
+        const fileContents = fs.readFileSync(filePath, 'utf8')
+        const { data: frontMatter } = matter(fileContents)
+
+        // Skip draft content
+        if (frontMatter.draft) continue
+
+        // Generate slug from file path
+        const relativePath = path.relative(docsDirectory, filePath)
+        const slug = relativePath.replace(/\.(mdx?|md)$/, '').replace(/\\/g, '/')
+
+        docMetas.push({
+          type: 'doc',
+          slug: slug,
+          title: (frontMatter.title as string) || 'Untitled',
+          description: (frontMatter.description as string) || '',
+          date: (frontMatter.publishedAt as string) || (frontMatter.updatedAt as string) || new Date().toISOString(),
+          tags: (frontMatter.tags as string[]) || [],
+          category: frontMatter.category as string | undefined,
+          featured: (frontMatter.featured as boolean) || false,
+        })
+      } catch (error) {
+        errors.push({ file: filePath, error })
       }
     }
 
-    return files
-  }
-
-  const mdxFiles = getAllMdxFiles(docsDirectory)
-  const docMetas: TaggedContent[] = []
-
-  for (const filePath of mdxFiles) {
-    try {
-      const fileContents = fs.readFileSync(filePath, 'utf8')
-      const { data: frontMatter } = matter(fileContents)
-
-      // Skip draft content
-      if (frontMatter.draft) continue
-
-      // Generate slug from file path
-      const relativePath = path.relative(docsDirectory, filePath)
-      const slug = relativePath.replace(/\.(mdx?|md)$/, '').replace(/\\/g, '/')
-
-      docMetas.push({
-        type: 'doc',
-        slug: slug,
-        title: frontMatter.title || 'Untitled',
-        description: frontMatter.description || '',
-        date: frontMatter.publishedAt || frontMatter.updatedAt || new Date().toISOString(),
-        tags: frontMatter.tags || [],
-        category: frontMatter.category,
-        featured: frontMatter.featured || false,
+    if (errors.length > 0) {
+      console.error(`[Tags] Failed to process ${errors.length} document(s):`)
+      errors.forEach(({ file, error }) => {
+        console.error(`  - ${file}:`, error instanceof Error ? error.message : error)
       })
-    } catch (error) {
-      console.error('Failed to process document:', filePath, error)
     }
-  }
 
-  return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  } catch (error) {
+    console.error('[Tags] Unexpected error in getAllDocMetas:', error)
+    return []
+  }
 }
 
 // Get tags and usage counts from all content types
 export async function getAllTags(): Promise<TagCount[]> {
-  const [blogPosts, releases, docs] = await Promise.all([getAllBlogPostMetas(), getAllReleaseMetas(), getAllDocMetas()])
+  try {
+    const contentErrors: string[] = []
+    const [blogPosts, releases, docs] = await Promise.all([
+      getAllBlogPostMetas().catch((error) => {
+        contentErrors.push(`blog: ${error instanceof Error ? error.message : String(error)}`)
+        return []
+      }),
+      getAllReleaseMetas().catch((error) => {
+        contentErrors.push(`releases: ${error instanceof Error ? error.message : String(error)}`)
+        return []
+      }),
+      getAllDocMetas().catch((error) => {
+        contentErrors.push(`docs: ${error instanceof Error ? error.message : String(error)}`)
+        return []
+      }),
+    ])
 
-  const tagCounts = new Map<string, number>()
+    if (contentErrors.length > 0) {
+      console.warn('[Tags] Some content sources failed:', contentErrors.join(', '))
+    }
 
-  // Aggregate blog post tags
-  blogPosts.forEach((post) => {
-    post.frontMatter.tags.forEach((tag) => {
-      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+    const tagCounts = new Map<string, number>()
+
+    // Aggregate blog post tags
+    blogPosts.forEach((post) => {
+      const tags = post.frontMatter?.tags || []
+      tags.forEach((tag) => {
+        if (tag && typeof tag === 'string') {
+          tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+        }
+      })
     })
-  })
 
-  // Aggregate release tags
-  releases.forEach((release) => {
-    release.frontMatter.tags.forEach((tag) => {
-      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+    // Aggregate release tags
+    releases.forEach((release) => {
+      const tags = release.frontMatter?.tags || []
+      tags.forEach((tag) => {
+        if (tag && typeof tag === 'string') {
+          tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+        }
+      })
     })
-  })
 
-  // Aggregate document tags
-  docs.forEach((doc) => {
-    doc.tags.forEach((tag) => {
-      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+    // Aggregate document tags
+    docs.forEach((doc) => {
+      const tags = doc.tags || []
+      tags.forEach((tag) => {
+        if (tag && typeof tag === 'string') {
+          tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+        }
+      })
     })
-  })
 
-  return Array.from(tagCounts.entries())
-    .map(([tag, count]) => ({ tag, count }))
-    .sort((a, b) => b.count - a.count)
+    return Array.from(tagCounts.entries())
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => b.count - a.count)
+  } catch (error) {
+    console.error('[Tags] Unexpected error in getAllTags:', error)
+    return []
+  }
 }
 
 // Get all content related to a specific tag

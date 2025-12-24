@@ -68,47 +68,93 @@ export function generateExcerpt(content: string, maxLength: number = 160): strin
 
 // Get all blog post metadata
 export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
-  if (!fs.existsSync(BLOG_DIR)) {
-    return []
-  }
+  try {
+    if (!fs.existsSync(BLOG_DIR)) {
+      console.warn(`[Blog] Blog directory not found: ${BLOG_DIR}`)
+      return []
+    }
 
-  const files = fs.readdirSync(BLOG_DIR)
-  const posts = await Promise.all(
-    files
-      .filter((file) => file.endsWith('.mdx'))
-      .map(async (file) => {
-        const slug = file.replace('.mdx', '')
+    let files: string[]
+    try {
+      files = fs.readdirSync(BLOG_DIR)
+    } catch (error) {
+      console.error(`[Blog] Failed to read blog directory: ${BLOG_DIR}`, error)
+      return []
+    }
+
+    const mdxFiles = files.filter((file) => file.endsWith('.mdx'))
+    const posts: BlogPostMeta[] = []
+    const errors: { file: string; error: unknown }[] = []
+
+    await Promise.all(
+      mdxFiles.map(async (file) => {
         const filePath = path.join(BLOG_DIR, file)
-        const fileContent = fs.readFileSync(filePath, 'utf-8')
-        const { data, content } = matter(fileContent)
+        try {
+          const slug = file.replace('.mdx', '')
+          const fileContent = fs.readFileSync(filePath, 'utf-8')
+          const { data, content } = matter(fileContent)
 
-        const frontMatter = data as BlogPostFrontMatter
-        const readingTime = calculateReadingTime(content)
-        const excerpt = frontMatter.description || generateExcerpt(content)
+          const frontMatter = data as BlogPostFrontMatter
 
-        return {
-          slug,
-          frontMatter: {
-            ...frontMatter,
+          // Validate required frontmatter fields
+          if (!frontMatter.title) {
+            console.warn(`[Blog] Missing required 'title' in frontmatter: ${filePath}`)
+          }
+          if (!frontMatter.publishedAt) {
+            console.warn(`[Blog] Missing required 'publishedAt' in frontmatter: ${filePath}`)
+          }
+
+          const readingTime = calculateReadingTime(content)
+          const excerpt = frontMatter.description || generateExcerpt(content)
+
+          posts.push({
+            slug,
+            frontMatter: {
+              ...frontMatter,
+              readingTime,
+            },
+            excerpt,
             readingTime,
-          },
-          excerpt,
-          readingTime,
+          })
+        } catch (error) {
+          errors.push({ file: filePath, error })
         }
       })
-  )
+    )
 
-  // Exclude drafts and sort by publish date (descending)
-  return posts
-    .filter((post) => !post.frontMatter.draft)
-    .sort((a, b) => new Date(b.frontMatter.publishedAt).getTime() - new Date(a.frontMatter.publishedAt).getTime())
+    // Log any errors that occurred during processing
+    if (errors.length > 0) {
+      console.error(`[Blog] Failed to process ${errors.length} blog post(s):`)
+      errors.forEach(({ file, error }) => {
+        console.error(`  - ${file}:`, error instanceof Error ? error.message : error)
+      })
+    }
+
+    // Exclude drafts and sort by publish date (descending)
+    return posts
+      .filter((post) => !post.frontMatter.draft)
+      .sort((a, b) => {
+        const dateA = a.frontMatter.publishedAt ? new Date(a.frontMatter.publishedAt).getTime() : 0
+        const dateB = b.frontMatter.publishedAt ? new Date(b.frontMatter.publishedAt).getTime() : 0
+        return dateB - dateA
+      })
+  } catch (error) {
+    console.error('[Blog] Unexpected error in getAllBlogPostMetas:', error)
+    return []
+  }
 }
 
 // Get individual article
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  try {
-    const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
+  // Validate slug to prevent path traversal
+  if (!slug || slug.includes('..') || slug.includes('/')) {
+    console.warn(`[Blog] Invalid slug provided: ${slug}`)
+    return null
+  }
 
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
+
+  try {
     if (!fs.existsSync(filePath)) {
       return null
     }
@@ -136,7 +182,8 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
       excerpt,
       readingTime,
     }
-  } catch {
+  } catch (error) {
+    console.error(`[Blog] Failed to read blog post: ${filePath}`, error instanceof Error ? error.message : error)
     return null
   }
 }

@@ -14,27 +14,51 @@ const CONTENT_PATH = path.join(process.cwd(), 'content/docs')
 export async function getMDXFiles(dir: string): Promise<string[]> {
   const fullPath = path.join(CONTENT_PATH, dir)
 
-  if (!fs.existsSync(fullPath)) {
+  try {
+    if (!fs.existsSync(fullPath)) {
+      console.warn(`[MDX] Directory not found: ${fullPath}`)
+      return []
+    }
+
+    const files = fs.readdirSync(fullPath)
+    return files.filter((file) => file.endsWith('.mdx'))
+  } catch (error) {
+    console.error(`[MDX] Failed to read directory: ${fullPath}`, error instanceof Error ? error.message : error)
     return []
   }
-
-  const files = fs.readdirSync(fullPath)
-  return files.filter((file) => file.endsWith('.mdx'))
 }
 
 /**
  * MDXファイルを読み込んでフロントマターとコンテンツを解析
  */
 export async function getMDXContent(filePath: string): Promise<ContentData | null> {
-  try {
-    const fullPath = path.join(CONTENT_PATH, filePath)
+  // Validate filePath to prevent path traversal
+  if (!filePath || filePath.includes('..')) {
+    console.warn(`[MDX] Invalid file path provided: ${filePath}`)
+    return null
+  }
 
+  const fullPath = path.join(CONTENT_PATH, filePath)
+
+  try {
     if (!fs.existsSync(fullPath)) {
       return null
     }
 
     const fileContent = fs.readFileSync(fullPath, 'utf8')
-    const { data, content } = matter(fileContent)
+
+    let parsedMatter: { data: Record<string, unknown>; content: string }
+    try {
+      parsedMatter = matter(fileContent)
+    } catch (parseError) {
+      console.error(
+        `[MDX] Failed to parse frontmatter in: ${fullPath}`,
+        parseError instanceof Error ? parseError.message : parseError
+      )
+      return null
+    }
+
+    const { data, content } = parsedMatter
 
     // スラッグを生成（ファイルパスから）
     const slug = filePath.replace(/\.mdx$/, '').replace(/\\/g, '/')
@@ -44,19 +68,19 @@ export async function getMDXContent(filePath: string): Promise<ContentData | nul
     const category = pathParts[0] || 'general'
 
     const frontMatter: FrontMatter = {
-      title: data.title || 'Untitled',
-      description: data.description || '',
-      tags: data.tags || [],
-      author: data.author,
-      publishedAt: data.publishedAt,
-      updatedAt: data.updatedAt,
+      title: (data.title as string) || 'Untitled',
+      description: (data.description as string) || '',
+      tags: (data.tags as string[]) || [],
+      author: data.author as string | undefined,
+      publishedAt: data.publishedAt as string | undefined,
+      updatedAt: data.updatedAt as string | undefined,
       slug,
       category,
-      order: data.order || 0,
-      draft: data.draft || false,
-      featured: data.featured || false,
+      order: (data.order as number) || 0,
+      draft: (data.draft as boolean) || false,
+      featured: (data.featured as boolean) || false,
       // AI/RAG用メタデータ
-      ai: data.ai || undefined,
+      ai: data.ai as FrontMatter['ai'] | undefined,
     }
 
     return {
@@ -65,7 +89,8 @@ export async function getMDXContent(filePath: string): Promise<ContentData | nul
       slug,
       path: filePath,
     }
-  } catch {
+  } catch (error) {
+    console.error(`[MDX] Failed to read file: ${fullPath}`, error instanceof Error ? error.message : error)
     return null
   }
 }
@@ -74,13 +99,24 @@ export async function getMDXContent(filePath: string): Promise<ContentData | nul
  * MDXコンテンツをシリアライズ（レンダリング用）
  */
 export async function serializeMDX(content: string) {
-  return await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [rehypeHighlight],
-      format: 'mdx',
-    },
-  })
+  if (!content || typeof content !== 'string') {
+    console.error('[MDX] Invalid content provided to serializeMDX')
+    throw new Error('Invalid MDX content: content must be a non-empty string')
+  }
+
+  try {
+    return await serialize(content, {
+      mdxOptions: {
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [rehypeHighlight],
+        format: 'mdx',
+      },
+    })
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error('[MDX] Failed to serialize MDX content:', errorMessage)
+    throw new Error(`Failed to serialize MDX content: ${errorMessage}`)
+  }
 }
 
 /**
@@ -124,39 +160,73 @@ export async function getMDXContentForRSC(slug: string): Promise<{ content: stri
  */
 export async function getAllContent(): Promise<ContentData[]> {
   const allContent: ContentData[] = []
+  const errors: { path: string; error: unknown }[] = []
 
   async function scanDirectory(dir: string): Promise<void> {
     const fullPath = path.join(CONTENT_PATH, dir)
 
-    if (!fs.existsSync(fullPath)) {
-      return
-    }
+    try {
+      if (!fs.existsSync(fullPath)) {
+        if (dir === '') {
+          console.warn(`[MDX] Content directory not found: ${fullPath}`)
+        }
+        return
+      }
 
-    const items = fs.readdirSync(fullPath, { withFileTypes: true })
+      let items: fs.Dirent[]
+      try {
+        items = fs.readdirSync(fullPath, { withFileTypes: true })
+      } catch (readError) {
+        console.error(
+          `[MDX] Failed to read directory: ${fullPath}`,
+          readError instanceof Error ? readError.message : readError
+        )
+        return
+      }
 
-    for (const item of items) {
-      const itemPath = path.join(dir, item.name)
+      for (const item of items) {
+        const itemPath = path.join(dir, item.name)
 
-      if (item.isDirectory()) {
-        await scanDirectory(itemPath)
-      } else if (item.name.endsWith('.mdx')) {
-        const content = await getMDXContent(itemPath)
-        if (content && !content.frontMatter.draft) {
-          allContent.push(content)
+        try {
+          if (item.isDirectory()) {
+            await scanDirectory(itemPath)
+          } else if (item.name.endsWith('.mdx')) {
+            const content = await getMDXContent(itemPath)
+            if (content && !content.frontMatter.draft) {
+              allContent.push(content)
+            }
+          }
+        } catch (itemError) {
+          errors.push({ path: itemPath, error: itemError })
         }
       }
+    } catch (error) {
+      errors.push({ path: dir, error })
     }
   }
 
-  await scanDirectory('')
+  try {
+    await scanDirectory('')
 
-  // orderでソート
-  return allContent.sort((a, b) => {
-    if (a.frontMatter.category !== b.frontMatter.category) {
-      return a.frontMatter.category.localeCompare(b.frontMatter.category)
+    // Log any errors that occurred during scanning
+    if (errors.length > 0) {
+      console.error(`[MDX] Failed to process ${errors.length} item(s):`)
+      errors.forEach(({ path: errorPath, error }) => {
+        console.error(`  - ${errorPath}:`, error instanceof Error ? error.message : error)
+      })
     }
-    return (a.frontMatter.order || 0) - (b.frontMatter.order || 0)
-  })
+
+    // orderでソート
+    return allContent.sort((a, b) => {
+      if (a.frontMatter.category !== b.frontMatter.category) {
+        return a.frontMatter.category.localeCompare(b.frontMatter.category)
+      }
+      return (a.frontMatter.order || 0) - (b.frontMatter.order || 0)
+    })
+  } catch (error) {
+    console.error('[MDX] Unexpected error in getAllContent:', error)
+    return []
+  }
 }
 
 /**
