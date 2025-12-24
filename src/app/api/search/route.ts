@@ -5,72 +5,94 @@ import matter from 'gray-matter'
 import { NextRequest, NextResponse } from 'next/server'
 import path from 'path'
 
+interface DocMeta {
+  slug: string
+  title: string
+  description: string
+  date: string
+  tags: string[]
+  category: string | undefined
+  featured: boolean
+}
+
 // Get document metadata
-async function getAllDocMetas() {
+async function getAllDocMetas(): Promise<DocMeta[]> {
   const docsDirectory = path.join(process.cwd(), 'content/docs')
 
-  if (!fs.existsSync(docsDirectory)) {
-    return []
-  }
+  try {
+    if (!fs.existsSync(docsDirectory)) {
+      console.warn(`[Search API] Docs directory not found: ${docsDirectory}`)
+      return []
+    }
 
-  const getAllMdxFiles = (dir: string): string[] => {
-    const files: string[] = []
-    const items = fs.readdirSync(dir)
+    const getAllMdxFiles = (dir: string): string[] => {
+      const files: string[] = []
+      try {
+        const items = fs.readdirSync(dir)
 
-    for (const item of items) {
-      const fullPath = path.join(dir, item)
-      const stat = fs.statSync(fullPath)
+        for (const item of items) {
+          const fullPath = path.join(dir, item)
+          try {
+            const stat = fs.statSync(fullPath)
 
-      if (stat.isDirectory()) {
-        files.push(...getAllMdxFiles(fullPath))
-      } else if (item.endsWith('.mdx') || item.endsWith('.md')) {
-        files.push(fullPath)
+            if (stat.isDirectory()) {
+              files.push(...getAllMdxFiles(fullPath))
+            } else if (item.endsWith('.mdx') || item.endsWith('.md')) {
+              files.push(fullPath)
+            }
+          } catch (statError) {
+            console.error(`[Search API] Failed to stat file: ${fullPath}`, statError)
+          }
+        }
+      } catch (readError) {
+        console.error(`[Search API] Failed to read directory: ${dir}`, readError)
+      }
+
+      return files
+    }
+
+    const mdxFiles = getAllMdxFiles(docsDirectory)
+    const docMetas: DocMeta[] = []
+    const errors: { file: string; error: unknown }[] = []
+
+    for (const filePath of mdxFiles) {
+      try {
+        const fileContents = fs.readFileSync(filePath, 'utf8')
+        const { data: frontMatter } = matter(fileContents)
+
+        // Skip draft content
+        if (frontMatter.draft) continue
+
+        // Generate slug from file path
+        const relativePath = path.relative(docsDirectory, filePath)
+        const slug = relativePath.replace(/\.(mdx?|md)$/, '').replace(/\\/g, '/')
+
+        docMetas.push({
+          slug: slug,
+          title: (frontMatter.title as string) || 'Untitled',
+          description: (frontMatter.description as string) || '',
+          date: (frontMatter.publishedAt as string) || (frontMatter.updatedAt as string) || new Date().toISOString(),
+          tags: (frontMatter.tags as string[]) || [],
+          category: frontMatter.category as string | undefined,
+          featured: (frontMatter.featured as boolean) || false,
+        })
+      } catch (err) {
+        errors.push({ file: filePath, error: err })
       }
     }
 
-    return files
-  }
-
-  interface DocMeta {
-    slug: string
-    title: string
-    description: string
-    date: string
-    tags: string[]
-    category: string | undefined
-    featured: boolean
-  }
-
-  const mdxFiles = getAllMdxFiles(docsDirectory)
-  const docMetas: DocMeta[] = []
-
-  for (const filePath of mdxFiles) {
-    try {
-      const fileContents = fs.readFileSync(filePath, 'utf8')
-      const { data: frontMatter } = matter(fileContents)
-
-      // Skip draft content
-      if (frontMatter.draft) continue
-
-      // Generate slug from file path
-      const relativePath = path.relative(docsDirectory, filePath)
-      const slug = relativePath.replace(/\.(mdx?|md)$/, '').replace(/\\/g, '/')
-
-      docMetas.push({
-        slug: slug,
-        title: frontMatter.title || 'Untitled',
-        description: frontMatter.description || '',
-        date: frontMatter.publishedAt || frontMatter.updatedAt || new Date().toISOString(),
-        tags: frontMatter.tags || [],
-        category: frontMatter.category,
-        featured: frontMatter.featured || false,
+    if (errors.length > 0) {
+      console.error(`[Search API] Failed to process ${errors.length} document(s):`)
+      errors.forEach(({ file, error }) => {
+        console.error(`  - ${file}:`, error instanceof Error ? error.message : error)
       })
-    } catch (err) {
-      console.error('Failed to process document:', filePath, err)
     }
-  }
 
-  return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    return docMetas.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  } catch (error) {
+    console.error('[Search API] Unexpected error in getAllDocMetas:', error)
+    return []
+  }
 }
 
 export async function GET(request: NextRequest) {
@@ -82,11 +104,30 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ results: [] })
     }
 
+    // Validate query length to prevent DoS
+    if (query.length > 200) {
+      return NextResponse.json({ error: 'Search query too long', code: 'QUERY_TOO_LONG' }, { status: 400 })
+    }
+
+    const contentErrors: string[] = []
     const [blogPosts, releases, docs] = await Promise.all([
-      getAllBlogPostMetas().catch(() => []),
-      getAllReleaseMetas().catch(() => []),
-      getAllDocMetas().catch(() => []),
+      getAllBlogPostMetas().catch((error) => {
+        contentErrors.push(`blog: ${error instanceof Error ? error.message : String(error)}`)
+        return []
+      }),
+      getAllReleaseMetas().catch((error) => {
+        contentErrors.push(`releases: ${error instanceof Error ? error.message : String(error)}`)
+        return []
+      }),
+      getAllDocMetas().catch((error) => {
+        contentErrors.push(`docs: ${error instanceof Error ? error.message : String(error)}`)
+        return []
+      }),
     ])
+
+    if (contentErrors.length > 0) {
+      console.warn('[Search API] Some content sources failed:', contentErrors.join(', '))
+    }
 
     const searchTerm = query.toLowerCase()
     const results = []
@@ -163,7 +204,8 @@ export async function GET(request: NextRequest) {
     })
 
     return NextResponse.json({ results: results.slice(0, 50) })
-  } catch {
-    return NextResponse.json({ error: 'Search failed' }, { status: 500 })
+  } catch (error) {
+    console.error('[Search API] Unexpected error:', error instanceof Error ? error.message : error)
+    return NextResponse.json({ error: 'Search failed', code: 'INTERNAL_ERROR' }, { status: 500 })
   }
 }
