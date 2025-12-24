@@ -1,9 +1,9 @@
 import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
 import { routing } from '@/i18n/routing'
 import { generateSEOMetadata } from '@/lib/metadata'
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { ContactForm } from './contact-form'
 
 interface PageProps {
   params: Promise<{ locale: string }>
@@ -37,16 +37,17 @@ export default async function ContactPage({ params }: PageProps) {
   const t = await getTranslations({ locale, namespace: 'marketing' })
 
   return (
-    <div className="bg-background min-h-screen">
-      <section className="py-24">
+    <div className="bg-background">
+      <section className="py-24 sm:py-32">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
-            <Heading as="h1" size="4xl" className="mb-6">
+            <h1 className="text-foreground mb-6 text-4xl font-semibold tracking-tight sm:text-5xl">
               {t('contact.title')}
-            </Heading>
-            <Text size="xl" variant="muted">
-              {t('contact.subtitle')}
-            </Text>
+            </h1>
+            <p className="text-muted-foreground mb-10 text-lg sm:text-xl">{t('contact.subtitle')}</p>
+            <div className="bg-card border-border w-full rounded-xl border p-6 text-left shadow-sm md:p-8">
+              <ContactForm />
+            </div>
           </div>
         </Container>
       </section>
