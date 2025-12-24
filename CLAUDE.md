@@ -195,6 +195,31 @@ messages/
 - **Manifest**: `public/manifest.json`
 - **Offline**: `public/offline.html`
 
+## AI開発ベストプラクティス
+
+Claude 4モデルの特性を活かした効果的な開発のためのガイドライン。
+
+**詳細**: [docs/development/CLAUDE_4_BEST_PRACTICES.md](docs/development/CLAUDE_4_BEST_PRACTICES.md)
+
+### 核心原則
+
+1. **明示的な指示**: 具体的で詳細な要件を提供する
+2. **背景と動機**: 「なぜ」を説明して適切な一般化を促す
+3. **良い例のみ**: 望ましいパターンだけを提示する
+4. **段階的アプローチ**: Explore → Plan → Code → Commit
+5. **Thinkツール活用**: 複雑な問題には `think hard` / `ultrathink` を使用
+
+### ワークフローパターン
+
+```markdown
+1. Explore（探索）: コードベースを調査し、影響範囲を把握
+2. Plan（計画）: 実装戦略を策定し、承認を得る
+3. Code（実装）: 計画に基づいてコードを書く
+4. Commit（コミット）: 変更を記録し、進捗を報告
+```
+
+---
+
 ## 重要な開発ルール
 
 ### 開発ワークフロー（役割分担）
@@ -231,6 +256,18 @@ npm run dev          # 開発サーバー起動・停止
 
 ---
 
+## 📚 詳細ドキュメント参照先
+
+| カテゴリ           | ドキュメント                                                              | 内容                               |
+| ------------------ | ------------------------------------------------------------------------- | ---------------------------------- |
+| **AI開発**         | [CLAUDE_4_BEST_PRACTICES.md](docs/development/CLAUDE_4_BEST_PRACTICES.md) | Claude 4プロンプトエンジニアリング |
+| **ドキュメント**   | [DOCUMENTATION_GUIDE.md](docs/DOCUMENTATION_GUIDE.md)                     | ドキュメント作成ガイド             |
+| **パフォーマンス** | [PERFORMANCE_GUIDE.md](docs/PERFORMANCE_GUIDE.md)                         | Core Web Vitals最適化              |
+| **テスト**         | [TESTING_AND_CICD_GUIDE.md](docs/TESTING_AND_CICD_GUIDE.md)               | テスト・CI/CD                      |
+| **デザイン**       | [design-system/CLAUDE.md](docs/design-system/CLAUDE.md)                   | デザインシステム                   |
+
+---
+
 **このドキュメントについて**: Web版BoxLogの完全開発ガイド
-**最終更新**: 2025年1月
-**バージョン**: v3.0
+**最終更新**: 2025年12月
+**バージョン**: v3.1

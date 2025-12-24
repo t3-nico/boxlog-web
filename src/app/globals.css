@@ -38,7 +38,7 @@
   --muted-foreground: oklch(0.45 0.02 264.54);
 
   /* Primary */
-  --primary: oklch(0.6231 0.188 259.8145);
+  --primary: oklch(0.5 0.188 259.8145);
   --primary-foreground: oklch(1 0 0);
 
   /* State: Active（選択中・アクティブ状態） */
@@ -204,7 +204,7 @@
   --muted-foreground: oklch(0.78 0 0);
 
   /* Primary */
-  --primary: oklch(0.6231 0.188 259.8145);
+  --primary: oklch(0.5 0.188 259.8145);
   --primary-foreground: oklch(1 0 0);
 
   /* State: Active（選択中・アクティブ状態） */
@@ -619,11 +619,9 @@ svg {
 }
 
 /* Accessibility - focus states */
+/* Note: input, textarea, select have custom focus styles in their components */
 a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
+button:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
   border-radius: calc(var(--radius-md) - 2px);
