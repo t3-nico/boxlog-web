@@ -2,8 +2,8 @@
 
 import { ErrorLayout } from '@/components/errors/ErrorLayout'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
@@ -15,11 +15,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   }, [error])
 
   return (
-    <ErrorLayout
-      title={t('errors.general.title')}
-      description={t('errors.general.description')}
-      showBackButton={false}
-    >
+    <ErrorLayout title={t('errors.general.title')} description={t('errors.general.description')} showBackButton={false}>
       <div className="mt-10 space-y-4">
         <Button onClick={reset} className="w-full sm:w-auto">
           {t('common.actions.tryAgain')}

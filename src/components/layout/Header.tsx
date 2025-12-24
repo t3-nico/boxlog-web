@@ -47,7 +47,10 @@ export function Header() {
         isScrolled && 'shadow-sm'
       )}
     >
-      <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6 lg:px-8" aria-label={t('aria.mainNavigation')}>
+      <nav
+        className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6 lg:px-8"
+        aria-label={t('aria.mainNavigation')}
+      >
         {/* Logo */}
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
