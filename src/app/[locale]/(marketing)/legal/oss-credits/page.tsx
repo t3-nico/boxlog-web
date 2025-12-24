@@ -62,7 +62,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
   })
 
   return (
-    <div className="bg-background container mx-auto min-h-screen max-w-6xl p-4 md:p-8">
+    <div className="bg-background container mx-auto min-h-screen max-w-6xl px-4 py-12 md:px-8 md:py-16">
       {/* ヘッダー */}
       <div className="mb-8">
         <h1 className="mb-2 text-3xl font-bold">{t('ossCredits.title')}</h1>
