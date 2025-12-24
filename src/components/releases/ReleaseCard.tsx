@@ -2,6 +2,7 @@
 
 import { Heading } from '@/components/ui/typography'
 import { Link } from '@/i18n/navigation'
+import { getTagColor } from '@/lib/tags-client'
 import { AlertTriangle, Star } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -62,11 +63,6 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
     minor: 'bg-release-improvement-bg text-release-improvement-text',
     patch: 'bg-release-new-bg text-release-new-text',
     prerelease: 'bg-release-bugfix-bg text-release-bugfix-text',
-  }
-
-  // タグカラー（M3準拠）
-  const getTagColor = () => {
-    return 'bg-muted text-muted-foreground hover:bg-state-hover'
   }
 
   const formatDate = (dateString: string) => {
@@ -163,7 +159,7 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
               {frontMatter.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${getTagColor()}`}
+                  className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
                 >
                   #{tag}
                 </span>

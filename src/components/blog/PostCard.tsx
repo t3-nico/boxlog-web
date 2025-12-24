@@ -3,6 +3,7 @@
 import { Heading } from '@/components/ui/typography'
 import { Link } from '@/i18n/navigation'
 import { BlogPostMeta } from '@/lib/blog'
+import { getTagColor } from '@/lib/tags-client'
 import { ImageIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -16,11 +17,6 @@ interface PostCardProps {
 
 export function PostCard({ post, priority = false, layout = 'horizontal', locale = 'en' }: PostCardProps) {
   const [imageError, setImageError] = useState(false)
-
-  // Function to determine tag color - using semantic tokens (M3準拠)
-  const getTagColor = (_tag: string) => {
-    return 'bg-muted text-muted-foreground hover:bg-state-hover'
-  }
 
   const formatDate = (dateString: string) => {
     const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US'
@@ -48,7 +44,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
             {post.frontMatter.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="bg-muted text-muted-foreground inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium"
+                className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ${getTagColor(tag)}`}
               >
                 {tag}
               </span>

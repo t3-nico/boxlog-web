@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Highlight } from '@/lib/highlight'
+import { getTagColor } from '@/lib/tags-client'
 import { Clock, Edit, FileText, Package, Search, Tag, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
@@ -49,13 +50,6 @@ const getQuickLinks = (locale: string) => [
 interface PopularTag {
   name: string
   count: number
-  color: string
-}
-
-// タグの色を決める関数（neutral系のみ使用）
-const getTagColor = (index: number): string => {
-  const colors = ['neutral-100', 'neutral-200', 'neutral-300'] as const
-  return colors[index % colors.length] ?? 'neutral-100'
 }
 
 export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) {
@@ -85,10 +79,9 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           throw new Error('Failed to fetch tags')
         }
         const allTags = await response.json()
-        const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }, index: number) => ({
+        const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }) => ({
           name: tag.tag,
           count: tag.count,
-          color: getTagColor(index),
         }))
         setPopularTags(topTags)
       } catch (error) {
@@ -182,11 +175,6 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
     }
   }
 
-  const getTagColorClass = (_color: string) => {
-    // セマンティックカラーを使用
-    return 'bg-tag-neutral-bg text-tag-neutral-text hover:bg-tag-neutral-hover'
-  }
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-popover border-border max-w-2xl gap-0 overflow-hidden p-0 shadow-2xl [&>button]:hidden">
@@ -244,7 +232,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                       onClick={() => handleTagClick(tag.name)}
                       variant="ghost"
                       size="sm"
-                      className={`inline-flex items-center gap-2 rounded-full ${getTagColorClass(tag.color)}`}
+                      className={`inline-flex items-center gap-2 rounded-full ${getTagColor(tag.name)}`}
                     >
                       <Tag className="h-3 w-3" />
                       <span>{tag.name}</span>

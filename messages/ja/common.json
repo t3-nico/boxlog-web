@@ -13,7 +13,8 @@
       "resources": "リソース",
       "blogDescription": "最新の記事とチュートリアル",
       "docsDescription": "ドキュメントとガイド",
-      "releasesDescription": "最新のアップデートと変更履歴"
+      "releasesDescription": "最新のアップデートと変更履歴",
+      "tagsDescription": "トピックでコンテンツを探す"
     },
     "actions": {
       "search": "検索",
@@ -139,6 +140,21 @@
     "view": {
       "list": "リスト",
       "grid": "グリッド"
+    }
+  },
+  "tags": {
+    "searchPlaceholder": "タグを検索...",
+    "clearSearch": "検索をクリア",
+    "category": "カテゴリ",
+    "all": "すべて",
+    "popularTags": "人気のタグ",
+    "noTagsFound": "タグが見つかりません",
+    "noTagsHint": "検索条件を変更してみてください",
+    "clearFilters": "フィルターをクリア",
+    "tagsCount": "{count}件のタグ",
+    "view": {
+      "grid": "グリッド",
+      "list": "リスト"
     }
   },
   "releases": {

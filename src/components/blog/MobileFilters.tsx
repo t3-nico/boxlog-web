@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import { getTagFilterColor } from '@/lib/tags-client'
+import { cn } from '@/lib/utils'
 import { Calendar, Filter, Search, Tag, TrendingUp, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
@@ -181,8 +183,8 @@ export function MobileFilters({
                     <Button
                       key={tag}
                       onClick={() => toggleTag(tag)}
-                      variant={isSelected ? 'primary' : 'outline'}
-                      className="justify-center gap-2"
+                      variant="outline"
+                      className={cn('justify-center gap-2 border', getTagFilterColor(tag, isSelected))}
                       size="sm"
                     >
                       <span>#</span>

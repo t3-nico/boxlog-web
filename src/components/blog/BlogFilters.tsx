@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { getTagFilterColor } from '@/lib/tags-client'
 import { cn } from '@/lib/utils'
 import { Calendar, Filter, Tag, TrendingUp, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -223,12 +224,9 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                     <Button
                       key={tag}
                       onClick={() => toggleTag(tag)}
-                      variant={isSelected ? 'primary' : 'outline'}
+                      variant="outline"
                       size="sm"
-                      className={cn(
-                        'inline-flex items-center gap-2',
-                        isSelected && 'bg-primary/10 text-primary border-primary'
-                      )}
+                      className={cn('inline-flex items-center gap-2 border', getTagFilterColor(tag, isSelected))}
                     >
                       <span>#</span>
                       {tag}
