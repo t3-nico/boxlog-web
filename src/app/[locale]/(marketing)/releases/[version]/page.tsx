@@ -78,6 +78,9 @@ export async function generateMetadata({ params }: ReleasePageProps): Promise<Me
   }
 }
 
+// ISR: リリースノートは1日ごとに再検証
+export const revalidate = 86400
+
 // Generate static paths
 export async function generateStaticParams() {
   const releases = await getAllReleaseMetas()

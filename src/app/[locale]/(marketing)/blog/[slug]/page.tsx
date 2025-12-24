@@ -66,6 +66,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   })
 }
 
+// ISR: ブログ記事は1時間ごとに再検証
+export const revalidate = 3600
+
 // Generate static paths
 export async function generateStaticParams() {
   const posts = await getAllBlogPostMetas()

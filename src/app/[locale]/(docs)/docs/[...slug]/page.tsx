@@ -22,6 +22,9 @@ interface DocPageProps {
   params: Promise<PageParams>
 }
 
+// ISR: ドキュメント記事は1日ごとに再検証
+export const revalidate = 86400
+
 // Generate static parameters (SEO optimization)
 export async function generateStaticParams(): Promise<PageParams[]> {
   try {

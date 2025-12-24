@@ -14,6 +14,9 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
+// ISR: マーケティングページは1時間ごとに再検証
+export const revalidate = 3600
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'marketing' })
