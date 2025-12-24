@@ -110,7 +110,8 @@
       "resources": "Resources",
       "blogDescription": "Read our latest articles and tutorials",
       "docsDescription": "Documentation and guides",
-      "releasesDescription": "Latest updates and changelog"
+      "releasesDescription": "Latest updates and changelog",
+      "tagsDescription": "Browse content by topic"
     },
     "states": {
       "loading": "Loading...",
@@ -460,6 +461,21 @@
     "view": {
       "list": "List",
       "grid": "Grid"
+    }
+  },
+  "tags": {
+    "searchPlaceholder": "Search tags...",
+    "clearSearch": "Clear search",
+    "category": "Category",
+    "all": "All",
+    "popularTags": "Popular Tags",
+    "noTagsFound": "No tags found",
+    "noTagsHint": "Try adjusting your search or filters",
+    "clearFilters": "Clear filters",
+    "tagsCount": "{count} tags",
+    "view": {
+      "grid": "Grid",
+      "list": "List"
     }
   },
   "releases": {

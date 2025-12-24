@@ -24,6 +24,7 @@ export function Header() {
           { name: t('navigation.blog'), href: '/blog', description: t('navigation.blogDescription') },
           { name: t('navigation.docs'), href: '/docs', description: t('navigation.docsDescription') },
           { name: t('navigation.releases'), href: '/releases', description: t('navigation.releasesDescription') },
+          { name: t('navigation.tags'), href: '/tags', description: t('navigation.tagsDescription') },
         ],
       },
       { name: t('navigation.about'), href: '/about' },
