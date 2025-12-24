@@ -78,7 +78,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
         </div>
 
         {/* Right: Actions */}
-        <div className="flex flex-1 items-center justify-end gap-2">
+        <div className="flex flex-1 items-center justify-end gap-0">
           {/* Theme Toggle */}
           <ThemeToggle />
 
@@ -86,7 +86,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
           <LanguageSwitcher />
 
           {/* Login Button */}
-          <Button variant="outline" size="default" asChild className="hidden sm:inline-flex">
+          <Button variant="outline" size="default" asChild className="ml-2 hidden sm:inline-flex">
             <Link href="/login">{t('actions.login')}</Link>
           </Button>
         </div>
