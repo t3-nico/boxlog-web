@@ -525,5 +525,18 @@
       "description": "No releases match your current filters.",
       "clearFilters": "Clear Filters"
     }
+  },
+  "docs": {
+    "toc": {
+      "onThisPage": "On This Page",
+      "loading": "Loading...",
+      "noHeadings": "No headings found",
+      "links": "Links",
+      "reportIssue": "Report an issue",
+      "viewSource": "View source"
+    },
+    "sidebar": {
+      "searchPlaceholder": "Search docs..."
+    }
   }
 }
