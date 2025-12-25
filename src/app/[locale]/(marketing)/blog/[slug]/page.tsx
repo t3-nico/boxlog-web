@@ -1,40 +1,40 @@
-import { RelatedPosts } from '@/components/blog/RelatedPosts'
-import { ShareButton } from '@/components/blog/ShareButton'
-import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
-import { Container } from '@/components/ui/container'
-import { Link } from '@/i18n/navigation'
-import { routing } from '@/i18n/routing'
-import { getAllBlogPostMetas, getBlogPost, getRelatedPosts } from '@/lib/blog'
-import { generateSEOMetadata } from '@/lib/metadata'
-import type { Metadata } from 'next'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
-import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { RelatedPosts } from '@/components/blog/RelatedPosts';
+import { ShareButton } from '@/components/blog/ShareButton';
+import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents';
+import { Container } from '@/components/ui/container';
+import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
+import { getAllBlogPostMetas, getBlogPost, getRelatedPosts } from '@/lib/blog';
+import { generateSEOMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 interface BlogPostPageProps {
-  params: Promise<{ locale: string; slug: string }>
+  params: Promise<{ locale: string; slug: string }>;
 }
 
-type HeadingProps = ComponentPropsWithoutRef<'h1'> & { children?: ReactNode }
-type ParagraphProps = ComponentPropsWithoutRef<'p'>
-type AnchorProps = ComponentPropsWithoutRef<'a'> & { href?: string }
-type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>
-type CodeProps = ComponentPropsWithoutRef<'code'>
-type PreProps = ComponentPropsWithoutRef<'pre'>
-type ListProps = ComponentPropsWithoutRef<'ul'>
-type OrderedListProps = ComponentPropsWithoutRef<'ol'>
-type ListItemProps = ComponentPropsWithoutRef<'li'>
-type ImageProps = ComponentPropsWithoutRef<'img'> & { src?: string; alt?: string }
-type TableProps = ComponentPropsWithoutRef<'table'>
-type ThProps = ComponentPropsWithoutRef<'th'>
-type TdProps = ComponentPropsWithoutRef<'td'>
+type HeadingProps = ComponentPropsWithoutRef<'h1'> & { children?: ReactNode };
+type ParagraphProps = ComponentPropsWithoutRef<'p'>;
+type AnchorProps = ComponentPropsWithoutRef<'a'> & { href?: string };
+type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>;
+type CodeProps = ComponentPropsWithoutRef<'code'>;
+type PreProps = ComponentPropsWithoutRef<'pre'>;
+type ListProps = ComponentPropsWithoutRef<'ul'>;
+type OrderedListProps = ComponentPropsWithoutRef<'ol'>;
+type ListItemProps = ComponentPropsWithoutRef<'li'>;
+type ImageProps = ComponentPropsWithoutRef<'img'> & { src?: string; alt?: string };
+type TableProps = ComponentPropsWithoutRef<'table'>;
+type ThProps = ComponentPropsWithoutRef<'th'>;
+type TdProps = ComponentPropsWithoutRef<'td'>;
 
 // Generate metadata
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { locale, slug } = await params
-  const post = await getBlogPost(slug)
+  const { locale, slug } = await params;
+  const post = await getBlogPost(slug);
 
   if (!post) {
     return generateSEOMetadata({
@@ -45,10 +45,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
           : 'The article you are looking for could not be found.',
       url: `/${locale}/blog/${slug}`,
       locale: locale,
-    })
+    });
   }
 
-  const { frontMatter } = post
+  const { frontMatter } = post;
 
   return generateSEOMetadata({
     title: frontMatter.title,
@@ -63,24 +63,24 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     keywords: frontMatter.tags,
     image: frontMatter.coverImage,
     section: frontMatter.category,
-  })
+  });
 }
 
 // ISR: ブログ記事は1時間ごとに再検証
-export const revalidate = 3600
+export const revalidate = 3600;
 
 // Generate static paths
 export async function generateStaticParams() {
-  const posts = await getAllBlogPostMetas()
-  const params = []
+  const posts = await getAllBlogPostMetas();
+  const params = [];
 
   for (const locale of routing.locales) {
     for (const post of posts) {
-      params.push({ locale, slug: post.slug })
+      params.push({ locale, slug: post.slug });
     }
   }
 
-  return params
+  return params;
 }
 
 // MDX components
@@ -91,8 +91,10 @@ const mdxComponents = {
         ?.toString()
         .toLowerCase()
         .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '') || ''
-    return <h1 id={id} className="text-foreground mt-8 mb-4 text-3xl font-bold first:mt-0" {...props} />
+        .replace(/[^a-z0-9-]/g, '') || '';
+    return (
+      <h1 id={id} className="text-foreground mt-8 mb-4 text-3xl font-bold first:mt-0" {...props} />
+    );
   },
   h2: (props: HeadingProps) => {
     const id =
@@ -100,8 +102,8 @@ const mdxComponents = {
         ?.toString()
         .toLowerCase()
         .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '') || ''
-    return <h2 id={id} className="text-foreground mt-8 mb-4 text-2xl font-bold" {...props} />
+        .replace(/[^a-z0-9-]/g, '') || '';
+    return <h2 id={id} className="text-foreground mt-8 mb-4 text-2xl font-bold" {...props} />;
   },
   h3: (props: HeadingProps) => {
     const id =
@@ -109,8 +111,8 @@ const mdxComponents = {
         ?.toString()
         .toLowerCase()
         .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '') || ''
-    return <h3 id={id} className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />
+        .replace(/[^a-z0-9-]/g, '') || '';
+    return <h3 id={id} className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />;
   },
   h4: (props: HeadingProps) => {
     const id =
@@ -118,10 +120,12 @@ const mdxComponents = {
         ?.toString()
         .toLowerCase()
         .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '') || ''
-    return <h4 id={id} className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />
+        .replace(/[^a-z0-9-]/g, '') || '';
+    return <h4 id={id} className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />;
   },
-  p: (props: ParagraphProps) => <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />,
+  p: (props: ParagraphProps) => (
+    <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />
+  ),
   a: (props: AnchorProps) => (
     <a
       className="text-link hover:text-link-hover underline underline-offset-2"
@@ -140,9 +144,14 @@ const mdxComponents = {
     <code className="bg-code-bg text-code-text rounded px-2 py-1 font-mono text-sm" {...props} />
   ),
   pre: (props: PreProps) => (
-    <pre className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm" {...props} />
+    <pre
+      className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm"
+      {...props}
+    />
   ),
-  ul: (props: ListProps) => <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />,
+  ul: (props: ListProps) => (
+    <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />
+  ),
   ol: (props: OrderedListProps) => (
     <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2" {...props} />
   ),
@@ -162,7 +171,10 @@ const mdxComponents = {
   ),
   table: (props: TableProps) => (
     <div className="my-6 overflow-x-auto">
-      <table className="divide-border border-border min-w-full divide-y rounded-lg border" {...props} />
+      <table
+        className="divide-border border-border min-w-full divide-y rounded-lg border"
+        {...props}
+      />
     </div>
   ),
   th: (props: ThProps) => (
@@ -172,28 +184,31 @@ const mdxComponents = {
     />
   ),
   td: (props: TdProps) => (
-    <td className="border-border text-foreground border-t px-6 py-4 text-sm whitespace-nowrap" {...props} />
+    <td
+      className="border-border text-foreground border-t px-6 py-4 text-sm whitespace-nowrap"
+      {...props}
+    />
   ),
   Callout: ({
     type = 'info',
     children,
   }: {
-    type?: 'info' | 'warning' | 'error' | 'success'
-    children: React.ReactNode
+    type?: 'info' | 'warning' | 'error' | 'success';
+    children: React.ReactNode;
   }) => {
     const styles = {
       info: 'bg-info/10 border-info/30 text-info',
       warning: 'bg-warning/10 border-warning/30 text-warning',
       error: 'bg-destructive/10 border-destructive/30 text-destructive',
       success: 'bg-success/10 border-success/30 text-success',
-    }
+    };
 
     const icons = {
       info: '💡',
       warning: '⚠️',
       error: '❌',
       success: '✅',
-    }
+    };
 
     return (
       <div className={`my-6 rounded-r-lg border-l-4 p-4 ${styles[type]}`}>
@@ -202,57 +217,60 @@ const mdxComponents = {
           <div className="prose prose-sm max-w-none">{children}</div>
         </div>
       </div>
-    )
+    );
   },
-}
+};
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { locale, slug } = await params
-  setRequestLocale(locale)
-  const t = await getTranslations('blog.share')
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations('blog.share');
 
-  const post = await getBlogPost(slug)
+  const post = await getBlogPost(slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   // Remove duplicate title and description from MDX content
-  let processedContent = post.content
+  let processedContent = post.content;
 
-  const titlePattern = new RegExp(`^# ${post.frontMatter.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`, 'gm')
-  processedContent = processedContent.replace(titlePattern, '')
+  const titlePattern = new RegExp(
+    `^# ${post.frontMatter.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`,
+    'gm',
+  );
+  processedContent = processedContent.replace(titlePattern, '');
 
   if (post.frontMatter.description) {
     const descPattern = new RegExp(
       `^${post.frontMatter.description.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\n`,
-      'gm'
-    )
-    processedContent = processedContent.replace(descPattern, '')
+      'gm',
+    );
+    processedContent = processedContent.replace(descPattern, '');
   }
 
-  processedContent = processedContent.replace(/^# [^\n]*\n+/gm, '')
+  processedContent = processedContent.replace(/^# [^\n]*\n+/gm, '');
 
-  const lines = processedContent.split('\n')
-  const processedLines = []
+  const lines = processedContent.split('\n');
+  const processedLines = [];
 
   for (let i = 0; i < lines.length; i++) {
-    const currentLine = lines[i]
-    if (currentLine === undefined) continue
-    const line = currentLine.trim()
+    const currentLine = lines[i];
+    if (currentLine === undefined) continue;
+    const line = currentLine.trim();
 
-    if (processedLines.length === 0 && line === '') continue
+    if (processedLines.length === 0 && line === '') continue;
 
     if (processedLines.length === 0 && line && !line.startsWith('#') && !line.startsWith('```')) {
-      continue
+      continue;
     }
 
-    processedLines.push(currentLine)
+    processedLines.push(currentLine);
   }
 
-  processedContent = processedLines.join('\n')
+  processedContent = processedLines.join('\n');
 
-  const relatedPosts = await getRelatedPosts(slug, 3)
+  const relatedPosts = await getRelatedPosts(slug, 3);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -274,11 +292,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       '@type': 'Organization',
       name: 'BoxLog Platform',
     },
-  }
+  };
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <div className="bg-background min-h-screen">
         <article className="py-8">
@@ -287,11 +308,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="w-[700px] flex-shrink-0 pt-16">
                 <div className="mb-8">
                   <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
-                    <Link href="/" className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors">
+                    <Link
+                      href="/"
+                      className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors"
+                    >
                       Home
                     </Link>
                     <span className="text-border">/</span>
-                    <Link href="/blog" className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors">
+                    <Link
+                      href="/blog"
+                      className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors"
+                    >
                       Blog
                     </Link>
                     <span className="text-border">/</span>
@@ -299,7 +326,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </nav>
                 </div>
 
-                <time className="text-muted-foreground mb-2 block text-sm" dateTime={post.frontMatter.publishedAt}>
+                <time
+                  className="text-muted-foreground mb-2 block text-sm"
+                  dateTime={post.frontMatter.publishedAt}
+                >
                   {new Date(post.frontMatter.publishedAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -307,7 +337,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   })}
                 </time>
 
-                <h1 className="text-foreground mb-8 text-4xl font-bold">{post.frontMatter.title}</h1>
+                <h1 className="text-foreground mb-8 text-4xl font-bold">
+                  {post.frontMatter.title}
+                </h1>
 
                 {post.frontMatter.coverImage && (
                   <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
@@ -363,5 +395,5 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <RelatedPosts posts={relatedPosts} currentSlug={slug} locale={locale} />
       </div>
     </>
-  )
+  );
 }

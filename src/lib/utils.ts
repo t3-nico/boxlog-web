@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 /**
@@ -15,22 +15,22 @@ export function cn(...inputs: ClassValue[]) {
 export function calculateReadingTime(
   content: string,
   options: {
-    wordsPerMinute?: number
-    charsPerMinute?: number
-  } = {}
+    wordsPerMinute?: number;
+    charsPerMinute?: number;
+  } = {},
 ): number {
-  const { wordsPerMinute = 200, charsPerMinute = 500 } = options
+  const { wordsPerMinute = 200, charsPerMinute = 500 } = options;
 
   // 日本語文字が含まれているかチェック
-  const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(content)
+  const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(content);
 
   if (hasJapanese) {
     // 日本語: 文字数ベース（約500文字/分）
-    const charCount = content.replace(/\s+/g, '').length
-    return Math.max(1, Math.ceil(charCount / charsPerMinute))
+    const charCount = content.replace(/\s+/g, '').length;
+    return Math.max(1, Math.ceil(charCount / charsPerMinute));
   } else {
     // 英語: 単語数ベース（約200単語/分）
-    const wordCount = content.split(/\s+/).filter(Boolean).length
-    return Math.max(1, Math.ceil(wordCount / wordsPerMinute))
+    const wordCount = content.split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
   }
 }

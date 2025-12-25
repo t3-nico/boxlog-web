@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/blog',
   },
-}
+};
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
-  return <div className="min-h-screen bg-white dark:bg-gray-900">{children}</div>
+  return <div className="min-h-screen bg-white dark:bg-gray-900">{children}</div>;
 }

@@ -1,33 +1,42 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { LanguageSwitcher } from '@/components/ui/language-switcher'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { Link } from '@/i18n/navigation'
-import { ChevronDown, Menu, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { Link } from '@/i18n/navigation';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface DocsHeaderProps {
-  onMobileMenuToggle?: () => void
-  mobileMenuOpen?: boolean
+  onMobileMenuToggle?: () => void;
+  mobileMenuOpen?: boolean;
 }
 
 export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderProps) {
-  const t = useTranslations('common')
+  const t = useTranslations('common');
 
   const resourcesItems = [
     { name: t('navigation.blog'), href: '/blog', description: t('navigation.blogDescription') },
     { name: t('navigation.docs'), href: '/docs', description: t('navigation.docsDescription') },
-    { name: t('navigation.releases'), href: '/releases', description: t('navigation.releasesDescription') },
+    {
+      name: t('navigation.releases'),
+      href: '/releases',
+      description: t('navigation.releasesDescription'),
+    },
     { name: t('navigation.tags'), href: '/tags', description: t('navigation.tagsDescription') },
-  ]
+  ];
 
   return (
     <header className="bg-background border-border z-50 w-full flex-shrink-0 border-b">
       <nav
         className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:px-6"
-        aria-label="Docs navigation"
+        aria-label={t('aria.docsNavigation')}
       >
         {/* Left: Mobile menu toggle + Logo */}
         <div className="flex items-center gap-3 lg:flex-1">
@@ -37,7 +46,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
             size="icon"
             onClick={onMobileMenuToggle}
             className="lg:hidden"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileMenuOpen ? t('aria.closeMenu') : t('aria.openMenu')}
           >
             {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </Button>
@@ -45,7 +54,9 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
           {/* Logo with Docs badge */}
           <Link href="/docs" className="flex items-center gap-2">
             <span className="text-foreground text-lg font-bold">BoxLog</span>
-            <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-xs font-medium">Docs</span>
+            <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-xs font-medium">
+              Docs
+            </span>
           </Link>
         </div>
 
@@ -92,5 +103,5 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
         </div>
       </nav>
     </header>
-  )
+  );
 }

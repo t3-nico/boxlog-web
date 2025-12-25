@@ -1,47 +1,47 @@
-import { ReleaseCard } from '@/components/releases/ReleaseCard'
-import { ReleaseHeader } from '@/components/releases/ReleaseHeader'
-import { Container } from '@/components/ui/container'
-import { changeTypes, getAllReleaseMetas, getRelatedReleases, getRelease } from '@/lib/releases'
-import type { Metadata } from 'next'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import Image from 'next/image'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import type { ComponentPropsWithoutRef } from 'react'
+import { ReleaseCard } from '@/components/releases/ReleaseCard';
+import { ReleaseHeader } from '@/components/releases/ReleaseHeader';
+import { Container } from '@/components/ui/container';
+import { changeTypes, getAllReleaseMetas, getRelatedReleases, getRelease } from '@/lib/releases';
+import type { Metadata } from 'next';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import type { ComponentPropsWithoutRef } from 'react';
 
-type HeadingProps = ComponentPropsWithoutRef<'h1'>
-type ParagraphProps = ComponentPropsWithoutRef<'p'>
-type AnchorProps = ComponentPropsWithoutRef<'a'> & { href?: string }
-type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>
-type CodeProps = ComponentPropsWithoutRef<'code'>
-type PreProps = ComponentPropsWithoutRef<'pre'>
-type ListProps = ComponentPropsWithoutRef<'ul'>
-type OrderedListProps = ComponentPropsWithoutRef<'ol'>
-type ListItemProps = ComponentPropsWithoutRef<'li'>
-type ImageProps = ComponentPropsWithoutRef<'img'> & { src?: string; alt?: string }
-type TableProps = ComponentPropsWithoutRef<'table'>
-type ThProps = ComponentPropsWithoutRef<'th'>
-type TdProps = ComponentPropsWithoutRef<'td'>
+type HeadingProps = ComponentPropsWithoutRef<'h1'>;
+type ParagraphProps = ComponentPropsWithoutRef<'p'>;
+type AnchorProps = ComponentPropsWithoutRef<'a'> & { href?: string };
+type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>;
+type CodeProps = ComponentPropsWithoutRef<'code'>;
+type PreProps = ComponentPropsWithoutRef<'pre'>;
+type ListProps = ComponentPropsWithoutRef<'ul'>;
+type OrderedListProps = ComponentPropsWithoutRef<'ol'>;
+type ListItemProps = ComponentPropsWithoutRef<'li'>;
+type ImageProps = ComponentPropsWithoutRef<'img'> & { src?: string; alt?: string };
+type TableProps = ComponentPropsWithoutRef<'table'>;
+type ThProps = ComponentPropsWithoutRef<'th'>;
+type TdProps = ComponentPropsWithoutRef<'td'>;
 
 interface ReleasePageProps {
   params: {
-    locale: string
-    version: string
-  }
+    locale: string;
+    version: string;
+  };
 }
 
 // Generate metadata
 export async function generateMetadata({ params }: ReleasePageProps): Promise<Metadata> {
-  const release = await getRelease(params.version)
+  const release = await getRelease(params.version);
 
   if (!release) {
     return {
       title: 'Release not found',
-    }
+    };
   }
 
-  const { frontMatter } = release
-  const releaseDate = new Date(frontMatter.date).toISOString()
+  const { frontMatter } = release;
+  const releaseDate = new Date(frontMatter.date).toISOString();
 
   return {
     title: `${frontMatter.title} - v${frontMatter.version}`,
@@ -75,36 +75,47 @@ export async function generateMetadata({ params }: ReleasePageProps): Promise<Me
     alternates: {
       canonical: `/releases/${params.version}`,
     },
-  }
+  };
 }
 
 // ISR: リリースノートは1日ごとに再検証
-export const revalidate = 86400
+export const revalidate = 86400;
 
 // Generate static paths
 export async function generateStaticParams() {
-  const releases = await getAllReleaseMetas()
-  const locales = ['en', 'ja']
-  const params = []
+  const releases = await getAllReleaseMetas();
+  const locales = ['en', 'ja'];
+  const params = [];
 
   for (const locale of locales) {
     for (const release of releases) {
-      params.push({ locale, version: release.frontMatter.version })
+      params.push({ locale, version: release.frontMatter.version });
     }
   }
 
-  return params
+  return params;
 }
 
 // MDX Components
 const mdxComponents = {
-  h1: (props: HeadingProps) => <h1 className="text-foreground mt-8 mb-4 text-3xl font-bold first:mt-0" {...props} />,
-  h2: (props: HeadingProps) => (
-    <h2 className="border-border text-foreground mt-8 mb-4 border-b pb-2 text-2xl font-bold" {...props} />
+  h1: (props: HeadingProps) => (
+    <h1 className="text-foreground mt-8 mb-4 text-3xl font-bold first:mt-0" {...props} />
   ),
-  h3: (props: HeadingProps) => <h3 className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />,
-  h4: (props: HeadingProps) => <h4 className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />,
-  p: (props: ParagraphProps) => <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />,
+  h2: (props: HeadingProps) => (
+    <h2
+      className="border-border text-foreground mt-8 mb-4 border-b pb-2 text-2xl font-bold"
+      {...props}
+    />
+  ),
+  h3: (props: HeadingProps) => (
+    <h3 className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />
+  ),
+  h4: (props: HeadingProps) => (
+    <h4 className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />
+  ),
+  p: (props: ParagraphProps) => (
+    <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />
+  ),
   a: (props: AnchorProps) => (
     <a
       className="text-link hover:text-link-hover underline underline-offset-2"
@@ -123,9 +134,14 @@ const mdxComponents = {
     <code className="bg-code-bg text-code-text rounded px-2 py-1 font-mono text-sm" {...props} />
   ),
   pre: (props: PreProps) => (
-    <pre className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm" {...props} />
+    <pre
+      className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm"
+      {...props}
+    />
   ),
-  ul: (props: ListProps) => <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />,
+  ul: (props: ListProps) => (
+    <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />
+  ),
   ol: (props: OrderedListProps) => (
     <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2" {...props} />
   ),
@@ -142,7 +158,10 @@ const mdxComponents = {
   ),
   table: (props: TableProps) => (
     <div className="my-6 overflow-x-auto">
-      <table className="divide-border border-border min-w-full divide-y rounded-lg border" {...props} />
+      <table
+        className="divide-border border-border min-w-full divide-y rounded-lg border"
+        {...props}
+      />
     </div>
   ),
   th: (props: ThProps) => (
@@ -152,13 +171,16 @@ const mdxComponents = {
     />
   ),
   td: (props: TdProps) => (
-    <td className="border-border text-foreground border-t px-6 py-4 text-sm whitespace-nowrap" {...props} />
+    <td
+      className="border-border text-foreground border-t px-6 py-4 text-sm whitespace-nowrap"
+      {...props}
+    />
   ),
 
   // Release notes specific components
   ChangeLog: ({ type, children }: { type: string; children: React.ReactNode }) => {
-    const changeType = changeTypes.find((ct) => ct.id === type)
-    if (!changeType) return <div>{children}</div>
+    const changeType = changeTypes.find((ct) => ct.id === type);
+    if (!changeType) return <div>{children}</div>;
 
     return (
       <div
@@ -172,7 +194,7 @@ const mdxComponents = {
         </div>
         <div className="prose prose-sm max-w-none">{children}</div>
       </div>
-    )
+    );
   },
 
   // Warning component
@@ -243,17 +265,17 @@ const mdxComponents = {
       </div>
     </div>
   ),
-}
+};
 
 export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
-  const { version } = params
-  const release = await getRelease(version)
+  const { version } = params;
+  const release = await getRelease(version);
 
   if (!release) {
-    notFound()
+    notFound();
   }
 
-  const relatedReleases = await getRelatedReleases(version, 3)
+  const relatedReleases = await getRelatedReleases(version, 3);
 
   // Structured data (JSON-LD)
   const jsonLd = {
@@ -277,12 +299,15 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
         softwareVersion: release.frontMatter.version,
       },
     },
-  }
+  };
 
   return (
     <>
       {/* Structured data */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <div className="bg-background min-h-screen">
         {/* Release header */}
@@ -330,7 +355,8 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-muted-foreground mb-1 text-sm">
-                      This release takes approximately <strong>{release.readingTime} minutes</strong> to read
+                      This release takes approximately{' '}
+                      <strong>{release.readingTime} minutes</strong> to read
                     </p>
                     <p className="text-muted-foreground text-sm">
                       Release date: {new Date(release.frontMatter.date).toLocaleDateString('en-US')}
@@ -341,7 +367,10 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <Link href="/releases" className="text-link hover:text-link-hover text-sm font-medium">
+                    <Link
+                      href="/releases"
+                      className="text-link hover:text-link-hover text-sm font-medium"
+                    >
                       View all releases
                     </Link>
 
@@ -372,7 +401,11 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {relatedReleases.map((relatedRelease) => (
-                    <ReleaseCard key={relatedRelease.frontMatter.version} release={relatedRelease} layout="vertical" />
+                    <ReleaseCard
+                      key={relatedRelease.frontMatter.version}
+                      release={relatedRelease}
+                      layout="vertical"
+                    />
                   ))}
                 </div>
 
@@ -381,8 +414,18 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                     href="/releases"
                     className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 text-sm font-medium transition-colors"
                   >
-                    <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <svg
+                      className="mr-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
                     </svg>
                     View all releases
                   </Link>
@@ -398,7 +441,8 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="text-foreground mb-4 text-2xl font-bold">Share Your Feedback</h2>
               <p className="text-muted-foreground mb-8">
-                If you have any questions or feedback about this new feature, please feel free to share it with us.
+                If you have any questions or feedback about this new feature, please feel free to
+                share it with us.
               </p>
 
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
@@ -406,7 +450,12 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   href="mailto:support@yoursaas.com"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
                 >
-                  <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="mr-2 h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -421,7 +470,12 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   href="/feedback"
                   className="border-border text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 font-medium transition-colors"
                 >
-                  <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="mr-2 h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -437,5 +491,5 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
         </section>
       </div>
     </>
-  )
+  );
 }

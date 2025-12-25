@@ -1,27 +1,27 @@
 export interface NavItem {
-  name: string
-  href?: string
-  description?: string
-  items?: NavItem[]
+  name: string;
+  href?: string;
+  description?: string;
+  items?: NavItem[];
 }
 
 export interface NavSection {
-  name: string
-  items: NavItem[]
+  name: string;
+  items: NavItem[];
 }
 
 // Navigation types for docs sidebar
 export interface NavigationItem {
-  title: string
-  href?: string
-  items?: NavigationItem[]
-  badge?: string
-  external?: boolean
+  title: string;
+  href?: string;
+  items?: NavigationItem[];
+  badge?: string;
+  external?: boolean;
 }
 
 export interface NavigationSection {
-  title: string
-  items: NavigationItem[]
+  title: string;
+  items: NavigationItem[];
 }
 
 // Generate docs navigation structure
@@ -60,5 +60,5 @@ export function generateDocsNavigation(): NavigationSection[] {
         { title: 'Billing', href: '/docs/account/billing' },
       ],
     },
-  ]
+  ];
 }

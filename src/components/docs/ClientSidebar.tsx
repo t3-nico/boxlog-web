@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { Input } from '@/components/ui/input'
-import { type NavigationItem, type NavigationSection } from '@/lib/navigation'
+import { Input } from '@/components/ui/input';
+import { type NavigationItem, type NavigationSection } from '@/lib/navigation';
 import {
   BarChart3,
   Bell,
@@ -21,72 +21,73 @@ import {
   Settings,
   Shield,
   User,
-} from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 function getPageIcon(href: string, _title: string) {
   // ホームページ
-  if (href === '/docs' || href === '/docs/') return Home
+  if (href === '/docs' || href === '/docs/') return Home;
 
   // Getting Started
-  if (href.includes('/getting-started')) return Rocket
+  if (href.includes('/getting-started')) return Rocket;
 
   // Account
-  if (href.includes('/account/profile')) return User
-  if (href.includes('/account/billing')) return CreditCard
-  if (href.includes('/account/api-keys')) return Key
-  if (href.includes('/account/security')) return Shield
-  if (href.includes('/account/notifications')) return Bell
-  if (href.includes('/account')) return Settings
+  if (href.includes('/account/profile')) return User;
+  if (href.includes('/account/billing')) return CreditCard;
+  if (href.includes('/account/api-keys')) return Key;
+  if (href.includes('/account/security')) return Shield;
+  if (href.includes('/account/notifications')) return Bell;
+  if (href.includes('/account')) return Settings;
 
   // Workspace
-  if (href.includes('/workspace')) return Building
+  if (href.includes('/workspace')) return Building;
 
   // Dashboard
-  if (href.includes('/dashboard')) return BarChart3
+  if (href.includes('/dashboard')) return BarChart3;
 
   // Logs
-  if (href.includes('/logs')) return FileText
+  if (href.includes('/logs')) return FileText;
 
   // Search
-  if (href.includes('/search')) return Search
+  if (href.includes('/search')) return Search;
 
   // Alerts
-  if (href.includes('/alerts')) return Bell
+  if (href.includes('/alerts')) return Bell;
 
   // Integrations
-  if (href.includes('/integrations')) return Puzzle
+  if (href.includes('/integrations')) return Puzzle;
 
   // SDKs
-  if (href.includes('/sdks')) return Code
+  if (href.includes('/sdks')) return Code;
 
   // API
-  if (href.includes('/api')) return Radio
+  if (href.includes('/api')) return Radio;
 
   // Guides
-  if (href.includes('/guides')) return BookOpen
+  if (href.includes('/guides')) return BookOpen;
 
   // Reference
-  if (href.includes('/reference')) return Book
+  if (href.includes('/reference')) return Book;
 
   // Default
-  return FileText
+  return FileText;
 }
 
 interface NavigationItemProps {
-  item: NavigationItem
-  level: number
-  currentPath: string
+  item: NavigationItem;
+  level: number;
+  currentPath: string;
 }
 
 function NavigationItemComponent({ item, level, currentPath }: NavigationItemProps) {
-  const hasChildren = item.items && item.items.length > 0
-  const hasHref = Boolean(item.href)
-  const paddingLeft = `${(level + 1) * 8}px`
+  const hasChildren = item.items && item.items.length > 0;
+  const hasHref = Boolean(item.href);
+  const paddingLeft = `${(level + 1) * 8}px`;
   // ロケールプレフィックス（/ja/, /en/）を除去してマッチング
-  const normalizedPath = currentPath.replace(/^\/(ja|en)/, '')
-  const isActive = item.href === normalizedPath || item.href === currentPath
+  const normalizedPath = currentPath.replace(/^\/(ja|en)/, '');
+  const isActive = item.href === normalizedPath || item.href === currentPath;
 
   return (
     <div>
@@ -107,13 +108,13 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
             }}
           >
             {(() => {
-              const IconComponent = getPageIcon(item.href!, item.title)
+              const IconComponent = getPageIcon(item.href!, item.title);
               return (
                 <>
                   <IconComponent className="mr-2 h-4 w-4 flex-shrink-0" />
                   <span className="flex-1">{item.title}</span>
                 </>
-              )
+              );
             })()}
             {item.badge && (
               <span className="bg-primary/10 text-primary ml-2 rounded px-1.5 py-0.5 text-xs font-medium">
@@ -133,13 +134,13 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
             }}
           >
             {(() => {
-              const IconComponent = getPageIcon('', item.title)
+              const IconComponent = getPageIcon('', item.title);
               return (
                 <>
                   <IconComponent className="mr-2 h-4 w-4 flex-shrink-0" />
                   <span className="flex-1">{item.title}</span>
                 </>
-              )
+              );
             })()}
           </span>
         )}
@@ -158,22 +159,23 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
         </div>
       )}
     </div>
-  )
+  );
 }
 
 interface ClientSidebarProps {
-  navigation: NavigationSection[]
+  navigation: NavigationSection[];
 }
 
 export function ClientSidebar({ navigation }: ClientSidebarProps) {
-  const pathname = usePathname()
+  const t = useTranslations('docs.sidebar');
+  const pathname = usePathname();
 
   return (
     <div className="flex h-full flex-col">
       {/* Search */}
       <div className="relative mb-4">
         <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-        <Input type="search" placeholder="Search docs..." size="sm" className="pl-9" />
+        <Input type="search" placeholder={t('searchPlaceholder')} size="sm" className="pl-9" />
       </div>
 
       {/* Navigation */}
@@ -198,5 +200,5 @@ export function ClientSidebar({ navigation }: ClientSidebarProps) {
         ))}
       </nav>
     </div>
-  )
+  );
 }

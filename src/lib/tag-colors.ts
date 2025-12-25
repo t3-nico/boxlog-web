@@ -22,9 +22,9 @@ export const TAG_COLOR_PALETTE = {
   orange: '#F97316',
   gray: '#6B7280',
   indigo: '#6366F1',
-} as const
+} as const;
 
-export type TagColorKey = keyof typeof TAG_COLOR_PALETTE
+export type TagColorKey = keyof typeof TAG_COLOR_PALETTE;
 
 // ========================================
 // カテゴリ定義
@@ -118,7 +118,15 @@ export const TAG_CATEGORIES = {
   // 自動化/統合 - Orange
   automation: {
     color: 'orange' as TagColorKey,
-    tags: ['automation', 'workflow', 'integration', 'productivity', 'collaboration', 'schedule', 'calendar'],
+    tags: [
+      'automation',
+      'workflow',
+      'integration',
+      'productivity',
+      'collaboration',
+      'schedule',
+      'calendar',
+    ],
   },
 
   // SDK/開発ツール - Indigo
@@ -141,27 +149,27 @@ export const TAG_CATEGORIES = {
       'system-design',
     ],
   },
-} as const
+} as const;
 
 // ========================================
 // タグ→カラーのマッピング生成
 // ========================================
 
-type TagColorMap = Record<string, TagColorKey>
+type TagColorMap = Record<string, TagColorKey>;
 
 function buildTagColorMap(): TagColorMap {
-  const map: TagColorMap = {}
+  const map: TagColorMap = {};
 
   for (const category of Object.values(TAG_CATEGORIES)) {
     for (const tag of category.tags) {
-      map[tag.toLowerCase()] = category.color
+      map[tag.toLowerCase()] = category.color;
     }
   }
 
-  return map
+  return map;
 }
 
-const TAG_COLOR_MAP = buildTagColorMap()
+const TAG_COLOR_MAP = buildTagColorMap();
 
 // ========================================
 // エクスポート関数
@@ -172,20 +180,20 @@ const TAG_COLOR_MAP = buildTagColorMap()
  * マッピングにない場合は 'gray' を返す
  */
 export function getTagColorKey(tag: string): TagColorKey {
-  return TAG_COLOR_MAP[tag.toLowerCase()] ?? 'gray'
+  return TAG_COLOR_MAP[tag.toLowerCase()] ?? 'gray';
 }
 
 /**
  * タグ名からHEXカラーコードを取得
  */
 export function getTagColorHex(tag: string): string {
-  const colorKey = getTagColorKey(tag)
-  return TAG_COLOR_PALETTE[colorKey]
+  const colorKey = getTagColorKey(tag);
+  return TAG_COLOR_PALETTE[colorKey];
 }
 
 /**
  * カラーキーからHEXカラーコードを取得
  */
 export function getColorHex(colorKey: TagColorKey): string {
-  return TAG_COLOR_PALETTE[colorKey]
+  return TAG_COLOR_PALETTE[colorKey];
 }

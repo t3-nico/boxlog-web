@@ -1,23 +1,27 @@
-'use client'
+'use client';
 
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { BlogPostMeta } from '@/lib/blog'
-import { useTranslations } from 'next-intl'
-import { PostCard } from './PostCard'
+import { Container } from '@/components/ui/container';
+import { Heading, Text } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { BlogPostMeta } from '@/lib/blog';
+import { useTranslations } from 'next-intl';
+import { PostCard } from './PostCard';
 
 interface RelatedPostsProps {
-  posts: BlogPostMeta[]
-  currentSlug: string
-  locale?: string
+  posts: BlogPostMeta[];
+  currentSlug: string;
+  locale?: string;
 }
 
-export function RelatedPosts({ posts, currentSlug: _currentSlug, locale = 'en' }: RelatedPostsProps) {
-  const t = useTranslations('blog.relatedPosts')
+export function RelatedPosts({
+  posts,
+  currentSlug: _currentSlug,
+  locale = 'en',
+}: RelatedPostsProps) {
+  const t = useTranslations('blog.relatedPosts');
 
   if (posts.length === 0) {
-    return null
+    return null;
   }
 
   return (
@@ -35,7 +39,13 @@ export function RelatedPosts({ posts, currentSlug: _currentSlug, locale = 'en' }
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 3).map((post, index) => (
-              <PostCard key={post.slug} post={post} priority={index === 0} layout="vertical" locale={locale} />
+              <PostCard
+                key={post.slug}
+                post={post}
+                priority={index === 0}
+                layout="vertical"
+                locale={locale}
+              />
             ))}
           </div>
 
@@ -47,12 +57,17 @@ export function RelatedPosts({ posts, currentSlug: _currentSlug, locale = 'en' }
             >
               {t('viewAll')}
               <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </Link>
           </div>
         </div>
       </Container>
     </section>
-  )
+  );
 }

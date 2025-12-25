@@ -1,15 +1,16 @@
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { generateSEOMetadata } from '@/lib/metadata'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/ui/container';
+import { Heading, Text } from '@/components/ui/typography';
+import { generateSEOMetadata } from '@/lib/metadata';
+import Link from 'next/link';
 
 export const metadata = generateSEOMetadata({
   title: 'Access Forbidden - 403 Error',
-  description: 'You do not have permission to access this resource. Please check your credentials or contact support.',
+  description:
+    'You do not have permission to access this resource. Please check your credentials or contact support.',
   url: '/403',
   noindex: true,
-})
+});
 
 export default function Forbidden() {
   return (
@@ -23,8 +24,8 @@ export default function Forbidden() {
           </Heading>
 
           <Text variant="muted" className="mb-8">
-            You don&apos;t have permission to access this resource. Please check your credentials or contact support if
-            you believe this is an error.
+            You don&apos;t have permission to access this resource. Please check your credentials or
+            contact support if you believe this is an error.
           </Text>
 
           <Button asChild className="w-full">
@@ -33,5 +34,5 @@ export default function Forbidden() {
         </div>
       </Container>
     </div>
-  )
+  );
 }

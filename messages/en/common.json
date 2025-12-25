@@ -213,6 +213,7 @@
   "aria": {
     "clearSelection": "Clear selection",
     "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "closeSidebar": "Close sidebar",
     "cardMenu": "Card menu",
     "closeModal": "Close modal",
@@ -230,7 +231,15 @@
     "weeklyCalendar": "Weekly calendar",
     "previous": "Previous",
     "next": "Next",
-    "selectColor": "Select {color}"
+    "selectColor": "Select {color}",
+    "mainNavigation": "Main navigation",
+    "docsNavigation": "Docs navigation",
+    "navigationMenu": "Navigation menu",
+    "goToPreviousPage": "Go to previous page",
+    "goToNextPage": "Go to next page",
+    "morePages": "More pages",
+    "pagination": "pagination",
+    "more": "More"
   },
   "status": {
     "loading": "Loading...",
@@ -524,6 +533,19 @@
       "title": "No Releases Found",
       "description": "No releases match your current filters.",
       "clearFilters": "Clear Filters"
+    }
+  },
+  "docs": {
+    "toc": {
+      "onThisPage": "On This Page",
+      "loading": "Loading...",
+      "noHeadings": "No headings found",
+      "links": "Links",
+      "reportIssue": "Report an issue",
+      "viewSource": "View source"
+    },
+    "sidebar": {
+      "searchPlaceholder": "Search docs..."
     }
   }
 }

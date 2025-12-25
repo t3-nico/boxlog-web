@@ -1,4 +1,4 @@
-import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 /**
  * AI検索・RAG用のメタデータ（簡略化版）
@@ -15,19 +15,19 @@ export interface AIMetadata {
    * ※ 手動で記述する唯一の必須フィールド
    * 例: ["BoxLogをインストールする方法は？", "How to install BoxLog?"]
    */
-  relatedQuestions?: string[]
+  relatedQuestions?: string[];
 
   /**
    * このドキュメントを読む前に必要な前提知識
    * 例: ["Node.js 18以上", "npmまたはyarnの基本操作"]
    */
-  prerequisites?: string[]
+  prerequisites?: string[];
 
   /**
    * 関連ドキュメントへのパス（内部リンク）
    * 例: ["/docs/getting-started/quick-start", "/docs/api/configuration"]
    */
-  relatedDocs?: string[]
+  relatedDocs?: string[];
 
   /**
    * コンテンツのチャンク戦略
@@ -36,80 +36,85 @@ export interface AIMetadata {
    * - "paragraph": 段落ごとに分割
    * - "full": 分割せず全体を1チャンクに
    */
-  chunkStrategy?: 'h2' | 'h3' | 'paragraph' | 'full'
+  chunkStrategy?: 'h2' | 'h3' | 'paragraph' | 'full';
 
   /**
    * AI検索の対象に含めるか
    * falseの場合、ベクトルDBへの登録をスキップ
    */
-  searchable?: boolean
+  searchable?: boolean;
 
   /**
    * コンテンツの難易度
    * AI回答時の説明レベル調整に使用
    */
-  difficulty?: 'beginner' | 'intermediate' | 'advanced'
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
 
   /**
    * コンテンツの種類
    * AI回答のフォーマット選択に使用
    */
-  contentType?: 'tutorial' | 'reference' | 'guide' | 'troubleshooting' | 'concept'
+  contentType?: 'tutorial' | 'reference' | 'guide' | 'troubleshooting' | 'concept';
 }
 
 export interface FrontMatter {
-  title: string
-  description: string
-  tags?: string[]
-  author?: string
-  publishedAt?: string
-  updatedAt?: string
-  slug: string
-  category: string
-  order?: number
-  draft?: boolean
-  featured?: boolean
+  title: string;
+  description: string;
+  tags?: string[];
+  author?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  slug: string;
+  category: string;
+  order?: number;
+  draft?: boolean;
+  featured?: boolean;
 
   // === AI/RAG用メタデータ ===
-  ai?: AIMetadata
+  ai?: AIMetadata;
 }
 
 export interface ContentData {
-  frontMatter: FrontMatter
-  content: string
-  slug: string
-  path: string
+  frontMatter: FrontMatter;
+  content: string;
+  slug: string;
+  path: string;
 }
 
 export interface SerializedContent {
-  mdxSource: MDXRemoteSerializeResult
-  frontMatter: FrontMatter
+  mdxSource: MDXRemoteSerializeResult;
+  frontMatter: FrontMatter;
 }
 
 export interface ContentCollection {
-  [key: string]: ContentData[]
+  [key: string]: ContentData[];
 }
 
 export interface TableOfContentsItem {
-  id: string
-  title: string
-  level: number
-  children?: TableOfContentsItem[]
+  id: string;
+  title: string;
+  level: number;
+  children?: TableOfContentsItem[];
 }
 
 export interface NavigationItem {
-  title: string
-  href?: string
-  items?: NavigationItem[]
-  badge?: string
-  external?: boolean
+  title: string;
+  href?: string;
+  items?: NavigationItem[];
+  badge?: string;
+  external?: boolean;
 }
 
 export interface CategoryInfo {
-  name: string
-  description: string
-  slug: string
-  order: number
+  name: string;
+  description: string;
+  slug: string;
+  order: number;
 }
 
-export type ContentCategory = 'getting-started' | 'api-reference' | 'guides' | 'examples' | 'resources'
+export type ContentCategory =
+  | 'getting-started'
+  | 'api-reference'
+  | 'guides'
+  | 'examples'
+  | 'resources';

@@ -1,82 +1,84 @@
-import { Heading, Text } from '@/components/ui/typography'
-import { generateAnchorId } from '@/lib/toc'
-import { MDXComponents } from 'mdx/types'
-import Image from 'next/image'
-import Link from 'next/link'
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
-import { CopyCodeButton } from './CopyCodeButton'
+import { Heading, Text } from '@/components/ui/typography';
+import { generateAnchorId } from '@/lib/toc';
+import { MDXComponents } from 'mdx/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
+import { CopyCodeButton } from './CopyCodeButton';
 
 type CodeBlockProps = ComponentPropsWithoutRef<'pre'> & {
-  children?: ReactNode
-  className?: string
-}
+  children?: ReactNode;
+  className?: string;
+};
 
 type InlineCodeProps = ComponentPropsWithoutRef<'code'> & {
-  children?: ReactNode
-}
+  children?: ReactNode;
+};
 
 type TableProps = ComponentPropsWithoutRef<'table'> & {
-  children?: ReactNode
-}
+  children?: ReactNode;
+};
 
 type ThProps = ComponentPropsWithoutRef<'th'> & {
-  children?: ReactNode
-}
+  children?: ReactNode;
+};
 
 type TdProps = ComponentPropsWithoutRef<'td'> & {
-  children?: ReactNode
-}
+  children?: ReactNode;
+};
 
 type CustomLinkProps = ComponentPropsWithoutRef<'a'> & {
-  href?: string
-  children?: ReactNode
-}
+  href?: string;
+  children?: ReactNode;
+};
 
 type HeadingComponentProps = ComponentPropsWithoutRef<'h1'> & {
-  children?: ReactNode
-  id?: string
-}
+  children?: ReactNode;
+  id?: string;
+};
 
 type CodeComponentProps = ComponentPropsWithoutRef<'code'> & {
-  children?: ReactNode
-  className?: string
-}
+  children?: ReactNode;
+  className?: string;
+};
 
 type PreComponentProps = ComponentPropsWithoutRef<'pre'> & {
-  children?: ReactNode
-}
+  children?: ReactNode;
+};
 
 // カスタムコードブロックコンポーネント
 function CodeBlock({ children, className }: CodeBlockProps) {
   // childrenがReact要素（code要素）の場合、そのpropsからテキストを取得
-  let codeString = ''
-  let codeClassName = className || ''
+  let codeString = '';
+  let codeClassName = className || '';
 
   if (children && typeof children === 'object' && 'props' in children) {
     // <code>要素がchildrenとして渡された場合
-    const codeElement = children as ReactElement<{ children?: ReactNode; className?: string }>
+    const codeElement = children as ReactElement<{ children?: ReactNode; className?: string }>;
     codeString =
       typeof codeElement.props.children === 'string'
         ? codeElement.props.children
-        : String(codeElement.props.children ?? '')
-    codeClassName = codeElement.props.className || className || ''
+        : String(codeElement.props.children ?? '');
+    codeClassName = codeElement.props.className || className || '';
   } else {
-    codeString = typeof children === 'string' ? children : String(children ?? '')
+    codeString = typeof children === 'string' ? children : String(children ?? '');
   }
 
   // 言語クラスを抽出（language-xxx形式）
-  const languageClass = codeClassName.match(/language-\w+/)?.[0] || ''
+  const languageClass = codeClassName.match(/language-\w+/)?.[0] || '';
 
   return (
     <div className="group relative">
       <div className="absolute top-3 right-3 opacity-0 transition-opacity group-hover:opacity-100">
         <CopyCodeButton code={codeString} />
       </div>
-      <pre className={`hljs ${languageClass} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}>
+      <pre
+        className={`hljs ${languageClass} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}
+      >
         <code className={languageClass}>{codeString}</code>
       </pre>
     </div>
-  )
+  );
 }
 
 // インラインコード
@@ -85,7 +87,7 @@ function InlineCode({ children, ...props }: InlineCodeProps) {
     <code className="bg-code-bg text-code-text rounded px-1.5 py-0.5 font-mono text-sm" {...props}>
       {children}
     </code>
-  )
+  );
 }
 
 // カスタムアラートボックス
@@ -93,15 +95,15 @@ function Alert({
   type = 'info',
   children,
 }: {
-  type?: 'info' | 'warning' | 'error' | 'success'
-  children: React.ReactNode
+  type?: 'info' | 'warning' | 'error' | 'success';
+  children: React.ReactNode;
 }) {
   const styles = {
     info: 'bg-info/10 border-info/30 text-info',
     warning: 'bg-warning/10 border-warning/30 text-warning',
     error: 'bg-destructive/10 border-destructive/30 text-destructive',
     success: 'bg-success/10 border-success/30 text-success',
-  }
+  };
 
   const icons = {
     info: (
@@ -140,7 +142,7 @@ function Alert({
         />
       </svg>
     ),
-  }
+  };
 
   return (
     <div className={`my-4 rounded-lg border p-4 ${styles[type]}`}>
@@ -149,7 +151,7 @@ function Alert({
         <div className="flex-1">{children}</div>
       </div>
     </div>
-  )
+  );
 }
 
 // カスタムテーブル
@@ -160,7 +162,7 @@ function Table({ children, ...props }: TableProps) {
         {children}
       </table>
     </div>
-  )
+  );
 }
 
 function Th({ children, ...props }: ThProps) {
@@ -171,20 +173,23 @@ function Th({ children, ...props }: ThProps) {
     >
       {children}
     </th>
-  )
+  );
 }
 
 function Td({ children, ...props }: TdProps) {
   return (
-    <td className="border-border text-foreground border-b px-6 py-4 text-sm whitespace-nowrap" {...props}>
+    <td
+      className="border-border text-foreground border-b px-6 py-4 text-sm whitespace-nowrap"
+      {...props}
+    >
       {children}
     </td>
-  )
+  );
 }
 
 // カスタムリンク
 function CustomLink({ href, children, ...props }: CustomLinkProps) {
-  const isExternal = href?.startsWith('http')
+  const isExternal = href?.startsWith('http');
 
   if (isExternal) {
     return (
@@ -205,72 +210,72 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
           />
         </svg>
       </a>
-    )
+    );
   }
 
   return (
     <Link href={href || '#'} className="text-link hover:text-link-hover underline" {...props}>
       {children}
     </Link>
-  )
+  );
 }
 
 // MDXコンポーネント定義
 export const mdxComponents: MDXComponents = {
   // 見出し（アンカーID自動生成）
   h1: ({ children, id, ...props }: HeadingComponentProps) => {
-    const headingText = typeof children === 'string' ? children : String(children)
-    const anchorId = id || generateAnchorId(headingText)
+    const headingText = typeof children === 'string' ? children : String(children);
+    const anchorId = id || generateAnchorId(headingText);
     return (
       <Heading as="h1" size="4xl" className="mt-8 mb-6 first:mt-0" id={anchorId} {...props}>
         {children}
       </Heading>
-    )
+    );
   },
   h2: ({ children, id, ...props }: HeadingComponentProps) => {
-    const headingText = typeof children === 'string' ? children : String(children)
-    const anchorId = id || generateAnchorId(headingText)
+    const headingText = typeof children === 'string' ? children : String(children);
+    const anchorId = id || generateAnchorId(headingText);
     return (
       <Heading as="h2" size="3xl" className="mt-8 mb-4" id={anchorId} {...props}>
         {children}
       </Heading>
-    )
+    );
   },
   h3: ({ children, id, ...props }: HeadingComponentProps) => {
-    const headingText = typeof children === 'string' ? children : String(children)
-    const anchorId = id || generateAnchorId(headingText)
+    const headingText = typeof children === 'string' ? children : String(children);
+    const anchorId = id || generateAnchorId(headingText);
     return (
       <Heading as="h3" size="2xl" className="mt-6 mb-3" id={anchorId} {...props}>
         {children}
       </Heading>
-    )
+    );
   },
   h4: ({ children, id, ...props }: HeadingComponentProps) => {
-    const headingText = typeof children === 'string' ? children : String(children)
-    const anchorId = id || generateAnchorId(headingText)
+    const headingText = typeof children === 'string' ? children : String(children);
+    const anchorId = id || generateAnchorId(headingText);
     return (
       <Heading as="h4" size="xl" className="mt-4 mb-2" id={anchorId} {...props}>
         {children}
       </Heading>
-    )
+    );
   },
   h5: ({ children, id, ...props }: HeadingComponentProps) => {
-    const headingText = typeof children === 'string' ? children : String(children)
-    const anchorId = id || generateAnchorId(headingText)
+    const headingText = typeof children === 'string' ? children : String(children);
+    const anchorId = id || generateAnchorId(headingText);
     return (
       <Heading as="h5" size="lg" className="mt-3 mb-2" id={anchorId} {...props}>
         {children}
       </Heading>
-    )
+    );
   },
   h6: ({ children, id, ...props }: HeadingComponentProps) => {
-    const headingText = typeof children === 'string' ? children : String(children)
-    const anchorId = id || generateAnchorId(headingText)
+    const headingText = typeof children === 'string' ? children : String(children);
+    const anchorId = id || generateAnchorId(headingText);
     return (
       <Heading as="h6" size="md" className="mt-2 mb-1" id={anchorId} {...props}>
         {children}
       </Heading>
-    )
+    );
   },
 
   // 段落とテキスト
@@ -300,15 +305,18 @@ export const mdxComponents: MDXComponents = {
   // コード
   code: ({ children, className }: CodeComponentProps) => {
     if (className) {
-      return <CodeBlock className={className}>{children}</CodeBlock>
+      return <CodeBlock className={className}>{children}</CodeBlock>;
     }
-    return <InlineCode>{children}</InlineCode>
+    return <InlineCode>{children}</InlineCode>;
   },
   pre: ({ children }: PreComponentProps) => <div className="my-6">{children}</div>,
 
   // 引用
   blockquote: ({ children, ...props }) => (
-    <blockquote className="border-border text-muted-foreground my-6 border-l-4 pl-4 italic" {...props}>
+    <blockquote
+      className="border-border text-muted-foreground my-6 border-l-4 pl-4 italic"
+      {...props}
+    >
       {children}
     </blockquote>
   ),
@@ -341,4 +349,4 @@ export const mdxComponents: MDXComponents = {
 
   // カスタムコンポーネント
   Alert,
-}
+};

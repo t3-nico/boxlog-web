@@ -1,4 +1,4 @@
-import { generateStructuredData } from '@/lib/metadata'
+import { generateStructuredData } from '@/lib/metadata';
 
 type StructuredDataValue =
   | string
@@ -7,15 +7,21 @@ type StructuredDataValue =
   | null
   | undefined
   | StructuredDataValue[]
-  | { [key: string]: StructuredDataValue }
+  | { [key: string]: StructuredDataValue };
 
 /**
  * Component for rendering structured data
  */
-export function StructuredData({ type, data }: { type: string; data: Record<string, StructuredDataValue> }) {
-  const structuredData = generateStructuredData(type, data)
+export function StructuredData({
+  type,
+  data,
+}: {
+  type: string;
+  data: Record<string, StructuredDataValue>;
+}) {
+  const structuredData = generateStructuredData(type, data);
 
-  if (!structuredData) return null
+  if (!structuredData) return null;
 
   return (
     <script
@@ -24,7 +30,7 @@ export function StructuredData({ type, data }: { type: string; data: Record<stri
         __html: JSON.stringify(structuredData),
       }}
     />
-  )
+  );
 }
 
-export default StructuredData
+export default StructuredData;

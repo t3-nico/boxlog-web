@@ -1,60 +1,78 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { PillSwitcher } from '@/components/ui/pill-switcher'
-import { Heading, Text } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { getTagColor } from '@/lib/tags-client'
-import { cn } from '@/lib/utils'
-import { BookOpen, FileText, Grid3X3, Hash, List, Megaphone, Search, TrendingUp, X } from 'lucide-react'
-import { useState } from 'react'
+import { Button } from '@/components/ui/button';
+import { PillSwitcher } from '@/components/ui/pill-switcher';
+import { Heading, Text } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { getTagColor } from '@/lib/tags-client';
+import { cn } from '@/lib/utils';
+import {
+  BookOpen,
+  FileText,
+  Grid3X3,
+  Hash,
+  List,
+  Megaphone,
+  Search,
+  TrendingUp,
+  X,
+} from 'lucide-react';
+import { useState } from 'react';
 
-type ViewMode = 'list' | 'grid'
-type CategoryFilter = 'all' | 'blog' | 'releases' | 'docs'
+type ViewMode = 'list' | 'grid';
+type CategoryFilter = 'all' | 'blog' | 'releases' | 'docs';
 
 interface TagData {
-  tag: string
-  count: number
-  blogCount: number
-  releaseCount: number
-  docsCount: number
+  tag: string;
+  count: number;
+  blogCount: number;
+  releaseCount: number;
+  docsCount: number;
 }
 
 interface FilteredTagsClientProps {
-  allTags: TagData[]
-  locale: string
+  allTags: TagData[];
+  locale: string;
 }
 
 export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps) {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [viewMode, setViewMode] = useState<ViewMode>('grid')
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
 
-  const isJa = locale === 'ja'
+  const isJa = locale === 'ja';
 
   // フィルタリング処理
   const filteredTags = allTags.filter((tag) => {
     // 検索クエリによるフィルタリング
     if (searchQuery && !tag.tag.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false
+      return false;
     }
 
     // カテゴリフィルター
-    if (categoryFilter === 'blog' && tag.blogCount === 0) return false
-    if (categoryFilter === 'releases' && tag.releaseCount === 0) return false
-    if (categoryFilter === 'docs' && tag.docsCount === 0) return false
+    if (categoryFilter === 'blog' && tag.blogCount === 0) return false;
+    if (categoryFilter === 'releases' && tag.releaseCount === 0) return false;
+    if (categoryFilter === 'docs' && tag.docsCount === 0) return false;
 
-    return true
-  })
+    return true;
+  });
 
-  const popularTags = allTags.slice(0, 10)
+  const popularTags = allTags.slice(0, 10);
 
   const categoryOptions: { value: CategoryFilter; label: string; icon: React.ReactNode }[] = [
     { value: 'all', label: isJa ? 'すべて' : 'All', icon: null },
     { value: 'blog', label: isJa ? 'ブログ' : 'Blog', icon: <FileText className="h-3 w-3" /> },
-    { value: 'releases', label: isJa ? 'リリース' : 'Releases', icon: <Megaphone className="h-3 w-3" /> },
-    { value: 'docs', label: isJa ? 'ドキュメント' : 'Docs', icon: <BookOpen className="h-3 w-3" /> },
-  ]
+    {
+      value: 'releases',
+      label: isJa ? 'リリース' : 'Releases',
+      icon: <Megaphone className="h-3 w-3" />,
+    },
+    {
+      value: 'docs',
+      label: isJa ? 'ドキュメント' : 'Docs',
+      icon: <BookOpen className="h-3 w-3" />,
+    },
+  ];
 
   return (
     <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
@@ -63,7 +81,9 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
         <div className="sticky top-24 space-y-8">
           {/* カテゴリフィルター */}
           <div className="border-border bg-card rounded-xl border p-6">
-            <h3 className="text-foreground mb-4 text-sm font-semibold">{isJa ? 'カテゴリ' : 'Category'}</h3>
+            <h3 className="text-foreground mb-4 text-sm font-semibold">
+              {isJa ? 'カテゴリ' : 'Category'}
+            </h3>
             <div className="space-y-2">
               {categoryOptions.map((option) => (
                 <Button
@@ -73,7 +93,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                   size="sm"
                   className={cn(
                     'w-full justify-start gap-2',
-                    categoryFilter === option.value && 'bg-muted text-foreground'
+                    categoryFilter === option.value && 'bg-muted text-foreground',
                   )}
                 >
                   {option.icon}
@@ -87,7 +107,9 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
           <div className="border-border bg-card rounded-xl border p-6">
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp className="text-muted-foreground h-4 w-4" />
-              <h3 className="text-foreground text-sm font-semibold">{isJa ? '人気のタグ' : 'Popular Tags'}</h3>
+              <h3 className="text-foreground text-sm font-semibold">
+                {isJa ? '人気のタグ' : 'Popular Tags'}
+              </h3>
             </div>
             <div className="flex flex-wrap gap-2">
               {popularTags.map((tag) => (
@@ -132,8 +154,16 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
 
           <PillSwitcher
             options={[
-              { value: 'grid', label: isJa ? 'グリッド' : 'Grid', icon: <Grid3X3 className="h-4 w-4" /> },
-              { value: 'list', label: isJa ? 'リスト' : 'List', icon: <List className="h-4 w-4" /> },
+              {
+                value: 'grid',
+                label: isJa ? 'グリッド' : 'Grid',
+                icon: <Grid3X3 className="h-4 w-4" />,
+              },
+              {
+                value: 'list',
+                label: isJa ? 'リスト' : 'List',
+                icon: <List className="h-4 w-4" />,
+              },
             ]}
             value={viewMode}
             onValueChange={setViewMode}
@@ -188,7 +218,9 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                   className="group flex items-center justify-between py-4 transition-colors hover:opacity-80"
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${getTagColor(tag.tag)}`}>
+                    <div
+                      className={`flex h-10 w-10 items-center justify-center rounded-lg ${getTagColor(tag.tag)}`}
+                    >
                       <Hash className="h-5 w-5" />
                     </div>
                     <div>
@@ -235,8 +267,8 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
             </Text>
             <button
               onClick={() => {
-                setSearchQuery('')
-                setCategoryFilter('all')
+                setSearchQuery('');
+                setCategoryFilter('all');
               }}
               className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
             >
@@ -246,5 +278,5 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
         )}
       </div>
     </div>
-  )
+  );
 }

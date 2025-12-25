@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Pagination,
@@ -8,50 +8,59 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination'
+} from '@/components/ui/pagination';
 
 interface BlogPaginationProps {
-  currentPage: number
-  totalPages: number
-  basePath: string
-  className?: string
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+  className?: string;
 }
 
-export function BlogPagination({ currentPage, totalPages, basePath, className }: BlogPaginationProps) {
-  if (totalPages <= 1) return null
+export function BlogPagination({
+  currentPage,
+  totalPages,
+  basePath,
+  className,
+}: BlogPaginationProps) {
+  if (totalPages <= 1) return null;
 
   const generatePageUrl = (page: number) => {
-    if (page === 1) return basePath
-    return `${basePath}?page=${page}`
-  }
+    if (page === 1) return basePath;
+    return `${basePath}?page=${page}`;
+  };
 
   const getVisiblePages = () => {
-    const delta = 2
-    const range: number[] = []
-    const rangeWithDots: (number | string)[] = []
+    const delta = 2;
+    const range: number[] = [];
+    const rangeWithDots: (number | string)[] = [];
 
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
-      range.push(i)
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i);
     }
 
     if (currentPage - delta > 2) {
-      rangeWithDots.push(1, '...')
+      rangeWithDots.push(1, '...');
     } else {
-      rangeWithDots.push(1)
+      rangeWithDots.push(1);
     }
 
-    rangeWithDots.push(...range)
+    rangeWithDots.push(...range);
 
     if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push('...', totalPages)
+      rangeWithDots.push('...', totalPages);
     } else {
-      rangeWithDots.push(totalPages)
+      rangeWithDots.push(totalPages);
     }
 
-    return rangeWithDots
-  }
+    return rangeWithDots;
+  };
 
-  const visiblePages = getVisiblePages()
+  const visiblePages = getVisiblePages();
 
   return (
     <Pagination className={className}>
@@ -60,7 +69,11 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
           {currentPage > 1 ? (
             <PaginationPrevious href={generatePageUrl(currentPage - 1)} />
           ) : (
-            <PaginationPrevious href="#" className="pointer-events-none opacity-50" aria-disabled="true" />
+            <PaginationPrevious
+              href="#"
+              className="pointer-events-none opacity-50"
+              aria-disabled="true"
+            />
           )}
         </PaginationItem>
 
@@ -70,11 +83,11 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
               <PaginationItem key={`dots-${index}`}>
                 <PaginationEllipsis />
               </PaginationItem>
-            )
+            );
           }
 
-          const pageNumber = page as number
-          const isCurrentPage = pageNumber === currentPage
+          const pageNumber = page as number;
+          const isCurrentPage = pageNumber === currentPage;
 
           return (
             <PaginationItem key={pageNumber}>
@@ -82,17 +95,21 @@ export function BlogPagination({ currentPage, totalPages, basePath, className }:
                 {pageNumber}
               </PaginationLink>
             </PaginationItem>
-          )
+          );
         })}
 
         <PaginationItem>
           {currentPage < totalPages ? (
             <PaginationNext href={generatePageUrl(currentPage + 1)} />
           ) : (
-            <PaginationNext href="#" className="pointer-events-none opacity-50" aria-disabled="true" />
+            <PaginationNext
+              href="#"
+              className="pointer-events-none opacity-50"
+              aria-disabled="true"
+            />
           )}
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-  )
+  );
 }

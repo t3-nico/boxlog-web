@@ -107,8 +107,8 @@ export function Navigation() {
 
 ```typescript
 // 特定ネームスペースのみ使用
-const t = await getTranslations({ locale, namespace: 'common' })
-t('navigation.home') // common.navigation.home
+const t = await getTranslations({ locale, namespace: 'common' });
+t('navigation.home'); // common.navigation.home
 ```
 
 ## ネームスペース一覧
@@ -129,7 +129,7 @@ t('navigation.home') // common.navigation.home
 const NAMESPACES = [
   // ... 既存
   'newNamespace', // 追加
-] as const
+] as const;
 ```
 
 ## appとの同期

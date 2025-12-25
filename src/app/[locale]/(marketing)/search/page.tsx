@@ -1,64 +1,64 @@
-'use client'
+'use client';
 
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/ui/container'
-import { Input } from '@/components/ui/input'
-import { Heading, Text } from '@/components/ui/typography'
-import { Highlight } from '@/lib/highlight'
-import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Suspense, useEffect, useState } from 'react'
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/ui/container';
+import { Input } from '@/components/ui/input';
+import { Heading, Text } from '@/components/ui/typography';
+import { Highlight } from '@/lib/highlight';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 
 interface SearchResultItem {
-  id: string
-  title: string
-  description: string
-  url: string
-  type: 'docs' | 'blog' | 'release'
-  breadcrumbs: string[]
-  lastModified: string
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  type: 'docs' | 'blog' | 'release';
+  breadcrumbs: string[];
+  lastModified: string;
 }
 
 function SearchResults() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState<SearchResultItem[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'docs' | 'blog' | 'release'>('all')
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<SearchResultItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'docs' | 'blog' | 'release'>('all');
 
   useEffect(() => {
-    const q = searchParams.get('q') || ''
-    setQuery(q)
+    const q = searchParams.get('q') || '';
+    setQuery(q);
 
     if (q) {
-      setIsLoading(true)
+      setIsLoading(true);
       // 実際の検索API呼び出し
       fetch(`/api/search?q=${encodeURIComponent(q)}`)
         .then((response) => response.json())
         .then((data) => {
-          setResults(data.results || [])
-          setIsLoading(false)
+          setResults(data.results || []);
+          setIsLoading(false);
         })
         .catch((_error) => {
-          setResults([])
-          setIsLoading(false)
-        })
+          setResults([]);
+          setIsLoading(false);
+        });
     } else {
-      setResults([])
+      setResults([]);
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const handleSearch = (newQuery: string) => {
-    const trimmedQuery = newQuery.trim()
+    const trimmedQuery = newQuery.trim();
     if (trimmedQuery) {
-      router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`)
+      router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`);
     }
-  }
+  };
 
   const filteredResults =
-    selectedFilter === 'all' ? results : results.filter((result) => result.type === selectedFilter)
+    selectedFilter === 'all' ? results : results.filter((result) => result.type === selectedFilter);
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -72,10 +72,15 @@ function SearchResults() {
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-        )
+        );
       case 'blog':
         return (
-          <svg className="text-success h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="text-success h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -83,10 +88,15 @@ function SearchResults() {
               d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
             />
           </svg>
-        )
+        );
       case 'release':
         return (
-          <svg className="text-primary h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="text-primary h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -94,24 +104,24 @@ function SearchResults() {
               d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m3 6V8a1 1 0 00-1-1H5a1 1 0 00-1 1v2m14 0v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8m14 0H4"
             />
           </svg>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const getTypeBadgeVariant = (type: string): 'info' | 'success' | 'primary' | 'secondary' => {
     switch (type) {
       case 'docs':
-        return 'info'
+        return 'info';
       case 'blog':
-        return 'success'
+        return 'success';
       case 'release':
-        return 'primary'
+        return 'primary';
       default:
-        return 'secondary'
+        return 'secondary';
     }
-  }
+  };
 
   return (
     <Container className="py-8">
@@ -197,7 +207,8 @@ function SearchResults() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <Text className="text-muted-foreground">
-                「<span className="font-medium">{query}</span>」の検索結果: {filteredResults.length}件
+                「<span className="font-medium">{query}</span>」の検索結果: {filteredResults.length}
+                件
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
@@ -210,7 +221,10 @@ function SearchResults() {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="border-border bg-card animate-pulse rounded-lg border p-6">
+                  <div
+                    key={i}
+                    className="border-border bg-card animate-pulse rounded-lg border p-6"
+                  >
                     <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
                     <div className="bg-muted mb-2 h-3 w-full rounded"></div>
                     <div className="bg-muted h-3 w-2/3 rounded"></div>
@@ -234,10 +248,19 @@ function SearchResults() {
                           <Highlight text={result.title} query={query} />
                         </Link>
                         <div className="mt-1 flex items-center gap-2">
-                          <Badge variant={getTypeBadgeVariant(result.type)} className="px-2 py-1 text-xs">
-                            {result.type === 'docs' ? 'ドキュメント' : result.type === 'blog' ? 'ブログ' : 'リリース'}
+                          <Badge
+                            variant={getTypeBadgeVariant(result.type)}
+                            className="px-2 py-1 text-xs"
+                          >
+                            {result.type === 'docs'
+                              ? 'ドキュメント'
+                              : result.type === 'blog'
+                                ? 'ブログ'
+                                : 'リリース'}
                           </Badge>
-                          <span className="text-muted-foreground text-xs">{result.breadcrumbs.join(' › ')}</span>
+                          <span className="text-muted-foreground text-xs">
+                            {result.breadcrumbs.join(' › ')}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -245,8 +268,13 @@ function SearchResults() {
                       <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground text-xs">最終更新: {result.lastModified}</span>
-                      <Link href={result.url} className="text-primary hover:text-primary-hover text-xs font-medium">
+                      <span className="text-muted-foreground text-xs">
+                        最終更新: {result.lastModified}
+                      </span>
+                      <Link
+                        href={result.url}
+                        className="text-primary hover:text-primary-hover text-xs font-medium"
+                      >
                         詳細を見る →
                       </Link>
                     </div>
@@ -277,8 +305,8 @@ function SearchResults() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    setQuery('')
-                    router.push('/search')
+                    setQuery('');
+                    router.push('/search');
                   }}
                 >
                   検索をクリア
@@ -322,7 +350,7 @@ function SearchResults() {
         )}
       </div>
     </Container>
-  )
+  );
 }
 
 export default function SearchPage() {
@@ -342,5 +370,5 @@ export default function SearchPage() {
         <SearchResults />
       </Suspense>
     </div>
-  )
+  );
 }

@@ -1,8 +1,8 @@
-import { Footer } from '@/components/layout/Footer'
-import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
 
 interface MarketingLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
@@ -14,5 +14,5 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
       </main>
       <Footer />
     </>
-  )
+  );
 }
