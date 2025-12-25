@@ -1,30 +1,30 @@
-import { getAllBlogPostMetas } from '@/lib/blog'
-import { getAllContent } from '@/lib/mdx'
-import { siteConfig } from '@/lib/metadata'
-import { getAllReleaseMetas } from '@/lib/releases'
-import { getAllTags } from '@/lib/tags-server'
-import { MetadataRoute } from 'next'
+import { getAllBlogPostMetas } from '@/lib/blog';
+import { getAllContent } from '@/lib/mdx';
+import { siteConfig } from '@/lib/metadata';
+import { getAllReleaseMetas } from '@/lib/releases';
+import { getAllTags } from '@/lib/tags-server';
+import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = siteConfig.url
-  const locales = ['en', 'ja']
+  const baseUrl = siteConfig.url;
+  const locales = ['en', 'ja'];
 
   // Helper function to create pages for both locales
   const createLocalizedPages = (
     path: string,
     options: {
-      lastModified: Date
-      changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
-      priority: number
-    }
+      lastModified: Date;
+      changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+      priority: number;
+    },
   ) => {
     return locales.map((locale) => ({
       url: `${baseUrl}/${locale}${path}`,
       lastModified: options.lastModified,
       changeFrequency: options.changeFrequency,
       priority: options.priority,
-    }))
-  }
+    }));
+  };
 
   // Static pages for both locales
   const staticPages = [
@@ -88,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.6,
     }),
-  ]
+  ];
 
   // Track which content types were successfully loaded
   const contentStatus = {
@@ -96,85 +96,93 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     releases: false,
     docs: false,
     tags: false,
-  }
+  };
 
-  let blogPages: MetadataRoute.Sitemap = []
-  let releasePages: MetadataRoute.Sitemap = []
-  let docPages: MetadataRoute.Sitemap = []
-  let tagPages: MetadataRoute.Sitemap = []
+  let blogPages: MetadataRoute.Sitemap = [];
+  let releasePages: MetadataRoute.Sitemap = [];
+  let docPages: MetadataRoute.Sitemap = [];
+  let tagPages: MetadataRoute.Sitemap = [];
 
   // Blog posts for both locales
   try {
-    const blogPosts = await getAllBlogPostMetas()
+    const blogPosts = await getAllBlogPostMetas();
     blogPages = blogPosts.flatMap((post) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/blog/${post.slug}`,
-        lastModified: new Date(post.frontMatter.updatedAt || post.frontMatter.publishedAt || new Date()),
+        lastModified: new Date(
+          post.frontMatter.updatedAt || post.frontMatter.publishedAt || new Date(),
+        ),
         changeFrequency: 'monthly' as const,
         priority: post.frontMatter.featured ? 0.8 : 0.6,
-      }))
-    )
-    contentStatus.blog = true
+      })),
+    );
+    contentStatus.blog = true;
   } catch (error) {
-    console.error('[Sitemap] Failed to load blog posts:', error instanceof Error ? error.message : error)
+    console.error(
+      '[Sitemap] Failed to load blog posts:',
+      error instanceof Error ? error.message : error,
+    );
   }
 
   // Release notes for both locales
   try {
-    const releases = await getAllReleaseMetas()
+    const releases = await getAllReleaseMetas();
     releasePages = releases.flatMap((release) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/releases/${release.frontMatter.version}`,
         lastModified: new Date(release.frontMatter.date || new Date()),
         changeFrequency: 'yearly' as const,
         priority: 0.7,
-      }))
-    )
-    contentStatus.releases = true
+      })),
+    );
+    contentStatus.releases = true;
   } catch (error) {
-    console.error('[Sitemap] Failed to load releases:', error instanceof Error ? error.message : error)
+    console.error(
+      '[Sitemap] Failed to load releases:',
+      error instanceof Error ? error.message : error,
+    );
   }
 
   // Documentation pages for both locales (dynamically from MDX files)
   try {
-    const allDocs = await getAllContent()
+    const allDocs = await getAllContent();
     docPages = allDocs.flatMap((doc) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/docs/${doc.slug}`,
         lastModified: doc.frontMatter.updatedAt ? new Date(doc.frontMatter.updatedAt) : new Date(),
         changeFrequency: 'weekly' as const,
         priority: doc.frontMatter.featured ? 0.8 : 0.6,
-      }))
-    )
-    contentStatus.docs = true
+      })),
+    );
+    contentStatus.docs = true;
   } catch (error) {
-    console.error('[Sitemap] Failed to load docs:', error instanceof Error ? error.message : error)
+    console.error('[Sitemap] Failed to load docs:', error instanceof Error ? error.message : error);
   }
 
   // Tag pages for both locales
   try {
-    const tags = await getAllTags()
+    const tags = await getAllTags();
     tagPages = tags.slice(0, 50).flatMap((tag) =>
       locales.map((locale) => ({
         url: `${baseUrl}/${locale}/tags/${encodeURIComponent(tag.tag.toLowerCase())}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.5,
-      }))
-    )
-    contentStatus.tags = true
+      })),
+    );
+    contentStatus.tags = true;
   } catch (error) {
-    console.error('[Sitemap] Failed to load tags:', error instanceof Error ? error.message : error)
+    console.error('[Sitemap] Failed to load tags:', error instanceof Error ? error.message : error);
   }
 
   // Log overall status
   const failedSources = Object.entries(contentStatus)
     .filter(([, success]) => !success)
-    .map(([source]) => source)
+    .map(([source]) => source);
 
   if (failedSources.length > 0) {
-    console.warn(`[Sitemap] Some content sources failed: ${failedSources.join(', ')}`)
+    console.warn(`[Sitemap] Some content sources failed: ${failedSources.join(', ')}`);
   }
 
-  return [...staticPages, ...blogPages, ...releasePages, ...docPages, ...tagPages]
+  return [...staticPages, ...blogPages, ...releasePages, ...docPages, ...tagPages];
 }

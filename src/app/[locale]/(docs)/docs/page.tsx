@@ -1,21 +1,21 @@
-import { Heading, Text } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { routing } from '@/i18n/routing'
-import { generateSEOMetadata } from '@/lib/metadata'
-import type { Metadata } from 'next'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { Heading, Text } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
+import { generateSEOMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface PageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'common' })
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'common' });
 
   return generateSEOMetadata({
     title: t('navigation.docs'),
@@ -27,16 +27,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? ['ドキュメント', 'API', 'ガイド', 'チュートリアル', 'SaaS', '開発']
         : ['documentation', 'API', 'guides', 'tutorials', 'SaaS', 'development'],
     type: 'website',
-  })
+  });
 }
 
 export default async function DocsPage({ params }: PageProps) {
-  const { locale } = await params
-  setRequestLocale(locale)
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: 'common' })
+  const t = await getTranslations({ locale, namespace: 'common' });
 
-  const isJa = locale === 'ja'
+  const isJa = locale === 'ja';
 
   return (
     <div className="space-y-12 px-6 py-8 lg:px-8">
@@ -58,8 +58,18 @@ export default async function DocsPage({ params }: PageProps) {
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
             <div className="mb-4 flex items-center space-x-3">
               <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
-                <svg className="text-primary h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <svg
+                  className="text-primary h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
               </div>
               <Heading as="h3" size="lg">
@@ -69,7 +79,10 @@ export default async function DocsPage({ params }: PageProps) {
             <Text variant="muted" className="mb-4">
               {isJa ? '数分でBoxLogを始めましょう' : 'Get started with BoxLog in minutes'}
             </Text>
-            <Link href="/docs/quick-start" className="text-primary hover:text-primary/80 font-medium">
+            <Link
+              href="/docs/quick-start"
+              className="text-primary hover:text-primary/80 font-medium"
+            >
               {isJa ? 'ガイドを読む →' : 'Read guide →'}
             </Link>
           </div>
@@ -77,7 +90,12 @@ export default async function DocsPage({ params }: PageProps) {
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
             <div className="mb-4 flex items-center space-x-3">
               <div className="bg-success/10 flex h-10 w-10 items-center justify-center rounded-lg">
-                <svg className="text-success h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="text-success h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -101,7 +119,12 @@ export default async function DocsPage({ params }: PageProps) {
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
             <div className="mb-4 flex items-center space-x-3">
               <div className="bg-info/10 flex h-10 w-10 items-center justify-center rounded-lg">
-                <svg className="text-info h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="text-info h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -124,5 +147,5 @@ export default async function DocsPage({ params }: PageProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

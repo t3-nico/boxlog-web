@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { ChevronDown, Monitor, Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import * as React from 'react'
+} from '@/components/ui/dropdown-menu';
+import { ChevronDown, Monitor, Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import * as React from 'react';
 
 const themeOptions = [
   { value: 'light', label: 'Light', icon: Sun },
   { value: 'dark', label: 'Dark', icon: Moon },
   { value: 'system', label: 'System', icon: Monitor },
-] as const
+] as const;
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
-  const currentTheme = themeOptions.find((t) => t.value === theme) || themeOptions[2]
-  const CurrentIcon = currentTheme.icon
+  const currentTheme = themeOptions.find((t) => t.value === theme) || themeOptions[2];
+  const CurrentIcon = currentTheme.icon;
 
   if (!mounted) {
     return (
@@ -34,7 +34,7 @@ export function ThemeToggle() {
         <Sun className="size-4" />
         <ChevronDown className="size-3" />
       </Button>
-    )
+    );
   }
 
   return (
@@ -60,5 +60,5 @@ export function ThemeToggle() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

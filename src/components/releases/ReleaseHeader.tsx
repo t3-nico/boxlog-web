@@ -1,60 +1,66 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { ShareButton } from './ShareButton'
+import Image from 'next/image';
+import Link from 'next/link';
+import { ShareButton } from './ShareButton';
 
 // Local type definitions and utilities
 interface ReleaseFrontMatter {
-  version: string
-  date: string
-  title: string
-  description: string
-  tags: string[]
-  breaking: boolean
-  featured: boolean
-  prerelease?: boolean
-  author?: string
-  authorAvatar?: string
-  coverImage?: string
+  version: string;
+  date: string;
+  title: string;
+  description: string;
+  tags: string[];
+  breaking: boolean;
+  featured: boolean;
+  prerelease?: boolean;
+  author?: string;
+  authorAvatar?: string;
+  coverImage?: string;
 }
 
 function isPrerelease(version: string): boolean {
-  return version.includes('beta') || version.includes('alpha') || version.includes('rc') || version.includes('pre')
+  return (
+    version.includes('beta') ||
+    version.includes('alpha') ||
+    version.includes('rc') ||
+    version.includes('pre')
+  );
 }
 
 function getVersionType(version: string): 'major' | 'minor' | 'patch' | 'prerelease' {
   if (isPrerelease(version)) {
-    return 'prerelease'
+    return 'prerelease';
   }
 
-  const cleanVersion = version.replace(/^v/, '')
-  const parts = cleanVersion.split('.').map(Number)
+  const cleanVersion = version.replace(/^v/, '');
+  const parts = cleanVersion.split('.').map(Number);
 
-  if ((parts[2] ?? 0) > 0) return 'patch'
-  if ((parts[1] ?? 0) > 0) return 'minor'
-  return 'major'
+  if ((parts[2] ?? 0) > 0) return 'patch';
+  if ((parts[1] ?? 0) > 0) return 'minor';
+  return 'major';
 }
 
 interface ReleaseHeaderProps {
-  frontMatter: ReleaseFrontMatter
-  version: string
+  frontMatter: ReleaseFrontMatter;
+  version: string;
 }
 
 export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
-  const versionType = getVersionType(frontMatter.version)
+  const versionType = getVersionType(frontMatter.version);
 
   const versionBadgeStyles = {
     major: 'bg-release-breaking-bg text-release-breaking-text border-release-breaking-border',
-    minor: 'bg-release-improvement-bg text-release-improvement-text border-release-improvement-border',
+    minor:
+      'bg-release-improvement-bg text-release-improvement-text border-release-improvement-border',
     patch: 'bg-release-new-bg text-release-new-text border-release-new-border',
     prerelease: 'bg-release-bugfix-bg text-release-bugfix-text border-release-bugfix-border',
-  }
+  };
 
   const versionLabels = {
     major: 'Major Release',
     minor: 'Minor Release',
     patch: 'Patch Release',
     prerelease: 'Prerelease',
-  }
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -62,15 +68,15 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
       month: 'long',
       day: 'numeric',
       weekday: 'long',
-    })
-  }
+    });
+  };
 
   const formatTime = (dateString: string) => {
     return new Date(dateString).toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
-    })
-  }
+    });
+  };
 
   return (
     <header className="relative overflow-hidden">
@@ -142,16 +148,25 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
         </div>
 
         {/* Title and Description */}
-        <h1 className="text-foreground mb-6 text-4xl leading-tight font-bold md:text-5xl">{frontMatter.title}</h1>
+        <h1 className="text-foreground mb-6 text-4xl leading-tight font-bold md:text-5xl">
+          {frontMatter.title}
+        </h1>
 
-        <p className="text-muted-foreground mb-8 max-w-3xl text-xl leading-relaxed">{frontMatter.description}</p>
+        <p className="text-muted-foreground mb-8 max-w-3xl text-xl leading-relaxed">
+          {frontMatter.description}
+        </p>
 
         {/* Meta Information */}
         <div className="text-muted-foreground flex flex-wrap items-center gap-6">
           {/* Release Date */}
           <div className="flex items-center gap-2">
             <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
-              <svg className="text-info h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="text-info h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -181,7 +196,12 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <svg className="text-muted-foreground h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="text-muted-foreground h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -201,7 +221,12 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
           {/* Version Statistics */}
           <div className="flex items-center gap-2">
             <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
-              <svg className="text-success h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="text-success h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -245,7 +270,12 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
           {versionType === 'major' && (
             <span className="bg-release-bugfix-bg text-release-bugfix-text border-release-bugfix-border inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium">
               <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
               </svg>
               Major Update
             </span>
@@ -277,7 +307,12 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
             className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium transition-colors"
           >
             <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -293,7 +328,12 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
             className="border-border text-foreground hover:bg-muted inline-flex items-center justify-center rounded-lg border px-6 py-3 font-medium transition-colors"
           >
             <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
             Back to Releases
           </Link>
@@ -302,5 +342,5 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
         </div>
       </div>
     </header>
-  )
+  );
 }

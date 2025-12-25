@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import { ArrowLeft } from 'lucide-react'
-import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 interface ErrorLayoutProps {
-  code?: string
-  title: string
-  description: string
-  showBackButton?: boolean
-  backToHomeLabel?: string
-  contactLabel?: string
-  docsLabel?: string
-  children?: React.ReactNode
+  code?: string;
+  title: string;
+  description: string;
+  showBackButton?: boolean;
+  backToHomeLabel?: string;
+  contactLabel?: string;
+  docsLabel?: string;
+  children?: React.ReactNode;
 }
 
 export function ErrorLayout({
@@ -38,7 +38,9 @@ export function ErrorLayout({
       <main className="mx-auto w-full max-w-7xl px-6 py-24 sm:py-32 lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:px-8">
         <div className="max-w-lg">
           {code && <p className="text-muted-foreground text-base font-semibold">{code}</p>}
-          <h1 className="text-foreground mt-4 text-5xl font-semibold tracking-tight sm:text-6xl">{title}</h1>
+          <h1 className="text-foreground mt-4 text-5xl font-semibold tracking-tight sm:text-6xl">
+            {title}
+          </h1>
           <p className="text-muted-foreground mt-6 text-lg font-medium sm:text-xl">{description}</p>
 
           {children}
@@ -80,5 +82,5 @@ export function ErrorLayout({
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10" />
       </div>
     </div>
-  )
+  );
 }

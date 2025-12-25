@@ -1,31 +1,31 @@
 // Client-side tag utilities (without fs module)
 
-import { getTagColorKey, type TagColorKey } from './tag-colors'
+import { getTagColorKey, type TagColorKey } from './tag-colors';
 
 export interface TagCount {
-  tag: string
-  count: number
+  tag: string;
+  count: number;
 }
 
 export interface TaggedContent {
-  type: 'blog' | 'release' | 'doc'
-  slug: string
-  title: string
-  description: string
-  date: string
-  tags: string[]
-  category?: string
-  featured?: boolean
-  version?: string // For releases
-  breaking?: boolean // For releases
+  type: 'blog' | 'release' | 'doc';
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  tags: string[];
+  category?: string;
+  featured?: boolean;
+  version?: string; // For releases
+  breaking?: boolean; // For releases
 }
 
 export interface UnifiedTagData {
-  tag: string
-  totalCount: number
-  blog: TaggedContent[]
-  releases: TaggedContent[]
-  docs: TaggedContent[]
+  tag: string;
+  totalCount: number;
+  blog: TaggedContent[];
+  releases: TaggedContent[];
+  docs: TaggedContent[];
 }
 
 /**
@@ -35,8 +35,8 @@ export interface UnifiedTagData {
  * @see ./tag-colors.ts - カテゴリとカラーの定義
  */
 export function getTagColor(tag: string): string {
-  const colorKey = getTagColorKey(tag)
-  return TAG_COLOR_CLASSES[colorKey]
+  const colorKey = getTagColorKey(tag);
+  return TAG_COLOR_CLASSES[colorKey];
 }
 
 /**
@@ -54,7 +54,7 @@ const TAG_COLOR_CLASSES: Record<TagColorKey, string> = {
   orange: 'bg-orange-500/10 text-orange-600 hover:bg-orange-500/20 dark:text-orange-400',
   gray: 'bg-neutral-500/10 text-neutral-600 hover:bg-neutral-500/20 dark:text-neutral-400',
   indigo: 'bg-indigo-500/10 text-indigo-600 hover:bg-indigo-500/20 dark:text-indigo-400',
-}
+};
 
 /**
  * フィルター用: 選択状態のタグカラー（濃い背景 + 白テキスト）
@@ -70,7 +70,7 @@ const TAG_COLOR_CLASSES_SELECTED: Record<TagColorKey, string> = {
   orange: 'bg-orange-500 text-white hover:bg-orange-600 border-orange-500',
   gray: 'bg-neutral-500 text-white hover:bg-neutral-600 border-neutral-500',
   indigo: 'bg-indigo-500 text-white hover:bg-indigo-600 border-indigo-500',
-}
+};
 
 /**
  * フィルター用: 非選択状態のタグカラー（ボーダー + カラーテキスト）
@@ -91,12 +91,12 @@ const TAG_COLOR_CLASSES_OUTLINE: Record<TagColorKey, string> = {
   gray: 'border-neutral-300 text-neutral-600 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-950',
   indigo:
     'border-indigo-300 text-indigo-600 hover:bg-indigo-50 dark:border-indigo-700 dark:text-indigo-400 dark:hover:bg-indigo-950',
-}
+};
 
 /**
  * フィルター用: タグ名から選択状態に応じたクラス名を取得
  */
 export function getTagFilterColor(tag: string, isSelected: boolean): string {
-  const colorKey = getTagColorKey(tag)
-  return isSelected ? TAG_COLOR_CLASSES_SELECTED[colorKey] : TAG_COLOR_CLASSES_OUTLINE[colorKey]
+  const colorKey = getTagColorKey(tag);
+  return isSelected ? TAG_COLOR_CLASSES_SELECTED[colorKey] : TAG_COLOR_CLASSES_OUTLINE[colorKey];
 }

@@ -1,8 +1,8 @@
-import { Skeleton } from '@/components/ui/skeleton'
-import { cn } from '@/lib/utils'
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 interface BlogSkeletonProps {
-  className?: string
+  className?: string;
 }
 
 export function BlogSkeleton({ className }: BlogSkeletonProps) {
@@ -12,7 +12,7 @@ export function BlogSkeleton({ className }: BlogSkeletonProps) {
         <BlogCardSkeleton key={i} />
       ))}
     </div>
-  )
+  );
 }
 
 export function BlogCardSkeleton() {
@@ -49,7 +49,7 @@ export function BlogCardSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export function BlogGridSkeleton() {
@@ -59,7 +59,7 @@ export function BlogGridSkeleton() {
         <BlogVerticalCardSkeleton key={i} />
       ))}
     </div>
-  )
+  );
 }
 
 export function BlogVerticalCardSkeleton() {
@@ -93,7 +93,7 @@ export function BlogVerticalCardSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export function FiltersSkeleton() {
@@ -131,5 +131,5 @@ export function FiltersSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }

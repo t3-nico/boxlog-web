@@ -5,24 +5,24 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
-import { generateBreadcrumbs } from '@/lib/mdx'
-import Link from 'next/link'
-import { Fragment } from 'react'
+} from '@/components/ui/breadcrumb';
+import { generateBreadcrumbs } from '@/lib/mdx';
+import Link from 'next/link';
+import { Fragment } from 'react';
 
 interface BreadcrumbsProps {
-  slug: string
-  title?: string
+  slug: string;
+  title?: string;
 }
 
 export function Breadcrumbs({ slug, title }: BreadcrumbsProps) {
-  const breadcrumbs = generateBreadcrumbs(slug)
+  const breadcrumbs = generateBreadcrumbs(slug);
 
   return (
     <Breadcrumb className="mb-6">
       <BreadcrumbList>
         {breadcrumbs.map((crumb, index) => {
-          const isLast = index === breadcrumbs.length - 1
+          const isLast = index === breadcrumbs.length - 1;
           return (
             <Fragment key={`${crumb.href}-${index}`}>
               <BreadcrumbItem>
@@ -38,9 +38,9 @@ export function Breadcrumbs({ slug, title }: BreadcrumbsProps) {
               </BreadcrumbItem>
               {!isLast && <BreadcrumbSeparator />}
             </Fragment>
-          )
+          );
         })}
       </BreadcrumbList>
     </Breadcrumb>
-  )
+  );
 }

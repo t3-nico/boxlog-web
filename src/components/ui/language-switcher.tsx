@@ -1,49 +1,49 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { usePathname, useRouter } from '@/i18n/navigation'
-import { routing, type Locale } from '@/i18n/routing'
-import { ChevronDown, Globe } from 'lucide-react'
-import { useLocale } from 'next-intl'
-import * as React from 'react'
+} from '@/components/ui/dropdown-menu';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { routing, type Locale } from '@/i18n/routing';
+import { ChevronDown, Globe } from 'lucide-react';
+import { useLocale } from 'next-intl';
+import * as React from 'react';
 
 const localeLabels: Record<Locale, string> = {
   en: 'EN',
   ja: 'JA',
-}
+};
 
 const localeNames: Record<Locale, string> = {
   en: 'English',
   ja: '日本語',
-}
+};
 
 interface LanguageSwitcherProps {
   /** 表示形式: 'short' = EN/JA, 'full' = English/日本語 */
-  variant?: 'short' | 'full'
-  className?: string
+  variant?: 'short' | 'full';
+  className?: string;
 }
 
 export function LanguageSwitcher({ variant = 'short', className }: LanguageSwitcherProps) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const locale = useLocale() as Locale
-  const [mounted, setMounted] = React.useState(false)
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale() as Locale;
+  const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   const handleLocaleChange = (newLocale: Locale) => {
-    router.replace(pathname, { locale: newLocale })
-  }
+    router.replace(pathname, { locale: newLocale });
+  };
 
-  const currentLabel = variant === 'full' ? localeNames[locale] : localeLabels[locale]
+  const currentLabel = variant === 'full' ? localeNames[locale] : localeLabels[locale];
 
   if (!mounted) {
     return (
@@ -52,7 +52,7 @@ export function LanguageSwitcher({ variant = 'short', className }: LanguageSwitc
         <span>{currentLabel}</span>
         <ChevronDown className="size-3" />
       </Button>
-    )
+    );
   }
 
   return (
@@ -66,11 +66,15 @@ export function LanguageSwitcher({ variant = 'short', className }: LanguageSwitc
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {routing.locales.map((loc) => (
-          <DropdownMenuCheckboxItem key={loc} checked={locale === loc} onCheckedChange={() => handleLocaleChange(loc)}>
+          <DropdownMenuCheckboxItem
+            key={loc}
+            checked={locale === loc}
+            onCheckedChange={() => handleLocaleChange(loc)}
+          >
             {localeNames[loc]}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

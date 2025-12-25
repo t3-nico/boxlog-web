@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Highlight } from '@/lib/highlight'
-import { getTagColor } from '@/lib/tags-client'
-import { Clock, Edit, FileText, Package, Search, Tag, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Highlight } from '@/lib/highlight';
+import { getTagColor } from '@/lib/tags-client';
+import { Clock, Edit, FileText, Package, Search, Tag, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 interface SearchDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  locale: string
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  locale: string;
 }
 
 // Mock data (in actual implementation, fetch from external source)
-const RECENT_SEARCHES = ['API Authentication', 'Release v2.1.0', 'Next.js Guide']
+const RECENT_SEARCHES = ['API Authentication', 'Release v2.1.0', 'Next.js Guide'];
 
 const getQuickLinks = (locale: string) => [
   {
@@ -45,52 +45,52 @@ const getQuickLinks = (locale: string) => [
     href: `/${locale}/blog/saas-strategy-2024`,
     type: 'blog',
   },
-]
+];
 
 interface PopularTag {
-  name: string
-  count: number
+  name: string;
+  count: number;
 }
 
 export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) {
-  const t = useTranslations('search')
-  const [query, setQuery] = useState('')
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const t = useTranslations('search');
+  const [query, setQuery] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState(0);
   interface PreviewResult {
-    url: string
-    type: string
-    title: string
-    description: string
-    breadcrumbs?: string[]
-    category?: string
+    url: string;
+    type: string;
+    title: string;
+    description: string;
+    breadcrumbs?: string[];
+    category?: string;
   }
-  const [popularTags, setPopularTags] = useState<PopularTag[]>([])
-  const [previewResults, setPreviewResults] = useState<PreviewResult[]>([])
-  const router = useRouter()
-  const inputRef = useRef<HTMLInputElement>(null)
-  const QUICK_LINKS = getQuickLinks(locale)
+  const [popularTags, setPopularTags] = useState<PopularTag[]>([]);
+  const [previewResults, setPreviewResults] = useState<PreviewResult[]>([]);
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const QUICK_LINKS = getQuickLinks(locale);
 
   // 人気タグを取得
   useEffect(() => {
     const fetchPopularTags = async () => {
       try {
-        const response = await fetch('/api/tags')
+        const response = await fetch('/api/tags');
         if (!response.ok) {
-          throw new Error('Failed to fetch tags')
+          throw new Error('Failed to fetch tags');
         }
-        const allTags = await response.json()
+        const allTags = await response.json();
         const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }) => ({
           name: tag.tag,
           count: tag.count,
-        }))
-        setPopularTags(topTags)
+        }));
+        setPopularTags(topTags);
       } catch (error) {
-        console.error('Failed to fetch tags:', error)
+        console.error('Failed to fetch tags:', error);
       }
-    }
+    };
 
-    fetchPopularTags()
-  }, [])
+    fetchPopularTags();
+  }, []);
 
   // 検索プレビューを取得
   useEffect(() => {
@@ -99,81 +99,81 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
         fetch(`/api/search?q=${encodeURIComponent(query)}`)
           .then((response) => response.json())
           .then((data) => {
-            setPreviewResults((data.results || []).slice(0, 3))
+            setPreviewResults((data.results || []).slice(0, 3));
           })
           .catch((error) => {
-            console.error('Failed to fetch search results:', error)
-            setPreviewResults([])
-          })
-      }, 300) // 300ms debounce
+            console.error('Failed to fetch search results:', error);
+            setPreviewResults([]);
+          });
+      }, 300); // 300ms debounce
 
-      return () => clearTimeout(timeoutId)
+      return () => clearTimeout(timeoutId);
     }
-    setPreviewResults([])
-    return
-  }, [query])
+    setPreviewResults([]);
+    return;
+  }, [query]);
 
   useEffect(() => {
     if (open) {
       setTimeout(() => {
-        inputRef.current?.focus()
-      }, 100)
+        inputRef.current?.focus();
+      }, 100);
     } else {
-      setQuery('')
-      setSelectedIndex(0)
+      setQuery('');
+      setSelectedIndex(0);
     }
-  }, [open])
+  }, [open]);
 
   const handleSearch = (searchQuery: string) => {
-    if (!searchQuery.trim()) return
+    if (!searchQuery.trim()) return;
 
-    onOpenChange(false)
-    router.push(`/${locale}/search?q=${encodeURIComponent(searchQuery)}`)
-  }
+    onOpenChange(false);
+    router.push(`/${locale}/search?q=${encodeURIComponent(searchQuery)}`);
+  };
 
   const handleTagClick = (tagName: string) => {
-    onOpenChange(false)
-    router.push(`/${locale}/tags/${encodeURIComponent(tagName.toLowerCase())}`)
-  }
+    onOpenChange(false);
+    router.push(`/${locale}/tags/${encodeURIComponent(tagName.toLowerCase())}`);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
-      onOpenChange(false)
-      return
+      onOpenChange(false);
+      return;
     }
 
     if (e.key === 'Enter') {
       if (query.trim()) {
-        handleSearch(query)
+        handleSearch(query);
       } else if (QUICK_LINKS[selectedIndex]) {
-        onOpenChange(false)
-        router.push(QUICK_LINKS[selectedIndex].href)
+        onOpenChange(false);
+        router.push(QUICK_LINKS[selectedIndex].href);
       }
     }
 
     if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      setSelectedIndex((prev) => Math.min(prev + 1, QUICK_LINKS.length - 1))
+      e.preventDefault();
+      setSelectedIndex((prev) => Math.min(prev + 1, QUICK_LINKS.length - 1));
     }
 
     if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      setSelectedIndex((prev) => Math.max(prev - 1, 0))
+      e.preventDefault();
+      setSelectedIndex((prev) => Math.max(prev - 1, 0));
     }
-  }
+  };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'docs':
-        return <FileText className="text-info h-4 w-4" />
+        return <FileText className="text-info h-4 w-4" />;
       case 'blog':
-        return <Edit className="text-success h-4 w-4" />
+        return <Edit className="text-success h-4 w-4" />;
       case 'release':
-        return <Package className="text-primary h-4 w-4" />
+        return <Package className="text-primary h-4 w-4" />;
       default:
-        return <FileText className="text-muted-foreground h-4 w-4" />
+        return <FileText className="text-muted-foreground h-4 w-4" />;
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -189,7 +189,12 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
             onKeyDown={handleKeyDown}
             className="text-foreground placeholder:text-muted-foreground flex-1 border-0 bg-transparent text-base shadow-none focus:outline-none focus-visible:ring-0"
           />
-          <Button onClick={() => onOpenChange(false)} variant="ghost" size="icon" className="h-5 w-5 flex-shrink-0">
+          <Button
+            onClick={() => onOpenChange(false)}
+            variant="ghost"
+            size="icon"
+            className="h-5 w-5 flex-shrink-0"
+          >
             <X className="h-4 w-4" />
           </Button>
         </div>
@@ -252,8 +257,8 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                     <Button
                       key={index}
                       onClick={() => {
-                        onOpenChange(false)
-                        router.push(link.href)
+                        onOpenChange(false);
+                        router.push(link.href);
                       }}
                       variant="ghost"
                       className={`flex h-auto w-full items-start justify-start gap-4 p-4 ${
@@ -262,12 +267,20 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                     >
                       <div className="mt-0.5">{getTypeIcon(link.type)}</div>
                       <div className="min-w-0 flex-1">
-                        <div className="text-foreground truncate text-sm font-medium">{link.title}</div>
-                        <div className="text-muted-foreground mt-0.5 text-xs">{link.description}</div>
+                        <div className="text-foreground truncate text-sm font-medium">
+                          {link.title}
+                        </div>
+                        <div className="text-muted-foreground mt-0.5 text-xs">
+                          {link.description}
+                        </div>
                       </div>
                       <div className="flex items-center gap-1">
                         <Badge variant="outline" className="px-2 py-1 text-xs">
-                          {link.type === 'docs' ? t('docs') : link.type === 'blog' ? t('blog') : t('release')}
+                          {link.type === 'docs'
+                            ? t('docs')
+                            : link.type === 'blog'
+                              ? t('blog')
+                              : t('release')}
                         </Badge>
                       </div>
                     </Button>
@@ -313,8 +326,8 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                       <Button
                         key={index}
                         onClick={() => {
-                          onOpenChange(false)
-                          router.push(result.url)
+                          onOpenChange(false);
+                          router.push(result.url);
                         }}
                         variant="ghost"
                         className="border-border flex h-auto w-full items-start justify-start gap-4 border p-4"
@@ -361,7 +374,9 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
               {/* タグ検索候補 */}
               {(() => {
-                const matchedTags = popularTags.filter((tag) => tag.name.toLowerCase().includes(query.toLowerCase()))
+                const matchedTags = popularTags.filter((tag) =>
+                  tag.name.toLowerCase().includes(query.toLowerCase()),
+                );
 
                 if (matchedTags.length > 0) {
                   return (
@@ -399,9 +414,9 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         ))}
                       </div>
                     </div>
-                  )
+                  );
                 }
-                return null
+                return null;
               })()}
             </div>
           )}
@@ -435,5 +450,5 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

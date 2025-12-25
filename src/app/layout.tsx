@@ -1,10 +1,10 @@
-import { generateEnhancedMetadata, StructuredData } from '@/components/seo/EnhancedSEO'
-import { Toaster } from '@/components/ui/sonner'
-import { ThemeProvider } from '@/lib/theme-provider'
-import { cn } from '@/lib/utils'
-import type { Metadata } from 'next'
-import { Inter, Noto_Sans_JP } from 'next/font/google'
-import './globals.css'
+import { generateEnhancedMetadata, StructuredData } from '@/components/seo/EnhancedSEO';
+import { Toaster } from '@/components/ui/sonner';
+import { ThemeProvider } from '@/lib/theme-provider';
+import { cn } from '@/lib/utils';
+import type { Metadata } from 'next';
+import { Inter, Noto_Sans_JP } from 'next/font/google';
+import './globals.css';
 
 // next/font による最適化されたフォント読み込み（Variable Font: optical size軸有効）
 // preload: true でLCP改善（デフォルトでtrueだが明示的に指定）
@@ -15,7 +15,7 @@ const inter = Inter({
   axes: ['opsz'],
   preload: true,
   fallback: ['system-ui', 'sans-serif'],
-})
+});
 
 // 日本語フォント（GAFA方針準拠: Google = Noto Sans JP）
 const notoSansJP = Noto_Sans_JP({
@@ -25,7 +25,7 @@ const notoSansJP = Noto_Sans_JP({
   variable: '--font-noto-jp',
   preload: true,
   fallback: ['Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'sans-serif'],
-})
+});
 
 export const metadata: Metadata = generateEnhancedMetadata({
   title: 'BoxLog - Modern SaaS Platform',
@@ -42,7 +42,7 @@ export const metadata: Metadata = generateEnhancedMetadata({
     'Performance optimization',
   ],
   type: 'website',
-})
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -77,5 +77,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

@@ -1,30 +1,41 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
-import type { PillSwitcherOption } from '@/components/ui/pill-switcher'
-import { PillSwitcher } from '@/components/ui/pill-switcher'
-import { Heading, Text } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { getTagColor } from '@/lib/tags-client'
-import type { TaggedContent } from '@/lib/tags-server'
-import { ArrowLeft, BookOpen, FileText, Grid3X3, Hash, List, Megaphone, Search, TrendingUp, X } from 'lucide-react'
-import { useState } from 'react'
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import type { PillSwitcherOption } from '@/components/ui/pill-switcher';
+import { PillSwitcher } from '@/components/ui/pill-switcher';
+import { Heading, Text } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { getTagColor } from '@/lib/tags-client';
+import type { TaggedContent } from '@/lib/tags-server';
+import {
+  ArrowLeft,
+  BookOpen,
+  FileText,
+  Grid3X3,
+  Hash,
+  List,
+  Megaphone,
+  Search,
+  TrendingUp,
+  X,
+} from 'lucide-react';
+import { useState } from 'react';
 
 // 統一コンテンツアイテム（TaggedContentにhrefを追加）
 interface UnifiedContentItem extends TaggedContent {
-  href: string
+  href: string;
 }
 
 // アイコンを取得
 function getContentIcon(type: TaggedContent['type']) {
   switch (type) {
     case 'blog':
-      return <FileText className="h-5 w-5" />
+      return <FileText className="h-5 w-5" />;
     case 'release':
-      return <Megaphone className="h-5 w-5" />
+      return <Megaphone className="h-5 w-5" />;
     case 'doc':
-      return <BookOpen className="h-5 w-5" />
+      return <BookOpen className="h-5 w-5" />;
   }
 }
 
@@ -32,24 +43,24 @@ function getContentIcon(type: TaggedContent['type']) {
 function getTypeLabel(type: TaggedContent['type'], isJa: boolean) {
   switch (type) {
     case 'blog':
-      return isJa ? 'ブログ' : 'Blog'
+      return isJa ? 'ブログ' : 'Blog';
     case 'release':
-      return isJa ? 'リリース' : 'Release'
+      return isJa ? 'リリース' : 'Release';
     case 'doc':
-      return isJa ? 'ドキュメント' : 'Docs'
+      return isJa ? 'ドキュメント' : 'Docs';
   }
 }
 
-type CategoryFilter = 'all' | 'blog' | 'releases' | 'docs'
-type ViewMode = 'list' | 'grid'
+type CategoryFilter = 'all' | 'blog' | 'releases' | 'docs';
+type ViewMode = 'list' | 'grid';
 
 interface TagDetailClientProps {
-  tag: string
-  blogContent: TaggedContent[]
-  releaseContent: TaggedContent[]
-  docsContent: TaggedContent[]
-  popularTags: { tag: string; count: number }[]
-  locale: string
+  tag: string;
+  blogContent: TaggedContent[];
+  releaseContent: TaggedContent[];
+  docsContent: TaggedContent[];
+  popularTags: { tag: string; count: number }[];
+  locale: string;
 }
 
 export function TagDetailClient({
@@ -60,73 +71,78 @@ export function TagDetailClient({
   popularTags,
   locale,
 }: TagDetailClientProps) {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
-  const [viewMode, setViewMode] = useState<ViewMode>('list')
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
 
-  const isJa = locale === 'ja'
-  const totalCount = blogContent.length + releaseContent.length + docsContent.length
+  const isJa = locale === 'ja';
+  const totalCount = blogContent.length + releaseContent.length + docsContent.length;
 
   // フィルタリング
   const filterContent = <T extends TaggedContent>(items: T[]) => {
-    if (!searchQuery) return items
-    const query = searchQuery.toLowerCase()
+    if (!searchQuery) return items;
+    const query = searchQuery.toLowerCase();
     return items.filter(
-      (item) => item.title.toLowerCase().includes(query) || item.description.toLowerCase().includes(query)
-    )
-  }
+      (item) =>
+        item.title.toLowerCase().includes(query) || item.description.toLowerCase().includes(query),
+    );
+  };
 
-  const filteredBlog = filterContent(blogContent)
-  const filteredReleases = filterContent(releaseContent)
-  const filteredDocs = filterContent(docsContent)
+  const filteredBlog = filterContent(blogContent);
+  const filteredReleases = filterContent(releaseContent);
+  const filteredDocs = filterContent(docsContent);
 
   // カテゴリオプションを動的に生成（コンテンツがあるもののみ）
-  const categoryOptions: PillSwitcherOption<CategoryFilter>[] = [{ value: 'all', label: isJa ? 'すべて' : 'All' }]
+  const categoryOptions: PillSwitcherOption<CategoryFilter>[] = [
+    { value: 'all', label: isJa ? 'すべて' : 'All' },
+  ];
   if (blogContent.length > 0) {
     categoryOptions.push({
       value: 'blog',
       label: isJa ? `ブログ (${filteredBlog.length})` : `Blog (${filteredBlog.length})`,
       icon: <FileText className="h-3 w-3" />,
-    })
+    });
   }
   if (releaseContent.length > 0) {
     categoryOptions.push({
       value: 'releases',
-      label: isJa ? `リリース (${filteredReleases.length})` : `Releases (${filteredReleases.length})`,
+      label: isJa
+        ? `リリース (${filteredReleases.length})`
+        : `Releases (${filteredReleases.length})`,
       icon: <Megaphone className="h-3 w-3" />,
-    })
+    });
   }
   if (docsContent.length > 0) {
     categoryOptions.push({
       value: 'docs',
       label: isJa ? `ドキュメント (${filteredDocs.length})` : `Docs (${filteredDocs.length})`,
       icon: <BookOpen className="h-3 w-3" />,
-    })
+    });
   }
 
   // 統一コンテンツリストを作成
-  const unifiedContent: UnifiedContentItem[] = []
+  const unifiedContent: UnifiedContentItem[] = [];
 
   if (categoryFilter === 'all' || categoryFilter === 'blog') {
     filteredBlog.forEach((item) => {
-      unifiedContent.push({ ...item, href: `/blog/${item.slug}` })
-    })
+      unifiedContent.push({ ...item, href: `/blog/${item.slug}` });
+    });
   }
   if (categoryFilter === 'all' || categoryFilter === 'releases') {
     filteredReleases.forEach((item) => {
-      unifiedContent.push({ ...item, href: `/releases/${item.slug}` })
-    })
+      unifiedContent.push({ ...item, href: `/releases/${item.slug}` });
+    });
   }
   if (categoryFilter === 'all' || categoryFilter === 'docs') {
     filteredDocs.forEach((item) => {
-      unifiedContent.push({ ...item, href: `/docs/${item.slug}` })
-    })
+      unifiedContent.push({ ...item, href: `/docs/${item.slug}` });
+    });
   }
 
   // 日付でソート（新しい順）
-  unifiedContent.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  unifiedContent.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  const hasContent = unifiedContent.length > 0
+  const hasContent = unifiedContent.length > 0;
 
   return (
     <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
@@ -136,7 +152,9 @@ export function TagDetailClient({
           {/* タグ情報 */}
           <div className="border-border bg-card rounded-xl border p-6">
             <div className="mb-4 flex items-center gap-3">
-              <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}>
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}
+              >
                 <Hash className="h-5 w-5" />
               </div>
               <div>
@@ -159,7 +177,9 @@ export function TagDetailClient({
           <div className="border-border bg-card rounded-xl border p-6">
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp className="text-muted-foreground h-4 w-4" />
-              <h3 className="text-foreground text-sm font-semibold">{isJa ? '人気のタグ' : 'Popular Tags'}</h3>
+              <h3 className="text-foreground text-sm font-semibold">
+                {isJa ? '人気のタグ' : 'Popular Tags'}
+              </h3>
             </div>
             <div className="flex flex-wrap gap-2">
               {popularTags.map((t) => (
@@ -167,7 +187,9 @@ export function TagDetailClient({
                   key={t.tag}
                   href={`/tags/${encodeURIComponent(t.tag)}`}
                   className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors ${
-                    t.tag.toLowerCase() === tag.toLowerCase() ? 'bg-foreground text-background' : getTagColor(t.tag)
+                    t.tag.toLowerCase() === tag.toLowerCase()
+                      ? 'bg-foreground text-background'
+                      : getTagColor(t.tag)
                   }`}
                 >
                   #{t.tag}
@@ -182,7 +204,11 @@ export function TagDetailClient({
       <div className="lg:col-span-3">
         {/* カテゴリスイッチャー */}
         <div className="mb-4">
-          <PillSwitcher options={categoryOptions} value={categoryFilter} onValueChange={setCategoryFilter} />
+          <PillSwitcher
+            options={categoryOptions}
+            value={categoryFilter}
+            onValueChange={setCategoryFilter}
+          />
         </div>
 
         {/* 検索 + ビュー切り替え */}
@@ -210,8 +236,16 @@ export function TagDetailClient({
 
           <PillSwitcher
             options={[
-              { value: 'list', label: isJa ? 'リスト' : 'List', icon: <List className="h-4 w-4" /> },
-              { value: 'grid', label: isJa ? 'グリッド' : 'Grid', icon: <Grid3X3 className="h-4 w-4" /> },
+              {
+                value: 'list',
+                label: isJa ? 'リスト' : 'List',
+                icon: <List className="h-4 w-4" />,
+              },
+              {
+                value: 'grid',
+                label: isJa ? 'グリッド' : 'Grid',
+                icon: <Grid3X3 className="h-4 w-4" />,
+              },
             ]}
             value={viewMode}
             onValueChange={setViewMode}
@@ -233,7 +267,9 @@ export function TagDetailClient({
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="mb-1 flex items-center gap-2">
-                      <span className="text-muted-foreground text-xs">{getTypeLabel(item.type, isJa)}</span>
+                      <span className="text-muted-foreground text-xs">
+                        {getTypeLabel(item.type, isJa)}
+                      </span>
                       <span className="text-muted-foreground text-xs">·</span>
                       <span className="text-muted-foreground text-xs">
                         {new Date(item.date).toLocaleDateString(isJa ? 'ja-JP' : 'en-US', {
@@ -255,7 +291,9 @@ export function TagDetailClient({
                           </span>
                         ))}
                         {item.tags.length > 3 && (
-                          <span className="text-muted-foreground text-xs">+{item.tags.length - 3}</span>
+                          <span className="text-muted-foreground text-xs">
+                            +{item.tags.length - 3}
+                          </span>
                         )}
                       </div>
                     )}
@@ -273,7 +311,9 @@ export function TagDetailClient({
                         <div className="bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center rounded-md">
                           {getContentIcon(item.type)}
                         </div>
-                        <span className="text-muted-foreground text-xs">{getTypeLabel(item.type, isJa)}</span>
+                        <span className="text-muted-foreground text-xs">
+                          {getTypeLabel(item.type, isJa)}
+                        </span>
                       </div>
                       <CardTitle className="line-clamp-2 text-base">{item.title}</CardTitle>
                       {item.tags.length > 0 && (
@@ -287,7 +327,9 @@ export function TagDetailClient({
                             </span>
                           ))}
                           {item.tags.length > 3 && (
-                            <span className="text-muted-foreground text-xs">+{item.tags.length - 3}</span>
+                            <span className="text-muted-foreground text-xs">
+                              +{item.tags.length - 3}
+                            </span>
                           )}
                         </div>
                       )}
@@ -309,7 +351,7 @@ export function TagDetailClient({
         )}
       </div>
     </div>
-  )
+  );
 }
 
 function EmptyState({ isJa, onClear }: { isJa: boolean; onClear: () => void }) {
@@ -331,5 +373,5 @@ function EmptyState({ isJa, onClear }: { isJa: boolean; onClear: () => void }) {
         {isJa ? '検索をクリア' : 'Clear search'}
       </button>
     </div>
-  )
+  );
 }

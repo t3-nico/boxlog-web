@@ -1,22 +1,22 @@
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/ui/container'
-import { Link } from '@/i18n/navigation'
-import { routing } from '@/i18n/routing'
-import { generateSEOMetadata } from '@/lib/metadata'
-import type { Metadata } from 'next'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/ui/container';
+import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
+import { generateSEOMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface PageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'marketing' });
 
   return generateSEOMetadata({
     title: t('hero.title'),
@@ -28,15 +28,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? ['SaaS', 'プラットフォーム', 'ビジネス', '生産性', '自動化', 'Next.js', 'TypeScript']
         : ['SaaS', 'platform', 'business', 'productivity', 'automation', 'Next.js', 'TypeScript'],
     type: 'website',
-  })
+  });
 }
 
 export default async function Home({ params }: PageProps) {
-  const { locale } = await params
-  setRequestLocale(locale)
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: 'marketing' })
-  const tCommon = await getTranslations({ locale, namespace: 'common' })
+  const t = await getTranslations({ locale, namespace: 'marketing' });
+  const tCommon = await getTranslations({ locale, namespace: 'common' });
 
   return (
     <div className="bg-background">
@@ -75,5 +75,5 @@ export default async function Home({ params }: PageProps) {
         </section>
       </div>
     </div>
-  )
+  );
 }

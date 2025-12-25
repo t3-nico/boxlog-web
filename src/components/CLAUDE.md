@@ -470,13 +470,13 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 #### Toast (Sonner)
 
 ```typescript
-import { toast } from 'sonner'
+import { toast } from 'sonner';
 
 // Client Componentで使用
-toast.success('Success message')
-toast.error('Error message')
-toast.info('Info message')
-toast.warning('Warning message')
+toast.success('Success message');
+toast.error('Error message');
+toast.info('Info message');
+toast.warning('Warning message');
 ```
 
 ---

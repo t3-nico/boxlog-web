@@ -1,9 +1,9 @@
-import { ClientSidebar } from '@/components/docs/ClientSidebar'
-import { DocsHeader } from '@/components/docs/DocsHeader'
-import { generateDocsNavigation } from '@/lib/navigation'
+import { ClientSidebar } from '@/components/docs/ClientSidebar';
+import { DocsHeader } from '@/components/docs/DocsHeader';
+import { generateDocsNavigation } from '@/lib/navigation';
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
-  const navigation = generateDocsNavigation()
+  const navigation = generateDocsNavigation();
 
   return (
     <div className="bg-background flex h-screen flex-col overflow-hidden">
@@ -25,5 +25,5 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         </main>
       </div>
     </div>
-  )
+  );
 }

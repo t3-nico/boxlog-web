@@ -1,28 +1,32 @@
-import type { Locale } from '@/i18n/routing'
-import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
-import { CookieSettingsForm } from './cookie-settings-form'
+import type { Locale } from '@/i18n/routing';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { CookieSettingsForm } from './cookie-settings-form';
 
 /**
  * メタデータ生成（SEO対策・i18n対応）
  */
-export async function generateMetadata({ params }: { params: Promise<{ locale?: Locale }> }): Promise<Metadata> {
-  const { locale = 'ja' } = await params
-  const t = await getTranslations({ locale })
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale?: Locale }>;
+}): Promise<Metadata> {
+  const { locale = 'ja' } = await params;
+  const t = await getTranslations({ locale });
 
   return {
     title: `${t('legal.cookies.page.title')} - BoxLog`,
     description: t('legal.cookies.page.description'),
-  }
+  };
 }
 
 interface PageProps {
-  params: Promise<{ locale?: Locale }>
+  params: Promise<{ locale?: Locale }>;
 }
 
 export default async function CookieSettingsPage({ params }: PageProps) {
-  const { locale = 'ja' } = await params
-  const t = await getTranslations({ locale })
+  const { locale = 'ja' } = await params;
+  const t = await getTranslations({ locale });
 
   return (
     <div className="bg-background container mx-auto min-h-screen max-w-4xl px-4 py-12 md:px-8 md:py-16">
@@ -34,14 +38,20 @@ export default async function CookieSettingsPage({ params }: PageProps) {
 
       {/* Cookie概要 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">{t('legal.cookies.page.whatAreCookies.title')}</h2>
-        <p className="text-foreground leading-relaxed">{t('legal.cookies.page.whatAreCookies.content')}</p>
+        <h2 className="mb-4 text-2xl font-semibold">
+          {t('legal.cookies.page.whatAreCookies.title')}
+        </h2>
+        <p className="text-foreground leading-relaxed">
+          {t('legal.cookies.page.whatAreCookies.content')}
+        </p>
       </section>
 
       {/* Cookieの使用目的 */}
       <section className="mb-8">
         <h2 className="mb-4 text-2xl font-semibold">{t('legal.cookies.page.howWeUse.title')}</h2>
-        <p className="text-foreground mb-4 leading-relaxed">{t('legal.cookies.page.howWeUse.content')}</p>
+        <p className="text-foreground mb-4 leading-relaxed">
+          {t('legal.cookies.page.howWeUse.content')}
+        </p>
         <ul className="text-foreground list-inside list-disc space-y-2 pl-4">
           <li>{t('legal.cookies.page.howWeUse.purposes.authentication')}</li>
           <li>{t('legal.cookies.page.howWeUse.purposes.preferences')}</li>
@@ -59,8 +69,12 @@ export default async function CookieSettingsPage({ params }: PageProps) {
 
       {/* Cookie管理方法 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">{t('legal.cookies.page.manageCookies.title')}</h2>
-        <p className="text-foreground leading-relaxed">{t('legal.cookies.page.manageCookies.content')}</p>
+        <h2 className="mb-4 text-2xl font-semibold">
+          {t('legal.cookies.page.manageCookies.title')}
+        </h2>
+        <p className="text-foreground leading-relaxed">
+          {t('legal.cookies.page.manageCookies.content')}
+        </p>
       </section>
 
       {/* 注意事項 */}
@@ -71,5 +85,5 @@ export default async function CookieSettingsPage({ params }: PageProps) {
         />
       </div>
     </div>
-  )
+  );
 }

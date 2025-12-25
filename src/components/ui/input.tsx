@@ -1,7 +1,7 @@
-import { cva, type VariantProps } from 'class-variance-authority'
-import * as React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 /**
  * インプットバリアント定義（boxlog-appと同期）
@@ -43,15 +43,26 @@ const inputVariants = cva(
     defaultVariants: {
       size: 'default',
     },
-  }
-)
+  },
+);
 
-export interface InputProps extends Omit<React.ComponentProps<'input'>, 'size'>, VariantProps<typeof inputVariants> {}
+export interface InputProps
+  extends Omit<React.ComponentProps<'input'>, 'size'>, VariantProps<typeof inputVariants> {}
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, size, ...props }, ref) => {
-  return <input type={type} data-slot="input" className={cn(inputVariants({ size }), className)} ref={ref} {...props} />
-})
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, size, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        data-slot="input"
+        className={cn(inputVariants({ size }), className)}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
 
-Input.displayName = 'Input'
+Input.displayName = 'Input';
 
-export { Input, inputVariants }
+export { Input, inputVariants };

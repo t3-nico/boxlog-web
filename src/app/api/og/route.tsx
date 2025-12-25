@@ -1,18 +1,19 @@
-import { ImageResponse } from 'next/og'
-import { NextRequest } from 'next/server'
+import { ImageResponse } from 'next/og';
+import { NextRequest } from 'next/server';
 
-export const runtime = 'edge'
+export const runtime = 'edge';
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
+    const { searchParams } = new URL(request.url);
 
-    const title = searchParams.get('title') || 'YourSaaS'
-    const description = searchParams.get('description') || 'Modern SaaS Platform for Scalable Applications'
-    const type = searchParams.get('type') || 'default'
-    const category = searchParams.get('category')
-    const author = searchParams.get('author')
-    const date = searchParams.get('date')
+    const title = searchParams.get('title') || 'YourSaaS';
+    const description =
+      searchParams.get('description') || 'Modern SaaS Platform for Scalable Applications';
+    const type = searchParams.get('type') || 'default';
+    const category = searchParams.get('category');
+    const author = searchParams.get('author');
+    const date = searchParams.get('date');
 
     // Brand colors
     const brandColors = {
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
       textLight: '#6b7280', // gray-500
       background: '#ffffff',
       gradient: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
-    }
+    };
 
     // Type-specific configurations
     const typeConfig = {
@@ -47,9 +48,9 @@ export async function GET(request: NextRequest) {
         color: brandColors.primary,
         label: 'YourSaaS',
       },
-    }
+    };
 
-    const config = typeConfig[type as keyof typeof typeConfig] || typeConfig.default
+    const config = typeConfig[type as keyof typeof typeConfig] || typeConfig.default;
 
     return new ImageResponse(
       <div
@@ -244,9 +245,9 @@ export async function GET(request: NextRequest) {
       {
         width: 1200,
         height: 630,
-      }
-    )
+      },
+    );
   } catch {
-    return new Response('Failed to generate image', { status: 500 })
+    return new Response('Failed to generate image', { status: 500 });
   }
 }

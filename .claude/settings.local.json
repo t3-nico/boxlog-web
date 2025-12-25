@@ -263,7 +263,8 @@
       "Bash(npx vercel env add:*)",
       "Bash(npx vercel --prod)",
       "Bash(npx vercel:*)",
-      "Bash(npm run type-check:*)"
+      "Bash(npm run type-check:*)",
+      "Bash(npm run format:*)"
     ],
     "deny": [],
     "ask": []

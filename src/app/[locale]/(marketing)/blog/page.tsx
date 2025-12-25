@@ -1,22 +1,22 @@
-import { FilteredBlogClient } from '@/components/blog/FilteredBlogClient'
-import { Container } from '@/components/ui/container'
-import { routing } from '@/i18n/routing'
-import { getAllBlogPostMetas, getAllTagNames } from '@/lib/blog'
-import { generateSEOMetadata } from '@/lib/metadata'
-import type { Metadata } from 'next'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { FilteredBlogClient } from '@/components/blog/FilteredBlogClient';
+import { Container } from '@/components/ui/container';
+import { routing } from '@/i18n/routing';
+import { getAllBlogPostMetas, getAllTagNames } from '@/lib/blog';
+import { generateSEOMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface PageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'common' })
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'common' });
 
   return generateSEOMetadata({
     title: t('navigation.blog'),
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? ['ブログ', '記事', 'SaaS', '開発', '技術', 'Next.js', 'TypeScript']
         : ['blog', 'articles', 'SaaS', 'development', 'technology', 'Next.js', 'TypeScript'],
     type: 'website',
-  })
+  });
 }
 
 export default async function BlogPage({ params }: PageProps) {
-  const { locale } = await params
-  setRequestLocale(locale)
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-  const [allPosts, allTags] = await Promise.all([getAllBlogPostMetas(), getAllTagNames()])
+  const [allPosts, allTags] = await Promise.all([getAllBlogPostMetas(), getAllTagNames()]);
 
   return (
     <div className="bg-background min-h-screen">
@@ -47,5 +47,5 @@ export default async function BlogPage({ params }: PageProps) {
         </Container>
       </section>
     </div>
-  )
+  );
 }
