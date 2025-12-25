@@ -1,70 +1,70 @@
-import { Breadcrumbs } from '@/components/docs/Breadcrumbs'
-import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents'
-import { mdxComponents } from '@/components/docs/MDXComponents'
-import { PageNavigation } from '@/components/docs/PageNavigation'
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
-import { Heading, Text } from '@/components/ui/typography'
-import { getAllContent, getMDXContentForRSC, getRelatedContent } from '@/lib/mdx'
-import { getTagColor } from '@/lib/tags-client'
-import { ContentData } from '@/types/content'
-import { Tag } from 'lucide-react'
-import { Metadata } from 'next'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { Breadcrumbs } from '@/components/docs/Breadcrumbs';
+import { ClientTableOfContents } from '@/components/docs/ClientTableOfContents';
+import { mdxComponents } from '@/components/docs/MDXComponents';
+import { PageNavigation } from '@/components/docs/PageNavigation';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Heading, Text } from '@/components/ui/typography';
+import { getAllContent, getMDXContentForRSC, getRelatedContent } from '@/lib/mdx';
+import { getTagColor } from '@/lib/tags-client';
+import { ContentData } from '@/types/content';
+import { Tag } from 'lucide-react';
+import { Metadata } from 'next';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 interface PageParams {
-  locale: string
-  slug: string[]
+  locale: string;
+  slug: string[];
 }
 
 interface DocPageProps {
-  params: Promise<PageParams>
+  params: Promise<PageParams>;
 }
 
 // ISR: ドキュメント記事は1日ごとに再検証
-export const revalidate = 86400
+export const revalidate = 86400;
 
 // Generate static parameters (SEO optimization)
 export async function generateStaticParams(): Promise<PageParams[]> {
   try {
-    const allContent = await getAllContent()
-    const locales = ['en', 'ja']
+    const allContent = await getAllContent();
+    const locales = ['en', 'ja'];
 
-    const params: PageParams[] = []
+    const params: PageParams[] = [];
 
     for (const locale of locales) {
       for (const content of allContent) {
         params.push({
           locale,
           slug: content.slug.split('/'),
-        })
+        });
       }
     }
 
-    return params
+    return params;
   } catch {
-    return []
+    return [];
   }
 }
 
 // Generate metadata
 export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
   try {
-    const { slug } = await params
-    const category = slug[0]
-    const contentSlug = slug.slice(1).join('/')
+    const { slug } = await params;
+    const category = slug[0];
+    const contentSlug = slug.slice(1).join('/');
 
-    const content = await getMDXContentForRSC(`${category}/${contentSlug}`)
+    const content = await getMDXContentForRSC(`${category}/${contentSlug}`);
 
     if (!content) {
       return {
         title: 'Page Not Found - BoxLog Documentation',
         description: 'The requested documentation page could not be found.',
-      }
+      };
     }
 
-    const { frontMatter } = content
+    const { frontMatter } = content;
 
     return {
       title: `${frontMatter.title} - BoxLog Documentation`,
@@ -85,73 +85,73 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
         title: frontMatter.title,
         description: frontMatter.description,
       },
-    }
+    };
   } catch {
     return {
       title: 'Documentation - BoxLog',
       description: 'BoxLog documentation and guides',
-    }
+    };
   }
 }
 
 // Get adjacent pages
 async function getAdjacentPages(slug: string): Promise<{
-  previousPage?: ContentData
-  nextPage?: ContentData
+  previousPage?: ContentData;
+  nextPage?: ContentData;
 }> {
   try {
-    const allContent = await getAllContent()
-    const currentIndex = allContent.findIndex((content) => content.slug === slug)
+    const allContent = await getAllContent();
+    const currentIndex = allContent.findIndex((content) => content.slug === slug);
 
     if (currentIndex === -1) {
-      return {}
+      return {};
     }
 
     return {
       previousPage: currentIndex > 0 ? allContent[currentIndex - 1] : undefined,
       nextPage: currentIndex < allContent.length - 1 ? allContent[currentIndex + 1] : undefined,
-    }
+    };
   } catch {
-    return {}
+    return {};
   }
 }
 
 // Main page component
 export default async function DocPage({ params }: DocPageProps) {
   try {
-    const { slug: slugArray } = await params
-    const slug = slugArray.join('/')
-    const category = slugArray[0]
-    const contentSlug = slugArray.slice(1).join('/')
+    const { slug: slugArray } = await params;
+    const slug = slugArray.join('/');
+    const category = slugArray[0];
+    const contentSlug = slugArray.slice(1).join('/');
 
     // Get MDX content
-    let content
+    let content;
 
     // First try with complete slug
-    content = await getMDXContentForRSC(slug)
+    content = await getMDXContentForRSC(slug);
 
     // If not found, try other patterns
     if (!content && contentSlug) {
       // Category/file format
-      content = await getMDXContentForRSC(`${category}/${contentSlug}`)
+      content = await getMDXContentForRSC(`${category}/${contentSlug}`);
     }
 
     if (!content && !contentSlug && category) {
       // Single file format
-      content = await getMDXContentForRSC(category)
+      content = await getMDXContentForRSC(category);
     }
 
     if (!content) {
-      notFound()
+      notFound();
     }
 
-    const { content: mdxContent, frontMatter } = content
+    const { content: mdxContent, frontMatter } = content;
 
     // Get adjacent pages
-    const { previousPage, nextPage } = await getAdjacentPages(slug)
+    const { previousPage, nextPage } = await getAdjacentPages(slug);
 
     // Get related content
-    const relatedContent = await getRelatedContent(frontMatter.category, slug, 3)
+    const relatedContent = await getRelatedContent(frontMatter.category, slug, 3);
 
     return (
       <div className="flex">
@@ -198,11 +198,15 @@ export default async function DocPage({ params }: DocPageProps) {
                     <Link key={related.slug} href={`/docs/${related.slug}`} className="block">
                       <Card className="h-full gap-3 py-3 transition-colors hover:bg-[var(--state-hover)]">
                         <CardHeader className="gap-1.5 px-4 py-0">
-                          <CardTitle className="line-clamp-2 text-sm">{related.frontMatter.title}</CardTitle>
+                          <CardTitle className="line-clamp-2 text-sm">
+                            {related.frontMatter.title}
+                          </CardTitle>
                           <div className="flex items-center gap-2">
                             {related.frontMatter.updatedAt && (
                               <time className="text-muted-foreground text-xs">
-                                {new Date(related.frontMatter.updatedAt).toLocaleDateString('ja-JP')}
+                                {new Date(related.frontMatter.updatedAt).toLocaleDateString(
+                                  'ja-JP',
+                                )}
                               </time>
                             )}
                             {related.frontMatter.tags && related.frontMatter.tags.length > 0 && (
@@ -238,7 +242,7 @@ export default async function DocPage({ params }: DocPageProps) {
           </div>
         </aside>
       </div>
-    )
+    );
   } catch {
     // Error page
     return (
@@ -258,6 +262,6 @@ export default async function DocPage({ params }: DocPageProps) {
           </Link>
         </div>
       </div>
-    )
+    );
   }
 }

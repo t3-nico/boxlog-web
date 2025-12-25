@@ -1,28 +1,28 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { routing } from '@/i18n/routing'
-import { generateSEOMetadata } from '@/lib/metadata'
-import { BarChart3, Lock, Plug, Smartphone, Users, Zap } from 'lucide-react'
-import type { Metadata } from 'next'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Container } from '@/components/ui/container';
+import { Heading, Text } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
+import { generateSEOMetadata } from '@/lib/metadata';
+import { BarChart3, Lock, Plug, Smartphone, Users, Zap } from 'lucide-react';
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface PageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 // ISR: マーケティングページは1時間ごとに再検証
-export const revalidate = 3600
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'marketing' });
 
   return generateSEOMetadata({
     title: t('features.title'),
@@ -31,7 +31,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale: locale,
     keywords:
       locale === 'ja'
-        ? ['機能', 'API統合', 'リアルタイム分析', 'セキュリティ', 'ワークフロー自動化', 'チームコラボレーション']
+        ? [
+            '機能',
+            'API統合',
+            'リアルタイム分析',
+            'セキュリティ',
+            'ワークフロー自動化',
+            'チームコラボレーション',
+          ]
         : [
             'features',
             'API integration',
@@ -41,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             'team collaboration',
           ],
     type: 'website',
-  })
+  });
 }
 
 const featureIcons = {
@@ -51,7 +58,7 @@ const featureIcons = {
   workflowAutomation: Zap,
   teamCollaboration: Users,
   mobileOptimized: Smartphone,
-}
+};
 
 const featureKeys = [
   'apiIntegration',
@@ -60,13 +67,13 @@ const featureKeys = [
   'workflowAutomation',
   'teamCollaboration',
   'mobileOptimized',
-] as const
+] as const;
 
 export default async function FeaturesPage({ params }: PageProps) {
-  const { locale } = await params
-  setRequestLocale(locale)
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const t = await getTranslations({ locale, namespace: 'marketing' });
 
   return (
     <div className="bg-background min-h-screen">
@@ -109,9 +116,12 @@ export default async function FeaturesPage({ params }: PageProps) {
 
           <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3">
             {featureKeys.map((key) => {
-              const Icon = featureIcons[key]
+              const Icon = featureIcons[key];
               return (
-                <Card key={key} className="border-border/50 bg-background transition-shadow hover:shadow-lg">
+                <Card
+                  key={key}
+                  className="border-border/50 bg-background transition-shadow hover:shadow-lg"
+                >
                   <CardHeader>
                     <div className="bg-primary/10 mb-4 inline-flex size-12 items-center justify-center rounded-lg">
                       <Icon className="text-primary size-6" />
@@ -124,7 +134,7 @@ export default async function FeaturesPage({ params }: PageProps) {
                     </CardDescription>
                   </CardContent>
                 </Card>
-              )
+              );
             })}
           </div>
         </Container>
@@ -162,5 +172,5 @@ export default async function FeaturesPage({ params }: PageProps) {
         </Container>
       </section>
     </div>
-  )
+  );
 }

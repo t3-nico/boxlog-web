@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { ImageIcon } from 'lucide-react'
-import Image from 'next/image'
-import { useState } from 'react'
+import { ImageIcon } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 interface BlogImageProps {
-  src: string | undefined
-  alt: string
-  priority?: boolean
-  aspectRatio?: 'default' | 'square'
-  sizes?: string
+  src: string | undefined;
+  alt: string;
+  priority?: boolean;
+  aspectRatio?: 'default' | 'square';
+  sizes?: string;
 }
 
 /**
@@ -23,9 +23,9 @@ export function BlogImage({
   aspectRatio = 'default',
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
 }: BlogImageProps) {
-  const [imageError, setImageError] = useState(false)
+  const [imageError, setImageError] = useState(false);
 
-  const aspectClass = aspectRatio === 'square' ? 'aspect-square' : 'aspect-[380/214]'
+  const aspectClass = aspectRatio === 'square' ? 'aspect-square' : 'aspect-[380/214]';
 
   if (!src || imageError) {
     return (
@@ -34,11 +34,13 @@ export function BlogImage({
       >
         <ImageIcon className="text-muted-foreground h-8 w-8" />
       </div>
-    )
+    );
   }
 
   return (
-    <div className={`relative ${aspectClass} overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40`}>
+    <div
+      className={`relative ${aspectClass} overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40`}
+    >
       <Image
         src={src}
         alt={alt}
@@ -49,5 +51,5 @@ export function BlogImage({
         sizes={sizes}
       />
     </div>
-  )
+  );
 }

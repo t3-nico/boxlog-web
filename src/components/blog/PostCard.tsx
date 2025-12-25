@@ -1,27 +1,32 @@
-import { Heading } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { BlogPostMeta } from '@/lib/blog'
-import { getTagColor } from '@/lib/tags-client'
-import { BlogImage } from './BlogImage'
+import { Heading } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { BlogPostMeta } from '@/lib/blog';
+import { getTagColor } from '@/lib/tags-client';
+import { BlogImage } from './BlogImage';
 
 interface PostCardProps {
-  post: BlogPostMeta
-  priority?: boolean
-  layout?: 'horizontal' | 'vertical' | 'list'
-  locale?: string
+  post: BlogPostMeta;
+  priority?: boolean;
+  layout?: 'horizontal' | 'vertical' | 'list';
+  locale?: string;
 }
 
-export function PostCard({ post, priority = false, layout = 'horizontal', locale = 'en' }: PostCardProps) {
+export function PostCard({
+  post,
+  priority = false,
+  layout = 'horizontal',
+  locale = 'en',
+}: PostCardProps) {
   const formatDate = (dateString: string) => {
-    const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US'
+    const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US';
     return new Date(dateString).toLocaleDateString(localeCode, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-    })
-  }
+    });
+  };
 
-  const formattedDate = formatDate(post.frontMatter.publishedAt)
+  const formattedDate = formatDate(post.frontMatter.publishedAt);
 
   // List layout (Claude blog style): date, category, title in a clean row
   if (layout === 'list') {
@@ -44,7 +49,9 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
               </span>
             ))}
             {post.frontMatter.tags.length > 3 && (
-              <span className="text-muted-foreground text-xs">+{post.frontMatter.tags.length - 3}</span>
+              <span className="text-muted-foreground text-xs">
+                +{post.frontMatter.tags.length - 3}
+              </span>
             )}
           </div>
 
@@ -62,7 +69,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
           </div>
         </div>
       </article>
-    )
+    );
   }
 
   if (layout === 'vertical') {
@@ -83,7 +90,11 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
         <div className="p-6">
           {/* Title */}
           <Link href={`/blog/${post.slug}`}>
-            <Heading as="h2" size="xl" className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline">
+            <Heading
+              as="h2"
+              size="xl"
+              className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline"
+            >
               {post.frontMatter.title}
             </Heading>
           </Link>
@@ -106,7 +117,7 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
           </div>
         </div>
       </article>
-    )
+    );
   }
 
   // Horizontal layout (for regular articles): image on left, content on right
@@ -128,7 +139,11 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
           <div className="my-1">
             {/* Title */}
             <Link href={`/blog/${post.slug}`}>
-              <Heading as="h2" size="lg" className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline">
+              <Heading
+                as="h2"
+                size="lg"
+                className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline"
+              >
                 {post.frontMatter.title}
               </Heading>
             </Link>
@@ -153,5 +168,5 @@ export function PostCard({ post, priority = false, layout = 'horizontal', locale
         </div>
       </div>
     </article>
-  )
+  );
 }

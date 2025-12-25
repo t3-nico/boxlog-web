@@ -1,51 +1,52 @@
-'use client'
+'use client';
 
-import { BlogFilters, type BlogFilterState } from '@/components/blog/BlogFilters'
-import { BlogPagination } from '@/components/blog/BlogPagination'
-import { BlogSkeleton } from '@/components/blog/BlogSkeleton'
-import { PostCard } from '@/components/blog/PostCard'
-import { Button } from '@/components/ui/button'
-import { PillSwitcher } from '@/components/ui/pill-switcher'
-import { Heading, Text } from '@/components/ui/typography'
-import type { BlogPostMeta } from '@/lib/blog'
-import { Grid3X3, List, Search, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { BlogFilters, type BlogFilterState } from '@/components/blog/BlogFilters';
+import { BlogPagination } from '@/components/blog/BlogPagination';
+import { BlogSkeleton } from '@/components/blog/BlogSkeleton';
+import { PostCard } from '@/components/blog/PostCard';
+import { Button } from '@/components/ui/button';
+import { PillSwitcher } from '@/components/ui/pill-switcher';
+import { Heading, Text } from '@/components/ui/typography';
+import type { BlogPostMeta } from '@/lib/blog';
+import { Grid3X3, List, Search, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-type ViewMode = 'list' | 'grid'
+type ViewMode = 'list' | 'grid';
 
-const POSTS_PER_PAGE = 12
+const POSTS_PER_PAGE = 12;
 
 interface FilteredBlogClientProps {
-  initialPosts: BlogPostMeta[]
-  tags: string[]
-  locale: string
+  initialPosts: BlogPostMeta[];
+  tags: string[];
+  locale: string;
 }
 
 export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogClientProps) {
-  const t = useTranslations('blog')
-  const searchParams = useSearchParams()
-  const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState<BlogPostMeta[]>(initialPosts)
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [viewMode, setViewMode] = useState<ViewMode>('list')
+  const t = useTranslations('blog');
+  const searchParams = useSearchParams();
+  const [filteredAndSortedPosts, setFilteredAndSortedPosts] =
+    useState<BlogPostMeta[]>(initialPosts);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [filters, setFilters] = useState<BlogFilterState>({
     selectedTags: [],
     searchQuery: '',
     sortBy: 'date',
     sortOrder: 'desc',
     tagOperator: 'OR',
-  })
+  });
 
-  const currentPage = Number(searchParams?.get('page')) || 1
+  const currentPage = Number(searchParams?.get('page')) || 1;
 
   // URLパラメータから初期状態を復元
   useEffect(() => {
-    const tagsParam = searchParams?.get('tags')
-    const searchParam = searchParams?.get('search')
-    const sortParam = searchParams?.get('sort')
-    const orderParam = searchParams?.get('order')
-    const operatorParam = searchParams?.get('operator')
+    const tagsParam = searchParams?.get('tags');
+    const searchParam = searchParams?.get('search');
+    const sortParam = searchParams?.get('sort');
+    const orderParam = searchParams?.get('order');
+    const operatorParam = searchParams?.get('operator');
 
     const initialFilters: BlogFilterState = {
       selectedTags: tagsParam ? tagsParam.split(',') : [],
@@ -53,30 +54,34 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
       sortBy: (sortParam as BlogFilterState['sortBy']) || 'date',
       sortOrder: (orderParam as BlogFilterState['sortOrder']) || 'desc',
       tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR',
-    }
+    };
 
-    setFilters(initialFilters)
-  }, [searchParams])
+    setFilters(initialFilters);
+  }, [searchParams]);
 
   // フィルタリングとソート処理
   useEffect(() => {
     const processPosts = () => {
-      setIsProcessing(true)
+      setIsProcessing(true);
       try {
-        let filtered = [...initialPosts]
+        let filtered = [...initialPosts];
 
         // 検索クエリによるフィルタリング（クライアント側実装）
         if (filters.searchQuery) {
-          const searchTerm = filters.searchQuery.toLowerCase()
+          const searchTerm = filters.searchQuery.toLowerCase();
           filtered = filtered.filter((post) => {
-            const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm)
-            const descriptionMatch = post.frontMatter.description?.toLowerCase().includes(searchTerm)
-            const tagMatch = post.frontMatter.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
-            const categoryMatch = post.frontMatter.category.toLowerCase().includes(searchTerm)
-            const excerptMatch = post.excerpt.toLowerCase().includes(searchTerm)
+            const titleMatch = post.frontMatter.title.toLowerCase().includes(searchTerm);
+            const descriptionMatch = post.frontMatter.description
+              ?.toLowerCase()
+              .includes(searchTerm);
+            const tagMatch = post.frontMatter.tags.some((tag) =>
+              tag.toLowerCase().includes(searchTerm),
+            );
+            const categoryMatch = post.frontMatter.category.toLowerCase().includes(searchTerm);
+            const excerptMatch = post.excerpt.toLowerCase().includes(searchTerm);
 
-            return titleMatch || descriptionMatch || tagMatch || categoryMatch || excerptMatch
-          })
+            return titleMatch || descriptionMatch || tagMatch || categoryMatch || excerptMatch;
+          });
         }
 
         // タグによるフィルタリング
@@ -84,60 +89,62 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
           if (filters.tagOperator === 'AND') {
             // すべてのタグが含まれる記事のみ
             filtered = filtered.filter((post) =>
-              filters.selectedTags.every((tag) => post.frontMatter.tags?.includes(tag))
-            )
+              filters.selectedTags.every((tag) => post.frontMatter.tags?.includes(tag)),
+            );
           } else {
             // いずれかのタグが含まれる記事
             filtered = filtered.filter((post) =>
-              filters.selectedTags.some((tag) => post.frontMatter.tags?.includes(tag))
-            )
+              filters.selectedTags.some((tag) => post.frontMatter.tags?.includes(tag)),
+            );
           }
         }
 
         // ソート処理
         filtered.sort((a, b) => {
-          let comparison = 0
+          let comparison = 0;
 
           switch (filters.sortBy) {
             case 'date':
-              comparison = new Date(a.frontMatter.publishedAt).getTime() - new Date(b.frontMatter.publishedAt).getTime()
-              break
+              comparison =
+                new Date(a.frontMatter.publishedAt).getTime() -
+                new Date(b.frontMatter.publishedAt).getTime();
+              break;
             case 'popularity':
               // タグ数でポピュラリティを判定（タグが多い = より多くのトピックに関連）
-              comparison = (a.frontMatter.tags?.length || 0) - (b.frontMatter.tags?.length || 0)
-              break
+              comparison = (a.frontMatter.tags?.length || 0) - (b.frontMatter.tags?.length || 0);
+              break;
             case 'category':
-              comparison = a.frontMatter.category.localeCompare(b.frontMatter.category)
-              break
+              comparison = a.frontMatter.category.localeCompare(b.frontMatter.category);
+              break;
           }
 
-          return filters.sortOrder === 'asc' ? comparison : -comparison
-        })
+          return filters.sortOrder === 'asc' ? comparison : -comparison;
+        });
 
-        setFilteredAndSortedPosts(filtered)
+        setFilteredAndSortedPosts(filtered);
       } catch {
         // 処理失敗時は空配列のまま
       } finally {
-        setIsProcessing(false)
+        setIsProcessing(false);
       }
-    }
+    };
 
-    processPosts()
-  }, [initialPosts, filters])
+    processPosts();
+  }, [initialPosts, filters]);
 
   // ページネーション
-  const totalPosts = filteredAndSortedPosts.length
-  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE)
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
-  const currentPosts = filteredAndSortedPosts.slice(startIndex, startIndex + POSTS_PER_PAGE)
+  const totalPosts = filteredAndSortedPosts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const currentPosts = filteredAndSortedPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   const handleFiltersChange = (newFilters: BlogFilterState) => {
-    setFilters(newFilters)
-  }
+    setFilters(newFilters);
+  };
 
   const handleSearchChange = (query: string) => {
-    setFilters((prev) => ({ ...prev, searchQuery: query }))
-  }
+    setFilters((prev) => ({ ...prev, searchQuery: query }));
+  };
 
   return (
     <>
@@ -229,7 +236,12 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
           ) : (
             <div className="py-16 text-center">
               <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
-                <svg className="text-muted-foreground h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="text-muted-foreground h-12 w-12"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -263,5 +275,5 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
         </div>
       </div>
     </>
-  )
+  );
 }
