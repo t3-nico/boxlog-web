@@ -2,7 +2,12 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Loading() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div
+      className="flex min-h-screen items-center justify-center"
+      role="status"
+      aria-busy="true"
+      aria-label="Loading page content"
+    >
       <div className="w-full max-w-md space-y-8 px-4">
         {/* スピナー */}
         <div className="flex justify-center">

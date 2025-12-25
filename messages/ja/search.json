@@ -18,6 +18,25 @@
     "toSelect": "選択",
     "toNavigate": "ナビゲート",
     "toClose": "閉じる",
-    "poweredBy": "BoxLog Search による検索"
+    "close": "検索を閉じる",
+    "poweredBy": "BoxLog Search による検索",
+    "quickLinks": {
+      "quickStart": {
+        "title": "クイックスタート",
+        "description": "BoxLogを5分で始める"
+      },
+      "apiReference": {
+        "title": "APIリファレンス",
+        "description": "認証とAPIの使い方"
+      },
+      "latestRelease": {
+        "title": "最新リリース",
+        "description": "v2.1.0の新機能"
+      },
+      "saasStrategy": {
+        "title": "SaaS戦略",
+        "description": "2024年のビジネス戦略"
+      }
+    }
   }
 }

@@ -13,6 +13,12 @@ const nextConfig = {
 
   // セキュリティヘッダー設定
   async headers() {
+    // 開発環境では unsafe-eval が必要（Hot Reload用）
+    const isDev = process.env.NODE_ENV === 'development'
+    const scriptSrc = isDev
+      ? "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com"
+      : "script-src 'self' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com"
+
     return [
       {
         source: '/(.*)',
@@ -27,7 +33,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com",
+              scriptSrc,
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data:",
