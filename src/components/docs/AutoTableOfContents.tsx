@@ -1,6 +1,7 @@
 'use client'
 
 import { TocItem, generateTableOfContents, truncateHeading } from '@/lib/toc'
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 interface AutoTableOfContentsProps {
@@ -41,6 +42,7 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
 }
 
 export function AutoTableOfContents({ content, className = '' }: AutoTableOfContentsProps) {
+  const t = useTranslations('docs.toc')
   const [toc, setToc] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>('')
   const [isLoaded, setIsLoaded] = useState(false)
@@ -143,11 +145,11 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
   if (!isLoaded || toc.length === 0) {
     return (
       <div className={`space-y-4 ${className}`}>
-        <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">On This Page</div>
+        <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{t('onThisPage')}</div>
         {!isLoaded ? (
-          <div className="text-muted-foreground text-sm">Loading...</div>
+          <div className="text-muted-foreground text-sm">{t('loading')}</div>
         ) : (
-          <div className="text-muted-foreground text-sm">No headings found</div>
+          <div className="text-muted-foreground text-sm">{t('noHeadings')}</div>
         )}
       </div>
     )
@@ -155,7 +157,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
   return (
     <div className={`space-y-4 ${className}`}>
-      <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">On This Page</div>
+      <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">{t('onThisPage')}</div>
 
       <nav className="space-y-1">
         <TocList items={toc} activeId={activeId} onItemClick={handleItemClick} />
@@ -163,7 +165,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
       {/* Links */}
       <div className="border-border border-t pt-4">
-        <div className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">Links</div>
+        <div className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">{t('links')}</div>
         <ul className="space-y-2">
           <li>
             <a
@@ -172,7 +174,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
-              Report an issue
+              {t('reportIssue')}
             </a>
           </li>
           <li>
@@ -182,7 +184,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
-              View source
+              {t('viewSource')}
             </a>
           </li>
         </ul>

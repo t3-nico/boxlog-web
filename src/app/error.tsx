@@ -30,10 +30,10 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
       {/* Error details for development */}
       {process.env.NODE_ENV === 'development' && (
         <details className="mt-8">
-          <summary className="cursor-pointer text-sm text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300">
+          <summary className="text-muted-foreground hover:text-foreground cursor-pointer text-sm">
             Error details (dev only)
           </summary>
-          <pre className="mt-2 overflow-auto rounded bg-neutral-100 p-4 text-xs text-red-600 dark:bg-neutral-800 dark:text-red-400">
+          <pre className="bg-muted text-destructive mt-2 overflow-auto rounded p-4 text-xs">
             {error.message}
             {error.stack && (
               <>

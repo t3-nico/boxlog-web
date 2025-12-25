@@ -63,7 +63,12 @@ const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentP
 )
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator'
 
-const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
+interface BreadcrumbEllipsisProps extends React.ComponentProps<'span'> {
+  /** Screen reader label */
+  srLabel?: string
+}
+
+const BreadcrumbEllipsis = ({ className, srLabel = 'More', ...props }: BreadcrumbEllipsisProps) => (
   <span
     role="presentation"
     aria-hidden="true"
@@ -71,10 +76,10 @@ const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<'span'
     {...props}
   >
     <MoreHorizontal className="h-4 w-4" />
-    <span className="sr-only">More</span>
+    <span className="sr-only">{srLabel}</span>
   </span>
 )
-BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis'
+BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis'
 
 export {
   Breadcrumb,

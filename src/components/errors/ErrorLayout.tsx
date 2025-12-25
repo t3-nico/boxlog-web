@@ -1,3 +1,5 @@
+'use client'
+
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
@@ -6,10 +8,22 @@ interface ErrorLayoutProps {
   title: string
   description: string
   showBackButton?: boolean
+  backToHomeLabel?: string
+  contactLabel?: string
+  docsLabel?: string
   children?: React.ReactNode
 }
 
-export function ErrorLayout({ code, title, description, showBackButton = true, children }: ErrorLayoutProps) {
+export function ErrorLayout({
+  code,
+  title,
+  description,
+  showBackButton = true,
+  backToHomeLabel = 'Back to home',
+  contactLabel = 'Contact support',
+  docsLabel = 'Documentation',
+  children,
+}: ErrorLayoutProps) {
   return (
     <div className="bg-background grid min-h-screen grid-cols-1 grid-rows-[1fr_auto_1fr] lg:grid-cols-[max(50%,36rem)_1fr]">
       {/* Header */}
@@ -36,7 +50,7 @@ export function ErrorLayout({ code, title, description, showBackButton = true, c
                 className="text-foreground hover:text-muted-foreground inline-flex items-center gap-2 text-sm font-semibold"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to home
+                {backToHomeLabel}
               </Link>
             </div>
           )}
@@ -48,13 +62,13 @@ export function ErrorLayout({ code, title, description, showBackButton = true, c
         <div className="border-border bg-muted border-t py-10">
           <nav className="text-muted-foreground mx-auto flex w-full max-w-7xl items-center gap-x-4 px-6 text-sm lg:px-8">
             <Link href="/contact" className="hover:text-foreground">
-              Contact support
+              {contactLabel}
             </Link>
             <svg viewBox="0 0 2 2" aria-hidden="true" className="fill-border h-0.5 w-0.5">
               <circle r={1} cx={1} cy={1} />
             </svg>
             <Link href="/docs" className="hover:text-foreground">
-              Documentation
+              {docsLabel}
             </Link>
           </nav>
         </div>

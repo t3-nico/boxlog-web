@@ -204,5 +204,33 @@
       "description": "現在のフィルターに一致するリリースはありません。",
       "clearFilters": "フィルターをクリア"
     }
+  },
+  "docs": {
+    "toc": {
+      "onThisPage": "このページの内容",
+      "loading": "読み込み中...",
+      "noHeadings": "見出しが見つかりません",
+      "links": "リンク",
+      "reportIssue": "問題を報告",
+      "viewSource": "ソースを表示"
+    },
+    "sidebar": {
+      "searchPlaceholder": "ドキュメントを検索..."
+    }
+  },
+  "aria": {
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "close": "閉じる",
+    "previous": "前へ",
+    "next": "次へ",
+    "mainNavigation": "メインナビゲーション",
+    "docsNavigation": "ドキュメントナビゲーション",
+    "navigationMenu": "ナビゲーションメニュー",
+    "goToPreviousPage": "前のページへ",
+    "goToNextPage": "次のページへ",
+    "morePages": "その他のページ",
+    "pagination": "ページネーション",
+    "more": "その他"
   }
 }

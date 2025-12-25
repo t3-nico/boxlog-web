@@ -47,7 +47,10 @@ export function Header() {
         isScrolled && 'shadow-sm'
       )}
     >
-      <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6 lg:px-8" aria-label="Global">
+      <nav
+        className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6 lg:px-8"
+        aria-label={t('aria.mainNavigation')}
+      >
         {/* Logo */}
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
@@ -109,7 +112,7 @@ export function Header() {
             <Button variant="primary" size="default" asChild>
               <Link href="/signup">{t('actions.signup')}</Link>
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)} aria-label="Open main menu">
+            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)} aria-label={t('aria.openMenu')}>
               <Menu className="size-5" aria-hidden="true" />
             </Button>
           </div>
@@ -121,13 +124,13 @@ export function Header() {
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50 lg:hidden" />
           <DialogPrimitive.Content className="bg-background border-border data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right fixed inset-y-0 right-0 z-50 w-full overflow-y-auto border-l px-6 py-6 duration-300 sm:max-w-sm lg:hidden">
-            <DialogPrimitive.Title className="sr-only">Navigation menu</DialogPrimitive.Title>
+            <DialogPrimitive.Title className="sr-only">{t('aria.navigationMenu')}</DialogPrimitive.Title>
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
                 <span className="text-foreground text-lg font-bold">BoxLog</span>
               </Link>
               <DialogPrimitive.Close className="text-muted-foreground hover:bg-state-hover hover:text-foreground -m-2 rounded-md p-2 transition-colors">
-                <span className="sr-only">Close menu</span>
+                <span className="sr-only">{t('aria.closeMenu')}</span>
                 <X className="size-5" aria-hidden="true" />
               </DialogPrimitive.Close>
             </div>
