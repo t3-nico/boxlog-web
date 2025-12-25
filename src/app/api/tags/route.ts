@@ -1,11 +1,11 @@
+import { apiError, apiSuccess, ErrorCode } from '@/lib/api-response';
 import { getAllTags } from '@/lib/tags-server';
-import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
     const tags = await getAllTags();
-    return NextResponse.json(tags);
+    return apiSuccess(tags);
   } catch {
-    return NextResponse.json({ error: 'Failed to fetch tags' }, { status: 500 });
+    return apiError('Failed to fetch tags', 500, { code: ErrorCode.INTERNAL_ERROR });
   }
 }

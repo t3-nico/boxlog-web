@@ -1,12 +1,8 @@
-'use client';
-
 import { Heading } from '@/components/ui/typography';
 import { Link } from '@/i18n/navigation';
 import { BlogPostMeta } from '@/lib/blog';
 import { getTagColor } from '@/lib/tags-client';
-import { ImageIcon } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
+import { BlogImage } from './BlogImage';
 
 interface PostCardProps {
   post: BlogPostMeta;
@@ -21,8 +17,6 @@ export function PostCard({
   layout = 'horizontal',
   locale = 'en',
 }: PostCardProps) {
-  const [imageError, setImageError] = useState(false);
-
   const formatDate = (dateString: string) => {
     const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US';
     return new Date(dateString).toLocaleDateString(localeCode, {
@@ -84,23 +78,12 @@ export function PostCard({
       <article className="group bg-card overflow-hidden rounded-2xl">
         {/* Cover image */}
         <Link href={`/blog/${post.slug}`} className="block">
-          {post.frontMatter.coverImage && !imageError ? (
-            <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
-              <Image
-                src={post.frontMatter.coverImage}
-                alt={post.frontMatter.title}
-                fill
-                className="rounded-lg object-cover"
-                onError={() => setImageError(true)}
-                priority={priority}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
-          ) : (
-            <div className="bg-muted flex aspect-[380/214] items-center justify-center rounded-lg transition-all duration-300 hover:opacity-40">
-              <ImageIcon className="text-muted-foreground h-12 w-12" />
-            </div>
-          )}
+          <BlogImage
+            src={post.frontMatter.coverImage}
+            alt={post.frontMatter.title}
+            priority={priority}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </Link>
 
         {/* Content */}
@@ -143,23 +126,12 @@ export function PostCard({
       <div className="flex gap-6">
         {/* Left side: Cover image */}
         <Link href={`/blog/${post.slug}`} className="w-80 flex-shrink-0">
-          {post.frontMatter.coverImage && !imageError ? (
-            <div className="relative aspect-[380/214] overflow-hidden rounded-lg transition-all duration-300 hover:opacity-40">
-              <Image
-                src={post.frontMatter.coverImage}
-                alt={post.frontMatter.title}
-                fill
-                className="rounded-lg object-cover"
-                onError={() => setImageError(true)}
-                priority={priority}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-              />
-            </div>
-          ) : (
-            <div className="bg-muted flex aspect-[380/214] items-center justify-center rounded-lg transition-all duration-300 hover:opacity-40">
-              <ImageIcon className="text-muted-foreground h-8 w-8" />
-            </div>
-          )}
+          <BlogImage
+            src={post.frontMatter.coverImage}
+            alt={post.frontMatter.title}
+            priority={priority}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+          />
         </Link>
 
         {/* Right side: Content */}

@@ -139,10 +139,13 @@ export function MobileFilters({
 
             {/* ソート */}
             <div>
-              <label className="text-muted-foreground mb-3 block text-sm font-medium">
+              <span
+                id="mobile-sort-label"
+                className="text-muted-foreground mb-3 block text-sm font-medium"
+              >
                 {t('sortBy')}
-              </label>
-              <div className="space-y-2">
+              </span>
+              <div className="space-y-2" role="group" aria-labelledby="mobile-sort-label">
                 {[
                   { value: 'date', label: t('date'), icon: Calendar },
                   { value: 'popularity', label: t('popularity'), icon: TrendingUp },
@@ -181,9 +184,9 @@ export function MobileFilters({
             {/* タグフィルター */}
             <div>
               <div className="mb-3 flex items-center justify-between">
-                <label className="text-muted-foreground text-sm font-medium">
+                <span id="mobile-tags-label" className="text-muted-foreground text-sm font-medium">
                   {t('filterByTags')}
-                </label>
+                </span>
                 {localFilters.selectedTags.length > 1 && (
                   <Button onClick={toggleTagOperator} variant="outline" size="sm">
                     {localFilters.tagOperator}
@@ -191,7 +194,11 @@ export function MobileFilters({
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div
+                className="grid grid-cols-2 gap-2"
+                role="group"
+                aria-labelledby="mobile-tags-label"
+              >
                 {tags.map((tag) => {
                   const isSelected = localFilters.selectedTags.includes(tag);
                   return (

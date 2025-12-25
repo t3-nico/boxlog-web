@@ -18,6 +18,25 @@
     "toSelect": "to select",
     "toNavigate": "to navigate",
     "toClose": "to close",
-    "poweredBy": "Powered by BoxLog Search"
+    "close": "Close search",
+    "poweredBy": "Powered by BoxLog Search",
+    "quickLinks": {
+      "quickStart": {
+        "title": "Quick Start",
+        "description": "Get started with BoxLog in 5 minutes"
+      },
+      "apiReference": {
+        "title": "API Reference",
+        "description": "Authentication and API usage"
+      },
+      "latestRelease": {
+        "title": "Latest Release",
+        "description": "New features in v2.1.0"
+      },
+      "saasStrategy": {
+        "title": "SaaS Strategy",
+        "description": "Business strategy for 2024"
+      }
+    }
   }
 }

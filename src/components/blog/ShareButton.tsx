@@ -42,8 +42,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
     try {
       await navigator.clipboard.writeText(url);
       toast.success(t('urlCopied'));
-    } catch (err) {
-      console.error('Failed to copy URL:', err);
+    } catch {
       toast.error(t('urlCopyFailed'));
     }
   };

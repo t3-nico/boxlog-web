@@ -33,6 +33,9 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   };
 }
 
+// ISR: タグ詳細は1時間ごとに再検証
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   const allTags = await getAllTags();
 

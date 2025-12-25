@@ -2,6 +2,7 @@ import type { AIMetadata } from '@/types/content';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import { calculateReadingTime } from './utils';
 
 export interface ReleaseFrontMatter {
   version: string;
@@ -110,12 +111,9 @@ export function sortVersions(versions: string[]): string[] {
   });
 }
 
-// リリース日時の計算
+// リリース読了時間の計算（utils.tsの統一関数を使用）
 export function calculateReleaseTime(content: string): number {
-  const wordsPerMinute = 200;
-  const wordCount = content.split(/\s+/).length;
-  const minutes = Math.ceil(wordCount / wordsPerMinute);
-  return Math.max(1, minutes);
+  return calculateReadingTime(content);
 }
 
 // 全てのリリースノートメタデータを取得

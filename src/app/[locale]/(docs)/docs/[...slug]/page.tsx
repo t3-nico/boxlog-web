@@ -22,6 +22,9 @@ interface DocPageProps {
   params: Promise<PageParams>;
 }
 
+// ISR: ドキュメント記事は1日ごとに再検証
+export const revalidate = 86400;
+
 // Generate static parameters (SEO optimization)
 export async function generateStaticParams(): Promise<PageParams[]> {
   try {
@@ -56,7 +59,7 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
 
     if (!content) {
       return {
-        title: 'Page Not Found - YourSaaS Documentation',
+        title: 'Page Not Found - BoxLog Documentation',
         description: 'The requested documentation page could not be found.',
       };
     }
@@ -64,7 +67,7 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
     const { frontMatter } = content;
 
     return {
-      title: `${frontMatter.title} - YourSaaS Documentation`,
+      title: `${frontMatter.title} - BoxLog Documentation`,
       description: frontMatter.description,
       keywords: frontMatter.tags?.join(', '),
       authors: frontMatter.author ? [{ name: frontMatter.author }] : undefined,
@@ -85,8 +88,8 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
     };
   } catch {
     return {
-      title: 'Documentation - YourSaaS',
-      description: 'YourSaaS documentation and guides',
+      title: 'Documentation - BoxLog',
+      description: 'BoxLog documentation and guides',
     };
   }
 }

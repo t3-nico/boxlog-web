@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+// ISR: 法的ページは1日ごとに再検証
+export const revalidate = 86400;
+
 /**
  * OSSクレジット情報の型定義
  */

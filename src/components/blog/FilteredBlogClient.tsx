@@ -122,8 +122,8 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
         });
 
         setFilteredAndSortedPosts(filtered);
-      } catch (error) {
-        console.error('Failed to process posts:', error);
+      } catch {
+        // 処理失敗時は空配列のまま
       } finally {
         setIsProcessing(false);
       }

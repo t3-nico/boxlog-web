@@ -1,6 +1,7 @@
+import { apiError, apiSuccess, ErrorCode } from '@/lib/api-response';
 import { existsSync, readFileSync } from 'fs';
 import { glob } from 'glob';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { join } from 'path';
 
 export interface CompassDoc {
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
 
     // Compassディレクトリが存在するかチェック
     if (!existsSync(compassRoot)) {
-      return NextResponse.json({ error: 'Compass directory not found' }, { status: 404 });
+      return apiError('Compass directory not found', 404, { code: ErrorCode.NOT_FOUND });
     }
 
     const patterns = [
@@ -87,10 +88,9 @@ export async function GET(request: NextRequest) {
         });
     }
 
-    return NextResponse.json({ docs: filteredDocs });
-  } catch (error) {
-    console.error('Failed to load compass docs:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return apiSuccess({ docs: filteredDocs });
+  } catch {
+    return apiError('Internal server error', 500, { code: ErrorCode.INTERNAL_ERROR });
   }
 }
 

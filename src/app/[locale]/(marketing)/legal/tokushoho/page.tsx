@@ -2,6 +2,9 @@ import type { Locale } from '@/i18n/routing';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
+// ISR: 法的ページは1日ごとに再検証
+export const revalidate = 86400;
+
 /**
  * メタデータ生成（SEO対策・i18n対応）
  */

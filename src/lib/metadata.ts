@@ -32,14 +32,14 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'YourSaaS',
-  title: 'YourSaaS - Modern SaaS Platform for Scalable Applications',
+  name: 'BoxLog',
+  title: 'BoxLog - スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム',
   description:
-    'Build, deploy, and scale your SaaS applications with YourSaaS. Comprehensive tools for authentication, user management, billing, and more.',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yoursaas.com',
+    'BoxLogで次世代のSaaSアプリケーションを構築、デプロイ、スケール。認証、ユーザー管理、請求処理など包括的なツールを提供します。',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://boxlog.app',
   ogImage: '/og-image.png',
-  creator: 'YourSaaS Team',
-  twitterHandle: '@yoursaas',
+  creator: 'BoxLog Team',
+  twitterHandle: '@boxlog_app',
   keywords: [
     'SaaS',
     'Software as a Service',
@@ -55,6 +55,26 @@ export const siteConfig: SiteConfig = {
   locale: 'ja',
   alternateLocales: ['en', 'ja'],
 };
+
+/**
+ * URLからロケールプレフィックスを除去
+ * 例: '/en/about' → '/about', '/ja/blog' → '/blog', '/about' → '/about'
+ */
+function stripLocaleFromUrl(url: string): string {
+  return url.replace(/^\/(en|ja)(\/|$)/, '/');
+}
+
+/**
+ * パスを正規化（先頭スラッシュ確保、末尾スラッシュ除去）
+ */
+function normalizePath(path: string): string {
+  // 空やルートの場合
+  if (!path || path === '/') return '';
+  // 先頭スラッシュを確保
+  const withLeadingSlash = path.startsWith('/') ? path : `/${path}`;
+  // 末尾スラッシュを除去（ルート以外）
+  return withLeadingSlash.replace(/\/$/, '');
+}
 
 /**
  * Convert locale code to proper format
@@ -92,7 +112,16 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
 
   const pageTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.title;
 
-  const pageUrl = url ? `${siteConfig.url}${url}` : siteConfig.url;
+  // URLからロケールプレフィックスを除去して正規化
+  const normalizedPath = normalizePath(stripLocaleFromUrl(url || ''));
+
+  // canonicalはロケール付きの完全URL
+  // localePrefix: 'as-needed' なので、enはプレフィックスなし、jaはプレフィックスあり
+  const canonicalUrl =
+    locale === 'en'
+      ? `${siteConfig.url}${normalizedPath}`
+      : `${siteConfig.url}/${locale}${normalizedPath}`;
+
   const pageImage = image
     ? `${siteConfig.url}${image}`
     : `${siteConfig.url}/api/og?title=${encodeURIComponent(title || siteConfig.title)}`;
@@ -118,17 +147,18 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
       },
     },
     alternates: {
-      canonical: pageUrl,
+      canonical: canonicalUrl,
       languages: {
-        'en-US': `${siteConfig.url}/en${url || ''}`,
-        'ja-JP': `${siteConfig.url}/jp${url || ''}`,
-        'x-default': `${siteConfig.url}/en${url || ''}`,
+        // localePrefix: 'as-needed' に従い、enはプレフィックスなし
+        'en-US': `${siteConfig.url}${normalizedPath}`,
+        'ja-JP': `${siteConfig.url}/ja${normalizedPath}`,
+        'x-default': `${siteConfig.url}${normalizedPath}`,
       },
     },
     openGraph: {
       type: type as 'website' | 'article',
       locale: formatLocaleForOpenGraph(locale),
-      url: pageUrl,
+      url: canonicalUrl,
       title: pageTitle,
       description,
       siteName: siteConfig.name,
@@ -235,16 +265,11 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
         url: baseUrl,
         logo: `${baseUrl}/logo.png`,
         description: siteConfig.description,
-        sameAs: [
-          'https://twitter.com/yoursaas',
-          'https://github.com/yoursaas',
-          'https://linkedin.com/company/yoursaas',
-        ],
+        sameAs: ['https://twitter.com/boxlog_app', 'https://github.com/boxlog'],
         contactPoint: {
           '@type': 'ContactPoint',
-          telephone: '+1-555-0123',
           contactType: 'Customer Service',
-          email: 'support@yoursaas.com',
+          email: 'support@boxlog.app',
         },
       };
 

@@ -1,3 +1,4 @@
+import { apiError, ErrorCode } from '@/lib/api-response';
 import { getAllBlogPostMetas } from '@/lib/blog';
 import { getAllReleaseMetas } from '@/lib/releases';
 import fs from 'fs';
@@ -109,10 +110,7 @@ export async function GET(request: NextRequest) {
 
     // Validate query length to prevent DoS
     if (query.length > 200) {
-      return NextResponse.json(
-        { error: 'Search query too long', code: 'QUERY_TOO_LONG' },
-        { status: 400 },
-      );
+      return apiError('Search query too long', 400, { code: ErrorCode.QUERY_TOO_LONG });
     }
 
     const contentErrors: string[] = [];
@@ -215,8 +213,7 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({ results: results.slice(0, 50) });
-  } catch (error) {
-    console.error('[Search API] Unexpected error:', error instanceof Error ? error.message : error);
-    return NextResponse.json({ error: 'Search failed', code: 'INTERNAL_ERROR' }, { status: 500 });
+  } catch {
+    return apiError('Search failed', 500, { code: ErrorCode.INTERNAL_ERROR });
   }
 }

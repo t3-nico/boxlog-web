@@ -13,6 +13,9 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// ISR: タグ一覧は1時間ごとに再検証
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: 'Tags - Browse by Topic',
   description:

@@ -17,8 +17,8 @@ interface SEOProps {
 }
 
 export function generateEnhancedMetadata({
-  title = 'YourSaaS - Modern SaaS Platform',
-  description = 'A modern SaaS platform built with Next.js and Tailwind CSS for optimal performance and user experience.',
+  title = 'BoxLog - モダンSaaSプラットフォーム',
+  description = 'Next.jsとTailwind CSSで構築された、最適なパフォーマンスとユーザー体験を提供するモダンSaaSプラットフォーム。',
   keywords = ['SaaS', 'Next.js', 'Tailwind CSS', 'React', 'TypeScript', 'Modern Web'],
   image = '/images/og-default.jpg',
   noIndex = false,
@@ -33,19 +33,19 @@ export function generateEnhancedMetadata({
 }: SEOProps): Metadata {
   // Get current URL for canonical and OG
   const baseUrl =
-    process.env.NODE_ENV === 'production' ? 'https://yoursaas.com' : 'http://localhost:3000';
+    process.env.NODE_ENV === 'production' ? 'https://boxlog.app' : 'http://localhost:3000';
   const currentUrl = canonical || url || baseUrl;
 
-  const siteTitle = 'YourSaaS';
+  const siteTitle = 'BoxLog';
   const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 
   return {
     title: fullTitle,
     description,
     keywords: keywords.join(', '),
-    authors: author ? [{ name: author }] : [{ name: 'YourSaaS Team' }],
-    creator: 'YourSaaS Team',
-    publisher: 'YourSaaS',
+    authors: author ? [{ name: author }] : [{ name: 'BoxLog Team' }],
+    creator: 'BoxLog Team',
+    publisher: 'BoxLog',
     category: category || 'Technology',
 
     // Robots
@@ -89,8 +89,8 @@ export function generateEnhancedMetadata({
       title: fullTitle,
       description,
       images: [image],
-      creator: '@yoursaas',
-      site: '@yoursaas',
+      creator: '@boxlog_app',
+      site: '@boxlog_app',
     },
 
     // Additional meta tags
@@ -166,23 +166,19 @@ export function StructuredData({ type, data }: StructuredDataProps) {
 
   // 組織の基本情報
   if (type === 'Organization') {
-    baseStructure.name = 'YourSaaS';
-    baseStructure.url = 'https://yoursaas.com';
-    baseStructure.logo = 'https://yoursaas.com/logo.png';
-    baseStructure.sameAs = [
-      'https://twitter.com/yoursaas',
-      'https://github.com/yoursaas',
-      'https://linkedin.com/company/yoursaas',
-    ];
+    baseStructure.name = 'BoxLog';
+    baseStructure.url = 'https://boxlog.app';
+    baseStructure.logo = 'https://boxlog.app/logo.png';
+    baseStructure.sameAs = ['https://twitter.com/boxlog_app', 'https://github.com/boxlog'];
   }
 
   // ウェブサイトの情報
   if (type === 'WebSite') {
-    baseStructure.name = 'YourSaaS';
-    baseStructure.url = 'https://yoursaas.com';
+    baseStructure.name = 'BoxLog';
+    baseStructure.url = 'https://boxlog.app';
     baseStructure.potentialAction = {
       '@type': 'SearchAction',
-      target: 'https://yoursaas.com/search?q={search_term_string}',
+      target: 'https://boxlog.app/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     };
   }
@@ -283,10 +279,10 @@ export function ArticleStructuredData({
     },
     publisher: {
       '@type': 'Organization',
-      name: 'YourSaaS',
+      name: 'BoxLog',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://yoursaas.com/logo.png',
+        url: 'https://boxlog.app/logo.png',
       },
     },
     ...(category && { category }),

@@ -70,10 +70,17 @@ export function ReleaseFilter({
             {/* タグフィルター */}
             {tags.length > 0 && (
               <div>
-                <label className="text-muted-foreground mb-3 block text-sm font-medium">
+                <span
+                  id="release-tags-label"
+                  className="text-muted-foreground mb-3 block text-sm font-medium"
+                >
                   {t('tags')}
-                </label>
-                <div className="flex flex-wrap gap-2">
+                </span>
+                <div
+                  className="flex flex-wrap gap-2"
+                  role="group"
+                  aria-labelledby="release-tags-label"
+                >
                   {tags.map((tagItem) => {
                     const isSelected = selectedTags.includes(tagItem.tag);
                     return (

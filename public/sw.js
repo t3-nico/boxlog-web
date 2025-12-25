@@ -1,7 +1,7 @@
-// Service Worker for YourSaaS Platform
-const CACHE_NAME = 'yoursaas-v1'
-const STATIC_CACHE_NAME = 'yoursaas-static-v1'
-const DYNAMIC_CACHE_NAME = 'yoursaas-dynamic-v1'
+// Service Worker for BoxLog Platform
+const CACHE_NAME = 'boxlog-v1'
+const STATIC_CACHE_NAME = 'boxlog-static-v1'
+const DYNAMIC_CACHE_NAME = 'boxlog-dynamic-v1'
 
 // Assets to cache immediately
 const STATIC_ASSETS = [

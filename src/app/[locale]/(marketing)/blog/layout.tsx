@@ -2,23 +2,22 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | YourSaaS Blog',
-    default: 'Blog | YourSaaS Platform',
+    template: '%s | BoxLog Blog',
+    default: 'Blog | BoxLog',
   },
-  description:
-    'Latest insights on SaaS development, technology, and business strategy to help you build better products.',
+  description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の知見をお届けします。',
   keywords: 'SaaS, blog, technology, development, business, startup, insights',
-  authors: [{ name: 'YourSaaS Team' }],
+  authors: [{ name: 'BoxLog Team' }],
   openGraph: {
-    title: 'Blog | YourSaaS Platform',
-    description: 'Latest insights on SaaS development, technology, and business strategy.',
+    title: 'Blog | BoxLog',
+    description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の知見。',
     type: 'website',
-    siteName: 'YourSaaS Platform',
+    siteName: 'BoxLog',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog | YourSaaS Platform',
-    description: 'Latest insights on SaaS development, technology, and business strategy.',
+    title: 'Blog | BoxLog',
+    description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の知見。',
   },
   alternates: {
     canonical: '/blog',

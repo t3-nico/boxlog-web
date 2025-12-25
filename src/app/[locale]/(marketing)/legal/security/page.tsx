@@ -4,6 +4,9 @@ import { getTranslations } from 'next-intl/server';
 
 import { SecurityContent } from './security-content';
 
+// ISR: 法的ページは1日ごとに再検証
+export const revalidate = 86400;
+
 /**
  * メタデータ生成（SEO対策）
  */

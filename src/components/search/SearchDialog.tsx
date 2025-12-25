@@ -17,34 +17,20 @@ interface SearchDialogProps {
   locale: string;
 }
 
-// Mock data (in actual implementation, fetch from external source)
+// Mock data (in actual implementation, fetch from user history or external source)
 const RECENT_SEARCHES = ['API Authentication', 'Release v2.1.0', 'Next.js Guide'];
 
-const getQuickLinks = (locale: string) => [
-  {
-    title: 'Quick Start',
-    description: 'Get started with YourSaaS in 5 minutes',
-    href: `/${locale}/docs/quick-start`,
-    type: 'docs',
-  },
-  {
-    title: 'API Reference',
-    description: 'Authentication and API usage',
-    href: `/${locale}/docs/api-reference`,
-    type: 'docs',
-  },
-  {
-    title: 'Latest Release',
-    description: 'New features in v2.1.0',
-    href: `/${locale}/releases/v2.1.0`,
-    type: 'release',
-  },
-  {
-    title: 'SaaS Strategy',
-    description: 'Business strategy for 2024',
-    href: `/${locale}/blog/saas-strategy-2024`,
-    type: 'blog',
-  },
+interface QuickLinkConfig {
+  key: 'quickStart' | 'apiReference' | 'latestRelease' | 'saasStrategy';
+  href: string;
+  type: string;
+}
+
+const QUICK_LINK_CONFIGS: QuickLinkConfig[] = [
+  { key: 'quickStart', href: '/docs/quick-start', type: 'docs' },
+  { key: 'apiReference', href: '/docs/api-reference', type: 'docs' },
+  { key: 'latestRelease', href: '/releases/v2.1.0', type: 'release' },
+  { key: 'saasStrategy', href: '/blog/saas-strategy-2024', type: 'blog' },
 ];
 
 interface PopularTag {
@@ -68,7 +54,14 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
   const [previewResults, setPreviewResults] = useState<PreviewResult[]>([]);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  const QUICK_LINKS = getQuickLinks(locale);
+
+  // クイックリンクを翻訳から生成
+  const QUICK_LINKS = QUICK_LINK_CONFIGS.map((config) => ({
+    title: t(`quickLinks.${config.key}.title`),
+    description: t(`quickLinks.${config.key}.description`),
+    href: `/${locale}${config.href}`,
+    type: config.type,
+  }));
 
   // 人気タグを取得
   useEffect(() => {
@@ -84,8 +77,8 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           count: tag.count,
         }));
         setPopularTags(topTags);
-      } catch (error) {
-        console.error('Failed to fetch tags:', error);
+      } catch {
+        // タグ取得失敗時は空配列のまま（UIで対応）
       }
     };
 
@@ -101,8 +94,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           .then((data) => {
             setPreviewResults((data.results || []).slice(0, 3));
           })
-          .catch((error) => {
-            console.error('Failed to fetch search results:', error);
+          .catch(() => {
             setPreviewResults([]);
           });
       }, 300); // 300ms debounce
@@ -193,9 +185,10 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
             onClick={() => onOpenChange(false)}
             variant="ghost"
             size="icon"
+            aria-label={t('close')}
             className="h-5 w-5 flex-shrink-0"
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
 

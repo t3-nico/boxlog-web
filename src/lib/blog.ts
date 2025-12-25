@@ -2,6 +2,7 @@ import type { AIMetadata } from '@/types/content';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import { calculateReadingTime } from './utils';
 
 export interface BlogPostFrontMatter {
   title: string;
@@ -37,13 +38,8 @@ export interface BlogPostMeta {
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog');
 
-// Calculate reading time (average 200 characters/minute)
-export function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
-  const wordCount = content.length;
-  const minutes = Math.ceil(wordCount / wordsPerMinute);
-  return Math.max(1, minutes);
-}
+// Re-export calculateReadingTime from utils for backward compatibility
+export { calculateReadingTime } from './utils';
 
 // Generate article excerpt
 export function generateExcerpt(content: string, maxLength: number = 160): string {

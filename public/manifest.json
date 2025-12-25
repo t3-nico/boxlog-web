@@ -1,7 +1,7 @@
 {
-  "name": "YourSaaS - Modern SaaS Platform",
-  "short_name": "YourSaaS",
-  "description": "Powerful, scalable SaaS platform built with Next.js 14, React 18, and Tailwind CSS",
+  "name": "BoxLog - モダンSaaSプラットフォーム",
+  "short_name": "BoxLog",
+  "description": "Next.js、React、Tailwind CSSで構築されたスケーラブルなSaaSプラットフォーム",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

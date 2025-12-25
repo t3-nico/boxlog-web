@@ -41,56 +41,53 @@ export function getTagColor(tag: string): string {
 
 /**
  * カラーキー別のTailwindクラス定義
- * 背景色は透明度10%、ホバー時は20%
+ * CSS変数ベース（globals.cssで定義）でダークモード自動対応
  */
 const TAG_COLOR_CLASSES: Record<TagColorKey, string> = {
-  blue: 'bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 dark:text-blue-400',
-  green: 'bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 dark:text-emerald-400',
-  red: 'bg-red-500/10 text-red-600 hover:bg-red-500/20 dark:text-red-400',
-  amber: 'bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 dark:text-amber-400',
-  violet: 'bg-violet-500/10 text-violet-600 hover:bg-violet-500/20 dark:text-violet-400',
-  pink: 'bg-pink-500/10 text-pink-600 hover:bg-pink-500/20 dark:text-pink-400',
-  cyan: 'bg-cyan-500/10 text-cyan-600 hover:bg-cyan-500/20 dark:text-cyan-400',
-  orange: 'bg-orange-500/10 text-orange-600 hover:bg-orange-500/20 dark:text-orange-400',
-  gray: 'bg-neutral-500/10 text-neutral-600 hover:bg-neutral-500/20 dark:text-neutral-400',
-  indigo: 'bg-indigo-500/10 text-indigo-600 hover:bg-indigo-500/20 dark:text-indigo-400',
+  blue: 'bg-tag-blue-bg text-tag-blue-text hover:bg-tag-blue-hover',
+  green: 'bg-tag-green-bg text-tag-green-text hover:bg-tag-green-hover',
+  red: 'bg-tag-red-bg text-tag-red-text hover:bg-tag-red-hover',
+  amber: 'bg-tag-amber-bg text-tag-amber-text hover:bg-tag-amber-hover',
+  violet: 'bg-tag-violet-bg text-tag-violet-text hover:bg-tag-violet-hover',
+  pink: 'bg-tag-pink-bg text-tag-pink-text hover:bg-tag-pink-hover',
+  cyan: 'bg-tag-cyan-bg text-tag-cyan-text hover:bg-tag-cyan-hover',
+  orange: 'bg-tag-orange-bg text-tag-orange-text hover:bg-tag-orange-hover',
+  gray: 'bg-tag-gray-bg text-tag-gray-text hover:bg-tag-gray-hover',
+  indigo: 'bg-tag-indigo-bg text-tag-indigo-text hover:bg-tag-indigo-hover',
 };
 
 /**
  * フィルター用: 選択状態のタグカラー（濃い背景 + 白テキスト）
+ * CSS変数ベース
  */
 const TAG_COLOR_CLASSES_SELECTED: Record<TagColorKey, string> = {
-  blue: 'bg-blue-500 text-white hover:bg-blue-600 border-blue-500',
-  green: 'bg-emerald-500 text-white hover:bg-emerald-600 border-emerald-500',
-  red: 'bg-red-500 text-white hover:bg-red-600 border-red-500',
-  amber: 'bg-amber-500 text-white hover:bg-amber-600 border-amber-500',
-  violet: 'bg-violet-500 text-white hover:bg-violet-600 border-violet-500',
-  pink: 'bg-pink-500 text-white hover:bg-pink-600 border-pink-500',
-  cyan: 'bg-cyan-500 text-white hover:bg-cyan-600 border-cyan-500',
-  orange: 'bg-orange-500 text-white hover:bg-orange-600 border-orange-500',
-  gray: 'bg-neutral-500 text-white hover:bg-neutral-600 border-neutral-500',
-  indigo: 'bg-indigo-500 text-white hover:bg-indigo-600 border-indigo-500',
+  blue: 'bg-tag-blue-solid text-white hover:opacity-90 border-tag-blue-solid',
+  green: 'bg-tag-green-solid text-white hover:opacity-90 border-tag-green-solid',
+  red: 'bg-tag-red-solid text-white hover:opacity-90 border-tag-red-solid',
+  amber: 'bg-tag-amber-solid text-white hover:opacity-90 border-tag-amber-solid',
+  violet: 'bg-tag-violet-solid text-white hover:opacity-90 border-tag-violet-solid',
+  pink: 'bg-tag-pink-solid text-white hover:opacity-90 border-tag-pink-solid',
+  cyan: 'bg-tag-cyan-solid text-white hover:opacity-90 border-tag-cyan-solid',
+  orange: 'bg-tag-orange-solid text-white hover:opacity-90 border-tag-orange-solid',
+  gray: 'bg-tag-gray-solid text-white hover:opacity-90 border-tag-gray-solid',
+  indigo: 'bg-tag-indigo-solid text-white hover:opacity-90 border-tag-indigo-solid',
 };
 
 /**
  * フィルター用: 非選択状態のタグカラー（ボーダー + カラーテキスト）
+ * CSS変数ベース - ダークモード自動対応
  */
 const TAG_COLOR_CLASSES_OUTLINE: Record<TagColorKey, string> = {
-  blue: 'border-blue-300 text-blue-600 hover:bg-blue-50 dark:border-blue-700 dark:text-blue-400 dark:hover:bg-blue-950',
-  green:
-    'border-emerald-300 text-emerald-600 hover:bg-emerald-50 dark:border-emerald-700 dark:text-emerald-400 dark:hover:bg-emerald-950',
-  red: 'border-red-300 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-950',
-  amber:
-    'border-amber-300 text-amber-600 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-400 dark:hover:bg-amber-950',
-  violet:
-    'border-violet-300 text-violet-600 hover:bg-violet-50 dark:border-violet-700 dark:text-violet-400 dark:hover:bg-violet-950',
-  pink: 'border-pink-300 text-pink-600 hover:bg-pink-50 dark:border-pink-700 dark:text-pink-400 dark:hover:bg-pink-950',
-  cyan: 'border-cyan-300 text-cyan-600 hover:bg-cyan-50 dark:border-cyan-700 dark:text-cyan-400 dark:hover:bg-cyan-950',
-  orange:
-    'border-orange-300 text-orange-600 hover:bg-orange-50 dark:border-orange-700 dark:text-orange-400 dark:hover:bg-orange-950',
-  gray: 'border-neutral-300 text-neutral-600 hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-950',
-  indigo:
-    'border-indigo-300 text-indigo-600 hover:bg-indigo-50 dark:border-indigo-700 dark:text-indigo-400 dark:hover:bg-indigo-950',
+  blue: 'border-tag-blue-border text-tag-blue-text hover:bg-tag-blue-bg',
+  green: 'border-tag-green-border text-tag-green-text hover:bg-tag-green-bg',
+  red: 'border-tag-red-border text-tag-red-text hover:bg-tag-red-bg',
+  amber: 'border-tag-amber-border text-tag-amber-text hover:bg-tag-amber-bg',
+  violet: 'border-tag-violet-border text-tag-violet-text hover:bg-tag-violet-bg',
+  pink: 'border-tag-pink-border text-tag-pink-text hover:bg-tag-pink-bg',
+  cyan: 'border-tag-cyan-border text-tag-cyan-text hover:bg-tag-cyan-bg',
+  orange: 'border-tag-orange-border text-tag-orange-text hover:bg-tag-orange-bg',
+  gray: 'border-tag-gray-border text-tag-gray-text hover:bg-tag-gray-bg',
+  indigo: 'border-tag-indigo-border text-tag-indigo-text hover:bg-tag-indigo-bg',
 };
 
 /**
