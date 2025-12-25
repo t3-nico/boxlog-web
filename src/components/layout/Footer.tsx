@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import { LanguageSwitcher } from '@/components/ui/language-switcher'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { Link } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 // SNS Icons
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
     <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
   </svg>
-)
+);
 
 const GitHubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
@@ -20,7 +20,7 @@ const GitHubIcon = (props: React.SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-)
+);
 
 const YouTubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
@@ -30,11 +30,11 @@ const YouTubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-)
+);
 
 export function Footer() {
-  const t = useTranslations()
-  const tFooter = useTranslations('footer')
+  const t = useTranslations();
+  const tFooter = useTranslations('footer');
 
   const navigation = {
     product: [
@@ -58,7 +58,7 @@ export function Footer() {
       { name: t('footer.legal.security'), href: '/legal/security' },
       { name: t('footer.legal.tokushoho'), href: '/legal/tokushoho' },
     ],
-  }
+  };
 
   const socialLinks = [
     {
@@ -76,7 +76,7 @@ export function Footer() {
       href: 'https://youtube.com/@boxlog',
       icon: YouTubeIcon,
     },
-  ]
+  ];
 
   return (
     <footer className="bg-background border-border border-t">
@@ -95,7 +95,9 @@ export function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Product */}
               <div>
-                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.product')}</h3>
+                <h3 className="text-foreground text-base font-semibold">
+                  {tFooter('sections.product')}
+                </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.product.map((item) => (
                     <li key={item.name}>
@@ -111,7 +113,9 @@ export function Footer() {
               </div>
               {/* Resources */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.resources')}</h3>
+                <h3 className="text-foreground text-base font-semibold">
+                  {tFooter('sections.resources')}
+                </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.resources.map((item) => (
                     <li key={item.name}>
@@ -129,7 +133,9 @@ export function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Company */}
               <div>
-                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.company')}</h3>
+                <h3 className="text-foreground text-base font-semibold">
+                  {tFooter('sections.company')}
+                </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.company.map((item) => (
                     <li key={item.name}>
@@ -145,7 +151,9 @@ export function Footer() {
               </div>
               {/* Legal */}
               <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-base font-semibold">{tFooter('sections.legal')}</h3>
+                <h3 className="text-foreground text-base font-semibold">
+                  {tFooter('sections.legal')}
+                </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
@@ -184,7 +192,9 @@ export function Footer() {
             </div>
             {/* Copyright left, Settings right */}
             <div className="flex items-center justify-between">
-              <p className="text-muted-foreground text-sm">&copy; {new Date().getFullYear()} BoxLog, Inc.</p>
+              <p className="text-muted-foreground text-sm">
+                &copy; {new Date().getFullYear()} BoxLog, Inc.
+              </p>
               <div className="flex items-center gap-x-0">
                 <ThemeToggle />
                 <LanguageSwitcher variant="full" />
@@ -219,5 +229,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -1,15 +1,16 @@
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { generateSEOMetadata } from '@/lib/metadata'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/ui/container';
+import { Heading, Text } from '@/components/ui/typography';
+import { generateSEOMetadata } from '@/lib/metadata';
+import Link from 'next/link';
 
 export const metadata = generateSEOMetadata({
   title: 'Internal Server Error - 500 Error',
-  description: 'An internal server error occurred. Our team has been notified and is working to resolve the issue.',
+  description:
+    'An internal server error occurred. Our team has been notified and is working to resolve the issue.',
   url: '/500',
   noindex: true,
-})
+});
 
 export default function InternalServerError() {
   return (
@@ -23,7 +24,8 @@ export default function InternalServerError() {
           </Heading>
 
           <Text variant="muted" className="mb-8">
-            Something went wrong on our end. Our team has been automatically notified and is working to fix this issue.
+            Something went wrong on our end. Our team has been automatically notified and is working
+            to fix this issue.
           </Text>
 
           <Button asChild className="w-full">
@@ -32,5 +34,5 @@ export default function InternalServerError() {
         </div>
       </Container>
     </div>
-  )
+  );
 }

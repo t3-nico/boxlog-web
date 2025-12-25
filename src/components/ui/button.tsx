@@ -1,9 +1,9 @@
-import { Slot } from '@radix-ui/react-slot'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { Loader2 } from 'lucide-react'
-import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { Loader2 } from 'lucide-react';
+import * as React from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 /**
  * ボタンバリアント定義（boxlog-appと同期）
@@ -45,7 +45,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         // 主要CTA - 最も強調されるボタン
-        primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover active:bg-primary-hover',
+        primary:
+          'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover active:bg-primary-hover',
         // 副次アクション - ボーダー付きの控えめなボタン
         outline: [
           'border border-border bg-surface-container text-foreground shadow-sm',
@@ -84,7 +85,10 @@ const buttonVariants = cva(
           'size-6',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:shrink-0",
         ].join(' '),
-        icon: ['size-8', "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0"].join(' '),
+        icon: [
+          'size-8',
+          "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
+        ].join(' '),
         'icon-lg': [
           'size-10',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 [&_svg]:shrink-0",
@@ -95,16 +99,17 @@ const buttonVariants = cva(
       variant: 'primary',
       size: 'default',
     },
-  }
-)
+  },
+);
 
-export interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
+export interface ButtonProps
+  extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
   /** 子要素にスタイルを委譲する（Linkなどで使用） */
-  asChild?: boolean
+  asChild?: boolean;
   /** ローディング状態 */
-  isLoading?: boolean
+  isLoading?: boolean;
   /** ローディング中に表示するテキスト */
-  loadingText?: string
+  loadingText?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -121,17 +126,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const Comp = asChild ? Slot : 'button'
+    const Comp = asChild ? Slot : 'button';
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (props['aria-disabled'] || isLoading) {
-        e.preventDefault()
-        return
+        e.preventDefault();
+        return;
       }
-      onClick?.(e)
-    }
+      onClick?.(e);
+    };
 
     const content = isLoading ? (
       <>
@@ -140,7 +145,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       </>
     ) : (
       children
-    )
+    );
 
     return (
       <Comp
@@ -154,9 +159,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {content}
       </Comp>
-    )
-  }
-)
-Button.displayName = 'Button'
+    );
+  },
+);
+Button.displayName = 'Button';
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

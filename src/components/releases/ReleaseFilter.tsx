@@ -1,31 +1,36 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { getTagFilterColor } from '@/lib/tags-client'
-import { cn } from '@/lib/utils'
-import { Filter, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { Button } from '@/components/ui/button';
+import { getTagFilterColor } from '@/lib/tags-client';
+import { cn } from '@/lib/utils';
+import { Filter, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 // Local type definition
 interface TagCount {
-  tag: string
-  count: number
+  tag: string;
+  count: number;
 }
 
 interface ReleaseFilterProps {
-  tags: TagCount[]
-  selectedTags: string[]
-  onTagToggle: (tag: string) => void
-  onClearFilters: () => void
+  tags: TagCount[];
+  selectedTags: string[];
+  onTagToggle: (tag: string) => void;
+  onClearFilters: () => void;
 }
 
-export function ReleaseFilter({ tags, selectedTags, onTagToggle, onClearFilters }: ReleaseFilterProps) {
-  const t = useTranslations('releases.filters')
-  const [isExpanded] = useState(true)
+export function ReleaseFilter({
+  tags,
+  selectedTags,
+  onTagToggle,
+  onClearFilters,
+}: ReleaseFilterProps) {
+  const t = useTranslations('releases.filters');
+  const [isExpanded] = useState(true);
 
-  const hasActiveFilters = selectedTags.length > 0
-  const activeFiltersCount = selectedTags.length
+  const hasActiveFilters = selectedTags.length > 0;
+  const activeFiltersCount = selectedTags.length;
 
   return (
     <>
@@ -46,7 +51,12 @@ export function ReleaseFilter({ tags, selectedTags, onTagToggle, onClearFilters 
 
             <div className="flex items-center gap-2">
               {hasActiveFilters && (
-                <Button onClick={onClearFilters} variant="ghost" size="sm" className="h-auto p-1 text-xs">
+                <Button
+                  onClick={onClearFilters}
+                  variant="ghost"
+                  size="sm"
+                  className="h-auto p-1 text-xs"
+                >
                   {t('clearAll')}
                 </Button>
               )}
@@ -60,10 +70,12 @@ export function ReleaseFilter({ tags, selectedTags, onTagToggle, onClearFilters 
             {/* タグフィルター */}
             {tags.length > 0 && (
               <div>
-                <label className="text-muted-foreground mb-3 block text-sm font-medium">{t('tags')}</label>
+                <label className="text-muted-foreground mb-3 block text-sm font-medium">
+                  {t('tags')}
+                </label>
                 <div className="flex flex-wrap gap-2">
                   {tags.map((tagItem) => {
-                    const isSelected = selectedTags.includes(tagItem.tag)
+                    const isSelected = selectedTags.includes(tagItem.tag);
                     return (
                       <Button
                         key={tagItem.tag}
@@ -72,17 +84,19 @@ export function ReleaseFilter({ tags, selectedTags, onTagToggle, onClearFilters 
                         size="sm"
                         className={cn(
                           'inline-flex items-center gap-2 border',
-                          getTagFilterColor(tagItem.tag, isSelected)
+                          getTagFilterColor(tagItem.tag, isSelected),
                         )}
                       >
                         <span>#</span>
                         {tagItem.tag}
-                        <span className={cn('text-xs', isSelected ? 'text-white/70' : 'opacity-60')}>
+                        <span
+                          className={cn('text-xs', isSelected ? 'text-white/70' : 'opacity-60')}
+                        >
                           ({tagItem.count})
                         </span>
                         {isSelected && <X className="h-3 w-3" />}
                       </Button>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -104,5 +118,5 @@ export function ReleaseFilter({ tags, selectedTags, onTagToggle, onClearFilters 
         </Button>
       </div>
     </>
-  )
+  );
 }

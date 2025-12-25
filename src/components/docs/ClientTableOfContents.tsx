@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { AutoTableOfContents } from './AutoTableOfContents'
+import { AutoTableOfContents } from './AutoTableOfContents';
 
 interface ClientTableOfContentsProps {
-  content?: string
+  content?: string;
 }
 
 export function ClientTableOfContents({ content }: ClientTableOfContentsProps) {
   if (!content) {
-    return null
+    return null;
   }
 
-  return <AutoTableOfContents content={content} />
+  return <AutoTableOfContents content={content} />;
 }

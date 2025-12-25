@@ -1,22 +1,35 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
-import { Link } from '@/i18n/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { CheckCircle, Paperclip, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useCallback, useRef, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Link } from '@/i18n/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CheckCircle, Paperclip, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useRef, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-const ALLOWED_FILE_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf']
-const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+const ALLOWED_FILE_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf'];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
-const CATEGORY_OPTIONS = ['general', 'technical', 'billing', 'partnership', 'feedback', 'other'] as const
+const CATEGORY_OPTIONS = [
+  'general',
+  'technical',
+  'billing',
+  'partnership',
+  'feedback',
+  'other',
+] as const;
 
 function createContactSchema(t: (key: string) => string) {
   return z.object({
@@ -25,14 +38,14 @@ function createContactSchema(t: (key: string) => string) {
     category: z.string().min(1, t('form.category.required')),
     subject: z.string().min(1, t('form.subject.required')).max(100, t('form.subject.maxLength')),
     message: z.string().min(10, t('form.message.minLength')).max(1000, t('form.message.maxLength')),
-  })
+  });
 }
 
-type ContactFormValues = z.infer<ReturnType<typeof createContactSchema>>
+type ContactFormValues = z.infer<ReturnType<typeof createContactSchema>>;
 
 /** 必須ラベルコンポーネント（デジタル庁ガイドライン準拠） */
 function RequiredBadge() {
-  return <span className="text-destructive ml-2 text-sm font-normal">※必須</span>
+  return <span className="text-destructive ml-2 text-sm font-normal">※必須</span>;
 }
 
 /** サポートテキストコンポーネント */
@@ -41,7 +54,7 @@ function SupportText({ children, id }: { children: React.ReactNode; id: string }
     <p id={id} className="text-muted-foreground text-sm">
       {children}
     </p>
-  )
+  );
 }
 
 /** エラーテキストコンポーネント（デジタル庁ガイドライン準拠: ＊を冒頭に付与） */
@@ -50,19 +63,19 @@ function ErrorText({ children, id }: { children: React.ReactNode; id: string }) 
     <p id={id} className="text-destructive text-sm">
       ＊{children}
     </p>
-  )
+  );
 }
 
 export function ContactForm() {
-  const t = useTranslations('marketing.contact')
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [submitError, setSubmitError] = useState<string | null>(null)
-  const [attachment, setAttachment] = useState<File | null>(null)
-  const [fileError, setFileError] = useState<string | null>(null)
-  const [isDragOver, setIsDragOver] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const t = useTranslations('marketing.contact');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [attachment, setAttachment] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const contactSchema = createContactSchema(t)
+  const contactSchema = createContactSchema(t);
 
   const {
     register,
@@ -80,12 +93,12 @@ export function ContactForm() {
       subject: '',
       message: '',
     },
-  })
+  });
 
-  const messageValue = watch('message') || ''
+  const messageValue = watch('message') || '';
 
   async function onSubmit(data: ContactFormValues) {
-    setSubmitError(null)
+    setSubmitError(null);
 
     try {
       const response = await fetch('/api/contact', {
@@ -94,86 +107,86 @@ export function ContactForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to submit')
+        throw new Error('Failed to submit');
       }
 
-      setIsSubmitted(true)
+      setIsSubmitted(true);
     } catch {
-      setSubmitError(t('form.submitError'))
+      setSubmitError(t('form.submitError'));
     }
   }
 
   const validateAndSetFile = useCallback(
     (file: File | null) => {
-      setFileError(null)
+      setFileError(null);
 
       if (!file) {
-        setAttachment(null)
-        return
+        setAttachment(null);
+        return;
       }
 
       if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-        setFileError(t('form.attachment.invalidType'))
-        setAttachment(null)
-        if (fileInputRef.current) fileInputRef.current.value = ''
-        return
+        setFileError(t('form.attachment.invalidType'));
+        setAttachment(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
       }
 
       if (file.size > MAX_FILE_SIZE) {
-        setFileError(t('form.attachment.tooLarge'))
-        setAttachment(null)
-        if (fileInputRef.current) fileInputRef.current.value = ''
-        return
+        setFileError(t('form.attachment.tooLarge'));
+        setAttachment(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
       }
 
-      setAttachment(file)
+      setAttachment(file);
     },
-    [t]
-  )
+    [t],
+  );
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0] ?? null
-    validateAndSetFile(file)
+    const file = event.target.files?.[0] ?? null;
+    validateAndSetFile(file);
   }
 
   function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
-    event.preventDefault()
-    event.stopPropagation()
-    setIsDragOver(true)
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragOver(true);
   }
 
   function handleDragLeave(event: React.DragEvent<HTMLDivElement>) {
-    event.preventDefault()
-    event.stopPropagation()
-    setIsDragOver(false)
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragOver(false);
   }
 
   function handleDrop(event: React.DragEvent<HTMLDivElement>) {
-    event.preventDefault()
-    event.stopPropagation()
-    setIsDragOver(false)
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragOver(false);
 
-    const file = event.dataTransfer.files?.[0] ?? null
-    validateAndSetFile(file)
+    const file = event.dataTransfer.files?.[0] ?? null;
+    validateAndSetFile(file);
   }
 
   function handleRemoveFile() {
-    setAttachment(null)
-    setFileError(null)
-    if (fileInputRef.current) fileInputRef.current.value = ''
+    setAttachment(null);
+    setFileError(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   }
 
   function handleReset() {
-    reset()
-    setIsSubmitted(false)
-    setSubmitError(null)
-    setAttachment(null)
-    setFileError(null)
-    setIsDragOver(false)
-    if (fileInputRef.current) fileInputRef.current.value = ''
+    reset();
+    setIsSubmitted(false);
+    setSubmitError(null);
+    setAttachment(null);
+    setFileError(null);
+    setIsDragOver(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   }
 
   if (isSubmitted) {
@@ -188,7 +201,7 @@ export function ContactForm() {
           {t('form.success.newMessage')}
         </Button>
       </div>
-    )
+    );
   }
 
   return (
@@ -248,7 +261,9 @@ export function ContactForm() {
                 id="category"
                 aria-required="true"
                 aria-invalid={!!errors.category}
-                aria-describedby={errors.category ? 'category-error category-support' : 'category-support'}
+                aria-describedby={
+                  errors.category ? 'category-error category-support' : 'category-support'
+                }
               >
                 <SelectValue placeholder={t('form.category.placeholder')} />
               </SelectTrigger>
@@ -318,7 +333,9 @@ export function ContactForm() {
           accept=".png,.jpg,.jpeg,.gif,.pdf"
           onChange={handleFileChange}
           className="sr-only"
-          aria-describedby={fileError ? 'attachment-error attachment-support' : 'attachment-support'}
+          aria-describedby={
+            fileError ? 'attachment-error attachment-support' : 'attachment-support'
+          }
         />
 
         {/* ドロップエリア（ボタンを包含する構造） */}
@@ -336,7 +353,12 @@ export function ContactForm() {
         >
           {/* ファイル選択ボタン */}
           <div className="mb-3">
-            <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => fileInputRef.current?.click()}
+            >
               <Paperclip className="mr-2 size-4" aria-hidden="true" />
               {t('form.attachment.button')}
             </Button>
@@ -352,7 +374,9 @@ export function ContactForm() {
         {attachment && (
           <div className="bg-muted/30 border-border flex items-center gap-2 rounded-md border px-3 py-2">
             <Paperclip className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
-            <span className="text-foreground min-w-0 flex-1 truncate text-sm">{attachment.name}</span>
+            <span className="text-foreground min-w-0 flex-1 truncate text-sm">
+              {attachment.name}
+            </span>
             <button
               type="button"
               onClick={handleRemoveFile}
@@ -365,7 +389,9 @@ export function ContactForm() {
         )}
 
         {/* ファイル未選択メッセージ */}
-        {!attachment && !fileError && <p className="text-muted-foreground text-sm">{t('form.attachment.noFile')}</p>}
+        {!attachment && !fileError && (
+          <p className="text-muted-foreground text-sm">{t('form.attachment.noFile')}</p>
+        )}
 
         {fileError && <ErrorText id="attachment-error">{fileError}</ErrorText>}
       </div>
@@ -379,7 +405,13 @@ export function ContactForm() {
 
       {/* 送信ボタン */}
       <div className="flex flex-col gap-4">
-        <Button type="submit" size="lg" className="w-full" disabled={isSubmitting} aria-busy={isSubmitting}>
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full"
+          disabled={isSubmitting}
+          aria-busy={isSubmitting}
+        >
           {isSubmitting ? t('form.submitting') : t('form.submit')}
         </Button>
 
@@ -391,5 +423,5 @@ export function ContactForm() {
         </p>
       </div>
     </form>
-  )
+  );
 }

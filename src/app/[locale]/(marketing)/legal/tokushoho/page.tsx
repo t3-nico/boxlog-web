@@ -1,32 +1,36 @@
-import type { Locale } from '@/i18n/routing'
-import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import type { Locale } from '@/i18n/routing';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 /**
  * メタデータ生成（SEO対策・i18n対応）
  */
-export async function generateMetadata({ params }: { params: Promise<{ locale?: Locale }> }): Promise<Metadata> {
-  const { locale = 'ja' } = await params
-  const t = await getTranslations({ locale })
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale?: Locale }>;
+}): Promise<Metadata> {
+  const { locale = 'ja' } = await params;
+  const t = await getTranslations({ locale });
 
   return {
     title: `${t('legal.tokushoho.title')} - BoxLog`,
     description: t('legal.tokushoho.description'),
-  }
+  };
 }
 
 interface PageProps {
-  params: Promise<{ locale?: Locale }>
+  params: Promise<{ locale?: Locale }>;
 }
 
 /**
  * 特定商取引法に基づく表記ページ（Server Component）
  */
 export default async function TokushohoPage({ params }: PageProps) {
-  const { locale = 'ja' } = await params
-  const t = await getTranslations({ locale })
+  const { locale = 'ja' } = await params;
+  const t = await getTranslations({ locale });
 
-  const lastUpdated = '2025-12-07'
+  const lastUpdated = '2025-12-07';
 
   return (
     <div className="bg-background container mx-auto min-h-screen max-w-4xl px-4 py-12 md:px-8 md:py-16">
@@ -44,8 +48,12 @@ export default async function TokushohoPage({ params }: PageProps) {
         <div className="flex items-start gap-3">
           <span className="text-2xl">📝</span>
           <div>
-            <p className="text-warning-foreground font-semibold">{t('legal.tokushoho.setupNotice.title')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">{t('legal.tokushoho.setupNotice.description')}</p>
+            <p className="text-warning-foreground font-semibold">
+              {t('legal.tokushoho.setupNotice.title')}
+            </p>
+            <p className="text-muted-foreground mt-1 text-sm">
+              {t('legal.tokushoho.setupNotice.description')}
+            </p>
           </div>
         </div>
       </div>
@@ -63,7 +71,9 @@ export default async function TokushohoPage({ params }: PageProps) {
                 <span className="bg-warning/20 text-warning-foreground rounded px-2 py-1 text-xs font-medium">
                   {t('legal.tokushoho.placeholder')}
                 </span>
-                <span className="text-muted-foreground ml-2 text-xs">{t('legal.tokushoho.items.seller.hint')}</span>
+                <span className="text-muted-foreground ml-2 text-xs">
+                  {t('legal.tokushoho.items.seller.hint')}
+                </span>
               </td>
             </tr>
 
@@ -91,7 +101,9 @@ export default async function TokushohoPage({ params }: PageProps) {
                 <span className="bg-warning/20 text-warning-foreground rounded px-2 py-1 text-xs font-medium">
                   {t('legal.tokushoho.placeholder')}
                 </span>
-                <span className="text-muted-foreground ml-2 text-xs">{t('legal.tokushoho.items.address.hint')}</span>
+                <span className="text-muted-foreground ml-2 text-xs">
+                  {t('legal.tokushoho.items.address.hint')}
+                </span>
               </td>
             </tr>
 
@@ -106,7 +118,9 @@ export default async function TokushohoPage({ params }: PageProps) {
                     <span className="text-muted-foreground">Email:</span> support@boxlog.app
                   </p>
                   <p>
-                    <span className="text-muted-foreground">{t('legal.tokushoho.items.contact.phoneLabel')}:</span>{' '}
+                    <span className="text-muted-foreground">
+                      {t('legal.tokushoho.items.contact.phoneLabel')}:
+                    </span>{' '}
                     <span className="bg-warning/20 text-warning-foreground rounded px-2 py-1 text-xs font-medium">
                       {t('legal.tokushoho.placeholder')}
                     </span>
@@ -120,7 +134,9 @@ export default async function TokushohoPage({ params }: PageProps) {
               <th className="bg-surface-container text-foreground w-1/3 px-6 py-4 text-left text-sm font-semibold">
                 {t('legal.tokushoho.items.price.label')}
               </th>
-              <td className="text-foreground px-6 py-4 text-sm">{t('legal.tokushoho.items.price.content')}</td>
+              <td className="text-foreground px-6 py-4 text-sm">
+                {t('legal.tokushoho.items.price.content')}
+              </td>
             </tr>
 
             {/* 支払方法 */}
@@ -140,7 +156,9 @@ export default async function TokushohoPage({ params }: PageProps) {
               <th className="bg-surface-container text-foreground w-1/3 px-6 py-4 text-left text-sm font-semibold">
                 {t('legal.tokushoho.items.paymentTiming.label')}
               </th>
-              <td className="text-foreground px-6 py-4 text-sm">{t('legal.tokushoho.items.paymentTiming.content')}</td>
+              <td className="text-foreground px-6 py-4 text-sm">
+                {t('legal.tokushoho.items.paymentTiming.content')}
+              </td>
             </tr>
 
             {/* サービス提供時期 */}
@@ -148,7 +166,9 @@ export default async function TokushohoPage({ params }: PageProps) {
               <th className="bg-surface-container text-foreground w-1/3 px-6 py-4 text-left text-sm font-semibold">
                 {t('legal.tokushoho.items.delivery.label')}
               </th>
-              <td className="text-foreground px-6 py-4 text-sm">{t('legal.tokushoho.items.delivery.content')}</td>
+              <td className="text-foreground px-6 py-4 text-sm">
+                {t('legal.tokushoho.items.delivery.content')}
+              </td>
             </tr>
 
             {/* キャンセル・返金 */}
@@ -200,7 +220,9 @@ export default async function TokushohoPage({ params }: PageProps) {
           <span className="text-2xl">⚠️</span>
           <div>
             <p className="text-destructive font-bold">{t('legal.reviewWarning.title')}</p>
-            <p className="text-muted-foreground mt-1 text-sm">{t('legal.reviewWarning.description')}</p>
+            <p className="text-muted-foreground mt-1 text-sm">
+              {t('legal.reviewWarning.description')}
+            </p>
             <ul className="text-muted-foreground mt-2 list-inside list-disc text-sm">
               <li>{t('legal.reviewWarning.items.lawyer')}</li>
               <li>{t('legal.reviewWarning.items.update')}</li>
@@ -210,5 +232,5 @@ export default async function TokushohoPage({ params }: PageProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

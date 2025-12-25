@@ -1,80 +1,85 @@
-'use client'
+'use client';
 
-import { Heading } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { getTagColor } from '@/lib/tags-client'
-import { AlertTriangle, Star } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { Heading } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { getTagColor } from '@/lib/tags-client';
+import { AlertTriangle, Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 // Local type definitions to avoid importing server-only lib
 interface ReleaseFrontMatter {
-  version: string
-  date: string
-  title: string
-  description: string
-  tags: string[]
-  breaking: boolean
-  featured: boolean
-  prerelease?: boolean
-  author?: string
-  authorAvatar?: string
-  coverImage?: string
+  version: string;
+  date: string;
+  title: string;
+  description: string;
+  tags: string[];
+  breaking: boolean;
+  featured: boolean;
+  prerelease?: boolean;
+  author?: string;
+  authorAvatar?: string;
+  coverImage?: string;
 }
 
 interface ReleasePostMeta {
-  frontMatter: ReleaseFrontMatter
-  slug: string
-  content: string
-  readingTime: number
+  frontMatter: ReleaseFrontMatter;
+  slug: string;
+  content: string;
+  readingTime: number;
 }
 
 // Local utility functions
 function isPrerelease(version: string): boolean {
-  return version.includes('beta') || version.includes('alpha') || version.includes('rc') || version.includes('pre')
+  return (
+    version.includes('beta') ||
+    version.includes('alpha') ||
+    version.includes('rc') ||
+    version.includes('pre')
+  );
 }
 
 function getVersionType(version: string): 'major' | 'minor' | 'patch' | 'prerelease' {
   if (isPrerelease(version)) {
-    return 'prerelease'
+    return 'prerelease';
   }
 
-  const cleanVersion = version.replace(/^v/, '')
-  const parts = cleanVersion.split('.').map(Number)
+  const cleanVersion = version.replace(/^v/, '');
+  const parts = cleanVersion.split('.').map(Number);
 
-  if ((parts[2] ?? 0) > 0) return 'patch'
-  if ((parts[1] ?? 0) > 0) return 'minor'
-  return 'major'
+  if ((parts[2] ?? 0) > 0) return 'patch';
+  if ((parts[1] ?? 0) > 0) return 'minor';
+  return 'major';
 }
 
 interface ReleaseCardProps {
-  release: ReleasePostMeta
-  priority?: boolean
-  layout?: 'list' | 'vertical'
-  locale?: string
+  release: ReleasePostMeta;
+  priority?: boolean;
+  layout?: 'list' | 'vertical';
+  locale?: string;
 }
 
 export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCardProps) {
-  const t = useTranslations('releases')
-  const { frontMatter } = release
-  const versionType = getVersionType(frontMatter.version)
+  const t = useTranslations('releases');
+  const { frontMatter } = release;
+  const versionType = getVersionType(frontMatter.version);
 
   const versionBadgeStyles = {
     major: 'bg-release-breaking-bg text-release-breaking-text',
     minor: 'bg-release-improvement-bg text-release-improvement-text',
     patch: 'bg-release-new-bg text-release-new-text',
     prerelease: 'bg-release-bugfix-bg text-release-bugfix-text',
-  }
+  };
 
   const formatDate = (dateString: string) => {
-    const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US'
+    const localeCode = locale === 'ja' ? 'ja-JP' : 'en-US';
     return new Date(dateString).toLocaleDateString(localeCode, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-    })
-  }
+    });
+  };
 
-  const formattedDate = formatDate(frontMatter.date)
+  const formattedDate = formatDate(frontMatter.date);
 
   // List layout (Claude blog style)
   if (layout === 'list') {
@@ -119,7 +124,7 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
           </div>
         </div>
       </article>
-    )
+    );
   }
 
   // Vertical layout (grid view)
@@ -149,7 +154,11 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
           </div>
 
           {/* Title */}
-          <Heading as="h2" size="xl" className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline">
+          <Heading
+            as="h2"
+            size="xl"
+            className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline"
+          >
             {frontMatter.title}
           </Heading>
 
@@ -165,7 +174,9 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
                 </span>
               ))}
               {frontMatter.tags.length > 3 && (
-                <span className="text-muted-foreground text-xs">+{frontMatter.tags.length - 3}</span>
+                <span className="text-muted-foreground text-xs">
+                  +{frontMatter.tags.length - 3}
+                </span>
               )}
             </div>
           )}
@@ -177,5 +188,5 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
         </div>
       </Link>
     </article>
-  )
+  );
 }

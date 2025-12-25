@@ -1,15 +1,21 @@
-'use client'
+'use client';
 
-import { ErrorLayout } from '@/components/errors/ErrorLayout'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { useEffect } from 'react'
+import { ErrorLayout } from '@/components/errors/ErrorLayout';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error('Application error:', error)
-  }, [error])
+    console.error('Application error:', error);
+  }, [error]);
 
   return (
     <ErrorLayout
@@ -45,5 +51,5 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
         </details>
       )}
     </ErrorLayout>
-  )
+  );
 }

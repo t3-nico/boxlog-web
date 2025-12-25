@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
 
-import { InfoIcon } from 'lucide-react'
+import { InfoIcon } from 'lucide-react';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Switch } from '@/components/ui/switch'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
 import {
   acceptAllCookies,
   acceptNecessaryOnly,
   getCookieConsent,
   setCookieConsent,
   type CookieConsent,
-} from '@/lib/cookie-consent'
-import { useTranslations } from 'next-intl'
-import { toast } from 'sonner'
+} from '@/lib/cookie-consent';
+import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
 
 // SSR対応の遅延初期化
 const getInitialSettings = (): CookieConsent => {
@@ -25,19 +25,19 @@ const getInitialSettings = (): CookieConsent => {
       analytics: false,
       marketing: false,
       timestamp: 0,
-    }
+    };
   }
-  const currentConsent = getCookieConsent()
+  const currentConsent = getCookieConsent();
   if (currentConsent) {
-    return currentConsent
+    return currentConsent;
   }
   return {
     necessary: true,
     analytics: false,
     marketing: false,
     timestamp: Date.now(),
-  }
-}
+  };
+};
 
 /**
  * Cookie設定フォーム（Client Component）
@@ -48,39 +48,39 @@ const getInitialSettings = (): CookieConsent => {
  * - マーケティングCookie: ユーザー選択可能
  */
 export function CookieSettingsForm() {
-  const t = useTranslations()
+  const t = useTranslations();
   // 遅延初期化でCookie設定を読み込み
-  const [settings, setSettings] = useState<CookieConsent>(getInitialSettings)
+  const [settings, setSettings] = useState<CookieConsent>(getInitialSettings);
 
   const handleSave = () => {
     setCookieConsent({
       analytics: settings.analytics,
       marketing: settings.marketing,
-    })
-    toast.success(t('legal.cookies.settings.saved'))
-  }
+    });
+    toast.success(t('legal.cookies.settings.saved'));
+  };
 
   const handleAcceptAll = () => {
-    acceptAllCookies()
+    acceptAllCookies();
     setSettings({
       necessary: true,
       analytics: true,
       marketing: true,
       timestamp: Date.now(),
-    })
-    toast.success(t('legal.cookies.settings.acceptedAll'))
-  }
+    });
+    toast.success(t('legal.cookies.settings.acceptedAll'));
+  };
 
   const handleAcceptNecessaryOnly = () => {
-    acceptNecessaryOnly()
+    acceptNecessaryOnly();
     setSettings({
       necessary: true,
       analytics: false,
       marketing: false,
       timestamp: Date.now(),
-    })
-    toast.success(t('legal.cookies.settings.acceptedNecessaryOnly'))
-  }
+    });
+    toast.success(t('legal.cookies.settings.acceptedNecessaryOnly'));
+  };
 
   return (
     <div className="space-y-6">
@@ -89,7 +89,11 @@ export function CookieSettingsForm() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             {t('legal.cookies.categories.necessary.title')}
-            <Switch checked={true} disabled aria-label={t('legal.cookies.categories.necessary.ariaLabel')} />
+            <Switch
+              checked={true}
+              disabled
+              aria-label={t('legal.cookies.categories.necessary.ariaLabel')}
+            />
           </CardTitle>
           <CardDescription>{t('legal.cookies.categories.necessary.description')}</CardDescription>
         </CardHeader>
@@ -169,5 +173,5 @@ export function CookieSettingsForm() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

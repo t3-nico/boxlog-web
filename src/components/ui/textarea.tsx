@@ -1,6 +1,6 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'>>(
   ({ className, ...props }, ref) => {
@@ -15,14 +15,14 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
           'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
           // 無効状態
           'disabled:cursor-not-allowed disabled:opacity-50',
-          className
+          className,
         )}
         ref={ref}
         {...props}
       />
-    )
-  }
-)
-Textarea.displayName = 'Textarea'
+    );
+  },
+);
+Textarea.displayName = 'Textarea';
 
-export { Textarea }
+export { Textarea };

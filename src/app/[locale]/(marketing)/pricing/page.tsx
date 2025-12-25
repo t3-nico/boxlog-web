@@ -1,21 +1,21 @@
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { routing } from '@/i18n/routing'
-import { generateSEOMetadata } from '@/lib/metadata'
-import type { Metadata } from 'next'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { Container } from '@/components/ui/container';
+import { Heading, Text } from '@/components/ui/typography';
+import { routing } from '@/i18n/routing';
+import { generateSEOMetadata } from '@/lib/metadata';
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface PageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'marketing' });
 
   return generateSEOMetadata({
     title: t('pricing.title'),
@@ -27,14 +27,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? ['料金', 'プラン', 'サブスクリプション', 'SaaS料金', 'チームプラン', 'エンタープライズ']
         : ['pricing', 'plans', 'subscription', 'SaaS pricing', 'team plans', 'enterprise'],
     type: 'website',
-  })
+  });
 }
 
 export default async function PricingPage({ params }: PageProps) {
-  const { locale } = await params
-  setRequestLocale(locale)
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const t = await getTranslations({ locale, namespace: 'marketing' });
 
   return (
     <div className="bg-background min-h-screen">
@@ -51,5 +51,5 @@ export default async function PricingPage({ params }: PageProps) {
         </Container>
       </section>
     </div>
-  )
+  );
 }

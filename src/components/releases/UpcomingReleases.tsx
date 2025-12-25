@@ -1,22 +1,32 @@
-import { Calendar, Check, ChevronRight, Clipboard, Clock, Eye, Info, TestTube, Wrench } from 'lucide-react'
-import Link from 'next/link'
+import {
+  Calendar,
+  Check,
+  ChevronRight,
+  Clipboard,
+  Clock,
+  Eye,
+  Info,
+  TestTube,
+  Wrench,
+} from 'lucide-react';
+import Link from 'next/link';
 
 interface UpcomingRelease {
-  version: string
-  expectedDate: string
-  status: 'planning' | 'development' | 'testing' | 'review'
-  description: string
-  features: string[]
-  progress: number
+  version: string;
+  expectedDate: string;
+  status: 'planning' | 'development' | 'testing' | 'review';
+  description: string;
+  features: string[];
+  progress: number;
 }
 
 interface UpcomingReleasesProps {
-  upcomingReleases?: UpcomingRelease[]
+  upcomingReleases?: UpcomingRelease[];
 }
 
 export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProps = {}) {
   if (upcomingReleases.length === 0) {
-    return null
+    return null;
   }
 
   return (
@@ -25,7 +35,12 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
       <div className="border-border border-b px-6 py-4">
         <div className="flex items-center gap-4">
           <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-lg">
-            <svg className="text-info h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="text-info h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -52,23 +67,26 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
       <div className="border-border bg-muted border-t px-6 py-4">
         <div className="flex items-center justify-between">
           <p className="text-muted-foreground text-sm">リリース予定は変更される場合があります</p>
-          <Link href="/roadmap" className="text-primary hover:text-primary-hover text-sm font-medium transition-colors">
+          <Link
+            href="/roadmap"
+            className="text-primary hover:text-primary-hover text-sm font-medium transition-colors"
+          >
             ロードマップを見る →
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 interface UpcomingReleaseItemProps {
   release: {
-    version: string
-    expectedDate: string
-    features: string[]
-    status: 'planning' | 'development' | 'testing' | 'review'
-  }
-  isFirst: boolean
+    version: string;
+    expectedDate: string;
+    features: string[];
+    status: 'planning' | 'development' | 'testing' | 'review';
+  };
+  isFirst: boolean;
 }
 
 function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
@@ -97,19 +115,19 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
       icon: Eye,
       progress: 90,
     },
-  }
+  };
 
-  const config = statusConfig[release.status]
+  const config = statusConfig[release.status];
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ja-JP', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-    })
-  }
+    });
+  };
 
-  const isOverdue = new Date(release.expectedDate) < new Date()
+  const isOverdue = new Date(release.expectedDate) < new Date();
 
   return (
     <div className={`p-6 ${isFirst ? 'bg-state-active/30' : ''}`}>
@@ -120,7 +138,9 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
           <div className="mb-3 flex items-center gap-4">
             <span
               className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-bold ${
-                isFirst ? 'bg-primary text-primary-foreground' : 'bg-tag-neutral-bg text-tag-neutral-text'
+                isFirst
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-tag-neutral-bg text-tag-neutral-text'
               }`}
             >
               {release.version}
@@ -144,7 +164,9 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
           {/* Expected Date */}
           <div className="mb-4 flex items-center gap-2">
             <Calendar className="text-muted-foreground h-4 w-4" />
-            <span className={`text-sm ${isOverdue ? 'text-destructive font-medium' : 'text-muted-foreground'}`}>
+            <span
+              className={`text-sm ${isOverdue ? 'text-destructive font-medium' : 'text-muted-foreground'}`}
+            >
               予定日: {formatDate(release.expectedDate)}
               {isOverdue && ' (予定より遅れています)'}
             </span>
@@ -198,22 +220,22 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // Compact version for sidebar
 export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingReleasesProps = {}) {
-  const nextRelease = upcomingReleases[0]
+  const nextRelease = upcomingReleases[0];
   if (!nextRelease) {
-    return null
+    return null;
   }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ja-JP', {
       month: 'short',
       day: 'numeric',
-    })
-  }
+    });
+  };
 
   return (
     <div className="border-primary/30 from-state-active/50 to-state-active/30 rounded-xl border bg-gradient-to-br p-4">
@@ -227,7 +249,9 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-primary text-lg font-bold">{nextRelease.version}</span>
-          <span className="text-muted-foreground text-xs">{formatDate(nextRelease.expectedDate)}</span>
+          <span className="text-muted-foreground text-xs">
+            {formatDate(nextRelease.expectedDate)}
+          </span>
         </div>
 
         <div className="text-muted-foreground text-sm">
@@ -238,7 +262,9 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
             </div>
           ))}
           {nextRelease.features.length > 2 && (
-            <div className="text-primary mt-1 text-xs">+{nextRelease.features.length - 2} more features</div>
+            <div className="text-primary mt-1 text-xs">
+              +{nextRelease.features.length - 2} more features
+            </div>
           )}
         </div>
 
@@ -251,7 +277,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
 // Release Timeline Component
@@ -275,7 +301,9 @@ export function ReleaseTimeline() {
                 <span className="text-foreground text-sm font-semibold">v2.1.0</span>
                 <span className="text-success text-xs font-medium">リリース済み</span>
               </div>
-              <p className="text-muted-foreground text-sm">Advanced Analytics & Team Collaboration</p>
+              <p className="text-muted-foreground text-sm">
+                Advanced Analytics & Team Collaboration
+              </p>
               <p className="text-muted-foreground/70 mt-1 text-xs">2024年1月15日</p>
             </div>
           </div>
@@ -290,7 +318,9 @@ export function ReleaseTimeline() {
                 <span className="text-foreground text-sm font-semibold">v2.2.0</span>
                 <span className="text-info text-xs font-medium">開発中</span>
               </div>
-              <p className="text-muted-foreground text-sm">AI-Powered Insights & Mobile Enhancements</p>
+              <p className="text-muted-foreground text-sm">
+                AI-Powered Insights & Mobile Enhancements
+              </p>
               <p className="text-muted-foreground/70 mt-1 text-xs">予定: 2024年2月15日</p>
             </div>
           </div>
@@ -304,12 +334,14 @@ export function ReleaseTimeline() {
                 <span className="text-foreground text-sm font-semibold">v2.3.0</span>
                 <span className="text-muted-foreground text-xs font-medium">計画中</span>
               </div>
-              <p className="text-muted-foreground text-sm">Advanced Security & Enterprise Features</p>
+              <p className="text-muted-foreground text-sm">
+                Advanced Security & Enterprise Features
+              </p>
               <p className="text-muted-foreground/70 mt-1 text-xs">予定: 2024年3月20日</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

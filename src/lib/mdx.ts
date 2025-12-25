@@ -1,30 +1,39 @@
-import type { ContentCategory, ContentCollection, ContentData, FrontMatter, SerializedContent } from '@/types/content'
-import fs from 'fs'
-import matter from 'gray-matter'
-import { serialize } from 'next-mdx-remote/serialize'
-import path from 'path'
-import rehypeHighlight from 'rehype-highlight'
-import remarkGfm from 'remark-gfm'
+import type {
+  ContentCategory,
+  ContentCollection,
+  ContentData,
+  FrontMatter,
+  SerializedContent,
+} from '@/types/content';
+import fs from 'fs';
+import matter from 'gray-matter';
+import { serialize } from 'next-mdx-remote/serialize';
+import path from 'path';
+import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
 
-const CONTENT_PATH = path.join(process.cwd(), 'content/docs')
+const CONTENT_PATH = path.join(process.cwd(), 'content/docs');
 
 /**
  * 指定されたディレクトリからMDXファイルを取得
  */
 export async function getMDXFiles(dir: string): Promise<string[]> {
-  const fullPath = path.join(CONTENT_PATH, dir)
+  const fullPath = path.join(CONTENT_PATH, dir);
 
   try {
     if (!fs.existsSync(fullPath)) {
-      console.warn(`[MDX] Directory not found: ${fullPath}`)
-      return []
+      console.warn(`[MDX] Directory not found: ${fullPath}`);
+      return [];
     }
 
-    const files = fs.readdirSync(fullPath)
-    return files.filter((file) => file.endsWith('.mdx'))
+    const files = fs.readdirSync(fullPath);
+    return files.filter((file) => file.endsWith('.mdx'));
   } catch (error) {
-    console.error(`[MDX] Failed to read directory: ${fullPath}`, error instanceof Error ? error.message : error)
-    return []
+    console.error(
+      `[MDX] Failed to read directory: ${fullPath}`,
+      error instanceof Error ? error.message : error,
+    );
+    return [];
   }
 }
 
@@ -34,38 +43,38 @@ export async function getMDXFiles(dir: string): Promise<string[]> {
 export async function getMDXContent(filePath: string): Promise<ContentData | null> {
   // Validate filePath to prevent path traversal
   if (!filePath || filePath.includes('..')) {
-    console.warn(`[MDX] Invalid file path provided: ${filePath}`)
-    return null
+    console.warn(`[MDX] Invalid file path provided: ${filePath}`);
+    return null;
   }
 
-  const fullPath = path.join(CONTENT_PATH, filePath)
+  const fullPath = path.join(CONTENT_PATH, filePath);
 
   try {
     if (!fs.existsSync(fullPath)) {
-      return null
+      return null;
     }
 
-    const fileContent = fs.readFileSync(fullPath, 'utf8')
+    const fileContent = fs.readFileSync(fullPath, 'utf8');
 
-    let parsedMatter: { data: Record<string, unknown>; content: string }
+    let parsedMatter: { data: Record<string, unknown>; content: string };
     try {
-      parsedMatter = matter(fileContent)
+      parsedMatter = matter(fileContent);
     } catch (parseError) {
       console.error(
         `[MDX] Failed to parse frontmatter in: ${fullPath}`,
-        parseError instanceof Error ? parseError.message : parseError
-      )
-      return null
+        parseError instanceof Error ? parseError.message : parseError,
+      );
+      return null;
     }
 
-    const { data, content } = parsedMatter
+    const { data, content } = parsedMatter;
 
     // スラッグを生成（ファイルパスから）
-    const slug = filePath.replace(/\.mdx$/, '').replace(/\\/g, '/')
+    const slug = filePath.replace(/\.mdx$/, '').replace(/\\/g, '/');
 
     // カテゴリーをパスから抽出
-    const pathParts = filePath.split('/')
-    const category = pathParts[0] || 'general'
+    const pathParts = filePath.split('/');
+    const category = pathParts[0] || 'general';
 
     const frontMatter: FrontMatter = {
       title: (data.title as string) || 'Untitled',
@@ -81,17 +90,20 @@ export async function getMDXContent(filePath: string): Promise<ContentData | nul
       featured: (data.featured as boolean) || false,
       // AI/RAG用メタデータ
       ai: data.ai as FrontMatter['ai'] | undefined,
-    }
+    };
 
     return {
       frontMatter,
       content,
       slug,
       path: filePath,
-    }
+    };
   } catch (error) {
-    console.error(`[MDX] Failed to read file: ${fullPath}`, error instanceof Error ? error.message : error)
-    return null
+    console.error(
+      `[MDX] Failed to read file: ${fullPath}`,
+      error instanceof Error ? error.message : error,
+    );
+    return null;
   }
 }
 
@@ -100,8 +112,8 @@ export async function getMDXContent(filePath: string): Promise<ContentData | nul
  */
 export async function serializeMDX(content: string) {
   if (!content || typeof content !== 'string') {
-    console.error('[MDX] Invalid content provided to serializeMDX')
-    throw new Error('Invalid MDX content: content must be a non-empty string')
+    console.error('[MDX] Invalid content provided to serializeMDX');
+    throw new Error('Invalid MDX content: content must be a non-empty string');
   }
 
   try {
@@ -111,11 +123,11 @@ export async function serializeMDX(content: string) {
         rehypePlugins: [rehypeHighlight],
         format: 'mdx',
       },
-    })
+    });
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    console.error('[MDX] Failed to serialize MDX content:', errorMessage)
-    throw new Error(`Failed to serialize MDX content: ${errorMessage}`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('[MDX] Failed to serialize MDX content:', errorMessage);
+    throw new Error(`Failed to serialize MDX content: ${errorMessage}`);
   }
 }
 
@@ -123,109 +135,111 @@ export async function serializeMDX(content: string) {
  * 指定されたスラッグのMDXコンテンツを取得してシリアライズ
  */
 export async function getSerializedContent(slug: string): Promise<SerializedContent | null> {
-  const filePath = `${slug}.mdx`
-  const content = await getMDXContent(filePath)
+  const filePath = `${slug}.mdx`;
+  const content = await getMDXContent(filePath);
 
   if (!content) {
-    return null
+    return null;
   }
 
-  const mdxSource = await serializeMDX(content.content)
+  const mdxSource = await serializeMDX(content.content);
 
   return {
     mdxSource,
     frontMatter: content.frontMatter,
-  }
+  };
 }
 
 /**
  * MDXコンテンツを直接返す（next-mdx-remote/rsc用）
  */
-export async function getMDXContentForRSC(slug: string): Promise<{ content: string; frontMatter: FrontMatter } | null> {
-  const filePath = `${slug}.mdx`
-  const content = await getMDXContent(filePath)
+export async function getMDXContentForRSC(
+  slug: string,
+): Promise<{ content: string; frontMatter: FrontMatter } | null> {
+  const filePath = `${slug}.mdx`;
+  const content = await getMDXContent(filePath);
 
   if (!content) {
-    return null
+    return null;
   }
 
   return {
     content: content.content,
     frontMatter: content.frontMatter,
-  }
+  };
 }
 
 /**
  * すべてのMDXファイルを取得
  */
 export async function getAllContent(): Promise<ContentData[]> {
-  const allContent: ContentData[] = []
-  const errors: { path: string; error: unknown }[] = []
+  const allContent: ContentData[] = [];
+  const errors: { path: string; error: unknown }[] = [];
 
   async function scanDirectory(dir: string): Promise<void> {
-    const fullPath = path.join(CONTENT_PATH, dir)
+    const fullPath = path.join(CONTENT_PATH, dir);
 
     try {
       if (!fs.existsSync(fullPath)) {
         if (dir === '') {
-          console.warn(`[MDX] Content directory not found: ${fullPath}`)
+          console.warn(`[MDX] Content directory not found: ${fullPath}`);
         }
-        return
+        return;
       }
 
-      let items: fs.Dirent[]
+      let items: fs.Dirent[];
       try {
-        items = fs.readdirSync(fullPath, { withFileTypes: true })
+        items = fs.readdirSync(fullPath, { withFileTypes: true });
       } catch (readError) {
         console.error(
           `[MDX] Failed to read directory: ${fullPath}`,
-          readError instanceof Error ? readError.message : readError
-        )
-        return
+          readError instanceof Error ? readError.message : readError,
+        );
+        return;
       }
 
       for (const item of items) {
-        const itemPath = path.join(dir, item.name)
+        const itemPath = path.join(dir, item.name);
 
         try {
           if (item.isDirectory()) {
-            await scanDirectory(itemPath)
+            await scanDirectory(itemPath);
           } else if (item.name.endsWith('.mdx')) {
-            const content = await getMDXContent(itemPath)
+            const content = await getMDXContent(itemPath);
             if (content && !content.frontMatter.draft) {
-              allContent.push(content)
+              allContent.push(content);
             }
           }
         } catch (itemError) {
-          errors.push({ path: itemPath, error: itemError })
+          errors.push({ path: itemPath, error: itemError });
         }
       }
     } catch (error) {
-      errors.push({ path: dir, error })
+      errors.push({ path: dir, error });
     }
   }
 
   try {
-    await scanDirectory('')
+    await scanDirectory('');
 
     // Log any errors that occurred during scanning
     if (errors.length > 0) {
-      console.error(`[MDX] Failed to process ${errors.length} item(s):`)
+      console.error(`[MDX] Failed to process ${errors.length} item(s):`);
       errors.forEach(({ path: errorPath, error }) => {
-        console.error(`  - ${errorPath}:`, error instanceof Error ? error.message : error)
-      })
+        console.error(`  - ${errorPath}:`, error instanceof Error ? error.message : error);
+      });
     }
 
     // orderでソート
     return allContent.sort((a, b) => {
       if (a.frontMatter.category !== b.frontMatter.category) {
-        return a.frontMatter.category.localeCompare(b.frontMatter.category)
+        return a.frontMatter.category.localeCompare(b.frontMatter.category);
       }
-      return (a.frontMatter.order || 0) - (b.frontMatter.order || 0)
-    })
+      return (a.frontMatter.order || 0) - (b.frontMatter.order || 0);
+    });
   } catch (error) {
-    console.error('[MDX] Unexpected error in getAllContent:', error)
-    return []
+    console.error('[MDX] Unexpected error in getAllContent:', error);
+    return [];
   }
 }
 
@@ -233,26 +247,29 @@ export async function getAllContent(): Promise<ContentData[]> {
  * カテゴリー別にコンテンツを取得
  */
 export async function getContentByCategory(): Promise<ContentCollection> {
-  const allContent = await getAllContent()
-  const collection: ContentCollection = {}
+  const allContent = await getAllContent();
+  const collection: ContentCollection = {};
 
   for (const content of allContent) {
-    const category = content.frontMatter.category
+    const category = content.frontMatter.category;
     if (!collection[category]) {
-      collection[category] = []
+      collection[category] = [];
     }
-    collection[category].push(content)
+    collection[category].push(content);
   }
 
-  return collection
+  return collection;
 }
 
 /**
  * 指定されたカテゴリーのコンテンツを取得
  */
-export async function getContentBySlug(category: ContentCategory, slug: string): Promise<SerializedContent | null> {
-  const filePath = `${category}/${slug}.mdx`
-  return await getSerializedContent(filePath)
+export async function getContentBySlug(
+  category: ContentCategory,
+  slug: string,
+): Promise<SerializedContent | null> {
+  const filePath = `${category}/${slug}.mdx`;
+  return await getSerializedContent(filePath);
 }
 
 /**
@@ -262,26 +279,26 @@ export async function getContentBySlug(category: ContentCategory, slug: string):
  * - relatedDocsで指定されている: +5点
  */
 function calculateRelevanceScore(current: ContentData, candidate: ContentData): number {
-  let score = 0
-  const currentTags = current.frontMatter.tags || []
-  const candidateTags = candidate.frontMatter.tags || []
+  let score = 0;
+  const currentTags = current.frontMatter.tags || [];
+  const candidateTags = candidate.frontMatter.tags || [];
 
   // 共通タグのスコア
-  const commonTags = currentTags.filter((tag) => candidateTags.includes(tag))
-  score += commonTags.length * 2
+  const commonTags = currentTags.filter((tag) => candidateTags.includes(tag));
+  score += commonTags.length * 2;
 
   // 同じカテゴリのスコア
   if (current.frontMatter.category === candidate.frontMatter.category) {
-    score += 1
+    score += 1;
   }
 
   // relatedDocsで明示的に指定されている場合
-  const relatedDocs = current.frontMatter.ai?.relatedDocs || []
+  const relatedDocs = current.frontMatter.ai?.relatedDocs || [];
   if (relatedDocs.some((doc) => doc.includes(candidate.slug))) {
-    score += 5
+    score += 5;
   }
 
-  return score
+  return score;
 }
 
 /**
@@ -290,14 +307,14 @@ function calculateRelevanceScore(current: ContentData, candidate: ContentData): 
 export async function getRelatedContent(
   _category: string, // 後方互換性のため引数は残す
   currentSlug: string,
-  limit: number = 3
+  limit: number = 3,
 ): Promise<ContentData[]> {
-  const allContent = await getAllContent()
+  const allContent = await getAllContent();
 
   // 現在の記事を取得
-  const currentContent = allContent.find((content) => content.slug === currentSlug)
+  const currentContent = allContent.find((content) => content.slug === currentSlug);
   if (!currentContent) {
-    return []
+    return [];
   }
 
   // 自分自身を除外してスコアリング
@@ -309,81 +326,89 @@ export async function getRelatedContent(
     }))
     .filter(({ score }) => score > 0) // スコア0は除外
     .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
+    .slice(0, limit);
 
-  return scoredContent.map(({ content }) => content)
+  return scoredContent.map(({ content }) => content);
 }
 
 /**
  * 検索機能（タイトル、説明、タグで検索）
  */
 export async function searchContent(query: string): Promise<ContentData[]> {
-  const allContent = await getAllContent()
-  const lowercaseQuery = query.toLowerCase()
+  const allContent = await getAllContent();
+  const lowercaseQuery = query.toLowerCase();
 
   return allContent.filter((content) => {
-    const { title, description, tags } = content.frontMatter
+    const { title, description, tags } = content.frontMatter;
 
     return (
       title.toLowerCase().includes(lowercaseQuery) ||
       description.toLowerCase().includes(lowercaseQuery) ||
       tags?.some((tag) => tag.toLowerCase().includes(lowercaseQuery)) ||
       content.content.toLowerCase().includes(lowercaseQuery)
-    )
-  })
+    );
+  });
 }
 
 /**
  * パンくずリスト用のパス情報を生成
  */
-export function generateBreadcrumbs(slug: string): Array<{ title: string; href: string; clickable?: boolean }> {
-  const breadcrumbs = []
+export function generateBreadcrumbs(
+  slug: string,
+): Array<{ title: string; href: string; clickable?: boolean }> {
+  const breadcrumbs = [];
 
   // Getting Startedセクションのページの場合
-  const gettingStartedPages = ['introduction', 'installation', 'quickstart', 'configuration', 'first-steps']
+  const gettingStartedPages = [
+    'introduction',
+    'installation',
+    'quickstart',
+    'configuration',
+    'first-steps',
+  ];
   if (gettingStartedPages.includes(slug)) {
     breadcrumbs.push({
       title: 'Getting Started',
       href: '/docs',
       clickable: false,
-    })
+    });
 
     const pageTitle = slug
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
+      .join(' ');
 
     breadcrumbs.push({
       title: pageTitle,
       href: `/docs/${slug}`,
       clickable: true,
-    })
+    });
 
-    return breadcrumbs
+    return breadcrumbs;
   }
 
   // その他のページの場合（カテゴリー部分もクリック不可）
-  const parts = slug.split('/')
+  const parts = slug.split('/');
 
-  let currentPath = '/docs'
+  let currentPath = '/docs';
   for (let i = 0; i < parts.length; i++) {
-    const part = parts[i]
-    if (!part) continue
-    currentPath += `/${part}`
+    const part = parts[i];
+    if (!part) continue;
+    currentPath += `/${part}`;
     const title = part
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
+      .join(' ');
 
     // 最初の部分（カテゴリー）はクリック不可、最後の部分もクリック不可
-    const clickable = i !== 0 && i !== parts.length - 1
+    const clickable = i !== 0 && i !== parts.length - 1;
 
     breadcrumbs.push({
       title,
       href: currentPath,
       clickable,
-    })
+    });
   }
 
-  return breadcrumbs
+  return breadcrumbs;
 }

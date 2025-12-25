@@ -20,15 +20,15 @@
 
 ```typescript
 // ✅ 推奨
-useLocale.ts
-useSearch.ts
-useTheme.ts
-useMediaQuery.ts
+useLocale.ts;
+useSearch.ts;
+useTheme.ts;
+useMediaQuery.ts;
 
 // ❌ 禁止
-Locale.ts // "use"プレフィックスなし
-use - locale.ts // kebab-caseは不可
-UseLocale.ts // PascalCaseは不可
+Locale.ts; // "use"プレフィックスなし
+use - locale.ts; // kebab-caseは不可
+UseLocale.ts; // PascalCaseは不可
 ```
 
 ### 2. Client Component専用
@@ -38,9 +38,9 @@ UseLocale.ts // PascalCaseは不可
 
 ```typescript
 // ✅ 必須
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 export function useLocale() {
   // ...
@@ -55,11 +55,11 @@ export function useLocale() {
 ```typescript
 // ✅ 推奨: 明示的な型定義
 interface UseSearchReturn {
-  results: SearchResult[]
-  loading: boolean
-  error: string | null
-  search: (query: string) => Promise<void>
-  clearResults: () => void
+  results: SearchResult[];
+  loading: boolean;
+  error: string | null;
+  search: (query: string) => Promise<void>;
+  clearResults: () => void;
 }
 
 export function useSearch(): UseSearchReturn {
@@ -80,63 +80,63 @@ export function useSearch() {
 
 ```typescript
 // hooks/useSearch.ts
-'use client'
+'use client';
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react';
 
 export interface SearchResult {
-  id: string
-  title: string
-  description: string
-  url: string
-  type: 'blog' | 'release' | 'docs'
-  breadcrumbs: string[]
-  lastModified: string
-  tags: string[]
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  type: 'blog' | 'release' | 'docs';
+  breadcrumbs: string[];
+  lastModified: string;
+  tags: string[];
 }
 
 interface UseSearchReturn {
-  results: SearchResult[]
-  loading: boolean
-  error: string | null
-  search: (query: string) => Promise<void>
-  clearResults: () => void
+  results: SearchResult[];
+  loading: boolean;
+  error: string | null;
+  search: (query: string) => Promise<void>;
+  clearResults: () => void;
 }
 
 export function useSearch(): UseSearchReturn {
-  const [results, setResults] = useState<SearchResult[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const search = useCallback(async (query: string) => {
     if (!query.trim()) {
-      setResults([])
-      return
+      setResults([]);
+      return;
     }
 
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
       if (!response.ok) {
-        throw new Error('Search failed')
+        throw new Error('Search failed');
       }
 
-      const data = await response.json()
-      setResults(data.results || [])
+      const data = await response.json();
+      setResults(data.results || []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Search failed')
-      setResults([])
+      setError(err instanceof Error ? err.message : 'Search failed');
+      setResults([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [])
+  }, []);
 
   const clearResults = useCallback(() => {
-    setResults([])
-    setError(null)
-  }, [])
+    setResults([]);
+    setError(null);
+  }, []);
 
   return {
     results,
@@ -144,7 +144,7 @@ export function useSearch(): UseSearchReturn {
     error,
     search,
     clearResults,
-  }
+  };
 }
 ```
 
@@ -179,33 +179,33 @@ export function SearchComponent() {
 
 ```typescript
 // hooks/useToggle.ts
-'use client'
+'use client';
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react';
 
 interface UseToggleReturn {
-  value: boolean
-  toggle: () => void
-  setTrue: () => void
-  setFalse: () => void
+  value: boolean;
+  toggle: () => void;
+  setTrue: () => void;
+  setFalse: () => void;
 }
 
 export function useToggle(initialValue = false): UseToggleReturn {
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState(initialValue);
 
   const toggle = useCallback(() => {
-    setValue((prev) => !prev)
-  }, [])
+    setValue((prev) => !prev);
+  }, []);
 
   const setTrue = useCallback(() => {
-    setValue(true)
-  }, [])
+    setValue(true);
+  }, []);
 
   const setFalse = useCallback(() => {
-    setValue(false)
-  }, [])
+    setValue(false);
+  }, []);
 
-  return { value, toggle, setTrue, setFalse }
+  return { value, toggle, setTrue, setFalse };
 }
 ```
 
@@ -229,45 +229,45 @@ export function MyComponent() {
 
 ```typescript
 // hooks/useFetch.ts
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 interface UseFetchReturn<T> {
-  data: T | null
-  loading: boolean
-  error: string | null
-  refetch: () => void
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+  refetch: () => void;
 }
 
 export function useFetch<T>(url: string): UseFetchReturn<T> {
-  const [data, setData] = useState<T | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchData = async () => {
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     try {
-      const response = await fetch(url)
+      const response = await fetch(url);
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const result = await response.json()
-      setData(result)
+      const result = await response.json();
+      setData(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [url])
+    fetchData();
+  }, [url]);
 
-  return { data, loading, error, refetch: fetchData }
+  return { data, loading, error, refetch: fetchData };
 }
 ```
 
@@ -290,34 +290,34 @@ export function MyComponent() {
 
 ```typescript
 // hooks/useMediaQuery.ts
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(false)
+  const [matches, setMatches] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(query)
-    setMatches(mediaQuery.matches)
+    const mediaQuery = window.matchMedia(query);
+    setMatches(mediaQuery.matches);
 
     const handler = (event: MediaQueryListEvent) => {
-      setMatches(event.matches)
-    }
+      setMatches(event.matches);
+    };
 
     // Modern browsers
     if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handler)
-      return () => mediaQuery.removeEventListener('change', handler)
+      mediaQuery.addEventListener('change', handler);
+      return () => mediaQuery.removeEventListener('change', handler);
     }
     // Legacy browsers
     else {
-      mediaQuery.addListener(handler)
-      return () => mediaQuery.removeListener(handler)
+      mediaQuery.addListener(handler);
+      return () => mediaQuery.removeListener(handler);
     }
-  }, [query])
+  }, [query]);
 
-  return matches
+  return matches;
 }
 ```
 
@@ -341,51 +341,51 @@ export function MyComponent() {
 
 ```typescript
 // hooks/useLocalStorage.ts
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 interface UseLocalStorageReturn<T> {
-  value: T
-  setValue: (value: T) => void
-  removeValue: () => void
+  value: T;
+  setValue: (value: T) => void;
+  removeValue: () => void;
 }
 
 export function useLocalStorage<T>(key: string, initialValue: T): UseLocalStorageReturn<T> {
-  const [value, setValue] = useState<T>(initialValue)
+  const [value, setValue] = useState<T>(initialValue);
 
   // Read from localStorage on mount
   useEffect(() => {
     try {
-      const item = window.localStorage.getItem(key)
+      const item = window.localStorage.getItem(key);
       if (item) {
-        setValue(JSON.parse(item))
+        setValue(JSON.parse(item));
       }
     } catch (error) {
-      console.error(`Error reading localStorage key "${key}":`, error)
+      console.error(`Error reading localStorage key "${key}":`, error);
     }
-  }, [key])
+  }, [key]);
 
   // Update localStorage when value changes
   const setStoredValue = (newValue: T) => {
     try {
-      setValue(newValue)
-      window.localStorage.setItem(key, JSON.stringify(newValue))
+      setValue(newValue);
+      window.localStorage.setItem(key, JSON.stringify(newValue));
     } catch (error) {
-      console.error(`Error setting localStorage key "${key}":`, error)
+      console.error(`Error setting localStorage key "${key}":`, error);
     }
-  }
+  };
 
   const removeValue = () => {
     try {
-      setValue(initialValue)
-      window.localStorage.removeItem(key)
+      setValue(initialValue);
+      window.localStorage.removeItem(key);
     } catch (error) {
-      console.error(`Error removing localStorage key "${key}":`, error)
+      console.error(`Error removing localStorage key "${key}":`, error);
     }
-  }
+  };
 
-  return { value, setValue: setStoredValue, removeValue }
+  return { value, setValue: setStoredValue, removeValue };
 }
 ```
 
@@ -409,24 +409,24 @@ export function MyComponent() {
 
 ```typescript
 // hooks/useDebounce.ts
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 export function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
+      setDebouncedValue(value);
+    }, delay);
 
     return () => {
-      clearTimeout(handler)
-    }
-  }, [value, delay])
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
 
-  return debouncedValue
+  return debouncedValue;
 }
 ```
 
@@ -455,10 +455,10 @@ export function SearchComponent() {
 ### ❌ 間違い: 'use client'ディレクティブなし
 
 ```typescript
-import { useState } from 'react'
+import { useState } from 'react';
 
 export function useToggle() {
-  const [value, setValue] = useState(false)
+  const [value, setValue] = useState(false);
   // ...
 }
 ```
@@ -466,12 +466,12 @@ export function useToggle() {
 ### ✅ 修正: 'use client'追加
 
 ```typescript
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
 
 export function useToggle() {
-  const [value, setValue] = useState(false)
+  const [value, setValue] = useState(false);
   // ...
 }
 ```
@@ -482,9 +482,9 @@ export function useToggle() {
 
 ```typescript
 export function useSearch() {
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState([]);
   // ...
-  return { results, loading, error }
+  return { results, loading, error };
 }
 ```
 
@@ -492,21 +492,21 @@ export function useSearch() {
 
 ```typescript
 interface SearchResult {
-  id: string
-  title: string
+  id: string;
+  title: string;
   // ...
 }
 
 interface UseSearchReturn {
-  results: SearchResult[]
-  loading: boolean
-  error: string | null
+  results: SearchResult[];
+  loading: boolean;
+  error: string | null;
 }
 
 export function useSearch(): UseSearchReturn {
-  const [results, setResults] = useState<SearchResult[]>([])
+  const [results, setResults] = useState<SearchResult[]>([]);
   // ...
-  return { results, loading, error }
+  return { results, loading, error };
 }
 ```
 
@@ -518,8 +518,8 @@ export function useSearch(): UseSearchReturn {
 export function useSearch() {
   const search = async (query: string) => {
     // ...
-  }
-  return { search }
+  };
+  return { search };
 }
 ```
 
@@ -529,9 +529,9 @@ export function useSearch() {
 export function useSearch() {
   const search = useCallback(async (query: string) => {
     // ...
-  }, [])
+  }, []);
 
-  return { search }
+  return { search };
 }
 ```
 

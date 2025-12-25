@@ -1,20 +1,20 @@
-import type { Locale } from '@/i18n/routing'
-import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import type { Locale } from '@/i18n/routing';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 /**
  * OSSクレジット情報の型定義
  */
 interface CreditInfo {
-  name: string
-  version: string
-  license: string
-  repository?: string
-  publisher?: string
-  copyright?: string
+  name: string;
+  version: string;
+  license: string;
+  repository?: string;
+  publisher?: string;
+  copyright?: string;
 }
 
 /**
@@ -25,41 +25,41 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'Open Source Licenses - BoxLog',
     description:
       'License information for open source software used in BoxLog. List of third-party dependencies and their licenses.',
-  }
+  };
 }
 
 /**
  * OSSクレジットページ（Server Component）
  */
 interface PageProps {
-  params: Promise<{ locale?: Locale }>
+  params: Promise<{ locale?: Locale }>;
 }
 
 export default async function OSSCreditsPage({ params }: PageProps) {
   // localeパラメータを取得
-  const { locale = 'ja' } = await params
+  const { locale = 'ja' } = await params;
 
   // OSSクレジット情報を読み込み
-  const creditsPath = join(process.cwd(), 'public/oss-credits.json')
-  let credits: CreditInfo[] = []
-  let loadError = false
+  const creditsPath = join(process.cwd(), 'public/oss-credits.json');
+  let credits: CreditInfo[] = [];
+  let loadError = false;
 
   try {
-    const creditsData = readFileSync(creditsPath, 'utf-8')
-    credits = JSON.parse(creditsData) as CreditInfo[]
+    const creditsData = readFileSync(creditsPath, 'utf-8');
+    credits = JSON.parse(creditsData) as CreditInfo[];
   } catch (error) {
-    console.error('Failed to load OSS credits:', error)
-    loadError = true
+    console.error('Failed to load OSS credits:', error);
+    loadError = true;
   }
 
   // i18n翻訳取得
-  const t = await getTranslations({ locale })
+  const t = await getTranslations({ locale });
 
   // ライセンス統計を計算
-  const licenseStats: Record<string, number> = {}
+  const licenseStats: Record<string, number> = {};
   credits.forEach((credit) => {
-    licenseStats[credit.license] = (licenseStats[credit.license] || 0) + 1
-  })
+    licenseStats[credit.license] = (licenseStats[credit.license] || 0) + 1;
+  });
 
   return (
     <div className="bg-background container mx-auto min-h-screen max-w-6xl px-4 py-12 md:px-8 md:py-16">
@@ -106,7 +106,9 @@ export default async function OSSCreditsPage({ params }: PageProps) {
       {/* パッケージリスト */}
       {!loadError && (
         <div>
-          <h2 className="mb-4 text-xl font-semibold">{t('ossCredits.packageList', { count: credits.length })}</h2>
+          <h2 className="mb-4 text-xl font-semibold">
+            {t('ossCredits.packageList', { count: credits.length })}
+          </h2>
           <div className="space-y-4">
             {credits.map((credit) => (
               <div
@@ -116,7 +118,9 @@ export default async function OSSCreditsPage({ params }: PageProps) {
                 <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                   <h3 className="text-foreground text-lg font-semibold">
                     {credit.name}
-                    <span className="text-muted-foreground ml-2 text-sm font-normal">v{credit.version}</span>
+                    <span className="text-muted-foreground ml-2 text-sm font-normal">
+                      v{credit.version}
+                    </span>
                   </h3>
                   <span className="bg-primary/12 text-primary w-fit rounded px-3 py-1 text-sm font-medium">
                     {credit.license}
@@ -126,7 +130,8 @@ export default async function OSSCreditsPage({ params }: PageProps) {
                 <div className="text-muted-foreground space-y-1 text-sm">
                   {credit.publisher && (
                     <div>
-                      <span className="font-medium">{t('ossCredits.publisher')}:</span> {credit.publisher}
+                      <span className="font-medium">{t('ossCredits.publisher')}:</span>{' '}
+                      {credit.publisher}
                     </div>
                   )}
                   {credit.repository && (
@@ -153,7 +158,11 @@ export default async function OSSCreditsPage({ params }: PageProps) {
       <div className="bg-surface-container mt-12 rounded-xl p-6 text-center">
         <p className="text-muted-foreground mb-4 text-sm">{t('ossCredits.footer.notice')}</p>
         <div className="flex flex-col gap-2 md:flex-row md:justify-center md:gap-4">
-          <Link href="/THIRD_PARTY_NOTICES.txt" target="_blank" className="text-primary hover:underline">
+          <Link
+            href="/THIRD_PARTY_NOTICES.txt"
+            target="_blank"
+            className="text-primary hover:underline"
+          >
             {t('ossCredits.footer.thirdPartyNotices')}
           </Link>
           <Link
@@ -167,5 +176,5 @@ export default async function OSSCreditsPage({ params }: PageProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

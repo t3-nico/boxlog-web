@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { Copy, Facebook, Link2, Linkedin, Twitter } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
-import { toast } from 'sonner'
+import { Button } from '@/components/ui/button';
+import { Copy, Facebook, Link2, Linkedin, Twitter } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { toast } from 'sonner';
 
 interface ShareButtonProps {
-  title: string
-  slug: string
+  title: string;
+  slug: string;
 }
 
 export function ShareButton({ title, slug }: ShareButtonProps) {
-  const t = useTranslations('common.actions')
-  const locale = useLocale()
-  const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/${locale}/blog/${slug}`
-  const encodedTitle = encodeURIComponent(title)
-  const encodedUrl = encodeURIComponent(url)
+  const t = useTranslations('common.actions');
+  const locale = useLocale();
+  const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/${locale}/blog/${slug}`;
+  const encodedTitle = encodeURIComponent(title);
+  const encodedUrl = encodeURIComponent(url);
 
   const shareLinks = [
     {
@@ -36,25 +36,25 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
       color: 'hover:text-blue-700',
     },
-  ]
+  ];
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(url)
-      toast.success(t('urlCopied'))
+      await navigator.clipboard.writeText(url);
+      toast.success(t('urlCopied'));
     } catch (err) {
-      console.error('Failed to copy URL:', err)
-      toast.error(t('urlCopyFailed'))
+      console.error('Failed to copy URL:', err);
+      toast.error(t('urlCopyFailed'));
     }
-  }
+  };
 
   const handleNativeShare = () => {
     if (typeof window !== 'undefined' && 'share' in navigator) {
-      navigator.share({ title, url })
+      navigator.share({ title, url });
     } else {
-      handleCopyLink()
+      handleCopyLink();
     }
-  }
+  };
 
   return (
     <div className="flex items-center gap-2">
@@ -94,5 +94,5 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
         </Button>
       )}
     </div>
-  )
+  );
 }

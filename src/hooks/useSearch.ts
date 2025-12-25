@@ -1,52 +1,52 @@
-'use client'
+'use client';
 
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react';
 
 export interface SearchResult {
-  id: string
-  title: string
-  description: string
-  url: string
-  type: 'blog' | 'release' | 'docs'
-  breadcrumbs: string[]
-  lastModified: string
-  tags: string[]
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  type: 'blog' | 'release' | 'docs';
+  breadcrumbs: string[];
+  lastModified: string;
+  tags: string[];
 }
 
 export function useSearch() {
-  const [results, setResults] = useState<SearchResult[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const search = useCallback(async (query: string) => {
     if (!query.trim()) {
-      setResults([])
-      return
+      setResults([]);
+      return;
     }
 
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
       if (!response.ok) {
-        throw new Error('Search failed')
+        throw new Error('Search failed');
       }
 
-      const data = await response.json()
-      setResults(data.results || [])
+      const data = await response.json();
+      setResults(data.results || []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Search failed')
-      setResults([])
+      setError(err instanceof Error ? err.message : 'Search failed');
+      setResults([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [])
+  }, []);
 
   const clearResults = useCallback(() => {
-    setResults([])
-    setError(null)
-  }, [])
+    setResults([]);
+    setError(null);
+  }, []);
 
   return {
     results,
@@ -54,5 +54,5 @@ export function useSearch() {
     error,
     search,
     clearResults,
-  }
+  };
 }

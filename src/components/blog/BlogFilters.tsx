@@ -1,27 +1,27 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { getTagFilterColor } from '@/lib/tags-client'
-import { cn } from '@/lib/utils'
-import { Calendar, Filter, Tag, TrendingUp, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
-import { MobileFilters } from './MobileFilters'
+import { Button } from '@/components/ui/button';
+import { getTagFilterColor } from '@/lib/tags-client';
+import { cn } from '@/lib/utils';
+import { Calendar, Filter, Tag, TrendingUp, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
+import { MobileFilters } from './MobileFilters';
 
 interface BlogFiltersProps {
-  tags: string[]
-  className?: string
-  onFiltersChange?: (filters: BlogFilterState) => void
-  locale: string
+  tags: string[];
+  className?: string;
+  onFiltersChange?: (filters: BlogFilterState) => void;
+  locale: string;
 }
 
 export interface BlogFilterState {
-  selectedTags: string[]
-  searchQuery: string
-  sortBy: 'date' | 'popularity' | 'category'
-  sortOrder: 'asc' | 'desc'
-  tagOperator: 'AND' | 'OR'
+  selectedTags: string[];
+  searchQuery: string;
+  sortBy: 'date' | 'popularity' | 'category';
+  sortOrder: 'asc' | 'desc';
+  tagOperator: 'AND' | 'OR';
 }
 
 const defaultFilters: BlogFilterState = {
@@ -30,23 +30,23 @@ const defaultFilters: BlogFilterState = {
   sortBy: 'date',
   sortOrder: 'desc',
   tagOperator: 'OR',
-}
+};
 
 export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFiltersProps) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [isExpanded, setIsExpanded] = useState(true) // 常に開いた状態に変更
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [filters, setFilters] = useState<BlogFilterState>(defaultFilters)
-  const t = useTranslations('blog.filters')
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isExpanded, setIsExpanded] = useState(true); // 常に開いた状態に変更
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [filters, setFilters] = useState<BlogFilterState>(defaultFilters);
+  const t = useTranslations('blog.filters');
 
   // URLパラメータから初期状態を復元
   useEffect(() => {
-    const tagsParam = searchParams.get('tags')
-    const searchParam = searchParams.get('search')
-    const sortParam = searchParams.get('sort')
-    const orderParam = searchParams.get('order')
-    const operatorParam = searchParams.get('operator')
+    const tagsParam = searchParams.get('tags');
+    const searchParam = searchParams.get('search');
+    const sortParam = searchParams.get('sort');
+    const orderParam = searchParams.get('order');
+    const operatorParam = searchParams.get('operator');
 
     const initialFilters: BlogFilterState = {
       selectedTags: tagsParam ? tagsParam.split(',') : [],
@@ -54,90 +54,92 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
       sortBy: (sortParam as BlogFilterState['sortBy']) || 'date',
       sortOrder: (orderParam as BlogFilterState['sortOrder']) || 'desc',
       tagOperator: (operatorParam as BlogFilterState['tagOperator']) || 'OR',
-    }
+    };
 
-    setFilters(initialFilters)
+    setFilters(initialFilters);
     // 常に開いた状態を維持（URLパラメータに関係なく）
-    setIsExpanded(true)
-  }, [searchParams])
+    setIsExpanded(true);
+  }, [searchParams]);
 
   // フィルター状態をURLに反映
   const updateURL = useCallback(
     (newFilters: BlogFilterState) => {
-      const params = new URLSearchParams()
+      const params = new URLSearchParams();
 
       if (newFilters.selectedTags.length > 0) {
-        params.set('tags', newFilters.selectedTags.join(','))
+        params.set('tags', newFilters.selectedTags.join(','));
       }
       if (newFilters.searchQuery) {
-        params.set('search', newFilters.searchQuery)
+        params.set('search', newFilters.searchQuery);
       }
       if (newFilters.sortBy !== 'date') {
-        params.set('sort', newFilters.sortBy)
+        params.set('sort', newFilters.sortBy);
       }
       if (newFilters.sortOrder !== 'desc') {
-        params.set('order', newFilters.sortOrder)
+        params.set('order', newFilters.sortOrder);
       }
       if (newFilters.tagOperator !== 'OR') {
-        params.set('operator', newFilters.tagOperator)
+        params.set('operator', newFilters.tagOperator);
       }
 
-      const paramString = params.toString()
-      const newUrl = paramString ? `/blog?${paramString}` : '/blog'
-      router.push(newUrl, { scroll: false })
+      const paramString = params.toString();
+      const newUrl = paramString ? `/blog?${paramString}` : '/blog';
+      router.push(newUrl, { scroll: false });
     },
-    [router]
-  )
+    [router],
+  );
 
   // フィルター状態の更新
   const updateFilters = useCallback(
     (newFilters: BlogFilterState) => {
-      setFilters(newFilters)
-      updateURL(newFilters)
-      onFiltersChange?.(newFilters)
+      setFilters(newFilters);
+      updateURL(newFilters);
+      onFiltersChange?.(newFilters);
     },
-    [updateURL, onFiltersChange]
-  )
+    [updateURL, onFiltersChange],
+  );
 
   // タグの選択/選択解除
   const toggleTag = (tag: string) => {
     const newSelectedTags = filters.selectedTags.includes(tag)
       ? filters.selectedTags.filter((t) => t !== tag)
-      : [...filters.selectedTags, tag]
+      : [...filters.selectedTags, tag];
 
-    updateFilters({ ...filters, selectedTags: newSelectedTags })
-  }
+    updateFilters({ ...filters, selectedTags: newSelectedTags });
+  };
 
   // ソート設定の更新
   const handleSortChange = (sortBy: BlogFilterState['sortBy']) => {
-    updateFilters({ ...filters, sortBy })
-  }
+    updateFilters({ ...filters, sortBy });
+  };
 
   // ソート順の切り替え
   const toggleSortOrder = () => {
-    const newOrder = filters.sortOrder === 'asc' ? 'desc' : 'asc'
-    updateFilters({ ...filters, sortOrder: newOrder })
-  }
+    const newOrder = filters.sortOrder === 'asc' ? 'desc' : 'asc';
+    updateFilters({ ...filters, sortOrder: newOrder });
+  };
 
   // タグ演算子の切り替え
   const toggleTagOperator = () => {
-    const newOperator = filters.tagOperator === 'AND' ? 'OR' : 'AND'
-    updateFilters({ ...filters, tagOperator: newOperator })
-  }
+    const newOperator = filters.tagOperator === 'AND' ? 'OR' : 'AND';
+    updateFilters({ ...filters, tagOperator: newOperator });
+  };
 
   // フィルターをクリア
   const clearFilters = () => {
-    updateFilters(defaultFilters)
-    setIsExpanded(false)
-  }
+    updateFilters(defaultFilters);
+    setIsExpanded(false);
+  };
 
   // アクティブなフィルターの数
-  const activeFiltersCount = filters.selectedTags.length + (filters.searchQuery ? 1 : 0)
+  const activeFiltersCount = filters.selectedTags.length + (filters.searchQuery ? 1 : 0);
 
   return (
     <>
       {/* デスクトップ版 */}
-      <div className={cn('border-border bg-background hidden rounded-xl border lg:block', className)}>
+      <div
+        className={cn('border-border bg-background hidden rounded-xl border lg:block', className)}
+      >
         {/* フィルターヘッダー */}
         <div className="border-border border-b p-4">
           <div className="flex items-center justify-between">
@@ -153,7 +155,12 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
 
             <div className="flex items-center gap-2">
               {activeFiltersCount > 0 && (
-                <Button onClick={clearFilters} variant="ghost" size="sm" className="h-auto p-1 text-xs">
+                <Button
+                  onClick={clearFilters}
+                  variant="ghost"
+                  size="sm"
+                  className="h-auto p-1 text-xs"
+                >
                   {t('clearAll')}
                 </Button>
               )}
@@ -167,7 +174,9 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           <div className="space-y-6 p-4">
             {/* ソート */}
             <div>
-              <label className="text-muted-foreground mb-3 block text-sm font-medium">{t('sortBy')}</label>
+              <label className="text-muted-foreground mb-3 block text-sm font-medium">
+                {t('sortBy')}
+              </label>
               <div className="flex flex-wrap gap-2">
                 {[
                   { value: 'date', label: t('date'), icon: Calendar },
@@ -181,7 +190,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                     size="sm"
                     className={cn(
                       'inline-flex items-center gap-2',
-                      filters.sortBy === value && 'bg-primary/10 text-primary border-primary'
+                      filters.sortBy === value && 'bg-primary/10 text-primary border-primary',
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -204,7 +213,9 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
             {/* タグフィルター */}
             <div>
               <div className="mb-3 flex items-center justify-between">
-                <label className="text-muted-foreground text-sm font-medium">{t('filterByTags')}</label>
+                <label className="text-muted-foreground text-sm font-medium">
+                  {t('filterByTags')}
+                </label>
                 {filters.selectedTags.length > 1 && (
                   <Button
                     onClick={toggleTagOperator}
@@ -219,27 +230,31 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
 
               <div className="flex flex-wrap gap-2">
                 {tags.map((tag) => {
-                  const isSelected = filters.selectedTags.includes(tag)
+                  const isSelected = filters.selectedTags.includes(tag);
                   return (
                     <Button
                       key={tag}
                       onClick={() => toggleTag(tag)}
                       variant="outline"
                       size="sm"
-                      className={cn('inline-flex items-center gap-2 border', getTagFilterColor(tag, isSelected))}
+                      className={cn(
+                        'inline-flex items-center gap-2 border',
+                        getTagFilterColor(tag, isSelected),
+                      )}
                     >
                       <span>#</span>
                       {tag}
                       {isSelected && <X className="h-3 w-3" />}
                     </Button>
-                  )
+                  );
                 })}
               </div>
 
               {filters.selectedTags.length > 1 && (
                 <p className="text-muted-foreground mt-2 text-xs">
                   {t('showingPostsMessage', {
-                    match: filters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny'),
+                    match:
+                      filters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny'),
                   })}
                 </p>
               )}
@@ -277,5 +292,5 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
         locale={locale}
       />
     </>
-  )
+  );
 }

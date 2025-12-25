@@ -70,14 +70,14 @@ src/
 
 ```typescript
 // ✅ 推奨
-components / blog / PostCard.tsx // PascalCase（コンポーネント）
-lib / blog.ts // kebab-case（ユーティリティ）
-hooks / useSearch.ts // camelCase with "use" prefix
+components / blog / PostCard.tsx; // PascalCase（コンポーネント）
+lib / blog.ts; // kebab-case（ユーティリティ）
+hooks / useSearch.ts; // camelCase with "use" prefix
 
 // ❌ 禁止
-components / blog / postCard.tsx // camelCaseは不可
-lib / Blog.ts // PascalCaseは不可
-hooks / Locale.ts // "use"プレフィックスなし
+components / blog / postCard.tsx; // camelCaseは不可
+lib / Blog.ts; // PascalCaseは不可
+hooks / Locale.ts; // "use"プレフィックスなし
 ```
 
 ---
@@ -153,11 +153,11 @@ hooks / Locale.ts // "use"プレフィックスなし
 
 ```typescript
 // ✅ 推奨: 8の倍数使用
-className = 'p-4 gap-6 space-y-8 mt-12 mb-16'
+className = 'p-4 gap-6 space-y-8 mt-12 mb-16';
 // 4 = 16px, 6 = 24px, 8 = 32px, 12 = 48px, 16 = 64px
 
 // ❌ 禁止: 8の倍数以外
-className = 'p-3 gap-5 space-y-7 mt-11'
+className = 'p-3 gap-5 space-y-7 mt-11';
 ```
 
 ### レスポンシブデザイン
@@ -213,12 +213,12 @@ export default function PostCard({ post }: PostCardProps) {
 // ✅ 推奨: 明示的な型定義
 interface PostCardProps {
   post: {
-    title: string
-    slug: string
-    date: string
-    excerpt: string
-  }
-  locale: 'en' | 'ja'
+    title: string;
+    slug: string;
+    date: string;
+    excerpt: string;
+  };
+  locale: 'en' | 'ja';
 }
 
 export function PostCard({ post, locale }: PostCardProps) {
@@ -269,28 +269,28 @@ export function PostCard({ post }: PostCardProps) {
 
 ```typescript
 // 1. React/Next.js関連
-import { type Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
+import { type Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 
 // 2. 外部ライブラリ
-import { format } from 'date-fns'
-import { z } from 'zod'
+import { format } from 'date-fns';
+import { z } from 'zod';
 
 // 3. 内部コンポーネント
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { PostCard } from '@/components/blog/PostCard'
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { PostCard } from '@/components/blog/PostCard';
 
 // 4. 内部ライブラリ・ユーティリティ
-import { getAllPosts } from '@/lib/blog'
-import { cn } from '@/lib/utils'
+import { getAllPosts } from '@/lib/blog';
+import { cn } from '@/lib/utils';
 
 // 5. 型定義
-import type { Post } from '@/types/blog'
+import type { Post } from '@/types/blog';
 
 // 6. スタイル（通常は不要）
-import './styles.css'
+import './styles.css';
 ```
 
 ---
@@ -488,10 +488,10 @@ const SearchDialog = dynamic(() => import('@/components/search/SearchDialog'), {
 
 ```typescript
 // ✅ 推奨: Tree-shakeable import
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 
 // ❌ 禁止: 全体インポート
-import * as dateFns from 'date-fns'
+import * as dateFns from 'date-fns';
 ```
 
 ---

@@ -1,34 +1,34 @@
-import { Metadata } from 'next'
+import { Metadata } from 'next';
 
 export interface SEOData {
-  title?: string
-  description?: string
-  keywords?: string[]
-  image?: string
-  url?: string
-  type?: 'website' | 'article'
-  publishedTime?: string
-  modifiedTime?: string
-  authors?: string[]
-  section?: string
-  tags?: string[]
-  locale?: string
-  alternateLocales?: string[]
-  noindex?: boolean
-  hreflang?: Record<string, string>
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  image?: string;
+  url?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  authors?: string[];
+  section?: string;
+  tags?: string[];
+  locale?: string;
+  alternateLocales?: string[];
+  noindex?: boolean;
+  hreflang?: Record<string, string>;
 }
 
 export interface SiteConfig {
-  name: string
-  title: string
-  description: string
-  url: string
-  ogImage: string
-  creator: string
-  twitterHandle: string
-  keywords: string[]
-  locale: string
-  alternateLocales: string[]
+  name: string;
+  title: string;
+  description: string;
+  url: string;
+  ogImage: string;
+  creator: string;
+  twitterHandle: string;
+  keywords: string[];
+  locale: string;
+  alternateLocales: string[];
 }
 
 export const siteConfig: SiteConfig = {
@@ -54,7 +54,7 @@ export const siteConfig: SiteConfig = {
   ],
   locale: 'ja',
   alternateLocales: ['en', 'ja'],
-}
+};
 
 /**
  * Convert locale code to proper format
@@ -62,11 +62,11 @@ export const siteConfig: SiteConfig = {
 function formatLocaleForOpenGraph(locale: string): string {
   switch (locale) {
     case 'ja':
-      return 'ja_JP'
+      return 'ja_JP';
     case 'en':
-      return 'en_US'
+      return 'en_US';
     default:
-      return locale.includes('_') ? locale : `${locale}_${locale.toUpperCase()}`
+      return locale.includes('_') ? locale : `${locale}_${locale.toUpperCase()}`;
   }
 }
 
@@ -88,16 +88,16 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
     tags = [],
     locale = siteConfig.locale,
     noindex = false,
-  } = data
+  } = data;
 
-  const pageTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.title
+  const pageTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.title;
 
-  const pageUrl = url ? `${siteConfig.url}${url}` : siteConfig.url
+  const pageUrl = url ? `${siteConfig.url}${url}` : siteConfig.url;
   const pageImage = image
     ? `${siteConfig.url}${image}`
-    : `${siteConfig.url}/api/og?title=${encodeURIComponent(title || siteConfig.title)}`
+    : `${siteConfig.url}/api/og?title=${encodeURIComponent(title || siteConfig.title)}`;
 
-  const allKeywords = [...siteConfig.keywords, ...keywords, ...tags].filter(Boolean)
+  const allKeywords = [...siteConfig.keywords, ...keywords, ...tags].filter(Boolean);
 
   return {
     title: pageTitle,
@@ -161,27 +161,27 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
       yandex: process.env.YANDEX_VERIFICATION,
       yahoo: process.env.YAHOO_VERIFICATION,
     },
-  }
+  };
 }
 
 /**
  * Generate metadata for article pages (blog, releases, docs)
  */
 export function generateArticleMetadata(data: {
-  title: string
-  description: string
-  slug: string
-  publishedAt: string
-  updatedAt?: string
-  authors?: string[]
-  tags?: string[]
-  category?: string
-  type: 'blog' | 'docs' | 'release'
+  title: string;
+  description: string;
+  slug: string;
+  publishedAt: string;
+  updatedAt?: string;
+  authors?: string[];
+  tags?: string[];
+  category?: string;
+  type: 'blog' | 'docs' | 'release';
 }): Metadata {
-  const { type, slug, publishedAt, updatedAt, authors, tags, category } = data
+  const { type, slug, publishedAt, updatedAt, authors, tags, category } = data;
 
-  const urlPath = `/${type}/${slug}`
-  const section = category || type
+  const urlPath = `/${type}/${slug}`;
+  const section = category || type;
 
   return generateSEOMetadata({
     ...data,
@@ -193,7 +193,7 @@ export function generateArticleMetadata(data: {
     section,
     tags,
     keywords: tags,
-  })
+  });
 }
 
 type StructuredDataValue =
@@ -203,28 +203,28 @@ type StructuredDataValue =
   | null
   | undefined
   | StructuredDataValue[]
-  | { [key: string]: StructuredDataValue }
+  | { [key: string]: StructuredDataValue };
 type StructuredDataInput = {
-  title?: string
-  description?: string
-  image?: string
-  publishedAt?: string
-  updatedAt?: string
-  author?: string
-  url?: string
-  tags?: string[]
-  category?: string
-  articleType?: string
-  dependencies?: string[]
-  items?: Array<{ name: string; url: string }>
-  [key: string]: StructuredDataValue
-}
+  title?: string;
+  description?: string;
+  image?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  author?: string;
+  url?: string;
+  tags?: string[];
+  category?: string;
+  articleType?: string;
+  dependencies?: string[];
+  items?: Array<{ name: string; url: string }>;
+  [key: string]: StructuredDataValue;
+};
 
 /**
  * Generate structured data (JSON-LD)
  */
 export function generateStructuredData(type: string, data: StructuredDataInput) {
-  const baseUrl = siteConfig.url
+  const baseUrl = siteConfig.url;
 
   switch (type) {
     case 'organization':
@@ -246,7 +246,7 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
           contactType: 'Customer Service',
           email: 'support@yoursaas.com',
         },
-      }
+      };
 
     case 'website':
       return {
@@ -263,7 +263,7 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
           },
           'query-input': 'required name=search_term_string',
         },
-      }
+      };
 
     case 'article':
       return {
@@ -294,7 +294,7 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
         },
         keywords: Array.isArray(data.tags) ? data.tags.join(', ') : undefined,
         articleSection: data.category,
-      }
+      };
 
     case 'techArticle':
       return {
@@ -326,22 +326,24 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
         proficiencyLevel: 'Beginner',
         dependencies: data.dependencies || [],
         applicationCategory: 'DeveloperApplication',
-      }
+      };
 
     case 'breadcrumb':
       return {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
-        itemListElement: (data.items as Array<{ name: string; url: string }>).map((item, index: number) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          name: item.name,
-          item: `${baseUrl}${item.url}`,
-        })),
-      }
+        itemListElement: (data.items as Array<{ name: string; url: string }>).map(
+          (item, index: number) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: item.name,
+            item: `${baseUrl}${item.url}`,
+          }),
+        ),
+      };
 
     default:
-      return null
+      return null;
   }
 }
 
@@ -351,5 +353,5 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
  * Generate breadcrumb data
  */
 export function generateBreadcrumbs(items: Array<{ name: string; url: string }>) {
-  return [{ name: 'ホーム', url: '/' }, ...items]
+  return [{ name: 'ホーム', url: '/' }, ...items];
 }
