@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
 /**
  * APIエラーコード
@@ -14,13 +14,13 @@ export const ErrorCode = {
   INTERNAL_ERROR: 'INTERNAL_ERROR',
   CONFIG_ERROR: 'CONFIG_ERROR',
   EXTERNAL_SERVICE_ERROR: 'EXTERNAL_SERVICE_ERROR',
-} as const
+} as const;
 
-export type ErrorCodeType = (typeof ErrorCode)[keyof typeof ErrorCode]
+export type ErrorCodeType = (typeof ErrorCode)[keyof typeof ErrorCode];
 
 interface ApiErrorOptions {
-  code?: ErrorCodeType
-  details?: unknown
+  code?: ErrorCodeType;
+  details?: unknown;
 }
 
 /**
@@ -33,25 +33,25 @@ interface ApiErrorOptions {
  */
 export function apiError(message: string, status: number, options?: ApiErrorOptions) {
   const body: {
-    error: string
-    code?: ErrorCodeType
-    details?: unknown
-  } = { error: message }
+    error: string;
+    code?: ErrorCodeType;
+    details?: unknown;
+  } = { error: message };
 
   if (options?.code) {
-    body.code = options.code
+    body.code = options.code;
   }
 
   if (options?.details) {
-    body.details = options.details
+    body.details = options.details;
   }
 
-  return NextResponse.json(body, { status })
+  return NextResponse.json(body, { status });
 }
 
 /**
  * 成功レスポンスを生成
  */
 export function apiSuccess<T>(data: T, status = 200) {
-  return NextResponse.json(data, { status })
+  return NextResponse.json(data, { status });
 }

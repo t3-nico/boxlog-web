@@ -1,29 +1,36 @@
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Container } from '@/components/ui/container'
-import { Heading, Text } from '@/components/ui/typography'
-import { Link } from '@/i18n/navigation'
-import { routing } from '@/i18n/routing'
-import { generateSEOMetadata } from '@/lib/metadata'
-import { Check, Clock, HeadphonesIcon, Shield } from 'lucide-react'
-import type { Metadata } from 'next'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Container } from '@/components/ui/container';
+import { Heading, Text } from '@/components/ui/typography';
+import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
+import { generateSEOMetadata } from '@/lib/metadata';
+import { Check, Clock, HeadphonesIcon, Shield } from 'lucide-react';
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface PageProps {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 // ISR: マーケティングページは1時間ごとに再検証
-export const revalidate = 3600
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'marketing' });
 
   return generateSEOMetadata({
     title: t('pricing.title'),
@@ -35,24 +42,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? ['料金', 'プラン', 'サブスクリプション', 'SaaS料金', 'チームプラン', 'エンタープライズ']
         : ['pricing', 'plans', 'subscription', 'SaaS pricing', 'team plans', 'enterprise'],
     type: 'website',
-  })
+  });
 }
 
-const planKeys = ['starter', 'pro', 'enterprise'] as const
+const planKeys = ['starter', 'pro', 'enterprise'] as const;
 
 const trustIndicatorIcons = {
   trial: Clock,
   security: Shield,
   support: HeadphonesIcon,
-}
+};
 
-const trustIndicatorKeys = ['trial', 'security', 'support'] as const
+const trustIndicatorKeys = ['trial', 'security', 'support'] as const;
 
 export default async function PricingPage({ params }: PageProps) {
-  const { locale } = await params
-  setRequestLocale(locale)
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: 'marketing' })
+  const t = await getTranslations({ locale, namespace: 'marketing' });
 
   return (
     <div className="bg-background min-h-screen">
@@ -79,8 +86,8 @@ export default async function PricingPage({ params }: PageProps) {
         <Container>
           <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
             {planKeys.map((planKey) => {
-              const isPopular = planKey === 'pro'
-              const features = t.raw(`pricing.plans.${planKey}.features`) as string[]
+              const isPopular = planKey === 'pro';
+              const features = t.raw(`pricing.plans.${planKey}.features`) as string[];
 
               return (
                 <Card
@@ -94,12 +101,18 @@ export default async function PricingPage({ params }: PageProps) {
                   )}
                   <CardHeader className="text-center">
                     <CardTitle className="text-2xl">{t(`pricing.plans.${planKey}.name`)}</CardTitle>
-                    <CardDescription className="mt-2">{t(`pricing.plans.${planKey}.description`)}</CardDescription>
+                    <CardDescription className="mt-2">
+                      {t(`pricing.plans.${planKey}.description`)}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="flex-1">
                     <div className="mb-8 text-center">
-                      <span className="text-4xl font-bold">{t(`pricing.plans.${planKey}.price`)}</span>
-                      <span className="text-muted-foreground">{t(`pricing.plans.${planKey}.period`)}</span>
+                      <span className="text-4xl font-bold">
+                        {t(`pricing.plans.${planKey}.price`)}
+                      </span>
+                      <span className="text-muted-foreground">
+                        {t(`pricing.plans.${planKey}.period`)}
+                      </span>
                     </div>
                     <ul className="space-y-3">
                       {features.map((feature, index) => (
@@ -111,12 +124,17 @@ export default async function PricingPage({ params }: PageProps) {
                     </ul>
                   </CardContent>
                   <CardFooter>
-                    <Button className="w-full" variant={isPopular ? 'primary' : 'outline'} size="lg" asChild>
+                    <Button
+                      className="w-full"
+                      variant={isPopular ? 'primary' : 'outline'}
+                      size="lg"
+                      asChild
+                    >
                       <Link href="/contact">{t(`pricing.plans.${planKey}.cta`)}</Link>
                     </Button>
                   </CardFooter>
                 </Card>
-              )
+              );
             })}
           </div>
         </Container>
@@ -127,7 +145,7 @@ export default async function PricingPage({ params }: PageProps) {
         <Container>
           <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-3">
             {trustIndicatorKeys.map((key) => {
-              const Icon = trustIndicatorIcons[key]
+              const Icon = trustIndicatorIcons[key];
               return (
                 <div key={key} className="text-center">
                   <div className="bg-primary/10 mx-auto mb-4 inline-flex size-12 items-center justify-center rounded-full">
@@ -138,7 +156,7 @@ export default async function PricingPage({ params }: PageProps) {
                   </Heading>
                   <Text variant="muted">{t(`pricing.trustIndicators.${key}.description`)}</Text>
                 </div>
-              )
+              );
             })}
           </div>
         </Container>
@@ -176,5 +194,5 @@ export default async function PricingPage({ params }: PageProps) {
         </Container>
       </section>
     </div>
-  )
+  );
 }

@@ -1,25 +1,25 @@
-'use client'
+'use client';
 
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
-import { getTagFilterColor } from '@/lib/tags-client'
-import { cn } from '@/lib/utils'
-import { Calendar, Filter, Search, Tag, TrendingUp, X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
-import type { BlogFilterState } from './BlogFilters'
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { getTagFilterColor } from '@/lib/tags-client';
+import { cn } from '@/lib/utils';
+import { Calendar, Filter, Search, Tag, TrendingUp, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import type { BlogFilterState } from './BlogFilters';
 
 interface MobileFiltersProps {
-  isOpen: boolean
-  onClose: () => void
-  tags: string[]
-  filters: BlogFilterState
-  onFiltersChange: (filters: BlogFilterState) => void
-  onClearFilters: () => void
-  activeFiltersCount: number
-  locale: string
+  isOpen: boolean;
+  onClose: () => void;
+  tags: string[];
+  filters: BlogFilterState;
+  onFiltersChange: (filters: BlogFilterState) => void;
+  onClearFilters: () => void;
+  activeFiltersCount: number;
+  locale: string;
 }
 
 export function MobileFilters({
@@ -32,45 +32,45 @@ export function MobileFilters({
   activeFiltersCount,
   locale: _locale,
 }: MobileFiltersProps) {
-  const t = useTranslations('blog.filters')
-  const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters)
+  const t = useTranslations('blog.filters');
+  const [localFilters, setLocalFilters] = useState<BlogFilterState>(filters);
 
   // フィルター適用
   const applyFilters = () => {
-    onFiltersChange(localFilters)
-    onClose()
-  }
+    onFiltersChange(localFilters);
+    onClose();
+  };
 
   // タグの選択/選択解除
   const toggleTag = (tag: string) => {
     const newSelectedTags = localFilters.selectedTags.includes(tag)
       ? localFilters.selectedTags.filter((t) => t !== tag)
-      : [...localFilters.selectedTags, tag]
+      : [...localFilters.selectedTags, tag];
 
-    setLocalFilters({ ...localFilters, selectedTags: newSelectedTags })
-  }
+    setLocalFilters({ ...localFilters, selectedTags: newSelectedTags });
+  };
 
   // 検索クエリの更新
   const handleSearchChange = (query: string) => {
-    setLocalFilters({ ...localFilters, searchQuery: query })
-  }
+    setLocalFilters({ ...localFilters, searchQuery: query });
+  };
 
   // ソート設定の更新
   const handleSortChange = (sortBy: BlogFilterState['sortBy']) => {
-    setLocalFilters({ ...localFilters, sortBy })
-  }
+    setLocalFilters({ ...localFilters, sortBy });
+  };
 
   // ソート順の切り替え
   const toggleSortOrder = () => {
-    const newOrder = localFilters.sortOrder === 'asc' ? 'desc' : 'asc'
-    setLocalFilters({ ...localFilters, sortOrder: newOrder })
-  }
+    const newOrder = localFilters.sortOrder === 'asc' ? 'desc' : 'asc';
+    setLocalFilters({ ...localFilters, sortOrder: newOrder });
+  };
 
   // タグ演算子の切り替え
   const toggleTagOperator = () => {
-    const newOperator = localFilters.tagOperator === 'AND' ? 'OR' : 'AND'
-    setLocalFilters({ ...localFilters, tagOperator: newOperator })
-  }
+    const newOperator = localFilters.tagOperator === 'AND' ? 'OR' : 'AND';
+    setLocalFilters({ ...localFilters, tagOperator: newOperator });
+  };
 
   // フィルターをクリア
   const clearAllFilters = () => {
@@ -80,11 +80,11 @@ export function MobileFilters({
       sortBy: 'date',
       sortOrder: 'desc',
       tagOperator: 'OR',
-    }
-    setLocalFilters(defaultFilters)
-    onClearFilters()
-    onClose()
-  }
+    };
+    setLocalFilters(defaultFilters);
+    onClearFilters();
+    onClose();
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -107,7 +107,10 @@ export function MobileFilters({
           <div className="flex-1 space-y-6 overflow-y-auto p-6">
             {/* 検索 */}
             <div>
-              <label htmlFor="mobile-search" className="text-muted-foreground mb-2 block text-sm font-medium">
+              <label
+                htmlFor="mobile-search"
+                className="text-muted-foreground mb-2 block text-sm font-medium"
+              >
                 {t('searchArticles')}
               </label>
               <div className="relative">
@@ -136,7 +139,10 @@ export function MobileFilters({
 
             {/* ソート */}
             <div>
-              <span id="mobile-sort-label" className="text-muted-foreground mb-3 block text-sm font-medium">
+              <span
+                id="mobile-sort-label"
+                className="text-muted-foreground mb-3 block text-sm font-medium"
+              >
                 {t('sortBy')}
               </span>
               <div className="space-y-2" role="group" aria-labelledby="mobile-sort-label">
@@ -154,15 +160,23 @@ export function MobileFilters({
                     <Icon className="h-4 w-4" />
                     <span className="font-medium">{label}</span>
                     {localFilters.sortBy === value && (
-                      <span className="ml-auto text-sm">{localFilters.sortOrder === 'asc' ? '↑' : '↓'}</span>
+                      <span className="ml-auto text-sm">
+                        {localFilters.sortOrder === 'asc' ? '↑' : '↓'}
+                      </span>
                     )}
                   </Button>
                 ))}
 
                 {/* ソート順切り替え */}
-                <Button onClick={toggleSortOrder} variant="outline" className="w-full justify-between">
+                <Button
+                  onClick={toggleSortOrder}
+                  variant="outline"
+                  className="w-full justify-between"
+                >
                   <span className="font-medium">{t('order')}</span>
-                  <span className="text-sm">{localFilters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}</span>
+                  <span className="text-sm">
+                    {localFilters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
+                  </span>
                 </Button>
               </div>
             </div>
@@ -180,29 +194,39 @@ export function MobileFilters({
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-2" role="group" aria-labelledby="mobile-tags-label">
+              <div
+                className="grid grid-cols-2 gap-2"
+                role="group"
+                aria-labelledby="mobile-tags-label"
+              >
                 {tags.map((tag) => {
-                  const isSelected = localFilters.selectedTags.includes(tag)
+                  const isSelected = localFilters.selectedTags.includes(tag);
                   return (
                     <Button
                       key={tag}
                       onClick={() => toggleTag(tag)}
                       variant="outline"
-                      className={cn('justify-center gap-2 border', getTagFilterColor(tag, isSelected))}
+                      className={cn(
+                        'justify-center gap-2 border',
+                        getTagFilterColor(tag, isSelected),
+                      )}
                       size="sm"
                     >
                       <span>#</span>
                       <span className="truncate">{tag}</span>
                       {isSelected && <X className="h-3 w-3 flex-shrink-0" />}
                     </Button>
-                  )
+                  );
                 })}
               </div>
 
               {localFilters.selectedTags.length > 1 && (
                 <p className="text-muted-foreground mt-2 text-xs">
                   {t('showingPostsMessage', {
-                    match: localFilters.tagOperator === 'AND' ? t('showingPostsAll') : t('showingPostsAny'),
+                    match:
+                      localFilters.tagOperator === 'AND'
+                        ? t('showingPostsAll')
+                        : t('showingPostsAny'),
                   })}
                 </p>
               )}
@@ -223,5 +247,5 @@ export function MobileFilters({
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

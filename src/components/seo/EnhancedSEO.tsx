@@ -1,19 +1,19 @@
-import { Metadata } from 'next'
+import { Metadata } from 'next';
 
 interface SEOProps {
-  title?: string
-  description?: string
-  keywords?: string[]
-  image?: string
-  noIndex?: boolean
-  canonical?: string
-  type?: 'website' | 'article'
-  publishedTime?: string
-  modifiedTime?: string
-  author?: string
-  category?: string
-  tags?: string[]
-  url?: string // Add URL as optional prop
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  image?: string;
+  noIndex?: boolean;
+  canonical?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  category?: string;
+  tags?: string[];
+  url?: string; // Add URL as optional prop
 }
 
 export function generateEnhancedMetadata({
@@ -32,11 +32,12 @@ export function generateEnhancedMetadata({
   url,
 }: SEOProps): Metadata {
   // Get current URL for canonical and OG
-  const baseUrl = process.env.NODE_ENV === 'production' ? 'https://boxlog.app' : 'http://localhost:3000'
-  const currentUrl = canonical || url || baseUrl
+  const baseUrl =
+    process.env.NODE_ENV === 'production' ? 'https://boxlog.app' : 'http://localhost:3000';
+  const currentUrl = canonical || url || baseUrl;
 
-  const siteTitle = 'BoxLog'
-  const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`
+  const siteTitle = 'BoxLog';
+  const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 
   return {
     title: fullTitle,
@@ -139,15 +140,21 @@ export function generateEnhancedMetadata({
         should_fallback: true,
       },
     },
-  }
+  };
 }
 
 // JSON-LD 構造化データのコンポーネント
-type SchemaValue = string | number | boolean | null | SchemaValue[] | { [key: string]: SchemaValue }
+type SchemaValue =
+  | string
+  | number
+  | boolean
+  | null
+  | SchemaValue[]
+  | { [key: string]: SchemaValue };
 
 interface StructuredDataProps {
-  type: 'Organization' | 'WebSite' | 'Article' | 'Product' | 'SoftwareApplication'
-  data: Record<string, SchemaValue>
+  type: 'Organization' | 'WebSite' | 'Article' | 'Product' | 'SoftwareApplication';
+  data: Record<string, SchemaValue>;
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
@@ -155,34 +162,39 @@ export function StructuredData({ type, data }: StructuredDataProps) {
     '@context': 'https://schema.org',
     '@type': type,
     ...data,
-  }
+  };
 
   // 組織の基本情報
   if (type === 'Organization') {
-    baseStructure.name = 'BoxLog'
-    baseStructure.url = 'https://boxlog.app'
-    baseStructure.logo = 'https://boxlog.app/logo.png'
-    baseStructure.sameAs = ['https://twitter.com/boxlog_app', 'https://github.com/boxlog']
+    baseStructure.name = 'BoxLog';
+    baseStructure.url = 'https://boxlog.app';
+    baseStructure.logo = 'https://boxlog.app/logo.png';
+    baseStructure.sameAs = ['https://twitter.com/boxlog_app', 'https://github.com/boxlog'];
   }
 
   // ウェブサイトの情報
   if (type === 'WebSite') {
-    baseStructure.name = 'BoxLog'
-    baseStructure.url = 'https://boxlog.app'
+    baseStructure.name = 'BoxLog';
+    baseStructure.url = 'https://boxlog.app';
     baseStructure.potentialAction = {
       '@type': 'SearchAction',
       target: 'https://boxlog.app/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
-    }
+    };
   }
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(baseStructure) }} />
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(baseStructure) }}
+    />
+  );
 }
 
 // パンくずリスト用のコンポーネント
 interface BreadcrumbItem {
-  name: string
-  url: string
+  name: string;
+  url: string;
 }
 
 export function BreadcrumbStructuredData({ items }: { items: BreadcrumbItem[] }) {
@@ -195,15 +207,20 @@ export function BreadcrumbStructuredData({ items }: { items: BreadcrumbItem[] })
       name: item.name,
       item: item.url,
     })),
-  }
+  };
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+    />
+  );
 }
 
 // FAQ用の構造化データ
 interface FAQItem {
-  question: string
-  answer: string
+  question: string;
+  answer: string;
 }
 
 export function FAQStructuredData({ faqs }: { faqs: FAQItem[] }) {
@@ -218,20 +235,25 @@ export function FAQStructuredData({ faqs }: { faqs: FAQItem[] }) {
         text: faq.answer,
       },
     })),
-  }
+  };
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }} />
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
+    />
+  );
 }
 
 // 記事用の構造化データ
 interface ArticleStructuredDataProps {
-  headline: string
-  description: string
-  image: string
-  datePublished: string
-  dateModified?: string
-  author: string
-  category?: string
+  headline: string;
+  description: string;
+  image: string;
+  datePublished: string;
+  dateModified?: string;
+  author: string;
+  category?: string;
 }
 
 export function ArticleStructuredData({
@@ -264,7 +286,12 @@ export function ArticleStructuredData({
       },
     },
     ...(category && { category }),
-  }
+  };
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleData) }} />
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(articleData) }}
+    />
+  );
 }
