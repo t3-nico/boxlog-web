@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { apiError, apiSuccess, ErrorCode } from '@/lib/api-response'
+import { NextRequest } from 'next/server'
 import { z } from 'zod'
 
 const contactSchema = z.object({
@@ -18,8 +19,7 @@ export async function POST(request: NextRequest) {
     const githubRepo = process.env.GITHUB_CONTACT_REPO || 't3-nico/boxlog-web'
 
     if (!githubToken) {
-      console.error('GITHUB_TOKEN is not configured')
-      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
+      return apiError('Server configuration error', 500, { code: ErrorCode.CONFIG_ERROR })
     }
 
     const categoryLabels: Record<string, string> = {
@@ -61,23 +61,23 @@ ${data.message}
     })
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      console.error('GitHub API error:', response.status, errorData)
-      return NextResponse.json({ error: 'Failed to submit contact request' }, { status: 500 })
+      return apiError('Failed to submit contact request', 500, { code: ErrorCode.EXTERNAL_SERVICE_ERROR })
     }
 
     const issueData = await response.json()
 
-    return NextResponse.json({
+    return apiSuccess({
       success: true,
       issueNumber: issueData.number,
     })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: error.issues }, { status: 400 })
+      return apiError('Validation failed', 400, {
+        code: ErrorCode.VALIDATION_ERROR,
+        details: error.issues,
+      })
     }
 
-    console.error('Contact API error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return apiError('Internal server error', 500, { code: ErrorCode.INTERNAL_ERROR })
   }
 }

@@ -19,14 +19,12 @@ export function ShareButton({ title, version }: ShareButtonProps) {
         await navigator.share({ title: fullTitle, url })
       } catch {
         // User cancelled share
-        console.log('Share cancelled')
       }
     } else {
       try {
         await navigator.clipboard.writeText(url)
         toast.success('URL copied to clipboard')
-      } catch (err) {
-        console.error('Failed to copy URL:', err)
+      } catch {
         toast.error('Failed to copy URL')
       }
     }

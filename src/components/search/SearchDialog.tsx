@@ -77,8 +77,8 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           count: tag.count,
         }))
         setPopularTags(topTags)
-      } catch (error) {
-        console.error('Failed to fetch tags:', error)
+      } catch {
+        // タグ取得失敗時は空配列のまま（UIで対応）
       }
     }
 
@@ -94,8 +94,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           .then((data) => {
             setPreviewResults((data.results || []).slice(0, 3))
           })
-          .catch((error) => {
-            console.error('Failed to fetch search results:', error)
+          .catch(() => {
             setPreviewResults([])
           })
       }, 300) // 300ms debounce

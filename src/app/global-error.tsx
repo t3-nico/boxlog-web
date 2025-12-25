@@ -12,8 +12,10 @@ interface GlobalErrorProps {
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
-    // Log the error to your error reporting service
-    console.error('Global error:', error)
+    // 開発環境のみコンソール出力（本番環境ではエラー監視サービスに送信推奨）
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Global error:', error)
+    }
   }, [error])
 
   return (
