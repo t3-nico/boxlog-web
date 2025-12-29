@@ -6,6 +6,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Highlight } from '@/lib/highlight';
 import { getTagColor } from '@/lib/tags-client';
+import type { PopularTag, SearchResponse, TagResponse } from '@/types/api';
 import { Clock, Edit, FileText, Package, Search, Tag, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -33,25 +34,12 @@ const QUICK_LINK_CONFIGS: QuickLinkConfig[] = [
   { key: 'saasStrategy', href: '/blog/saas-strategy-2024', type: 'blog' },
 ];
 
-interface PopularTag {
-  name: string;
-  count: number;
-}
-
 export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) {
   const t = useTranslations('search');
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  interface PreviewResult {
-    url: string;
-    type: string;
-    title: string;
-    description: string;
-    breadcrumbs?: string[];
-    category?: string;
-  }
   const [popularTags, setPopularTags] = useState<PopularTag[]>([]);
-  const [previewResults, setPreviewResults] = useState<PreviewResult[]>([]);
+  const [previewResults, setPreviewResults] = useState<SearchResponse['results']>([]);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -78,10 +66,10 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           throw new Error('Failed to fetch tags');
         }
 
-        const allTags = await response.json();
+        const allTags: TagResponse[] = await response.json();
 
         if (isMounted) {
-          const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }) => ({
+          const topTags: PopularTag[] = allTags.slice(0, 8).map((tag) => ({
             name: tag.tag,
             count: tag.count,
           }));
@@ -115,7 +103,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
         signal: abortController.signal,
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then((data: SearchResponse) => {
           setPreviewResults((data.results || []).slice(0, 3));
         })
         .catch((error) => {
