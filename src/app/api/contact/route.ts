@@ -1,5 +1,6 @@
 import { apiError, apiSuccess, ErrorCode } from '@/lib/api-response';
 import { verifyCsrfToken } from '@/lib/csrf-protection';
+import { isStrictPrivacyMode, maskEmail } from '@/lib/privacy';
 import { contactRateLimit, getClientIp } from '@/lib/rate-limit';
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
@@ -55,10 +56,14 @@ export async function POST(request: NextRequest) {
       other: 'その他',
     };
 
+    // プライバシー保護: メールアドレスをマスク
+    // Strict モードではメールアドレスを完全にマスク、通常モードでは部分マスク
+    const displayEmail = isStrictPrivacyMode() ? '***@***' : maskEmail(data.email);
+
     const issueBody = `## お問い合わせ内容
 
 **送信者:** ${data.name}
-**メールアドレス:** ${data.email}
+**メールアドレス:** ${displayEmail}
 **カテゴリ:** ${categoryLabels[data.category] || data.category}
 
 ---
@@ -66,6 +71,15 @@ export async function POST(request: NextRequest) {
 ${data.message}
 
 ---
+
+> [!WARNING]
+> **個人情報保護について**
+>
+> この Issue には個人情報（名前、メールアドレス）が含まれています。
+> - リポジトリは **必ず private** に設定してください
+> - GDPR/個人情報保護法に準拠した取り扱いが必要です
+> - メールアドレス: \`${data.email}\` (実際の返信用)
+> - 作成日時: ${new Date().toISOString()}
 
 *このissueはコンタクトフォームから自動作成されました。*
 `;
