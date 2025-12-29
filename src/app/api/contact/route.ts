@@ -1,4 +1,5 @@
 import { apiError, apiSuccess, ErrorCode } from '@/lib/api-response';
+import { verifyCsrfToken } from '@/lib/csrf-protection';
 import { contactRateLimit, getClientIp } from '@/lib/rate-limit';
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
@@ -13,6 +14,13 @@ const contactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // CSRF トークン検証
+    if (!verifyCsrfToken(request)) {
+      return apiError('Invalid CSRF token', 403, {
+        code: ErrorCode.CSRF_INVALID,
+      });
+    }
+
     // レート制限チェック
     const ip = getClientIp(request);
     const { success, limit, remaining, reset } = await contactRateLimit.limit(ip);
