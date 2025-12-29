@@ -18,9 +18,6 @@ interface SearchDialogProps {
   locale: string;
 }
 
-// Mock data (in actual implementation, fetch from user history or external source)
-const RECENT_SEARCHES = ['API Authentication', 'Release v2.1.0', 'Next.js Guide'];
-
 interface QuickLinkConfig {
   key: 'quickStart' | 'apiReference' | 'latestRelease' | 'saasStrategy';
   href: string;
@@ -40,6 +37,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [popularTags, setPopularTags] = useState<PopularTag[]>([]);
   const [previewResults, setPreviewResults] = useState<SearchResponse['results']>([]);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -61,6 +59,37 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
     const normalizedQuery = query.toLowerCase();
     return popularTags.filter((tag) => tag.name.toLowerCase().includes(normalizedQuery));
   }, [popularTags, query]);
+
+  // localStorage から最近の検索を読み込む
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('recent-searches');
+      if (stored) {
+        const searches: string[] = JSON.parse(stored);
+        setRecentSearches(searches.slice(0, 5)); // 最大5件
+      }
+    } catch (error) {
+      console.error('[SearchDialog] Failed to load recent searches:', error);
+      setRecentSearches([]);
+    }
+  }, []);
+
+  // 検索を履歴に追加
+  const addToRecentSearches = (searchQuery: string) => {
+    if (!searchQuery.trim()) return;
+
+    try {
+      // 重複を削除して最新を先頭に追加
+      const updated = [searchQuery, ...recentSearches.filter((s) => s !== searchQuery)].slice(
+        0,
+        5,
+      );
+      localStorage.setItem('recent-searches', JSON.stringify(updated));
+      setRecentSearches(updated);
+    } catch (error) {
+      console.error('[SearchDialog] Failed to save recent search:', error);
+    }
+  };
 
   // 人気タグを取得
   useEffect(() => {
@@ -144,6 +173,9 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
   const handleSearch = (searchQuery: string) => {
     if (!searchQuery.trim()) return;
 
+    // 検索履歴に追加
+    addToRecentSearches(searchQuery);
+
     onOpenChange(false);
     router.push(`/${locale}/search?q=${encodeURIComponent(searchQuery)}`);
   };
@@ -222,13 +254,13 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           {!query ? (
             <div className="space-y-6 p-4">
               {/* 最近の検索 */}
-              {RECENT_SEARCHES.length > 0 && (
+              {recentSearches.length > 0 && (
                 <div>
                   <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
                     {t('recentSearches')}
                   </h3>
                   <div className="space-y-1">
-                    {RECENT_SEARCHES.map((search, index) => (
+                    {recentSearches.map((search, index) => (
                       <Button
                         key={index}
                         onClick={() => setQuery(search)}
