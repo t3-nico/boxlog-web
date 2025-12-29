@@ -7,6 +7,13 @@
  * - 必須Cookieは常に有効（無効化不可）
  */
 
+import {
+  createStructuredError,
+  ErrorCategory,
+  ErrorLevel,
+  logError,
+} from '@/lib/error-utils';
+
 export type CookieCategory = 'necessary' | 'analytics' | 'marketing';
 
 export interface CookieConsent {
@@ -41,7 +48,15 @@ export const getCookieConsent = (): CookieConsent | null => {
 
     return consent;
   } catch (error) {
-    console.error('Failed to parse cookie consent:', error);
+    logError(
+      createStructuredError(
+        'Failed to parse cookie consent from localStorage',
+        ErrorCategory.VALIDATION,
+        ErrorLevel.WARN,
+        'getCookieConsent',
+        error,
+      ),
+    );
     return null;
   }
 };
@@ -71,7 +86,15 @@ export const setCookieConsent = (
     // カスタムイベント発火（他のコンポーネントで同意状態変更を検知可能）
     window.dispatchEvent(new CustomEvent('cookieConsentChanged', { detail: newConsent }));
   } catch (error) {
-    console.error('Failed to save cookie consent:', error);
+    logError(
+      createStructuredError(
+        'Failed to save cookie consent to localStorage',
+        ErrorCategory.INTERNAL,
+        ErrorLevel.ERROR,
+        'setCookieConsent',
+        error,
+      ),
+    );
   }
 };
 
@@ -107,7 +130,15 @@ export const resetCookieConsent = (): void => {
     localStorage.removeItem(STORAGE_KEY);
     window.dispatchEvent(new CustomEvent('cookieConsentChanged', { detail: null }));
   } catch (error) {
-    console.error('Failed to reset cookie consent:', error);
+    logError(
+      createStructuredError(
+        'Failed to reset cookie consent',
+        ErrorCategory.INTERNAL,
+        ErrorLevel.ERROR,
+        'resetCookieConsent',
+        error,
+      ),
+    );
   }
 };
 
