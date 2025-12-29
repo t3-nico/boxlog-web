@@ -1,0 +1,53 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# TypeScript/JavaScript
+[*.{js,jsx,ts,tsx,mjs,cjs}]
+indent_size = 2
+max_line_length = 100
+
+# JSON
+[*.json]
+indent_size = 2
+
+# YAML
+[*.{yml,yaml}]
+indent_size = 2
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# MDX
+[*.mdx]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Shell scripts
+[*.sh]
+end_of_line = lf
+
+# Makefile
+[Makefile]
+indent_style = tab
+
+# Configuration files
+[{package.json,.prettierrc,.eslintrc}]
+indent_size = 2
+
+# Lock files (do not modify)
+[{package-lock.json,pnpm-lock.yaml,yarn.lock}]
+insert_final_newline = unset
+trim_trailing_whitespace = unset

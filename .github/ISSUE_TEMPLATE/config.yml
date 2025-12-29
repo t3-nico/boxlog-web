@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions & Discussions
+    url: https://github.com/t3-nico/boxlog-web/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📚 Documentation
+    url: https://github.com/t3-nico/boxlog-web/tree/main/docs
+    about: Read the project documentation
+  - name: 🔒 Security Vulnerability
+    url: https://github.com/t3-nico/boxlog-web/security/advisories/new
+    about: Report security vulnerabilities privately
