@@ -1,5 +1,6 @@
 import { apiError, ErrorCode } from '@/lib/api-response';
 import { getAllBlogPostMetas } from '@/lib/blog';
+import { getClientIp, searchRateLimit } from '@/lib/rate-limit';
 import { getAllReleaseMetas } from '@/lib/releases';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -101,6 +102,16 @@ async function getAllDocMetas(): Promise<DocMeta[]> {
 
 export async function GET(request: NextRequest) {
   try {
+    // レート制限チェック
+    const ip = getClientIp(request);
+    const { success } = await searchRateLimit.limit(ip);
+
+    if (!success) {
+      return apiError('Too many requests. Please try again later.', 429, {
+        code: ErrorCode.RATE_LIMIT_EXCEEDED,
+      });
+    }
+
     const searchParams = request.nextUrl.searchParams;
     const query = searchParams.get('q');
 
