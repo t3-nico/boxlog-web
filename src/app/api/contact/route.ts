@@ -1,4 +1,5 @@
 import { apiError, apiSuccess, ErrorCode } from '@/lib/api-response';
+import { contactRateLimit, getClientIp } from '@/lib/rate-limit';
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
 
@@ -12,6 +13,21 @@ const contactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // レート制限チェック
+    const ip = getClientIp(request);
+    const { success, limit, remaining, reset } = await contactRateLimit.limit(ip);
+
+    if (!success) {
+      return apiError('Too many requests. Please try again later.', 429, {
+        code: ErrorCode.RATE_LIMIT_EXCEEDED,
+        details: {
+          limit,
+          remaining,
+          reset: new Date(reset).toISOString(),
+        },
+      });
+    }
+
     const body = await request.json();
     const data = contactSchema.parse(body);
 
@@ -46,32 +62,55 @@ ${data.message}
 *このissueはコンタクトフォームから自動作成されました。*
 `;
 
-    const response = await fetch(`https://api.github.com/repos/${githubRepo}/issues`, {
-      method: 'POST',
-      headers: {
-        Authorization: `token ${githubToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/vnd.github.v3+json',
-      },
-      body: JSON.stringify({
-        title: `[Contact] ${data.subject}`,
-        body: issueBody,
-        labels: ['contact', 'triage'],
-      }),
-    });
+    // タイムアウト設定（10秒）
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    if (!response.ok) {
+    try {
+      const response = await fetch(`https://api.github.com/repos/${githubRepo}/issues`, {
+        method: 'POST',
+        headers: {
+          Authorization: `token ${githubToken}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/vnd.github.v3+json',
+        },
+        body: JSON.stringify({
+          title: `[Contact] ${data.subject}`,
+          body: issueBody,
+          labels: ['contact', 'triage'],
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        return apiError('Failed to submit contact request', 500, {
+          code: ErrorCode.EXTERNAL_SERVICE_ERROR,
+        });
+      }
+
+      const issueData = await response.json();
+
+      return apiSuccess({
+        success: true,
+        issueNumber: issueData.number,
+      });
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+
+      // タイムアウトエラー
+      if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+        return apiError('Request timeout. Please try again later.', 504, {
+          code: ErrorCode.TIMEOUT,
+        });
+      }
+
+      // その他の fetch エラー
       return apiError('Failed to submit contact request', 500, {
         code: ErrorCode.EXTERNAL_SERVICE_ERROR,
       });
     }
-
-    const issueData = await response.json();
-
-    return apiSuccess({
-      success: true,
-      issueNumber: issueData.number,
-    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return apiError('Validation failed', 400, {

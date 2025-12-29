@@ -9,11 +9,13 @@ export const ErrorCode = {
   BAD_REQUEST: 'BAD_REQUEST',
   NOT_FOUND: 'NOT_FOUND',
   QUERY_TOO_LONG: 'QUERY_TOO_LONG',
+  RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
 
   // 500系
   INTERNAL_ERROR: 'INTERNAL_ERROR',
   CONFIG_ERROR: 'CONFIG_ERROR',
   EXTERNAL_SERVICE_ERROR: 'EXTERNAL_SERVICE_ERROR',
+  TIMEOUT: 'TIMEOUT',
 } as const;
 
 export type ErrorCodeType = (typeof ErrorCode)[keyof typeof ErrorCode];
