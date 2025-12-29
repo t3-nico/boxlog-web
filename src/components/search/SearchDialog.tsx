@@ -10,7 +10,7 @@ import type { PopularTag, SearchResponse, TagResponse } from '@/types/api';
 import { Clock, Edit, FileText, Package, Search, Tag, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface SearchDialogProps {
   open: boolean;
@@ -43,13 +43,24 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // クイックリンクを翻訳から生成
-  const QUICK_LINKS = QUICK_LINK_CONFIGS.map((config) => ({
-    title: t(`quickLinks.${config.key}.title`),
-    description: t(`quickLinks.${config.key}.description`),
-    href: `/${locale}${config.href}`,
-    type: config.type,
-  }));
+  // クイックリンクを翻訳から生成（メモ化）
+  const QUICK_LINKS = useMemo(
+    () =>
+      QUICK_LINK_CONFIGS.map((config) => ({
+        title: t(`quickLinks.${config.key}.title`),
+        description: t(`quickLinks.${config.key}.description`),
+        href: `/${locale}${config.href}`,
+        type: config.type,
+      })),
+    [t, locale],
+  );
+
+  // タグフィルタリング（メモ化）
+  const matchedTags = useMemo(() => {
+    if (!query) return [];
+    const normalizedQuery = query.toLowerCase();
+    return popularTags.filter((tag) => tag.name.toLowerCase().includes(normalizedQuery));
+  }, [popularTags, query]);
 
   // 人気タグを取得
   useEffect(() => {
@@ -380,14 +391,8 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               )}
 
               {/* タグ検索候補 */}
-              {(() => {
-                const matchedTags = popularTags.filter((tag) =>
-                  tag.name.toLowerCase().includes(query.toLowerCase()),
-                );
-
-                if (matchedTags.length > 0) {
-                  return (
-                    <div>
+              {matchedTags.length > 0 && (
+                <div>
                       <p className="text-muted-foreground mb-2 text-xs">{t('relatedTags')}</p>
                       <div className="space-y-1">
                         {matchedTags.map((tag, index) => (
@@ -421,10 +426,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         ))}
                       </div>
                     </div>
-                  );
-                }
-                return null;
-              })()}
+              )}
             </div>
           )}
         </div>
