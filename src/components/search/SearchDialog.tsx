@@ -65,44 +65,70 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
   // 人気タグを取得
   useEffect(() => {
+    let isMounted = true;
+    const abortController = new AbortController();
+
     const fetchPopularTags = async () => {
       try {
-        const response = await fetch('/api/tags');
+        const response = await fetch('/api/tags', {
+          signal: abortController.signal,
+        });
+
         if (!response.ok) {
           throw new Error('Failed to fetch tags');
         }
+
         const allTags = await response.json();
-        const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }) => ({
-          name: tag.tag,
-          count: tag.count,
-        }));
-        setPopularTags(topTags);
-      } catch {
-        // タグ取得失敗時は空配列のまま（UIで対応）
+
+        if (isMounted) {
+          const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }) => ({
+            name: tag.tag,
+            count: tag.count,
+          }));
+          setPopularTags(topTags);
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name !== 'AbortError') {
+          console.error('[SearchDialog] Failed to fetch popular tags:', error);
+        }
       }
     };
 
     fetchPopularTags();
+
+    return () => {
+      isMounted = false;
+      abortController.abort();
+    };
   }, []);
 
   // 検索プレビューを取得
   useEffect(() => {
-    if (query.length > 2) {
-      const timeoutId = setTimeout(() => {
-        fetch(`/api/search?q=${encodeURIComponent(query)}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setPreviewResults((data.results || []).slice(0, 3));
-          })
-          .catch(() => {
-            setPreviewResults([]);
-          });
-      }, 300); // 300ms debounce
-
-      return () => clearTimeout(timeoutId);
+    if (query.length <= 2) {
+      setPreviewResults([]);
+      return;
     }
-    setPreviewResults([]);
-    return;
+
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => {
+      fetch(`/api/search?q=${encodeURIComponent(query)}`, {
+        signal: abortController.signal,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setPreviewResults((data.results || []).slice(0, 3));
+        })
+        .catch((error) => {
+          if (error instanceof Error && error.name !== 'AbortError') {
+            setPreviewResults([]);
+          }
+        });
+    }, 300); // 300ms debounce
+
+    return () => {
+      clearTimeout(timeoutId);
+      abortController.abort();
+    };
   }, [query]);
 
   useEffect(() => {
