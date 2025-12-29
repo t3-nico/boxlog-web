@@ -2,6 +2,7 @@ import { apiError, apiSuccess, ErrorCode } from '@/lib/api-response';
 import { verifyCsrfToken } from '@/lib/csrf-protection';
 import { isStrictPrivacyMode, maskEmail } from '@/lib/privacy';
 import { contactRateLimit, getClientIp } from '@/lib/rate-limit';
+import { env } from '@/config/env';
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
 
@@ -40,8 +41,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = contactSchema.parse(body);
 
-    const githubToken = process.env.GITHUB_TOKEN;
-    const githubRepo = process.env.GITHUB_CONTACT_REPO || 't3-nico/boxlog-web';
+    const githubToken = env.GITHUB_TOKEN;
+    const githubRepo = env.GITHUB_CONTACT_REPO || 't3-nico/boxlog-web';
 
     if (!githubToken) {
       return apiError('Server configuration error', 500, { code: ErrorCode.CONFIG_ERROR });

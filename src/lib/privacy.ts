@@ -1,3 +1,5 @@
+import { env } from '@/config/env';
+
 /**
  * プライバシー保護ユーティリティ
  *
@@ -67,5 +69,5 @@ export async function hashString(value: string): Promise<string> {
  * より厳格なプライバシー保護を適用
  */
 export function isStrictPrivacyMode(): boolean {
-  return process.env.PRIVACY_PROTECTION_MODE === 'strict';
+  return env.PRIVACY_PROTECTION_MODE === 'strict';
 }

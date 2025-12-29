@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { env, getSiteUrl } from '@/config/env';
 
 export interface SEOData {
   title?: string;
@@ -36,7 +37,7 @@ export const siteConfig: SiteConfig = {
   title: 'BoxLog - スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム',
   description:
     'BoxLogで次世代のSaaSアプリケーションを構築、デプロイ、スケール。認証、ユーザー管理、請求処理など包括的なツールを提供します。',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://boxlog.app',
+  url: getSiteUrl(),
   ogImage: '/og-image.png',
   creator: 'BoxLog Team',
   twitterHandle: '@boxlog_app',
@@ -187,9 +188,9 @@ export function generateSEOMetadata(data: SEOData = {}): Metadata {
       site: siteConfig.twitterHandle,
     },
     verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION,
-      yandex: process.env.YANDEX_VERIFICATION,
-      yahoo: process.env.YAHOO_VERIFICATION,
+      google: env.GOOGLE_SITE_VERIFICATION,
+      yandex: env.YANDEX_VERIFICATION,
+      yahoo: env.YAHOO_VERIFICATION,
     },
   };
 }

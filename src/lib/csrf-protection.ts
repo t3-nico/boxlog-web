@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { env } from '@/config/env';
 
 /**
  * CSRF 保護ミドルウェア
@@ -19,13 +20,13 @@ function getAllowedOrigins(): string[] {
   const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
 
   // Vercel のプレビュー/本番環境
-  if (process.env.VERCEL_URL) {
-    allowedOrigins.push(`https://${process.env.VERCEL_URL}`);
+  if (env.VERCEL_URL) {
+    allowedOrigins.push(`https://${env.VERCEL_URL}`);
   }
 
   // 本番ドメイン
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    allowedOrigins.push(process.env.NEXT_PUBLIC_APP_URL);
+  if (env.NEXT_PUBLIC_APP_URL) {
+    allowedOrigins.push(env.NEXT_PUBLIC_APP_URL);
   }
 
   // デフォルトの本番ドメイン
@@ -100,7 +101,7 @@ export function verifyCsrfToken(request: NextRequest): boolean {
 
   // Origin も Referer もない場合は拒否
   // ただし、開発環境では警告のみ
-  if (process.env.NODE_ENV === 'development') {
+  if (env.NODE_ENV === 'development') {
     console.warn('[CSRF] No Origin or Referer header found, but allowing in development');
     return true;
   }
@@ -158,7 +159,7 @@ export function csrfVerificationDetails(request: NextRequest): {
 
   // ヘッダーなし
   return {
-    valid: process.env.NODE_ENV === 'development',
+    valid: env.NODE_ENV === 'development',
     reason: 'Missing Origin and Referer headers',
     allowedOrigins,
   };
