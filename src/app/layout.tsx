@@ -5,29 +5,11 @@ import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
-import { Inter, Noto_Sans_JP } from 'next/font/google';
 import './globals.css';
 
-// next/font による最適化されたフォント読み込み（Variable Font: optical size軸有効）
-// preload: true でLCP改善（デフォルトでtrueだが明示的に指定）
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-  axes: ['opsz'],
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
-});
-
-// 日本語フォント（GAFA方針準拠: Google = Noto Sans JP）
-const notoSansJP = Noto_Sans_JP({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  display: 'swap',
-  variable: '--font-noto-jp',
-  preload: true,
-  fallback: ['Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'sans-serif'],
-});
+// NOTE: Google Fonts アクセスが制限されているビルド環境向けに一時的にシステムフォントを使用
+// 本番環境では next/font/google を使用することを推奨
+// TODO: ビルド環境でGoogle Fontsアクセスが可能になったら next/font/google に戻す
 
 export const metadata: Metadata = generateEnhancedMetadata({
   title: 'BoxLog - Modern SaaS Platform',
@@ -48,7 +30,7 @@ export const metadata: Metadata = generateEnhancedMetadata({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${notoSansJP.variable}`}>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <StructuredData
           type="Organization"

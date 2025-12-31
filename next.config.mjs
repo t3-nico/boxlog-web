@@ -129,6 +129,8 @@ const nextConfig = {
   },
 
   experimental: {
+    // Turbopack TLS証明書設定（Google Fonts等の外部リソース取得用）
+    turbopackUseSystemTlsCerts: true,
     // Next.js 15 Router Cache再有効化
     staleTimes: {
       dynamic: 30, // 動的ルート: 30秒キャッシュ
