@@ -186,6 +186,11 @@ function parseBoolean(value: string | undefined): boolean | undefined {
  * 必須環境変数のチェック
  */
 function validateRequiredEnv(env: Partial<EnvConfig>): void {
+  // CI環境ではビルドチェックのみなのでスキップ
+  if (env.CI) {
+    return;
+  }
+
   const errors: string[] = [];
 
   // Production環境では NEXT_PUBLIC_APP_URL が必須
