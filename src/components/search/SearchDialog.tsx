@@ -80,10 +80,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
     try {
       // 重複を削除して最新を先頭に追加
-      const updated = [searchQuery, ...recentSearches.filter((s) => s !== searchQuery)].slice(
-        0,
-        5,
-      );
+      const updated = [searchQuery, ...recentSearches.filter((s) => s !== searchQuery)].slice(0, 5);
       localStorage.setItem('recent-searches', JSON.stringify(updated));
       setRecentSearches(updated);
     } catch (error) {
@@ -425,39 +422,39 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               {/* タグ検索候補 */}
               {matchedTags.length > 0 && (
                 <div>
-                      <p className="text-muted-foreground mb-2 text-xs">{t('relatedTags')}</p>
-                      <div className="space-y-1">
-                        {matchedTags.map((tag, index) => (
-                          <Button
-                            key={index}
-                            onClick={() => handleTagClick(tag.name)}
-                            variant="ghost"
-                            className="flex h-auto w-full items-center justify-start gap-4 p-2"
-                          >
-                            <div className="mt-0.5">
-                              <Tag className="text-muted-foreground h-4 w-4" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="mb-1 flex items-center gap-2">
-                                <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                                  {t('tags')}
-                                </span>
-                                <span className="text-muted-foreground/50 text-xs">•</span>
-                                <span className="text-muted-foreground text-xs">
-                                  {tag.count} {t('articles')}
-                                </span>
-                              </div>
-                              <div className="text-foreground truncate text-sm font-medium">
-                                <Highlight text={tag.name} query={query} />
-                              </div>
-                            </div>
-                            <Badge variant="outline" className="self-start px-2 py-1 text-xs">
+                  <p className="text-muted-foreground mb-2 text-xs">{t('relatedTags')}</p>
+                  <div className="space-y-1">
+                    {matchedTags.map((tag, index) => (
+                      <Button
+                        key={index}
+                        onClick={() => handleTagClick(tag.name)}
+                        variant="ghost"
+                        className="flex h-auto w-full items-center justify-start gap-4 p-2"
+                      >
+                        <div className="mt-0.5">
+                          <Tag className="text-muted-foreground h-4 w-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-1 flex items-center gap-2">
+                            <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
                               {t('tags')}
-                            </Badge>
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
+                            </span>
+                            <span className="text-muted-foreground/50 text-xs">•</span>
+                            <span className="text-muted-foreground text-xs">
+                              {tag.count} {t('articles')}
+                            </span>
+                          </div>
+                          <div className="text-foreground truncate text-sm font-medium">
+                            <Highlight text={tag.name} query={query} />
+                          </div>
+                        </div>
+                        <Badge variant="outline" className="self-start px-2 py-1 text-xs">
+                          {t('tags')}
+                        </Badge>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           )}

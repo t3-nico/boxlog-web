@@ -167,8 +167,7 @@ export function createStructuredError(
  * @param structuredError - 構造化されたエラー
  */
 export function logError(structuredError: StructuredError): void {
-  const { message, category, level, context, originalError, timestamp, stack } =
-    structuredError;
+  const { message, category, level, context, originalError, timestamp, stack } = structuredError;
 
   // ログプレフィックス
   const prefix = context ? `[${context}]` : `[${category}]`;

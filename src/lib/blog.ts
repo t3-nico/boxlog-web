@@ -1,10 +1,5 @@
+import { createStructuredError, ErrorCategory, ErrorLevel, logError } from '@/lib/error-utils';
 import type { AIMetadata } from '@/types/content';
-import {
-  createStructuredError,
-  ErrorCategory,
-  ErrorLevel,
-  logError,
-} from '@/lib/error-utils';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';

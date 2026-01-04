@@ -1,5 +1,5 @@
-import { Metadata } from 'next';
 import { env, getAppUrl } from '@/config/env';
+import { Metadata } from 'next';
 
 interface SEOProps {
   title?: string;

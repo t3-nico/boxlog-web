@@ -7,12 +7,7 @@
  * - 必須Cookieは常に有効（無効化不可）
  */
 
-import {
-  createStructuredError,
-  ErrorCategory,
-  ErrorLevel,
-  logError,
-} from '@/lib/error-utils';
+import { createStructuredError, ErrorCategory, ErrorLevel, logError } from '@/lib/error-utils';
 
 export type CookieCategory = 'necessary' | 'analytics' | 'marketing';
 

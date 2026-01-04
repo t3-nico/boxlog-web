@@ -190,9 +190,7 @@ function validateRequiredEnv(env: Partial<EnvConfig>): void {
 
   // Production環境では NEXT_PUBLIC_APP_URL が必須
   if (env.NODE_ENV === 'production' && !env.NEXT_PUBLIC_APP_URL && !env.VERCEL_URL) {
-    errors.push(
-      'NEXT_PUBLIC_APP_URL or VERCEL_URL is required in production environment',
-    );
+    errors.push('NEXT_PUBLIC_APP_URL or VERCEL_URL is required in production environment');
   }
 
   // コンタクトフォームを使用する場合は GITHUB_TOKEN が必須
@@ -217,9 +215,7 @@ function validateRequiredEnv(env: Partial<EnvConfig>): void {
   }
 
   if (errors.length > 0) {
-    throw new EnvValidationError(
-      `\n${errors.map((err) => `  - ${err}`).join('\n')}`,
-    );
+    throw new EnvValidationError(`\n${errors.map((err) => `  - ${err}`).join('\n')}`);
   }
 }
 

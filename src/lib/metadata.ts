@@ -1,5 +1,5 @@
-import { Metadata } from 'next';
 import { env, getSiteUrl } from '@/config/env';
+import { Metadata } from 'next';
 
 export interface SEOData {
   title?: string;
