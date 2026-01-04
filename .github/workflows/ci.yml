@@ -118,7 +118,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          npm_config_optional: false
+          # Optional dependencies required for Tailwind CSS v4 (lightningcss)
           npm_config_audit: false
 
       - name: Cache Next.js build
