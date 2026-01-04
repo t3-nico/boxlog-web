@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Heading, Text } from '@/components/ui/typography';
+import { isDevelopment } from '@/config/env';
 import { useEffect } from 'react';
 
 interface GlobalErrorProps {
@@ -50,7 +51,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               </div>
 
               {/* Error details for development */}
-              {process.env.NODE_ENV === 'development' && (
+              {isDevelopment && (
                 <div className="mt-8 rounded-lg bg-neutral-100 p-4 text-left dark:bg-neutral-800">
                   <Text size="sm" variant="muted" className="mb-2 block">
                     Development Error Details:

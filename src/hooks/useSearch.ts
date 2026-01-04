@@ -1,5 +1,12 @@
 'use client';
 
+import {
+  createStructuredError,
+  ErrorCategory,
+  ErrorLevel,
+  getErrorMessage,
+  logError,
+} from '@/lib/error-utils';
 import { useCallback, useState } from 'react';
 
 export interface SearchResult {
@@ -30,13 +37,23 @@ export function useSearch() {
     try {
       const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
       if (!response.ok) {
-        throw new Error('Search failed');
+        throw new Error(`Search failed with status: ${response.status}`);
       }
 
       const data = await response.json();
       setResults(data.results || []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Search failed');
+      const errorMessage = getErrorMessage(err);
+      const structuredError = createStructuredError(
+        errorMessage,
+        ErrorCategory.NETWORK,
+        ErrorLevel.ERROR,
+        'useSearch',
+        err,
+      );
+      logError(structuredError);
+
+      setError(errorMessage);
       setResults([]);
     } finally {
       setLoading(false);

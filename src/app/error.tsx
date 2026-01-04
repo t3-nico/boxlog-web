@@ -2,6 +2,7 @@
 
 import { ErrorLayout } from '@/components/errors/ErrorLayout';
 import { Button } from '@/components/ui/button';
+import { isDevelopment } from '@/config/env';
 import Link from 'next/link';
 import { useEffect } from 'react';
 
@@ -34,7 +35,7 @@ export default function Error({
       </div>
 
       {/* Error details for development */}
-      {process.env.NODE_ENV === 'development' && (
+      {isDevelopment && (
         <details className="mt-8">
           <summary className="text-muted-foreground hover:text-foreground cursor-pointer text-sm">
             Error details (dev only)
