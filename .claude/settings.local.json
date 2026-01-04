@@ -264,7 +264,8 @@
       "Bash(npx vercel --prod)",
       "Bash(npx vercel:*)",
       "Bash(npm run type-check:*)",
-      "Bash(npm run format:*)"
+      "Bash(npm run format:*)",
+      "Bash(do echo \"=== PR #$pr ===\")"
     ],
     "deny": [],
     "ask": []
