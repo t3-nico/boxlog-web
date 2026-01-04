@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Cache
+.cache/
+coverage/
+.eslintcache
+
+# Generated files
+*.min.js
+next-env.d.ts
+.next/types/**/*.ts
+
+# Public assets
+public/
+
+# Reports
+reports/
+
+# Test outputs
+test-results/
+playwright-report/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Configuration files (no need to lint)
+*.config.js
+*.config.mjs
+*.config.ts
+next.config.mjs
+postcss.config.js
+tailwind.config.ts
+playwright.config.ts

@@ -1,3 +1,4 @@
+import { createStructuredError, ErrorCategory, ErrorLevel, logError } from '@/lib/error-utils';
 import type { AIMetadata } from '@/types/content';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -74,7 +75,15 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
     try {
       files = fs.readdirSync(BLOG_DIR);
     } catch (error) {
-      console.error(`[Blog] Failed to read blog directory: ${BLOG_DIR}`, error);
+      logError(
+        createStructuredError(
+          `Failed to read blog directory: ${BLOG_DIR}`,
+          ErrorCategory.FILESYSTEM,
+          ErrorLevel.ERROR,
+          'getAllBlogPostMetas',
+          error,
+        ),
+      );
       return [];
     }
 
@@ -120,9 +129,24 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
 
     // Log any errors that occurred during processing
     if (errors.length > 0) {
-      console.error(`[Blog] Failed to process ${errors.length} blog post(s):`);
+      logError(
+        createStructuredError(
+          `Failed to process ${errors.length} blog post(s)`,
+          ErrorCategory.FILESYSTEM,
+          ErrorLevel.WARN,
+          'getAllBlogPostMetas',
+        ),
+      );
       errors.forEach(({ file, error }) => {
-        console.error(`  - ${file}:`, error instanceof Error ? error.message : error);
+        logError(
+          createStructuredError(
+            `Failed to process ${path.basename(file)}`,
+            ErrorCategory.FILESYSTEM,
+            ErrorLevel.ERROR,
+            'getAllBlogPostMetas',
+            error,
+          ),
+        );
       });
     }
 
@@ -135,7 +159,15 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
         return dateB - dateA;
       });
   } catch (error) {
-    console.error('[Blog] Unexpected error in getAllBlogPostMetas:', error);
+    logError(
+      createStructuredError(
+        'Unexpected error in getAllBlogPostMetas',
+        ErrorCategory.INTERNAL,
+        ErrorLevel.ERROR,
+        'getAllBlogPostMetas',
+        error,
+      ),
+    );
     return [];
   }
 }

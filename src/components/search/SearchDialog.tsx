@@ -6,19 +6,17 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Highlight } from '@/lib/highlight';
 import { getTagColor } from '@/lib/tags-client';
+import type { PopularTag, SearchResponse, TagResponse } from '@/types/api';
 import { Clock, Edit, FileText, Package, Search, Tag, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface SearchDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   locale: string;
 }
-
-// Mock data (in actual implementation, fetch from user history or external source)
-const RECENT_SEARCHES = ['API Authentication', 'Release v2.1.0', 'Next.js Guide'];
 
 interface QuickLinkConfig {
   key: 'quickStart' | 'apiReference' | 'latestRelease' | 'saasStrategy';
@@ -33,76 +31,129 @@ const QUICK_LINK_CONFIGS: QuickLinkConfig[] = [
   { key: 'saasStrategy', href: '/blog/saas-strategy-2024', type: 'blog' },
 ];
 
-interface PopularTag {
-  name: string;
-  count: number;
-}
-
 export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) {
   const t = useTranslations('search');
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  interface PreviewResult {
-    url: string;
-    type: string;
-    title: string;
-    description: string;
-    breadcrumbs?: string[];
-    category?: string;
-  }
   const [popularTags, setPopularTags] = useState<PopularTag[]>([]);
-  const [previewResults, setPreviewResults] = useState<PreviewResult[]>([]);
+  const [previewResults, setPreviewResults] = useState<SearchResponse['results']>([]);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // クイックリンクを翻訳から生成
-  const QUICK_LINKS = QUICK_LINK_CONFIGS.map((config) => ({
-    title: t(`quickLinks.${config.key}.title`),
-    description: t(`quickLinks.${config.key}.description`),
-    href: `/${locale}${config.href}`,
-    type: config.type,
-  }));
+  // クイックリンクを翻訳から生成（メモ化）
+  const QUICK_LINKS = useMemo(
+    () =>
+      QUICK_LINK_CONFIGS.map((config) => ({
+        title: t(`quickLinks.${config.key}.title`),
+        description: t(`quickLinks.${config.key}.description`),
+        href: `/${locale}${config.href}`,
+        type: config.type,
+      })),
+    [t, locale],
+  );
+
+  // タグフィルタリング（メモ化）
+  const matchedTags = useMemo(() => {
+    if (!query) return [];
+    const normalizedQuery = query.toLowerCase();
+    return popularTags.filter((tag) => tag.name.toLowerCase().includes(normalizedQuery));
+  }, [popularTags, query]);
+
+  // localStorage から最近の検索を読み込む
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('recent-searches');
+      if (stored) {
+        const searches: string[] = JSON.parse(stored);
+        setRecentSearches(searches.slice(0, 5)); // 最大5件
+      }
+    } catch (error) {
+      console.error('[SearchDialog] Failed to load recent searches:', error);
+      setRecentSearches([]);
+    }
+  }, []);
+
+  // 検索を履歴に追加
+  const addToRecentSearches = (searchQuery: string) => {
+    if (!searchQuery.trim()) return;
+
+    try {
+      // 重複を削除して最新を先頭に追加
+      const updated = [searchQuery, ...recentSearches.filter((s) => s !== searchQuery)].slice(0, 5);
+      localStorage.setItem('recent-searches', JSON.stringify(updated));
+      setRecentSearches(updated);
+    } catch (error) {
+      console.error('[SearchDialog] Failed to save recent search:', error);
+    }
+  };
 
   // 人気タグを取得
   useEffect(() => {
+    let isMounted = true;
+    const abortController = new AbortController();
+
     const fetchPopularTags = async () => {
       try {
-        const response = await fetch('/api/tags');
+        const response = await fetch('/api/tags', {
+          signal: abortController.signal,
+        });
+
         if (!response.ok) {
           throw new Error('Failed to fetch tags');
         }
-        const allTags = await response.json();
-        const topTags = allTags.slice(0, 8).map((tag: { tag: string; count: number }) => ({
-          name: tag.tag,
-          count: tag.count,
-        }));
-        setPopularTags(topTags);
-      } catch {
-        // タグ取得失敗時は空配列のまま（UIで対応）
+
+        const allTags: TagResponse[] = await response.json();
+
+        if (isMounted) {
+          const topTags: PopularTag[] = allTags.slice(0, 8).map((tag) => ({
+            name: tag.tag,
+            count: tag.count,
+          }));
+          setPopularTags(topTags);
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name !== 'AbortError') {
+          console.error('[SearchDialog] Failed to fetch popular tags:', error);
+        }
       }
     };
 
     fetchPopularTags();
+
+    return () => {
+      isMounted = false;
+      abortController.abort();
+    };
   }, []);
 
   // 検索プレビューを取得
   useEffect(() => {
-    if (query.length > 2) {
-      const timeoutId = setTimeout(() => {
-        fetch(`/api/search?q=${encodeURIComponent(query)}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setPreviewResults((data.results || []).slice(0, 3));
-          })
-          .catch(() => {
-            setPreviewResults([]);
-          });
-      }, 300); // 300ms debounce
-
-      return () => clearTimeout(timeoutId);
+    if (query.length <= 2) {
+      setPreviewResults([]);
+      return;
     }
-    setPreviewResults([]);
-    return;
+
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => {
+      fetch(`/api/search?q=${encodeURIComponent(query)}`, {
+        signal: abortController.signal,
+      })
+        .then((response) => response.json())
+        .then((data: SearchResponse) => {
+          setPreviewResults((data.results || []).slice(0, 3));
+        })
+        .catch((error) => {
+          if (error instanceof Error && error.name !== 'AbortError') {
+            setPreviewResults([]);
+          }
+        });
+    }, 300); // 300ms debounce
+
+    return () => {
+      clearTimeout(timeoutId);
+      abortController.abort();
+    };
   }, [query]);
 
   useEffect(() => {
@@ -118,6 +169,9 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
   const handleSearch = (searchQuery: string) => {
     if (!searchQuery.trim()) return;
+
+    // 検索履歴に追加
+    addToRecentSearches(searchQuery);
 
     onOpenChange(false);
     router.push(`/${locale}/search?q=${encodeURIComponent(searchQuery)}`);
@@ -197,13 +251,13 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           {!query ? (
             <div className="space-y-6 p-4">
               {/* 最近の検索 */}
-              {RECENT_SEARCHES.length > 0 && (
+              {recentSearches.length > 0 && (
                 <div>
                   <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
                     {t('recentSearches')}
                   </h3>
                   <div className="space-y-1">
-                    {RECENT_SEARCHES.map((search, index) => (
+                    {recentSearches.map((search, index) => (
                       <Button
                         key={index}
                         onClick={() => setQuery(search)}
@@ -366,51 +420,42 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               )}
 
               {/* タグ検索候補 */}
-              {(() => {
-                const matchedTags = popularTags.filter((tag) =>
-                  tag.name.toLowerCase().includes(query.toLowerCase()),
-                );
-
-                if (matchedTags.length > 0) {
-                  return (
-                    <div>
-                      <p className="text-muted-foreground mb-2 text-xs">{t('relatedTags')}</p>
-                      <div className="space-y-1">
-                        {matchedTags.map((tag, index) => (
-                          <Button
-                            key={index}
-                            onClick={() => handleTagClick(tag.name)}
-                            variant="ghost"
-                            className="flex h-auto w-full items-center justify-start gap-4 p-2"
-                          >
-                            <div className="mt-0.5">
-                              <Tag className="text-muted-foreground h-4 w-4" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="mb-1 flex items-center gap-2">
-                                <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                                  {t('tags')}
-                                </span>
-                                <span className="text-muted-foreground/50 text-xs">•</span>
-                                <span className="text-muted-foreground text-xs">
-                                  {tag.count} {t('articles')}
-                                </span>
-                              </div>
-                              <div className="text-foreground truncate text-sm font-medium">
-                                <Highlight text={tag.name} query={query} />
-                              </div>
-                            </div>
-                            <Badge variant="outline" className="self-start px-2 py-1 text-xs">
+              {matchedTags.length > 0 && (
+                <div>
+                  <p className="text-muted-foreground mb-2 text-xs">{t('relatedTags')}</p>
+                  <div className="space-y-1">
+                    {matchedTags.map((tag, index) => (
+                      <Button
+                        key={index}
+                        onClick={() => handleTagClick(tag.name)}
+                        variant="ghost"
+                        className="flex h-auto w-full items-center justify-start gap-4 p-2"
+                      >
+                        <div className="mt-0.5">
+                          <Tag className="text-muted-foreground h-4 w-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-1 flex items-center gap-2">
+                            <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
                               {t('tags')}
-                            </Badge>
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              })()}
+                            </span>
+                            <span className="text-muted-foreground/50 text-xs">•</span>
+                            <span className="text-muted-foreground text-xs">
+                              {tag.count} {t('articles')}
+                            </span>
+                          </div>
+                          <div className="text-foreground truncate text-sm font-medium">
+                            <Highlight text={tag.name} query={query} />
+                          </div>
+                        </div>
+                        <Badge variant="outline" className="self-start px-2 py-1 text-xs">
+                          {t('tags')}
+                        </Badge>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

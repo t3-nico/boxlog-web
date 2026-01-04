@@ -1,0 +1,31 @@
+# CODEOWNERS file for BoxLog Web
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+* @t3-nico
+
+# Documentation
+*.md @t3-nico
+/docs/ @t3-nico
+
+# Configuration files
+/.github/ @t3-nico
+*.config.* @t3-nico
+.eslintrc* @t3-nico
+.prettierrc* @t3-nico
+tsconfig.json @t3-nico
+
+# Security-sensitive files
+/src/config/env.ts @t3-nico
+/src/lib/csrf-protection.ts @t3-nico
+/src/lib/rate-limit.ts @t3-nico
+/src/lib/privacy.ts @t3-nico
+/.env.example @t3-nico
+SECURITY.md @t3-nico
+
+# CI/CD
+/.github/workflows/ @t3-nico
+
+# Dependencies
+package.json @t3-nico
+package-lock.json @t3-nico

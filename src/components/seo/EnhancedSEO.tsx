@@ -1,3 +1,4 @@
+import { env, getAppUrl } from '@/config/env';
 import { Metadata } from 'next';
 
 interface SEOProps {
@@ -32,8 +33,7 @@ export function generateEnhancedMetadata({
   url,
 }: SEOProps): Metadata {
   // Get current URL for canonical and OG
-  const baseUrl =
-    process.env.NODE_ENV === 'production' ? 'https://boxlog.app' : 'http://localhost:3000';
+  const baseUrl = getAppUrl();
   const currentUrl = canonical || url || baseUrl;
 
   const siteTitle = 'BoxLog';
@@ -114,9 +114,9 @@ export function generateEnhancedMetadata({
 
     // Verification
     verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION,
-      yandex: process.env.YANDEX_VERIFICATION,
-      yahoo: process.env.YAHOO_VERIFICATION,
+      google: env.GOOGLE_SITE_VERIFICATION,
+      yandex: env.YANDEX_VERIFICATION,
+      yahoo: env.YAHOO_VERIFICATION,
     },
 
     // Icons
