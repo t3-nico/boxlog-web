@@ -786,16 +786,8 @@ html.dark {
 /* NOTE: Google Fonts アクセス制限により一時的にシステムフォントのみを使用 */
 body {
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    'Hiragino Sans',
-    'Hiragino Kaku Gothic ProN',
-    Meiryo,
-    sans-serif;
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Hiragino Sans',
+    'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
   font-size: 1rem; /* 16px - GAFA業界標準ベースサイズ */
   line-height: 1.6;
   margin: 0;
