@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
 
     if (!content) {
       return {
-        title: 'Page Not Found - BoxLog Documentation',
+        title: 'Page Not Found - Dayopt Documentation',
         description: 'The requested documentation page could not be found.',
       };
     }
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
     const { frontMatter } = content;
 
     return {
-      title: `${frontMatter.title} - BoxLog Documentation`,
+      title: `${frontMatter.title} - Dayopt Documentation`,
       description: frontMatter.description,
       keywords: frontMatter.tags?.join(', '),
       authors: frontMatter.author ? [{ name: frontMatter.author }] : undefined,
@@ -88,8 +88,8 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
     };
   } catch {
     return {
-      title: 'Documentation - BoxLog',
-      description: 'BoxLog documentation and guides',
+      title: 'Documentation - Dayopt',
+      description: 'Dayopt documentation and guides',
     };
   }
 }

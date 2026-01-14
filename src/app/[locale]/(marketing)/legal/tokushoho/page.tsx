@@ -17,7 +17,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return {
-    title: `${t('legal.tokushoho.title')} - BoxLog`,
+    title: `${t('legal.tokushoho.title')} - Dayopt`,
     description: t('legal.tokushoho.description'),
   };
 }
@@ -118,7 +118,7 @@ export default async function TokushohoPage({ params }: PageProps) {
               <td className="text-foreground px-6 py-4 text-sm">
                 <div className="space-y-1">
                   <p>
-                    <span className="text-muted-foreground">Email:</span> support@boxlog.app
+                    <span className="text-muted-foreground">Email:</span> support@dayopt.app
                   </p>
                   <p>
                     <span className="text-muted-foreground">

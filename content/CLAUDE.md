@@ -479,7 +479,7 @@ npm run dev
 
 ```mdx
 # ✅ 推奨: /public/images配下の画像
-![BoxLog Dashboard](/images/blog/dashboard.jpg)
+![Dayopt Dashboard](/images/blog/dashboard.jpg)
 
 # ❌ 禁止: 外部画像URL
 ![External Image](https://example.com/image.jpg)

@@ -1,8 +1,8 @@
-# デザインシステム - boxlog-web
+# デザインシステム - dayopt-web
 
 ## 概要
 
-boxlog-web のデザインシステムは **boxlog-app と共通化** されています。
+dayopt-web のデザインシステムは **dayopt-app と共通化** されています。
 共通トークンは app が正（ソースオブトゥルース）です。
 
 ## カラーシステム
@@ -143,7 +143,7 @@ CSS変数をTailwindクラスで使用できるようにマッピング：
 
 ## 参照
 
-- **app スタイルガイド**: `boxlog-app/docs/design-system/STYLE_GUIDE.md`
+- **app スタイルガイド**: `dayopt-app/docs/design-system/STYLE_GUIDE.md`
 - **globals.css**: `src/app/globals.css`
 
 ---

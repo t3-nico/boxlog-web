@@ -1,8 +1,8 @@
 ---
 title: "Logging Best Practices"
-description: "Learn the best practices for implementing effective logging in your applications with BoxLog."
+description: "Learn the best practices for implementing effective logging in your applications with Dayopt."
 tags: ["best-practices", "logging", "guide", "performance"]
-author: "BoxLog Team"
+author: "Dayopt Team"
 publishedAt: "2025-01-16"
 updatedAt: "2025-01-16"
 order: 1
@@ -21,7 +21,7 @@ ai:
     - "分散トレーシングを実装するには？"
     - "開発環境と本番環境でログ設定を変えるには？"
   prerequisites:
-    - "BoxLog SDKの基本的な使い方を理解している"
+    - "Dayopt SDKの基本的な使い方を理解している"
     - "アプリケーション開発の経験がある"
   relatedDocs:
     - "/docs/sdks/javascript"
@@ -35,7 +35,7 @@ ai:
 
 # Logging Best Practices
 
-Effective logging is crucial for debugging, monitoring, and maintaining healthy applications. This guide covers best practices for implementing logging with BoxLog.
+Effective logging is crucial for debugging, monitoring, and maintaining healthy applications. This guide covers best practices for implementing logging with Dayopt.
 
 ## 1. Log Levels Guidelines
 
@@ -92,7 +92,7 @@ Include relevant context in every log entry:
 
 ```javascript
 // Create a logger with default context
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: process.env.BOXLOG_API_KEY,
   defaultMetadata: {
     service: 'payment-service',
@@ -139,7 +139,7 @@ Use async logging to avoid blocking your application:
 
 ```javascript
 // Configure async batch sending
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: process.env.BOXLOG_API_KEY,
   batchSize: 100,
   flushInterval: 5000 // 5 seconds
@@ -175,7 +175,7 @@ logger.info('User login', {
 Implement automatic data masking for sensitive fields:
 
 ```javascript
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: process.env.BOXLOG_API_KEY,
   masks: [
     { field: 'password', mask: '[REDACTED]' },
@@ -284,7 +284,7 @@ logger.info('Order completed', {
 ### Environment-Specific Configuration
 
 ```javascript
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: process.env.BOXLOG_API_KEY,
   level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   pretty: process.env.NODE_ENV !== 'production',
@@ -312,7 +312,7 @@ if (process.env.NODE_ENV === 'development') {
 Configure appropriate retention policies:
 
 ```javascript
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: process.env.BOXLOG_API_KEY,
   retention: {
     trace: '1d',    // 1 day

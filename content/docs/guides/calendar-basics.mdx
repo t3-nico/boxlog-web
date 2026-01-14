@@ -1,8 +1,8 @@
 ---
 title: "カレンダーの基本"
-description: "BoxLogのカレンダー機能を使って、日々の予定とタスクを効率的に管理する方法を学びます。ビュー切り替え、予定の作成、ドラッグ&ドロップ操作まで解説します。"
+description: "Dayoptのカレンダー機能を使って、日々の予定とタスクを効率的に管理する方法を学びます。ビュー切り替え、予定の作成、ドラッグ&ドロップ操作まで解説します。"
 tags: ["calendar", "tutorial", "getting-started", "schedule"]
-author: "BoxLog Team"
+author: "Dayopt Team"
 publishedAt: "2024-12-23"
 updatedAt: "2024-12-23"
 order: 1
@@ -17,7 +17,7 @@ ai:
     - "ドラッグ&ドロップで予定を移動したい"
     - "週表示と日表示の違いは？"
   prerequisites:
-    - "BoxLogアカウントを作成済み"
+    - "Dayoptアカウントを作成済み"
     - "ログイン済み"
   relatedDocs:
     - "/docs/getting-started/quick-start"
@@ -31,11 +31,11 @@ ai:
 
 # カレンダーの基本
 
-BoxLogのカレンダーは、あなたの日々の予定とタスクを一目で把握できる中心的な機能です。このガイドでは、カレンダーの基本的な使い方を解説します。
+Dayoptのカレンダーは、あなたの日々の予定とタスクを一目で把握できる中心的な機能です。このガイドでは、カレンダーの基本的な使い方を解説します。
 
 ## カレンダービューの種類
 
-BoxLogは3つのカレンダービューを提供しています：
+Dayoptは3つのカレンダービューを提供しています：
 
 | ビュー | 用途 | ショートカット |
 |--------|------|----------------|
@@ -104,7 +104,7 @@ interface Plan {
 
 ```typescript
 // タグ付き予定の作成例
-const plan = await boxlog.plans.create({
+const plan = await dayopt.plans.create({
   title: "チームミーティング",
   startTime: new Date("2024-12-23T10:00:00"),
   endTime: new Date("2024-12-23T11:00:00"),

@@ -6,7 +6,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 /**
- * ボタンバリアント定義（boxlog-appと同期）
+ * ボタンバリアント定義（dayopt-appと同期）
  *
  * ## バリアント設計（Material Design 3 準拠）
  *

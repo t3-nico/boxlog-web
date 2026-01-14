@@ -281,7 +281,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'BoxLog',
+    name: 'Dayopt',
     applicationCategory: 'BusinessApplication',
     releaseNotes: {
       '@type': 'TechArticle',
@@ -289,13 +289,13 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
       description: release.frontMatter.description,
       author: {
         '@type': 'Person',
-        name: release.frontMatter.author || 'BoxLog Team',
+        name: release.frontMatter.author || 'Dayopt Team',
       },
       datePublished: release.frontMatter.date,
       keywords: release.frontMatter.tags.join(', '),
       about: {
         '@type': 'SoftwareApplication',
-        name: 'BoxLog',
+        name: 'Dayopt',
         softwareVersion: release.frontMatter.version,
       },
     },

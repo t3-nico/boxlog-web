@@ -8,7 +8,7 @@
 
 /* ============================================
  * カラーシステム（modern-minimal OKLCH）
- * boxlog-app と完全同期（M3準拠）
+ * dayopt-app と完全同期（M3準拠）
  * ============================================ */
 
 /* ライトモード（CSS変数定義） */
@@ -118,7 +118,7 @@
   --release-security-text: oklch(0.4 0.15 300);
   --release-security-border: oklch(0.8 0.12 300);
 
-  /* Tag colors - カテゴリ別10色（boxlog-appと同期） */
+  /* Tag colors - カテゴリ別10色（dayopt-appと同期） */
   /* Blue - 技術/フレームワーク */
   --tag-blue-bg: oklch(0.94 0.04 250);
   --tag-blue-text: oklch(0.48 0.18 250);
@@ -492,7 +492,7 @@
   /* ============================================
    * ステートレイヤー（M3準拠）
    * foregroundベースの半透明オーバーレイ
-   * boxlog-appと同期
+   * dayopt-appと同期
    * ============================================ */
   --color-state-hover: oklch(from var(--foreground) l c h / 10%);
   --color-state-focus: oklch(from var(--foreground) l c h / 12%);

@@ -202,7 +202,7 @@ jobs:
                 : '**Please fix the issues above.**';
             })()}
 
-            <sub>BoxLog Web CI Pipeline</sub>`;
+            <sub>Dayopt Web CI Pipeline</sub>`;
 
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,

@@ -53,7 +53,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
 
           {/* Logo with Docs badge */}
           <Link href="/docs" className="flex items-center gap-2">
-            <span className="text-foreground text-lg font-bold">BoxLog</span>
+            <span className="text-foreground text-lg font-bold">Dayopt</span>
             <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-xs font-medium">
               Docs
             </span>

@@ -101,7 +101,7 @@ export function SecurityContent() {
             <li className="flex items-center gap-2">
               <Mail className="h-4 w-4" />
               <strong>{t('legal.security.vulnerability.contacts.email')}</strong>:{' '}
-              <a href="mailto:security@boxlog.app" className="text-primary hover:underline">
+              <a href="mailto:security@dayopt.app" className="text-primary hover:underline">
                 {t('legal.security.vulnerability.contacts.emailAddress')}
               </a>
             </li>
@@ -109,7 +109,7 @@ export function SecurityContent() {
               <ExternalLink className="h-4 w-4" />
               <strong>{t('legal.security.vulnerability.contacts.github')}</strong>:{' '}
               <a
-                href="https://github.com/t3-nico/boxlog-app/security/advisories/new"
+                href="https://github.com/t3-nico/dayopt-app/security/advisories/new"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
@@ -244,7 +244,7 @@ export function SecurityContent() {
 
         <div className="grid gap-4 md:grid-cols-2">
           <Link
-            href="https://github.com/t3-nico/boxlog-app/blob/main/docs/legal/SECURITY.md"
+            href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/SECURITY.md"
             target="_blank"
             rel="noopener noreferrer"
             className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
@@ -258,7 +258,7 @@ export function SecurityContent() {
           </Link>
 
           <Link
-            href="https://github.com/t3-nico/boxlog-app/blob/main/docs/legal/VULNERABILITY_DISCLOSURE.md"
+            href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/VULNERABILITY_DISCLOSURE.md"
             target="_blank"
             rel="noopener noreferrer"
             className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
@@ -272,7 +272,7 @@ export function SecurityContent() {
           </Link>
 
           <Link
-            href="https://github.com/t3-nico/boxlog-app/blob/main/docs/legal/INCIDENT_RESPONSE.md"
+            href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/INCIDENT_RESPONSE.md"
             target="_blank"
             rel="noopener noreferrer"
             className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
@@ -306,14 +306,14 @@ export function SecurityContent() {
           <p className="flex items-center gap-2">
             <Mail className="h-4 w-4" />
             <strong>{t('legal.security.contact.securityTeam')}</strong>:{' '}
-            <a href="mailto:security@boxlog.app" className="text-primary hover:underline">
+            <a href="mailto:security@dayopt.app" className="text-primary hover:underline">
               {t('legal.security.contact.securityEmail')}
             </a>
           </p>
           <p className="flex items-center gap-2">
             <Mail className="h-4 w-4" />
             <strong>{t('legal.security.contact.general')}</strong>:{' '}
-            <a href="mailto:support@boxlog.app" className="text-primary hover:underline">
+            <a href="mailto:support@dayopt.app" className="text-primary hover:underline">
               {t('legal.security.contact.generalEmail')}
             </a>
           </p>

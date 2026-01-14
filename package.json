@@ -1,14 +1,14 @@
 {
-  "name": "boxlog-marketing",
+  "name": "dayopt-marketing",
   "version": "0.1.0",
   "description": "Modern, high-performance marketing website built with Next.js 16, featuring comprehensive accessibility (WCAG 2.1 AA), enterprise-grade security, and type-safe development",
   "private": true,
   "type": "module",
-  "author": "BoxLog Team",
+  "author": "Dayopt Team",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/t3-nico/boxlog-web"
+    "url": "https://github.com/t3-nico/dayopt-web"
   },
   "keywords": [
     "nextjs",

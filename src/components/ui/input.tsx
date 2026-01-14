@@ -4,7 +4,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 /**
- * インプットバリアント定義（boxlog-appと同期）
+ * インプットバリアント定義（dayopt-appと同期）
  *
  * ## サイズ設計（8pxグリッド準拠）
  *

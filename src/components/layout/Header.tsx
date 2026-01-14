@@ -75,7 +75,7 @@ export function Header() {
         {/* Logo */}
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-foreground text-lg font-bold">BoxLog</span>
+            <span className="text-foreground text-lg font-bold">Dayopt</span>
           </Link>
         </div>
 
@@ -159,7 +159,7 @@ export function Header() {
                 className="flex items-center gap-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="text-foreground text-lg font-bold">BoxLog</span>
+                <span className="text-foreground text-lg font-bold">Dayopt</span>
               </Link>
               <DialogPrimitive.Close className="text-muted-foreground hover:bg-state-hover hover:text-foreground -m-2 rounded-md p-2 transition-colors">
                 <span className="sr-only">{t('aria.closeMenu')}</span>

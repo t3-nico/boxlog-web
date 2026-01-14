@@ -2,7 +2,7 @@
   "marketing": {
     "hero": {
       "title": "Modern SaaS Platform for Scalable Applications",
-      "subtitle": "Build, deploy, and scale your SaaS applications with BoxLog.",
+      "subtitle": "Build, deploy, and scale your SaaS applications with Dayopt.",
       "cta": "Start Building Today"
     },
     "features": {
@@ -10,7 +10,7 @@
       "subtitle": "Everything you need to build and scale your SaaS application",
       "badge": "Features",
       "headline": "Everything you need to scale your business",
-      "description": "From powerful APIs to advanced analytics, BoxLog provides all the tools you need to build, deploy, and scale your applications with confidence.",
+      "description": "From powerful APIs to advanced analytics, Dayopt provides all the tools you need to build, deploy, and scale your applications with confidence.",
       "startTrial": "Start Free Trial",
       "scheduleDemo": "Schedule Demo",
       "grid": {
@@ -49,7 +49,7 @@
       "subtitle": "Learn about our mission, team, and values. We create technology that empowers everyone to build a better future.",
       "hero": {
         "title": "About Us",
-        "description": "BoxLog is an innovative SaaS platform that supports corporate growth through the power of technology. Our mission is to realize a world where everyone can create a better future.",
+        "description": "Dayopt is an innovative SaaS platform that supports corporate growth through the power of technology. Our mission is to realize a world where everyone can create a better future.",
         "contactButton": "Contact Us",
         "teamButton": "Meet the Team"
       },

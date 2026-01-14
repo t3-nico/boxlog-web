@@ -19,11 +19,11 @@
     "toNavigate": "ナビゲート",
     "toClose": "閉じる",
     "close": "検索を閉じる",
-    "poweredBy": "BoxLog Search による検索",
+    "poweredBy": "Dayopt Search による検索",
     "quickLinks": {
       "quickStart": {
         "title": "クイックスタート",
-        "description": "BoxLogを5分で始める"
+        "description": "Dayoptを5分で始める"
       },
       "apiReference": {
         "title": "APIリファレンス",

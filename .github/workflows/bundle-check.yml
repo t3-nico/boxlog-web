@@ -60,7 +60,7 @@ jobs:
 
             [View Details](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
-            <sub>BoxLog Web Bundle Analysis</sub>`;
+            <sub>Dayopt Web Bundle Analysis</sub>`;
 
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,

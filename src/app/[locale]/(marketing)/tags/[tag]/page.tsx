@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     title: `#${tagData.tag} - Tagged Content`,
     description: `Browse all content tagged with "${tagData.tag}". ${tagData.blog.length} blog posts, ${tagData.releases.length} releases, ${tagData.docs.length} docs.`,
     openGraph: {
-      title: `#${tagData.tag} - Tagged Content | BoxLog`,
+      title: `#${tagData.tag} - Tagged Content | Dayopt`,
       description: `Browse all content tagged with "${tagData.tag}". ${tagData.blog.length} blog posts, ${tagData.releases.length} releases, ${tagData.docs.length} docs.`,
       type: 'website',
     },

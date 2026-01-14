@@ -1,8 +1,8 @@
 ---
 title: "JavaScript/TypeScript SDK"
-description: "Complete guide for the BoxLog JavaScript/TypeScript SDK. Perfect for Node.js backends and frontend applications."
+description: "Complete guide for the Dayopt JavaScript/TypeScript SDK. Perfect for Node.js backends and frontend applications."
 tags: ["sdk", "javascript", "typescript", "node.js", "browser"]
-author: "BoxLog Team"
+author: "Dayopt Team"
 publishedAt: "2025-01-16"
 updatedAt: "2025-01-16"
 order: 1
@@ -14,17 +14,17 @@ slug: "javascript"
 ai:
   relatedQuestions:
     - "JavaScript SDKの使い方は？"
-    - "TypeScriptでBoxLogを使うには？"
+    - "TypeScriptでDayoptを使うには？"
     - "Node.jsでログを送信するには？"
-    - "Express.jsでBoxLogを使うには？"
-    - "Next.jsでBoxLogを設定するには？"
+    - "Express.jsでDayoptを使うには？"
+    - "Next.jsでDayoptを設定するには？"
     - "ブラウザからログを送信できる？"
     - "ログレベルの設定方法は？"
     - "機密情報のマスキング方法は？"
   prerequisites:
     - "Node.js 18以上"
     - "npm/yarn/pnpmが使用可能"
-    - "BoxLog APIキーを取得済み"
+    - "Dayopt APIキーを取得済み"
   relatedDocs:
     - "/docs/getting-started/installation"
     - "/docs/guides/best-practices"
@@ -37,16 +37,16 @@ ai:
 
 # JavaScript/TypeScript SDK
 
-The official BoxLog SDK for JavaScript and TypeScript applications. Works in Node.js backends and modern browsers.
+The official Dayopt SDK for JavaScript and TypeScript applications. Works in Node.js backends and modern browsers.
 
 ## Installation
 
 ```bash
-npm install @boxlog/sdk
+npm install @dayopt/sdk
 # or
-yarn add @boxlog/sdk
+yarn add @dayopt/sdk
 # or
-pnpm add @boxlog/sdk
+pnpm add @dayopt/sdk
 ```
 
 ## Quick Start
@@ -54,9 +54,9 @@ pnpm add @boxlog/sdk
 ### Basic Setup
 
 ```typescript
-import { BoxLog } from '@boxlog/sdk'
+import { Dayopt } from '@dayopt/sdk'
 
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: process.env.BOXLOG_API_KEY!,
   service: 'my-app',
   environment: process.env.NODE_ENV || 'development'
@@ -84,7 +84,7 @@ BOXLOG_ENVIRONMENT=development
 ### Constructor Options
 
 ```typescript
-interface BoxLogConfig {
+interface DayoptConfig {
   // Required
   apiKey: string
 
@@ -103,7 +103,7 @@ interface BoxLogConfig {
   masks?: MaskConfig[]
 }
 
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: 'your_api_key',
   service: 'payment-service',
   environment: 'production',
@@ -289,10 +289,10 @@ logger.info('Operation performance', {
 
 ```typescript
 import express from 'express'
-import { BoxLog } from '@boxlog/sdk'
+import { Dayopt } from '@dayopt/sdk'
 
 const app = express()
-const logger = new BoxLog({ /* config */ })
+const logger = new Dayopt({ /* config */ })
 
 // Request logging middleware
 app.use((req, res, next) => {
@@ -324,9 +324,9 @@ app.use((req, res, next) => {
 
 ```typescript
 // lib/logger.ts
-import { BoxLog } from '@boxlog/sdk'
+import { Dayopt } from '@dayopt/sdk'
 
-export const logger = new BoxLog({
+export const logger = new Dayopt({
   apiKey: process.env.BOXLOG_API_KEY!,
   service: 'nextjs-app',
   environment: process.env.NODE_ENV
@@ -361,9 +361,9 @@ export default async function handler(req, res) {
 
 ```typescript
 // logger.ts
-import { BoxLog } from '@boxlog/sdk'
+import { Dayopt } from '@dayopt/sdk'
 
-export const logger = new BoxLog({
+export const logger = new Dayopt({
   apiKey: process.env.REACT_APP_BOXLOG_API_KEY!,
   service: 'react-frontend',
   environment: process.env.NODE_ENV,
@@ -430,7 +430,7 @@ The SDK works in all modern browsers:
 Automatically mask sensitive data:
 
 ```typescript
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: 'your_api_key',
   masks: [
     { field: 'password', mask: '[REDACTED]' },
@@ -454,8 +454,8 @@ logger.info('User login', {
 Mock the logger in your tests:
 
 ```typescript
-// __mocks__/@boxlog/sdk.ts
-export class BoxLog {
+// __mocks__/@dayopt/sdk.ts
+export class Dayopt {
   info = jest.fn()
   error = jest.fn()
   warn = jest.fn()
@@ -471,7 +471,7 @@ export class BoxLog {
 // In your test
 import { logger } from '../logger'
 
-jest.mock('@boxlog/sdk')
+jest.mock('@dayopt/sdk')
 
 test('should log user action', () => {
   performUserAction()
@@ -494,7 +494,7 @@ interface UserEvent {
   timestamp: string
 }
 
-const logger = new BoxLog({ /* config */ })
+const logger = new Dayopt({ /* config */ })
 
 // Type-safe logging
 logger.info<UserEvent>('User event', {

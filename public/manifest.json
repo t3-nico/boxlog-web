@@ -1,6 +1,6 @@
 {
-  "name": "BoxLog - モダンSaaSプラットフォーム",
-  "short_name": "BoxLog",
+  "name": "Dayopt - モダンSaaSプラットフォーム",
+  "short_name": "Dayopt",
   "description": "Next.js、React、Tailwind CSSで構築されたスケーラブルなSaaSプラットフォーム",
   "start_url": "/",
   "display": "standalone",

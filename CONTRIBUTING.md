@@ -1,6 +1,6 @@
-# Contributing to BoxLog Web
+# Contributing to Dayopt Web
 
-BoxLog Webへの貢献に興味を持っていただき、ありがとうございます！このガイドでは、プロジェクトへの貢献方法について説明します。
+Dayopt Webへの貢献に興味を持っていただき、ありがとうございます！このガイドでは、プロジェクトへの貢献方法について説明します。
 
 ## 目次
 
@@ -22,24 +22,28 @@ BoxLog Webへの貢献に興味を持っていただき、ありがとうござ�
 ### セットアップ手順
 
 1. **リポジトリのフォーク**
+
    ```bash
    # GitHubでリポジトリをフォーク後、クローン
-   git clone https://github.com/YOUR_USERNAME/boxlog-web.git
-   cd boxlog-web
+   git clone https://github.com/YOUR_USERNAME/dayopt-web.git
+   cd dayopt-web
    ```
 
 2. **依存関係のインストール**
+
    ```bash
    npm ci
    ```
 
 3. **環境変数の設定**
+
    ```bash
    cp .env.example .env.local
    # .env.local を編集（詳細は docs/ENVIRONMENT_VARIABLES.md を参照）
    ```
 
 4. **開発サーバーの起動**
+
    ```bash
    npm run dev
    ```
@@ -115,6 +119,7 @@ git push origin feature/your-feature-name
 - **オプショナルチェーン**: `?.` を積極的に使用
 
 **良い例:**
+
 ```typescript
 // ✅ 型推論を活用
 const user = { name: 'John', age: 30 };
@@ -131,6 +136,7 @@ const userName = user?.profile?.name ?? 'Anonymous';
 ```
 
 **悪い例:**
+
 ```typescript
 // ❌ 不要な型注釈
 const user: { name: string; age: number } = { name: 'John', age: 30 };
@@ -149,6 +155,7 @@ function handleError(error: any) {
 - **export**: `export default` より名前付きexportを推奨
 
 **良い例:**
+
 ```typescript
 // ✅ 関数コンポーネント + 型定義
 interface ButtonProps {
@@ -320,7 +327,7 @@ npm run test:performance
 
 質問がある場合：
 
-- **Issue**: [GitHub Issues](https://github.com/t3-nico/boxlog-web/issues)
+- **Issue**: [GitHub Issues](https://github.com/t3-nico/dayopt-web/issues)
 - **ドキュメント**: `docs/` ディレクトリを確認
 
 ---

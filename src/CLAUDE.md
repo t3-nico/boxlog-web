@@ -433,7 +433,7 @@ import Image from 'next/image'
 // ✅ 推奨: /public配下の画像
 <Image
   src="/images/logo.png"
-  alt="BoxLog logo"
+  alt="Dayopt logo"
   width={200}
   height={50}
 />
@@ -542,7 +542,7 @@ export function BlogPostSchema({ post }: { post: Post }) {
     datePublished: post.date,
     author: {
       '@type': 'Organization',
-      name: 'BoxLog',
+      name: 'Dayopt',
     },
   }
 

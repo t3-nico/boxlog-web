@@ -17,7 +17,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return {
-    title: `${t('legal.terms.title')} - BoxLog`,
+    title: `${t('legal.terms.title')} - Dayopt`,
     description: t('legal.terms.description'),
   };
 }

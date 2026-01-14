@@ -29,8 +29,8 @@ export function ErrorLayout({
       {/* Header */}
       <header className="mx-auto w-full max-w-7xl px-6 pt-6 sm:pt-10 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:px-8">
         <Link href="/" className="inline-block">
-          <span className="sr-only">BoxLog</span>
-          <div className="text-foreground text-2xl font-bold">BoxLog</div>
+          <span className="sr-only">Dayopt</span>
+          <div className="text-foreground text-2xl font-bold">Dayopt</div>
         </Link>
       </header>
 

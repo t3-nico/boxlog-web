@@ -5,7 +5,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 /**
- * バッジバリアント定義（boxlog-appと同期）
+ * バッジバリアント定義（dayopt-appと同期）
  *
  * ## バリアント設計（Carbon Design System 参考）
  *

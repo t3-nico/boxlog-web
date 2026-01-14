@@ -13,7 +13,7 @@ export interface AIMetadata {
    * このドキュメントで回答できる想定質問
    * RAGでの関連性判断に使用
    * ※ 手動で記述する唯一の必須フィールド
-   * 例: ["BoxLogをインストールする方法は？", "How to install BoxLog?"]
+   * 例: ["Dayoptをインストールする方法は？", "How to install Dayopt?"]
    */
   relatedQuestions?: string[];
 

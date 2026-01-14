@@ -19,11 +19,11 @@
     "toNavigate": "to navigate",
     "toClose": "to close",
     "close": "Close search",
-    "poweredBy": "Powered by BoxLog Search",
+    "poweredBy": "Powered by Dayopt Search",
     "quickLinks": {
       "quickStart": {
         "title": "Quick Start",
-        "description": "Get started with BoxLog in 5 minutes"
+        "description": "Get started with Dayopt in 5 minutes"
       },
       "apiReference": {
         "title": "API Reference",

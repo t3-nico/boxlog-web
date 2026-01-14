@@ -1,6 +1,6 @@
 # 品質管理・CI/CDガイド
 
-このドキュメントでは、BoxLog Webプロジェクトの品質管理戦略、CI/CDワークフロー、開発プラクティスについて説明します。
+このドキュメントでは、Dayopt Webプロジェクトの品質管理戦略、CI/CDワークフロー、開発プラクティスについて説明します。
 
 ## 概要
 
@@ -18,17 +18,17 @@
 
 ### コマンド一覧
 
-| コマンド | 説明 |
-|---------|------|
-| `npm run lint` | ESLintでコード品質チェック |
-| `npm run lint:fix` | ESLint自動修正 |
-| `npm run type-check` | TypeScript型チェック |
-| `npm run format` | Prettier実行 |
-| `npm run format:check` | Prettierチェック |
-| `npm run audit:accessibility` | アクセシビリティ監査 |
-| `npm run audit:performance` | パフォーマンス監査 |
-| `npm run test:a11y` | ビルド後アクセシビリティテスト |
-| `npm run test:performance` | ビルド後パフォーマンステスト |
+| コマンド                      | 説明                           |
+| ----------------------------- | ------------------------------ |
+| `npm run lint`                | ESLintでコード品質チェック     |
+| `npm run lint:fix`            | ESLint自動修正                 |
+| `npm run type-check`          | TypeScript型チェック           |
+| `npm run format`              | Prettier実行                   |
+| `npm run format:check`        | Prettierチェック               |
+| `npm run audit:accessibility` | アクセシビリティ監査           |
+| `npm run audit:performance`   | パフォーマンス監査             |
+| `npm run test:a11y`           | ビルド後アクセシビリティテスト |
+| `npm run test:performance`    | ビルド後パフォーマンステスト   |
 
 ### 開発ワークフロー
 
@@ -50,6 +50,7 @@ npm run prepare:production
 `src/scripts/accessibility-audit.js` でWCAG 2.1 AA準拠を確認します。
 
 **チェック項目**:
+
 - 適切なalt属性
 - 色コントラスト比
 - キーボードナビゲーション
@@ -94,6 +95,7 @@ npm run test:performance
 **トリガー**: `dev`/`main`へのpush、`dev`/`main`へのPR
 
 **ジョブ**:
+
 - 依存関係インストール (`npm ci`)
 - リント実行 (`npm run lint`)
 - 型チェック実行 (`npm run type-check`)
@@ -106,6 +108,7 @@ npm run test:performance
 **トリガー**: `main`ブランチへのpush、手動ディスパッチ
 
 **ジョブ**:
+
 - 本番ビルド準備
 - Vercelデプロイ
 - デプロイ後検証
@@ -113,17 +116,20 @@ npm run test:performance
 ### 品質ゲート
 
 #### 必須要件
+
 - TypeScriptコンパイル成功
 - ESLintがエラーなしで通過
 - ビルドプロセス正常完了
 
 #### パフォーマンス要件
+
 - Lighthouseパフォーマンススコア > 90
 - First Contentful Paint < 1.8秒
 - Largest Contentful Paint < 2.5秒
 - Cumulative Layout Shift < 0.1
 
 #### アクセシビリティ要件
+
 - WCAG 2.1 AA準拠
 - 色コントラスト比 > 4.5:1
 - キーボードナビゲーション対応
@@ -137,18 +143,14 @@ Huskyとlint-stagedによるプリコミットフックが設定されていま�
 // package.json
 {
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,md,yml,yaml}": [
-      "prettier --write"
-    ]
+    "*.{ts,tsx,js,jsx}": ["prettier --write", "eslint --fix"],
+    "*.{json,md,yml,yaml}": ["prettier --write"]
   }
 }
 ```
 
 コミット時に自動的に:
+
 1. Prettierでフォーマット
 2. ESLintで修正可能なエラーを自動修正
 
@@ -235,11 +237,13 @@ npm run build
 ### ヘルプ
 
 #### ドキュメントリソース
+
 - [ESLint](https://eslint.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [GitHub Actions](https://docs.github.com/en/actions)
 
 #### 内部リソース
+
 - `CLAUDE.md` - プロジェクト概要とコマンド
 - `docs/DOCUMENTATION_GUIDE.md` - ドキュメントガイドライン
 - `docs/PERFORMANCE_GUIDE.md` - 最適化戦略
@@ -247,17 +251,19 @@ npm run build
 ## 将来のロードマップ
 
 ### 短期
+
 - [ ] ユニットテストフレームワーク（Vitest）の導入検討
 - [ ] コンポーネントテストの実装
 - [ ] E2Eテスト（Playwright）の導入検討
 
 ### 中期
+
 - [ ] テストカバレッジレポート
 - [ ] 自動セキュリティスキャン
 - [ ] パフォーマンス予算設定
 
 ---
 
-*このガイドはコードベースと共にメンテナンスされています。質問や改善提案はissueを作成するかPRを提出してください。*
+_このガイドはコードベースと共にメンテナンスされています。質問や改善提案はissueを作成するかPRを提出してください。_
 
 **最終更新**: 2025年1月

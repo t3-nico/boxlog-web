@@ -18,7 +18,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return {
-    title: `${t('legal.cookies.page.title')} - BoxLog`,
+    title: `${t('legal.cookies.page.title')} - Dayopt`,
     description: t('legal.cookies.page.description'),
   };
 }

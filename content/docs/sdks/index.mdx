@@ -1,8 +1,8 @@
 ---
 title: "SDKs & Libraries"
-description: "Official BoxLog SDKs for all major programming languages. Easy integration, comprehensive features, and excellent developer experience."
+description: "Official Dayopt SDKs for all major programming languages. Easy integration, comprehensive features, and excellent developer experience."
 tags: ["sdks", "libraries", "integration", "programming-languages"]
-author: "BoxLog Team"
+author: "Dayopt Team"
 publishedAt: "2025-01-16"
 updatedAt: "2025-01-16"
 order: 1
@@ -13,7 +13,7 @@ slug: "sdks"
 
 # SDKs & Libraries
 
-BoxLog provides official SDKs for all major programming languages, making it easy to integrate logging into your applications with just a few lines of code.
+Dayopt provides official SDKs for all major programming languages, making it easy to integrate logging into your applications with just a few lines of code.
 
 ## Available SDKs
 
@@ -25,8 +25,8 @@ BoxLog provides official SDKs for all major programming languages, making it eas
 Full-featured SDK for Node.js backends and modern browsers. TypeScript support included.
 
 ```javascript
-import { BoxLog } from '@boxlog/sdk'
-const logger = new BoxLog({ apiKey: 'your_key' })
+import { Dayopt } from '@dayopt/sdk'
+const logger = new Dayopt({ apiKey: 'your_key' })
 logger.info('User logged in', { userId: 'user_123' })
 ```
 
@@ -36,8 +36,8 @@ logger.info('User logged in', { userId: 'user_123' })
 Comprehensive Python SDK with Django, Flask, and FastAPI integrations.
 
 ```python
-from boxlog import BoxLog
-logger = BoxLog(api_key='your_key')
+from dayopt import Dayopt
+logger = Dayopt(api_key='your_key')
 logger.info('Processing started', {'job_id': 'job_123'})
 ```
 
@@ -47,9 +47,9 @@ logger.info('Processing started', {'job_id': 'job_123'})
 Efficient Go SDK optimized for high-throughput applications and microservices.
 
 ```go
-import "github.com/boxlog/go-sdk"
-logger := boxlog.New("your_key")
-logger.Info("Request processed", boxlog.Fields{"duration": 250})
+import "github.com/dayopt/go-sdk"
+logger := dayopt.New("your_key")
+logger.Info("Request processed", dayopt.Fields{"duration": 250})
 ```
 
 #### 💎 [Ruby](/docs/sdks/ruby)
@@ -58,8 +58,8 @@ logger.Info("Request processed", boxlog.Fields{"duration": 250})
 Ruby SDK with Rails integration and ActiveRecord support.
 
 ```ruby
-require 'boxlog'
-logger = BoxLog.new(api_key: 'your_key')
+require 'dayopt'
+logger = Dayopt.new(api_key: 'your_key')
 logger.info('User created', { user_id: 'user_123' })
 ```
 
@@ -112,22 +112,22 @@ Rust SDK for systems programming and high-performance applications.
 
 **[JavaScript Quick Start](/docs/sdks/javascript#quick-start)**
 ```bash
-npm install @boxlog/sdk
+npm install @dayopt/sdk
 ```
 
 **[Python Quick Start](/docs/sdks/python#quick-start)**
 ```bash
-pip install boxlog
+pip install dayopt
 ```
 
 **[Go Quick Start](/docs/sdks/go#quick-start)**
 ```bash
-go get github.com/boxlog/go-sdk
+go get github.com/dayopt/go-sdk
 ```
 
 **[Ruby Quick Start](/docs/sdks/ruby#quick-start)**
 ```bash
-gem install boxlog
+gem install dayopt
 ```
 
 ### Framework Integrations
@@ -161,7 +161,7 @@ logger.info('Event occurred', { userId, action, timestamp })
 logger.info('Event occurred', {'user_id': user_id, 'action': action})
 
 // Go
-logger.Info("Event occurred", boxlog.Fields{"userId": userId, "action": action})
+logger.Info("Event occurred", dayopt.Fields{"userId": userId, "action": action})
 ```
 
 ### Context and Correlation
@@ -177,7 +177,7 @@ requestLogger.info('Processing request')
 Optimize performance with batching and async sending:
 
 ```javascript
-const logger = new BoxLog({
+const logger = new Dayopt({
   apiKey: 'your_key',
   batchSize: 100,
   flushInterval: 5000
@@ -223,10 +223,10 @@ try {
 
 ### Open Source
 All SDKs are open source and available on GitHub:
-- **[JavaScript SDK](https://github.com/boxlog/javascript-sdk)**
-- **[Python SDK](https://github.com/boxlog/python-sdk)**
-- **[Go SDK](https://github.com/boxlog/go-sdk)**
-- **[Ruby SDK](https://github.com/boxlog/ruby-sdk)**
+- **[JavaScript SDK](https://github.com/dayopt/javascript-sdk)**
+- **[Python SDK](https://github.com/dayopt/python-sdk)**
+- **[Go SDK](https://github.com/dayopt/go-sdk)**
+- **[Ruby SDK](https://github.com/dayopt/ruby-sdk)**
 
 ### Community Contributions
 - Framework-specific integrations
@@ -235,10 +235,10 @@ All SDKs are open source and available on GitHub:
 - Examples and templates
 
 ### Support Channels
-- 💬 **[Discord Community](https://discord.gg/boxlog)** - Community support
-- 📧 **[SDK Support](mailto:sdk@boxlog.io)** - Technical SDK support
-- 🐛 **[GitHub Issues](https://github.com/boxlog)** - Bug reports and features
-- 📚 **[Documentation](https://docs.boxlog.io)** - Comprehensive guides
+- 💬 **[Discord Community](https://discord.gg/dayopt)** - Community support
+- 📧 **[SDK Support](mailto:sdk@dayopt.io)** - Technical SDK support
+- 🐛 **[GitHub Issues](https://github.com/dayopt)** - Bug reports and features
+- 📚 **[Documentation](https://docs.dayopt.io)** - Comprehensive guides
 
 ---
 

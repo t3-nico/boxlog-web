@@ -18,7 +18,7 @@ interface SEOProps {
 }
 
 export function generateEnhancedMetadata({
-  title = 'BoxLog - モダンSaaSプラットフォーム',
+  title = 'Dayopt - モダンSaaSプラットフォーム',
   description = 'Next.jsとTailwind CSSで構築された、最適なパフォーマンスとユーザー体験を提供するモダンSaaSプラットフォーム。',
   keywords = ['SaaS', 'Next.js', 'Tailwind CSS', 'React', 'TypeScript', 'Modern Web'],
   image = '/images/og-default.jpg',
@@ -36,16 +36,16 @@ export function generateEnhancedMetadata({
   const baseUrl = getAppUrl();
   const currentUrl = canonical || url || baseUrl;
 
-  const siteTitle = 'BoxLog';
+  const siteTitle = 'Dayopt';
   const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 
   return {
     title: fullTitle,
     description,
     keywords: keywords.join(', '),
-    authors: author ? [{ name: author }] : [{ name: 'BoxLog Team' }],
-    creator: 'BoxLog Team',
-    publisher: 'BoxLog',
+    authors: author ? [{ name: author }] : [{ name: 'Dayopt Team' }],
+    creator: 'Dayopt Team',
+    publisher: 'Dayopt',
     category: category || 'Technology',
 
     // Robots
@@ -89,8 +89,8 @@ export function generateEnhancedMetadata({
       title: fullTitle,
       description,
       images: [image],
-      creator: '@boxlog_app',
-      site: '@boxlog_app',
+      creator: '@dayopt_app',
+      site: '@dayopt_app',
     },
 
     // Additional meta tags
@@ -166,19 +166,19 @@ export function StructuredData({ type, data }: StructuredDataProps) {
 
   // 組織の基本情報
   if (type === 'Organization') {
-    baseStructure.name = 'BoxLog';
-    baseStructure.url = 'https://boxlog.app';
-    baseStructure.logo = 'https://boxlog.app/logo.png';
-    baseStructure.sameAs = ['https://twitter.com/boxlog_app', 'https://github.com/boxlog'];
+    baseStructure.name = 'Dayopt';
+    baseStructure.url = 'https://dayopt.app';
+    baseStructure.logo = 'https://dayopt.app/logo.png';
+    baseStructure.sameAs = ['https://twitter.com/dayopt_app', 'https://github.com/dayopt'];
   }
 
   // ウェブサイトの情報
   if (type === 'WebSite') {
-    baseStructure.name = 'BoxLog';
-    baseStructure.url = 'https://boxlog.app';
+    baseStructure.name = 'Dayopt';
+    baseStructure.url = 'https://dayopt.app';
     baseStructure.potentialAction = {
       '@type': 'SearchAction',
-      target: 'https://boxlog.app/search?q={search_term_string}',
+      target: 'https://dayopt.app/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     };
   }
@@ -279,10 +279,10 @@ export function ArticleStructuredData({
     },
     publisher: {
       '@type': 'Organization',
-      name: 'BoxLog',
+      name: 'Dayopt',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://boxlog.app/logo.png',
+        url: 'https://dayopt.app/logo.png',
       },
     },
     ...(category && { category }),

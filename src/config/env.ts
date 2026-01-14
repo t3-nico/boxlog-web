@@ -45,14 +45,14 @@ export interface EnvConfig {
    * アプリケーションの公開 URL
    *
    * @required Production環境では必須
-   * @example 'https://boxlog.app'
+   * @example 'https://dayopt.app'
    */
   NEXT_PUBLIC_APP_URL?: string;
 
   /**
    * サイトの公開 URL（SEO・OGP用）
    *
-   * @default 'https://boxlog.app'
+   * @default 'https://dayopt.app'
    */
   NEXT_PUBLIC_SITE_URL?: string;
 
@@ -92,7 +92,7 @@ export interface EnvConfig {
   /**
    * GitHub リポジトリ (owner/repo 形式)
    *
-   * @default 't3-nico/boxlog-web'
+   * @default 't3-nico/dayopt-web'
    * @example 'your-org/your-repo'
    */
   GITHUB_CONTACT_REPO?: string;
@@ -301,7 +301,7 @@ export const isCI = env.CI === true;
  * 優先順位:
  * 1. NEXT_PUBLIC_APP_URL
  * 2. VERCEL_URL (https:// プレフィックス付与)
- * 3. デフォルト値 (開発: localhost:3000, 本番: https://boxlog.app)
+ * 3. デフォルト値 (開発: localhost:3000, 本番: https://dayopt.app)
  */
 export const getAppUrl = (): string => {
   if (env.NEXT_PUBLIC_APP_URL) {
@@ -316,7 +316,7 @@ export const getAppUrl = (): string => {
     return 'http://localhost:3000';
   }
 
-  return 'https://boxlog.app';
+  return 'https://dayopt.app';
 };
 
 /**

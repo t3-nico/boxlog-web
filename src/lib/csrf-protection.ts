@@ -30,7 +30,7 @@ function getAllowedOrigins(): string[] {
   }
 
   // デフォルトの本番ドメイン
-  allowedOrigins.push('https://boxlog.app', 'https://www.boxlog.app');
+  allowedOrigins.push('https://dayopt.app', 'https://www.dayopt.app');
 
   return allowedOrigins;
 }

@@ -1,6 +1,6 @@
 # 環境変数セットアップガイド
 
-BoxLog Web の環境変数設定に関する完全なガイドです。
+Dayopt Web の環境変数設定に関する完全なガイドです。
 
 ## 目次
 
@@ -43,52 +43,52 @@ npm run dev
 
 ### Node.js 環境
 
-| 変数名 | 型 | デフォルト | 必須 | 説明 |
-|--------|------|------------|------|------|
-| `NODE_ENV` | `'development' \| 'production' \| 'test'` | `'development'` | ❌ | 実行環境（Next.jsが自動設定） |
-| `CI` | `boolean` | `undefined` | ❌ | CI/CD環境フラグ（GitHub Actionsが自動設定） |
+| 変数名     | 型                                        | デフォルト      | 必須 | 説明                                        |
+| ---------- | ----------------------------------------- | --------------- | ---- | ------------------------------------------- |
+| `NODE_ENV` | `'development' \| 'production' \| 'test'` | `'development'` | ❌   | 実行環境（Next.jsが自動設定）               |
+| `CI`       | `boolean`                                 | `undefined`     | ❌   | CI/CD環境フラグ（GitHub Actionsが自動設定） |
 
 ### アプリケーション設定
 
-| 変数名 | 型 | デフォルト | 必須 | 説明 |
-|--------|------|------------|------|------|
-| `NEXT_PUBLIC_APP_URL` | `string` | `undefined` | ⚠️ 本番のみ | アプリケーションの公開URL<br>例: `https://boxlog.app` |
-| `NEXT_PUBLIC_SITE_URL` | `string` | `NEXT_PUBLIC_APP_URL` | ❌ | SEO・OGP用のサイトURL |
-| `VERCEL_URL` | `string` | `undefined` | ❌ | VercelデプロイURL（自動設定） |
+| 変数名                 | 型       | デフォルト            | 必須        | 説明                                                  |
+| ---------------------- | -------- | --------------------- | ----------- | ----------------------------------------------------- |
+| `NEXT_PUBLIC_APP_URL`  | `string` | `undefined`           | ⚠️ 本番のみ | アプリケーションの公開URL<br>例: `https://dayopt.app` |
+| `NEXT_PUBLIC_SITE_URL` | `string` | `NEXT_PUBLIC_APP_URL` | ❌          | SEO・OGP用のサイトURL                                 |
+| `VERCEL_URL`           | `string` | `undefined`           | ❌          | VercelデプロイURL（自動設定）                         |
 
 ### セキュリティ設定
 
-| 変数名 | 型 | デフォルト | 必須 | 説明 |
-|--------|------|------------|------|------|
-| `PRIVACY_PROTECTION_MODE` | `'normal' \| 'strict'` | `'normal'` | ❌ | プライバシー保護モード<br>- `normal`: 部分マスク (u\*\*\*@example.com)<br>- `strict`: 完全マスク (\*\*\*@\*\*\*) |
+| 変数名                    | 型                     | デフォルト | 必須 | 説明                                                                                                             |
+| ------------------------- | ---------------------- | ---------- | ---- | ---------------------------------------------------------------------------------------------------------------- |
+| `PRIVACY_PROTECTION_MODE` | `'normal' \| 'strict'` | `'normal'` | ❌   | プライバシー保護モード<br>- `normal`: 部分マスク (u\*\*\*@example.com)<br>- `strict`: 完全マスク (\*\*\*@\*\*\*) |
 
 ### 外部サービス - GitHub
 
-| 変数名 | 型 | デフォルト | 必須 | 説明 |
-|--------|------|------------|------|------|
-| `GITHUB_TOKEN` | `string` | `undefined` | ⚠️ 本番のみ | GitHub Personal Access Token<br>スコープ: `repo` または `public_repo` |
-| `GITHUB_CONTACT_REPO` | `string` | `'t3-nico/boxlog-web'` | ❌ | コンタクトフォームのIssue作成先リポジトリ<br>形式: `owner/repo` |
+| 変数名                | 型       | デフォルト             | 必須        | 説明                                                                  |
+| --------------------- | -------- | ---------------------- | ----------- | --------------------------------------------------------------------- |
+| `GITHUB_TOKEN`        | `string` | `undefined`            | ⚠️ 本番のみ | GitHub Personal Access Token<br>スコープ: `repo` または `public_repo` |
+| `GITHUB_CONTACT_REPO` | `string` | `'t3-nico/dayopt-web'` | ❌          | コンタクトフォームのIssue作成先リポジトリ<br>形式: `owner/repo`       |
 
 ### 外部サービス - Upstash (Rate Limiting)
 
-| 変数名 | 型 | デフォルト | 必須 | 説明 |
-|--------|------|------------|------|------|
-| `UPSTASH_REDIS_REST_URL` | `string` | `undefined` | ❌ | Upstash Redis REST API URL<br>未設定時はメモリベースにフォールバック |
-| `UPSTASH_REDIS_REST_TOKEN` | `string` | `undefined` | ❌ | Upstash Redis REST API Token<br>URLと両方設定する必要あり |
+| 変数名                     | 型       | デフォルト  | 必須 | 説明                                                                 |
+| -------------------------- | -------- | ----------- | ---- | -------------------------------------------------------------------- |
+| `UPSTASH_REDIS_REST_URL`   | `string` | `undefined` | ❌   | Upstash Redis REST API URL<br>未設定時はメモリベースにフォールバック |
+| `UPSTASH_REDIS_REST_TOKEN` | `string` | `undefined` | ❌   | Upstash Redis REST API Token<br>URLと両方設定する必要あり            |
 
 ### SEO - 検索エンジン検証
 
-| 変数名 | 型 | デフォルト | 必須 | 説明 |
-|--------|------|------------|------|------|
-| `GOOGLE_SITE_VERIFICATION` | `string` | `undefined` | ❌ | Google Search Console 検証コード |
-| `YANDEX_VERIFICATION` | `string` | `undefined` | ❌ | Yandex Webmaster 検証コード |
-| `YAHOO_VERIFICATION` | `string` | `undefined` | ❌ | Yahoo! Search 検証コード |
+| 変数名                     | 型       | デフォルト  | 必須 | 説明                             |
+| -------------------------- | -------- | ----------- | ---- | -------------------------------- |
+| `GOOGLE_SITE_VERIFICATION` | `string` | `undefined` | ❌   | Google Search Console 検証コード |
+| `YANDEX_VERIFICATION`      | `string` | `undefined` | ❌   | Yandex Webmaster 検証コード      |
+| `YAHOO_VERIFICATION`       | `string` | `undefined` | ❌   | Yahoo! Search 検証コード         |
 
 ---
 
 ## 型安全性
 
-BoxLog Web では、環境変数アクセスが完全に型安全です。
+Dayopt Web では、環境変数アクセスが完全に型安全です。
 
 ### 従来の問題
 
@@ -98,10 +98,12 @@ const token = process.env.GITHUB_TOKEN; // string | undefined
 const mode = process.env.PRIVACY_PROTECTION_MODE; // string | undefined
 
 // 型安全性がない
-if (mode === 'strict') { /* ... */ } // 型エラーなし（実行時エラーの可能性）
+if (mode === 'strict') {
+  /* ... */
+} // 型エラーなし（実行時エラーの可能性）
 ```
 
-### BoxLog の実装
+### Dayopt の実装
 
 ```typescript
 import { env, isDevelopment, getAppUrl } from '@/config/env';
@@ -111,11 +113,17 @@ const token = env.GITHUB_TOKEN; // string | undefined
 const mode = env.PRIVACY_PROTECTION_MODE; // 'normal' | 'strict'
 
 // 型チェックが効く
-if (mode === 'strict') { /* ... */ } // OK
-if (mode === 'invalid') { /* ... */ } // コンパイルエラー！
+if (mode === 'strict') {
+  /* ... */
+} // OK
+if (mode === 'invalid') {
+  /* ... */
+} // コンパイルエラー！
 
 // ヘルパー関数
-if (isDevelopment) { /* ... */ }
+if (isDevelopment) {
+  /* ... */
+}
 const url = getAppUrl(); // string (優先順位付きフォールバック)
 ```
 
@@ -252,7 +260,7 @@ npm run dev
 
 **任意:**
 
-- `GITHUB_CONTACT_REPO`: デフォルトは `t3-nico/boxlog-web`
+- `GITHUB_CONTACT_REPO`: デフォルトは `t3-nico/dayopt-web`
 - `PRIVACY_PROTECTION_MODE`: デフォルトは `normal`
 - `GOOGLE_SITE_VERIFICATION`: Google Search Console 検証用
 - `YANDEX_VERIFICATION`: Yandex Webmaster 検証用
@@ -291,6 +299,7 @@ Environment Variable Validation Error:
 **原因:** 本番環境でアプリケーションURLが設定されていません。
 
 **解決方法:**
+
 1. Vercel の場合: `VERCEL_URL` が自動設定されるため、通常は不要
 2. その他の場合: `NEXT_PUBLIC_APP_URL=https://your-domain.com` を設定
 
@@ -305,6 +314,7 @@ Environment Variable Validation Error:
 **影響:** コンタクトフォームが動作しません。
 
 **解決方法:**
+
 - 開発環境: 警告を無視してもOK（コンタクトフォーム以外は動作）
 - 本番環境: `GITHUB_TOKEN` を設定する
 
@@ -320,6 +330,7 @@ Falling back to memory-based rate limiting.
 **影響:** メモリベースのレート制限にフォールバック。
 
 **解決方法:**
+
 - 両方設定するか、両方削除する
 - Vercel Serverless では Redis ベースを推奨
 
