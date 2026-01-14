@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: MetadataProps): Promise<Metad
   const t = await getTranslations({ locale });
 
   return {
-    title: `${t('legal.security.header.title')} - BoxLog`,
+    title: `${t('legal.security.header.title')} - Dayopt`,
     description: t('legal.security.header.description'),
   };
 }

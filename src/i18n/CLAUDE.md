@@ -134,7 +134,7 @@ const NAMESPACES = [
 
 ## appとの同期
 
-このプロジェクト（web）の翻訳は、boxlog-appと共通化されています。
+このプロジェクト（web）の翻訳は、dayopt-appと共通化されています。
 
 ### 同期対象ファイル
 
@@ -161,4 +161,4 @@ const NAMESPACES = [
 
 - [next-intl 公式ドキュメント](https://next-intl-docs.vercel.app/)
 - [App Router での使用](https://next-intl-docs.vercel.app/docs/getting-started/app-router)
-- [boxlog-app/src/i18n/CLAUDE.md](../../boxlog-app/src/i18n/CLAUDE.md) - app側のi18nガイド
+- [dayopt-app/src/i18n/CLAUDE.md](../../dayopt-app/src/i18n/CLAUDE.md) - app側のi18nガイド

@@ -63,17 +63,17 @@ export function Footer() {
   const socialLinks = [
     {
       name: 'X',
-      href: 'https://x.com/boxlog',
+      href: 'https://x.com/dayopt',
       icon: XIcon,
     },
     {
       name: 'GitHub',
-      href: 'https://github.com/boxlog',
+      href: 'https://github.com/dayopt',
       icon: GitHubIcon,
     },
     {
       name: 'YouTube',
-      href: 'https://youtube.com/@boxlog',
+      href: 'https://youtube.com/@dayopt',
       icon: YouTubeIcon,
     },
   ];
@@ -86,7 +86,7 @@ export function Footer() {
           {/* Logo */}
           <div>
             <Link href="/" className="inline-block">
-              <span className="text-foreground text-2xl font-bold">BoxLog</span>
+              <span className="text-foreground text-2xl font-bold">Dayopt</span>
             </Link>
           </div>
 
@@ -193,7 +193,7 @@ export function Footer() {
             {/* Copyright left, Settings right */}
             <div className="flex items-center justify-between">
               <p className="text-muted-foreground text-sm">
-                &copy; {new Date().getFullYear()} BoxLog, Inc.
+                &copy; {new Date().getFullYear()} Dayopt, Inc.
               </p>
               <div className="flex items-center gap-x-0">
                 <ThemeToggle />
@@ -205,7 +205,7 @@ export function Footer() {
           {/* Desktop: SNS + Settings right, Copyright left */}
           <div className="hidden md:flex md:items-center md:justify-between">
             <p className="text-muted-foreground text-sm">
-              &copy; {new Date().getFullYear()} BoxLog, Inc. {tFooter('legal.copyright')}
+              &copy; {new Date().getFullYear()} Dayopt, Inc. {tFooter('legal.copyright')}
             </p>
             <div className="flex items-center gap-x-6">
               {socialLinks.map((item) => (

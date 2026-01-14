@@ -51,8 +51,8 @@ export default async function DocsPage({ params }: PageProps) {
           </Heading>
           <Text size="xl" variant="muted" className="max-w-3xl">
             {isJa
-              ? 'ドキュメントとガイドでBoxLogを始めましょう'
-              : 'Get started with BoxLog using our documentation and guides'}
+              ? 'ドキュメントとガイドでDayoptを始めましょう'
+              : 'Get started with Dayopt using our documentation and guides'}
           </Text>
         </div>
 
@@ -80,7 +80,7 @@ export default async function DocsPage({ params }: PageProps) {
               </Heading>
             </div>
             <Text variant="muted" className="mb-4">
-              {isJa ? '数分でBoxLogを始めましょう' : 'Get started with BoxLog in minutes'}
+              {isJa ? '数分でDayoptを始めましょう' : 'Get started with Dayopt in minutes'}
             </Text>
             <Link
               href="/docs/quick-start"

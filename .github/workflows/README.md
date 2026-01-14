@@ -1,15 +1,15 @@
 # GitHub Actions ワークフロー
 
-BoxLog Web（マーケティングサイト）のCI/CDシステム
+Dayopt Web（マーケティングサイト）のCI/CDシステム
 
 ## ワークフロー構成
 
-| ワークフロー     | ファイル                               | トリガー       | 役割                            |
-| ---------------- | -------------------------------------- | -------------- | ------------------------------- |
+| ワークフロー     | ファイル                               | トリガー       | 役割                     |
+| ---------------- | -------------------------------------- | -------------- | ------------------------ |
 | **CI Pipeline**  | [`ci.yml`](ci.yml)                     | Push/PR (main) | lint + typecheck + build |
-| **Lighthouse**   | [`lighthouse.yml`](lighthouse.yml)     | Push (main)    | パフォーマンス・SEO監視         |
-| **Bundle Check** | [`bundle-check.yml`](bundle-check.yml) | PR作成時       | バンドルサイズ監視              |
-| **PR Labeler**   | [`pr-labeler.yml`](pr-labeler.yml)     | PR作成/更新時  | 自動ラベル付与                  |
+| **Lighthouse**   | [`lighthouse.yml`](lighthouse.yml)     | Push (main)    | パフォーマンス・SEO監視  |
+| **Bundle Check** | [`bundle-check.yml`](bundle-check.yml) | PR作成時       | バンドルサイズ監視       |
+| **PR Labeler**   | [`pr-labeler.yml`](pr-labeler.yml)     | PR作成/更新時  | 自動ラベル付与           |
 
 ## CI Pipeline ([ci.yml](ci.yml))
 

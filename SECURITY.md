@@ -15,7 +15,7 @@
 ### 報告方法
 
 1. **プライベートに報告**
-   - GitHubのPrivate Security Advisoryを使用: [Report a vulnerability](https://github.com/t3-nico/boxlog-web/security/advisories/new)
+   - GitHubのPrivate Security Advisoryを使用: [Report a vulnerability](https://github.com/t3-nico/dayopt-web/security/advisories/new)
    - または、プロジェクトメンテナーに直接連絡
 
 2. **報告内容**
@@ -84,6 +84,7 @@
 ## 連絡先
 
 セキュリティに関する質問:
+
 - GitHub Security Advisory
 - プロジェクトメンテナー
 

@@ -1,7 +1,7 @@
-// Service Worker for BoxLog Platform
-const CACHE_NAME = 'boxlog-v1'
-const STATIC_CACHE_NAME = 'boxlog-static-v1'
-const DYNAMIC_CACHE_NAME = 'boxlog-dynamic-v1'
+// Service Worker for Dayopt Platform
+const CACHE_NAME = 'dayopt-v1'
+const STATIC_CACHE_NAME = 'dayopt-static-v1'
+const DYNAMIC_CACHE_NAME = 'dayopt-dynamic-v1'
 
 // Assets to cache immediately
 const STATIC_ASSETS = [

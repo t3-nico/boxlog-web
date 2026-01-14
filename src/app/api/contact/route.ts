@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     const data = contactSchema.parse(body);
 
     const githubToken = env.GITHUB_TOKEN;
-    const githubRepo = env.GITHUB_CONTACT_REPO || 't3-nico/boxlog-web';
+    const githubRepo = env.GITHUB_CONTACT_REPO || 't3-nico/dayopt-web';
 
     if (!githubToken) {
       return apiError('Server configuration error', 500, { code: ErrorCode.CONFIG_ERROR });

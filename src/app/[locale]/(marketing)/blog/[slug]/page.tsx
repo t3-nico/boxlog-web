@@ -290,7 +290,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     image: post.frontMatter.coverImage,
     publisher: {
       '@type': 'Organization',
-      name: 'BoxLog Platform',
+      name: 'Dayopt Platform',
     },
   };
 

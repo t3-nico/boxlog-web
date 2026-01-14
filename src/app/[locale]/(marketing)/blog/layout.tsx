@@ -2,21 +2,21 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | BoxLog Blog',
-    default: 'Blog | BoxLog',
+    template: '%s | Dayopt Blog',
+    default: 'Blog | Dayopt',
   },
   description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の知見をお届けします。',
   keywords: 'SaaS, blog, technology, development, business, startup, insights',
-  authors: [{ name: 'BoxLog Team' }],
+  authors: [{ name: 'Dayopt Team' }],
   openGraph: {
-    title: 'Blog | BoxLog',
+    title: 'Blog | Dayopt',
     description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の知見。',
     type: 'website',
-    siteName: 'BoxLog',
+    siteName: 'Dayopt',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog | BoxLog',
+    title: 'Blog | Dayopt',
     description: 'SaaS開発、テクノロジー、ビジネス戦略に関する最新の知見。',
   },
   alternates: {

@@ -25,9 +25,9 @@ interface CreditInfo {
  */
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Open Source Licenses - BoxLog',
+    title: 'Open Source Licenses - Dayopt',
     description:
-      'License information for open source software used in BoxLog. List of third-party dependencies and their licenses.',
+      'License information for open source software used in Dayopt. List of third-party dependencies and their licenses.',
   };
 }
 
@@ -169,7 +169,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
             {t('ossCredits.footer.thirdPartyNotices')}
           </Link>
           <Link
-            href="https://github.com/t3-nico/boxlog-app"
+            href="https://github.com/t3-nico/dayopt-app"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline"

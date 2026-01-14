@@ -33,14 +33,14 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'BoxLog',
-  title: 'BoxLog - スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム',
+  name: 'Dayopt',
+  title: 'Dayopt - スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム',
   description:
-    'BoxLogで次世代のSaaSアプリケーションを構築、デプロイ、スケール。認証、ユーザー管理、請求処理など包括的なツールを提供します。',
+    'Dayoptで次世代のSaaSアプリケーションを構築、デプロイ、スケール。認証、ユーザー管理、請求処理など包括的なツールを提供します。',
   url: getSiteUrl(),
   ogImage: '/og-image.png',
-  creator: 'BoxLog Team',
-  twitterHandle: '@boxlog_app',
+  creator: 'Dayopt Team',
+  twitterHandle: '@dayopt_app',
   keywords: [
     'SaaS',
     'Software as a Service',
@@ -266,11 +266,11 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
         url: baseUrl,
         logo: `${baseUrl}/logo.png`,
         description: siteConfig.description,
-        sameAs: ['https://twitter.com/boxlog_app', 'https://github.com/boxlog'],
+        sameAs: ['https://twitter.com/dayopt_app', 'https://github.com/dayopt'],
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'Customer Service',
-          email: 'support@boxlog.app',
+          email: 'support@dayopt.app',
         },
       };
 

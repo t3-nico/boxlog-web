@@ -1,10 +1,11 @@
-# BoxLog マーケティングウェブサイト
+# Dayopt マーケティングウェブサイト
 
 Next.js 16で構築された、モダンで高パフォーマンスなマーケティングウェブサイトです。包括的なアクセシビリティ対応（WCAG 2.1 AA準拠）、高度なパフォーマンス最適化、エンタープライズレベルのセキュリティを実現しています。
 
 ## 主な機能
 
 ### コア機能
+
 - **Next.js 16**: App RouterとServer Componentsを採用
 - **TypeScript**: 型安全性と開発体験の向上
 - **Tailwind CSS v4**: ユーティリティファーストのスタイリング
@@ -15,6 +16,7 @@ Next.js 16で構築された、モダンで高パフォーマンスなマーケ�
   - 検索履歴の localStorage 対応
 
 ### パフォーマンス最適化
+
 - **Core Web Vitals**: リアルタイム監視と最適化（目標: 90+）
 - **動的インポート**: コード分割による最適化
 - **画像最適化**: レスポンシブサイズとWebP/AVIF対応
@@ -27,6 +29,7 @@ Next.js 16で構築された、モダンで高パフォーマンスなマーケ�
   - 型安全性強化（API レスポンス型定義）
 
 ### アクセシビリティ（WCAG 2.1 AA準拠）
+
 - **適切なalt属性**: コンテキストを考慮した自動生成
 - **フォーカス管理**: トラップと復元機能
 - **色コントラスト検証**: リアルタイムチェック
@@ -35,6 +38,7 @@ Next.js 16で構築された、モダンで高パフォーマンスなマーケ�
 - **モーション設定の尊重**: ユーザー設定に配慮
 
 ### セキュリティ機能
+
 - **Content Security Policy (CSP)**: 厳格なヘッダー設定
 - **入力検証**: サニタイゼーション処理
 - **XSS対策**: HTMLエスケープ処理
@@ -49,6 +53,7 @@ Next.js 16で構築された、モダンで高パフォーマンスなマーケ�
 - **環境変数の型安全性**: 実行時バリデーションと型定義（13種類の環境変数）
 
 ### 開発体験（DX）
+
 - **型安全なエラーハンドリング**: 構造化エラーと6種類のカテゴリ分類
 - **環境変数システム**: TypeScript型定義と実行時検証
 - **包括的ドキュメント**: 環境変数・セットアップガイド完備
@@ -107,23 +112,28 @@ content/
 ### インストール
 
 1. **リポジトリをクローン**
+
    ```bash
-   git clone https://github.com/your-username/boxlog-web.git
-   cd boxlog-web
+   git clone https://github.com/your-username/dayopt-web.git
+   cd dayopt-web
    ```
 
 2. **依存関係をインストール**
+
    ```bash
    npm install
    ```
 
 3. **環境変数を設定**
+
    ```bash
    cp .env.example .env.local
    ```
+
    `.env.local`を編集して設定値を入力してください。
 
 4. **開発サーバーを起動**
+
    ```bash
    npm run dev
    ```
@@ -135,38 +145,38 @@ content/
 
 ### 開発
 
-| スクリプト | 説明 |
-|-----------|------|
-| `npm run dev` | 開発サーバー起動 |
-| `npm run build` | 本番用ビルド |
+| スクリプト      | 説明             |
+| --------------- | ---------------- |
+| `npm run dev`   | 開発サーバー起動 |
+| `npm run build` | 本番用ビルド     |
 | `npm run start` | 本番サーバー起動 |
 
 ### 品質管理
 
-| スクリプト | 説明 |
-|-----------|------|
-| `npm run lint` | ESLint実行 |
-| `npm run lint:fix` | ESLint自動修正 |
-| `npm run type-check` | TypeScript型チェック |
-| `npm run format` | Prettier実行 |
-| `npm run format:check` | Prettierチェック |
+| スクリプト             | 説明                 |
+| ---------------------- | -------------------- |
+| `npm run lint`         | ESLint実行           |
+| `npm run lint:fix`     | ESLint自動修正       |
+| `npm run type-check`   | TypeScript型チェック |
+| `npm run format`       | Prettier実行         |
+| `npm run format:check` | Prettierチェック     |
 
 ### 分析・監査
 
-| スクリプト | 説明 |
-|-----------|------|
-| `npm run analyze` | バンドルサイズ分析 |
-| `npm run audit:accessibility` | アクセシビリティ監査 |
-| `npm run audit:performance` | パフォーマンス監査 |
-| `npm run test:a11y` | ビルド後アクセシビリティテスト |
-| `npm run test:performance` | ビルド後パフォーマンステスト |
+| スクリプト                    | 説明                           |
+| ----------------------------- | ------------------------------ |
+| `npm run analyze`             | バンドルサイズ分析             |
+| `npm run audit:accessibility` | アクセシビリティ監査           |
+| `npm run audit:performance`   | パフォーマンス監査             |
+| `npm run test:a11y`           | ビルド後アクセシビリティテスト |
+| `npm run test:performance`    | ビルド後パフォーマンステスト   |
 
 ### 本番準備
 
-| スクリプト | 説明 |
-|-----------|------|
+| スクリプト                   | 説明                                     |
+| ---------------------------- | ---------------------------------------- |
 | `npm run prepare:production` | console削除 + lint + 型チェック + ビルド |
-| `npm run cleanup:console` | console.log削除 |
+| `npm run cleanup:console`    | console.log削除                          |
 
 ## 設定
 
@@ -187,6 +197,7 @@ SENDGRID_API_KEY=your-sendgrid-key
 ### コンテンツ管理
 
 コンテンツはMDXファイルで管理します：
+
 - `content/blog/` - ブログ記事
 - `content/docs/` - ドキュメント
 - `content/releases/` - リリースノート
@@ -195,10 +206,10 @@ SENDGRID_API_KEY=your-sendgrid-key
 
 ```markdown
 ---
-title: "記事タイトル"
-description: "記事の説明"
-date: "2025-01-01"
-tags: ["タグ1", "タグ2"]
+title: '記事タイトル'
+description: '記事の説明'
+date: '2025-01-01'
+tags: ['タグ1', 'タグ2']
 ---
 
 コンテンツ本文...
@@ -228,11 +239,11 @@ npm run start
 
 ### Core Web Vitals目標
 
-| 指標 | 目標値 |
-|------|--------|
+| 指標                           | 目標値  |
+| ------------------------------ | ------- |
 | LCP (Largest Contentful Paint) | < 2.5秒 |
-| FID (First Input Delay) | < 100ms |
-| CLS (Cumulative Layout Shift) | < 0.1 |
+| FID (First Input Delay)        | < 100ms |
+| CLS (Cumulative Layout Shift)  | < 0.1   |
 
 ### バンドル分析
 
@@ -255,6 +266,7 @@ WCAG 2.1 AA準拠を完全サポート：
 ## セキュリティ
 
 ### セキュリティヘッダー
+
 - Content Security Policy (CSP)
 - X-Frame-Options
 - X-Content-Type-Options
@@ -262,6 +274,7 @@ WCAG 2.1 AA準拠を完全サポート：
 - Strict-Transport-Security
 
 ### 入力検証
+
 - XSS対策
 - SQLインジェクション対策
 - CSRFトークン検証

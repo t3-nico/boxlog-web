@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
 
-    const title = searchParams.get('title') || 'BoxLog';
+    const title = searchParams.get('title') || 'Dayopt';
     const description =
       searchParams.get('description') ||
       'スケーラブルなアプリケーションのためのモダンSaaSプラットフォーム';
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       default: {
         icon: '📦',
         color: brandColors.primary,
-        label: 'BoxLog',
+        label: 'Dayopt',
       },
     };
 
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
                 lineHeight: '1.2',
               }}
             >
-              BoxLog
+              Dayopt
             </div>
             <div
               style={{

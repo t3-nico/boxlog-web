@@ -1,14 +1,14 @@
 # デプロイガイド
 
-このガイドでは、BoxLogマーケティングウェブサイトの各環境へのデプロイ方法を説明します。
+このガイドでは、Dayoptマーケティングウェブサイトの各環境へのデプロイ方法を説明します。
 
 ## 🌍 環境概要
 
-| 環境 | URL | ブランチ | 自動デプロイ | 用途 |
-|------|-----|----------|--------------|------|
-| 開発 | `localhost:3000` | `dev` | ❌ | ローカル開発 |
-| ステージング | `staging.yoursite.com` | `staging` | ✅ | テスト・QA |
-| 本番 | `yoursite.com` | `main` | ✅ | ライブサイト |
+| 環境         | URL                    | ブランチ  | 自動デプロイ | 用途         |
+| ------------ | ---------------------- | --------- | ------------ | ------------ |
+| 開発         | `localhost:3000`       | `dev`     | ❌           | ローカル開発 |
+| ステージング | `staging.yoursite.com` | `staging` | ✅           | テスト・QA   |
+| 本番         | `yoursite.com`         | `main`    | ✅           | ライブサイト |
 
 ## 🚀 Vercelデプロイ（推奨）
 
@@ -20,6 +20,7 @@
    - プロジェクトのルートディレクトリを選択
 
 2. **ビルド設定**
+
    ```json
    {
      "buildCommand": "npm run build",
@@ -33,6 +34,7 @@
    Vercelダッシュボードで以下を設定：
 
    **本番環境:**
+
    ```bash
    NEXT_PUBLIC_SITE_URL=https://yoursite.com
    NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
@@ -41,6 +43,7 @@
    ```
 
    **ステージング:**
+
    ```bash
    NEXT_PUBLIC_SITE_URL=https://staging.yoursite.com
    NEXT_PUBLIC_GA_MEASUREMENT_ID=G-STAGING-ID
@@ -68,6 +71,7 @@
 
 1. Vercelダッシュボードで**ドメインを追加**
 2. **DNS設定**:
+
    ```
    Type: CNAME
    Name: www
@@ -77,6 +81,7 @@
    Name: @
    Value: 76.76.19.61
    ```
+
 3. **SSL証明書** - Vercelで自動発行
 
 ## 🔧 代替デプロイオプション
@@ -84,6 +89,7 @@
 ### Netlify
 
 1. **ビルド設定**
+
    ```toml
    [build]
      command = "npm run build && npm run export"
@@ -124,6 +130,7 @@
 ### Dockerデプロイ
 
 1. **Dockerfile**
+
    ```dockerfile
    FROM node:18-alpine AS deps
    WORKDIR /app
@@ -151,8 +158,8 @@
 
 2. **ビルドと実行**
    ```bash
-   docker build -t boxlog-web .
-   docker run -p 3000:3000 boxlog-web
+   docker build -t dayopt-web .
+   docker run -p 3000:3000 dayopt-web
    ```
 
 ## ⚙️ 環境設定
@@ -160,6 +167,7 @@
 ### 環境別の環境変数
 
 #### 開発環境 (`.env.local`)
+
 ```bash
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NODE_ENV=development
@@ -170,6 +178,7 @@ SKIP_TYPE_CHECK=false
 ```
 
 #### ステージング環境
+
 ```bash
 NEXT_PUBLIC_SITE_URL=https://staging.yoursite.com
 NODE_ENV=staging
@@ -179,6 +188,7 @@ NEXT_PUBLIC_ENABLE_BETA_FEATURES=true
 ```
 
 #### 本番環境
+
 ```bash
 NEXT_PUBLIC_SITE_URL=https://yoursite.com
 NODE_ENV=production
@@ -219,11 +229,13 @@ SENTRY_DSN=https://production@sentry.io/project
 ### ビルド最適化
 
 1. **バンドル分析**
+
    ```bash
    npm run analyze
    ```
 
 2. **型チェック**
+
    ```bash
    npm run type-check
    ```
@@ -236,11 +248,13 @@ SENTRY_DSN=https://production@sentry.io/project
 ### CDN設定
 
 #### Vercel Edge Network
+
 - グローバルCDN自動設定
 - Edge Functions対応
 - 画像最適化
 
 #### CloudFront（AWS用）
+
 ```json
 {
   "cacheBehaviors": [
@@ -262,6 +276,7 @@ SENTRY_DSN=https://production@sentry.io/project
 ### 自動テストパイプライン
 
 1. **品質チェック実行**
+
    ```bash
    npm run lint
    npm run type-check
@@ -269,6 +284,7 @@ SENTRY_DSN=https://production@sentry.io/project
    ```
 
 2. **監査**
+
    ```bash
    npm run audit:accessibility   # アクセシビリティ監査
    npm run audit:performance     # パフォーマンス監査
@@ -307,14 +323,15 @@ SENTRY_DSN=https://production@sentry.io/project
 ### エラートラッキング
 
 1. **Sentry設定**
+
    ```javascript
-   import * as Sentry from "@sentry/nextjs"
+   import * as Sentry from '@sentry/nextjs';
 
    Sentry.init({
      dsn: process.env.SENTRY_DSN,
      environment: process.env.NODE_ENV,
      tracesSampleRate: 1.0,
-   })
+   });
    ```
 
 2. **アラート設定**
@@ -352,6 +369,7 @@ SENTRY_DSN=https://production@sentry.io/project
 ## 📋 デプロイチェックリスト
 
 ### デプロイ前
+
 - [ ] コードレビュー完了
 - [ ] テスト通過
 - [ ] パフォーマンス指標確認
@@ -360,6 +378,7 @@ SENTRY_DSN=https://production@sentry.io/project
 - [ ] データベースマイグレーション（必要な場合）
 
 ### デプロイ中
+
 - [ ] ステージングにデプロイ
 - [ ] ステージングで動作確認
 - [ ] 本番にデプロイ
@@ -367,6 +386,7 @@ SENTRY_DSN=https://production@sentry.io/project
 - [ ] エラー監視
 
 ### デプロイ後
+
 - [ ] パフォーマンス監視
 - [ ] エラートラッキング
 - [ ] ユーザーフィードバック監視

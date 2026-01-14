@@ -47,16 +47,31 @@
       "menu": "メニュー"
     },
     "metadata": {
-      "siteName": "BoxLog",
+      "siteName": "Dayopt",
       "siteDescription": "Next.jsとTailwind CSSで構築されたモダンなSaaSプラットフォーム"
+    },
+    "aria": {
+      "openMenu": "メニューを開く",
+      "closeMenu": "メニューを閉じる",
+      "close": "閉じる",
+      "previous": "前へ",
+      "next": "次へ",
+      "mainNavigation": "メインナビゲーション",
+      "docsNavigation": "ドキュメントナビゲーション",
+      "navigationMenu": "ナビゲーションメニュー",
+      "goToPreviousPage": "前のページへ",
+      "goToNextPage": "次のページへ",
+      "morePages": "その他のページ",
+      "pagination": "ページネーション",
+      "more": "その他"
     }
   },
   "footer": {
     "description": "タスクの整理、時間管理、目標達成を支援するモダンな生産性ツール。",
     "cta": {
       "label": "今すぐ始める",
-      "title": "生産性を向上させよう。BoxLogを今すぐ始めましょう。",
-      "description": "BoxLogの強力な生産性ツールで、タスクを整理し、時間を追跡し、目標を達成しましょう。",
+      "title": "生産性を向上させよう。Dayoptを今すぐ始めましょう。",
+      "description": "Dayoptの強力な生産性ツールで、タスクを整理し、時間を追跡し、目標を達成しましょう。",
       "primaryButton": "今すぐ始める",
       "secondaryButton": "詳細を見る"
     },
@@ -217,20 +232,5 @@
     "sidebar": {
       "searchPlaceholder": "ドキュメントを検索..."
     }
-  },
-  "aria": {
-    "openMenu": "メニューを開く",
-    "closeMenu": "メニューを閉じる",
-    "close": "閉じる",
-    "previous": "前へ",
-    "next": "次へ",
-    "mainNavigation": "メインナビゲーション",
-    "docsNavigation": "ドキュメントナビゲーション",
-    "navigationMenu": "ナビゲーションメニュー",
-    "goToPreviousPage": "前のページへ",
-    "goToNextPage": "次のページへ",
-    "morePages": "その他のページ",
-    "pagination": "ページネーション",
-    "more": "その他"
   }
 }

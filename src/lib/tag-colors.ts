@@ -1,14 +1,14 @@
 /**
  * タグカラー設定
  *
- * タグをカテゴリ別に分類し、boxlog-appと同じカラーパレットを使用
+ * タグをカテゴリ別に分類し、dayopt-appと同じカラーパレットを使用
  * 新しいタグを追加する場合は、適切なカテゴリに追加してください
  *
- * @see boxlog-app/src/config/ui/colors.ts - カラーパレットの定義元
+ * @see dayopt-app/src/config/ui/colors.ts - カラーパレットの定義元
  */
 
 // ========================================
-// カラーパレット（boxlog-appと同期）
+// カラーパレット（dayopt-appと同期）
 // ========================================
 
 export const TAG_COLOR_PALETTE = {

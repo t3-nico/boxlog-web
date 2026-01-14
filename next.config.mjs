@@ -114,6 +114,42 @@ const nextConfig = {
     ]
   },
 
+  // Multi-zones設定: LP（web）とアプリ（app）を同一ドメインで運用
+  // web側にないパスはapp側（dayopt-app）にフォールバック
+  // @see https://nextjs.org/docs/app/building-your-application/deploying/multi-zones
+  async rewrites() {
+    const appDomain = process.env.APP_DOMAIN || 'https://dayopt-app.vercel.app'
+
+    return {
+      // app側のアセットをプロキシ
+      beforeFiles: [
+        {
+          source: '/app-static/:path*',
+          destination: `${appDomain}/app-static/:path*`,
+        },
+      ],
+      // web側にないパスをapp側にフォールバック
+      fallback: [
+        {
+          source: '/settings',
+          destination: `${appDomain}/settings`,
+        },
+        {
+          source: '/settings/:path*',
+          destination: `${appDomain}/settings/:path*`,
+        },
+        {
+          source: '/ja/settings',
+          destination: `${appDomain}/ja/settings`,
+        },
+        {
+          source: '/ja/settings/:path*',
+          destination: `${appDomain}/ja/settings/:path*`,
+        },
+      ],
+    }
+  },
+
   // Turbopack configuration (default bundler in Next.js 16)
   turbopack: {
     // Turbopack handles optimization automatically

@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale: locale,
     keywords:
       locale === 'ja'
-        ? ['リリースノート', '更新', '新機能', 'バグ修正', 'BoxLog']
-        : ['release notes', 'updates', 'new features', 'bug fixes', 'BoxLog'],
+        ? ['リリースノート', '更新', '新機能', 'バグ修正', 'Dayopt']
+        : ['release notes', 'updates', 'new features', 'bug fixes', 'Dayopt'],
     type: 'website',
   });
 }

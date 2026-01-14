@@ -12,7 +12,7 @@ import './globals.css';
 // TODO: ビルド環境でGoogle Fontsアクセスが可能になったら next/font/google に戻す
 
 export const metadata: Metadata = generateEnhancedMetadata({
-  title: 'BoxLog - Modern SaaS Platform',
+  title: 'Dayopt - Modern SaaS Platform',
   description:
     'Powerful, scalable SaaS platform built with Next.js, React, and Tailwind CSS. Optimized for performance, accessibility, and SEO.',
   keywords: [
@@ -35,22 +35,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData
           type="Organization"
           data={{
-            name: 'BoxLog',
-            alternateName: 'BoxLog Platform',
+            name: 'Dayopt',
+            alternateName: 'Dayopt Platform',
             description: 'Modern SaaS platform for businesses',
             foundingDate: '2024-01-01',
             contactPoint: {
               '@type': 'ContactPoint',
               contactType: 'customer service',
-              email: 'contact@boxlog.app',
+              email: 'contact@dayopt.app',
             },
           }}
         />
         <StructuredData
           type="WebSite"
           data={{
-            name: 'BoxLog Platform',
-            alternateName: 'BoxLog',
+            name: 'Dayopt Platform',
+            alternateName: 'Dayopt',
           }}
         />
       </head>

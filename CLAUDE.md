@@ -1,6 +1,6 @@
-# CLAUDE.md - BoxLog Web Project
+# CLAUDE.md - Dayopt Web Project
 
-This file provides guidance to Claude Code (claude.ai/code) when working with the BoxLog Web project.
+This file provides guidance to Claude Code (claude.ai/code) when working with the Dayopt Web project.
 
 ## Communication Language
 
@@ -132,7 +132,7 @@ export const routing = defineRouting({
   locales: ['en', 'ja'],
   defaultLocale: 'en',
   localePrefix: 'as-needed', // デフォルト言語では/enを省略
-})
+});
 ```
 
 ### 実装パターン
@@ -268,6 +268,6 @@ npm run dev          # 開発サーバー起動・停止
 
 ---
 
-**このドキュメントについて**: Web版BoxLogの完全開発ガイド
+**このドキュメントについて**: Web版Dayoptの完全開発ガイド
 **最終更新**: 2025年12月
 **バージョン**: v3.1
