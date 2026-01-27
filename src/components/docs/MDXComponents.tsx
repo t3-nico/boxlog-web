@@ -280,24 +280,24 @@ export const mdxComponents: MDXComponents = {
 
   // 段落とテキスト
   p: ({ children, ...props }) => (
-    <Text className="mb-4 leading-7" {...props}>
+    <Text className="mb-4 text-xl leading-7" {...props}>
       {children}
     </Text>
   ),
 
   // リスト
   ul: ({ children, ...props }) => (
-    <ul className="mb-4 list-inside list-disc space-y-2" {...props}>
+    <ul className="mb-4 list-inside list-disc space-y-2 text-xl" {...props}>
       {children}
     </ul>
   ),
   ol: ({ children, ...props }) => (
-    <ol className="mb-4 list-inside list-decimal space-y-2" {...props}>
+    <ol className="mb-4 list-inside list-decimal space-y-2 text-xl" {...props}>
       {children}
     </ol>
   ),
   li: ({ children, ...props }) => (
-    <li className="text-foreground/90" {...props}>
+    <li className="text-foreground/90 text-xl" {...props}>
       {children}
     </li>
   ),

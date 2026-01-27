@@ -124,7 +124,7 @@ const mdxComponents = {
     return <h4 id={id} className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />;
   },
   p: (props: ParagraphProps) => (
-    <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />
+    <p className="text-foreground/90 mb-4 text-xl leading-relaxed" {...props} />
   ),
   a: (props: AnchorProps) => (
     <a
@@ -136,7 +136,7 @@ const mdxComponents = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="border-info bg-info/10 text-foreground/90 my-6 rounded-r-lg border-l-4 py-2 pl-4 italic"
+      className="border-info bg-info/10 text-foreground/90 my-6 rounded-r-lg border-l-4 py-2 pl-4 text-xl italic"
       {...props}
     />
   ),
@@ -150,10 +150,10 @@ const mdxComponents = {
     />
   ),
   ul: (props: ListProps) => (
-    <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />
+    <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2 text-xl" {...props} />
   ),
   ol: (props: OrderedListProps) => (
-    <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2" {...props} />
+    <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2 text-xl" {...props} />
   ),
   li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
   img: (props: ImageProps) => (
