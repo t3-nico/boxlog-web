@@ -211,13 +211,13 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'docs':
-        return <FileText className="text-info h-4 w-4" />;
+        return <FileText className="text-info size-4" />;
       case 'blog':
-        return <Edit className="text-success h-4 w-4" />;
+        return <Edit className="text-success size-4" />;
       case 'release':
-        return <Package className="text-primary h-4 w-4" />;
+        return <Package className="text-primary size-4" />;
       default:
-        return <FileText className="text-muted-foreground h-4 w-4" />;
+        return <FileText className="text-muted-foreground size-4" />;
     }
   };
 
@@ -226,7 +226,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
       <DialogContent className="bg-popover border-border max-w-2xl gap-0 overflow-hidden p-0 shadow-2xl [&>button]:hidden">
         {/* 検索ヘッダー */}
         <div className="border-border flex items-center gap-4 border-b p-4">
-          <Search className="text-muted-foreground h-5 w-5 flex-shrink-0" />
+          <Search className="text-muted-foreground size-5 flex-shrink-0" />
           <Input
             ref={inputRef}
             placeholder={t('placeholder')}
@@ -240,9 +240,9 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
             variant="ghost"
             size="icon"
             aria-label={t('close')}
-            className="h-5 w-5 flex-shrink-0"
+            className="size-5 flex-shrink-0"
           >
-            <X className="h-4 w-4" aria-hidden="true" />
+            <X className="size-4" aria-hidden="true" />
           </Button>
         </div>
 
@@ -264,7 +264,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         variant="ghost"
                         className="flex h-auto w-full items-center justify-start gap-4 p-2"
                       >
-                        <Clock className="text-muted-foreground h-4 w-4" />
+                        <Clock className="text-muted-foreground size-4" />
                         <span className="text-sm">{search}</span>
                       </Button>
                     ))}
@@ -286,7 +286,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                       size="sm"
                       className={`inline-flex items-center gap-2 rounded-full ${getTagColor(tag.name)}`}
                     >
-                      <Tag className="h-3 w-3" />
+                      <Tag className="size-3" />
                       <span>{tag.name}</span>
                       <span className="text-xs opacity-75">({tag.count})</span>
                     </Button>
@@ -353,7 +353,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                 variant="ghost"
                 className="bg-state-active border-primary hover:bg-state-hover flex h-auto w-full items-center justify-start gap-4 border p-4"
               >
-                <Search className="text-primary h-4 w-4" />
+                <Search className="text-primary size-4" />
                 <div className="text-left">
                   <div className="text-foreground text-sm font-medium">
                     {t('searchFor')} &ldquo;
@@ -432,7 +432,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         className="flex h-auto w-full items-center justify-start gap-4 p-2"
                       >
                         <div className="mt-0.5">
-                          <Tag className="text-muted-foreground h-4 w-4" />
+                          <Tag className="text-muted-foreground size-4" />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-1 flex items-center gap-2">

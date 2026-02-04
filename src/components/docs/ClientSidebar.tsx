@@ -111,7 +111,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
               const IconComponent = getPageIcon(item.href!, item.title);
               return (
                 <>
-                  <IconComponent className="mr-2 h-4 w-4 flex-shrink-0" />
+                  <IconComponent className="mr-2 size-4 flex-shrink-0" />
                   <span className="flex-1">{item.title}</span>
                 </>
               );
@@ -121,7 +121,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
                 {item.badge}
               </span>
             )}
-            {item.external && <ExternalLink className="ml-1 h-3 w-3" />}
+            {item.external && <ExternalLink className="ml-1 size-3" />}
           </Link>
         ) : (
           <span
@@ -137,7 +137,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
               const IconComponent = getPageIcon('', item.title);
               return (
                 <>
-                  <IconComponent className="mr-2 h-4 w-4 flex-shrink-0" />
+                  <IconComponent className="mr-2 size-4 flex-shrink-0" />
                   <span className="flex-1">{item.title}</span>
                 </>
               );

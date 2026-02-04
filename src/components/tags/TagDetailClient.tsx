@@ -31,11 +31,11 @@ interface UnifiedContentItem extends TaggedContent {
 function getContentIcon(type: TaggedContent['type']) {
   switch (type) {
     case 'blog':
-      return <FileText className="h-5 w-5" />;
+      return <FileText className="size-5" />;
     case 'release':
-      return <Megaphone className="h-5 w-5" />;
+      return <Megaphone className="size-5" />;
     case 'doc':
-      return <BookOpen className="h-5 w-5" />;
+      return <BookOpen className="size-5" />;
   }
 }
 
@@ -100,7 +100,7 @@ export function TagDetailClient({
     categoryOptions.push({
       value: 'blog',
       label: isJa ? `ブログ (${filteredBlog.length})` : `Blog (${filteredBlog.length})`,
-      icon: <FileText className="h-3 w-3" />,
+      icon: <FileText className="size-3" />,
     });
   }
   if (releaseContent.length > 0) {
@@ -109,14 +109,14 @@ export function TagDetailClient({
       label: isJa
         ? `リリース (${filteredReleases.length})`
         : `Releases (${filteredReleases.length})`,
-      icon: <Megaphone className="h-3 w-3" />,
+      icon: <Megaphone className="size-3" />,
     });
   }
   if (docsContent.length > 0) {
     categoryOptions.push({
       value: 'docs',
       label: isJa ? `ドキュメント (${filteredDocs.length})` : `Docs (${filteredDocs.length})`,
-      icon: <BookOpen className="h-3 w-3" />,
+      icon: <BookOpen className="size-3" />,
     });
   }
 
@@ -153,9 +153,9 @@ export function TagDetailClient({
           <div className="border-border bg-card rounded-xl border p-6">
             <div className="mb-4 flex items-center gap-3">
               <div
-                className={`flex h-10 w-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}
+                className={`flex size-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}
               >
-                <Hash className="h-5 w-5" />
+                <Hash className="size-5" />
               </div>
               <div>
                 <h1 className="text-foreground text-lg font-semibold">#{tag}</h1>
@@ -168,7 +168,7 @@ export function TagDetailClient({
               href="/tags"
               className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="size-4" />
               {isJa ? 'すべてのタグ' : 'All Tags'}
             </Link>
           </div>
@@ -176,7 +176,7 @@ export function TagDetailClient({
           {/* 人気のタグ */}
           <div className="border-border bg-card rounded-xl border p-6">
             <div className="mb-4 flex items-center gap-2">
-              <TrendingUp className="text-muted-foreground h-4 w-4" />
+              <TrendingUp className="text-muted-foreground size-4" />
               <h3 className="text-foreground text-sm font-semibold">
                 {isJa ? '人気のタグ' : 'Popular Tags'}
               </h3>
@@ -227,9 +227,9 @@ export function TagDetailClient({
                 onClick={() => setSearchQuery('')}
                 variant="ghost"
                 size="icon"
-                className="absolute top-1/2 right-2 h-7 w-7 -translate-y-1/2"
+                className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
               >
-                <X className="h-4 w-4" />
+                <X className="size-4" />
               </Button>
             )}
           </div>
@@ -239,12 +239,12 @@ export function TagDetailClient({
               {
                 value: 'list',
                 label: isJa ? 'リスト' : 'List',
-                icon: <List className="h-4 w-4" />,
+                icon: <List className="size-4" />,
               },
               {
                 value: 'grid',
                 label: isJa ? 'グリッド' : 'Grid',
-                icon: <Grid3X3 className="h-4 w-4" />,
+                icon: <Grid3X3 className="size-4" />,
               },
             ]}
             value={viewMode}
@@ -262,7 +262,7 @@ export function TagDetailClient({
                   href={item.href}
                   className="hover:bg-state-hover flex items-start gap-4 py-4 transition-colors first:pt-0"
                 >
-                  <div className="bg-muted text-muted-foreground flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
+                  <div className="bg-muted text-muted-foreground flex size-10 shrink-0 items-center justify-center rounded-lg">
                     {getContentIcon(item.type)}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -308,7 +308,7 @@ export function TagDetailClient({
                   <Card className="h-full transition-colors hover:bg-[var(--state-hover)]">
                     <CardHeader className="gap-2">
                       <div className="flex items-center gap-2">
-                        <div className="bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center rounded-md">
+                        <div className="bg-muted text-muted-foreground flex size-8 items-center justify-center rounded-md">
                           {getContentIcon(item.type)}
                         </div>
                         <span className="text-muted-foreground text-xs">
@@ -357,8 +357,8 @@ export function TagDetailClient({
 function EmptyState({ isJa, onClear }: { isJa: boolean; onClear: () => void }) {
   return (
     <div className="py-16 text-center">
-      <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
-        <Search className="text-muted-foreground h-12 w-12" />
+      <div className="bg-muted mx-auto mb-6 flex size-24 items-center justify-center rounded-full">
+        <Search className="text-muted-foreground size-10" />
       </div>
       <Heading as="h3" size="lg" className="mb-2">
         {isJa ? 'コンテンツが見つかりません' : 'No content found'}

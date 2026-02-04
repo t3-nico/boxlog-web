@@ -83,7 +83,7 @@ export default async function AboutPage({ params }: PageProps) {
             {/* Mission */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
               <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-xl">
-                <Target className="text-primary size-7" />
+                <Target className="text-primary size-6" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
                 {t('about.mission.title')}
@@ -99,7 +99,7 @@ export default async function AboutPage({ params }: PageProps) {
             {/* Vision */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
               <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-xl">
-                <Users className="text-primary size-7" />
+                <Users className="text-primary size-6" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
                 {t('about.vision.title')}
@@ -137,7 +137,7 @@ export default async function AboutPage({ params }: PageProps) {
                 >
                   <CardHeader>
                     <div className="bg-muted mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-xl">
-                      <Icon className="text-primary size-7" />
+                      <Icon className="text-primary size-6" />
                     </div>
                     <CardTitle className="text-lg">
                       {t(`about.values.items.${key}.title`)}

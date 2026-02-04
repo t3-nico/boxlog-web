@@ -40,7 +40,7 @@ export function ReleaseFilter({
         <div className="border-border border-b p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Filter className="text-muted-foreground h-5 w-5" />
+              <Filter className="text-muted-foreground size-5" />
               <h3 className="text-foreground font-medium">{t('title')}</h3>
               {activeFiltersCount > 0 && (
                 <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
@@ -99,7 +99,7 @@ export function ReleaseFilter({
                         <span className={cn('text-xs', isSelected ? 'text-white' : 'opacity-60')}>
                           ({tagItem.count})
                         </span>
-                        {isSelected && <X className="h-3 w-3" />}
+                        {isSelected && <X className="size-3" />}
                       </Button>
                     );
                   })}
@@ -113,7 +113,7 @@ export function ReleaseFilter({
       {/* モバイル版フィルターボタン */}
       <div className="lg:hidden">
         <Button variant="outline" className="flex w-full items-center justify-center gap-2">
-          <Filter className="text-muted-foreground h-4 w-4" />
+          <Filter className="text-muted-foreground size-4" />
           <span className="text-foreground font-medium">{t('title')}</span>
           {activeFiltersCount > 0 && (
             <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
