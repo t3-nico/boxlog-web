@@ -35,7 +35,7 @@ export function ReleaseFilter({
   return (
     <>
       {/* デスクトップ版 */}
-      <div className={cn('border-border bg-background hidden rounded-xl border lg:block')}>
+      <div className={cn('border-border bg-background hidden rounded-2xl border lg:block')}>
         {/* フィルターヘッダー */}
         <div className="border-border border-b p-4">
           <div className="flex items-center justify-between">

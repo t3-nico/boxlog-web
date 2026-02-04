@@ -95,7 +95,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
         {hasHref ? (
           <Link
             href={item.href!}
-            className={`flex flex-1 items-center rounded-md text-sm transition-colors hover:bg-[var(--state-hover)] ${
+            className={`flex flex-1 items-center rounded-lg text-sm transition-colors hover:bg-[var(--state-hover)] ${
               isActive
                 ? 'text-foreground bg-[var(--state-selected)] font-medium'
                 : 'text-muted-foreground hover:text-foreground'

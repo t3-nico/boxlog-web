@@ -94,17 +94,17 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
           {/* バージョン + ステータス */}
           <div className="flex w-44 flex-shrink-0 flex-wrap items-center gap-1.5">
             <span
-              className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ${versionBadgeStyles[versionType]}`}
+              className={`inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-medium ${versionBadgeStyles[versionType]}`}
             >
               v{frontMatter.version}
             </span>
             {frontMatter.featured && (
-              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs">
+              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-lg border px-1.5 py-0.5 text-xs">
                 <Star className="size-3" />
               </span>
             )}
             {frontMatter.breaking && (
-              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs">
+              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-lg border px-1.5 py-0.5 text-xs">
                 <AlertTriangle className="size-3" />
               </span>
             )}
@@ -140,13 +140,13 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
               v{frontMatter.version}
             </span>
             {frontMatter.featured && (
-              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium">
+              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-lg border px-2 py-1 text-xs font-medium">
                 <Star className="mr-1 size-3" />
                 {t('featured')}
               </span>
             )}
             {frontMatter.breaking && (
-              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium">
+              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-lg border px-2 py-1 text-xs font-medium">
                 <AlertTriangle className="mr-1 size-3" />
                 {t('breaking')}
               </span>
@@ -168,7 +168,7 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
               {frontMatter.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
                 >
                   #{tag}
                 </span>

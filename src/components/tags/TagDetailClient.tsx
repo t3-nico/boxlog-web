@@ -150,7 +150,7 @@ export function TagDetailClient({
       <div className="lg:col-span-1">
         <div className="sticky top-24 space-y-6">
           {/* タグ情報 */}
-          <div className="border-border bg-card rounded-xl border p-6">
+          <div className="border-border bg-card rounded-2xl border p-6">
             <div className="mb-4 flex items-center gap-3">
               <div
                 className={`flex size-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}
@@ -174,7 +174,7 @@ export function TagDetailClient({
           </div>
 
           {/* 人気のタグ */}
-          <div className="border-border bg-card rounded-xl border p-6">
+          <div className="border-border bg-card rounded-2xl border p-6">
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp className="text-muted-foreground size-4" />
               <h3 className="text-foreground text-sm font-semibold">
@@ -186,7 +186,7 @@ export function TagDetailClient({
                 <Link
                   key={t.tag}
                   href={`/tags/${encodeURIComponent(t.tag)}`}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium transition-colors ${
                     t.tag.toLowerCase() === tag.toLowerCase()
                       ? 'bg-foreground text-background'
                       : getTagColor(t.tag)
@@ -308,7 +308,7 @@ export function TagDetailClient({
                   <Card className="h-full transition-colors hover:bg-[var(--state-hover)]">
                     <CardHeader className="gap-2">
                       <div className="flex items-center gap-2">
-                        <div className="bg-muted text-muted-foreground flex size-8 items-center justify-center rounded-md">
+                        <div className="bg-muted text-muted-foreground flex size-8 items-center justify-center rounded-lg">
                           {getContentIcon(item.type)}
                         </div>
                         <span className="text-muted-foreground text-xs">

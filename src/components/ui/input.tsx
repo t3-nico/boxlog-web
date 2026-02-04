@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils';
 const inputVariants = cva(
   [
     // 基本スタイル
-    'w-full min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none',
+    'w-full min-w-0 rounded-lg border shadow-xs transition-[color,box-shadow] outline-none',
     'border-input bg-input',
     // テキスト
     'placeholder:text-muted-foreground',

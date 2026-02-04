@@ -80,7 +80,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
       <div className="lg:col-span-1">
         <div className="sticky top-24 space-y-8">
           {/* カテゴリフィルター */}
-          <div className="border-border bg-card rounded-xl border p-6">
+          <div className="border-border bg-card rounded-2xl border p-6">
             <h3 className="text-foreground mb-4 text-sm font-semibold">
               {isJa ? 'カテゴリ' : 'Category'}
             </h3>
@@ -104,7 +104,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
           </div>
 
           {/* 人気のタグ */}
-          <div className="border-border bg-card rounded-xl border p-6">
+          <div className="border-border bg-card rounded-2xl border p-6">
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp className="text-muted-foreground size-4" />
               <h3 className="text-foreground text-sm font-semibold">
@@ -116,7 +116,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors ${getTagColor(tag.tag)}`}
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium transition-colors ${getTagColor(tag.tag)}`}
                 >
                   #{tag.tag}
                 </Link>

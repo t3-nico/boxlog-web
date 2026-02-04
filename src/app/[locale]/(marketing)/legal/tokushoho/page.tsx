@@ -47,7 +47,7 @@ export default async function TokushohoPage({ params }: PageProps) {
       </div>
 
       {/* 注意書き（要入力項目あり） */}
-      <div className="bg-muted border-warning mb-8 rounded-xl border-2 border-dashed p-6">
+      <div className="bg-muted border-warning mb-8 rounded-2xl border-2 border-dashed p-6">
         <div className="flex items-start gap-3">
           <span className="text-2xl">📝</span>
           <div>
@@ -62,7 +62,7 @@ export default async function TokushohoPage({ params }: PageProps) {
       </div>
 
       {/* 表形式での表記 */}
-      <div className="bg-card border-border overflow-hidden rounded-xl border">
+      <div className="bg-card border-border overflow-hidden rounded-2xl border">
         <table className="w-full">
           <tbody className="divide-border divide-y">
             {/* 販売業者 */}
@@ -218,7 +218,7 @@ export default async function TokushohoPage({ params }: PageProps) {
       </div>
 
       {/* 法的レビュー警告 */}
-      <div className="bg-muted border-destructive mt-8 rounded-xl border-2 p-6">
+      <div className="bg-muted border-destructive mt-8 rounded-2xl border-2 p-6">
         <div className="flex items-start gap-3">
           <span className="text-2xl">⚠️</span>
           <div>

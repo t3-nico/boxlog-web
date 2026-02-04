@@ -178,7 +178,7 @@ export default async function DocPage({ params }: DocPageProps) {
                     <Link
                       key={tag}
                       href={`/tags/${encodeURIComponent(tag)}`}
-                      className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${getTagColor(tag)}`}
+                      className={`inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${getTagColor(tag)}`}
                     >
                       #{tag}
                     </Link>

@@ -26,7 +26,7 @@ export function SecurityContent() {
           <h2 className="text-2xl font-semibold">{t('legal.security.policy.title')}</h2>
         </div>
 
-        <div className="bg-container mb-6 rounded-xl p-6">
+        <div className="bg-container mb-6 rounded-2xl p-6">
           <h3 className="mb-4 text-lg font-semibold">
             {t('legal.security.policy.supportedVersions.title')}
           </h3>
@@ -84,7 +84,7 @@ export function SecurityContent() {
           <h2 className="text-2xl font-semibold">{t('legal.security.vulnerability.title')}</h2>
         </div>
 
-        <div className="bg-muted mb-6 rounded-xl p-6">
+        <div className="bg-muted mb-6 rounded-2xl p-6">
           <p className="text-destructive-foreground mb-4 font-semibold">
             {t('legal.security.vulnerability.warning.title')}
           </p>
@@ -202,7 +202,7 @@ export function SecurityContent() {
       <section className="mb-12">
         <h2 className="mb-4 text-2xl font-semibold">{t('legal.security.disclosure.title')}</h2>
 
-        <div className="bg-container rounded-xl p-6">
+        <div className="bg-container rounded-2xl p-6">
           <h3 className="mb-4 text-lg font-semibold">
             {t('legal.security.disclosure.safeHarbor.title')}
           </h3>
@@ -247,7 +247,7 @@ export function SecurityContent() {
             href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/SECURITY.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
             <h3 className="mb-2 font-semibold">
               {t('legal.security.relatedDocs.securityPolicy.title')}
@@ -261,7 +261,7 @@ export function SecurityContent() {
             href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/VULNERABILITY_DISCLOSURE.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
             <h3 className="mb-2 font-semibold">
               {t('legal.security.relatedDocs.vulnerabilityDisclosure.title')}
@@ -275,7 +275,7 @@ export function SecurityContent() {
             href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/INCIDENT_RESPONSE.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
             <h3 className="mb-2 font-semibold">
               {t('legal.security.relatedDocs.incidentResponse.title')}
@@ -287,7 +287,7 @@ export function SecurityContent() {
 
           <Link
             href="/legal/privacy"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
             <h3 className="mb-2 font-semibold">
               {t('legal.security.relatedDocs.privacyPolicy.title')}
@@ -300,7 +300,7 @@ export function SecurityContent() {
       </section>
 
       {/* お問い合わせ */}
-      <section className="bg-container rounded-xl p-6">
+      <section className="bg-container rounded-2xl p-6">
         <h2 className="mb-4 text-xl font-semibold">{t('legal.security.contact.title')}</h2>
         <div className="space-y-2">
           <p className="flex items-center gap-2">

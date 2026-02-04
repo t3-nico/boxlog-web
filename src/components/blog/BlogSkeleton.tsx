@@ -17,7 +17,7 @@ export function BlogSkeleton({ className }: BlogSkeletonProps) {
 
 export function BlogCardSkeleton() {
   return (
-    <div className="border-border bg-card rounded-xl border p-6">
+    <div className="border-border bg-card rounded-2xl border p-6">
       <div className="flex flex-col gap-6 md:flex-row">
         {/* 画像スケルトン */}
         <Skeleton className="h-32 w-full flex-shrink-0 rounded-lg md:w-48" />
@@ -64,7 +64,7 @@ export function BlogGridSkeleton() {
 
 export function BlogVerticalCardSkeleton() {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-xl border">
+    <div className="border-border bg-card overflow-hidden rounded-2xl border">
       {/* 画像スケルトン */}
       <Skeleton className="h-48 w-full" />
 
@@ -98,7 +98,7 @@ export function BlogVerticalCardSkeleton() {
 
 export function FiltersSkeleton() {
   return (
-    <div className="border-border bg-card rounded-xl border p-6">
+    <div className="border-border bg-card rounded-2xl border p-6">
       {/* ヘッダー */}
       <div className="mb-6 flex items-center justify-between">
         <Skeleton className="h-5 w-16" />

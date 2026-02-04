@@ -43,7 +43,7 @@ export function PostCard({
             {post.frontMatter.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ${getTagColor(tag)}`}
+                className={`inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-medium ${getTagColor(tag)}`}
               >
                 {tag}
               </span>
@@ -104,7 +104,7 @@ export function PostCard({
             {post.frontMatter.tags.map((tag) => (
               <span
                 key={tag}
-                className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
+                className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
               >
                 #{tag}
               </span>
@@ -153,7 +153,7 @@ export function PostCard({
               {post.frontMatter.tags.map((tag) => (
                 <span
                   key={tag}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-sm font-medium ${getTagColor(tag)}`}
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-sm font-medium ${getTagColor(tag)}`}
                 >
                   #{tag}
                 </span>

@@ -321,7 +321,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   alt={release.frontMatter.title}
                   width={1200}
                   height={630}
-                  className="h-auto w-full rounded-xl shadow-lg"
+                  className="h-auto w-full rounded-2xl shadow-lg"
                   priority
                 />
               </div>
@@ -349,7 +349,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               </div>
 
               {/* Release information footer */}
-              <div className="bg-container mt-8 rounded-xl p-6">
+              <div className="bg-container mt-8 rounded-2xl p-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-muted-foreground mb-1 text-sm">

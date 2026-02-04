@@ -272,13 +272,14 @@
   --spacing-2xl: 4rem; /* 64px */
 
   /* ============================================
-   * ボーダー半径（8pxグリッド準拠）
+   * ボーダー半径（Storybook準拠・5種類のみ）
+   * rounded-none: 0px    — タブ、結合部分
+   * rounded:      4px    — タグ、バッジ（Tailwind既定）
+   * rounded-lg:   8px    — 標準: ボタン、入力、カード（Tailwind既定）
+   * rounded-2xl:  16px   — モーダル、ダイアログ（Tailwind既定）
+   * rounded-full: 9999px — アバター、ピル型（Tailwind既定）
+   * ※ 上記5種類以外のradiusクラスは使用禁止
    * ============================================ */
-  --radius-sm: 0.25rem; /* 4px - 例外: 小要素用 */
-  --radius-md: 0.5rem; /* 8px */
-  --radius-xl: 1rem; /* 16px */
-  --radius-2xl: 1.5rem; /* 24px */
-  --radius-full: 9999px;
 
   /* ============================================
    * シャドウ（Storybook Elevation準拠・6段階）
@@ -385,7 +386,7 @@ a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
-  border-radius: calc(var(--radius-md) - 2px);
+  border-radius: calc(var(--radius-lg) - 2px);
 }
 
 /* High contrast mode */

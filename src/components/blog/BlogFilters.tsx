@@ -138,7 +138,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
     <>
       {/* デスクトップ版 */}
       <div
-        className={cn('border-border bg-background hidden rounded-xl border lg:block', className)}
+        className={cn('border-border bg-background hidden rounded-2xl border lg:block', className)}
       >
         {/* フィルターヘッダー */}
         <div className="border-border border-b p-4">

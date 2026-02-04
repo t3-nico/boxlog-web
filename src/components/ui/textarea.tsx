@@ -8,7 +8,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
       <textarea
         className={cn(
           // 基本スタイル（Inputと統一）
-          'border-input bg-input flex min-h-[80px] w-full rounded-md border px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
+          'border-input bg-input flex min-h-[80px] w-full rounded-lg border px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
           // テキスト
           'placeholder:text-muted-foreground',
           // フォーカス（Inputと統一）

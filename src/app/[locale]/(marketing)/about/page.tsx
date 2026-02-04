@@ -82,7 +82,7 @@ export default async function AboutPage({ params }: PageProps) {
           <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
             {/* Mission */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-xl">
+              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-2xl">
                 <Target className="text-primary size-6" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
@@ -98,7 +98,7 @@ export default async function AboutPage({ params }: PageProps) {
 
             {/* Vision */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-xl">
+              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-2xl">
                 <Users className="text-primary size-6" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
@@ -136,7 +136,7 @@ export default async function AboutPage({ params }: PageProps) {
                   className="border-border text-center transition-shadow hover:shadow-lg"
                 >
                   <CardHeader>
-                    <div className="bg-muted mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-xl">
+                    <div className="bg-muted mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-2xl">
                       <Icon className="text-primary size-6" />
                     </div>
                     <CardTitle className="text-lg">

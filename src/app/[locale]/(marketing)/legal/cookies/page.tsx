@@ -81,7 +81,7 @@ export default async function CookieSettingsPage({ params }: PageProps) {
       </section>
 
       {/* 注意事項 */}
-      <div className="bg-container mt-8 rounded-xl p-6">
+      <div className="bg-container mt-8 rounded-2xl p-6">
         <p
           className="text-muted-foreground text-sm"
           dangerouslySetInnerHTML={{ __html: t('legal.cookies.page.browserWarning') }}

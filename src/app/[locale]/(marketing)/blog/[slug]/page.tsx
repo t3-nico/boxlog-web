@@ -342,12 +342,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </h1>
 
                 {post.frontMatter.coverImage && (
-                  <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl shadow-lg">
                     <Image
                       src={post.frontMatter.coverImage}
                       alt={post.frontMatter.title}
                       fill
-                      className="rounded-xl object-cover"
+                      className="rounded-2xl object-cover"
                       priority
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                     />

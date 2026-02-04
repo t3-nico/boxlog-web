@@ -50,7 +50,7 @@ export default async function ContactPage({ params }: PageProps) {
             <p className="text-muted-foreground mb-10 text-lg sm:text-xl">
               {t('contact.subtitle')}
             </p>
-            <div className="bg-card border-border w-full rounded-xl border p-6 text-left shadow-sm md:p-8">
+            <div className="bg-card border-border w-full rounded-2xl border p-6 text-left shadow-sm md:p-8">
               <ContactForm />
             </div>
           </div>

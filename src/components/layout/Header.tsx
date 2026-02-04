@@ -84,7 +84,7 @@ export function Header() {
           {navigation.main.map((item) =>
             item.items ? (
               <DropdownMenu key={item.name}>
-                <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-md px-3 py-2 text-base font-medium transition-colors outline-none">
+                <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-lg px-3 py-2 text-base font-medium transition-colors outline-none">
                   {item.name}
                   <ChevronDown className="size-4" aria-hidden="true" />
                 </DropdownMenuTrigger>
@@ -105,7 +105,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href!}
-                className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-md px-3 py-2 text-base font-medium transition-colors"
+                className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-lg px-3 py-2 text-base font-medium transition-colors"
               >
                 {item.name}
               </Link>
@@ -161,7 +161,7 @@ export function Header() {
               >
                 <span className="text-foreground text-lg font-bold">Dayopt</span>
               </Link>
-              <DialogPrimitive.Close className="text-muted-foreground hover:bg-state-hover hover:text-foreground -m-2 rounded-md p-2 transition-colors">
+              <DialogPrimitive.Close className="text-muted-foreground hover:bg-state-hover hover:text-foreground -m-2 rounded-lg p-2 transition-colors">
                 <span className="sr-only">{t('aria.closeMenu')}</span>
                 <X className="size-5" aria-hidden="true" />
               </DialogPrimitive.Close>
@@ -182,7 +182,7 @@ export function Header() {
                               key={subItem.name}
                               href={subItem.href}
                               onClick={() => setMobileMenuOpen(false)}
-                              className="text-foreground hover:bg-state-hover block rounded-md px-3 py-2 text-sm transition-colors"
+                              className="text-foreground hover:bg-state-hover block rounded-lg px-3 py-2 text-sm transition-colors"
                             >
                               <div className="font-medium">{subItem.name}</div>
                               <div className="text-muted-foreground text-xs">
@@ -197,7 +197,7 @@ export function Header() {
                         key={item.name}
                         href={item.href!}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="text-foreground hover:bg-state-hover block rounded-md px-3 py-2 text-sm font-medium transition-colors"
+                        className="text-foreground hover:bg-state-hover block rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                       >
                         {item.name}
                       </Link>

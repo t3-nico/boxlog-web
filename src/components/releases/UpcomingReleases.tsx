@@ -30,7 +30,7 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
   }
 
   return (
-    <div className="border-border bg-card overflow-hidden rounded-xl border">
+    <div className="border-border bg-card overflow-hidden rounded-2xl border">
       {/* Header */}
       <div className="border-border border-b px-6 py-4">
         <div className="flex items-center gap-4">
@@ -231,7 +231,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
   };
 
   return (
-    <div className="border-primary from-state-active to-state-active rounded-xl border bg-gradient-to-br p-4">
+    <div className="border-primary from-state-active to-state-active rounded-2xl border bg-gradient-to-br p-4">
       <div className="mb-3 flex items-center gap-2">
         <div className="bg-primary flex size-6 items-center justify-center rounded-lg">
           <Clock className="text-primary-foreground size-3" />
@@ -276,7 +276,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
 // Release Timeline Component
 export function ReleaseTimeline() {
   return (
-    <div className="border-border bg-card rounded-xl border p-6">
+    <div className="border-border bg-card rounded-2xl border p-6">
       <h3 className="text-foreground mb-6 text-lg font-semibold">リリースタイムライン</h3>
 
       <div className="relative">
