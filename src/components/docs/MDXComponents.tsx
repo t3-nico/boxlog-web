@@ -69,7 +69,7 @@ function CodeBlock({ children, className }: CodeBlockProps) {
 
   return (
     <div className="group relative">
-      <div className="absolute top-3 right-3 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="absolute top-3 right-3 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
         <CopyCodeButton code={codeString} />
       </div>
       <pre

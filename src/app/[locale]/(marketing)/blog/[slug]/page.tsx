@@ -305,7 +305,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <article className="py-8">
           <Container>
             <div className="flex justify-center gap-8">
-              <div className="w-[700px] flex-shrink-0 pt-16">
+              <div className="max-w-2xl flex-shrink-0 pt-16">
                 <div className="mb-8">
                   <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
                     <Link
@@ -383,7 +383,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
               </div>
 
-              <aside className="hidden w-[240px] flex-shrink-0 xl:block">
+              <aside className="hidden w-60 flex-shrink-0 xl:block">
                 <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pt-16 pl-6">
                   <ClientTableOfContents content={post.content} />
                 </div>
