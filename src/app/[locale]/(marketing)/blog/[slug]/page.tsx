@@ -124,11 +124,11 @@ const mdxComponents = {
     return <h4 id={id} className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />;
   },
   p: (props: ParagraphProps) => (
-    <p className="text-foreground/90 mb-4 text-xl leading-relaxed" {...props} />
+    <p className="text-foreground mb-4 text-xl leading-relaxed" {...props} />
   ),
   a: (props: AnchorProps) => (
     <a
-      className="text-link hover:text-link-hover underline underline-offset-2"
+      className="text-primary hover:text-primary/80 underline underline-offset-2"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props}
@@ -136,24 +136,24 @@ const mdxComponents = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="border-info bg-info/10 text-foreground/90 my-6 rounded-r-lg border-l-4 py-2 pl-4 text-xl italic"
+      className="border-info bg-muted text-foreground my-6 rounded-r-lg border-l-4 py-2 pl-4 text-xl italic"
       {...props}
     />
   ),
   code: (props: CodeProps) => (
-    <code className="bg-code-bg text-code-text rounded px-2 py-1 font-mono text-sm" {...props} />
+    <code className="bg-muted text-foreground rounded px-2 py-1 font-mono text-sm" {...props} />
   ),
   pre: (props: PreProps) => (
     <pre
-      className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm"
+      className="bg-muted text-foreground my-6 overflow-x-auto rounded-lg p-4 text-sm"
       {...props}
     />
   ),
   ul: (props: ListProps) => (
-    <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2 text-xl" {...props} />
+    <ul className="text-foreground mb-4 list-inside list-disc space-y-2 text-xl" {...props} />
   ),
   ol: (props: OrderedListProps) => (
-    <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2 text-xl" {...props} />
+    <ol className="text-foreground mb-4 list-inside list-decimal space-y-2 text-xl" {...props} />
   ),
   li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
   img: (props: ImageProps) => (
@@ -179,7 +179,7 @@ const mdxComponents = {
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
       {...props}
     />
   ),
@@ -197,10 +197,10 @@ const mdxComponents = {
     children: React.ReactNode;
   }) => {
     const styles = {
-      info: 'bg-info/10 border-info/30 text-info',
-      warning: 'bg-warning/10 border-warning/30 text-warning',
-      error: 'bg-destructive/10 border-destructive/30 text-destructive',
-      success: 'bg-success/10 border-success/30 text-success',
+      info: 'bg-muted border-info text-info',
+      warning: 'bg-muted border-warning text-warning',
+      error: 'bg-muted border-destructive text-destructive',
+      success: 'bg-muted border-success text-success',
     };
 
     const icons = {
@@ -310,14 +310,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
                     <Link
                       href="/"
-                      className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Home
                     </Link>
                     <span className="text-border">/</span>
                     <Link
                       href="/blog"
-                      className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Blog
                     </Link>
@@ -368,7 +368,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <Link
                           key={tag}
                           href={`/tags/${encodeURIComponent(tag)}`}
-                          className="bg-tag-neutral-bg text-tag-neutral-text hover:bg-tag-neutral-hover inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors"
+                          className="bg-muted text-muted-foreground hover:bg-muted/80 inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors"
                         >
                           #{tag}
                         </Link>

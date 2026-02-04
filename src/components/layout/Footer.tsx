@@ -63,17 +63,17 @@ export function Footer() {
   const socialLinks = [
     {
       name: 'X',
-      href: 'https://x.com/dayopt',
+      href: 'https://x.com/dayoptapp',
       icon: XIcon,
     },
     {
       name: 'GitHub',
-      href: 'https://github.com/dayopt',
+      href: 'https://github.com/dayoptapp',
       icon: GitHubIcon,
     },
     {
       name: 'YouTube',
-      href: 'https://youtube.com/@dayopt',
+      href: 'https://youtube.com/@dayoptapp',
       icon: YouTubeIcon,
     },
   ];

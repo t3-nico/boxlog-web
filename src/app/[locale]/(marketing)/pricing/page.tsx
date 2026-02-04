@@ -141,14 +141,14 @@ export default async function PricingPage({ params }: PageProps) {
       </section>
 
       {/* Trust Indicators */}
-      <section className="bg-muted/30 py-16">
+      <section className="bg-muted py-16">
         <Container>
           <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-3">
             {trustIndicatorKeys.map((key) => {
               const Icon = trustIndicatorIcons[key];
               return (
                 <div key={key} className="text-center">
-                  <div className="bg-primary/10 mx-auto mb-4 inline-flex size-12 items-center justify-center rounded-full">
+                  <div className="bg-muted mx-auto mb-4 inline-flex size-12 items-center justify-center rounded-full">
                     <Icon className="text-primary size-6" />
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">

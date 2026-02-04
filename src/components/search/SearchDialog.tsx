@@ -309,7 +309,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                       }}
                       variant="ghost"
                       className={`flex h-auto w-full items-start justify-start gap-4 p-4 ${
-                        selectedIndex === index ? 'bg-state-active border-primary/30 border' : ''
+                        selectedIndex === index ? 'bg-state-active border-primary border' : ''
                       }`}
                     >
                       <div className="mt-0.5">{getTypeIcon(link.type)}</div>
@@ -351,7 +351,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               <Button
                 onClick={() => handleSearch(query)}
                 variant="ghost"
-                className="bg-state-active border-primary/30 hover:bg-state-hover flex h-auto w-full items-center justify-start gap-4 border p-4"
+                className="bg-state-active border-primary hover:bg-state-hover flex h-auto w-full items-center justify-start gap-4 border p-4"
               >
                 <Search className="text-primary h-4 w-4" />
                 <div className="text-left">
@@ -461,23 +461,23 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
         </div>
 
         {/* フッター */}
-        <div className="bg-surface-container text-muted-foreground border-border border-t p-4 text-xs">
+        <div className="bg-container text-muted-foreground border-border border-t p-4 text-xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
-                <kbd className="bg-kbd-bg border-kbd-border text-kbd-text rounded border px-2 py-1 font-mono text-xs">
+                <kbd className="bg-muted border-border text-foreground rounded border px-2 py-1 font-mono text-xs">
                   Enter
                 </kbd>
                 <span>{t('toSelect')}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="bg-kbd-bg border-kbd-border text-kbd-text rounded border px-2 py-1 font-mono text-xs">
+                <kbd className="bg-muted border-border text-foreground rounded border px-2 py-1 font-mono text-xs">
                   ↑↓
                 </kbd>
                 <span>{t('toNavigate')}</span>
               </div>
               <div className="flex items-center gap-1">
-                <kbd className="bg-kbd-bg border-kbd-border text-kbd-text rounded border px-2 py-1 font-mono text-xs">
+                <kbd className="bg-muted border-border text-foreground rounded border px-2 py-1 font-mono text-xs">
                   Esc
                 </kbd>
                 <span>{t('toClose')}</span>

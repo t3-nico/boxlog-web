@@ -117,7 +117,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
               );
             })()}
             {item.badge && (
-              <span className="bg-primary/10 text-primary ml-2 rounded px-1.5 py-0.5 text-xs font-medium">
+              <span className="bg-muted text-primary border-primary ml-2 rounded border px-1.5 py-0.5 text-xs font-medium">
                 {item.badge}
               </span>
             )}

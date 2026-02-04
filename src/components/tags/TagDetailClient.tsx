@@ -368,7 +368,7 @@ function EmptyState({ isJa, onClear }: { isJa: boolean; onClear: () => void }) {
       </Text>
       <button
         onClick={onClear}
-        className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+        className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
       >
         {isJa ? '検索をクリア' : 'Clear search'}
       </button>

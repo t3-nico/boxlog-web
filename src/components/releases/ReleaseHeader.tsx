@@ -48,11 +48,10 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
   const versionType = getVersionType(frontMatter.version);
 
   const versionBadgeStyles = {
-    major: 'bg-release-breaking-bg text-release-breaking-text border-release-breaking-border',
-    minor:
-      'bg-release-improvement-bg text-release-improvement-text border-release-improvement-border',
-    patch: 'bg-release-new-bg text-release-new-text border-release-new-border',
-    prerelease: 'bg-release-bugfix-bg text-release-bugfix-text border-release-bugfix-border',
+    major: 'bg-muted text-destructive border-destructive',
+    minor: 'bg-muted text-info border-info',
+    patch: 'bg-muted text-success border-success',
+    prerelease: 'bg-muted text-warning border-warning',
   };
 
   const versionLabels = {
@@ -81,7 +80,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
   return (
     <header className="relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="from-surface via-background to-surface-container absolute inset-0 bg-gradient-to-br">
+      <div className="from-overlay via-background to-container absolute inset-0 bg-gradient-to-br">
         <div
           className="absolute inset-0 opacity-40"
           style={{
@@ -93,9 +92,9 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
       <div className="relative mx-auto max-w-4xl px-6 py-16">
         {/* Breadcrumb */}
         <nav className="mb-8" aria-label="Breadcrumb">
-          <ol className="text-breadcrumb-text flex items-center space-x-2 text-sm">
+          <ol className="text-muted-foreground flex items-center space-x-2 text-sm">
             <li>
-              <Link href="/" className="hover:text-breadcrumb-hover transition-colors">
+              <Link href="/" className="hover:text-foreground transition-colors">
                 Home
               </Link>
             </li>
@@ -109,7 +108,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
               </svg>
             </li>
             <li>
-              <Link href="/releases" className="hover:text-breadcrumb-hover transition-colors">
+              <Link href="/releases" className="hover:text-foreground transition-colors">
                 Release Notes
               </Link>
             </li>
@@ -122,7 +121,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
                 />
               </svg>
             </li>
-            <li className="text-breadcrumb-current font-medium">v{frontMatter.version}</li>
+            <li className="text-foreground font-medium">v{frontMatter.version}</li>
           </ol>
         </nav>
 
@@ -140,7 +139,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
             </span>
 
             {frontMatter.prerelease && (
-              <span className="bg-release-bugfix-bg text-release-bugfix-text border-release-bugfix-border inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium">
+              <span className="bg-muted text-warning border-warning inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium">
                 🚧 Beta
               </span>
             )}
@@ -245,7 +244,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
         {/* Status Badges */}
         <div className="mt-8 flex flex-wrap gap-4">
           {frontMatter.featured && (
-            <span className="bg-release-security-bg text-release-security-text border-release-security-border inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium">
+            <span className="bg-muted text-primary border-primary inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium">
               <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
@@ -254,7 +253,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
           )}
 
           {frontMatter.breaking && (
-            <span className="bg-release-breaking-bg text-release-breaking-text border-release-breaking-border inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium">
+            <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium">
               <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -268,7 +267,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
           )}
 
           {versionType === 'major' && (
-            <span className="bg-release-bugfix-bg text-release-bugfix-text border-release-bugfix-border inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium">
+            <span className="bg-muted text-warning border-warning inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium">
               <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"

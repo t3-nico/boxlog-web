@@ -73,7 +73,7 @@ function CodeBlock({ children, className }: CodeBlockProps) {
         <CopyCodeButton code={codeString} />
       </div>
       <pre
-        className={`hljs ${languageClass} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}
+        className={`hljs ${languageClass} bg-muted text-foreground overflow-x-auto rounded-lg p-4`}
       >
         <code className={languageClass}>{codeString}</code>
       </pre>
@@ -84,7 +84,7 @@ function CodeBlock({ children, className }: CodeBlockProps) {
 // インラインコード
 function InlineCode({ children, ...props }: InlineCodeProps) {
   return (
-    <code className="bg-code-bg text-code-text rounded px-1.5 py-0.5 font-mono text-sm" {...props}>
+    <code className="bg-muted text-foreground rounded px-1.5 py-0.5 font-mono text-sm" {...props}>
       {children}
     </code>
   );
@@ -99,10 +99,10 @@ function Alert({
   children: React.ReactNode;
 }) {
   const styles = {
-    info: 'bg-info/10 border-info/30 text-info',
-    warning: 'bg-warning/10 border-warning/30 text-warning',
-    error: 'bg-destructive/10 border-destructive/30 text-destructive',
-    success: 'bg-success/10 border-success/30 text-success',
+    info: 'bg-muted border-info text-info',
+    warning: 'bg-muted border-warning text-warning',
+    error: 'bg-muted border-destructive text-destructive',
+    success: 'bg-muted border-success text-success',
   };
 
   const icons = {
@@ -168,7 +168,7 @@ function Table({ children, ...props }: TableProps) {
 function Th({ children, ...props }: ThProps) {
   return (
     <th
-      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
       {...props}
     >
       {children}
@@ -197,7 +197,7 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-link hover:text-link-hover underline"
+        className="text-primary hover:text-primary/80 underline"
         {...props}
       >
         {children}
@@ -214,7 +214,7 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
   }
 
   return (
-    <Link href={href || '#'} className="text-link hover:text-link-hover underline" {...props}>
+    <Link href={href || '#'} className="text-primary hover:text-primary/80 underline" {...props}>
       {children}
     </Link>
   );
@@ -297,7 +297,7 @@ export const mdxComponents: MDXComponents = {
     </ol>
   ),
   li: ({ children, ...props }) => (
-    <li className="text-foreground/90 text-xl" {...props}>
+    <li className="text-foreground text-xl" {...props}>
       {children}
     </li>
   ),

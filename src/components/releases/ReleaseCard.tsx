@@ -64,10 +64,10 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
   const versionType = getVersionType(frontMatter.version);
 
   const versionBadgeStyles = {
-    major: 'bg-release-breaking-bg text-release-breaking-text',
-    minor: 'bg-release-improvement-bg text-release-improvement-text',
-    patch: 'bg-release-new-bg text-release-new-text',
-    prerelease: 'bg-release-bugfix-bg text-release-bugfix-text',
+    major: 'bg-muted text-destructive border border-destructive',
+    minor: 'bg-muted text-info border border-info',
+    patch: 'bg-muted text-success border border-success',
+    prerelease: 'bg-muted text-warning border border-warning',
   };
 
   const formatDate = (dateString: string) => {
@@ -99,12 +99,12 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
               v{frontMatter.version}
             </span>
             {frontMatter.featured && (
-              <span className="bg-release-security-bg text-release-security-text inline-flex items-center rounded-md px-1.5 py-0.5 text-xs">
+              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs">
                 <Star className="h-3 w-3" />
               </span>
             )}
             {frontMatter.breaking && (
-              <span className="bg-release-breaking-bg text-release-breaking-text inline-flex items-center rounded-md px-1.5 py-0.5 text-xs">
+              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs">
                 <AlertTriangle className="h-3 w-3" />
               </span>
             )}
@@ -140,13 +140,13 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
               v{frontMatter.version}
             </span>
             {frontMatter.featured && (
-              <span className="bg-release-security-bg text-release-security-text inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium">
                 <Star className="mr-1 h-3 w-3" />
                 {t('featured')}
               </span>
             )}
             {frontMatter.breaking && (
-              <span className="bg-release-breaking-bg text-release-breaking-text inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium">
                 <AlertTriangle className="mr-1 h-3 w-3" />
                 {t('breaking')}
               </span>

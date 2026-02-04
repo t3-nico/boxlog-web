@@ -40,7 +40,7 @@ export const siteConfig: SiteConfig = {
   url: getSiteUrl(),
   ogImage: '/og-image.png',
   creator: 'Dayopt Team',
-  twitterHandle: '@dayopt_app',
+  twitterHandle: '@dayoptapp',
   keywords: [
     'SaaS',
     'Software as a Service',
@@ -266,7 +266,7 @@ export function generateStructuredData(type: string, data: StructuredDataInput) 
         url: baseUrl,
         logo: `${baseUrl}/logo.png`,
         description: siteConfig.description,
-        sameAs: ['https://twitter.com/dayopt_app', 'https://github.com/dayopt'],
+        sameAs: ['https://x.com/dayoptapp', 'https://github.com/dayoptapp'],
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'Customer Service',

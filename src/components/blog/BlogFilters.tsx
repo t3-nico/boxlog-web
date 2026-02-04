@@ -147,7 +147,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
               <Filter className="text-muted-foreground h-5 w-5" />
               <h3 className="text-foreground font-medium">{t('title')}</h3>
               {activeFiltersCount > 0 && (
-                <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
+                <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
                   {activeFiltersCount}
                 </span>
               )}
@@ -197,7 +197,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
                     size="sm"
                     className={cn(
                       'inline-flex items-center gap-2',
-                      filters.sortBy === value && 'bg-primary/10 text-primary border-primary',
+                      filters.sortBy === value && 'bg-muted text-primary border-primary',
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -284,7 +284,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           <Filter className="text-muted-foreground h-4 w-4" />
           <span className="text-foreground font-medium">{t('title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
+            <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
               {activeFiltersCount}
             </span>
           )}

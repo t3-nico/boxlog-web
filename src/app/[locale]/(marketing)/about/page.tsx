@@ -77,12 +77,12 @@ export default async function AboutPage({ params }: PageProps) {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="bg-muted/30 py-24">
+      <section className="bg-muted py-24">
         <Container>
           <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
             {/* Mission */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <div className="bg-primary/10 mb-6 inline-flex size-14 items-center justify-center rounded-xl">
+              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-xl">
                 <Target className="text-primary size-7" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
@@ -98,7 +98,7 @@ export default async function AboutPage({ params }: PageProps) {
 
             {/* Vision */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <div className="bg-primary/10 mb-6 inline-flex size-14 items-center justify-center rounded-xl">
+              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-xl">
                 <Users className="text-primary size-7" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
@@ -133,10 +133,10 @@ export default async function AboutPage({ params }: PageProps) {
               return (
                 <Card
                   key={key}
-                  className="border-border/50 text-center transition-shadow hover:shadow-lg"
+                  className="border-border text-center transition-shadow hover:shadow-lg"
                 >
                   <CardHeader>
-                    <div className="bg-primary/10 mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-xl">
+                    <div className="bg-muted mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-xl">
                       <Icon className="text-primary size-7" />
                     </div>
                     <CardTitle className="text-lg">

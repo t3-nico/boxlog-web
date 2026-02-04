@@ -192,7 +192,7 @@ export function ContactForm() {
   if (isSubmitted) {
     return (
       <div className="text-center" role="status" aria-live="polite">
-        <div className="bg-success/10 mx-auto mb-6 flex size-16 items-center justify-center rounded-full">
+        <div className="bg-muted mx-auto mb-6 flex size-16 items-center justify-center rounded-full">
           <CheckCircle className="text-success size-8" aria-hidden="true" />
         </div>
         <h3 className="text-foreground mb-2 text-xl font-semibold">{t('form.success.title')}</h3>
@@ -345,7 +345,7 @@ export function ContactForm() {
           onDrop={handleDrop}
           className={`rounded-md border p-4 transition-colors ${
             isDragOver
-              ? 'border-success bg-success/5'
+              ? 'border-success bg-muted'
               : fileError
                 ? 'border-destructive bg-input'
                 : 'border-input bg-input'
@@ -372,7 +372,7 @@ export function ContactForm() {
 
         {/* 選択済みファイル表示 */}
         {attachment && (
-          <div className="bg-muted/30 border-border flex items-center gap-2 rounded-md border px-3 py-2">
+          <div className="bg-muted border-border flex items-center gap-2 rounded-md border px-3 py-2">
             <Paperclip className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
             <span className="text-foreground min-w-0 flex-1 truncate text-sm">
               {attachment.name}
@@ -398,7 +398,7 @@ export function ContactForm() {
 
       {/* 送信エラー */}
       {submitError && (
-        <div className="bg-destructive/10 text-destructive rounded-md p-3 text-sm" role="alert">
+        <div className="bg-muted text-destructive rounded-md p-3 text-sm" role="alert">
           ＊{submitError}
         </div>
       )}

@@ -32,16 +32,13 @@ const badgeVariants = cva(
         // 軽量 - ボーダー付き
         outline: 'border-border bg-background text-foreground [a&]:hover:bg-state-hover',
         // 成功 - 完了、プラス
-        success:
-          'border-transparent bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+        success: 'border-success bg-muted text-success',
         // 警告 - 注意
-        warning:
-          'border-transparent bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+        warning: 'border-warning bg-muted text-warning',
         // 情報 - ニュートラル
-        info: 'border-transparent bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+        info: 'border-info bg-muted text-info',
         // エラー - マイナス、削除
-        destructive:
-          'border-transparent bg-destructive text-white [a&]:hover:bg-destructive-hover focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+        destructive: 'border-transparent bg-destructive text-white [a&]:hover:bg-destructive-hover',
       },
     },
     defaultVariants: {

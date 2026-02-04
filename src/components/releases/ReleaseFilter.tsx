@@ -43,7 +43,7 @@ export function ReleaseFilter({
               <Filter className="text-muted-foreground h-5 w-5" />
               <h3 className="text-foreground font-medium">{t('title')}</h3>
               {activeFiltersCount > 0 && (
-                <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
+                <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
                   {activeFiltersCount}
                 </span>
               )}
@@ -96,9 +96,7 @@ export function ReleaseFilter({
                       >
                         <span>#</span>
                         {tagItem.tag}
-                        <span
-                          className={cn('text-xs', isSelected ? 'text-white/70' : 'opacity-60')}
-                        >
+                        <span className={cn('text-xs', isSelected ? 'text-white' : 'opacity-60')}>
                           ({tagItem.count})
                         </span>
                         {isSelected && <X className="h-3 w-3" />}
@@ -118,7 +116,7 @@ export function ReleaseFilter({
           <Filter className="text-muted-foreground h-4 w-4" />
           <span className="text-foreground font-medium">{t('title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
+            <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
               {activeFiltersCount}
             </span>
           )}

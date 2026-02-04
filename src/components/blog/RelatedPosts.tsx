@@ -25,7 +25,7 @@ export function RelatedPosts({
   }
 
   return (
-    <section className="bg-surface-container py-16">
+    <section className="bg-container py-16">
       <Container>
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">

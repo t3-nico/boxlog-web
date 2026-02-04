@@ -176,7 +176,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
           <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.terms.sections.contact.content')}
           </p>
-          <div className="bg-surface-container rounded-xl p-4">
+          <div className="bg-container rounded-xl p-4">
             <p className="text-foreground">
               <strong>Email:</strong> {t('legal.contact.email')}
             </p>
@@ -188,7 +188,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
       </div>
 
       {/* 法的レビュー警告 */}
-      <div className="bg-destructive/10 border-destructive mt-12 rounded-xl border-2 p-6">
+      <div className="bg-muted border-destructive mt-12 rounded-xl border-2 p-6">
         <div className="flex items-start gap-3">
           <span className="text-2xl">⚠️</span>
           <div>

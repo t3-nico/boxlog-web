@@ -73,7 +73,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
       </div>
 
       {/* イントロダクション */}
-      <div className="bg-surface-container mb-8 rounded-xl p-6">
+      <div className="bg-container mb-8 rounded-xl p-6">
         <p className="text-foreground mb-4">{t('ossCredits.intro')}</p>
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground text-sm">{t('ossCredits.totalPackages')}:</span>
@@ -83,7 +83,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
 
       {/* エラー表示 */}
       {loadError && (
-        <div className="bg-destructive/12 text-destructive border-destructive mb-8 rounded-xl border p-6">
+        <div className="bg-muted text-destructive border-destructive mb-8 rounded-xl border p-6">
           <p className="font-semibold">{t('ossCredits.loadingError')}</p>
         </div>
       )}
@@ -116,7 +116,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
             {credits.map((credit) => (
               <div
                 key={`${credit.name}-${credit.version}`}
-                className="bg-card border-border hover:border-primary/50 rounded-xl border p-6 transition-colors"
+                className="bg-card border-border hover:border-primary rounded-xl border p-6 transition-colors"
               >
                 <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                   <h3 className="text-foreground text-lg font-semibold">
@@ -125,7 +125,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
                       v{credit.version}
                     </span>
                   </h3>
-                  <span className="bg-primary/12 text-primary w-fit rounded px-3 py-1 text-sm font-medium">
+                  <span className="bg-muted text-primary w-fit rounded px-3 py-1 text-sm font-medium">
                     {credit.license}
                   </span>
                 </div>
@@ -158,7 +158,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
       )}
 
       {/* フッター - 詳細情報へのリンク */}
-      <div className="bg-surface-container mt-12 rounded-xl p-6 text-center">
+      <div className="bg-container mt-12 rounded-xl p-6 text-center">
         <p className="text-muted-foreground mb-4 text-sm">{t('ossCredits.footer.notice')}</p>
         <div className="flex flex-col gap-2 md:flex-row md:justify-center md:gap-4">
           <Link

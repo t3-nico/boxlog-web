@@ -93,25 +93,25 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
   const statusConfig = {
     planning: {
       label: '計画中',
-      color: 'bg-tag-neutral-bg text-tag-neutral-text',
+      color: 'bg-muted text-muted-foreground',
       icon: Clipboard,
       progress: 10,
     },
     development: {
       label: '開発中',
-      color: 'bg-release-improvement-bg text-release-improvement-text',
+      color: 'bg-muted text-info border border-info',
       icon: Wrench,
       progress: 50,
     },
     testing: {
       label: 'テスト中',
-      color: 'bg-release-bugfix-bg text-release-bugfix-text',
+      color: 'bg-muted text-warning border border-warning',
       icon: TestTube,
       progress: 80,
     },
     review: {
       label: 'レビュー中',
-      color: 'bg-release-security-bg text-release-security-text',
+      color: 'bg-muted text-primary border border-primary',
       icon: Eye,
       progress: 90,
     },
@@ -130,7 +130,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
   const isOverdue = new Date(release.expectedDate) < new Date();
 
   return (
-    <div className={`p-6 ${isFirst ? 'bg-state-active/30' : ''}`}>
+    <div className={`p-6 ${isFirst ? 'bg-muted' : ''}`}>
       <div className="flex items-start justify-between gap-4">
         {/* Left Side */}
         <div className="min-w-0 flex-1">
@@ -138,9 +138,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
           <div className="mb-3 flex items-center gap-4">
             <span
               className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-bold ${
-                isFirst
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-tag-neutral-bg text-tag-neutral-text'
+                isFirst ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
               }`}
             >
               {release.version}
@@ -154,7 +152,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             </span>
 
             {isFirst && (
-              <span className="bg-release-new-bg text-release-new-text inline-flex items-center rounded-full px-3 py-1 text-xs font-medium">
+              <span className="bg-muted text-success border-success inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium">
                 <span className="bg-success mr-2 h-2 w-2 rounded-full"></span>
                 Next Release
               </span>
@@ -192,14 +190,14 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             <div className="text-foreground mb-1 text-2xl font-bold">{config.progress}%</div>
 
             {/* Progress Bar */}
-            <div className="bg-progress-bg mb-2 h-2 w-full rounded-full">
+            <div className="bg-muted mb-2 h-2 w-full rounded-full">
               <div
                 className={`h-2 rounded-full transition-all duration-300 ${
                   config.progress >= 80
-                    ? 'bg-progress-fill-high'
+                    ? 'bg-success'
                     : config.progress >= 50
-                      ? 'bg-progress-fill-mid'
-                      : 'bg-progress-fill-low'
+                      ? 'bg-warning'
+                      : 'bg-muted-foreground'
                 }`}
                 style={{ width: `${config.progress}%` }}
               ></div>
@@ -212,7 +210,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
 
       {/* Additional Info for First Item */}
       {isFirst && (
-        <div className="border-primary/30 mt-4 border-t pt-4">
+        <div className="border-border mt-4 border-t pt-4">
           <div className="text-primary flex items-center gap-2 text-sm">
             <Info className="h-4 w-4" />
             このリリースの詳細は開発ブログで随時更新されます
@@ -238,7 +236,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
   };
 
   return (
-    <div className="border-primary/30 from-state-active/50 to-state-active/30 rounded-xl border bg-gradient-to-br p-4">
+    <div className="border-primary from-state-active to-state-active rounded-xl border bg-gradient-to-br p-4">
       <div className="mb-3 flex items-center gap-2">
         <div className="bg-primary flex h-6 w-6 items-center justify-center rounded-lg">
           <Clock className="text-primary-foreground h-3 w-3" />

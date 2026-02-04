@@ -81,7 +81,7 @@ export default async function FeaturesPage({ params }: PageProps) {
       <section className="py-24">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
-            <div className="bg-primary/10 text-primary mb-6 inline-block rounded-full px-4 py-1.5 text-sm font-medium">
+            <div className="bg-muted text-primary mb-6 inline-block rounded-full px-4 py-1.5 text-sm font-medium">
               {t('features.badge')}
             </div>
             <Heading as="h1" size="4xl" className="mb-6">
@@ -103,7 +103,7 @@ export default async function FeaturesPage({ params }: PageProps) {
       </section>
 
       {/* Features Grid */}
-      <section className="bg-muted/30 py-24">
+      <section className="bg-muted py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <Heading as="h2" size="3xl" className="mb-4">
@@ -120,10 +120,10 @@ export default async function FeaturesPage({ params }: PageProps) {
               return (
                 <Card
                   key={key}
-                  className="border-border/50 bg-background transition-shadow hover:shadow-lg"
+                  className="border-border bg-background transition-shadow hover:shadow-lg"
                 >
                   <CardHeader>
-                    <div className="bg-primary/10 mb-4 inline-flex size-12 items-center justify-center rounded-lg">
+                    <div className="bg-muted mb-4 inline-flex size-12 items-center justify-center rounded-lg">
                       <Icon className="text-primary size-6" />
                     </div>
                     <CardTitle className="text-xl">{t(`features.items.${key}.title`)}</CardTitle>

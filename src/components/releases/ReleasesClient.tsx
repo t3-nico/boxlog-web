@@ -252,7 +252,7 @@ export function ReleasesClient({ initialReleases, initialTags, locale }: Release
                 </Text>
                 <button
                   onClick={handleClearFilters}
-                  className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+                  className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
                 >
                   {t('noResults.clearFilters')}
                 </button>
