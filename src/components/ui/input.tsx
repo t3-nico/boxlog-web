@@ -33,11 +33,11 @@ const inputVariants = cva(
     variants: {
       size: {
         // sm: 32px高さ - コンパクトUI
-        sm: 'h-8 px-3 text-sm file:h-6 file:text-xs',
+        sm: 'h-8 px-4 text-sm file:h-6 file:text-xs',
         // default: 40px高さ - 標準
         default: 'h-10 px-4 text-base md:text-sm file:h-7 file:text-sm',
         // lg: 48px高さ - 主要な入力
-        lg: 'h-12 px-5 text-lg file:h-8 file:text-base',
+        lg: 'h-12 px-6 text-lg file:h-8 file:text-base',
       },
     },
     defaultVariants: {

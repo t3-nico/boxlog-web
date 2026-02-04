@@ -112,7 +112,7 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || '';
-    return <h3 id={id} className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />;
+    return <h3 id={id} className="text-foreground mt-6 mb-4 text-xl font-bold" {...props} />;
   },
   h4: (props: HeadingProps) => {
     const id =
@@ -121,7 +121,7 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || '';
-    return <h4 id={id} className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />;
+    return <h4 id={id} className="text-foreground mt-6 mb-4 text-lg font-semibold" {...props} />;
   },
   p: (props: ParagraphProps) => (
     <p className="text-foreground mb-4 text-xl leading-relaxed" {...props} />
@@ -179,7 +179,7 @@ const mdxComponents = {
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase"
       {...props}
     />
   ),
@@ -213,7 +213,7 @@ const mdxComponents = {
     return (
       <div className={`my-6 rounded-r-lg border-l-4 p-4 ${styles[type]}`}>
         <div className="flex items-start">
-          <span className="mr-3 flex-shrink-0 text-lg">{icons[type]}</span>
+          <span className="mr-4 flex-shrink-0 text-lg">{icons[type]}</span>
           <div className="prose prose-sm max-w-none">{children}</div>
         </div>
       </div>
@@ -362,13 +362,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 <div className="mt-6 space-y-6">
                   <div>
-                    <h3 className="text-foreground mb-3 text-lg font-semibold">Tags Used</h3>
+                    <h3 className="text-foreground mb-4 text-lg font-semibold">Tags Used</h3>
                     <div className="flex flex-wrap gap-2">
                       {post.frontMatter.tags.map((tag) => (
                         <Link
                           key={tag}
                           href={`/tags/${encodeURIComponent(tag)}`}
-                          className="bg-muted text-muted-foreground hover:bg-muted/80 inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors"
+                          className="bg-muted text-muted-foreground hover:bg-muted/80 inline-flex items-center rounded-full px-4 py-1 text-sm font-medium transition-colors"
                         >
                           #{tag}
                         </Link>
@@ -377,7 +377,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
 
                   <div>
-                    <h3 className="text-foreground mb-3 text-lg font-semibold">{t('title')}</h3>
+                    <h3 className="text-foreground mb-4 text-lg font-semibold">{t('title')}</h3>
                     <ShareButton title={post.frontMatter.title} slug={slug} />
                   </div>
                 </div>

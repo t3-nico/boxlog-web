@@ -112,7 +112,7 @@ export function FiltersSkeleton() {
       </div>
 
       {/* ソートオプション */}
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         <Skeleton className="h-4 w-16" />
         <div className="flex flex-wrap gap-2">
           {[...Array(4)].map((_, i) => (
@@ -122,7 +122,7 @@ export function FiltersSkeleton() {
       </div>
 
       {/* タグリスト */}
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         <Skeleton className="h-4 w-24" />
         <div className="flex flex-wrap gap-2">
           {[...Array(8)].map((_, i) => (

@@ -85,26 +85,26 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
   if (layout === 'list') {
     return (
       <article className="group py-6 first:pt-0">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
           {/* 日付 */}
           <div className="text-muted-foreground w-28 flex-shrink-0 text-sm">
             <time dateTime={frontMatter.date}>{formattedDate}</time>
           </div>
 
           {/* バージョン + ステータス */}
-          <div className="flex w-44 flex-shrink-0 flex-wrap items-center gap-1.5">
+          <div className="flex w-44 flex-shrink-0 flex-wrap items-center gap-2">
             <span
-              className={`inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-medium ${versionBadgeStyles[versionType]}`}
+              className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium ${versionBadgeStyles[versionType]}`}
             >
               v{frontMatter.version}
             </span>
             {frontMatter.featured && (
-              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-lg border px-1.5 py-0.5 text-xs">
+              <span className="bg-muted text-primary border-primary inline-flex items-center rounded-lg border px-2 py-1 text-xs">
                 <Star className="size-3" />
               </span>
             )}
             {frontMatter.breaking && (
-              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-lg border px-1.5 py-0.5 text-xs">
+              <span className="bg-muted text-destructive border-destructive inline-flex items-center rounded-lg border px-2 py-1 text-xs">
                 <AlertTriangle className="size-3" />
               </span>
             )}
@@ -133,9 +133,9 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
       <Link href={`/releases/${frontMatter.version}`} className="block">
         <div className="p-6">
           {/* Version Badge */}
-          <div className="mb-3 flex items-center gap-2">
+          <div className="mb-4 flex items-center gap-2">
             <span
-              className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${versionBadgeStyles[versionType]}`}
+              className={`inline-flex items-center rounded-full px-4 py-1 text-sm font-medium ${versionBadgeStyles[versionType]}`}
             >
               v{frontMatter.version}
             </span>
@@ -157,7 +157,7 @@ export function ReleaseCard({ release, layout = 'vertical', locale }: ReleaseCar
           <Heading
             as="h2"
             size="xl"
-            className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline"
+            className="mb-4 line-clamp-2 cursor-pointer transition-colors hover:underline"
           >
             {frontMatter.title}
           </Heading>

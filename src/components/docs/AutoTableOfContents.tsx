@@ -18,12 +18,12 @@ interface TocListProps {
 
 function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
   return (
-    <ul className={`space-y-1 ${level > 0 ? 'ml-3' : ''}`}>
+    <ul className={`space-y-1 ${level > 0 ? 'ml-4' : ''}`}>
       {items.map((item) => (
         <li key={item.id}>
           <button
             onClick={() => onItemClick(item.id)}
-            className={`-ml-2 block w-full rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${
+            className={`-ml-2 block w-full rounded-lg px-2 py-2 text-left text-sm transition-colors ${
               activeId === item.id
                 ? 'text-foreground bg-[var(--state-selected)] font-medium'
                 : 'text-muted-foreground hover:text-foreground hover:bg-[var(--state-hover)]'
@@ -176,7 +176,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
       {/* Links */}
       <div className="border-border border-t pt-4">
-        <div className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">
+        <div className="text-muted-foreground mb-4 text-xs font-semibold tracking-wider uppercase">
           {t('links')}
         </div>
         <ul className="space-y-2">

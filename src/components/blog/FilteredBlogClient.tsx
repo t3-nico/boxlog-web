@@ -167,7 +167,7 @@ export function FilteredBlogClient({ initialPosts, tags, locale }: FilteredBlogC
                 value={filters.searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder={t('filters.searchPlaceholder')}
-                className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+                className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-12 pl-12 transition-colors focus:ring-2 focus:outline-none"
               />
               {filters.searchQuery && (
                 <Button

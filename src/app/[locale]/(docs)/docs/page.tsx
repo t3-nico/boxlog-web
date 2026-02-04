@@ -59,7 +59,7 @@ export default async function DocsPage({ params }: PageProps) {
         {/* Quick Start Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
-            <div className="mb-4 flex items-center space-x-3">
+            <div className="mb-4 flex items-center space-x-4">
               <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
                   className="text-primary size-6"
@@ -91,7 +91,7 @@ export default async function DocsPage({ params }: PageProps) {
           </div>
 
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
-            <div className="mb-4 flex items-center space-x-3">
+            <div className="mb-4 flex items-center space-x-4">
               <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
                   className="text-success size-6"
@@ -120,7 +120,7 @@ export default async function DocsPage({ params }: PageProps) {
           </div>
 
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
-            <div className="mb-4 flex items-center space-x-3">
+            <div className="mb-4 flex items-center space-x-4">
               <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
                   className="text-info size-6"

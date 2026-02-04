@@ -52,7 +52,7 @@ export default async function Home({ params }: PageProps) {
                 {t('hero.title')}
               </h1>
               <p className="text-muted-foreground mt-6 text-lg sm:text-xl">{t('hero.subtitle')}</p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
+              <div className="mt-12 flex items-center justify-center gap-x-6">
                 <Button size="lg" asChild>
                   <Link href="/contact">{t('hero.cta')}</Link>
                 </Button>

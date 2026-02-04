@@ -51,10 +51,10 @@ export function PillSwitcher<T extends string = string>({
             key={option.value}
             value={option.value}
             className={cn(
-              'h-8 rounded-lg px-3 text-sm font-medium transition-all',
+              'h-8 rounded-lg px-4 text-sm font-medium transition-all',
               'text-muted-foreground',
               'data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm',
-              option.icon && 'gap-1.5',
+              option.icon && 'gap-2',
             )}
           >
             {option.icon}

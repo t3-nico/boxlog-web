@@ -53,7 +53,7 @@ export function RelatedPosts({
           <div className="mt-12 text-center">
             <Link
               href="/blog"
-              className="border-border bg-card text-foreground hover:border-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 text-sm font-medium transition-colors"
+              className="border-border bg-card text-foreground hover:border-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-4 text-sm font-medium transition-colors"
             >
               {t('viewAll')}
               <svg className="ml-2 size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

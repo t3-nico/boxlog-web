@@ -14,7 +14,7 @@ export function highlightText(text: string, query: string): React.ReactNode {
 
   return parts.map((part, index) =>
     regex.test(part) ? (
-      <mark key={index} className="bg-muted text-foreground rounded px-0.5">
+      <mark key={index} className="bg-muted text-foreground rounded px-1">
         {part}
       </mark>
     ) : (

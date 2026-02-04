@@ -66,7 +66,7 @@ const buttonVariants = cva(
       size: {
         // sm: 24px高さ、12pxパディング
         sm: [
-          'h-6 px-3 text-xs',
+          'h-6 px-4 text-xs',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:shrink-0",
         ].join(' '),
         // default: 32px高さ、16pxパディング

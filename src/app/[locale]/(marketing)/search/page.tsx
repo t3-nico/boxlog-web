@@ -154,10 +154,10 @@ function SearchResults() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch(query)}
-                className="py-3 pr-4 pl-10 text-base"
+                className="py-4 pr-4 pl-12 text-base"
               />
             </div>
-            <Button onClick={() => handleSearch(query)} className="px-6 py-3">
+            <Button onClick={() => handleSearch(query)} className="px-6 py-4">
               Search
             </Button>
           </div>
@@ -188,7 +188,7 @@ function SearchResults() {
                   <button
                     key={filter.key}
                     onClick={() => setSelectedFilter(filter.key as typeof selectedFilter)}
-                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                       selectedFilter === filter.key
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-muted text-muted-foreground hover:bg-state-hover hover:text-foreground'
@@ -225,7 +225,7 @@ function SearchResults() {
                     key={i}
                     className="border-border bg-card animate-pulse rounded-lg border p-6"
                   >
-                    <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
+                    <div className="bg-muted mb-4 h-4 w-3/4 rounded"></div>
                     <div className="bg-muted mb-2 h-3 w-full rounded"></div>
                     <div className="bg-muted h-3 w-2/3 rounded"></div>
                   </div>
@@ -238,7 +238,7 @@ function SearchResults() {
                     key={result.id}
                     className="border-border bg-card rounded-lg border p-6 transition-shadow hover:shadow-md"
                   >
-                    <div className="mb-3 flex items-start gap-4">
+                    <div className="mb-4 flex items-start gap-4">
                       {getTypeIcon(result.type)}
                       <div className="min-w-0 flex-1">
                         <Link
@@ -264,7 +264,7 @@ function SearchResults() {
                         </div>
                       </div>
                     </div>
-                    <p className="text-muted-foreground mb-3 line-clamp-2 text-sm">
+                    <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">
                       <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
@@ -336,13 +336,13 @@ function SearchResults() {
               ドキュメント、ブログ記事、リリースノートを横断検索できます。
             </Text>
             <div className="flex justify-center gap-2">
-              <Badge variant="outline" className="px-3 py-1 text-sm">
+              <Badge variant="outline" className="px-4 py-1 text-sm">
                 ドキュメント
               </Badge>
-              <Badge variant="outline" className="px-3 py-1 text-sm">
+              <Badge variant="outline" className="px-4 py-1 text-sm">
                 ブログ
               </Badge>
-              <Badge variant="outline" className="px-3 py-1 text-sm">
+              <Badge variant="outline" className="px-4 py-1 text-sm">
                 リリース
               </Badge>
             </div>

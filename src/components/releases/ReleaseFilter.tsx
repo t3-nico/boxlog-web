@@ -72,7 +72,7 @@ export function ReleaseFilter({
               <div>
                 <span
                   id="release-tags-label"
-                  className="text-muted-foreground mb-3 block text-sm font-medium"
+                  className="text-muted-foreground mb-4 block text-sm font-medium"
                 >
                   {t('tags')}
                 </span>

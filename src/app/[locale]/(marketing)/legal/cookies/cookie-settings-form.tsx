@@ -128,7 +128,7 @@ export function CookieSettingsForm() {
           <ul className="list-inside list-disc space-y-1">
             <li>{t('legal.cookies.categories.analytics.cookies.sentry')}</li>
           </ul>
-          <p className="text-muted-foreground mt-3 flex items-start gap-1.5 text-xs">
+          <p className="text-muted-foreground mt-4 flex items-start gap-2 text-xs">
             <InfoIcon className="size-3.5 shrink-0" aria-hidden="true" />
             {t('legal.cookies.categories.analytics.cookies.vercelNote')}
           </p>
@@ -161,7 +161,7 @@ export function CookieSettingsForm() {
       </Card>
 
       {/* アクションボタン */}
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <Button onClick={handleSave} className="w-full sm:w-auto">
           {t('legal.cookies.settings.save')}
         </Button>

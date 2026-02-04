@@ -23,7 +23,7 @@ export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) 
               variant="outline"
               size="lg"
               asChild
-              className="h-auto w-full justify-start px-4 py-3"
+              className="h-auto w-full justify-start px-4 py-4"
             >
               <Link href={`/docs/${previousPage.slug}`}>
                 <ChevronLeft className="mr-2 size-4 shrink-0" />
@@ -45,7 +45,7 @@ export function PageNavigation({ previousPage, nextPage }: PageNavigationProps) 
               variant="outline"
               size="lg"
               asChild
-              className="h-auto w-full justify-end px-4 py-3"
+              className="h-auto w-full justify-end px-4 py-4"
             >
               <Link href={`/docs/${nextPage.slug}`}>
                 <div className="text-right">

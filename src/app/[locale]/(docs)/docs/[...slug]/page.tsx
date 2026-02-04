@@ -193,11 +193,11 @@ export default async function DocPage({ params }: DocPageProps) {
                 <Heading as="h2" size="xl" className="mb-6">
                   関連記事
                 </Heading>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {relatedContent.map((related) => (
                     <Link key={related.slug} href={`/docs/${related.slug}`} className="block">
-                      <Card className="h-full gap-3 py-3 transition-colors hover:bg-[var(--state-hover)]">
-                        <CardHeader className="gap-1.5 px-4 py-0">
+                      <Card className="h-full gap-4 py-4 transition-colors hover:bg-[var(--state-hover)]">
+                        <CardHeader className="gap-2 px-4 py-0">
                           <CardTitle className="line-clamp-2 text-sm">
                             {related.frontMatter.title}
                           </CardTitle>
@@ -214,7 +214,7 @@ export default async function DocPage({ params }: DocPageProps) {
                                 {related.frontMatter.tags.slice(0, 2).map((tag) => (
                                   <span
                                     key={tag}
-                                    className="bg-muted text-muted-foreground rounded-full px-1.5 py-0.5 text-xs"
+                                    className="bg-muted text-muted-foreground rounded-full px-2 py-1 text-xs"
                                   >
                                     {tag}
                                   </span>

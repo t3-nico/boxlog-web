@@ -176,7 +176,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
             <div>
               <span
                 id="desktop-sort-label"
-                className="text-muted-foreground mb-3 block text-sm font-medium"
+                className="text-muted-foreground mb-4 block text-sm font-medium"
               >
                 {t('sortBy')}
               </span>
@@ -219,7 +219,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
 
             {/* タグフィルター */}
             <div>
-              <div className="mb-3 flex items-center justify-between">
+              <div className="mb-4 flex items-center justify-between">
                 <span id="desktop-tags-label" className="text-muted-foreground text-sm font-medium">
                   {t('filterByTags')}
                 </span>

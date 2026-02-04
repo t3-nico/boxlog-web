@@ -151,7 +151,7 @@ export function TagDetailClient({
         <div className="sticky top-24 space-y-6">
           {/* タグ情報 */}
           <div className="border-border bg-card rounded-2xl border p-6">
-            <div className="mb-4 flex items-center gap-3">
+            <div className="mb-4 flex items-center gap-4">
               <div
                 className={`flex size-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}
               >
@@ -220,7 +220,7 @@ export function TagDetailClient({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={isJa ? 'コンテンツを検索...' : 'Search content...'}
-              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-12 pl-12 transition-colors focus:ring-2 focus:outline-none"
             />
             {searchQuery && (
               <Button
@@ -285,7 +285,7 @@ export function TagDetailClient({
                         {item.tags.slice(0, 3).map((t) => (
                           <span
                             key={t}
-                            className={`inline-flex items-center rounded px-1.5 py-0.5 text-xs ${getTagColor(t)}`}
+                            className={`inline-flex items-center rounded px-2 py-1 text-xs ${getTagColor(t)}`}
                           >
                             #{t}
                           </span>
@@ -321,7 +321,7 @@ export function TagDetailClient({
                           {item.tags.slice(0, 3).map((t) => (
                             <span
                               key={t}
-                              className={`inline-flex items-center rounded px-1.5 py-0.5 text-xs ${getTagColor(t)}`}
+                              className={`inline-flex items-center rounded px-2 py-1 text-xs ${getTagColor(t)}`}
                             >
                               #{t}
                             </span>

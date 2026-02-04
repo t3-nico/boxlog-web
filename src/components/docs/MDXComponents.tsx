@@ -84,7 +84,7 @@ function CodeBlock({ children, className }: CodeBlockProps) {
 // インラインコード
 function InlineCode({ children, ...props }: InlineCodeProps) {
   return (
-    <code className="bg-muted text-foreground rounded px-1.5 py-0.5 font-mono text-sm" {...props}>
+    <code className="bg-muted text-foreground rounded px-2 py-1 font-mono text-sm" {...props}>
       {children}
     </code>
   );
@@ -147,7 +147,7 @@ function Alert({
   return (
     <div className={`my-4 rounded-lg border p-4 ${styles[type]}`}>
       <div className="flex items-start">
-        <div className="mt-0.5 mr-3 flex-shrink-0">{icons[type]}</div>
+        <div className="mt-1 mr-4 flex-shrink-0">{icons[type]}</div>
         <div className="flex-1">{children}</div>
       </div>
     </div>
@@ -168,7 +168,7 @@ function Table({ children, ...props }: TableProps) {
 function Th({ children, ...props }: ThProps) {
   return (
     <th
-      className="bg-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase"
       {...props}
     >
       {children}
@@ -245,7 +245,7 @@ export const mdxComponents: MDXComponents = {
     const headingText = typeof children === 'string' ? children : String(children);
     const anchorId = id || generateAnchorId(headingText);
     return (
-      <Heading as="h3" size="2xl" className="mt-6 mb-3" id={anchorId} {...props}>
+      <Heading as="h3" size="2xl" className="mt-6 mb-4" id={anchorId} {...props}>
         {children}
       </Heading>
     );
@@ -263,7 +263,7 @@ export const mdxComponents: MDXComponents = {
     const headingText = typeof children === 'string' ? children : String(children);
     const anchorId = id || generateAnchorId(headingText);
     return (
-      <Heading as="h5" size="lg" className="mt-3 mb-2" id={anchorId} {...props}>
+      <Heading as="h5" size="lg" className="mt-4 mb-2" id={anchorId} {...props}>
         {children}
       </Heading>
     );

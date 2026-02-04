@@ -137,7 +137,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={isJa ? 'タグを検索...' : 'Search tags...'}
-              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-12 pl-12 transition-colors focus:ring-2 focus:outline-none"
             />
             {searchQuery && (
               <Button
@@ -194,12 +194,12 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
 
         {filteredTags.length > 0 ? (
           viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filteredTags.map((tag) => (
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className={`group flex items-center justify-between rounded-lg border px-4 py-3 transition-all ${getTagColor(tag.tag)}`}
+                  className={`group flex items-center justify-between rounded-lg border px-4 py-4 transition-all ${getTagColor(tag.tag)}`}
                 >
                   <div className="flex items-center gap-2">
                     <Hash className="size-4" />
@@ -225,7 +225,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                     </div>
                     <div>
                       <div className="text-foreground font-medium">#{tag.tag}</div>
-                      <div className="text-muted-foreground flex items-center gap-3 text-sm">
+                      <div className="text-muted-foreground flex items-center gap-4 text-sm">
                         {tag.blogCount > 0 && (
                           <span className="flex items-center gap-1">
                             <FileText className="size-3" />

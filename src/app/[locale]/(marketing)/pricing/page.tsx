@@ -114,10 +114,10 @@ export default async function PricingPage({ params }: PageProps) {
                         {t(`pricing.plans.${planKey}.period`)}
                       </span>
                     </div>
-                    <ul className="space-y-3">
+                    <ul className="space-y-4">
                       {features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <Check className="text-primary mt-0.5 size-5 shrink-0" />
+                        <li key={index} className="flex items-start gap-4">
+                          <Check className="text-primary mt-1 size-5 shrink-0" />
                           <span className="text-muted-foreground">{feature}</span>
                         </li>
                       ))}

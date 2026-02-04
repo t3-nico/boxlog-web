@@ -92,7 +92,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           <h2 className="mb-4 text-2xl font-semibold">
             {t('legal.privacy.sections.dataSharing.title')}
           </h2>
-          <p className="text-foreground mb-3 leading-relaxed">
+          <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.privacy.sections.dataSharing.intro')}
           </p>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -100,7 +100,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             <li>{t('legal.privacy.sections.dataSharing.vercel')}</li>
             <li>{t('legal.privacy.sections.dataSharing.sentry')}</li>
           </ul>
-          <p className="text-muted-foreground mt-3 text-sm">
+          <p className="text-muted-foreground mt-4 text-sm">
             {t('legal.privacy.sections.dataSharing.note')}
           </p>
         </section>
@@ -129,7 +129,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             <li>{t('legal.privacy.sections.userRights.portability')}</li>
             <li>{t('legal.privacy.sections.userRights.objection')}</li>
           </ul>
-          <p className="text-muted-foreground mt-3 text-sm">
+          <p className="text-muted-foreground mt-4 text-sm">
             {t('legal.privacy.sections.userRights.contact')}
           </p>
         </section>
@@ -139,7 +139,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           <h2 className="mb-4 text-2xl font-semibold">
             {t('legal.privacy.sections.security.title')}
           </h2>
-          <p className="text-foreground mb-3 leading-relaxed">
+          <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.privacy.sections.security.measures')}
           </p>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -154,7 +154,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           <h2 className="mb-4 text-2xl font-semibold">
             {t('legal.privacy.sections.cookies.title')}
           </h2>
-          <p className="text-foreground mb-3 leading-relaxed">
+          <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.privacy.sections.cookies.intro')}
           </p>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -162,7 +162,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             <li>{t('legal.privacy.sections.cookies.analytics')}</li>
             <li>{t('legal.privacy.sections.cookies.preference')}</li>
           </ul>
-          <p className="text-muted-foreground mt-3 text-sm">
+          <p className="text-muted-foreground mt-4 text-sm">
             {t('legal.privacy.sections.cookies.control')}
           </p>
         </section>
@@ -208,7 +208,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
       {/* 法的レビュー警告 */}
       <div className="bg-muted border-destructive mt-12 rounded-2xl border-2 p-6">
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-4">
           <span className="text-2xl">⚠️</span>
           <div>
             <p className="text-destructive font-bold">{t('legal.reviewWarning.title')}</p>

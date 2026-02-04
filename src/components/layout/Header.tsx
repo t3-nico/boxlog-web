@@ -84,7 +84,7 @@ export function Header() {
           {navigation.main.map((item) =>
             item.items ? (
               <DropdownMenu key={item.name}>
-                <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-lg px-3 py-2 text-base font-medium transition-colors outline-none">
+                <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-lg px-4 py-2 text-base font-medium transition-colors outline-none">
                   {item.name}
                   <ChevronDown className="size-4" aria-hidden="true" />
                 </DropdownMenuTrigger>
@@ -105,7 +105,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href!}
-                className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-lg px-3 py-2 text-base font-medium transition-colors"
+                className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-lg px-4 py-2 text-base font-medium transition-colors"
               >
                 {item.name}
               </Link>
@@ -173,7 +173,7 @@ export function Header() {
                   {navigation.main.map((item) =>
                     item.items ? (
                       <div key={item.name} className="space-y-1">
-                        <div className="text-muted-foreground px-3 py-2 text-sm font-medium">
+                        <div className="text-muted-foreground px-4 py-2 text-sm font-medium">
                           {item.name}
                         </div>
                         <div className="space-y-1 pl-4">
@@ -182,7 +182,7 @@ export function Header() {
                               key={subItem.name}
                               href={subItem.href}
                               onClick={() => setMobileMenuOpen(false)}
-                              className="text-foreground hover:bg-state-hover block rounded-lg px-3 py-2 text-sm transition-colors"
+                              className="text-foreground hover:bg-state-hover block rounded-lg px-4 py-2 text-sm transition-colors"
                             >
                               <div className="font-medium">{subItem.name}</div>
                               <div className="text-muted-foreground text-xs">
@@ -197,7 +197,7 @@ export function Header() {
                         key={item.name}
                         href={item.href!}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="text-foreground hover:bg-state-hover block rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                        className="text-foreground hover:bg-state-hover block rounded-lg px-4 py-2 text-sm font-medium transition-colors"
                       >
                         {item.name}
                       </Link>

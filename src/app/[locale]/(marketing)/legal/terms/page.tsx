@@ -88,7 +88,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
           <h2 className="mb-4 text-2xl font-semibold">
             {t('legal.terms.sections.userResponsibilities.title')}
           </h2>
-          <p className="text-foreground mb-3 leading-relaxed">
+          <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.terms.sections.userResponsibilities.intro')}
           </p>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -189,7 +189,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
       {/* 法的レビュー警告 */}
       <div className="bg-muted border-destructive mt-12 rounded-2xl border-2 p-6">
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-4">
           <span className="text-2xl">⚠️</span>
           <div>
             <p className="text-destructive font-bold">{t('legal.reviewWarning.title')}</p>

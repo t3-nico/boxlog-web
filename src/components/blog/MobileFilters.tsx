@@ -121,7 +121,7 @@ export function MobileFilters({
                   value={localFilters.searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   placeholder={t('searchPlaceholder')}
-                  className="pr-10 pl-10"
+                  className="pr-12 pl-12"
                 />
                 {localFilters.searchQuery && (
                   <Button
@@ -141,7 +141,7 @@ export function MobileFilters({
             <div>
               <span
                 id="mobile-sort-label"
-                className="text-muted-foreground mb-3 block text-sm font-medium"
+                className="text-muted-foreground mb-4 block text-sm font-medium"
               >
                 {t('sortBy')}
               </span>
@@ -183,7 +183,7 @@ export function MobileFilters({
 
             {/* タグフィルター */}
             <div>
-              <div className="mb-3 flex items-center justify-between">
+              <div className="mb-4 flex items-center justify-between">
                 <span id="mobile-tags-label" className="text-muted-foreground text-sm font-medium">
                   {t('filterByTags')}
                 </span>
@@ -234,7 +234,7 @@ export function MobileFilters({
           </div>
 
           {/* フッター */}
-          <div className="flex-shrink-0 space-y-3 border-t p-6">
+          <div className="flex-shrink-0 space-y-4 border-t p-6">
             <div className="flex gap-4">
               <Button onClick={clearAllFilters} variant="outline" className="flex-1">
                 {t('clearAll')}

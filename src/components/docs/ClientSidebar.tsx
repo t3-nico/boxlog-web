@@ -117,7 +117,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
               );
             })()}
             {item.badge && (
-              <span className="bg-muted text-primary border-primary ml-2 rounded border px-1.5 py-0.5 text-xs font-medium">
+              <span className="bg-muted text-primary border-primary ml-2 rounded border px-2 py-1 text-xs font-medium">
                 {item.badge}
               </span>
             )}
@@ -175,18 +175,18 @@ export function ClientSidebar({ navigation }: ClientSidebarProps) {
       {/* Search */}
       <div className="relative mb-4">
         <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-        <Input type="search" placeholder={t('searchPlaceholder')} size="sm" className="pl-9" />
+        <Input type="search" placeholder={t('searchPlaceholder')} size="sm" className="pl-8" />
       </div>
 
       {/* Navigation */}
       <nav className="flex-1 space-y-6 overflow-y-auto">
         {navigation.map((section) => (
           <div key={section.title}>
-            <div className="text-muted-foreground cursor-default py-2 pr-3 pl-2 text-xs font-semibold tracking-wider uppercase">
+            <div className="text-muted-foreground cursor-default py-2 pr-4 pl-2 text-xs font-semibold tracking-wider uppercase">
               {section.title}
             </div>
 
-            <div className="mt-0.5 space-y-0">
+            <div className="mt-1 space-y-0">
               {section.items.map((item, index) => (
                 <NavigationItemComponent
                   key={item.href || `${section.title}-${index}`}

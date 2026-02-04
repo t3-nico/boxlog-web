@@ -139,7 +139,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
             </span>
 
             {frontMatter.prerelease && (
-              <span className="bg-muted text-warning border-warning inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium">
+              <span className="bg-muted text-warning border-warning inline-flex items-center rounded-full border px-4 py-1 text-sm font-medium">
                 🚧 Beta
               </span>
             )}
@@ -170,7 +170,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  d="M8 7V3m8 4V3m-8 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
             </div>
@@ -284,13 +284,13 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
         {/* Tags */}
         {frontMatter.tags.length > 0 && (
           <div className="mt-8">
-            <h3 className="text-muted-foreground mb-3 text-sm font-medium">Related Tags</h3>
+            <h3 className="text-muted-foreground mb-4 text-sm font-medium">Related Tags</h3>
             <div className="flex flex-wrap gap-2">
               {frontMatter.tags.map((tag) => (
                 <a
                   key={tag}
                   href={`/releases/tag/${encodeURIComponent(tag)}`}
-                  className="border-border bg-card text-foreground hover:border-foreground hover:bg-muted inline-flex items-center rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors"
+                  className="border-border bg-card text-foreground hover:border-foreground hover:bg-muted inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
                 >
                   #{tag}
                 </a>
@@ -300,10 +300,10 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
         )}
 
         {/* Actions */}
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+        <div className="mt-12 flex flex-col gap-4 sm:flex-row">
           <a
             href="#changes"
-            className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium transition-colors"
+            className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex items-center justify-center rounded-lg px-6 py-4 font-medium transition-colors"
           >
             <svg className="mr-2 size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -324,7 +324,7 @@ export function ReleaseHeader({ frontMatter }: ReleaseHeaderProps) {
 
           <Link
             href="/releases"
-            className="border-border text-foreground hover:bg-muted inline-flex items-center justify-center rounded-lg border px-6 py-3 font-medium transition-colors"
+            className="border-border text-foreground hover:bg-muted inline-flex items-center justify-center rounded-lg border px-6 py-4 font-medium transition-colors"
           >
             <svg className="mr-2 size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

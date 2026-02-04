@@ -47,7 +47,7 @@ export default async function ContactPage({ params }: PageProps) {
             <h1 className="text-foreground mb-6 text-4xl font-semibold tracking-tight sm:text-5xl">
               {t('contact.title')}
             </h1>
-            <p className="text-muted-foreground mb-10 text-lg sm:text-xl">
+            <p className="text-muted-foreground mb-12 text-lg sm:text-xl">
               {t('contact.subtitle')}
             </p>
             <div className="bg-card border-border w-full rounded-2xl border p-6 text-left shadow-sm md:p-8">

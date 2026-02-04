@@ -48,7 +48,7 @@ export default async function TokushohoPage({ params }: PageProps) {
 
       {/* 注意書き（要入力項目あり） */}
       <div className="bg-muted border-warning mb-8 rounded-2xl border-2 border-dashed p-6">
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-4">
           <span className="text-2xl">📝</span>
           <div>
             <p className="text-warning-foreground font-semibold">
@@ -219,7 +219,7 @@ export default async function TokushohoPage({ params }: PageProps) {
 
       {/* 法的レビュー警告 */}
       <div className="bg-muted border-destructive mt-8 rounded-2xl border-2 p-6">
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-4">
           <span className="text-2xl">⚠️</span>
           <div>
             <p className="text-destructive font-bold">{t('legal.reviewWarning.title')}</p>

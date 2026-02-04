@@ -253,7 +253,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               {/* 最近の検索 */}
               {recentSearches.length > 0 && (
                 <div>
-                  <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+                  <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wide uppercase">
                     {t('recentSearches')}
                   </h3>
                   <div className="space-y-1">
@@ -274,7 +274,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
               {/* 人気タグ */}
               <div>
-                <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+                <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wide uppercase">
                   {t('popularTags')}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -296,7 +296,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
               {/* クイックリンク */}
               <div>
-                <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+                <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wide uppercase">
                   {t('popularPages')}
                 </h3>
                 <div className="space-y-1">
@@ -312,14 +312,12 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         selectedIndex === index ? 'bg-state-active border-primary border' : ''
                       }`}
                     >
-                      <div className="mt-0.5">{getTypeIcon(link.type)}</div>
+                      <div className="mt-1">{getTypeIcon(link.type)}</div>
                       <div className="min-w-0 flex-1">
                         <div className="text-foreground truncate text-sm font-medium">
                           {link.title}
                         </div>
-                        <div className="text-muted-foreground mt-0.5 text-xs">
-                          {link.description}
-                        </div>
+                        <div className="text-muted-foreground mt-1 text-xs">{link.description}</div>
                       </div>
                       <div className="flex items-center gap-1">
                         <Badge variant="outline" className="px-2 py-1 text-xs">
@@ -379,7 +377,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         variant="ghost"
                         className="border-border flex h-auto w-full items-start justify-start gap-4 border p-4"
                       >
-                        <div className="mt-0.5">{getTypeIcon(result.type)}</div>
+                        <div className="mt-1">{getTypeIcon(result.type)}</div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-1 flex items-center gap-2">
                             <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
@@ -400,7 +398,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                           <div className="text-foreground truncate text-sm font-medium">
                             <Highlight text={result.title} query={query} />
                           </div>
-                          <div className="text-muted-foreground mt-0.5 line-clamp-2 text-xs">
+                          <div className="text-muted-foreground mt-1 line-clamp-2 text-xs">
                             <Highlight text={result.description} query={query} />
                           </div>
                         </div>
@@ -431,7 +429,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         variant="ghost"
                         className="flex h-auto w-full items-center justify-start gap-4 p-2"
                       >
-                        <div className="mt-0.5">
+                        <div className="mt-1">
                           <Tag className="text-muted-foreground size-4" />
                         </div>
                         <div className="min-w-0 flex-1">

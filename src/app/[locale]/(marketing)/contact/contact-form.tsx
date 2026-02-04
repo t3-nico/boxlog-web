@@ -352,7 +352,7 @@ export function ContactForm() {
           }`}
         >
           {/* ファイル選択ボタン */}
-          <div className="mb-3">
+          <div className="mb-4">
             <Button
               type="button"
               variant="outline"
@@ -372,7 +372,7 @@ export function ContactForm() {
 
         {/* 選択済みファイル表示 */}
         {attachment && (
-          <div className="bg-muted border-border flex items-center gap-2 rounded-lg border px-3 py-2">
+          <div className="bg-muted border-border flex items-center gap-2 rounded-lg border px-4 py-2">
             <Paperclip className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
             <span className="text-foreground min-w-0 flex-1 truncate text-sm">
               {attachment.name}
@@ -398,7 +398,7 @@ export function ContactForm() {
 
       {/* 送信エラー */}
       {submitError && (
-        <div className="bg-muted text-destructive rounded-lg p-3 text-sm" role="alert">
+        <div className="bg-muted text-destructive rounded-lg p-4 text-sm" role="alert">
           ＊{submitError}
         </div>
       )}

@@ -130,9 +130,9 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
         {/* Left Side */}
         <div className="min-w-0 flex-1">
           {/* Version and Status */}
-          <div className="mb-3 flex items-center gap-4">
+          <div className="mb-4 flex items-center gap-4">
             <span
-              className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-bold ${
+              className={`inline-flex items-center rounded-full px-4 py-1 text-sm font-bold ${
                 isFirst ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
               }`}
             >
@@ -140,14 +140,14 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             </span>
 
             <span
-              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium ${config.color}`}
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-medium ${config.color}`}
             >
               <config.icon className="size-3" />
               {config.label}
             </span>
 
             {isFirst && (
-              <span className="bg-muted text-success border-success inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium">
+              <span className="bg-muted text-success border-success inline-flex items-center rounded-full border px-4 py-1 text-xs font-medium">
                 <span className="bg-success mr-2 size-2 rounded-full"></span>
                 Next Release
               </span>
@@ -232,7 +232,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
 
   return (
     <div className="border-primary from-state-active to-state-active rounded-2xl border bg-gradient-to-br p-4">
-      <div className="mb-3 flex items-center gap-2">
+      <div className="mb-4 flex items-center gap-2">
         <div className="bg-primary flex size-6 items-center justify-center rounded-lg">
           <Clock className="text-primary-foreground size-3" />
         </div>

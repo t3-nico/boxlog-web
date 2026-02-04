@@ -61,7 +61,7 @@ export default async function AboutPage({ params }: PageProps) {
             <Heading as="h1" size="4xl" className="mb-6">
               {t('about.hero.title')}
             </Heading>
-            <Text size="xl" variant="muted" className="mx-auto mb-10 max-w-2xl">
+            <Text size="xl" variant="muted" className="mx-auto mb-12 max-w-2xl">
               {t('about.hero.description')}
             </Text>
             <div className="flex flex-wrap items-center justify-center gap-4">

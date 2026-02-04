@@ -112,7 +112,7 @@ export function Footer() {
                 </ul>
               </div>
               {/* Resources */}
-              <div className="mt-10 md:mt-0">
+              <div className="mt-12 md:mt-0">
                 <h3 className="text-foreground text-base font-semibold">
                   {tFooter('sections.resources')}
                 </h3>
@@ -150,7 +150,7 @@ export function Footer() {
                 </ul>
               </div>
               {/* Legal */}
-              <div className="mt-10 md:mt-0">
+              <div className="mt-12 md:mt-0">
                 <h3 className="text-foreground text-base font-semibold">
                   {tFooter('sections.legal')}
                 </h3>

@@ -12,7 +12,7 @@ export function SecurityContent() {
     <div className="bg-background container mx-auto min-h-screen max-w-4xl px-4 py-12 md:px-8 md:py-16">
       {/* ページヘッダー */}
       <div className="mb-8">
-        <div className="mb-4 flex items-center gap-3">
+        <div className="mb-4 flex items-center gap-4">
           <Shield className="text-primary size-10" />
           <h1 className="text-3xl font-bold">{t('legal.security.header.title')}</h1>
         </div>
@@ -33,28 +33,28 @@ export function SecurityContent() {
           <table className="border-border w-full border">
             <thead className="bg-container">
               <tr>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.policy.supportedVersions.version')}
                 </th>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.policy.supportedVersions.status')}
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v1')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v1Status')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v0')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v0Status')}
                 </td>
               </tr>
@@ -137,59 +137,59 @@ export function SecurityContent() {
           <table className="border-border w-full border">
             <thead className="bg-container">
               <tr>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.vulnerability.timeline.severity')}
                 </th>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.vulnerability.timeline.initialResponse')}
                 </th>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.vulnerability.timeline.fixRelease')}
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.critical')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.criticalResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.criticalFix')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.high')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.highResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.highFix')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.medium')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.mediumResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.mediumFix')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.low')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.lowResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.lowFix')}
                 </td>
               </tr>
