@@ -8,37 +8,41 @@
 
 /* ============================================
  * カラーシステム（modern-minimal OKLCH）
- * dayopt-app と完全同期（M3準拠）
+ * app側と完全同期（GAFA準拠）
  * ============================================ */
 
 /* ライトモード（CSS変数定義） */
 :root {
   /* ============================================
-   * Background & Surface（M3準拠）
-   * background: 最背面（1種類のみ）
-   * surface: 段階的レイヤー（dim → bright）
+   * Surface体系（GAFA準拠・4段階）
+   * Material Design 3 / Apple HIG の共通原則に基づく意味ベース設計
+   *
+   * Background: ページ背景（最明）
+   * Overlay: ポップオーバー（background直下の明度）
+   * Container: サイドバー、セクション
+   * Card: カード、ダイアログ
+   *
+   * 明度順（ライト）: background > overlay > container > card
+   * 各段階で約3%の明度差（GAFA準拠）
    * ============================================ */
   --background: oklch(0.99 0 0);
-  --foreground: oklch(0.3211 0 0);
+  --foreground: oklch(0.25 0 0);
 
-  /* Surface 段階的レイヤー（明るい順） */
-  --surface-bright: oklch(0.98 0 0);
-  --surface: oklch(0.97 0 0);
-  --surface-container: oklch(0.96 0 0);
-  --surface-container-high: oklch(0.94 0 0);
-  --surface-dim: oklch(0.93 0 0);
+  /* Surface（意味ベース4段階・GAFA準拠の明度差） */
+  --overlay: oklch(0.96 0 0);
+  --container: oklch(0.93 0 0);
+  --card: oklch(0.90 0 0);
 
-  /* 互換性エイリアス（既存コード用） */
-  --card: var(--surface);
-  --card-foreground: oklch(0.3211 0 0);
-  --popover: var(--surface-bright);
-  --popover-foreground: oklch(0.3211 0 0);
-  --secondary: var(--surface-container);
+  /* 互換性エイリアス（shadcn/ui用） */
+  --card-foreground: oklch(0.25 0 0);
+  --popover: var(--overlay);
+  --popover-foreground: oklch(0.25 0 0);
+  --secondary: var(--container);
   --secondary-foreground: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.45 0.02 264.54);
+  --muted-foreground: oklch(0.35 0.02 264.54);
 
   /* Primary */
-  --primary: oklch(0.5 0.188 259.8145);
+  --primary: oklch(0.45 0.188 259.8145);
   --primary-foreground: oklch(1 0 0);
 
   /* State: Active（選択中・アクティブ状態） */
@@ -49,18 +53,6 @@
   --accent: var(--state-active);
   --accent-foreground: var(--state-active-foreground);
 
-  /* ============================================
-   * State Layer（Material Design 3準拠）
-   * ホバー・フォーカス・選択状態用
-   * ============================================ */
-  --state-hover: oklch(from var(--foreground) l c h / 10%);
-  --state-focus: oklch(from var(--foreground) l c h / 12%);
-  --state-selected: oklch(from var(--foreground) l c h / 12%);
-
-  /* 塗りボタン用ホバートークン（90%不透明度） */
-  --primary-hover: oklch(from var(--primary) l c h / 90%);
-  --destructive-hover: oklch(from var(--destructive) l c h / 90%);
-
   /* Semantic Colors */
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
@@ -68,7 +60,7 @@
   --warning-foreground: oklch(1 0 0);
   --success: oklch(0.5859 0.1684 149.2);
   --success-foreground: oklch(1 0 0);
-  --info: oklch(0.5851 0.1538 241.9);
+  --info: oklch(0.40 0 0);
   --info-foreground: oklch(1 0 0);
 
   /* Tooltip（反転デザイン） */
@@ -76,8 +68,8 @@
   --tooltip-foreground: oklch(0.95 0 0);
 
   /* Borders & Inputs */
-  --border: oklch(0.9 0.006 264.54);
-  --input: var(--surface-bright);
+  --border: oklch(0.75 0.01 264.54);
+  --input: var(--overlay);
   --ring: oklch(0.6231 0.188 259.8145);
 
   /* Charts */
@@ -88,189 +80,43 @@
   --chart-5: oklch(0.3791 0.1378 265.5222);
 
   /* ============================================
-   * web固有トークン（マーケティングサイト用）
+   * Tag Colors（ライトモード）
+   * ダークモードでは明度を上げてアクセシビリティ確保
    * ============================================ */
-
-  /* Sidebar */
-  --sidebar-background: oklch(0.98 0 0);
-  --sidebar-foreground: oklch(0.35 0 0);
-  --sidebar-primary: oklch(0.2 0 0);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.96 0 0);
-  --sidebar-accent-foreground: oklch(0.2 0 0);
-  --sidebar-border: oklch(0.91 0 0);
-  --sidebar-ring: oklch(0.7 0.15 250);
-
-  /* Release type colors */
-  --release-new-bg: oklch(0.95 0.05 150);
-  --release-new-text: oklch(0.35 0.1 150);
-  --release-new-border: oklch(0.85 0.1 150);
-  --release-improvement-bg: oklch(0.93 0.05 250);
-  --release-improvement-text: oklch(0.4 0.12 250);
-  --release-improvement-border: oklch(0.8 0.1 250);
-  --release-bugfix-bg: oklch(0.93 0.06 60);
-  --release-bugfix-text: oklch(0.45 0.12 40);
-  --release-bugfix-border: oklch(0.8 0.12 50);
-  --release-breaking-bg: oklch(0.93 0.05 25);
-  --release-breaking-text: oklch(0.45 0.15 25);
-  --release-breaking-border: oklch(0.8 0.12 25);
-  --release-security-bg: oklch(0.93 0.06 300);
-  --release-security-text: oklch(0.4 0.15 300);
-  --release-security-border: oklch(0.8 0.12 300);
-
-  /* Tag colors - カテゴリ別10色（dayopt-appと同期） */
-  /* Blue - 技術/フレームワーク */
-  --tag-blue-bg: oklch(0.94 0.04 250);
-  --tag-blue-text: oklch(0.48 0.18 250);
-  --tag-blue-hover: oklch(0.9 0.06 250);
-  --tag-blue-solid: oklch(0.6 0.18 250);
-  --tag-blue-border: oklch(0.8 0.1 250);
-
-  /* Green - 機能/領域 */
-  --tag-green-bg: oklch(0.94 0.04 160);
-  --tag-green-text: oklch(0.48 0.16 160);
-  --tag-green-hover: oklch(0.9 0.06 160);
-  --tag-green-solid: oklch(0.65 0.16 160);
-  --tag-green-border: oklch(0.8 0.1 160);
-
-  /* Red - セキュリティ/重要 */
-  --tag-red-bg: oklch(0.94 0.04 25);
-  --tag-red-text: oklch(0.55 0.18 25);
-  --tag-red-hover: oklch(0.9 0.06 25);
-  --tag-red-solid: oklch(0.62 0.2 25);
-  --tag-red-border: oklch(0.8 0.12 25);
-
-  /* Amber - ビジネス */
-  --tag-amber-bg: oklch(0.94 0.05 85);
-  --tag-amber-text: oklch(0.55 0.14 70);
-  --tag-amber-hover: oklch(0.9 0.07 85);
-  --tag-amber-solid: oklch(0.75 0.16 70);
-  --tag-amber-border: oklch(0.8 0.1 80);
-
-  /* Violet - ドキュメント */
-  --tag-violet-bg: oklch(0.94 0.04 290);
-  --tag-violet-text: oklch(0.52 0.18 290);
-  --tag-violet-hover: oklch(0.9 0.06 290);
-  --tag-violet-solid: oklch(0.6 0.2 290);
-  --tag-violet-border: oklch(0.8 0.1 290);
-
-  /* Pink - UI/デザイン */
-  --tag-pink-bg: oklch(0.94 0.04 350);
-  --tag-pink-text: oklch(0.55 0.18 350);
-  --tag-pink-hover: oklch(0.9 0.06 350);
-  --tag-pink-solid: oklch(0.7 0.18 350);
-  --tag-pink-border: oklch(0.8 0.1 350);
-
-  /* Cyan - データ/分析 */
-  --tag-cyan-bg: oklch(0.94 0.04 200);
-  --tag-cyan-text: oklch(0.5 0.14 200);
-  --tag-cyan-hover: oklch(0.9 0.06 200);
-  --tag-cyan-solid: oklch(0.7 0.14 200);
-  --tag-cyan-border: oklch(0.8 0.08 200);
-
-  /* Orange - 自動化/統合 */
-  --tag-orange-bg: oklch(0.94 0.05 50);
-  --tag-orange-text: oklch(0.55 0.16 45);
-  --tag-orange-hover: oklch(0.9 0.07 50);
-  --tag-orange-solid: oklch(0.7 0.18 45);
-  --tag-orange-border: oklch(0.8 0.12 50);
-
-  /* Gray - その他/未分類 */
-  --tag-gray-bg: oklch(0.96 0 0);
-  --tag-gray-text: oklch(0.4 0 0);
-  --tag-gray-hover: oklch(0.92 0 0);
-  --tag-gray-solid: oklch(0.55 0 0);
-  --tag-gray-border: oklch(0.85 0 0);
-
-  /* Indigo - SDK/開発ツール */
-  --tag-indigo-bg: oklch(0.94 0.04 270);
-  --tag-indigo-text: oklch(0.5 0.18 270);
-  --tag-indigo-hover: oklch(0.9 0.06 270);
-  --tag-indigo-solid: oklch(0.55 0.2 270);
-  --tag-indigo-border: oklch(0.8 0.1 270);
-
-  /* 後方互換エイリアス */
-  --tag-neutral-bg: var(--tag-gray-bg);
-  --tag-neutral-text: var(--tag-gray-text);
-  --tag-neutral-hover: var(--tag-gray-hover);
-  --tag-accent-bg: var(--tag-blue-bg);
-  --tag-accent-text: var(--tag-blue-text);
-  --tag-accent-hover: var(--tag-blue-hover);
-
-  /* Search highlight */
-  --highlight-bg: oklch(0.9 0.12 85);
-  --highlight-text: oklch(0.45 0.1 60);
-
-  /* Icon backgrounds */
-  --icon-bg-primary: oklch(0.96 0 0);
-  --icon-bg-secondary: oklch(0.94 0.04 260);
-  --icon-bg-tertiary: oklch(0.95 0.05 150);
-
-  /* Button colors */
-  --signup-btn-bg: oklch(0.2 0 0);
-  --signup-btn-text: oklch(1 0 0);
-
-  /* ============================================
-   * 追加セマンティックカラー（コンポーネント用）
-   * ============================================ */
-
-  /* Code block */
-  --code-bg: oklch(0.94 0 0);
-  --code-text: oklch(0.35 0 0);
-  --code-block-bg: oklch(0.2 0 0);
-  --code-block-text: oklch(0.9 0 0);
-
-  /* Breadcrumb */
-  --breadcrumb-text: oklch(0.55 0 0);
-  --breadcrumb-hover: oklch(0.35 0 0);
-  --breadcrumb-separator: oklch(0.75 0 0);
-  --breadcrumb-current: oklch(0.25 0 0);
-
-  /* Progress bar */
-  --progress-bg: oklch(0.92 0 0);
-  --progress-fill-low: oklch(0.62 0.18 260);
-  --progress-fill-mid: oklch(0.7 0.15 68);
-  --progress-fill-high: oklch(0.58 0.16 149);
-
-  /* Status colors */
-  --status-active-bg: oklch(0.58 0.16 149 / 15%);
-  --status-active-text: oklch(0.45 0.14 149);
-  --status-pending-bg: oklch(0.7 0.15 68 / 15%);
-  --status-pending-text: oklch(0.5 0.12 68);
-  --status-completed-bg: oklch(0.58 0.16 149 / 15%);
-  --status-completed-text: oklch(0.45 0.14 149);
-
-  /* Link colors */
-  --link: oklch(0.58 0.18 260);
-  --link-hover: oklch(0.48 0.2 260);
-
-  /* Kbd (keyboard) */
-  --kbd-bg: oklch(0.98 0 0);
-  --kbd-border: oklch(0.88 0 0);
-  --kbd-text: oklch(0.35 0 0);
+  --tag-blue: oklch(0.62 0.21 257);
+  --tag-green: oklch(0.67 0.17 162);
+  --tag-red: oklch(0.63 0.23 25);
+  --tag-amber: oklch(0.78 0.18 75);
+  --tag-violet: oklch(0.55 0.24 293);
+  --tag-pink: oklch(0.64 0.22 350);
+  --tag-cyan: oklch(0.68 0.14 203);
+  --tag-orange: oklch(0.70 0.20 45);
+  --tag-gray: oklch(0.52 0.02 256);
+  --tag-indigo: oklch(0.54 0.24 275);
 }
 
 /* ダークモード（CSS変数上書き） */
 .dark {
   /* ============================================
-   * Background & Surface（M3準拠）
+   * Surface体系（GAFA準拠・4段階）
+   * MD3原則: 高いelevationほど明るい
+   * 各段階で約5〜6%の明度差（GAFA準拠）
+   *
+   * 明度順（ダーク）: overlay > background > container > card
    * ============================================ */
-  --background: oklch(0.26 0 0);
+  --background: oklch(0.24 0 0);
   --foreground: oklch(0.9219 0 0);
 
-  /* Surface 段階的レイヤー（暗い順） */
-  --surface-bright: oklch(0.24 0 0);
-  --surface: oklch(0.22 0 0);
-  --surface-container: oklch(0.2 0 0);
-  --surface-container-high: oklch(0.18 0 0);
-  --surface-dim: oklch(0.16 0 0);
+  /* Surface（意味ベース4段階・GAFA準拠の明度差） */
+  --overlay: oklch(0.30 0 0);
+  --container: oklch(0.18 0 0);
+  --card: oklch(0.12 0 0);
 
-  /* 互換性エイリアス（既存コード用） */
-  --card: var(--surface);
+  /* 互換性エイリアス（shadcn/ui用） */
   --card-foreground: oklch(0.9219 0 0);
-  --popover: var(--surface-bright);
+  --popover: var(--overlay);
   --popover-foreground: oklch(0.9219 0 0);
-  --secondary: var(--surface-container);
+  --secondary: var(--container);
   --secondary-foreground: oklch(0.95 0 0);
   --muted-foreground: oklch(0.78 0 0);
 
@@ -286,18 +132,6 @@
   --accent: var(--state-active);
   --accent-foreground: var(--state-active-foreground);
 
-  /* ============================================
-   * State Layer（Material Design 3準拠）
-   * ホバー・フォーカス・選択状態用
-   * ============================================ */
-  --state-hover: oklch(from var(--foreground) l c h / 10%);
-  --state-focus: oklch(from var(--foreground) l c h / 12%);
-  --state-selected: oklch(from var(--foreground) l c h / 12%);
-
-  /* 塗りボタン用ホバートークン（90%不透明度） */
-  --primary-hover: oklch(from var(--primary) l c h / 90%);
-  --destructive-hover: oklch(from var(--destructive) l c h / 90%);
-
   /* Semantic Colors */
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
@@ -305,7 +139,7 @@
   --warning-foreground: oklch(1 0 0);
   --success: oklch(0.5859 0.1684 149.2);
   --success-foreground: oklch(1 0 0);
-  --info: oklch(0.5851 0.1538 241.9);
+  --info: oklch(0.40 0 0);
   --info-foreground: oklch(1 0 0);
 
   /* Tooltip（反転デザイン - ダークモードでは明るい背景） */
@@ -314,7 +148,7 @@
 
   /* Borders & Inputs */
   --border: oklch(0.3715 0 0);
-  --input: var(--surface-bright);
+  --input: var(--overlay);
   --ring: oklch(0.6231 0.188 259.8145);
 
   /* Charts */
@@ -325,166 +159,20 @@
   --chart-5: oklch(0.4244 0.1809 265.6377);
 
   /* ============================================
-   * web固有トークン（マーケティングサイト用）
+   * Tag Colors（ダークモード用）
+   * 明度を上げ、彩度を下げてアクセシビリティ確保
+   * WCAG 2.1 非テキスト要素コントラスト比 3:1 以上を目標
    * ============================================ */
-
-  /* Sidebar - dark mode */
-  --sidebar-background: oklch(0.2 0 0);
-  --sidebar-foreground: oklch(0.7 0 0);
-  --sidebar-primary: oklch(0.98 0 0);
-  --sidebar-primary-foreground: oklch(0.35 0 0);
-  --sidebar-accent: oklch(0.25 0 0);
-  --sidebar-accent-foreground: oklch(0.7 0 0);
-  --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.7 0.15 250);
-
-  /* Release type colors - dark mode */
-  --release-new-bg: oklch(0.3 0.08 150);
-  --release-new-text: oklch(0.85 0.1 150);
-  --release-new-border: oklch(0.4 0.1 150);
-  --release-improvement-bg: oklch(0.3 0.08 250);
-  --release-improvement-text: oklch(0.8 0.1 250);
-  --release-improvement-border: oklch(0.4 0.1 250);
-  --release-bugfix-bg: oklch(0.35 0.08 50);
-  --release-bugfix-text: oklch(0.8 0.1 50);
-  --release-bugfix-border: oklch(0.45 0.1 50);
-  --release-breaking-bg: oklch(0.3 0.08 25);
-  --release-breaking-text: oklch(0.85 0.1 25);
-  --release-breaking-border: oklch(0.45 0.12 25);
-  --release-security-bg: oklch(0.3 0.1 300);
-  --release-security-text: oklch(0.85 0.1 300);
-  --release-security-border: oklch(0.45 0.12 300);
-
-  /* Tag colors - dark mode（カテゴリ別10色） */
-  /* Blue - 技術/フレームワーク */
-  --tag-blue-bg: oklch(0.3 0.08 250);
-  --tag-blue-text: oklch(0.8 0.12 250);
-  --tag-blue-hover: oklch(0.38 0.1 250);
-  --tag-blue-solid: oklch(0.55 0.16 250);
-  --tag-blue-border: oklch(0.45 0.1 250);
-
-  /* Green - 機能/領域 */
-  --tag-green-bg: oklch(0.3 0.06 160);
-  --tag-green-text: oklch(0.8 0.12 160);
-  --tag-green-hover: oklch(0.38 0.08 160);
-  --tag-green-solid: oklch(0.6 0.14 160);
-  --tag-green-border: oklch(0.45 0.08 160);
-
-  /* Red - セキュリティ/重要 */
-  --tag-red-bg: oklch(0.3 0.06 25);
-  --tag-red-text: oklch(0.85 0.12 25);
-  --tag-red-hover: oklch(0.38 0.08 25);
-  --tag-red-solid: oklch(0.58 0.18 25);
-  --tag-red-border: oklch(0.45 0.1 25);
-
-  /* Amber - ビジネス */
-  --tag-amber-bg: oklch(0.32 0.06 70);
-  --tag-amber-text: oklch(0.85 0.12 70);
-  --tag-amber-hover: oklch(0.4 0.08 70);
-  --tag-amber-solid: oklch(0.7 0.14 70);
-  --tag-amber-border: oklch(0.48 0.08 70);
-
-  /* Violet - ドキュメント */
-  --tag-violet-bg: oklch(0.3 0.08 290);
-  --tag-violet-text: oklch(0.8 0.12 290);
-  --tag-violet-hover: oklch(0.38 0.1 290);
-  --tag-violet-solid: oklch(0.55 0.18 290);
-  --tag-violet-border: oklch(0.45 0.1 290);
-
-  /* Pink - UI/デザイン */
-  --tag-pink-bg: oklch(0.3 0.06 350);
-  --tag-pink-text: oklch(0.85 0.12 350);
-  --tag-pink-hover: oklch(0.38 0.08 350);
-  --tag-pink-solid: oklch(0.65 0.16 350);
-  --tag-pink-border: oklch(0.45 0.08 350);
-
-  /* Cyan - データ/分析 */
-  --tag-cyan-bg: oklch(0.3 0.06 200);
-  --tag-cyan-text: oklch(0.82 0.1 200);
-  --tag-cyan-hover: oklch(0.38 0.08 200);
-  --tag-cyan-solid: oklch(0.65 0.12 200);
-  --tag-cyan-border: oklch(0.45 0.06 200);
-
-  /* Orange - 自動化/統合 */
-  --tag-orange-bg: oklch(0.32 0.06 50);
-  --tag-orange-text: oklch(0.85 0.12 50);
-  --tag-orange-hover: oklch(0.4 0.08 50);
-  --tag-orange-solid: oklch(0.65 0.16 50);
-  --tag-orange-border: oklch(0.48 0.1 50);
-
-  /* Gray - その他/未分類 */
-  --tag-gray-bg: oklch(0.28 0 0);
-  --tag-gray-text: oklch(0.85 0 0);
-  --tag-gray-hover: oklch(0.35 0 0);
-  --tag-gray-solid: oklch(0.5 0 0);
-  --tag-gray-border: oklch(0.4 0 0);
-
-  /* Indigo - SDK/開発ツール */
-  --tag-indigo-bg: oklch(0.3 0.08 270);
-  --tag-indigo-text: oklch(0.8 0.12 270);
-  --tag-indigo-hover: oklch(0.38 0.1 270);
-  --tag-indigo-solid: oklch(0.5 0.18 270);
-  --tag-indigo-border: oklch(0.45 0.1 270);
-
-  /* 後方互換エイリアス */
-  --tag-neutral-bg: var(--tag-gray-bg);
-  --tag-neutral-text: var(--tag-gray-text);
-  --tag-neutral-hover: var(--tag-gray-hover);
-  --tag-accent-bg: var(--tag-blue-bg);
-  --tag-accent-text: var(--tag-blue-text);
-  --tag-accent-hover: var(--tag-blue-hover);
-
-  /* Search highlight - dark mode */
-  --highlight-bg: oklch(0.45 0.1 70);
-  --highlight-text: oklch(0.9 0.08 85);
-
-  /* Icon backgrounds - dark mode */
-  --icon-bg-primary: oklch(0.28 0 0);
-  --icon-bg-secondary: oklch(0.3 0.1 270);
-  --icon-bg-tertiary: oklch(0.3 0.08 150);
-
-  /* Button colors - dark mode */
-  --signup-btn-bg: oklch(1 0 0);
-  --signup-btn-text: oklch(0.2 0 0);
-
-  /* ============================================
-   * 追加セマンティックカラー（コンポーネント用）- dark mode
-   * ============================================ */
-
-  /* Code block - dark mode */
-  --code-bg: oklch(0.28 0 0);
-  --code-text: oklch(0.85 0 0);
-  --code-block-bg: oklch(0.18 0 0);
-  --code-block-text: oklch(0.9 0 0);
-
-  /* Breadcrumb - dark mode */
-  --breadcrumb-text: oklch(0.6 0 0);
-  --breadcrumb-hover: oklch(0.8 0 0);
-  --breadcrumb-separator: oklch(0.45 0 0);
-  --breadcrumb-current: oklch(0.9 0 0);
-
-  /* Progress bar - dark mode */
-  --progress-bg: oklch(0.3 0 0);
-  --progress-fill-low: oklch(0.58 0.16 260);
-  --progress-fill-mid: oklch(0.65 0.13 68);
-  --progress-fill-high: oklch(0.55 0.14 149);
-
-  /* Status colors - dark mode */
-  --status-active-bg: oklch(0.55 0.14 149 / 20%);
-  --status-active-text: oklch(0.75 0.12 149);
-  --status-pending-bg: oklch(0.65 0.13 68 / 20%);
-  --status-pending-text: oklch(0.8 0.1 68);
-  --status-completed-bg: oklch(0.55 0.14 149 / 20%);
-  --status-completed-text: oklch(0.75 0.12 149);
-
-  /* Link colors - dark mode */
-  --link: oklch(0.7 0.14 260);
-  --link-hover: oklch(0.8 0.12 260);
-
-  /* Kbd (keyboard) - dark mode */
-  --kbd-bg: oklch(0.28 0 0);
-  --kbd-border: oklch(0.4 0 0);
-  --kbd-text: oklch(0.8 0 0);
+  --tag-blue: oklch(0.75 0.18 257);
+  --tag-green: oklch(0.78 0.15 162);
+  --tag-red: oklch(0.75 0.20 25);
+  --tag-amber: oklch(0.85 0.16 75);
+  --tag-violet: oklch(0.72 0.20 293);
+  --tag-pink: oklch(0.76 0.18 350);
+  --tag-cyan: oklch(0.78 0.12 203);
+  --tag-orange: oklch(0.80 0.17 45);
+  --tag-gray: oklch(0.70 0.02 256);
+  --tag-indigo: oklch(0.72 0.20 275);
 }
 
 /* Tailwindへのマッピング（@theme inline） */
@@ -510,13 +198,10 @@
   --color-info-hover: oklch(from var(--info) l c h / 90%);
 
   /* ============================================
-   * Surface トークン（M3準拠）
+   * Surface トークン（GAFA準拠・4段階）
    * ============================================ */
-  --color-surface-dim: var(--surface-dim);
-  --color-surface: var(--surface);
-  --color-surface-bright: var(--surface-bright);
-  --color-surface-container: var(--surface-container);
-  --color-surface-container-high: var(--surface-container-high);
+  --color-overlay: var(--overlay);
+  --color-container: var(--container);
 
   /* 共通トークン */
   --color-background: var(--background);
@@ -529,7 +214,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--surface-dim);
+  --color-muted: var(--container);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
@@ -553,153 +238,19 @@
   --color-chart-5: var(--chart-5);
 
   /* ============================================
-   * State Layer（Material Design 3準拠）
+   * Tag Colors（ユーザー選択用カラーパレット）
+   * 使用例: bg-tag-blue, text-tag-red
    * ============================================ */
-  --color-state-hover: var(--state-hover);
-  --color-state-focus: var(--state-focus);
-  --color-state-selected: var(--state-selected);
-  --color-primary-hover: var(--primary-hover);
-  --color-destructive-hover: var(--destructive-hover);
-
-  /* Sidebar */
-  --color-sidebar-background: var(--sidebar-background);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  /* Release type colors */
-  --color-release-new-bg: var(--release-new-bg);
-  --color-release-new-text: var(--release-new-text);
-  --color-release-new-border: var(--release-new-border);
-  --color-release-improvement-bg: var(--release-improvement-bg);
-  --color-release-improvement-text: var(--release-improvement-text);
-  --color-release-improvement-border: var(--release-improvement-border);
-  --color-release-bugfix-bg: var(--release-bugfix-bg);
-  --color-release-bugfix-text: var(--release-bugfix-text);
-  --color-release-bugfix-border: var(--release-bugfix-border);
-  --color-release-breaking-bg: var(--release-breaking-bg);
-  --color-release-breaking-text: var(--release-breaking-text);
-  --color-release-breaking-border: var(--release-breaking-border);
-  --color-release-security-bg: var(--release-security-bg);
-  --color-release-security-text: var(--release-security-text);
-  --color-release-security-border: var(--release-security-border);
-
-  /* Tag colors - カテゴリ別10色 */
-  --color-tag-blue-bg: var(--tag-blue-bg);
-  --color-tag-blue-text: var(--tag-blue-text);
-  --color-tag-blue-hover: var(--tag-blue-hover);
-  --color-tag-blue-solid: var(--tag-blue-solid);
-  --color-tag-blue-border: var(--tag-blue-border);
-
-  --color-tag-green-bg: var(--tag-green-bg);
-  --color-tag-green-text: var(--tag-green-text);
-  --color-tag-green-hover: var(--tag-green-hover);
-  --color-tag-green-solid: var(--tag-green-solid);
-  --color-tag-green-border: var(--tag-green-border);
-
-  --color-tag-red-bg: var(--tag-red-bg);
-  --color-tag-red-text: var(--tag-red-text);
-  --color-tag-red-hover: var(--tag-red-hover);
-  --color-tag-red-solid: var(--tag-red-solid);
-  --color-tag-red-border: var(--tag-red-border);
-
-  --color-tag-amber-bg: var(--tag-amber-bg);
-  --color-tag-amber-text: var(--tag-amber-text);
-  --color-tag-amber-hover: var(--tag-amber-hover);
-  --color-tag-amber-solid: var(--tag-amber-solid);
-  --color-tag-amber-border: var(--tag-amber-border);
-
-  --color-tag-violet-bg: var(--tag-violet-bg);
-  --color-tag-violet-text: var(--tag-violet-text);
-  --color-tag-violet-hover: var(--tag-violet-hover);
-  --color-tag-violet-solid: var(--tag-violet-solid);
-  --color-tag-violet-border: var(--tag-violet-border);
-
-  --color-tag-pink-bg: var(--tag-pink-bg);
-  --color-tag-pink-text: var(--tag-pink-text);
-  --color-tag-pink-hover: var(--tag-pink-hover);
-  --color-tag-pink-solid: var(--tag-pink-solid);
-  --color-tag-pink-border: var(--tag-pink-border);
-
-  --color-tag-cyan-bg: var(--tag-cyan-bg);
-  --color-tag-cyan-text: var(--tag-cyan-text);
-  --color-tag-cyan-hover: var(--tag-cyan-hover);
-  --color-tag-cyan-solid: var(--tag-cyan-solid);
-  --color-tag-cyan-border: var(--tag-cyan-border);
-
-  --color-tag-orange-bg: var(--tag-orange-bg);
-  --color-tag-orange-text: var(--tag-orange-text);
-  --color-tag-orange-hover: var(--tag-orange-hover);
-  --color-tag-orange-solid: var(--tag-orange-solid);
-  --color-tag-orange-border: var(--tag-orange-border);
-
-  --color-tag-gray-bg: var(--tag-gray-bg);
-  --color-tag-gray-text: var(--tag-gray-text);
-  --color-tag-gray-hover: var(--tag-gray-hover);
-  --color-tag-gray-solid: var(--tag-gray-solid);
-  --color-tag-gray-border: var(--tag-gray-border);
-
-  --color-tag-indigo-bg: var(--tag-indigo-bg);
-  --color-tag-indigo-text: var(--tag-indigo-text);
-  --color-tag-indigo-hover: var(--tag-indigo-hover);
-  --color-tag-indigo-solid: var(--tag-indigo-solid);
-  --color-tag-indigo-border: var(--tag-indigo-border);
-
-  /* 後方互換エイリアス */
-  --color-tag-neutral-bg: var(--tag-neutral-bg);
-  --color-tag-neutral-text: var(--tag-neutral-text);
-  --color-tag-neutral-hover: var(--tag-neutral-hover);
-  --color-tag-accent-bg: var(--tag-accent-bg);
-  --color-tag-accent-text: var(--tag-accent-text);
-  --color-tag-accent-hover: var(--tag-accent-hover);
-
-  /* Search highlight */
-  --color-highlight-bg: var(--highlight-bg);
-  --color-highlight-text: var(--highlight-text);
-
-  /* Icon backgrounds */
-  --color-icon-bg-primary: var(--icon-bg-primary);
-  --color-icon-bg-secondary: var(--icon-bg-secondary);
-  --color-icon-bg-tertiary: var(--icon-bg-tertiary);
-
-  /* Code block */
-  --color-code-bg: var(--code-bg);
-  --color-code-text: var(--code-text);
-  --color-code-block-bg: var(--code-block-bg);
-  --color-code-block-text: var(--code-block-text);
-
-  /* Breadcrumb */
-  --color-breadcrumb-text: var(--breadcrumb-text);
-  --color-breadcrumb-hover: var(--breadcrumb-hover);
-  --color-breadcrumb-separator: var(--breadcrumb-separator);
-  --color-breadcrumb-current: var(--breadcrumb-current);
-
-  /* Progress bar */
-  --color-progress-bg: var(--progress-bg);
-  --color-progress-fill-low: var(--progress-fill-low);
-  --color-progress-fill-mid: var(--progress-fill-mid);
-  --color-progress-fill-high: var(--progress-fill-high);
-
-  /* Status colors */
-  --color-status-active-bg: var(--status-active-bg);
-  --color-status-active-text: var(--status-active-text);
-  --color-status-pending-bg: var(--status-pending-bg);
-  --color-status-pending-text: var(--status-pending-text);
-  --color-status-completed-bg: var(--status-completed-bg);
-  --color-status-completed-text: var(--status-completed-text);
-
-  /* Link colors */
-  --color-link: var(--link);
-  --color-link-hover: var(--link-hover);
-
-  /* Kbd (keyboard) */
-  --color-kbd-bg: var(--kbd-bg);
-  --color-kbd-border: var(--kbd-border);
-  --color-kbd-text: var(--kbd-text);
+  --color-tag-blue: var(--tag-blue);
+  --color-tag-green: var(--tag-green);
+  --color-tag-red: var(--tag-red);
+  --color-tag-amber: var(--tag-amber);
+  --color-tag-violet: var(--tag-violet);
+  --color-tag-pink: var(--tag-pink);
+  --color-tag-cyan: var(--tag-cyan);
+  --color-tag-orange: var(--tag-orange);
+  --color-tag-gray: var(--tag-gray);
+  --color-tag-indigo: var(--tag-indigo);
 }
 
 @theme {
