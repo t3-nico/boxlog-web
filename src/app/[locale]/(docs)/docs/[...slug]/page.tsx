@@ -170,7 +170,7 @@ export default async function DocPage({ params }: DocPageProps) {
             {frontMatter.tags && frontMatter.tags.length > 0 && (
               <aside className="border-border mt-12 border-t pt-8">
                 <div className="mb-4 flex items-center gap-2">
-                  <Tag className="text-muted-foreground h-4 w-4" />
+                  <Tag className="text-muted-foreground size-4" />
                   <span className="text-muted-foreground text-sm font-medium">Tags</span>
                 </div>
                 <div className="flex flex-wrap gap-2">

@@ -60,9 +60,9 @@ export default async function DocsPage({ params }: PageProps) {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
             <div className="mb-4 flex items-center space-x-3">
-              <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
+              <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
-                  className="text-primary h-6 w-6"
+                  className="text-primary size-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -92,9 +92,9 @@ export default async function DocsPage({ params }: PageProps) {
 
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
             <div className="mb-4 flex items-center space-x-3">
-              <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
+              <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
-                  className="text-success h-6 w-6"
+                  className="text-success size-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -121,9 +121,9 @@ export default async function DocsPage({ params }: PageProps) {
 
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
             <div className="mb-4 flex items-center space-x-3">
-              <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
+              <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
-                  className="text-info h-6 w-6"
+                  className="text-info size-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

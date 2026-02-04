@@ -51,7 +51,7 @@ export function ErrorLayout({
                 href="/"
                 className="text-foreground hover:text-muted-foreground inline-flex items-center gap-2 text-sm font-semibold"
               >
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="size-4" />
                 {backToHomeLabel}
               </Link>
             </div>
@@ -66,7 +66,7 @@ export function ErrorLayout({
             <Link href="/contact" className="hover:text-foreground">
               {contactLabel}
             </Link>
-            <svg viewBox="0 0 2 2" aria-hidden="true" className="fill-border h-0.5 w-0.5">
+            <svg viewBox="0 0 2 2" aria-hidden="true" className="fill-border size-0.5">
               <circle r={1} cx={1} cy={1} />
             </svg>
             <Link href="/docs" className="hover:text-foreground">

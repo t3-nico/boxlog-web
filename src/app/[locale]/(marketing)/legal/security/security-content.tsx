@@ -13,7 +13,7 @@ export function SecurityContent() {
       {/* ページヘッダー */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-3">
-          <Shield className="text-primary h-10 w-10" />
+          <Shield className="text-primary size-10" />
           <h1 className="text-3xl font-bold">{t('legal.security.header.title')}</h1>
         </div>
         <p className="text-muted-foreground">{t('legal.security.header.description')}</p>
@@ -22,7 +22,7 @@ export function SecurityContent() {
       {/* セキュリティポリシー */}
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
-          <Lock className="text-primary h-6 w-6" />
+          <Lock className="text-primary size-6" />
           <h2 className="text-2xl font-semibold">{t('legal.security.policy.title')}</h2>
         </div>
 
@@ -80,7 +80,7 @@ export function SecurityContent() {
       {/* 脆弱性報告 */}
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
-          <AlertTriangle className="text-primary h-6 w-6" />
+          <AlertTriangle className="text-primary size-6" />
           <h2 className="text-2xl font-semibold">{t('legal.security.vulnerability.title')}</h2>
         </div>
 
@@ -99,14 +99,14 @@ export function SecurityContent() {
           </h3>
           <ul className="space-y-2">
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4" />
+              <Mail className="size-4" />
               <strong>{t('legal.security.vulnerability.contacts.email')}</strong>:{' '}
               <a href="mailto:security@dayopt.app" className="text-primary hover:underline">
                 {t('legal.security.vulnerability.contacts.emailAddress')}
               </a>
             </li>
             <li className="flex items-center gap-2">
-              <ExternalLink className="h-4 w-4" />
+              <ExternalLink className="size-4" />
               <strong>{t('legal.security.vulnerability.contacts.github')}</strong>:{' '}
               <a
                 href="https://github.com/t3-nico/dayopt-app/security/advisories/new"
@@ -238,7 +238,7 @@ export function SecurityContent() {
       {/* 関連ドキュメント */}
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
-          <FileText className="text-primary h-6 w-6" />
+          <FileText className="text-primary size-6" />
           <h2 className="text-2xl font-semibold">{t('legal.security.relatedDocs.title')}</h2>
         </div>
 
@@ -304,14 +304,14 @@ export function SecurityContent() {
         <h2 className="mb-4 text-xl font-semibold">{t('legal.security.contact.title')}</h2>
         <div className="space-y-2">
           <p className="flex items-center gap-2">
-            <Mail className="h-4 w-4" />
+            <Mail className="size-4" />
             <strong>{t('legal.security.contact.securityTeam')}</strong>:{' '}
             <a href="mailto:security@dayopt.app" className="text-primary hover:underline">
               {t('legal.security.contact.securityEmail')}
             </a>
           </p>
           <p className="flex items-center gap-2">
-            <Mail className="h-4 w-4" />
+            <Mail className="size-4" />
             <strong>{t('legal.security.contact.general')}</strong>:{' '}
             <a href="mailto:support@dayopt.app" className="text-primary hover:underline">
               {t('legal.security.contact.generalEmail')}

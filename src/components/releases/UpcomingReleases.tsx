@@ -34,13 +34,8 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
       {/* Header */}
       <div className="border-border border-b px-6 py-4">
         <div className="flex items-center gap-4">
-          <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-lg">
-            <svg
-              className="text-info h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+          <div className="bg-muted flex size-8 items-center justify-center rounded-lg">
+            <svg className="text-info size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -147,13 +142,13 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             <span
               className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium ${config.color}`}
             >
-              <config.icon className="h-3 w-3" />
+              <config.icon className="size-3" />
               {config.label}
             </span>
 
             {isFirst && (
               <span className="bg-muted text-success border-success inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium">
-                <span className="bg-success mr-2 h-2 w-2 rounded-full"></span>
+                <span className="bg-success mr-2 size-2 rounded-full"></span>
                 Next Release
               </span>
             )}
@@ -161,7 +156,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
 
           {/* Expected Date */}
           <div className="mb-4 flex items-center gap-2">
-            <Calendar className="text-muted-foreground h-4 w-4" />
+            <Calendar className="text-muted-foreground size-4" />
             <span
               className={`text-sm ${isOverdue ? 'text-destructive font-medium' : 'text-muted-foreground'}`}
             >
@@ -176,7 +171,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             <ul className="space-y-1">
               {release.features.map((feature, index) => (
                 <li key={index} className="text-muted-foreground flex items-start gap-2 text-sm">
-                  <span className="bg-muted-foreground mt-2 h-2 w-2 flex-shrink-0 rounded-full"></span>
+                  <span className="bg-muted-foreground mt-2 size-2 flex-shrink-0 rounded-full"></span>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -212,7 +207,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
       {isFirst && (
         <div className="border-border mt-4 border-t pt-4">
           <div className="text-primary flex items-center gap-2 text-sm">
-            <Info className="h-4 w-4" />
+            <Info className="size-4" />
             このリリースの詳細は開発ブログで随時更新されます
           </div>
         </div>
@@ -238,8 +233,8 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
   return (
     <div className="border-primary from-state-active to-state-active rounded-xl border bg-gradient-to-br p-4">
       <div className="mb-3 flex items-center gap-2">
-        <div className="bg-primary flex h-6 w-6 items-center justify-center rounded-lg">
-          <Clock className="text-primary-foreground h-3 w-3" />
+        <div className="bg-primary flex size-6 items-center justify-center rounded-lg">
+          <Clock className="text-primary-foreground size-3" />
         </div>
         <h4 className="text-foreground text-sm font-semibold">次期リリース</h4>
       </div>
@@ -255,7 +250,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
         <div className="text-muted-foreground text-sm">
           {nextRelease.features.slice(0, 2).map((feature, index) => (
             <div key={index} className="flex items-start gap-1">
-              <span className="bg-muted-foreground mt-2 h-1 w-1 flex-shrink-0 rounded-full"></span>
+              <span className="bg-muted-foreground mt-2 size-1 flex-shrink-0 rounded-full"></span>
               <span className="text-xs">{feature}</span>
             </div>
           ))}
@@ -271,7 +266,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
           className="text-primary hover:text-primary-hover mt-2 inline-flex items-center text-xs font-medium"
         >
           詳細を見る
-          <ChevronRight className="ml-1 h-3 w-3" />
+          <ChevronRight className="ml-1 size-3" />
         </Link>
       </div>
     </div>
@@ -291,8 +286,8 @@ export function ReleaseTimeline() {
         <div className="space-y-8">
           {/* Current Release */}
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
-              <Check className="text-success h-5 w-5" />
+            <div className="border-background bg-muted flex size-10 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+              <Check className="text-success size-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
@@ -308,8 +303,8 @@ export function ReleaseTimeline() {
 
           {/* Upcoming Releases */}
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
-              <Clock className="text-info h-5 w-5" />
+            <div className="border-background bg-muted flex size-10 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+              <Clock className="text-info size-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
@@ -324,8 +319,8 @@ export function ReleaseTimeline() {
           </div>
 
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
-              <Clipboard className="text-muted-foreground h-5 w-5" />
+            <div className="border-background bg-muted flex size-10 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+              <Clipboard className="text-muted-foreground size-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">

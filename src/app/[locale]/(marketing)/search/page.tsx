@@ -64,7 +64,7 @@ function SearchResults() {
     switch (type) {
       case 'docs':
         return (
-          <svg className="text-info h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="text-info size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -76,7 +76,7 @@ function SearchResults() {
       case 'blog':
         return (
           <svg
-            className="text-success h-4 w-4"
+            className="text-success size-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -92,7 +92,7 @@ function SearchResults() {
       case 'release':
         return (
           <svg
-            className="text-primary h-4 w-4"
+            className="text-primary size-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -136,7 +136,7 @@ function SearchResults() {
           <div className="mb-6 flex items-center gap-4">
             <div className="relative flex-1">
               <svg
-                className="text-muted-foreground absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform"
+                className="text-muted-foreground absolute top-1/2 left-3 size-5 -translate-y-1/2 transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -212,7 +212,7 @@ function SearchResults() {
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
-                  <div className="border-primary h-4 w-4 animate-spin rounded-full border-b-2"></div>
+                  <div className="border-primary size-4 animate-spin rounded-full border-b-2"></div>
                   <Text className="text-muted-foreground text-sm">検索中...</Text>
                 </div>
               )}
@@ -284,7 +284,7 @@ function SearchResults() {
             ) : (
               <div className="py-16 text-center">
                 <svg
-                  className="text-muted-foreground mx-auto mb-4 h-16 w-16"
+                  className="text-muted-foreground mx-auto mb-4 size-16"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -317,7 +317,7 @@ function SearchResults() {
         ) : (
           <div className="py-16 text-center">
             <svg
-              className="text-muted-foreground mx-auto mb-4 h-16 w-16"
+              className="text-muted-foreground mx-auto mb-4 size-16"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -361,7 +361,7 @@ export default function SearchPage() {
           <Container className="py-8">
             <div className="mx-auto max-w-4xl">
               <div className="flex items-center justify-center py-12">
-                <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
+                <div className="border-primary size-8 animate-spin rounded-full border-b-2"></div>
               </div>
             </div>
           </Container>

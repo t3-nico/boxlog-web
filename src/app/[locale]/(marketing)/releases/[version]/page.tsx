@@ -200,7 +200,7 @@ const mdxComponents = {
     <div className="border-warning bg-muted my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="text-warning mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
+          className="text-warning mt-0.5 mr-3 size-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -222,7 +222,7 @@ const mdxComponents = {
     <div className="border-info bg-muted my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="text-info mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
+          className="text-info mt-0.5 mr-3 size-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -244,7 +244,7 @@ const mdxComponents = {
     <div className="border-primary bg-muted my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="text-primary mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
+          className="text-primary mt-0.5 mr-3 size-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -341,9 +341,9 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               <div className="border-border mt-16 border-t pt-8">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
-                    <div className="bg-border h-2 w-2 rounded-full"></div>
-                    <div className="bg-border h-2 w-2 rounded-full"></div>
-                    <div className="bg-border h-2 w-2 rounded-full"></div>
+                    <div className="bg-border size-2 rounded-full"></div>
+                    <div className="bg-border size-2 rounded-full"></div>
+                    <div className="bg-border size-2 rounded-full"></div>
                   </div>
                 </div>
               </div>
@@ -413,7 +413,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                     className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 text-sm font-medium transition-colors"
                   >
                     <svg
-                      className="mr-2 h-4 w-4"
+                      className="mr-2 size-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -449,7 +449,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
                 >
                   <svg
-                    className="mr-2 h-5 w-5"
+                    className="mr-2 size-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -469,7 +469,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   className="border-border text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 font-medium transition-colors"
                 >
                   <svg
-                    className="mr-2 h-5 w-5"
+                    className="mr-2 size-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

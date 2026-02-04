@@ -281,7 +281,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           variant="outline"
           className="flex w-full items-center justify-center gap-2"
         >
-          <Filter className="text-muted-foreground h-4 w-4" />
+          <Filter className="text-muted-foreground size-4" />
           <span className="text-foreground font-medium">{t('title')}</span>
           {activeFiltersCount > 0 && (
             <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">

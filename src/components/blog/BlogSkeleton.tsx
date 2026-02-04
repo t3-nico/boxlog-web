@@ -102,7 +102,7 @@ export function FiltersSkeleton() {
       {/* ヘッダー */}
       <div className="mb-6 flex items-center justify-between">
         <Skeleton className="h-5 w-16" />
-        <Skeleton className="h-4 w-4" />
+        <Skeleton className="size-4" />
       </div>
 
       {/* 検索バー */}
