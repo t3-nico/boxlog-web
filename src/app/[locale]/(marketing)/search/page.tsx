@@ -211,7 +211,7 @@ function SearchResults() {
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
-                  <div className="border-primary size-4 animate-spin rounded-full border-b-2"></div>
+                  <div className="border-primary size-4 animate-spin rounded-full border-b-2 motion-reduce:animate-none"></div>
                   <Text className="text-muted-foreground text-sm">検索中...</Text>
                 </div>
               )}
@@ -220,13 +220,10 @@ function SearchResults() {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="border-border bg-card animate-pulse rounded-lg border p-6"
-                  >
-                    <div className="bg-muted mb-4 h-4 w-3/4 rounded"></div>
-                    <div className="bg-muted mb-2 h-3 w-full rounded"></div>
-                    <div className="bg-muted h-3 w-2/3 rounded"></div>
+                  <div key={i} className="border-border bg-card rounded-lg border p-6">
+                    <div className="animate-shimmer mb-4 h-4 w-3/4 rounded"></div>
+                    <div className="animate-shimmer mb-2 h-3 w-full rounded"></div>
+                    <div className="animate-shimmer h-3 w-2/3 rounded"></div>
                   </div>
                 ))}
               </div>
@@ -360,7 +357,7 @@ export default function SearchPage() {
           <Container className="py-8">
             <div className="mx-auto max-w-4xl">
               <div className="flex items-center justify-center py-12">
-                <div className="border-primary size-8 animate-spin rounded-full border-b-2"></div>
+                <div className="border-primary size-8 animate-spin rounded-full border-b-2 motion-reduce:animate-none"></div>
               </div>
             </div>
           </Container>

@@ -18,7 +18,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         info: <Info className="size-4" />,
         warning: <TriangleAlert className="size-4" />,
         error: <OctagonX className="size-4" />,
-        loading: <LoaderCircle className="size-4 animate-spin" />,
+        loading: <LoaderCircle className="size-4 animate-spin motion-reduce:animate-none" />,
       }}
       toastOptions={{
         classNames: {

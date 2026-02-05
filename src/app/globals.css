@@ -515,3 +515,64 @@ button:focus-visible {
     -webkit-line-clamp: 3;
   }
 }
+
+/* ============================================
+ * アニメーション（Storybook Motion準拠）
+ * ============================================ */
+
+/* Shimmer - スケルトンローダー（Facebook/LinkedIn方式） */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--container) 0%,
+    var(--overlay) 50%,
+    var(--container) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.dark .animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--container) 0%,
+    var(--card) 50%,
+    var(--container) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Shake - エラーフィードバック（Apple HIG準拠） */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
