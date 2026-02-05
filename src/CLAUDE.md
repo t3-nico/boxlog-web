@@ -84,70 +84,61 @@ hooks / Locale.ts; // "use"プレフィックスなし
 
 ## スタイリング規約
 
-### 必須: globals.css のセマンティックトークン使用
+### 必須: セマンティックトークン使用
 
 ```typescript
-// ✅ 推奨: セマンティックトークン使用
+// ✅ 推奨: セマンティックトークン
 <div className="bg-card text-foreground border-border">
   <h1 className="text-primary">Title</h1>
 </div>
 
-// ✅ 推奨: カスタムトークン使用
-<div className="bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))]">
-  Content
-</div>
-
-// ❌ 禁止: Tailwindクラスの直接指定
+// ❌ 禁止: ハードコードカラー
 <div className="bg-blue-500 text-white border-gray-300">
-  Content
-</div>
+<div className="bg-neutral-900 text-neutral-100">
+<div className="bg-white dark:bg-gray-900">
+
+// ❌ 禁止: 不透明度ベースホバー
+<button className="bg-primary hover:bg-primary/90">
+// → hover:bg-primary-hover を使用
 
 // ❌ 禁止: style属性
 <div style={{ backgroundColor: '#3b82f6' }}>
-  Content
-</div>
 ```
 
 ### 利用可能なセマンティックトークン
 
-#### shadcn/ui基本トークン
+#### Surface（背景階層）
 
-- `bg-background`, `text-foreground`
-- `bg-card`, `text-card-foreground`
-- `bg-primary`, `text-primary-foreground`
-- `bg-secondary`, `text-secondary-foreground`
-- `bg-muted`, `text-muted-foreground`
-- `bg-accent`, `text-accent-foreground`
-- `bg-destructive`, `text-destructive-foreground`
-- `border-border`, `border-input`
-- `ring-ring`
+- `bg-background` — ページ全体
+- `bg-container` — セクション・エリア
+- `bg-card` — カード・パネル
+- `bg-overlay` — モーダル背景
 
-#### カスタムニュートラルトークン（RGB形式）
+#### テキスト
 
-- `--bg-primary`, `--bg-secondary`, `--bg-tertiary`
-- `--text-primary`, `--text-secondary`, `--text-tertiary`
-- `--border-primary`, `--border-secondary`
+- `text-foreground` — メイン
+- `text-muted-foreground` — 補助
+- `text-card-foreground` — カード内
 
-#### セマンティックカラー
+#### Primary・セマンティック
 
-- `--error-color`, `--error-bg`
-- `--success-color`, `--success-bg`
-- `--warning-color`, `--warning-bg`
-- `--info-color`, `--info-bg`
-- `--link-color`, `--link-hover`
+- `bg-primary`, `text-primary-foreground`, `hover:bg-primary-hover`
+- `bg-destructive`, `text-destructive-foreground`, `hover:bg-destructive-hover`
+- `bg-warning`, `text-warning`, `hover:bg-warning-hover`
+- `bg-success`, `text-success`, `hover:bg-success-hover`
+- `bg-info`, `text-info`, `hover:bg-info-hover`
 
-#### タグカラー
+#### ホバー専用トークン
 
-- `--tag-neutral-bg`, `--tag-neutral-text`, `--tag-neutral-hover`
-- `--tag-accent-bg`, `--tag-accent-text`, `--tag-accent-hover`
+- `hover:bg-state-hover` — ニュートラル（汎用）
+- `hover:bg-secondary-hover` — Secondary/Muted
+- `hover:bg-primary-state-hover` — Primary Ghost
+- `hover:bg-destructive-state-hover` — Destructive Ghost
 
-#### リリースタイプカラー
+#### ボーダー・入力・状態
 
-- `--release-new-bg`, `--release-new-text`, `--release-new-border`
-- `--release-improvement-bg`, `--release-improvement-text`, `--release-improvement-border`
-- `--release-bugfix-bg`, `--release-bugfix-text`, `--release-bugfix-border`
-- `--release-breaking-bg`, `--release-breaking-text`, `--release-breaking-border`
-- `--release-security-bg`, `--release-security-text`, `--release-security-border`
+- `border-border`, `bg-input`, `ring-ring`
+- `bg-state-hover`, `bg-state-active`, `text-state-active-foreground`
 
 ### 8pxグリッドシステム
 
@@ -563,7 +554,12 @@ export function BlogPostSchema({ post }: { post: Post }) {
 
 - ❌ `any`, `unknown`型
 - ❌ `style`属性、カラーコード
-- ❌ Tailwindクラスの直接指定（`bg-blue-500`等）
+- ❌ ハードコードカラー（`bg-blue-500`, `bg-neutral-*`, `text-white`, `bg-white dark:bg-*`等）
+- ❌ 不透明度ベースホバー（`hover:bg-primary/90`等 → `hover:bg-primary-hover`を使用）
+- ❌ `font-semibold`, `font-medium`（`font-bold`/`font-normal`のみ）
+- ❌ 生のz-index（`z-50`等 → `z-modal`等セマンティック値を使用）
+- ❌ `animate-pulse`（`animate-shimmer`を使用）
+- ❌ `rounded-sm`, `rounded-md`, `rounded-xl`（5種のみ: none/rounded/lg/2xl/full）
 - ❌ `React.FC`
 - ❌ コンポーネントでの`export default`（App Router以外）
 - ❌ `useEffect`でのfetch
@@ -595,4 +591,4 @@ export function BlogPostSchema({ post }: { post: Post }) {
 
 ---
 
-**最終更新**: 2025年1月 | **バージョン**: v2.0
+**最終更新**: 2026年2月 | **バージョン**: v3.0
