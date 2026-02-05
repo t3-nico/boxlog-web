@@ -20,7 +20,7 @@ const SelectTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       // 基本スタイル（Input/Textareaと統一）
-      'border-input bg-input text-foreground flex h-10 w-full items-center justify-between rounded-md border px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
+      'border-input bg-input text-foreground flex h-10 w-full items-center justify-between rounded-lg border px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
       'data-[placeholder]:text-muted-foreground',
       // フォーカス（Input/Textareaと統一）
       'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
@@ -32,7 +32,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className="size-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -47,7 +47,7 @@ const SelectScrollUpButton = React.forwardRef<
     className={cn('flex cursor-default items-center justify-center py-1', className)}
     {...props}
   >
-    <ChevronUp className="h-4 w-4" />
+    <ChevronUp className="size-4" />
   </SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -61,7 +61,7 @@ const SelectScrollDownButton = React.forwardRef<
     className={cn('flex cursor-default items-center justify-center py-1', className)}
     {...props}
   >
-    <ChevronDown className="h-4 w-4" />
+    <ChevronDown className="size-4" />
   </SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
@@ -75,7 +75,7 @@ const SelectContent = React.forwardRef<
       ref={ref}
       className={cn(
         // セマンティックトークン - ドロップダウンコンテンツ
-        'border-border bg-popover text-popover-foreground relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border shadow-md',
+        'border-border bg-popover text-popover-foreground z-dropdown relative max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-lg border shadow-md',
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]',
         position === 'popper' &&
@@ -109,7 +109,7 @@ const SelectLabel = React.forwardRef<
     ref={ref}
     className={cn(
       // セマンティックトークン - ラベル
-      'text-muted-foreground py-2 pr-2 pl-8 text-sm font-semibold',
+      'text-muted-foreground py-2 pr-2 pl-8 text-sm font-bold',
       className,
     )}
     {...props}
@@ -125,16 +125,16 @@ const SelectItem = React.forwardRef<
     ref={ref}
     className={cn(
       // セマンティックトークン - アイテム
-      'text-foreground relative flex w-full cursor-default items-center rounded-sm py-2 pr-2 pl-8 text-sm outline-none select-none',
+      'text-foreground relative flex w-full cursor-default items-center rounded py-2 pr-2 pl-8 text-sm outline-none select-none',
       'focus:bg-state-hover focus:text-foreground hover:bg-state-hover',
       'data-[disabled]:text-muted-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className,
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-4 w-4 items-center justify-center">
+    <span className="absolute left-2 flex size-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="size-4" />
       </SelectPrimitive.ItemIndicator>
     </span>
 

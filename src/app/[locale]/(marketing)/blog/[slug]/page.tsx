@@ -112,7 +112,7 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || '';
-    return <h3 id={id} className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />;
+    return <h3 id={id} className="text-foreground mt-6 mb-4 text-xl font-bold" {...props} />;
   },
   h4: (props: HeadingProps) => {
     const id =
@@ -121,14 +121,14 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || '';
-    return <h4 id={id} className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />;
+    return <h4 id={id} className="text-foreground mt-6 mb-4 text-lg font-bold" {...props} />;
   },
   p: (props: ParagraphProps) => (
-    <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />
+    <p className="text-foreground mb-4 text-xl leading-relaxed" {...props} />
   ),
   a: (props: AnchorProps) => (
     <a
-      className="text-link hover:text-link-hover underline underline-offset-2"
+      className="text-primary hover:text-primary/80 underline underline-offset-2"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props}
@@ -136,24 +136,24 @@ const mdxComponents = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="border-info bg-info/10 text-foreground/90 my-6 rounded-r-lg border-l-4 py-2 pl-4 italic"
+      className="border-info bg-muted text-foreground my-6 rounded-r-lg border-l-4 py-2 pl-4 text-xl italic"
       {...props}
     />
   ),
   code: (props: CodeProps) => (
-    <code className="bg-code-bg text-code-text rounded px-2 py-1 font-mono text-sm" {...props} />
+    <code className="bg-muted text-foreground rounded px-2 py-1 font-mono text-sm" {...props} />
   ),
   pre: (props: PreProps) => (
     <pre
-      className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm"
+      className="bg-muted text-foreground my-6 overflow-x-auto rounded-lg p-4 text-sm"
       {...props}
     />
   ),
   ul: (props: ListProps) => (
-    <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />
+    <ul className="text-foreground mb-4 list-inside list-disc space-y-2 text-xl" {...props} />
   ),
   ol: (props: OrderedListProps) => (
-    <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2" {...props} />
+    <ol className="text-foreground mb-4 list-inside list-decimal space-y-2 text-xl" {...props} />
   ),
   li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
   img: (props: ImageProps) => (
@@ -179,7 +179,7 @@ const mdxComponents = {
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-bold tracking-wider uppercase"
       {...props}
     />
   ),
@@ -197,10 +197,10 @@ const mdxComponents = {
     children: React.ReactNode;
   }) => {
     const styles = {
-      info: 'bg-info/10 border-info/30 text-info',
-      warning: 'bg-warning/10 border-warning/30 text-warning',
-      error: 'bg-destructive/10 border-destructive/30 text-destructive',
-      success: 'bg-success/10 border-success/30 text-success',
+      info: 'bg-muted border-info text-info',
+      warning: 'bg-muted border-warning text-warning',
+      error: 'bg-muted border-destructive text-destructive',
+      success: 'bg-muted border-success text-success',
     };
 
     const icons = {
@@ -213,7 +213,7 @@ const mdxComponents = {
     return (
       <div className={`my-6 rounded-r-lg border-l-4 p-4 ${styles[type]}`}>
         <div className="flex items-start">
-          <span className="mr-3 flex-shrink-0 text-lg">{icons[type]}</span>
+          <span className="mr-4 flex-shrink-0 text-lg">{icons[type]}</span>
           <div className="prose prose-sm max-w-none">{children}</div>
         </div>
       </div>
@@ -305,24 +305,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <article className="py-8">
           <Container>
             <div className="flex justify-center gap-8">
-              <div className="w-[700px] flex-shrink-0 pt-16">
+              <div className="max-w-2xl flex-shrink-0 pt-16">
                 <div className="mb-8">
                   <nav aria-label="breadcrumb" className="flex items-center space-x-2 text-sm">
                     <Link
                       href="/"
-                      className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Home
                     </Link>
                     <span className="text-border">/</span>
                     <Link
                       href="/blog"
-                      className="text-breadcrumb-text hover:text-breadcrumb-hover transition-colors"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Blog
                     </Link>
                     <span className="text-border">/</span>
-                    <span className="text-foreground font-semibold">{post.frontMatter.title}</span>
+                    <span className="text-foreground font-bold">{post.frontMatter.title}</span>
                   </nav>
                 </div>
 
@@ -342,12 +342,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </h1>
 
                 {post.frontMatter.coverImage && (
-                  <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl shadow-lg">
                     <Image
                       src={post.frontMatter.coverImage}
                       alt={post.frontMatter.title}
                       fill
-                      className="rounded-xl object-cover"
+                      className="rounded-2xl object-cover"
                       priority
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                     />
@@ -362,13 +362,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 <div className="mt-6 space-y-6">
                   <div>
-                    <h3 className="text-foreground mb-3 text-lg font-semibold">Tags Used</h3>
+                    <h3 className="text-foreground mb-4 text-lg font-bold">Tags Used</h3>
                     <div className="flex flex-wrap gap-2">
                       {post.frontMatter.tags.map((tag) => (
                         <Link
                           key={tag}
                           href={`/tags/${encodeURIComponent(tag)}`}
-                          className="bg-tag-neutral-bg text-tag-neutral-text hover:bg-tag-neutral-hover inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors"
+                          className="bg-muted text-muted-foreground hover:bg-secondary-hover inline-flex items-center rounded-full px-4 py-1 text-sm font-bold transition-colors"
                         >
                           #{tag}
                         </Link>
@@ -377,13 +377,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
 
                   <div>
-                    <h3 className="text-foreground mb-3 text-lg font-semibold">{t('title')}</h3>
+                    <h3 className="text-foreground mb-4 text-lg font-bold">{t('title')}</h3>
                     <ShareButton title={post.frontMatter.title} slug={slug} />
                   </div>
                 </div>
               </div>
 
-              <aside className="hidden w-[240px] flex-shrink-0 xl:block">
+              <aside className="hidden w-60 flex-shrink-0 xl:block">
                 <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pt-16 pl-6">
                   <ClientTableOfContents content={post.content} />
                 </div>

@@ -64,7 +64,7 @@ function SearchResults() {
     switch (type) {
       case 'docs':
         return (
-          <svg className="text-info h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="text-info size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -76,7 +76,7 @@ function SearchResults() {
       case 'blog':
         return (
           <svg
-            className="text-success h-4 w-4"
+            className="text-success size-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -92,7 +92,7 @@ function SearchResults() {
       case 'release':
         return (
           <svg
-            className="text-primary h-4 w-4"
+            className="text-primary size-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -136,7 +136,7 @@ function SearchResults() {
           <div className="mb-6 flex items-center gap-4">
             <div className="relative flex-1">
               <svg
-                className="text-muted-foreground absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform"
+                className="text-muted-foreground absolute top-1/2 left-3 size-5 -translate-y-1/2 transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -154,10 +154,10 @@ function SearchResults() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch(query)}
-                className="py-3 pr-4 pl-10 text-base"
+                className="py-4 pr-4 pl-12 text-base"
               />
             </div>
-            <Button onClick={() => handleSearch(query)} className="px-6 py-3">
+            <Button onClick={() => handleSearch(query)} className="px-6 py-4">
               Search
             </Button>
           </div>
@@ -188,7 +188,7 @@ function SearchResults() {
                   <button
                     key={filter.key}
                     onClick={() => setSelectedFilter(filter.key as typeof selectedFilter)}
-                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                    className={`rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
                       selectedFilter === filter.key
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-muted text-muted-foreground hover:bg-state-hover hover:text-foreground'
@@ -207,12 +207,11 @@ function SearchResults() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <Text className="text-muted-foreground">
-                「<span className="font-medium">{query}</span>」の検索結果: {filteredResults.length}
-                件
+                「<span className="font-bold">{query}</span>」の検索結果: {filteredResults.length}件
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
-                  <div className="border-primary h-4 w-4 animate-spin rounded-full border-b-2"></div>
+                  <div className="border-primary size-4 animate-spin rounded-full border-b-2 motion-reduce:animate-none"></div>
                   <Text className="text-muted-foreground text-sm">検索中...</Text>
                 </div>
               )}
@@ -221,13 +220,10 @@ function SearchResults() {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="border-border bg-card animate-pulse rounded-lg border p-6"
-                  >
-                    <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
-                    <div className="bg-muted mb-2 h-3 w-full rounded"></div>
-                    <div className="bg-muted h-3 w-2/3 rounded"></div>
+                  <div key={i} className="border-border bg-card rounded-lg border p-6">
+                    <div className="animate-shimmer mb-4 h-4 w-3/4 rounded"></div>
+                    <div className="animate-shimmer mb-2 h-3 w-full rounded"></div>
+                    <div className="animate-shimmer h-3 w-2/3 rounded"></div>
                   </div>
                 ))}
               </div>
@@ -238,12 +234,12 @@ function SearchResults() {
                     key={result.id}
                     className="border-border bg-card rounded-lg border p-6 transition-shadow hover:shadow-md"
                   >
-                    <div className="mb-3 flex items-start gap-4">
+                    <div className="mb-4 flex items-start gap-4">
                       {getTypeIcon(result.type)}
                       <div className="min-w-0 flex-1">
                         <Link
                           href={result.url}
-                          className="text-primary hover:text-primary-hover block truncate text-lg font-medium hover:underline"
+                          className="text-primary hover:text-primary-hover block truncate text-lg font-bold hover:underline"
                         >
                           <Highlight text={result.title} query={query} />
                         </Link>
@@ -264,7 +260,7 @@ function SearchResults() {
                         </div>
                       </div>
                     </div>
-                    <p className="text-muted-foreground mb-3 line-clamp-2 text-sm">
+                    <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">
                       <Highlight text={result.description} query={query} />
                     </p>
                     <div className="flex items-center justify-between">
@@ -273,7 +269,7 @@ function SearchResults() {
                       </span>
                       <Link
                         href={result.url}
-                        className="text-primary hover:text-primary-hover text-xs font-medium"
+                        className="text-primary hover:text-primary-hover text-xs font-bold"
                       >
                         詳細を見る →
                       </Link>
@@ -284,7 +280,7 @@ function SearchResults() {
             ) : (
               <div className="py-16 text-center">
                 <svg
-                  className="text-muted-foreground mx-auto mb-4 h-16 w-16"
+                  className="text-muted-foreground mx-auto mb-4 size-16"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -317,7 +313,7 @@ function SearchResults() {
         ) : (
           <div className="py-16 text-center">
             <svg
-              className="text-muted-foreground mx-auto mb-4 h-16 w-16"
+              className="text-muted-foreground mx-auto mb-4 size-16"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -336,13 +332,13 @@ function SearchResults() {
               ドキュメント、ブログ記事、リリースノートを横断検索できます。
             </Text>
             <div className="flex justify-center gap-2">
-              <Badge variant="outline" className="px-3 py-1 text-sm">
+              <Badge variant="outline" className="px-4 py-1 text-sm">
                 ドキュメント
               </Badge>
-              <Badge variant="outline" className="px-3 py-1 text-sm">
+              <Badge variant="outline" className="px-4 py-1 text-sm">
                 ブログ
               </Badge>
-              <Badge variant="outline" className="px-3 py-1 text-sm">
+              <Badge variant="outline" className="px-4 py-1 text-sm">
                 リリース
               </Badge>
             </div>
@@ -361,7 +357,7 @@ export default function SearchPage() {
           <Container className="py-8">
             <div className="mx-auto max-w-4xl">
               <div className="flex items-center justify-center py-12">
-                <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
+                <div className="border-primary size-8 animate-spin rounded-full border-b-2 motion-reduce:animate-none"></div>
               </div>
             </div>
           </Container>

@@ -69,11 +69,11 @@ function CodeBlock({ children, className }: CodeBlockProps) {
 
   return (
     <div className="group relative">
-      <div className="absolute top-3 right-3 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="absolute top-3 right-3 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
         <CopyCodeButton code={codeString} />
       </div>
       <pre
-        className={`hljs ${languageClass} bg-code-block-bg text-code-block-text overflow-x-auto rounded-lg p-4`}
+        className={`hljs ${languageClass} bg-muted text-foreground overflow-x-auto rounded-lg p-4`}
       >
         <code className={languageClass}>{codeString}</code>
       </pre>
@@ -84,7 +84,7 @@ function CodeBlock({ children, className }: CodeBlockProps) {
 // インラインコード
 function InlineCode({ children, ...props }: InlineCodeProps) {
   return (
-    <code className="bg-code-bg text-code-text rounded px-1.5 py-0.5 font-mono text-sm" {...props}>
+    <code className="bg-muted text-foreground rounded px-2 py-1 font-mono text-sm" {...props}>
       {children}
     </code>
   );
@@ -99,15 +99,15 @@ function Alert({
   children: React.ReactNode;
 }) {
   const styles = {
-    info: 'bg-info/10 border-info/30 text-info',
-    warning: 'bg-warning/10 border-warning/30 text-warning',
-    error: 'bg-destructive/10 border-destructive/30 text-destructive',
-    success: 'bg-success/10 border-success/30 text-success',
+    info: 'bg-muted border-info text-info',
+    warning: 'bg-muted border-warning text-warning',
+    error: 'bg-muted border-destructive text-destructive',
+    success: 'bg-muted border-success text-success',
   };
 
   const icons = {
     info: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+      <svg className="size-5" fill="currentColor" viewBox="0 0 20 20">
         <path
           fillRule="evenodd"
           d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
@@ -116,7 +116,7 @@ function Alert({
       </svg>
     ),
     warning: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+      <svg className="size-5" fill="currentColor" viewBox="0 0 20 20">
         <path
           fillRule="evenodd"
           d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
@@ -125,7 +125,7 @@ function Alert({
       </svg>
     ),
     error: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+      <svg className="size-5" fill="currentColor" viewBox="0 0 20 20">
         <path
           fillRule="evenodd"
           d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -134,7 +134,7 @@ function Alert({
       </svg>
     ),
     success: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+      <svg className="size-5" fill="currentColor" viewBox="0 0 20 20">
         <path
           fillRule="evenodd"
           d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -147,7 +147,7 @@ function Alert({
   return (
     <div className={`my-4 rounded-lg border p-4 ${styles[type]}`}>
       <div className="flex items-start">
-        <div className="mt-0.5 mr-3 flex-shrink-0">{icons[type]}</div>
+        <div className="mt-1 mr-4 flex-shrink-0">{icons[type]}</div>
         <div className="flex-1">{children}</div>
       </div>
     </div>
@@ -168,7 +168,7 @@ function Table({ children, ...props }: TableProps) {
 function Th({ children, ...props }: ThProps) {
   return (
     <th
-      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-bold tracking-wider uppercase"
       {...props}
     >
       {children}
@@ -197,11 +197,11 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-link hover:text-link-hover underline"
+        className="text-primary hover:text-primary/80 underline"
         {...props}
       >
         {children}
-        <svg className="ml-1 inline h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="ml-1 inline size-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -214,7 +214,7 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
   }
 
   return (
-    <Link href={href || '#'} className="text-link hover:text-link-hover underline" {...props}>
+    <Link href={href || '#'} className="text-primary hover:text-primary/80 underline" {...props}>
       {children}
     </Link>
   );
@@ -245,7 +245,7 @@ export const mdxComponents: MDXComponents = {
     const headingText = typeof children === 'string' ? children : String(children);
     const anchorId = id || generateAnchorId(headingText);
     return (
-      <Heading as="h3" size="2xl" className="mt-6 mb-3" id={anchorId} {...props}>
+      <Heading as="h3" size="2xl" className="mt-6 mb-4" id={anchorId} {...props}>
         {children}
       </Heading>
     );
@@ -263,7 +263,7 @@ export const mdxComponents: MDXComponents = {
     const headingText = typeof children === 'string' ? children : String(children);
     const anchorId = id || generateAnchorId(headingText);
     return (
-      <Heading as="h5" size="lg" className="mt-3 mb-2" id={anchorId} {...props}>
+      <Heading as="h5" size="lg" className="mt-4 mb-2" id={anchorId} {...props}>
         {children}
       </Heading>
     );
@@ -280,24 +280,24 @@ export const mdxComponents: MDXComponents = {
 
   // 段落とテキスト
   p: ({ children, ...props }) => (
-    <Text className="mb-4 leading-7" {...props}>
+    <Text className="mb-4 text-xl leading-7" {...props}>
       {children}
     </Text>
   ),
 
   // リスト
   ul: ({ children, ...props }) => (
-    <ul className="mb-4 list-inside list-disc space-y-2" {...props}>
+    <ul className="mb-4 list-inside list-disc space-y-2 text-xl" {...props}>
       {children}
     </ul>
   ),
   ol: ({ children, ...props }) => (
-    <ol className="mb-4 list-inside list-decimal space-y-2" {...props}>
+    <ol className="mb-4 list-inside list-decimal space-y-2 text-xl" {...props}>
       {children}
     </ol>
   ),
   li: ({ children, ...props }) => (
-    <li className="text-foreground/90" {...props}>
+    <li className="text-foreground text-xl" {...props}>
       {children}
     </li>
   ),

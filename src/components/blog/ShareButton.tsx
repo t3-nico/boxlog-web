@@ -22,19 +22,16 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
       name: 'Twitter',
       icon: Twitter,
       url: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
-      color: 'hover:text-blue-400',
     },
     {
       name: 'Facebook',
       icon: Facebook,
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      color: 'hover:text-blue-600',
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      color: 'hover:text-blue-700',
     },
   ];
 
@@ -58,7 +55,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
   return (
     <div className="flex items-center gap-2">
       {shareLinks.map((social) => (
-        <Button key={social.name} variant="ghost" size="icon" className="h-8 w-8" asChild>
+        <Button key={social.name} variant="ghost" size="icon" className="size-8" asChild>
           <a
             href={social.url}
             target="_blank"
@@ -66,30 +63,30 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
             title={t('shareOn', { platform: social.name })}
             aria-label={t('shareOn', { platform: social.name })}
           >
-            <social.icon className="h-4 w-4" />
+            <social.icon className="size-4" />
           </a>
         </Button>
       ))}
       <Button
         variant="ghost"
         size="icon"
-        className="h-8 w-8"
+        className="size-8"
         onClick={handleCopyLink}
         title={t('copyLink')}
         aria-label={t('copyLink')}
       >
-        <Copy className="h-4 w-4" />
+        <Copy className="size-4" />
       </Button>
       {typeof window !== 'undefined' && 'share' in navigator && (
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8"
+          className="size-8"
           onClick={handleNativeShare}
           title={t('share')}
           aria-label={t('share')}
         >
-          <Link2 className="h-4 w-4" />
+          <Link2 className="size-4" />
         </Button>
       )}
     </div>

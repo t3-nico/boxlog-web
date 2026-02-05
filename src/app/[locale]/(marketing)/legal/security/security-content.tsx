@@ -12,8 +12,8 @@ export function SecurityContent() {
     <div className="bg-background container mx-auto min-h-screen max-w-4xl px-4 py-12 md:px-8 md:py-16">
       {/* ページヘッダー */}
       <div className="mb-8">
-        <div className="mb-4 flex items-center gap-3">
-          <Shield className="text-primary h-10 w-10" />
+        <div className="mb-4 flex items-center gap-4">
+          <Shield className="text-primary size-10" />
           <h1 className="text-3xl font-bold">{t('legal.security.header.title')}</h1>
         </div>
         <p className="text-muted-foreground">{t('legal.security.header.description')}</p>
@@ -22,39 +22,39 @@ export function SecurityContent() {
       {/* セキュリティポリシー */}
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
-          <Lock className="text-primary h-6 w-6" />
-          <h2 className="text-2xl font-semibold">{t('legal.security.policy.title')}</h2>
+          <Lock className="text-primary size-6" />
+          <h2 className="text-2xl font-bold">{t('legal.security.policy.title')}</h2>
         </div>
 
-        <div className="bg-surface-container mb-6 rounded-xl p-6">
-          <h3 className="mb-4 text-lg font-semibold">
+        <div className="bg-container mb-6 rounded-2xl p-6">
+          <h3 className="mb-4 text-lg font-bold">
             {t('legal.security.policy.supportedVersions.title')}
           </h3>
           <table className="border-border w-full border">
-            <thead className="bg-surface-container">
+            <thead className="bg-container">
               <tr>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.policy.supportedVersions.version')}
                 </th>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.policy.supportedVersions.status')}
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v1')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v1Status')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v0')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.policy.supportedVersions.v0Status')}
                 </td>
               </tr>
@@ -63,7 +63,7 @@ export function SecurityContent() {
         </div>
 
         <div className="prose dark:prose-invert max-w-none">
-          <h3 className="text-lg font-semibold">{t('legal.security.policy.measures.title')}</h3>
+          <h3 className="text-lg font-bold">{t('legal.security.policy.measures.title')}</h3>
           <ul className="space-y-2">
             <li>{t('legal.security.policy.measures.https')}</li>
             <li>{t('legal.security.policy.measures.mfa')}</li>
@@ -80,12 +80,12 @@ export function SecurityContent() {
       {/* 脆弱性報告 */}
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
-          <AlertTriangle className="text-primary h-6 w-6" />
-          <h2 className="text-2xl font-semibold">{t('legal.security.vulnerability.title')}</h2>
+          <AlertTriangle className="text-primary size-6" />
+          <h2 className="text-2xl font-bold">{t('legal.security.vulnerability.title')}</h2>
         </div>
 
-        <div className="bg-destructive/12 mb-6 rounded-xl p-6">
-          <p className="text-destructive-foreground mb-4 font-semibold">
+        <div className="bg-muted mb-6 rounded-2xl p-6">
+          <p className="text-destructive-foreground mb-4 font-bold">
             {t('legal.security.vulnerability.warning.title')}
           </p>
           <p className="text-muted-foreground text-sm">
@@ -94,19 +94,17 @@ export function SecurityContent() {
         </div>
 
         <div className="prose dark:prose-invert max-w-none">
-          <h3 className="text-lg font-semibold">
-            {t('legal.security.vulnerability.contacts.title')}
-          </h3>
+          <h3 className="text-lg font-bold">{t('legal.security.vulnerability.contacts.title')}</h3>
           <ul className="space-y-2">
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4" />
+              <Mail className="size-4" />
               <strong>{t('legal.security.vulnerability.contacts.email')}</strong>:{' '}
               <a href="mailto:security@dayopt.app" className="text-primary hover:underline">
                 {t('legal.security.vulnerability.contacts.emailAddress')}
               </a>
             </li>
             <li className="flex items-center gap-2">
-              <ExternalLink className="h-4 w-4" />
+              <ExternalLink className="size-4" />
               <strong>{t('legal.security.vulnerability.contacts.github')}</strong>:{' '}
               <a
                 href="https://github.com/t3-nico/dayopt-app/security/advisories/new"
@@ -119,7 +117,7 @@ export function SecurityContent() {
             </li>
           </ul>
 
-          <h3 className="mt-6 text-lg font-semibold">
+          <h3 className="mt-6 text-lg font-bold">
             {t('legal.security.vulnerability.includeInfo.title')}
           </h3>
           <ul className="space-y-2">
@@ -131,65 +129,65 @@ export function SecurityContent() {
             <li>{t('legal.security.vulnerability.includeInfo.fix')}</li>
           </ul>
 
-          <h3 className="mt-6 text-lg font-semibold">
+          <h3 className="mt-6 text-lg font-bold">
             {t('legal.security.vulnerability.timeline.title')}
           </h3>
           <table className="border-border w-full border">
-            <thead className="bg-surface-container">
+            <thead className="bg-container">
               <tr>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.vulnerability.timeline.severity')}
                 </th>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.vulnerability.timeline.initialResponse')}
                 </th>
-                <th className="border-border border p-3 text-left">
+                <th className="border-border border p-4 text-left">
                   {t('legal.security.vulnerability.timeline.fixRelease')}
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.critical')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.criticalResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.criticalFix')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.high')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.highResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.highFix')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.medium')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.mediumResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.mediumFix')}
                 </td>
               </tr>
               <tr>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.low')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.lowResponse')}
                 </td>
-                <td className="border-border border p-3">
+                <td className="border-border border p-4">
                   {t('legal.security.vulnerability.timeline.lowFix')}
                 </td>
               </tr>
@@ -200,10 +198,10 @@ export function SecurityContent() {
 
       {/* 責任ある開示 */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-semibold">{t('legal.security.disclosure.title')}</h2>
+        <h2 className="mb-4 text-2xl font-bold">{t('legal.security.disclosure.title')}</h2>
 
-        <div className="bg-surface-container rounded-xl p-6">
-          <h3 className="mb-4 text-lg font-semibold">
+        <div className="bg-container rounded-2xl p-6">
+          <h3 className="mb-4 text-lg font-bold">
             {t('legal.security.disclosure.safeHarbor.title')}
           </h3>
           <p className="text-foreground mb-4 leading-relaxed">
@@ -212,7 +210,7 @@ export function SecurityContent() {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <h4 className="mb-2 font-semibold text-green-600 dark:text-green-400">
+              <h4 className="text-success mb-2 font-bold">
                 {t('legal.security.disclosure.safeHarbor.allowed.title')}
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
@@ -222,7 +220,7 @@ export function SecurityContent() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-2 font-semibold text-red-600 dark:text-red-400">
+              <h4 className="text-destructive mb-2 font-bold">
                 {t('legal.security.disclosure.safeHarbor.prohibited.title')}
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
@@ -238,8 +236,8 @@ export function SecurityContent() {
       {/* 関連ドキュメント */}
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
-          <FileText className="text-primary h-6 w-6" />
-          <h2 className="text-2xl font-semibold">{t('legal.security.relatedDocs.title')}</h2>
+          <FileText className="text-primary size-6" />
+          <h2 className="text-2xl font-bold">{t('legal.security.relatedDocs.title')}</h2>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -247,9 +245,9 @@ export function SecurityContent() {
             href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/SECURITY.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.securityPolicy.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -261,9 +259,9 @@ export function SecurityContent() {
             href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/VULNERABILITY_DISCLOSURE.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.vulnerabilityDisclosure.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -275,9 +273,9 @@ export function SecurityContent() {
             href="https://github.com/t3-nico/dayopt-app/blob/main/docs/legal/INCIDENT_RESPONSE.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.incidentResponse.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -287,9 +285,9 @@ export function SecurityContent() {
 
           <Link
             href="/legal/privacy"
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.privacyPolicy.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -300,18 +298,18 @@ export function SecurityContent() {
       </section>
 
       {/* お問い合わせ */}
-      <section className="bg-surface-container rounded-xl p-6">
-        <h2 className="mb-4 text-xl font-semibold">{t('legal.security.contact.title')}</h2>
+      <section className="bg-container rounded-2xl p-6">
+        <h2 className="mb-4 text-xl font-bold">{t('legal.security.contact.title')}</h2>
         <div className="space-y-2">
           <p className="flex items-center gap-2">
-            <Mail className="h-4 w-4" />
+            <Mail className="size-4" />
             <strong>{t('legal.security.contact.securityTeam')}</strong>:{' '}
             <a href="mailto:security@dayopt.app" className="text-primary hover:underline">
               {t('legal.security.contact.securityEmail')}
             </a>
           </p>
           <p className="flex items-center gap-2">
-            <Mail className="h-4 w-4" />
+            <Mail className="size-4" />
             <strong>{t('legal.security.contact.general')}</strong>:{' '}
             <a href="mailto:support@dayopt.app" className="text-primary hover:underline">
               {t('legal.security.contact.generalEmail')}

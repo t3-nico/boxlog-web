@@ -63,17 +63,17 @@ export function Footer() {
   const socialLinks = [
     {
       name: 'X',
-      href: 'https://x.com/dayopt',
+      href: 'https://x.com/dayoptapp',
       icon: XIcon,
     },
     {
       name: 'GitHub',
-      href: 'https://github.com/dayopt',
+      href: 'https://github.com/dayoptapp',
       icon: GitHubIcon,
     },
     {
       name: 'YouTube',
-      href: 'https://youtube.com/@dayopt',
+      href: 'https://youtube.com/@dayoptapp',
       icon: YouTubeIcon,
     },
   ];
@@ -95,7 +95,7 @@ export function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Product */}
               <div>
-                <h3 className="text-foreground text-base font-semibold">
+                <h3 className="text-foreground text-base font-bold">
                   {tFooter('sections.product')}
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -112,8 +112,8 @@ export function Footer() {
                 </ul>
               </div>
               {/* Resources */}
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-base font-semibold">
+              <div className="mt-12 md:mt-0">
+                <h3 className="text-foreground text-base font-bold">
                   {tFooter('sections.resources')}
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -133,7 +133,7 @@ export function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               {/* Company */}
               <div>
-                <h3 className="text-foreground text-base font-semibold">
+                <h3 className="text-foreground text-base font-bold">
                   {tFooter('sections.company')}
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -150,10 +150,8 @@ export function Footer() {
                 </ul>
               </div>
               {/* Legal */}
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-foreground text-base font-semibold">
-                  {tFooter('sections.legal')}
-                </h3>
+              <div className="mt-12 md:mt-0">
+                <h3 className="text-foreground text-base font-bold">{tFooter('sections.legal')}</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>

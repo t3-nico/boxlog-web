@@ -64,7 +64,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        'bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full backdrop-blur transition-shadow',
+        'bg-background/95 supports-[backdrop-filter]:bg-background/60 z-dropdown sticky top-0 w-full backdrop-blur transition-shadow',
         isScrolled && 'shadow-sm',
       )}
     >
@@ -84,7 +84,7 @@ export function Header() {
           {navigation.main.map((item) =>
             item.items ? (
               <DropdownMenu key={item.name}>
-                <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-md px-3 py-2 text-base font-medium transition-colors outline-none">
+                <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-lg px-4 py-2 text-base font-bold transition-colors outline-none">
                   {item.name}
                   <ChevronDown className="size-4" aria-hidden="true" />
                 </DropdownMenuTrigger>
@@ -93,7 +93,7 @@ export function Header() {
                     <DropdownMenuItem key={subItem.name} asChild className="cursor-pointer">
                       <Link href={subItem.href}>
                         <div className="flex-auto">
-                          <span className="text-foreground block font-medium">{subItem.name}</span>
+                          <span className="text-foreground block font-bold">{subItem.name}</span>
                           <p className="text-muted-foreground text-xs">{subItem.description}</p>
                         </div>
                       </Link>
@@ -105,7 +105,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href!}
-                className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-md px-3 py-2 text-base font-medium transition-colors"
+                className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-lg px-4 py-2 text-base font-bold transition-colors"
               >
                 {item.name}
               </Link>
@@ -148,8 +148,8 @@ export function Header() {
       {/* Mobile menu - Using Radix Dialog */}
       <DialogPrimitive.Root open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <DialogPrimitive.Portal>
-          <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50 lg:hidden" />
-          <DialogPrimitive.Content className="bg-background border-border data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right fixed inset-y-0 right-0 z-50 w-full overflow-y-auto border-l px-6 py-6 duration-300 sm:max-w-sm lg:hidden">
+          <DialogPrimitive.Overlay className="z-sheet bg-overlay fixed inset-0 lg:hidden" />
+          <DialogPrimitive.Content className="bg-background border-border data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right z-sheet fixed inset-y-0 right-0 w-full overflow-y-auto border-l px-6 py-6 duration-300 sm:max-w-sm lg:hidden">
             <DialogPrimitive.Title className="sr-only">
               {t('aria.navigationMenu')}
             </DialogPrimitive.Title>
@@ -161,7 +161,7 @@ export function Header() {
               >
                 <span className="text-foreground text-lg font-bold">Dayopt</span>
               </Link>
-              <DialogPrimitive.Close className="text-muted-foreground hover:bg-state-hover hover:text-foreground -m-2 rounded-md p-2 transition-colors">
+              <DialogPrimitive.Close className="text-muted-foreground hover:bg-state-hover hover:text-foreground -m-2 rounded-lg p-2 transition-colors">
                 <span className="sr-only">{t('aria.closeMenu')}</span>
                 <X className="size-5" aria-hidden="true" />
               </DialogPrimitive.Close>
@@ -173,7 +173,7 @@ export function Header() {
                   {navigation.main.map((item) =>
                     item.items ? (
                       <div key={item.name} className="space-y-1">
-                        <div className="text-muted-foreground px-3 py-2 text-sm font-medium">
+                        <div className="text-muted-foreground px-4 py-2 text-sm font-bold">
                           {item.name}
                         </div>
                         <div className="space-y-1 pl-4">
@@ -182,9 +182,9 @@ export function Header() {
                               key={subItem.name}
                               href={subItem.href}
                               onClick={() => setMobileMenuOpen(false)}
-                              className="text-foreground hover:bg-state-hover block rounded-md px-3 py-2 text-sm transition-colors"
+                              className="text-foreground hover:bg-state-hover block rounded-lg px-4 py-2 text-sm transition-colors"
                             >
-                              <div className="font-medium">{subItem.name}</div>
+                              <div className="font-bold">{subItem.name}</div>
                               <div className="text-muted-foreground text-xs">
                                 {subItem.description}
                               </div>
@@ -197,7 +197,7 @@ export function Header() {
                         key={item.name}
                         href={item.href!}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="text-foreground hover:bg-state-hover block rounded-md px-3 py-2 text-sm font-medium transition-colors"
+                        className="text-foreground hover:bg-state-hover block rounded-lg px-4 py-2 text-sm font-bold transition-colors"
                       >
                         {item.name}
                       </Link>

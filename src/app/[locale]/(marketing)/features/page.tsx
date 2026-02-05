@@ -81,13 +81,13 @@ export default async function FeaturesPage({ params }: PageProps) {
       <section className="py-24">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
-            <div className="bg-primary/10 text-primary mb-6 inline-block rounded-full px-4 py-1.5 text-sm font-medium">
+            <div className="bg-muted text-primary mb-6 inline-block rounded-full px-4 py-2 text-sm font-bold">
               {t('features.badge')}
             </div>
             <Heading as="h1" size="4xl" className="mb-6">
               {t('features.headline')}
             </Heading>
-            <Text size="xl" variant="muted" className="mx-auto mb-10 max-w-2xl">
+            <Text size="xl" variant="muted" className="mx-auto mb-12 max-w-2xl">
               {t('features.description')}
             </Text>
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -103,7 +103,7 @@ export default async function FeaturesPage({ params }: PageProps) {
       </section>
 
       {/* Features Grid */}
-      <section className="bg-muted/30 py-24">
+      <section className="bg-muted py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <Heading as="h2" size="3xl" className="mb-4">
@@ -120,10 +120,10 @@ export default async function FeaturesPage({ params }: PageProps) {
               return (
                 <Card
                   key={key}
-                  className="border-border/50 bg-background transition-shadow hover:shadow-lg"
+                  className="border-border bg-background transition-shadow hover:shadow-lg"
                 >
                   <CardHeader>
-                    <div className="bg-primary/10 mb-4 inline-flex size-12 items-center justify-center rounded-lg">
+                    <div className="bg-muted mb-4 inline-flex size-12 items-center justify-center rounded-lg">
                       <Icon className="text-primary size-6" />
                     </div>
                     <CardTitle className="text-xl">{t(`features.items.${key}.title`)}</CardTitle>
@@ -154,7 +154,7 @@ export default async function FeaturesPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary bg-white hover:bg-white/90"
+                className="border-primary-foreground/20 text-primary bg-background hover:bg-state-hover"
                 asChild
               >
                 <Link href="/contact">{t('pricing.cta.startButton')}</Link>
@@ -162,7 +162,7 @@ export default async function FeaturesPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-state-hover"
                 asChild
               >
                 <Link href="/pricing">{t('pricing.cta.salesButton')}</Link>

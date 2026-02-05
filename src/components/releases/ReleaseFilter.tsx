@@ -35,15 +35,15 @@ export function ReleaseFilter({
   return (
     <>
       {/* デスクトップ版 */}
-      <div className={cn('border-border bg-background hidden rounded-xl border lg:block')}>
+      <div className={cn('border-border bg-background hidden rounded-2xl border lg:block')}>
         {/* フィルターヘッダー */}
         <div className="border-border border-b p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Filter className="text-muted-foreground h-5 w-5" />
-              <h3 className="text-foreground font-medium">{t('title')}</h3>
+              <Filter className="text-muted-foreground size-5" />
+              <h3 className="text-foreground font-bold">{t('title')}</h3>
               {activeFiltersCount > 0 && (
-                <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
+                <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-bold">
                   {activeFiltersCount}
                 </span>
               )}
@@ -72,7 +72,7 @@ export function ReleaseFilter({
               <div>
                 <span
                   id="release-tags-label"
-                  className="text-muted-foreground mb-3 block text-sm font-medium"
+                  className="text-muted-foreground mb-4 block text-sm font-bold"
                 >
                   {t('tags')}
                 </span>
@@ -97,11 +97,14 @@ export function ReleaseFilter({
                         <span>#</span>
                         {tagItem.tag}
                         <span
-                          className={cn('text-xs', isSelected ? 'text-white/70' : 'opacity-60')}
+                          className={cn(
+                            'text-xs',
+                            isSelected ? 'text-primary-foreground' : 'opacity-60',
+                          )}
                         >
                           ({tagItem.count})
                         </span>
-                        {isSelected && <X className="h-3 w-3" />}
+                        {isSelected && <X className="size-3" />}
                       </Button>
                     );
                   })}
@@ -115,10 +118,10 @@ export function ReleaseFilter({
       {/* モバイル版フィルターボタン */}
       <div className="lg:hidden">
         <Button variant="outline" className="flex w-full items-center justify-center gap-2">
-          <Filter className="text-muted-foreground h-4 w-4" />
-          <span className="text-foreground font-medium">{t('title')}</span>
+          <Filter className="text-muted-foreground size-4" />
+          <span className="text-foreground font-bold">{t('title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs font-medium">
+            <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-bold">
               {activeFiltersCount}
             </span>
           )}

@@ -35,7 +35,7 @@ export function ShareButton({ title, version }: ShareButtonProps) {
 
   return (
     <Button onClick={handleShare} variant="outline" className="gap-2">
-      <Share2 className="h-4 w-4" />
+      <Share2 className="size-4" />
       {t('share')}
     </Button>
   );

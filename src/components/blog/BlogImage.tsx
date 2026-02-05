@@ -32,7 +32,7 @@ export function BlogImage({
       <div
         className={`bg-muted flex ${aspectClass} items-center justify-center rounded-lg transition-all duration-300 hover:opacity-40`}
       >
-        <ImageIcon className="text-muted-foreground h-8 w-8" />
+        <ImageIcon className="text-muted-foreground size-8" />
       </div>
     );
   }

@@ -17,7 +17,7 @@ const BreadcrumbList = React.forwardRef<HTMLOListElement, React.ComponentPropsWi
     <ol
       ref={ref}
       className={cn(
-        'text-muted-foreground flex flex-wrap items-center gap-2 text-sm break-words sm:gap-3',
+        'text-muted-foreground flex flex-wrap items-center gap-2 text-sm break-words sm:gap-4',
         className,
       )}
       {...props}
@@ -66,12 +66,7 @@ const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWit
 BreadcrumbPage.displayName = 'BreadcrumbPage';
 
 const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentProps<'li'>) => (
-  <li
-    role="presentation"
-    aria-hidden="true"
-    className={cn('[&>svg]:h-4 [&>svg]:w-4', className)}
-    {...props}
-  >
+  <li role="presentation" aria-hidden="true" className={cn('[&>svg]:size-4', className)} {...props}>
     {children ?? <ChevronRight />}
   </li>
 );
@@ -86,10 +81,10 @@ const BreadcrumbEllipsis = ({ className, srLabel = 'More', ...props }: Breadcrum
   <span
     role="presentation"
     aria-hidden="true"
-    className={cn('flex h-8 w-8 items-center justify-center', className)}
+    className={cn('flex size-8 items-center justify-center', className)}
     {...props}
   >
-    <MoreHorizontal className="h-4 w-4" />
+    <MoreHorizontal className="size-4" />
     <span className="sr-only">{srLabel}</span>
   </span>
 );

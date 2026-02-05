@@ -135,31 +135,31 @@ export function ReleasesClient({ initialReleases, initialTags, locale }: Release
             {/* 検索ボックス + ビュー切り替え */}
             <div className="mb-8 flex items-center gap-4">
               <div className="relative flex-1">
-                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   placeholder={t('filters.searchPlaceholder')}
-                  className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+                  className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-12 pl-12 transition-colors focus:ring-2 focus:outline-none"
                 />
                 {searchQuery && (
                   <Button
                     onClick={() => handleSearchChange('')}
                     variant="ghost"
                     size="icon"
-                    className="absolute top-1/2 right-2 h-7 w-7 -translate-y-1/2"
+                    className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
                     aria-label={t('filters.clearSearch')}
                   >
-                    <X className="h-4 w-4" />
+                    <X className="size-4" />
                   </Button>
                 )}
               </div>
 
               <PillSwitcher
                 options={[
-                  { value: 'list', label: t('view.list'), icon: <List className="h-4 w-4" /> },
-                  { value: 'grid', label: t('view.grid'), icon: <Grid3X3 className="h-4 w-4" /> },
+                  { value: 'list', label: t('view.list'), icon: <List className="size-4" /> },
+                  { value: 'grid', label: t('view.grid'), icon: <Grid3X3 className="size-4" /> },
                 ]}
                 value={viewMode}
                 onValueChange={setViewMode}
@@ -207,9 +207,9 @@ export function ReleasesClient({ initialReleases, initialTags, locale }: Release
               </>
             ) : initialReleases.length === 0 ? (
               <div className="py-16 text-center">
-                <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
+                <div className="bg-muted mx-auto mb-6 flex size-24 items-center justify-center rounded-full">
                   <svg
-                    className="text-muted-foreground h-12 w-12"
+                    className="text-muted-foreground size-10"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -229,9 +229,9 @@ export function ReleasesClient({ initialReleases, initialTags, locale }: Release
               </div>
             ) : (
               <div className="py-16 text-center">
-                <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
+                <div className="bg-muted mx-auto mb-6 flex size-24 items-center justify-center rounded-full">
                   <svg
-                    className="text-muted-foreground h-12 w-12"
+                    className="text-muted-foreground size-10"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -252,7 +252,7 @@ export function ReleasesClient({ initialReleases, initialTags, locale }: Release
                 </Text>
                 <button
                   onClick={handleClearFilters}
-                  className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+                  className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-bold transition-colors"
                 >
                   {t('noResults.clearFilters')}
                 </button>

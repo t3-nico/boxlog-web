@@ -170,15 +170,15 @@ export default async function DocPage({ params }: DocPageProps) {
             {frontMatter.tags && frontMatter.tags.length > 0 && (
               <aside className="border-border mt-12 border-t pt-8">
                 <div className="mb-4 flex items-center gap-2">
-                  <Tag className="text-muted-foreground h-4 w-4" />
-                  <span className="text-muted-foreground text-sm font-medium">Tags</span>
+                  <Tag className="text-muted-foreground size-4" />
+                  <span className="text-muted-foreground text-sm font-bold">Tags</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {frontMatter.tags.map((tag) => (
                     <Link
                       key={tag}
                       href={`/tags/${encodeURIComponent(tag)}`}
-                      className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${getTagColor(tag)}`}
+                      className={`inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-bold transition-colors ${getTagColor(tag)}`}
                     >
                       #{tag}
                     </Link>
@@ -193,11 +193,11 @@ export default async function DocPage({ params }: DocPageProps) {
                 <Heading as="h2" size="xl" className="mb-6">
                   関連記事
                 </Heading>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {relatedContent.map((related) => (
                     <Link key={related.slug} href={`/docs/${related.slug}`} className="block">
-                      <Card className="h-full gap-3 py-3 transition-colors hover:bg-[var(--state-hover)]">
-                        <CardHeader className="gap-1.5 px-4 py-0">
+                      <Card className="h-full gap-4 py-4 transition-colors hover:bg-[var(--state-hover)]">
+                        <CardHeader className="gap-2 px-4 py-0">
                           <CardTitle className="line-clamp-2 text-sm">
                             {related.frontMatter.title}
                           </CardTitle>
@@ -214,7 +214,7 @@ export default async function DocPage({ params }: DocPageProps) {
                                 {related.frontMatter.tags.slice(0, 2).map((tag) => (
                                   <span
                                     key={tag}
-                                    className="bg-muted text-muted-foreground rounded-full px-1.5 py-0.5 text-xs"
+                                    className="bg-muted text-muted-foreground rounded-full px-2 py-1 text-xs"
                                   >
                                     {tag}
                                   </span>
@@ -256,7 +256,7 @@ export default async function DocPage({ params }: DocPageProps) {
           </Text>
           <Link
             href="/docs"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-4 py-2 transition-colors"
+            className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex items-center rounded-lg px-4 py-2 transition-colors"
           >
             Back to Documentation
           </Link>

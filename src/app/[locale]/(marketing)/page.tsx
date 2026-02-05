@@ -48,11 +48,11 @@ export default async function Home({ params }: PageProps) {
         <section className="py-24 sm:py-32 lg:pb-40">
           <Container>
             <div className="mx-auto max-w-4xl text-center">
-              <h1 className="text-foreground text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="text-foreground text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 {t('hero.title')}
               </h1>
               <p className="text-muted-foreground mt-6 text-lg sm:text-xl">{t('hero.subtitle')}</p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
+              <div className="mt-12 flex items-center justify-center gap-x-6">
                 <Button size="lg" asChild>
                   <Link href="/contact">{t('hero.cta')}</Link>
                 </Button>
@@ -66,8 +66,8 @@ export default async function Home({ params }: PageProps) {
 
             {/* Screenshot */}
             <div className="mt-16 flow-root sm:mt-24">
-              <div className="bg-muted/50 ring-border -m-2 rounded-xl p-2 ring-1 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4">
-                <div className="bg-muted ring-border relative aspect-[16/9] w-full rounded-md shadow-2xl ring-1">
+              <div className="bg-muted ring-border -m-2 rounded-2xl p-2 ring-1 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4">
+                <div className="bg-muted ring-border relative aspect-[16/9] w-full rounded-lg shadow-2xl ring-1">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <p className="text-muted-foreground text-sm">App Screenshot Placeholder</p>
                   </div>

@@ -44,13 +44,13 @@ export default async function ContactPage({ params }: PageProps) {
       <section className="py-24 sm:py-32">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-foreground mb-6 text-4xl font-semibold tracking-tight sm:text-5xl">
+            <h1 className="text-foreground mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
               {t('contact.title')}
             </h1>
-            <p className="text-muted-foreground mb-10 text-lg sm:text-xl">
+            <p className="text-muted-foreground mb-12 text-lg sm:text-xl">
               {t('contact.subtitle')}
             </p>
-            <div className="bg-card border-border w-full rounded-xl border p-6 text-left shadow-sm md:p-8">
+            <div className="bg-card border-border w-full rounded-2xl border p-6 text-left shadow-sm md:p-8">
               <ContactForm />
             </div>
           </div>

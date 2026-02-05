@@ -30,17 +30,12 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
   }
 
   return (
-    <div className="border-border bg-card overflow-hidden rounded-xl border">
+    <div className="border-border bg-card overflow-hidden rounded-2xl border">
       {/* Header */}
       <div className="border-border border-b px-6 py-4">
         <div className="flex items-center gap-4">
-          <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-lg">
-            <svg
-              className="text-info h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+          <div className="bg-muted flex size-8 items-center justify-center rounded-lg">
+            <svg className="text-info size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -50,7 +45,7 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
             </svg>
           </div>
           <div>
-            <h3 className="text-foreground text-lg font-semibold">今後のリリース予定</h3>
+            <h3 className="text-foreground text-lg font-bold">今後のリリース予定</h3>
             <p className="text-muted-foreground text-sm">開発中の新機能とリリース予定日</p>
           </div>
         </div>
@@ -69,7 +64,7 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
           <p className="text-muted-foreground text-sm">リリース予定は変更される場合があります</p>
           <Link
             href="/roadmap"
-            className="text-primary hover:text-primary-hover text-sm font-medium transition-colors"
+            className="text-primary hover:text-primary-hover text-sm font-bold transition-colors"
           >
             ロードマップを見る →
           </Link>
@@ -93,25 +88,25 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
   const statusConfig = {
     planning: {
       label: '計画中',
-      color: 'bg-tag-neutral-bg text-tag-neutral-text',
+      color: 'bg-muted text-muted-foreground',
       icon: Clipboard,
       progress: 10,
     },
     development: {
       label: '開発中',
-      color: 'bg-release-improvement-bg text-release-improvement-text',
+      color: 'bg-muted text-info border border-info',
       icon: Wrench,
       progress: 50,
     },
     testing: {
       label: 'テスト中',
-      color: 'bg-release-bugfix-bg text-release-bugfix-text',
+      color: 'bg-muted text-warning border border-warning',
       icon: TestTube,
       progress: 80,
     },
     review: {
       label: 'レビュー中',
-      color: 'bg-release-security-bg text-release-security-text',
+      color: 'bg-muted text-primary border border-primary',
       icon: Eye,
       progress: 90,
     },
@@ -130,32 +125,30 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
   const isOverdue = new Date(release.expectedDate) < new Date();
 
   return (
-    <div className={`p-6 ${isFirst ? 'bg-state-active/30' : ''}`}>
+    <div className={`p-6 ${isFirst ? 'bg-muted' : ''}`}>
       <div className="flex items-start justify-between gap-4">
         {/* Left Side */}
         <div className="min-w-0 flex-1">
           {/* Version and Status */}
-          <div className="mb-3 flex items-center gap-4">
+          <div className="mb-4 flex items-center gap-4">
             <span
-              className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-bold ${
-                isFirst
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-tag-neutral-bg text-tag-neutral-text'
+              className={`inline-flex items-center rounded-full px-4 py-1 text-sm font-bold ${
+                isFirst ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
               }`}
             >
               {release.version}
             </span>
 
             <span
-              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium ${config.color}`}
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-bold ${config.color}`}
             >
-              <config.icon className="h-3 w-3" />
+              <config.icon className="size-3" />
               {config.label}
             </span>
 
             {isFirst && (
-              <span className="bg-release-new-bg text-release-new-text inline-flex items-center rounded-full px-3 py-1 text-xs font-medium">
-                <span className="bg-success mr-2 h-2 w-2 rounded-full"></span>
+              <span className="bg-muted text-success border-success inline-flex items-center rounded-full border px-4 py-1 text-xs font-bold">
+                <span className="bg-success mr-2 size-2 rounded-full"></span>
                 Next Release
               </span>
             )}
@@ -163,9 +156,9 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
 
           {/* Expected Date */}
           <div className="mb-4 flex items-center gap-2">
-            <Calendar className="text-muted-foreground h-4 w-4" />
+            <Calendar className="text-muted-foreground size-4" />
             <span
-              className={`text-sm ${isOverdue ? 'text-destructive font-medium' : 'text-muted-foreground'}`}
+              className={`text-sm ${isOverdue ? 'text-destructive font-bold' : 'text-muted-foreground'}`}
             >
               予定日: {formatDate(release.expectedDate)}
               {isOverdue && ' (予定より遅れています)'}
@@ -174,11 +167,11 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
 
           {/* Features */}
           <div>
-            <h4 className="text-foreground mb-2 text-sm font-medium">主な新機能</h4>
+            <h4 className="text-foreground mb-2 text-sm font-bold">主な新機能</h4>
             <ul className="space-y-1">
               {release.features.map((feature, index) => (
                 <li key={index} className="text-muted-foreground flex items-start gap-2 text-sm">
-                  <span className="bg-muted-foreground mt-2 h-2 w-2 flex-shrink-0 rounded-full"></span>
+                  <span className="bg-muted-foreground mt-2 size-2 flex-shrink-0 rounded-full"></span>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -192,14 +185,14 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             <div className="text-foreground mb-1 text-2xl font-bold">{config.progress}%</div>
 
             {/* Progress Bar */}
-            <div className="bg-progress-bg mb-2 h-2 w-full rounded-full">
+            <div className="bg-muted mb-2 h-2 w-full rounded-full">
               <div
                 className={`h-2 rounded-full transition-all duration-300 ${
                   config.progress >= 80
-                    ? 'bg-progress-fill-high'
+                    ? 'bg-success'
                     : config.progress >= 50
-                      ? 'bg-progress-fill-mid'
-                      : 'bg-progress-fill-low'
+                      ? 'bg-warning'
+                      : 'bg-muted-foreground'
                 }`}
                 style={{ width: `${config.progress}%` }}
               ></div>
@@ -212,9 +205,9 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
 
       {/* Additional Info for First Item */}
       {isFirst && (
-        <div className="border-primary/30 mt-4 border-t pt-4">
+        <div className="border-border mt-4 border-t pt-4">
           <div className="text-primary flex items-center gap-2 text-sm">
-            <Info className="h-4 w-4" />
+            <Info className="size-4" />
             このリリースの詳細は開発ブログで随時更新されます
           </div>
         </div>
@@ -238,12 +231,12 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
   };
 
   return (
-    <div className="border-primary/30 from-state-active/50 to-state-active/30 rounded-xl border bg-gradient-to-br p-4">
-      <div className="mb-3 flex items-center gap-2">
-        <div className="bg-primary flex h-6 w-6 items-center justify-center rounded-lg">
-          <Clock className="text-primary-foreground h-3 w-3" />
+    <div className="border-primary from-state-active to-state-active rounded-2xl border bg-gradient-to-br p-4">
+      <div className="mb-4 flex items-center gap-2">
+        <div className="bg-primary flex size-6 items-center justify-center rounded-lg">
+          <Clock className="text-primary-foreground size-3" />
         </div>
-        <h4 className="text-foreground text-sm font-semibold">次期リリース</h4>
+        <h4 className="text-foreground text-sm font-bold">次期リリース</h4>
       </div>
 
       <div className="space-y-2">
@@ -257,7 +250,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
         <div className="text-muted-foreground text-sm">
           {nextRelease.features.slice(0, 2).map((feature, index) => (
             <div key={index} className="flex items-start gap-1">
-              <span className="bg-muted-foreground mt-2 h-1 w-1 flex-shrink-0 rounded-full"></span>
+              <span className="bg-muted-foreground mt-2 size-1 flex-shrink-0 rounded-full"></span>
               <span className="text-xs">{feature}</span>
             </div>
           ))}
@@ -270,10 +263,10 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
 
         <Link
           href="/releases"
-          className="text-primary hover:text-primary-hover mt-2 inline-flex items-center text-xs font-medium"
+          className="text-primary hover:text-primary-hover mt-2 inline-flex items-center text-xs font-bold"
         >
           詳細を見る
-          <ChevronRight className="ml-1 h-3 w-3" />
+          <ChevronRight className="ml-1 size-3" />
         </Link>
       </div>
     </div>
@@ -283,8 +276,8 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
 // Release Timeline Component
 export function ReleaseTimeline() {
   return (
-    <div className="border-border bg-card rounded-xl border p-6">
-      <h3 className="text-foreground mb-6 text-lg font-semibold">リリースタイムライン</h3>
+    <div className="border-border bg-card rounded-2xl border p-6">
+      <h3 className="text-foreground mb-6 text-lg font-bold">リリースタイムライン</h3>
 
       <div className="relative">
         {/* Timeline Line */}
@@ -293,13 +286,13 @@ export function ReleaseTimeline() {
         <div className="space-y-8">
           {/* Current Release */}
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
-              <Check className="text-success h-5 w-5" />
+            <div className="border-background bg-muted flex size-10 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+              <Check className="text-success size-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
-                <span className="text-foreground text-sm font-semibold">v2.1.0</span>
-                <span className="text-success text-xs font-medium">リリース済み</span>
+                <span className="text-foreground text-sm font-bold">v2.1.0</span>
+                <span className="text-success text-xs font-bold">リリース済み</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 Advanced Analytics & Team Collaboration
@@ -310,13 +303,13 @@ export function ReleaseTimeline() {
 
           {/* Upcoming Releases */}
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
-              <Clock className="text-info h-5 w-5" />
+            <div className="border-background bg-muted flex size-10 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+              <Clock className="text-info size-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
-                <span className="text-foreground text-sm font-semibold">v2.2.0</span>
-                <span className="text-info text-xs font-medium">開発中</span>
+                <span className="text-foreground text-sm font-bold">v2.2.0</span>
+                <span className="text-info text-xs font-bold">開発中</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 AI-Powered Insights & Mobile Enhancements
@@ -326,13 +319,13 @@ export function ReleaseTimeline() {
           </div>
 
           <div className="relative flex items-start gap-4">
-            <div className="border-background bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
-              <Clipboard className="text-muted-foreground h-5 w-5" />
+            <div className="border-background bg-muted flex size-10 flex-shrink-0 items-center justify-center rounded-full border-4 shadow-sm">
+              <Clipboard className="text-muted-foreground size-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
-                <span className="text-foreground text-sm font-semibold">v2.3.0</span>
-                <span className="text-muted-foreground text-xs font-medium">計画中</span>
+                <span className="text-foreground text-sm font-bold">v2.3.0</span>
+                <span className="text-muted-foreground text-xs font-bold">計画中</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 Advanced Security & Enterprise Features

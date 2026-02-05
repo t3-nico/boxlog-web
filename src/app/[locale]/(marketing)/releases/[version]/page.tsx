@@ -108,17 +108,15 @@ const mdxComponents = {
     />
   ),
   h3: (props: HeadingProps) => (
-    <h3 className="text-foreground mt-6 mb-3 text-xl font-bold" {...props} />
+    <h3 className="text-foreground mt-6 mb-4 text-xl font-bold" {...props} />
   ),
   h4: (props: HeadingProps) => (
-    <h4 className="text-foreground mt-6 mb-3 text-lg font-semibold" {...props} />
+    <h4 className="text-foreground mt-6 mb-4 text-lg font-bold" {...props} />
   ),
-  p: (props: ParagraphProps) => (
-    <p className="text-foreground/90 mb-4 leading-relaxed" {...props} />
-  ),
+  p: (props: ParagraphProps) => <p className="text-foreground mb-4 leading-relaxed" {...props} />,
   a: (props: AnchorProps) => (
     <a
-      className="text-link hover:text-link-hover underline underline-offset-2"
+      className="text-primary hover:text-primary/80 underline underline-offset-2"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       {...props}
@@ -126,24 +124,24 @@ const mdxComponents = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="border-info bg-info/10 text-foreground/90 my-6 rounded-r-lg border-l-4 py-2 pl-4 italic"
+      className="border-info bg-muted text-foreground my-6 rounded-r-lg border-l-4 py-2 pl-4 italic"
       {...props}
     />
   ),
   code: (props: CodeProps) => (
-    <code className="bg-code-bg text-code-text rounded px-2 py-1 font-mono text-sm" {...props} />
+    <code className="bg-muted text-foreground rounded px-2 py-1 font-mono text-sm" {...props} />
   ),
   pre: (props: PreProps) => (
     <pre
-      className="bg-code-block-bg text-code-block-text my-6 overflow-x-auto rounded-lg p-4 text-sm"
+      className="bg-muted text-foreground my-6 overflow-x-auto rounded-lg p-4 text-sm"
       {...props}
     />
   ),
   ul: (props: ListProps) => (
-    <ul className="text-foreground/90 mb-4 list-inside list-disc space-y-2" {...props} />
+    <ul className="text-foreground mb-4 list-inside list-disc space-y-2" {...props} />
   ),
   ol: (props: OrderedListProps) => (
-    <ol className="text-foreground/90 mb-4 list-inside list-decimal space-y-2" {...props} />
+    <ol className="text-foreground mb-4 list-inside list-decimal space-y-2" {...props} />
   ),
   li: (props: ListItemProps) => <li className="leading-relaxed" {...props} />,
   img: (props: ImageProps) => (
@@ -166,7 +164,7 @@ const mdxComponents = {
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-surface-container text-muted-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-bold tracking-wider uppercase"
       {...props}
     />
   ),
@@ -190,7 +188,7 @@ const mdxComponents = {
           <span className="text-lg" role="img" aria-label={changeType.label}>
             {changeType.icon}
           </span>
-          <h4 className="font-semibold">{changeType.label}</h4>
+          <h4 className="font-bold">{changeType.label}</h4>
         </div>
         <div className="prose prose-sm max-w-none">{children}</div>
       </div>
@@ -199,10 +197,10 @@ const mdxComponents = {
 
   // Warning component
   Warning: ({ children }: { children: React.ReactNode }) => (
-    <div className="border-warning/30 bg-warning/10 my-6 rounded-lg border p-4">
+    <div className="border-warning bg-muted my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="text-warning mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
+          className="text-warning mt-1 mr-4 size-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -221,10 +219,10 @@ const mdxComponents = {
 
   // Info component
   Info: ({ children }: { children: React.ReactNode }) => (
-    <div className="border-info/30 bg-info/10 my-6 rounded-lg border p-4">
+    <div className="border-info bg-muted my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="text-info mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
+          className="text-info mt-1 mr-4 size-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -243,10 +241,10 @@ const mdxComponents = {
 
   // Migration guide
   Migration: ({ children }: { children: React.ReactNode }) => (
-    <div className="border-primary/30 bg-primary/10 my-6 rounded-lg border p-4">
+    <div className="border-primary bg-muted my-6 rounded-lg border p-4">
       <div className="flex items-start">
         <svg
-          className="text-primary mt-0.5 mr-3 h-5 w-5 flex-shrink-0"
+          className="text-primary mt-1 mr-4 size-5 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -259,8 +257,8 @@ const mdxComponents = {
           />
         </svg>
         <div>
-          <h4 className="text-primary mb-2 font-semibold">Migration Information</h4>
-          <div className="prose prose-sm text-primary/80 max-w-none">{children}</div>
+          <h4 className="text-primary mb-2 font-bold">Migration Information</h4>
+          <div className="prose prose-sm text-primary max-w-none">{children}</div>
         </div>
       </div>
     </div>
@@ -323,7 +321,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   alt={release.frontMatter.title}
                   width={1200}
                   height={630}
-                  className="h-auto w-full rounded-xl shadow-lg"
+                  className="h-auto w-full rounded-2xl shadow-lg"
                   priority
                 />
               </div>
@@ -343,15 +341,15 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               <div className="border-border mt-16 border-t pt-8">
                 <div className="flex items-center justify-center">
                   <div className="flex space-x-2">
-                    <div className="bg-border h-2 w-2 rounded-full"></div>
-                    <div className="bg-border h-2 w-2 rounded-full"></div>
-                    <div className="bg-border h-2 w-2 rounded-full"></div>
+                    <div className="bg-border size-2 rounded-full"></div>
+                    <div className="bg-border size-2 rounded-full"></div>
+                    <div className="bg-border size-2 rounded-full"></div>
                   </div>
                 </div>
               </div>
 
               {/* Release information footer */}
-              <div className="bg-surface-container mt-8 rounded-xl p-6">
+              <div className="bg-container mt-8 rounded-2xl p-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-muted-foreground mb-1 text-sm">
@@ -369,7 +367,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   <div className="flex items-center gap-4">
                     <Link
                       href="/releases"
-                      className="text-link hover:text-link-hover text-sm font-medium"
+                      className="text-primary hover:text-primary/80 text-sm font-bold"
                     >
                       View all releases
                     </Link>
@@ -378,7 +376,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                       href={`https://github.com/yoursaas/platform/releases/tag/v${release.frontMatter.version}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground text-sm font-medium"
+                      className="text-muted-foreground hover:text-foreground text-sm font-bold"
                     >
                       View on GitHub
                     </a>
@@ -412,10 +410,10 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 <div className="mt-8 text-center">
                   <Link
                     href="/releases"
-                    className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 text-sm font-medium transition-colors"
+                    className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-4 text-sm font-bold transition-colors"
                   >
                     <svg
-                      className="mr-2 h-4 w-4"
+                      className="mr-2 size-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -448,10 +446,10 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <a
                   href="mailto:support@yoursaas.com"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
+                  className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex items-center rounded-lg px-6 py-4 font-bold transition-colors"
                 >
                   <svg
-                    className="mr-2 h-5 w-5"
+                    className="mr-2 size-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -468,10 +466,10 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
                 <Link
                   href="/feedback"
-                  className="border-border text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-3 font-medium transition-colors"
+                  className="border-border text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-4 font-bold transition-colors"
                 >
                   <svg
-                    className="mr-2 h-5 w-5"
+                    className="mr-2 size-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

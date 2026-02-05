@@ -41,9 +41,7 @@ export default async function CookieSettingsPage({ params }: PageProps) {
 
       {/* Cookie概要 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">
-          {t('legal.cookies.page.whatAreCookies.title')}
-        </h2>
+        <h2 className="mb-4 text-2xl font-bold">{t('legal.cookies.page.whatAreCookies.title')}</h2>
         <p className="text-foreground leading-relaxed">
           {t('legal.cookies.page.whatAreCookies.content')}
         </p>
@@ -51,7 +49,7 @@ export default async function CookieSettingsPage({ params }: PageProps) {
 
       {/* Cookieの使用目的 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">{t('legal.cookies.page.howWeUse.title')}</h2>
+        <h2 className="mb-4 text-2xl font-bold">{t('legal.cookies.page.howWeUse.title')}</h2>
         <p className="text-foreground mb-4 leading-relaxed">
           {t('legal.cookies.page.howWeUse.content')}
         </p>
@@ -65,23 +63,21 @@ export default async function CookieSettingsPage({ params }: PageProps) {
 
       {/* Cookie設定フォーム（Client Component） */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">{t('legal.cookies.settings.title')}</h2>
+        <h2 className="mb-4 text-2xl font-bold">{t('legal.cookies.settings.title')}</h2>
         <p className="text-muted-foreground mb-6">{t('legal.cookies.settings.description')}</p>
         <CookieSettingsForm />
       </section>
 
       {/* Cookie管理方法 */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-semibold">
-          {t('legal.cookies.page.manageCookies.title')}
-        </h2>
+        <h2 className="mb-4 text-2xl font-bold">{t('legal.cookies.page.manageCookies.title')}</h2>
         <p className="text-foreground leading-relaxed">
           {t('legal.cookies.page.manageCookies.content')}
         </p>
       </section>
 
       {/* 注意事項 */}
-      <div className="bg-surface-container mt-8 rounded-xl p-6">
+      <div className="bg-container mt-8 rounded-2xl p-6">
         <p
           className="text-muted-foreground text-sm"
           dangerouslySetInnerHTML={{ __html: t('legal.cookies.page.browserWarning') }}

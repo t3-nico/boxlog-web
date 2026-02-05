@@ -17,13 +17,13 @@ import { cn } from '@/lib/utils';
 const inputVariants = cva(
   [
     // 基本スタイル
-    'w-full min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none',
+    'w-full min-w-0 rounded-lg border shadow-xs transition-[color,box-shadow] outline-none',
     'border-input bg-input',
     // テキスト
     'placeholder:text-muted-foreground',
     'selection:bg-primary selection:text-primary-foreground',
     // ファイル入力
-    'file:text-foreground file:inline-flex file:border-0 file:bg-transparent file:font-medium',
+    'file:text-foreground file:inline-flex file:border-0 file:bg-transparent file:font-bold',
     // フォーカス
     'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
     // 無効状態
@@ -33,11 +33,11 @@ const inputVariants = cva(
     variants: {
       size: {
         // sm: 32px高さ - コンパクトUI
-        sm: 'h-8 px-3 text-sm file:h-6 file:text-xs',
+        sm: 'h-8 px-4 text-sm file:h-6 file:text-xs',
         // default: 40px高さ - 標準
         default: 'h-10 px-4 text-base md:text-sm file:h-7 file:text-sm',
         // lg: 48px高さ - 主要な入力
-        lg: 'h-12 px-5 text-lg file:h-8 file:text-base',
+        lg: 'h-12 px-6 text-lg file:h-8 file:text-base',
       },
     },
     defaultVariants: {

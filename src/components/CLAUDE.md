@@ -80,11 +80,23 @@ export function CustomComponent() {
 ### ❌ 絶対禁止
 
 ```typescript
-// ❌ カラーコード直接指定
+// ❌ ハードコードカラー
 <div className="bg-blue-500 text-white">Content</div>
-
-// ❌ Tailwindクラス直接指定（セマンティックトークンなし）
 <div className="bg-neutral-900 text-neutral-100">Content</div>
+<div className="bg-white dark:bg-gray-900">Content</div>
+
+// ❌ 不透明度ベースホバー
+<button className="bg-primary hover:bg-primary/90">...</button>
+// → hover:bg-primary-hover を使用
+
+// ❌ 禁止されたフォントウェイト
+<span className="font-semibold">...</span>
+<span className="font-medium">...</span>
+// → font-bold / font-normal のみ
+
+// ❌ 生のz-index / 非標準角丸
+<div className="z-50 rounded-md">...</div>
+// → z-modal, rounded-lg 等のセマンティック値を使用
 
 // ❌ style属性
 <div style={{ backgroundColor: '#3b82f6' }}>Content</div>
@@ -240,7 +252,7 @@ import dynamic from 'next/dynamic'
 
 const SearchDialog = dynamic(() => import('./SearchDialog').then(mod => ({ default: mod.SearchDialog })), {
   ssr: false,
-  loading: () => <div className="h-10 w-32 bg-muted animate-pulse rounded" />
+  loading: () => <div className="h-10 w-32 animate-shimmer rounded-lg" />
 })
 
 export { SearchDialog }
@@ -302,31 +314,31 @@ export function BlogFilters({
 ### セマンティックトークンの使用
 
 ```typescript
-// ✅ 推奨: shadcn/uiトークン
+// ✅ 推奨: セマンティックトークン
 <Card className="bg-card text-card-foreground border-border">
   <CardHeader>
     <CardTitle className="text-primary">Title</CardTitle>
     <p className="text-muted-foreground">Subtitle</p>
   </CardHeader>
   <CardContent>
-    <Button className="bg-primary text-primary-foreground">
-      Click me
-    </Button>
+    <Button variant="primary">Click me</Button>
   </CardContent>
 </Card>
 
-// ✅ 推奨: カスタムトークン（RGB形式）
-<div className="bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] border-[rgb(var(--border-primary))]">
-  Content
+// ✅ 推奨: Surface階層を意識
+<div className="bg-background">           {/* ページ全体 */}
+  <div className="bg-container p-6">      {/* セクション */}
+    <div className="bg-card rounded-lg">  {/* カード */}
+      Content
+    </div>
+  </div>
 </div>
 
-// ✅ 推奨: セマンティックカラー
-<div className="bg-[rgb(var(--error-bg))] text-[rgb(var(--error-color))]">
-  Error message
-</div>
-<div className="bg-[rgb(var(--success-bg))] text-[rgb(var(--success-color))]">
-  Success message
-</div>
+// ✅ 推奨: セマンティックカラー + ホバートークン
+<div className="bg-destructive text-destructive-foreground">Error</div>
+<div className="bg-success text-success">Success</div>
+<button className="bg-primary hover:bg-primary-hover">送信</button>
+<button className="text-primary hover:bg-primary-state-hover">Ghost</button>
 ```
 
 ### レスポンシブデザイン
@@ -369,9 +381,9 @@ export function BlogFilters({
   </ul>
 </nav>
 
-// ✅ 推奨: フォーカス管理
+// ✅ 推奨: フォーカス管理（ring-ring トークン使用）
 <Button
-  className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--focus-ring))]"
+  className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
 >
   Click me
 </Button>
@@ -394,11 +406,13 @@ export function BlogFilters({
 ```typescript
 import { Button } from '@/components/ui/button'
 
-<Button variant="default">Default</Button>
+<Button variant="primary">Primary</Button>
 <Button variant="outline">Outline</Button>
 <Button variant="ghost">Ghost</Button>
+<Button variant="text">Text</Button>
 <Button variant="destructive">Destructive</Button>
 <Button size="sm">Small</Button>
+<Button size="default">Default</Button>
 <Button size="lg">Large</Button>
 ```
 
@@ -445,9 +459,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 ```typescript
 import { Badge } from '@/components/ui/badge'
 
-<Badge variant="default">Default</Badge>
+<Badge variant="primary">Primary</Badge>
 <Badge variant="secondary">Secondary</Badge>
 <Badge variant="outline">Outline</Badge>
+<Badge variant="success">Success</Badge>
+<Badge variant="warning">Warning</Badge>
+<Badge variant="info">Info</Badge>
 <Badge variant="destructive">Destructive</Badge>
 ```
 
@@ -583,4 +600,4 @@ export function PostCard({ post }: PostCardProps) {
 
 ---
 
-**最終更新**: 2025年1月 | **バージョン**: v2.0
+**最終更新**: 2026年2月 | **バージョン**: v3.0

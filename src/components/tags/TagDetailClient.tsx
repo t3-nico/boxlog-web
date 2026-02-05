@@ -31,11 +31,11 @@ interface UnifiedContentItem extends TaggedContent {
 function getContentIcon(type: TaggedContent['type']) {
   switch (type) {
     case 'blog':
-      return <FileText className="h-5 w-5" />;
+      return <FileText className="size-5" />;
     case 'release':
-      return <Megaphone className="h-5 w-5" />;
+      return <Megaphone className="size-5" />;
     case 'doc':
-      return <BookOpen className="h-5 w-5" />;
+      return <BookOpen className="size-5" />;
   }
 }
 
@@ -100,7 +100,7 @@ export function TagDetailClient({
     categoryOptions.push({
       value: 'blog',
       label: isJa ? `ブログ (${filteredBlog.length})` : `Blog (${filteredBlog.length})`,
-      icon: <FileText className="h-3 w-3" />,
+      icon: <FileText className="size-3" />,
     });
   }
   if (releaseContent.length > 0) {
@@ -109,14 +109,14 @@ export function TagDetailClient({
       label: isJa
         ? `リリース (${filteredReleases.length})`
         : `Releases (${filteredReleases.length})`,
-      icon: <Megaphone className="h-3 w-3" />,
+      icon: <Megaphone className="size-3" />,
     });
   }
   if (docsContent.length > 0) {
     categoryOptions.push({
       value: 'docs',
       label: isJa ? `ドキュメント (${filteredDocs.length})` : `Docs (${filteredDocs.length})`,
-      icon: <BookOpen className="h-3 w-3" />,
+      icon: <BookOpen className="size-3" />,
     });
   }
 
@@ -150,15 +150,15 @@ export function TagDetailClient({
       <div className="lg:col-span-1">
         <div className="sticky top-24 space-y-6">
           {/* タグ情報 */}
-          <div className="border-border bg-card rounded-xl border p-6">
-            <div className="mb-4 flex items-center gap-3">
+          <div className="border-border bg-card rounded-2xl border p-6">
+            <div className="mb-4 flex items-center gap-4">
               <div
-                className={`flex h-10 w-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}
+                className={`flex size-10 items-center justify-center rounded-lg ${getTagColor(tag)}`}
               >
-                <Hash className="h-5 w-5" />
+                <Hash className="size-5" />
               </div>
               <div>
-                <h1 className="text-foreground text-lg font-semibold">#{tag}</h1>
+                <h1 className="text-foreground text-lg font-bold">#{tag}</h1>
                 <p className="text-muted-foreground text-sm">
                   {totalCount} {isJa ? '件' : totalCount === 1 ? 'item' : 'items'}
                 </p>
@@ -168,16 +168,16 @@ export function TagDetailClient({
               href="/tags"
               className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="size-4" />
               {isJa ? 'すべてのタグ' : 'All Tags'}
             </Link>
           </div>
 
           {/* 人気のタグ */}
-          <div className="border-border bg-card rounded-xl border p-6">
+          <div className="border-border bg-card rounded-2xl border p-6">
             <div className="mb-4 flex items-center gap-2">
-              <TrendingUp className="text-muted-foreground h-4 w-4" />
-              <h3 className="text-foreground text-sm font-semibold">
+              <TrendingUp className="text-muted-foreground size-4" />
+              <h3 className="text-foreground text-sm font-bold">
                 {isJa ? '人気のタグ' : 'Popular Tags'}
               </h3>
             </div>
@@ -186,7 +186,7 @@ export function TagDetailClient({
                 <Link
                   key={t.tag}
                   href={`/tags/${encodeURIComponent(t.tag)}`}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-bold transition-colors ${
                     t.tag.toLowerCase() === tag.toLowerCase()
                       ? 'bg-foreground text-background'
                       : getTagColor(t.tag)
@@ -214,22 +214,22 @@ export function TagDetailClient({
         {/* 検索 + ビュー切り替え */}
         <div className="mb-6 flex items-center gap-4">
           <div className="relative flex-1">
-            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={isJa ? 'コンテンツを検索...' : 'Search content...'}
-              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-12 pl-12 transition-colors focus:ring-2 focus:outline-none"
             />
             {searchQuery && (
               <Button
                 onClick={() => setSearchQuery('')}
                 variant="ghost"
                 size="icon"
-                className="absolute top-1/2 right-2 h-7 w-7 -translate-y-1/2"
+                className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
               >
-                <X className="h-4 w-4" />
+                <X className="size-4" />
               </Button>
             )}
           </div>
@@ -239,12 +239,12 @@ export function TagDetailClient({
               {
                 value: 'list',
                 label: isJa ? 'リスト' : 'List',
-                icon: <List className="h-4 w-4" />,
+                icon: <List className="size-4" />,
               },
               {
                 value: 'grid',
                 label: isJa ? 'グリッド' : 'Grid',
-                icon: <Grid3X3 className="h-4 w-4" />,
+                icon: <Grid3X3 className="size-4" />,
               },
             ]}
             value={viewMode}
@@ -262,7 +262,7 @@ export function TagDetailClient({
                   href={item.href}
                   className="hover:bg-state-hover flex items-start gap-4 py-4 transition-colors first:pt-0"
                 >
-                  <div className="bg-muted text-muted-foreground flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
+                  <div className="bg-muted text-muted-foreground flex size-10 shrink-0 items-center justify-center rounded-lg">
                     {getContentIcon(item.type)}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -279,13 +279,13 @@ export function TagDetailClient({
                         })}
                       </span>
                     </div>
-                    <h3 className="text-foreground line-clamp-1 font-medium">{item.title}</h3>
+                    <h3 className="text-foreground line-clamp-1 font-bold">{item.title}</h3>
                     {item.tags.length > 0 && (
                       <div className="mt-1 flex flex-wrap gap-1">
                         {item.tags.slice(0, 3).map((t) => (
                           <span
                             key={t}
-                            className={`inline-flex items-center rounded px-1.5 py-0.5 text-xs ${getTagColor(t)}`}
+                            className={`inline-flex items-center rounded px-2 py-1 text-xs ${getTagColor(t)}`}
                           >
                             #{t}
                           </span>
@@ -305,10 +305,10 @@ export function TagDetailClient({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {unifiedContent.map((item) => (
                 <Link key={`${item.type}-${item.slug}`} href={item.href} className="block">
-                  <Card className="h-full transition-colors hover:bg-[var(--state-hover)]">
+                  <Card className="hover:bg-state-hover h-full transition-colors">
                     <CardHeader className="gap-2">
                       <div className="flex items-center gap-2">
-                        <div className="bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center rounded-md">
+                        <div className="bg-muted text-muted-foreground flex size-8 items-center justify-center rounded-lg">
                           {getContentIcon(item.type)}
                         </div>
                         <span className="text-muted-foreground text-xs">
@@ -321,7 +321,7 @@ export function TagDetailClient({
                           {item.tags.slice(0, 3).map((t) => (
                             <span
                               key={t}
-                              className={`inline-flex items-center rounded px-1.5 py-0.5 text-xs ${getTagColor(t)}`}
+                              className={`inline-flex items-center rounded px-2 py-1 text-xs ${getTagColor(t)}`}
                             >
                               #{t}
                             </span>
@@ -357,8 +357,8 @@ export function TagDetailClient({
 function EmptyState({ isJa, onClear }: { isJa: boolean; onClear: () => void }) {
   return (
     <div className="py-16 text-center">
-      <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
-        <Search className="text-muted-foreground h-12 w-12" />
+      <div className="bg-muted mx-auto mb-6 flex size-24 items-center justify-center rounded-full">
+        <Search className="text-muted-foreground size-10" />
       </div>
       <Heading as="h3" size="lg" className="mb-2">
         {isJa ? 'コンテンツが見つかりません' : 'No content found'}
@@ -368,7 +368,7 @@ function EmptyState({ isJa, onClear }: { isJa: boolean; onClear: () => void }) {
       </Text>
       <button
         onClick={onClear}
-        className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+        className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-bold transition-colors"
       >
         {isJa ? '検索をクリア' : 'Clear search'}
       </button>

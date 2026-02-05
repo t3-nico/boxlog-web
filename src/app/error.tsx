@@ -24,7 +24,7 @@ export default function Error({
       description="We encountered an unexpected error. Please try again or contact support if the problem persists."
       showBackButton={false}
     >
-      <div className="mt-10 space-y-4">
+      <div className="mt-12 space-y-4">
         <Button onClick={reset} className="w-full sm:w-auto">
           Try again
         </Button>

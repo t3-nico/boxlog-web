@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
  * | destructive | エラー、マイナス、削除                       | エラー、-5%、無効            |
  */
 const badgeVariants = cva(
-  'inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] overflow-hidden',
+  'inline-flex items-center justify-center rounded-lg border px-2 py-1 text-xs font-bold w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] overflow-hidden',
   {
     variants: {
       variant: {
@@ -32,16 +32,14 @@ const badgeVariants = cva(
         // 軽量 - ボーダー付き
         outline: 'border-border bg-background text-foreground [a&]:hover:bg-state-hover',
         // 成功 - 完了、プラス
-        success:
-          'border-transparent bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+        success: 'border-success bg-muted text-success',
         // 警告 - 注意
-        warning:
-          'border-transparent bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+        warning: 'border-warning bg-muted text-warning',
         // 情報 - ニュートラル
-        info: 'border-transparent bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+        info: 'border-info bg-muted text-info',
         // エラー - マイナス、削除
         destructive:
-          'border-transparent bg-destructive text-white [a&]:hover:bg-destructive-hover focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+          'border-transparent bg-destructive text-destructive-foreground [a&]:hover:bg-destructive-hover',
       },
     },
     defaultVariants: {

@@ -52,7 +52,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
       <div className="space-y-8">
         {/* 1. はじめに */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.privacy.sections.introduction.title')}
           </h2>
           <p className="text-foreground leading-relaxed">
@@ -62,7 +62,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
         {/* 2. 収集する情報 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.privacy.sections.dataCollection.title')}
           </h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -75,9 +75,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
         {/* 3. 情報の利用目的 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.privacy.sections.dataUsage.title')}
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.privacy.sections.dataUsage.title')}</h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
             <li>{t('legal.privacy.sections.dataUsage.serviceProvision')}</li>
             <li>{t('legal.privacy.sections.dataUsage.userSupport')}</li>
@@ -89,10 +87,10 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
         {/* 4. 第三者提供 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.privacy.sections.dataSharing.title')}
           </h2>
-          <p className="text-foreground mb-3 leading-relaxed">
+          <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.privacy.sections.dataSharing.intro')}
           </p>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -100,14 +98,14 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             <li>{t('legal.privacy.sections.dataSharing.vercel')}</li>
             <li>{t('legal.privacy.sections.dataSharing.sentry')}</li>
           </ul>
-          <p className="text-muted-foreground mt-3 text-sm">
+          <p className="text-muted-foreground mt-4 text-sm">
             {t('legal.privacy.sections.dataSharing.note')}
           </p>
         </section>
 
         {/* 5. データ保持期間 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.privacy.sections.dataRetention.title')}
           </h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -119,7 +117,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
         {/* 6. ユーザーの権利 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.privacy.sections.userRights.title')}
           </h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -129,17 +127,15 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             <li>{t('legal.privacy.sections.userRights.portability')}</li>
             <li>{t('legal.privacy.sections.userRights.objection')}</li>
           </ul>
-          <p className="text-muted-foreground mt-3 text-sm">
+          <p className="text-muted-foreground mt-4 text-sm">
             {t('legal.privacy.sections.userRights.contact')}
           </p>
         </section>
 
         {/* 7. セキュリティ対策 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.privacy.sections.security.title')}
-          </h2>
-          <p className="text-foreground mb-3 leading-relaxed">
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.privacy.sections.security.title')}</h2>
+          <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.privacy.sections.security.measures')}
           </p>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -151,10 +147,8 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
         {/* 8. Cookieについて */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.privacy.sections.cookies.title')}
-          </h2>
-          <p className="text-foreground mb-3 leading-relaxed">
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.privacy.sections.cookies.title')}</h2>
+          <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.privacy.sections.cookies.intro')}
           </p>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -162,16 +156,14 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             <li>{t('legal.privacy.sections.cookies.analytics')}</li>
             <li>{t('legal.privacy.sections.cookies.preference')}</li>
           </ul>
-          <p className="text-muted-foreground mt-3 text-sm">
+          <p className="text-muted-foreground mt-4 text-sm">
             {t('legal.privacy.sections.cookies.control')}
           </p>
         </section>
 
         {/* 9. 未成年者について */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.privacy.sections.children.title')}
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.privacy.sections.children.title')}</h2>
           <p className="text-foreground leading-relaxed">
             {t('legal.privacy.sections.children.content')}
           </p>
@@ -179,9 +171,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
         {/* 10. ポリシーの変更 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.privacy.sections.changes.title')}
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.privacy.sections.changes.title')}</h2>
           <p className="text-foreground leading-relaxed">
             {t('legal.privacy.sections.changes.content')}
           </p>
@@ -189,13 +179,11 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
         {/* 11. お問い合わせ */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.privacy.sections.contact.title')}
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.privacy.sections.contact.title')}</h2>
           <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.privacy.sections.contact.content')}
           </p>
-          <div className="bg-surface-container rounded-xl p-4">
+          <div className="bg-container rounded-2xl p-4">
             <p className="text-foreground">
               <strong>Email:</strong> {t('legal.contact.email')}
             </p>
@@ -207,8 +195,8 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
       </div>
 
       {/* 法的レビュー警告 */}
-      <div className="bg-destructive/10 border-destructive mt-12 rounded-xl border-2 p-6">
-        <div className="flex items-start gap-3">
+      <div className="bg-muted border-destructive mt-12 rounded-2xl border-2 p-6">
+        <div className="flex items-start gap-4">
           <span className="text-2xl">⚠️</span>
           <div>
             <p className="text-destructive font-bold">{t('legal.reviewWarning.title')}</p>

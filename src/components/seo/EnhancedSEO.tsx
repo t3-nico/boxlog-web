@@ -89,8 +89,8 @@ export function generateEnhancedMetadata({
       title: fullTitle,
       description,
       images: [image],
-      creator: '@dayopt_app',
-      site: '@dayopt_app',
+      creator: '@dayoptapp',
+      site: '@dayoptapp',
     },
 
     // Additional meta tags
@@ -169,7 +169,7 @@ export function StructuredData({ type, data }: StructuredDataProps) {
     baseStructure.name = 'Dayopt';
     baseStructure.url = 'https://dayopt.app';
     baseStructure.logo = 'https://dayopt.app/logo.png';
-    baseStructure.sameAs = ['https://twitter.com/dayopt_app', 'https://github.com/dayopt'];
+    baseStructure.sameAs = ['https://x.com/dayoptapp', 'https://github.com/dayoptapp'];
   }
 
   // ウェブサイトの情報

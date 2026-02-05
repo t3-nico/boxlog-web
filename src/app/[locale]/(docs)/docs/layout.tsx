@@ -13,7 +13,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
       {/* 3カラムレイアウト: Sidebar(240px) | Main(flex-1) | TOC(240px, xl以上) */}
       <div className="max-w-8xl mx-auto flex w-full flex-1 overflow-hidden">
         {/* Left Sidebar - Navigation (lg以上で表示) */}
-        <aside className="bg-surface-container hidden w-60 flex-shrink-0 overflow-y-auto lg:block">
+        <aside className="bg-container hidden w-60 flex-shrink-0 overflow-y-auto lg:block">
           <div className="px-4 py-8">
             <ClientSidebar navigation={navigation} />
           </div>

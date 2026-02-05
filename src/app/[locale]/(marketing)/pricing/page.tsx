@@ -75,7 +75,7 @@ export default async function PricingPage({ params }: PageProps) {
             </Text>
             <Text size="lg" variant="muted">
               {t('pricing.hero.description')}{' '}
-              <span className="text-primary font-medium">{t('pricing.hero.trialNote')}</span>
+              <span className="text-primary font-bold">{t('pricing.hero.trialNote')}</span>
             </Text>
           </div>
         </Container>
@@ -114,10 +114,10 @@ export default async function PricingPage({ params }: PageProps) {
                         {t(`pricing.plans.${planKey}.period`)}
                       </span>
                     </div>
-                    <ul className="space-y-3">
+                    <ul className="space-y-4">
                       {features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <Check className="text-primary mt-0.5 size-5 shrink-0" />
+                        <li key={index} className="flex items-start gap-4">
+                          <Check className="text-primary mt-1 size-5 shrink-0" />
                           <span className="text-muted-foreground">{feature}</span>
                         </li>
                       ))}
@@ -141,14 +141,14 @@ export default async function PricingPage({ params }: PageProps) {
       </section>
 
       {/* Trust Indicators */}
-      <section className="bg-muted/30 py-16">
+      <section className="bg-muted py-16">
         <Container>
           <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-3">
             {trustIndicatorKeys.map((key) => {
               const Icon = trustIndicatorIcons[key];
               return (
                 <div key={key} className="text-center">
-                  <div className="bg-primary/10 mx-auto mb-4 inline-flex size-12 items-center justify-center rounded-full">
+                  <div className="bg-muted mx-auto mb-4 inline-flex size-12 items-center justify-center rounded-full">
                     <Icon className="text-primary size-6" />
                   </div>
                   <Heading as="h3" size="lg" className="mb-2">
@@ -176,7 +176,7 @@ export default async function PricingPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary bg-white hover:bg-white/90"
+                className="border-primary-foreground/20 text-primary bg-background hover:bg-state-hover"
                 asChild
               >
                 <Link href="/contact">{t('pricing.cta.startButton')}</Link>
@@ -184,7 +184,7 @@ export default async function PricingPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-state-hover"
                 asChild
               >
                 <Link href="/contact">{t('pricing.cta.salesButton')}</Link>

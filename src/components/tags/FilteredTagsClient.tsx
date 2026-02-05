@@ -61,16 +61,16 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
 
   const categoryOptions: { value: CategoryFilter; label: string; icon: React.ReactNode }[] = [
     { value: 'all', label: isJa ? 'すべて' : 'All', icon: null },
-    { value: 'blog', label: isJa ? 'ブログ' : 'Blog', icon: <FileText className="h-3 w-3" /> },
+    { value: 'blog', label: isJa ? 'ブログ' : 'Blog', icon: <FileText className="size-3" /> },
     {
       value: 'releases',
       label: isJa ? 'リリース' : 'Releases',
-      icon: <Megaphone className="h-3 w-3" />,
+      icon: <Megaphone className="size-3" />,
     },
     {
       value: 'docs',
       label: isJa ? 'ドキュメント' : 'Docs',
-      icon: <BookOpen className="h-3 w-3" />,
+      icon: <BookOpen className="size-3" />,
     },
   ];
 
@@ -80,8 +80,8 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
       <div className="lg:col-span-1">
         <div className="sticky top-24 space-y-8">
           {/* カテゴリフィルター */}
-          <div className="border-border bg-card rounded-xl border p-6">
-            <h3 className="text-foreground mb-4 text-sm font-semibold">
+          <div className="border-border bg-card rounded-2xl border p-6">
+            <h3 className="text-foreground mb-4 text-sm font-bold">
               {isJa ? 'カテゴリ' : 'Category'}
             </h3>
             <div className="space-y-2">
@@ -104,10 +104,10 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
           </div>
 
           {/* 人気のタグ */}
-          <div className="border-border bg-card rounded-xl border p-6">
+          <div className="border-border bg-card rounded-2xl border p-6">
             <div className="mb-4 flex items-center gap-2">
-              <TrendingUp className="text-muted-foreground h-4 w-4" />
-              <h3 className="text-foreground text-sm font-semibold">
+              <TrendingUp className="text-muted-foreground size-4" />
+              <h3 className="text-foreground text-sm font-bold">
                 {isJa ? '人気のタグ' : 'Popular Tags'}
               </h3>
             </div>
@@ -116,7 +116,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors ${getTagColor(tag.tag)}`}
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-bold transition-colors ${getTagColor(tag.tag)}`}
                 >
                   #{tag.tag}
                 </Link>
@@ -131,23 +131,23 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
         {/* 検索ボックス + ビュー切り替え */}
         <div className="mb-8 flex items-center gap-4">
           <div className="relative flex-1">
-            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={isJa ? 'タグを検索...' : 'Search tags...'}
-              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-10 pl-10 transition-colors focus:ring-2 focus:outline-none"
+              className="border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-ring h-10 w-full rounded-lg border pr-12 pl-12 transition-colors focus:ring-2 focus:outline-none"
             />
             {searchQuery && (
               <Button
                 onClick={() => setSearchQuery('')}
                 variant="ghost"
                 size="icon"
-                className="absolute top-1/2 right-2 h-7 w-7 -translate-y-1/2"
+                className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
                 aria-label={isJa ? '検索をクリア' : 'Clear search'}
               >
-                <X className="h-4 w-4" />
+                <X className="size-4" />
               </Button>
             )}
           </div>
@@ -157,12 +157,12 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
               {
                 value: 'grid',
                 label: isJa ? 'グリッド' : 'Grid',
-                icon: <Grid3X3 className="h-4 w-4" />,
+                icon: <Grid3X3 className="size-4" />,
               },
               {
                 value: 'list',
                 label: isJa ? 'リスト' : 'List',
-                icon: <List className="h-4 w-4" />,
+                icon: <List className="size-4" />,
               },
             ]}
             value={viewMode}
@@ -194,16 +194,16 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
 
         {filteredTags.length > 0 ? (
           viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filteredTags.map((tag) => (
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className={`group flex items-center justify-between rounded-lg border px-4 py-3 transition-all ${getTagColor(tag.tag)}`}
+                  className={`group flex items-center justify-between rounded-lg border px-4 py-4 transition-all ${getTagColor(tag.tag)}`}
                 >
                   <div className="flex items-center gap-2">
-                    <Hash className="h-4 w-4" />
-                    <span className="font-medium">{tag.tag}</span>
+                    <Hash className="size-4" />
+                    <span className="font-bold">{tag.tag}</span>
                   </div>
                   <span className="text-sm opacity-75">{tag.count}</span>
                 </Link>
@@ -215,39 +215,39 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className="group flex items-center justify-between py-4 transition-colors hover:opacity-80"
+                  className="group hover:bg-state-hover flex items-center justify-between py-4 transition-colors"
                 >
                   <div className="flex items-center gap-4">
                     <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-lg ${getTagColor(tag.tag)}`}
+                      className={`flex size-10 items-center justify-center rounded-lg ${getTagColor(tag.tag)}`}
                     >
-                      <Hash className="h-5 w-5" />
+                      <Hash className="size-5" />
                     </div>
                     <div>
-                      <div className="text-foreground font-medium">#{tag.tag}</div>
-                      <div className="text-muted-foreground flex items-center gap-3 text-sm">
+                      <div className="text-foreground font-bold">#{tag.tag}</div>
+                      <div className="text-muted-foreground flex items-center gap-4 text-sm">
                         {tag.blogCount > 0 && (
                           <span className="flex items-center gap-1">
-                            <FileText className="h-3 w-3" />
+                            <FileText className="size-3" />
                             {tag.blogCount}
                           </span>
                         )}
                         {tag.releaseCount > 0 && (
                           <span className="flex items-center gap-1">
-                            <Megaphone className="h-3 w-3" />
+                            <Megaphone className="size-3" />
                             {tag.releaseCount}
                           </span>
                         )}
                         {tag.docsCount > 0 && (
                           <span className="flex items-center gap-1">
-                            <BookOpen className="h-3 w-3" />
+                            <BookOpen className="size-3" />
                             {tag.docsCount}
                           </span>
                         )}
                       </div>
                     </div>
                   </div>
-                  <div className="bg-muted text-foreground flex h-8 w-8 items-center justify-center rounded-lg text-sm font-semibold">
+                  <div className="bg-muted text-foreground flex size-8 items-center justify-center rounded-lg text-sm font-bold">
                     {tag.count}
                   </div>
                 </Link>
@@ -256,8 +256,8 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
           )
         ) : (
           <div className="py-16 text-center">
-            <div className="bg-muted mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full">
-              <Search className="text-muted-foreground h-12 w-12" />
+            <div className="bg-muted mx-auto mb-6 flex size-24 items-center justify-center rounded-full">
+              <Search className="text-muted-foreground size-10" />
             </div>
             <Heading as="h3" size="lg" className="mb-2">
               {isJa ? 'タグが見つかりません' : 'No tags found'}
@@ -270,7 +270,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 setSearchQuery('');
                 setCategoryFilter('all');
               }}
-              className="bg-primary/10 text-primary hover:bg-state-hover inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+              className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-bold transition-colors"
             >
               {isJa ? 'フィルターをクリア' : 'Clear filters'}
             </button>

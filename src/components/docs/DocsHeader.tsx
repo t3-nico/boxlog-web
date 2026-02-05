@@ -33,13 +33,13 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
   ];
 
   return (
-    <header className="bg-background border-border z-50 w-full flex-shrink-0 border-b">
+    <header className="bg-background border-border z-dropdown w-full flex-shrink-0 border-b">
       <nav
         className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:px-6"
         aria-label={t('aria.docsNavigation')}
       >
         {/* Left: Mobile menu toggle + Logo */}
-        <div className="flex items-center gap-3 lg:flex-1">
+        <div className="flex items-center gap-4 lg:flex-1">
           {/* Mobile menu toggle */}
           <Button
             variant="ghost"
@@ -54,7 +54,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
           {/* Logo with Docs badge */}
           <Link href="/docs" className="flex items-center gap-2">
             <span className="text-foreground text-lg font-bold">Dayopt</span>
-            <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-xs font-medium">
+            <span className="bg-muted text-muted-foreground rounded px-2 py-1 text-xs font-bold">
               Docs
             </span>
           </Link>
@@ -64,12 +64,12 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
         <div className="hidden lg:flex lg:items-center lg:gap-x-1">
           <Link
             href="/"
-            className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-md px-3 py-2 text-base font-medium transition-colors"
+            className="text-muted-foreground hover:bg-state-hover hover:text-foreground rounded-lg px-4 py-2 text-base font-bold transition-colors"
           >
             {t('navigation.home')}
           </Link>
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-md px-3 py-2 text-base font-medium transition-colors outline-none">
+            <DropdownMenuTrigger className="text-muted-foreground hover:bg-state-hover hover:text-foreground flex items-center gap-x-1 rounded-lg px-4 py-2 text-base font-bold transition-colors outline-none">
               {t('navigation.resources')}
               <ChevronDown className="size-4" aria-hidden="true" />
             </DropdownMenuTrigger>
@@ -78,7 +78,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
                 <DropdownMenuItem key={item.name} asChild className="cursor-pointer">
                   <Link href={item.href}>
                     <div className="flex-auto">
-                      <span className="text-foreground block font-medium">{item.name}</span>
+                      <span className="text-foreground block font-bold">{item.name}</span>
                       <p className="text-muted-foreground text-xs">{item.description}</p>
                     </div>
                   </Link>

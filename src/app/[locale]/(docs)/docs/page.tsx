@@ -59,10 +59,10 @@ export default async function DocsPage({ params }: PageProps) {
         {/* Quick Start Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+            <div className="mb-4 flex items-center space-x-4">
+              <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
-                  className="text-primary h-6 w-6"
+                  className="text-primary size-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -82,19 +82,16 @@ export default async function DocsPage({ params }: PageProps) {
             <Text variant="muted" className="mb-4">
               {isJa ? '数分でDayoptを始めましょう' : 'Get started with Dayopt in minutes'}
             </Text>
-            <Link
-              href="/docs/quick-start"
-              className="text-primary hover:text-primary/80 font-medium"
-            >
+            <Link href="/docs/quick-start" className="text-primary hover:text-primary/80 font-bold">
               {isJa ? 'ガイドを読む →' : 'Read guide →'}
             </Link>
           </div>
 
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="bg-success/10 flex h-10 w-10 items-center justify-center rounded-lg">
+            <div className="mb-4 flex items-center space-x-4">
+              <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
-                  className="text-success h-6 w-6"
+                  className="text-success size-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -114,16 +111,16 @@ export default async function DocsPage({ params }: PageProps) {
             <Text variant="muted" className="mb-4">
               {isJa ? 'APIドキュメントを探索する' : 'Explore our API documentation'}
             </Text>
-            <Link href="/docs/api" className="text-primary hover:text-primary/80 font-medium">
+            <Link href="/docs/api" className="text-primary hover:text-primary/80 font-bold">
               {isJa ? 'ドキュメントを見る →' : 'View docs →'}
             </Link>
           </div>
 
           <div className="border-border bg-card hover:border-foreground rounded-lg border p-6 transition-colors">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="bg-info/10 flex h-10 w-10 items-center justify-center rounded-lg">
+            <div className="mb-4 flex items-center space-x-4">
+              <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
                 <svg
-                  className="text-info h-6 w-6"
+                  className="text-info size-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -143,7 +140,7 @@ export default async function DocsPage({ params }: PageProps) {
             <Text variant="muted" className="mb-4">
               {isJa ? 'ステップバイステップのチュートリアル' : 'Step-by-step tutorials'}
             </Text>
-            <Link href="/docs/guides" className="text-primary hover:text-primary/80 font-medium">
+            <Link href="/docs/guides" className="text-primary hover:text-primary/80 font-bold">
               {isJa ? 'ガイドを見る →' : 'Browse guides →'}
             </Link>
           </div>

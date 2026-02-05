@@ -61,7 +61,7 @@ export default async function AboutPage({ params }: PageProps) {
             <Heading as="h1" size="4xl" className="mb-6">
               {t('about.hero.title')}
             </Heading>
-            <Text size="xl" variant="muted" className="mx-auto mb-10 max-w-2xl">
+            <Text size="xl" variant="muted" className="mx-auto mb-12 max-w-2xl">
               {t('about.hero.description')}
             </Text>
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -77,18 +77,18 @@ export default async function AboutPage({ params }: PageProps) {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="bg-muted/30 py-24">
+      <section className="bg-muted py-24">
         <Container>
           <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
             {/* Mission */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <div className="bg-primary/10 mb-6 inline-flex size-14 items-center justify-center rounded-xl">
-                <Target className="text-primary size-7" />
+              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-2xl">
+                <Target className="text-primary size-6" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
                 {t('about.mission.title')}
               </Heading>
-              <Text size="lg" className="text-primary mb-4 font-semibold">
+              <Text size="lg" className="text-primary mb-4 font-bold">
                 {t('about.mission.content')}
               </Text>
               <Text variant="muted" className="leading-relaxed">
@@ -98,13 +98,13 @@ export default async function AboutPage({ params }: PageProps) {
 
             {/* Vision */}
             <div className="bg-background rounded-2xl p-8 shadow-sm">
-              <div className="bg-primary/10 mb-6 inline-flex size-14 items-center justify-center rounded-xl">
-                <Users className="text-primary size-7" />
+              <div className="bg-muted mb-6 inline-flex size-14 items-center justify-center rounded-2xl">
+                <Users className="text-primary size-6" />
               </div>
               <Heading as="h2" size="2xl" className="mb-4">
                 {t('about.vision.title')}
               </Heading>
-              <Text size="lg" className="text-primary mb-4 font-semibold">
+              <Text size="lg" className="text-primary mb-4 font-bold">
                 {t('about.vision.content')}
               </Text>
               <Text variant="muted" className="leading-relaxed">
@@ -133,11 +133,11 @@ export default async function AboutPage({ params }: PageProps) {
               return (
                 <Card
                   key={key}
-                  className="border-border/50 text-center transition-shadow hover:shadow-lg"
+                  className="border-border text-center transition-shadow hover:shadow-lg"
                 >
                   <CardHeader>
-                    <div className="bg-primary/10 mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-xl">
-                      <Icon className="text-primary size-7" />
+                    <div className="bg-muted mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-2xl">
+                      <Icon className="text-primary size-6" />
                     </div>
                     <CardTitle className="text-lg">
                       {t(`about.values.items.${key}.title`)}
@@ -169,7 +169,7 @@ export default async function AboutPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary bg-white hover:bg-white/90"
+                className="border-primary-foreground/20 text-primary bg-background hover:bg-state-hover"
                 asChild
               >
                 <Link href="/contact">{t('about.cta.startButton')}</Link>
@@ -177,7 +177,7 @@ export default async function AboutPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-state-hover"
                 asChild
               >
                 <Link href="/features">{t('about.cta.featuresButton')}</Link>

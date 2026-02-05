@@ -93,8 +93,8 @@ export function MobileFilters({
           {/* ヘッダー */}
           <SheetHeader className="flex-shrink-0 border-b p-6">
             <div className="flex items-center gap-4">
-              <Filter className="text-muted-foreground h-5 w-5" />
-              <SheetTitle className="text-lg font-semibold">{t('title')}</SheetTitle>
+              <Filter className="text-muted-foreground size-5" />
+              <SheetTitle className="text-lg font-bold">{t('title')}</SheetTitle>
               {activeFiltersCount > 0 && (
                 <Badge variant="primary" className="ml-auto">
                   {activeFiltersCount}
@@ -109,29 +109,29 @@ export function MobileFilters({
             <div>
               <label
                 htmlFor="mobile-search"
-                className="text-muted-foreground mb-2 block text-sm font-medium"
+                className="text-muted-foreground mb-2 block text-sm font-bold"
               >
                 {t('searchArticles')}
               </label>
               <div className="relative">
-                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform" />
+                <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2 transform" />
                 <Input
                   id="mobile-search"
                   type="text"
                   value={localFilters.searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   placeholder={t('searchPlaceholder')}
-                  className="pr-10 pl-10"
+                  className="pr-12 pl-12"
                 />
                 {localFilters.searchQuery && (
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute top-1/2 right-1 h-8 w-8 -translate-y-1/2 transform"
+                    className="absolute top-1/2 right-1 size-8 -translate-y-1/2 transform"
                     onClick={() => handleSearchChange('')}
                     aria-label={t('clearSearch')}
                   >
-                    <X className="h-4 w-4" />
+                    <X className="size-4" />
                   </Button>
                 )}
               </div>
@@ -141,7 +141,7 @@ export function MobileFilters({
             <div>
               <span
                 id="mobile-sort-label"
-                className="text-muted-foreground mb-3 block text-sm font-medium"
+                className="text-muted-foreground mb-4 block text-sm font-bold"
               >
                 {t('sortBy')}
               </span>
@@ -157,8 +157,8 @@ export function MobileFilters({
                     variant={localFilters.sortBy === value ? 'primary' : 'outline'}
                     className="w-full justify-start gap-4"
                   >
-                    <Icon className="h-4 w-4" />
-                    <span className="font-medium">{label}</span>
+                    <Icon className="size-4" />
+                    <span className="font-bold">{label}</span>
                     {localFilters.sortBy === value && (
                       <span className="ml-auto text-sm">
                         {localFilters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -173,7 +173,7 @@ export function MobileFilters({
                   variant="outline"
                   className="w-full justify-between"
                 >
-                  <span className="font-medium">{t('order')}</span>
+                  <span className="font-bold">{t('order')}</span>
                   <span className="text-sm">
                     {localFilters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
                   </span>
@@ -183,8 +183,8 @@ export function MobileFilters({
 
             {/* タグフィルター */}
             <div>
-              <div className="mb-3 flex items-center justify-between">
-                <span id="mobile-tags-label" className="text-muted-foreground text-sm font-medium">
+              <div className="mb-4 flex items-center justify-between">
+                <span id="mobile-tags-label" className="text-muted-foreground text-sm font-bold">
                   {t('filterByTags')}
                 </span>
                 {localFilters.selectedTags.length > 1 && (
@@ -214,7 +214,7 @@ export function MobileFilters({
                     >
                       <span>#</span>
                       <span className="truncate">{tag}</span>
-                      {isSelected && <X className="h-3 w-3 flex-shrink-0" />}
+                      {isSelected && <X className="size-3 flex-shrink-0" />}
                     </Button>
                   );
                 })}
@@ -234,7 +234,7 @@ export function MobileFilters({
           </div>
 
           {/* フッター */}
-          <div className="flex-shrink-0 space-y-3 border-t p-6">
+          <div className="flex-shrink-0 space-y-4 border-t p-6">
             <div className="flex gap-4">
               <Button onClick={clearAllFilters} variant="outline" className="flex-1">
                 {t('clearAll')}

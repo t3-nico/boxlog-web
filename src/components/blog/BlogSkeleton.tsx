@@ -17,7 +17,7 @@ export function BlogSkeleton({ className }: BlogSkeletonProps) {
 
 export function BlogCardSkeleton() {
   return (
-    <div className="border-border bg-card rounded-xl border p-6">
+    <div className="border-border bg-card rounded-2xl border p-6">
       <div className="flex flex-col gap-6 md:flex-row">
         {/* 画像スケルトン */}
         <Skeleton className="h-32 w-full flex-shrink-0 rounded-lg md:w-48" />
@@ -64,7 +64,7 @@ export function BlogGridSkeleton() {
 
 export function BlogVerticalCardSkeleton() {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-xl border">
+    <div className="border-border bg-card overflow-hidden rounded-2xl border">
       {/* 画像スケルトン */}
       <Skeleton className="h-48 w-full" />
 
@@ -98,11 +98,11 @@ export function BlogVerticalCardSkeleton() {
 
 export function FiltersSkeleton() {
   return (
-    <div className="border-border bg-card rounded-xl border p-6">
+    <div className="border-border bg-card rounded-2xl border p-6">
       {/* ヘッダー */}
       <div className="mb-6 flex items-center justify-between">
         <Skeleton className="h-5 w-16" />
-        <Skeleton className="h-4 w-4" />
+        <Skeleton className="size-4" />
       </div>
 
       {/* 検索バー */}
@@ -112,7 +112,7 @@ export function FiltersSkeleton() {
       </div>
 
       {/* ソートオプション */}
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         <Skeleton className="h-4 w-16" />
         <div className="flex flex-wrap gap-2">
           {[...Array(4)].map((_, i) => (
@@ -122,7 +122,7 @@ export function FiltersSkeleton() {
       </div>
 
       {/* タグリスト */}
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         <Skeleton className="h-4 w-24" />
         <div className="flex flex-wrap gap-2">
           {[...Array(8)].map((_, i) => (

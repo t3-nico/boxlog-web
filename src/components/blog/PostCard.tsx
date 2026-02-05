@@ -32,18 +32,18 @@ export function PostCard({
   if (layout === 'list') {
     return (
       <article className="group py-6 first:pt-0">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
           {/* 日付 */}
           <div className="text-muted-foreground w-28 flex-shrink-0 text-sm">
             <time dateTime={post.frontMatter.publishedAt}>{formattedDate}</time>
           </div>
 
           {/* タグ（最大3つ + 残り数） */}
-          <div className="flex w-44 flex-shrink-0 flex-wrap items-center gap-1.5">
+          <div className="flex w-44 flex-shrink-0 flex-wrap items-center gap-2">
             {post.frontMatter.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ${getTagColor(tag)}`}
+                className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-bold ${getTagColor(tag)}`}
               >
                 {tag}
               </span>
@@ -61,7 +61,7 @@ export function PostCard({
               <Heading
                 as="h2"
                 size="md"
-                className="text-foreground group-hover/link:text-primary font-medium transition-colors"
+                className="text-foreground group-hover/link:text-primary font-bold transition-colors"
               >
                 {post.frontMatter.title}
               </Heading>
@@ -93,7 +93,7 @@ export function PostCard({
             <Heading
               as="h2"
               size="xl"
-              className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline"
+              className="mb-4 line-clamp-2 cursor-pointer transition-colors hover:underline"
             >
               {post.frontMatter.title}
             </Heading>
@@ -104,7 +104,7 @@ export function PostCard({
             {post.frontMatter.tags.map((tag) => (
               <span
                 key={tag}
-                className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
+                className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-bold ${getTagColor(tag)}`}
               >
                 #{tag}
               </span>
@@ -142,18 +142,18 @@ export function PostCard({
               <Heading
                 as="h2"
                 size="lg"
-                className="mb-3 line-clamp-2 cursor-pointer transition-colors hover:underline"
+                className="mb-4 line-clamp-2 cursor-pointer transition-colors hover:underline"
               >
                 {post.frontMatter.title}
               </Heading>
             </Link>
 
             {/* Tags */}
-            <div className="mb-3 flex flex-wrap gap-2">
+            <div className="mb-4 flex flex-wrap gap-2">
               {post.frontMatter.tags.map((tag) => (
                 <span
                   key={tag}
-                  className={`inline-flex items-center rounded-md px-2 py-1 text-sm font-medium ${getTagColor(tag)}`}
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-sm font-bold ${getTagColor(tag)}`}
                 >
                   #{tag}
                 </span>

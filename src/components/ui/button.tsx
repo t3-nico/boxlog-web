@@ -29,7 +29,7 @@ import { cn } from '@/lib/utils';
 const buttonVariants = cva(
   [
     // 基本レイアウト
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium',
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-bold',
     // トランジション
     'transition-colors',
     // フォーカス状態（アクセシビリティ）
@@ -49,7 +49,7 @@ const buttonVariants = cva(
           'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover active:bg-primary-hover',
         // 副次アクション - ボーダー付きの控えめなボタン
         outline: [
-          'border border-border bg-surface-container text-foreground shadow-sm',
+          'border border-border bg-container text-foreground shadow-sm',
           'hover:bg-state-hover active:bg-state-hover',
         ].join(' '),
         // アイコンボタン・ツールバー - 背景なし、ホバーで背景出現
@@ -58,16 +58,15 @@ const buttonVariants = cva(
         text: 'text-primary underline-offset-4 hover:underline',
         // 破壊的アクション - 削除、解除など
         destructive: [
-          'bg-destructive text-white shadow-sm',
+          'bg-destructive text-destructive-foreground shadow-sm',
           'hover:bg-destructive-hover active:bg-destructive-hover',
           'focus-visible:outline-destructive',
-          'dark:bg-destructive/60',
         ].join(' '),
       },
       size: {
         // sm: 24px高さ、12pxパディング
         sm: [
-          'h-6 px-3 text-xs',
+          'h-6 px-4 text-xs',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:shrink-0",
         ].join(' '),
         // default: 32px高さ、16pxパディング
