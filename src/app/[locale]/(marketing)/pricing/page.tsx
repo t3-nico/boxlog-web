@@ -176,7 +176,7 @@ export default async function PricingPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary bg-white hover:bg-white/90"
+                className="border-primary-foreground/20 text-primary bg-background hover:bg-state-hover"
                 asChild
               >
                 <Link href="/contact">{t('pricing.cta.startButton')}</Link>
@@ -184,7 +184,7 @@ export default async function PricingPage({ params }: PageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-state-hover"
                 asChild
               >
                 <Link href="/contact">{t('pricing.cta.salesButton')}</Link>

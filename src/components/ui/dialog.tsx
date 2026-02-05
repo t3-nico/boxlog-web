@@ -22,7 +22,7 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       // Neutral system - overlay with theme-aware transparency
-      'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 z-modal fixed inset-0 bg-neutral-900/80',
+      'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 z-modal bg-overlay fixed inset-0',
       className,
     )}
     {...props}

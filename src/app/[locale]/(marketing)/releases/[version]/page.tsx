@@ -446,7 +446,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <a
                   href="mailto:support@yoursaas.com"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-4 font-bold transition-colors"
+                  className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex items-center rounded-lg px-6 py-4 font-bold transition-colors"
                 >
                   <svg
                     className="mr-2 size-5"

@@ -58,7 +58,7 @@ const buttonVariants = cva(
         text: 'text-primary underline-offset-4 hover:underline',
         // 破壊的アクション - 削除、解除など
         destructive: [
-          'bg-destructive text-white shadow-sm',
+          'bg-destructive text-destructive-foreground shadow-sm',
           'hover:bg-destructive-hover active:bg-destructive-hover',
           'focus-visible:outline-destructive',
         ].join(' '),

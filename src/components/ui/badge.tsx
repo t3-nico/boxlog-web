@@ -38,7 +38,8 @@ const badgeVariants = cva(
         // 情報 - ニュートラル
         info: 'border-info bg-muted text-info',
         // エラー - マイナス、削除
-        destructive: 'border-transparent bg-destructive text-white [a&]:hover:bg-destructive-hover',
+        destructive:
+          'border-transparent bg-destructive text-destructive-foreground [a&]:hover:bg-destructive-hover',
       },
     },
     defaultVariants: {

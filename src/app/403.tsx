@@ -14,10 +14,10 @@ export const metadata = generateSEOMetadata({
 
 export default function Forbidden() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-50 dark:bg-neutral-900">
+    <div className="bg-background flex min-h-screen items-center justify-center">
       <Container>
         <div className="mx-auto max-w-md text-center">
-          <div className="mb-4 text-9xl font-bold text-neutral-200 dark:text-neutral-800">403</div>
+          <div className="text-muted-foreground/20 mb-4 text-9xl font-bold">403</div>
 
           <Heading as="h2" size="xl" className="mb-4">
             Access Forbidden

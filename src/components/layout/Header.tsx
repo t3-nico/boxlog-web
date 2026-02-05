@@ -148,7 +148,7 @@ export function Header() {
       {/* Mobile menu - Using Radix Dialog */}
       <DialogPrimitive.Root open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <DialogPrimitive.Portal>
-          <DialogPrimitive.Overlay className="z-sheet fixed inset-0 bg-black/50 lg:hidden" />
+          <DialogPrimitive.Overlay className="z-sheet bg-overlay fixed inset-0 lg:hidden" />
           <DialogPrimitive.Content className="bg-background border-border data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right z-sheet fixed inset-y-0 right-0 w-full overflow-y-auto border-l px-6 py-6 duration-300 sm:max-w-sm lg:hidden">
             <DialogPrimitive.Title className="sr-only">
               {t('aria.navigationMenu')}

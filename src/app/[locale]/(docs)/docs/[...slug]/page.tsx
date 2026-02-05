@@ -256,7 +256,7 @@ export default async function DocPage({ params }: DocPageProps) {
           </Text>
           <Link
             href="/docs"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-4 py-2 transition-colors"
+            className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex items-center rounded-lg px-4 py-2 transition-colors"
           >
             Back to Documentation
           </Link>

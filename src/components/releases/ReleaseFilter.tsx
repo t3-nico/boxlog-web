@@ -96,7 +96,12 @@ export function ReleaseFilter({
                       >
                         <span>#</span>
                         {tagItem.tag}
-                        <span className={cn('text-xs', isSelected ? 'text-white' : 'opacity-60')}>
+                        <span
+                          className={cn(
+                            'text-xs',
+                            isSelected ? 'text-primary-foreground' : 'opacity-60',
+                          )}
+                        >
                           ({tagItem.count})
                         </span>
                         {isSelected && <X className="size-3" />}

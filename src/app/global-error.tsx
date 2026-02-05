@@ -20,12 +20,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   return (
     <html>
       <body>
-        <div className="flex min-h-screen items-center justify-center bg-neutral-50 dark:bg-neutral-900">
+        <div className="bg-background flex min-h-screen items-center justify-center">
           <Container>
             <div className="mx-auto max-w-md text-center">
-              <div className="mb-4 text-9xl font-bold text-neutral-200 dark:text-neutral-800">
-                !
-              </div>
+              <div className="text-muted-foreground/20 mb-4 text-9xl font-bold">!</div>
 
               <Heading as="h2" size="xl" className="mb-4">
                 Something went wrong
@@ -52,13 +50,11 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
               {/* Error details for development */}
               {isDevelopment && (
-                <div className="mt-8 rounded-lg bg-neutral-100 p-4 text-left dark:bg-neutral-800">
+                <div className="bg-container mt-8 rounded-lg p-4 text-left">
                   <Text size="sm" variant="muted" className="mb-2 block">
                     Development Error Details:
                   </Text>
-                  <pre className="overflow-auto text-xs text-red-600 dark:text-red-400">
-                    {error.message}
-                  </pre>
+                  <pre className="text-destructive overflow-auto text-xs">{error.message}</pre>
                   {error.digest && (
                     <Text size="xs" variant="muted" className="mt-2 block">
                       Error ID: {error.digest}

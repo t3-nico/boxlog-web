@@ -196,6 +196,11 @@
   --color-warning-hover: oklch(from var(--warning) l c h / 90%);
   --color-success-hover: oklch(from var(--success) l c h / 90%);
   --color-info-hover: oklch(from var(--info) l c h / 90%);
+  --color-secondary-hover: oklch(from var(--secondary) l c h / 80%);
+
+  /* セマンティックGhostホバー（薄い背景色） */
+  --color-primary-state-hover: oklch(from var(--primary) l c h / 10%);
+  --color-destructive-state-hover: oklch(from var(--destructive) l c h / 10%);
 
   /* ============================================
    * Surface トークン（GAFA準拠・4段階）
