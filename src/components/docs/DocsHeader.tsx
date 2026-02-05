@@ -33,7 +33,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
   ];
 
   return (
-    <header className="bg-background border-border z-50 w-full flex-shrink-0 border-b">
+    <header className="bg-background border-border z-dropdown w-full flex-shrink-0 border-b">
       <nav
         className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:px-6"
         aria-label={t('aria.docsNavigation')}

@@ -340,6 +340,19 @@
   --line-height-tight: var(--leading-tight);
   --line-height-normal: var(--leading-normal);
   --line-height-relaxed: var(--leading-relaxed);
+
+  /* ============================================
+   * Z-Index（Storybook準拠・セマンティックレイヤー）
+   * 用途別に階層化されたz-index値
+   * 値が大きいほど前面に表示される
+   * 使用例: z-dropdown, z-modal, z-tooltip
+   * ============================================ */
+  --z-index-dropdown: 50;
+  --z-index-popover: 100;
+  --z-index-sheet: 150;
+  --z-index-modal: 200;
+  --z-index-toast: 300;
+  --z-index-tooltip: 9999;
 }
 
 /* ブラウザUIのダークモード対応 */
