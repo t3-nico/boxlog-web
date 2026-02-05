@@ -111,7 +111,7 @@ const mdxComponents = {
     <h3 className="text-foreground mt-6 mb-4 text-xl font-bold" {...props} />
   ),
   h4: (props: HeadingProps) => (
-    <h4 className="text-foreground mt-6 mb-4 text-lg font-semibold" {...props} />
+    <h4 className="text-foreground mt-6 mb-4 text-lg font-bold" {...props} />
   ),
   p: (props: ParagraphProps) => <p className="text-foreground mb-4 leading-relaxed" {...props} />,
   a: (props: AnchorProps) => (
@@ -164,7 +164,7 @@ const mdxComponents = {
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-bold tracking-wider uppercase"
       {...props}
     />
   ),
@@ -188,7 +188,7 @@ const mdxComponents = {
           <span className="text-lg" role="img" aria-label={changeType.label}>
             {changeType.icon}
           </span>
-          <h4 className="font-semibold">{changeType.label}</h4>
+          <h4 className="font-bold">{changeType.label}</h4>
         </div>
         <div className="prose prose-sm max-w-none">{children}</div>
       </div>
@@ -257,7 +257,7 @@ const mdxComponents = {
           />
         </svg>
         <div>
-          <h4 className="text-primary mb-2 font-semibold">Migration Information</h4>
+          <h4 className="text-primary mb-2 font-bold">Migration Information</h4>
           <div className="prose prose-sm text-primary max-w-none">{children}</div>
         </div>
       </div>
@@ -367,7 +367,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                   <div className="flex items-center gap-4">
                     <Link
                       href="/releases"
-                      className="text-primary hover:text-primary/80 text-sm font-medium"
+                      className="text-primary hover:text-primary/80 text-sm font-bold"
                     >
                       View all releases
                     </Link>
@@ -376,7 +376,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                       href={`https://github.com/yoursaas/platform/releases/tag/v${release.frontMatter.version}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground text-sm font-medium"
+                      className="text-muted-foreground hover:text-foreground text-sm font-bold"
                     >
                       View on GitHub
                     </a>
@@ -410,7 +410,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
                 <div className="mt-8 text-center">
                   <Link
                     href="/releases"
-                    className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-4 text-sm font-medium transition-colors"
+                    className="border-border bg-card text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-4 text-sm font-bold transition-colors"
                   >
                     <svg
                       className="mr-2 size-4"
@@ -446,7 +446,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <a
                   href="mailto:support@yoursaas.com"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-4 font-medium transition-colors"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-4 font-bold transition-colors"
                 >
                   <svg
                     className="mr-2 size-5"
@@ -466,7 +466,7 @@ export default async function ReleaseDetailPage({ params }: ReleasePageProps) {
 
                 <Link
                   href="/feedback"
-                  className="border-border text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-4 font-medium transition-colors"
+                  className="border-border text-foreground hover:bg-muted inline-flex items-center rounded-lg border px-6 py-4 font-bold transition-colors"
                 >
                   <svg
                     className="mr-2 size-5"

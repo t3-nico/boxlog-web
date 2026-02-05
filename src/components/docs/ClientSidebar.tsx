@@ -97,7 +97,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
             href={item.href!}
             className={`hover:bg-state-hover flex flex-1 items-center rounded-lg text-sm transition-colors ${
               isActive
-                ? 'text-foreground bg-state-selected font-medium'
+                ? 'text-foreground bg-state-selected font-bold'
                 : 'text-muted-foreground hover:text-foreground'
             }`}
             style={{
@@ -117,7 +117,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
               );
             })()}
             {item.badge && (
-              <span className="bg-muted text-primary border-primary ml-2 rounded border px-2 py-1 text-xs font-medium">
+              <span className="bg-muted text-primary border-primary ml-2 rounded border px-2 py-1 text-xs font-bold">
                 {item.badge}
               </span>
             )}
@@ -125,7 +125,7 @@ function NavigationItemComponent({ item, level, currentPath }: NavigationItemPro
           </Link>
         ) : (
           <span
-            className="text-foreground flex flex-1 items-center text-sm font-medium"
+            className="text-foreground flex flex-1 items-center text-sm font-bold"
             style={{
               paddingLeft,
               paddingRight: '8px',
@@ -182,7 +182,7 @@ export function ClientSidebar({ navigation }: ClientSidebarProps) {
       <nav className="flex-1 space-y-6 overflow-y-auto">
         {navigation.map((section) => (
           <div key={section.title}>
-            <div className="text-muted-foreground cursor-default py-2 pr-4 pl-2 text-xs font-semibold tracking-wider uppercase">
+            <div className="text-muted-foreground cursor-default py-2 pr-4 pl-2 text-xs font-bold tracking-wider uppercase">
               {section.title}
             </div>
 

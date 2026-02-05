@@ -158,7 +158,7 @@ export function TagDetailClient({
                 <Hash className="size-5" />
               </div>
               <div>
-                <h1 className="text-foreground text-lg font-semibold">#{tag}</h1>
+                <h1 className="text-foreground text-lg font-bold">#{tag}</h1>
                 <p className="text-muted-foreground text-sm">
                   {totalCount} {isJa ? '件' : totalCount === 1 ? 'item' : 'items'}
                 </p>
@@ -177,7 +177,7 @@ export function TagDetailClient({
           <div className="border-border bg-card rounded-2xl border p-6">
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp className="text-muted-foreground size-4" />
-              <h3 className="text-foreground text-sm font-semibold">
+              <h3 className="text-foreground text-sm font-bold">
                 {isJa ? '人気のタグ' : 'Popular Tags'}
               </h3>
             </div>
@@ -186,7 +186,7 @@ export function TagDetailClient({
                 <Link
                   key={t.tag}
                   href={`/tags/${encodeURIComponent(t.tag)}`}
-                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium transition-colors ${
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-bold transition-colors ${
                     t.tag.toLowerCase() === tag.toLowerCase()
                       ? 'bg-foreground text-background'
                       : getTagColor(t.tag)
@@ -279,7 +279,7 @@ export function TagDetailClient({
                         })}
                       </span>
                     </div>
-                    <h3 className="text-foreground line-clamp-1 font-medium">{item.title}</h3>
+                    <h3 className="text-foreground line-clamp-1 font-bold">{item.title}</h3>
                     {item.tags.length > 0 && (
                       <div className="mt-1 flex flex-wrap gap-1">
                         {item.tags.slice(0, 3).map((t) => (
@@ -368,7 +368,7 @@ function EmptyState({ isJa, onClear }: { isJa: boolean; onClear: () => void }) {
       </Text>
       <button
         onClick={onClear}
-        className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
+        className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-bold transition-colors"
       >
         {isJa ? '検索をクリア' : 'Clear search'}
       </button>

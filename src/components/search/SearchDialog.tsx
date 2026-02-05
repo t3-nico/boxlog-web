@@ -253,7 +253,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               {/* 最近の検索 */}
               {recentSearches.length > 0 && (
                 <div>
-                  <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wide uppercase">
+                  <h3 className="text-muted-foreground mb-4 text-xs font-bold tracking-wide uppercase">
                     {t('recentSearches')}
                   </h3>
                   <div className="space-y-1">
@@ -274,7 +274,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
               {/* 人気タグ */}
               <div>
-                <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wide uppercase">
+                <h3 className="text-muted-foreground mb-4 text-xs font-bold tracking-wide uppercase">
                   {t('popularTags')}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -296,7 +296,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
 
               {/* クイックリンク */}
               <div>
-                <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wide uppercase">
+                <h3 className="text-muted-foreground mb-4 text-xs font-bold tracking-wide uppercase">
                   {t('popularPages')}
                 </h3>
                 <div className="space-y-1">
@@ -314,7 +314,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                     >
                       <div className="mt-1">{getTypeIcon(link.type)}</div>
                       <div className="min-w-0 flex-1">
-                        <div className="text-foreground truncate text-sm font-medium">
+                        <div className="text-foreground truncate text-sm font-bold">
                           {link.title}
                         </div>
                         <div className="text-muted-foreground mt-1 text-xs">{link.description}</div>
@@ -338,7 +338,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               <div className="mb-4 flex items-center justify-between">
                 <p className="text-muted-foreground text-sm">
                   {t('searchResultsFor')} &ldquo;
-                  <span className="font-medium">{query}</span>&rdquo;
+                  <span className="font-bold">{query}</span>&rdquo;
                 </p>
                 <Badge variant="outline" className="text-xs">
                   {t('pressEnterToSearch')}
@@ -353,7 +353,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
               >
                 <Search className="text-primary size-4" />
                 <div className="text-left">
-                  <div className="text-foreground text-sm font-medium">
+                  <div className="text-foreground text-sm font-bold">
                     {t('searchFor')} &ldquo;
                     <Highlight text={query} query={query} />
                     &rdquo;
@@ -380,7 +380,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         <div className="mt-1">{getTypeIcon(result.type)}</div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-1 flex items-center gap-2">
-                            <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                            <span className="text-muted-foreground text-xs font-bold tracking-wide uppercase">
                               {result.breadcrumbs?.[0] ||
                                 (result.type === 'docs'
                                   ? t('docs')
@@ -395,7 +395,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                               {result.breadcrumbs?.[1] || result.category || 'General'}
                             </span>
                           </div>
-                          <div className="text-foreground truncate text-sm font-medium">
+                          <div className="text-foreground truncate text-sm font-bold">
                             <Highlight text={result.title} query={query} />
                           </div>
                           <div className="text-muted-foreground mt-1 line-clamp-2 text-xs">
@@ -434,7 +434,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-1 flex items-center gap-2">
-                            <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                            <span className="text-muted-foreground text-xs font-bold tracking-wide uppercase">
                               {t('tags')}
                             </span>
                             <span className="text-muted-foreground/50 text-xs">•</span>
@@ -442,7 +442,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
                               {tag.count} {t('articles')}
                             </span>
                           </div>
-                          <div className="text-foreground truncate text-sm font-medium">
+                          <div className="text-foreground truncate text-sm font-bold">
                             <Highlight text={tag.name} query={query} />
                           </div>
                         </div>

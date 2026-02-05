@@ -52,7 +52,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
       <div className="space-y-8">
         {/* 1. はじめに */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.terms.sections.introduction.title')}
           </h2>
           <p className="text-foreground leading-relaxed">
@@ -62,7 +62,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 2. サービス内容 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.terms.sections.serviceDescription.title')}
           </h2>
           <p className="text-foreground leading-relaxed">
@@ -72,7 +72,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 3. アカウント登録 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.terms.sections.accountRegistration.title')}
           </h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -85,7 +85,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 4. ユーザーの責任 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.terms.sections.userResponsibilities.title')}
           </h2>
           <p className="text-foreground mb-4 leading-relaxed">
@@ -103,7 +103,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 5. 知的財産権 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.terms.sections.intellectualProperty.title')}
           </h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -115,9 +115,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 6. データのバックアップ */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.terms.sections.dataBackup.title')}
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.terms.sections.dataBackup.title')}</h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
             <li>{t('legal.terms.sections.dataBackup.responsibility')}</li>
             <li>{t('legal.terms.sections.dataBackup.liability')}</li>
@@ -126,9 +124,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 7. 免責事項 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.terms.sections.disclaimer.title')}
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.terms.sections.disclaimer.title')}</h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
             <li>{t('legal.terms.sections.disclaimer.availability')}</li>
             <li>{t('legal.terms.sections.disclaimer.interruption')}</li>
@@ -139,9 +135,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 8. アカウント停止・削除 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
-            {t('legal.terms.sections.termination.title')}
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.terms.sections.termination.title')}</h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
             <li>{t('legal.terms.sections.termination.userInitiated')}</li>
             <li>{t('legal.terms.sections.termination.serviceInitiated')}</li>
@@ -151,7 +145,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 9. 規約の変更 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.terms.sections.modifications.title')}
           </h2>
           <p className="text-foreground leading-relaxed">
@@ -161,7 +155,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 10. 準拠法・管轄裁判所 */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">
+          <h2 className="mb-4 text-2xl font-bold">
             {t('legal.terms.sections.governingLaw.title')}
           </h2>
           <ul className="text-foreground list-inside list-disc space-y-2 leading-relaxed">
@@ -172,7 +166,7 @@ export default async function TermsOfServicePage({ params }: PageProps) {
 
         {/* 11. お問い合わせ */}
         <section>
-          <h2 className="mb-4 text-2xl font-semibold">{t('legal.terms.sections.contact.title')}</h2>
+          <h2 className="mb-4 text-2xl font-bold">{t('legal.terms.sections.contact.title')}</h2>
           <p className="text-foreground mb-4 leading-relaxed">
             {t('legal.terms.sections.contact.content')}
           </p>

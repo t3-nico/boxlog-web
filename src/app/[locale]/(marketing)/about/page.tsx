@@ -88,7 +88,7 @@ export default async function AboutPage({ params }: PageProps) {
               <Heading as="h2" size="2xl" className="mb-4">
                 {t('about.mission.title')}
               </Heading>
-              <Text size="lg" className="text-primary mb-4 font-semibold">
+              <Text size="lg" className="text-primary mb-4 font-bold">
                 {t('about.mission.content')}
               </Text>
               <Text variant="muted" className="leading-relaxed">
@@ -104,7 +104,7 @@ export default async function AboutPage({ params }: PageProps) {
               <Heading as="h2" size="2xl" className="mb-4">
                 {t('about.vision.title')}
               </Heading>
-              <Text size="lg" className="text-primary mb-4 font-semibold">
+              <Text size="lg" className="text-primary mb-4 font-bold">
                 {t('about.vision.content')}
               </Text>
               <Text variant="muted" className="leading-relaxed">

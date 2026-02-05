@@ -109,7 +109,7 @@ const SelectLabel = React.forwardRef<
     ref={ref}
     className={cn(
       // セマンティックトークン - ラベル
-      'text-muted-foreground py-2 pr-2 pl-8 text-sm font-semibold',
+      'text-muted-foreground py-2 pr-2 pl-8 text-sm font-bold',
       className,
     )}
     {...props}

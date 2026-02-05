@@ -41,9 +41,9 @@ export function ReleaseFilter({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Filter className="text-muted-foreground size-5" />
-              <h3 className="text-foreground font-medium">{t('title')}</h3>
+              <h3 className="text-foreground font-bold">{t('title')}</h3>
               {activeFiltersCount > 0 && (
-                <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
+                <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-bold">
                   {activeFiltersCount}
                 </span>
               )}
@@ -72,7 +72,7 @@ export function ReleaseFilter({
               <div>
                 <span
                   id="release-tags-label"
-                  className="text-muted-foreground mb-4 block text-sm font-medium"
+                  className="text-muted-foreground mb-4 block text-sm font-bold"
                 >
                   {t('tags')}
                 </span>
@@ -114,9 +114,9 @@ export function ReleaseFilter({
       <div className="lg:hidden">
         <Button variant="outline" className="flex w-full items-center justify-center gap-2">
           <Filter className="text-muted-foreground size-4" />
-          <span className="text-foreground font-medium">{t('title')}</span>
+          <span className="text-foreground font-bold">{t('title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
+            <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-bold">
               {activeFiltersCount}
             </span>
           )}

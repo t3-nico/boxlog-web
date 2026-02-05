@@ -195,7 +195,7 @@ export function ContactForm() {
         <div className="bg-muted mx-auto mb-6 flex size-16 items-center justify-center rounded-full">
           <CheckCircle className="text-success size-8" aria-hidden="true" />
         </div>
-        <h3 className="text-foreground mb-2 text-xl font-semibold">{t('form.success.title')}</h3>
+        <h3 className="text-foreground mb-2 text-xl font-bold">{t('form.success.title')}</h3>
         <p className="text-muted-foreground mb-6">{t('form.success.description')}</p>
         <Button variant="outline" onClick={handleReset}>
           {t('form.success.newMessage')}

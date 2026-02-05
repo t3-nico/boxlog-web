@@ -85,7 +85,7 @@ const DialogTitle = React.forwardRef<
     ref={ref}
     className={cn(
       // セマンティックトークン - ダイアログタイトル
-      'text-foreground text-lg leading-none font-semibold tracking-tight',
+      'text-foreground text-lg leading-none font-bold tracking-tight',
       className,
     )}
     {...props}

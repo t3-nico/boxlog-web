@@ -81,7 +81,7 @@ export default async function FeaturesPage({ params }: PageProps) {
       <section className="py-24">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
-            <div className="bg-muted text-primary mb-6 inline-block rounded-full px-4 py-2 text-sm font-medium">
+            <div className="bg-muted text-primary mb-6 inline-block rounded-full px-4 py-2 text-sm font-bold">
               {t('features.badge')}
             </div>
             <Heading as="h1" size="4xl" className="mb-6">

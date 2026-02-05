@@ -168,7 +168,7 @@ function Table({ children, ...props }: TableProps) {
 function Th({ children, ...props }: ThProps) {
   return (
     <th
-      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-bold tracking-wider uppercase"
       {...props}
     >
       {children}

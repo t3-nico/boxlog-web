@@ -37,11 +37,11 @@ export function ErrorLayout({
       {/* Main Content */}
       <main className="mx-auto w-full max-w-7xl px-6 py-24 sm:py-32 lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:px-8">
         <div className="max-w-lg">
-          {code && <p className="text-muted-foreground text-base font-semibold">{code}</p>}
-          <h1 className="text-foreground mt-4 text-5xl font-semibold tracking-tight sm:text-6xl">
+          {code && <p className="text-muted-foreground text-base font-bold">{code}</p>}
+          <h1 className="text-foreground mt-4 text-5xl font-bold tracking-tight sm:text-6xl">
             {title}
           </h1>
-          <p className="text-muted-foreground mt-6 text-lg font-medium sm:text-xl">{description}</p>
+          <p className="text-muted-foreground mt-6 text-lg font-bold sm:text-xl">{description}</p>
 
           {children}
 
@@ -49,7 +49,7 @@ export function ErrorLayout({
             <div className="mt-12">
               <Link
                 href="/"
-                className="text-foreground hover:text-muted-foreground inline-flex items-center gap-2 text-sm font-semibold"
+                className="text-foreground hover:text-muted-foreground inline-flex items-center gap-2 text-sm font-bold"
               >
                 <ArrowLeft className="size-4" />
                 {backToHomeLabel}

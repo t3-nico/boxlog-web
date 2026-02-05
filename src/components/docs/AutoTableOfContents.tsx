@@ -25,7 +25,7 @@ function TocList({ items, level = 0, activeId, onItemClick }: TocListProps) {
             onClick={() => onItemClick(item.id)}
             className={`-ml-2 block w-full rounded-lg px-2 py-2 text-left text-sm transition-colors ${
               activeId === item.id
-                ? 'text-foreground bg-state-selected font-medium'
+                ? 'text-foreground bg-state-selected font-bold'
                 : 'text-muted-foreground hover:text-foreground hover:bg-state-hover'
             }`}
             title={item.title}
@@ -152,7 +152,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
   if (!isLoaded || toc.length === 0) {
     return (
       <div className={`space-y-4 ${className}`}>
-        <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+        <div className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
           {t('onThisPage')}
         </div>
         {!isLoaded ? (
@@ -166,7 +166,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
   return (
     <div className={`space-y-4 ${className}`}>
-      <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+      <div className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
         {t('onThisPage')}
       </div>
 
@@ -176,7 +176,7 @@ export function AutoTableOfContents({ content, className = '' }: AutoTableOfCont
 
       {/* Links */}
       <div className="border-border border-t pt-4">
-        <div className="text-muted-foreground mb-4 text-xs font-semibold tracking-wider uppercase">
+        <div className="text-muted-foreground mb-4 text-xs font-bold tracking-wider uppercase">
           {t('links')}
         </div>
         <ul className="space-y-2">

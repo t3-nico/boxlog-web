@@ -171,14 +171,14 @@ export default async function DocPage({ params }: DocPageProps) {
               <aside className="border-border mt-12 border-t pt-8">
                 <div className="mb-4 flex items-center gap-2">
                   <Tag className="text-muted-foreground size-4" />
-                  <span className="text-muted-foreground text-sm font-medium">Tags</span>
+                  <span className="text-muted-foreground text-sm font-bold">Tags</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {frontMatter.tags.map((tag) => (
                     <Link
                       key={tag}
                       href={`/tags/${encodeURIComponent(tag)}`}
-                      className={`inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${getTagColor(tag)}`}
+                      className={`inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-bold transition-colors ${getTagColor(tag)}`}
                     >
                       #{tag}
                     </Link>

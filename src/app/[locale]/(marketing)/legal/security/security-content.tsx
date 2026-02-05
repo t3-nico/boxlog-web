@@ -23,11 +23,11 @@ export function SecurityContent() {
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
           <Lock className="text-primary size-6" />
-          <h2 className="text-2xl font-semibold">{t('legal.security.policy.title')}</h2>
+          <h2 className="text-2xl font-bold">{t('legal.security.policy.title')}</h2>
         </div>
 
         <div className="bg-container mb-6 rounded-2xl p-6">
-          <h3 className="mb-4 text-lg font-semibold">
+          <h3 className="mb-4 text-lg font-bold">
             {t('legal.security.policy.supportedVersions.title')}
           </h3>
           <table className="border-border w-full border">
@@ -63,7 +63,7 @@ export function SecurityContent() {
         </div>
 
         <div className="prose dark:prose-invert max-w-none">
-          <h3 className="text-lg font-semibold">{t('legal.security.policy.measures.title')}</h3>
+          <h3 className="text-lg font-bold">{t('legal.security.policy.measures.title')}</h3>
           <ul className="space-y-2">
             <li>{t('legal.security.policy.measures.https')}</li>
             <li>{t('legal.security.policy.measures.mfa')}</li>
@@ -81,11 +81,11 @@ export function SecurityContent() {
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
           <AlertTriangle className="text-primary size-6" />
-          <h2 className="text-2xl font-semibold">{t('legal.security.vulnerability.title')}</h2>
+          <h2 className="text-2xl font-bold">{t('legal.security.vulnerability.title')}</h2>
         </div>
 
         <div className="bg-muted mb-6 rounded-2xl p-6">
-          <p className="text-destructive-foreground mb-4 font-semibold">
+          <p className="text-destructive-foreground mb-4 font-bold">
             {t('legal.security.vulnerability.warning.title')}
           </p>
           <p className="text-muted-foreground text-sm">
@@ -94,9 +94,7 @@ export function SecurityContent() {
         </div>
 
         <div className="prose dark:prose-invert max-w-none">
-          <h3 className="text-lg font-semibold">
-            {t('legal.security.vulnerability.contacts.title')}
-          </h3>
+          <h3 className="text-lg font-bold">{t('legal.security.vulnerability.contacts.title')}</h3>
           <ul className="space-y-2">
             <li className="flex items-center gap-2">
               <Mail className="size-4" />
@@ -119,7 +117,7 @@ export function SecurityContent() {
             </li>
           </ul>
 
-          <h3 className="mt-6 text-lg font-semibold">
+          <h3 className="mt-6 text-lg font-bold">
             {t('legal.security.vulnerability.includeInfo.title')}
           </h3>
           <ul className="space-y-2">
@@ -131,7 +129,7 @@ export function SecurityContent() {
             <li>{t('legal.security.vulnerability.includeInfo.fix')}</li>
           </ul>
 
-          <h3 className="mt-6 text-lg font-semibold">
+          <h3 className="mt-6 text-lg font-bold">
             {t('legal.security.vulnerability.timeline.title')}
           </h3>
           <table className="border-border w-full border">
@@ -200,10 +198,10 @@ export function SecurityContent() {
 
       {/* 責任ある開示 */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-semibold">{t('legal.security.disclosure.title')}</h2>
+        <h2 className="mb-4 text-2xl font-bold">{t('legal.security.disclosure.title')}</h2>
 
         <div className="bg-container rounded-2xl p-6">
-          <h3 className="mb-4 text-lg font-semibold">
+          <h3 className="mb-4 text-lg font-bold">
             {t('legal.security.disclosure.safeHarbor.title')}
           </h3>
           <p className="text-foreground mb-4 leading-relaxed">
@@ -212,7 +210,7 @@ export function SecurityContent() {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <h4 className="mb-2 font-semibold text-green-600 dark:text-green-400">
+              <h4 className="text-success mb-2 font-bold">
                 {t('legal.security.disclosure.safeHarbor.allowed.title')}
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
@@ -222,7 +220,7 @@ export function SecurityContent() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-2 font-semibold text-red-600 dark:text-red-400">
+              <h4 className="text-destructive mb-2 font-bold">
                 {t('legal.security.disclosure.safeHarbor.prohibited.title')}
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
@@ -239,7 +237,7 @@ export function SecurityContent() {
       <section className="mb-12">
         <div className="mb-4 flex items-center gap-2">
           <FileText className="text-primary size-6" />
-          <h2 className="text-2xl font-semibold">{t('legal.security.relatedDocs.title')}</h2>
+          <h2 className="text-2xl font-bold">{t('legal.security.relatedDocs.title')}</h2>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -249,7 +247,7 @@ export function SecurityContent() {
             rel="noopener noreferrer"
             className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.securityPolicy.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -263,7 +261,7 @@ export function SecurityContent() {
             rel="noopener noreferrer"
             className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.vulnerabilityDisclosure.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -277,7 +275,7 @@ export function SecurityContent() {
             rel="noopener noreferrer"
             className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.incidentResponse.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -289,7 +287,7 @@ export function SecurityContent() {
             href="/legal/privacy"
             className="border-border hover:border-primary block rounded-2xl border p-4 transition-colors"
           >
-            <h3 className="mb-2 font-semibold">
+            <h3 className="mb-2 font-bold">
               {t('legal.security.relatedDocs.privacyPolicy.title')}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -301,7 +299,7 @@ export function SecurityContent() {
 
       {/* お問い合わせ */}
       <section className="bg-container rounded-2xl p-6">
-        <h2 className="mb-4 text-xl font-semibold">{t('legal.security.contact.title')}</h2>
+        <h2 className="mb-4 text-xl font-bold">{t('legal.security.contact.title')}</h2>
         <div className="space-y-2">
           <p className="flex items-center gap-2">
             <Mail className="size-4" />

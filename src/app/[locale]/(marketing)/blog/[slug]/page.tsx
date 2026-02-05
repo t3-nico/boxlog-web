@@ -121,7 +121,7 @@ const mdxComponents = {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '') || '';
-    return <h4 id={id} className="text-foreground mt-6 mb-4 text-lg font-semibold" {...props} />;
+    return <h4 id={id} className="text-foreground mt-6 mb-4 text-lg font-bold" {...props} />;
   },
   p: (props: ParagraphProps) => (
     <p className="text-foreground mb-4 text-xl leading-relaxed" {...props} />
@@ -179,7 +179,7 @@ const mdxComponents = {
   ),
   th: (props: ThProps) => (
     <th
-      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase"
+      className="bg-container text-muted-foreground px-6 py-4 text-left text-xs font-bold tracking-wider uppercase"
       {...props}
     />
   ),
@@ -322,7 +322,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       Blog
                     </Link>
                     <span className="text-border">/</span>
-                    <span className="text-foreground font-semibold">{post.frontMatter.title}</span>
+                    <span className="text-foreground font-bold">{post.frontMatter.title}</span>
                   </nav>
                 </div>
 
@@ -362,13 +362,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 <div className="mt-6 space-y-6">
                   <div>
-                    <h3 className="text-foreground mb-4 text-lg font-semibold">Tags Used</h3>
+                    <h3 className="text-foreground mb-4 text-lg font-bold">Tags Used</h3>
                     <div className="flex flex-wrap gap-2">
                       {post.frontMatter.tags.map((tag) => (
                         <Link
                           key={tag}
                           href={`/tags/${encodeURIComponent(tag)}`}
-                          className="bg-muted text-muted-foreground hover:bg-muted/80 inline-flex items-center rounded-full px-4 py-1 text-sm font-medium transition-colors"
+                          className="bg-muted text-muted-foreground hover:bg-muted/80 inline-flex items-center rounded-full px-4 py-1 text-sm font-bold transition-colors"
                         >
                           #{tag}
                         </Link>
@@ -377,7 +377,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
 
                   <div>
-                    <h3 className="text-foreground mb-4 text-lg font-semibold">{t('title')}</h3>
+                    <h3 className="text-foreground mb-4 text-lg font-bold">{t('title')}</h3>
                     <ShareButton title={post.frontMatter.title} slug={slug} />
                   </div>
                 </div>

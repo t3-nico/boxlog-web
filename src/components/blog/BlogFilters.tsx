@@ -145,9 +145,9 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Filter className="text-muted-foreground size-5" />
-              <h3 className="text-foreground font-medium">{t('title')}</h3>
+              <h3 className="text-foreground font-bold">{t('title')}</h3>
               {activeFiltersCount > 0 && (
-                <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
+                <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-bold">
                   {activeFiltersCount}
                 </span>
               )}
@@ -176,7 +176,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
             <div>
               <span
                 id="desktop-sort-label"
-                className="text-muted-foreground mb-4 block text-sm font-medium"
+                className="text-muted-foreground mb-4 block text-sm font-bold"
               >
                 {t('sortBy')}
               </span>
@@ -220,7 +220,7 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
             {/* タグフィルター */}
             <div>
               <div className="mb-4 flex items-center justify-between">
-                <span id="desktop-tags-label" className="text-muted-foreground text-sm font-medium">
+                <span id="desktop-tags-label" className="text-muted-foreground text-sm font-bold">
                   {t('filterByTags')}
                 </span>
                 {filters.selectedTags.length > 1 && (
@@ -282,9 +282,9 @@ export function BlogFilters({ tags, className, onFiltersChange, locale }: BlogFi
           className="flex w-full items-center justify-center gap-2"
         >
           <Filter className="text-muted-foreground size-4" />
-          <span className="text-foreground font-medium">{t('title')}</span>
+          <span className="text-foreground font-bold">{t('title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-medium">
+            <span className="bg-muted text-primary border-primary rounded-full border px-2 py-1 text-xs font-bold">
               {activeFiltersCount}
             </span>
           )}

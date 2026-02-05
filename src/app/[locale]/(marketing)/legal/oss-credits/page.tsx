@@ -77,21 +77,21 @@ export default async function OSSCreditsPage({ params }: PageProps) {
         <p className="text-foreground mb-4">{t('ossCredits.intro')}</p>
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground text-sm">{t('ossCredits.totalPackages')}:</span>
-          <span className="text-foreground text-xl font-semibold">{credits.length}</span>
+          <span className="text-foreground text-xl font-bold">{credits.length}</span>
         </div>
       </div>
 
       {/* エラー表示 */}
       {loadError && (
         <div className="bg-muted text-destructive border-destructive mb-8 rounded-2xl border p-6">
-          <p className="font-semibold">{t('ossCredits.loadingError')}</p>
+          <p className="font-bold">{t('ossCredits.loadingError')}</p>
         </div>
       )}
 
       {/* ライセンス統計 */}
       {!loadError && (
         <div className="mb-8">
-          <h2 className="mb-4 text-xl font-semibold">{t('ossCredits.licenseDistribution')}</h2>
+          <h2 className="mb-4 text-xl font-bold">{t('ossCredits.licenseDistribution')}</h2>
           <div className="bg-card border-border grid grid-cols-2 gap-4 rounded-2xl border p-6 md:grid-cols-4">
             {Object.entries(licenseStats)
               .sort(([, a], [, b]) => b - a)
@@ -109,7 +109,7 @@ export default async function OSSCreditsPage({ params }: PageProps) {
       {/* パッケージリスト */}
       {!loadError && (
         <div>
-          <h2 className="mb-4 text-xl font-semibold">
+          <h2 className="mb-4 text-xl font-bold">
             {t('ossCredits.packageList', { count: credits.length })}
           </h2>
           <div className="space-y-4">
@@ -119,13 +119,13 @@ export default async function OSSCreditsPage({ params }: PageProps) {
                 className="bg-card border-border hover:border-primary rounded-2xl border p-6 transition-colors"
               >
                 <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-                  <h3 className="text-foreground text-lg font-semibold">
+                  <h3 className="text-foreground text-lg font-bold">
                     {credit.name}
                     <span className="text-muted-foreground ml-2 text-sm font-normal">
                       v{credit.version}
                     </span>
                   </h3>
-                  <span className="bg-muted text-primary w-fit rounded px-4 py-1 text-sm font-medium">
+                  <span className="bg-muted text-primary w-fit rounded px-4 py-1 text-sm font-bold">
                     {credit.license}
                   </span>
                 </div>
@@ -133,13 +133,13 @@ export default async function OSSCreditsPage({ params }: PageProps) {
                 <div className="text-muted-foreground space-y-1 text-sm">
                   {credit.publisher && (
                     <div>
-                      <span className="font-medium">{t('ossCredits.publisher')}:</span>{' '}
+                      <span className="font-bold">{t('ossCredits.publisher')}:</span>{' '}
                       {credit.publisher}
                     </div>
                   )}
                   {credit.repository && (
                     <div>
-                      <span className="font-medium">{t('ossCredits.repository')}:</span>{' '}
+                      <span className="font-bold">{t('ossCredits.repository')}:</span>{' '}
                       <Link
                         href={credit.repository}
                         target="_blank"

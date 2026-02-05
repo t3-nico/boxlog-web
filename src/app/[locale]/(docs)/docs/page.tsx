@@ -82,10 +82,7 @@ export default async function DocsPage({ params }: PageProps) {
             <Text variant="muted" className="mb-4">
               {isJa ? '数分でDayoptを始めましょう' : 'Get started with Dayopt in minutes'}
             </Text>
-            <Link
-              href="/docs/quick-start"
-              className="text-primary hover:text-primary/80 font-medium"
-            >
+            <Link href="/docs/quick-start" className="text-primary hover:text-primary/80 font-bold">
               {isJa ? 'ガイドを読む →' : 'Read guide →'}
             </Link>
           </div>
@@ -114,7 +111,7 @@ export default async function DocsPage({ params }: PageProps) {
             <Text variant="muted" className="mb-4">
               {isJa ? 'APIドキュメントを探索する' : 'Explore our API documentation'}
             </Text>
-            <Link href="/docs/api" className="text-primary hover:text-primary/80 font-medium">
+            <Link href="/docs/api" className="text-primary hover:text-primary/80 font-bold">
               {isJa ? 'ドキュメントを見る →' : 'View docs →'}
             </Link>
           </div>
@@ -143,7 +140,7 @@ export default async function DocsPage({ params }: PageProps) {
             <Text variant="muted" className="mb-4">
               {isJa ? 'ステップバイステップのチュートリアル' : 'Step-by-step tutorials'}
             </Text>
-            <Link href="/docs/guides" className="text-primary hover:text-primary/80 font-medium">
+            <Link href="/docs/guides" className="text-primary hover:text-primary/80 font-bold">
               {isJa ? 'ガイドを見る →' : 'Browse guides →'}
             </Link>
           </div>

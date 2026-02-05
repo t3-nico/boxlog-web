@@ -75,7 +75,7 @@ export default async function PricingPage({ params }: PageProps) {
             </Text>
             <Text size="lg" variant="muted">
               {t('pricing.hero.description')}{' '}
-              <span className="text-primary font-medium">{t('pricing.hero.trialNote')}</span>
+              <span className="text-primary font-bold">{t('pricing.hero.trialNote')}</span>
             </Text>
           </div>
         </Container>

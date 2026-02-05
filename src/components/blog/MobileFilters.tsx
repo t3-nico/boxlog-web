@@ -94,7 +94,7 @@ export function MobileFilters({
           <SheetHeader className="flex-shrink-0 border-b p-6">
             <div className="flex items-center gap-4">
               <Filter className="text-muted-foreground size-5" />
-              <SheetTitle className="text-lg font-semibold">{t('title')}</SheetTitle>
+              <SheetTitle className="text-lg font-bold">{t('title')}</SheetTitle>
               {activeFiltersCount > 0 && (
                 <Badge variant="primary" className="ml-auto">
                   {activeFiltersCount}
@@ -109,7 +109,7 @@ export function MobileFilters({
             <div>
               <label
                 htmlFor="mobile-search"
-                className="text-muted-foreground mb-2 block text-sm font-medium"
+                className="text-muted-foreground mb-2 block text-sm font-bold"
               >
                 {t('searchArticles')}
               </label>
@@ -141,7 +141,7 @@ export function MobileFilters({
             <div>
               <span
                 id="mobile-sort-label"
-                className="text-muted-foreground mb-4 block text-sm font-medium"
+                className="text-muted-foreground mb-4 block text-sm font-bold"
               >
                 {t('sortBy')}
               </span>
@@ -158,7 +158,7 @@ export function MobileFilters({
                     className="w-full justify-start gap-4"
                   >
                     <Icon className="size-4" />
-                    <span className="font-medium">{label}</span>
+                    <span className="font-bold">{label}</span>
                     {localFilters.sortBy === value && (
                       <span className="ml-auto text-sm">
                         {localFilters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -173,7 +173,7 @@ export function MobileFilters({
                   variant="outline"
                   className="w-full justify-between"
                 >
-                  <span className="font-medium">{t('order')}</span>
+                  <span className="font-bold">{t('order')}</span>
                   <span className="text-sm">
                     {localFilters.sortOrder === 'asc' ? t('orderAsc') : t('orderDesc')}
                   </span>
@@ -184,7 +184,7 @@ export function MobileFilters({
             {/* タグフィルター */}
             <div>
               <div className="mb-4 flex items-center justify-between">
-                <span id="mobile-tags-label" className="text-muted-foreground text-sm font-medium">
+                <span id="mobile-tags-label" className="text-muted-foreground text-sm font-bold">
                   {t('filterByTags')}
                 </span>
                 {localFilters.selectedTags.length > 1 && (

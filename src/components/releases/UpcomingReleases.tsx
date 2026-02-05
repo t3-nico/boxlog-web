@@ -45,7 +45,7 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
             </svg>
           </div>
           <div>
-            <h3 className="text-foreground text-lg font-semibold">今後のリリース予定</h3>
+            <h3 className="text-foreground text-lg font-bold">今後のリリース予定</h3>
             <p className="text-muted-foreground text-sm">開発中の新機能とリリース予定日</p>
           </div>
         </div>
@@ -64,7 +64,7 @@ export function UpcomingReleases({ upcomingReleases = [] }: UpcomingReleasesProp
           <p className="text-muted-foreground text-sm">リリース予定は変更される場合があります</p>
           <Link
             href="/roadmap"
-            className="text-primary hover:text-primary-hover text-sm font-medium transition-colors"
+            className="text-primary hover:text-primary-hover text-sm font-bold transition-colors"
           >
             ロードマップを見る →
           </Link>
@@ -140,14 +140,14 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
             </span>
 
             <span
-              className={`inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-medium ${config.color}`}
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-bold ${config.color}`}
             >
               <config.icon className="size-3" />
               {config.label}
             </span>
 
             {isFirst && (
-              <span className="bg-muted text-success border-success inline-flex items-center rounded-full border px-4 py-1 text-xs font-medium">
+              <span className="bg-muted text-success border-success inline-flex items-center rounded-full border px-4 py-1 text-xs font-bold">
                 <span className="bg-success mr-2 size-2 rounded-full"></span>
                 Next Release
               </span>
@@ -158,7 +158,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
           <div className="mb-4 flex items-center gap-2">
             <Calendar className="text-muted-foreground size-4" />
             <span
-              className={`text-sm ${isOverdue ? 'text-destructive font-medium' : 'text-muted-foreground'}`}
+              className={`text-sm ${isOverdue ? 'text-destructive font-bold' : 'text-muted-foreground'}`}
             >
               予定日: {formatDate(release.expectedDate)}
               {isOverdue && ' (予定より遅れています)'}
@@ -167,7 +167,7 @@ function UpcomingReleaseItem({ release, isFirst }: UpcomingReleaseItemProps) {
 
           {/* Features */}
           <div>
-            <h4 className="text-foreground mb-2 text-sm font-medium">主な新機能</h4>
+            <h4 className="text-foreground mb-2 text-sm font-bold">主な新機能</h4>
             <ul className="space-y-1">
               {release.features.map((feature, index) => (
                 <li key={index} className="text-muted-foreground flex items-start gap-2 text-sm">
@@ -236,7 +236,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
         <div className="bg-primary flex size-6 items-center justify-center rounded-lg">
           <Clock className="text-primary-foreground size-3" />
         </div>
-        <h4 className="text-foreground text-sm font-semibold">次期リリース</h4>
+        <h4 className="text-foreground text-sm font-bold">次期リリース</h4>
       </div>
 
       <div className="space-y-2">
@@ -263,7 +263,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
 
         <Link
           href="/releases"
-          className="text-primary hover:text-primary-hover mt-2 inline-flex items-center text-xs font-medium"
+          className="text-primary hover:text-primary-hover mt-2 inline-flex items-center text-xs font-bold"
         >
           詳細を見る
           <ChevronRight className="ml-1 size-3" />
@@ -277,7 +277,7 @@ export function UpcomingReleasesCompact({ upcomingReleases = [] }: UpcomingRelea
 export function ReleaseTimeline() {
   return (
     <div className="border-border bg-card rounded-2xl border p-6">
-      <h3 className="text-foreground mb-6 text-lg font-semibold">リリースタイムライン</h3>
+      <h3 className="text-foreground mb-6 text-lg font-bold">リリースタイムライン</h3>
 
       <div className="relative">
         {/* Timeline Line */}
@@ -291,8 +291,8 @@ export function ReleaseTimeline() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
-                <span className="text-foreground text-sm font-semibold">v2.1.0</span>
-                <span className="text-success text-xs font-medium">リリース済み</span>
+                <span className="text-foreground text-sm font-bold">v2.1.0</span>
+                <span className="text-success text-xs font-bold">リリース済み</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 Advanced Analytics & Team Collaboration
@@ -308,8 +308,8 @@ export function ReleaseTimeline() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
-                <span className="text-foreground text-sm font-semibold">v2.2.0</span>
-                <span className="text-info text-xs font-medium">開発中</span>
+                <span className="text-foreground text-sm font-bold">v2.2.0</span>
+                <span className="text-info text-xs font-bold">開発中</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 AI-Powered Insights & Mobile Enhancements
@@ -324,8 +324,8 @@ export function ReleaseTimeline() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
-                <span className="text-foreground text-sm font-semibold">v2.3.0</span>
-                <span className="text-muted-foreground text-xs font-medium">計画中</span>
+                <span className="text-foreground text-sm font-bold">v2.3.0</span>
+                <span className="text-muted-foreground text-xs font-bold">計画中</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 Advanced Security & Enterprise Features

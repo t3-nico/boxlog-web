@@ -48,7 +48,7 @@ export default async function Home({ params }: PageProps) {
         <section className="py-24 sm:py-32 lg:pb-40">
           <Container>
             <div className="mx-auto max-w-4xl text-center">
-              <h1 className="text-foreground text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="text-foreground text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 {t('hero.title')}
               </h1>
               <p className="text-muted-foreground mt-6 text-lg sm:text-xl">{t('hero.subtitle')}</p>

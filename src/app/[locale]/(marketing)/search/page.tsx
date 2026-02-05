@@ -188,7 +188,7 @@ function SearchResults() {
                   <button
                     key={filter.key}
                     onClick={() => setSelectedFilter(filter.key as typeof selectedFilter)}
-                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    className={`rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
                       selectedFilter === filter.key
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-muted text-muted-foreground hover:bg-state-hover hover:text-foreground'
@@ -207,8 +207,7 @@ function SearchResults() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <Text className="text-muted-foreground">
-                「<span className="font-medium">{query}</span>」の検索結果: {filteredResults.length}
-                件
+                「<span className="font-bold">{query}</span>」の検索結果: {filteredResults.length}件
               </Text>
               {isLoading && (
                 <div className="flex items-center gap-2">
@@ -243,7 +242,7 @@ function SearchResults() {
                       <div className="min-w-0 flex-1">
                         <Link
                           href={result.url}
-                          className="text-primary hover:text-primary-hover block truncate text-lg font-medium hover:underline"
+                          className="text-primary hover:text-primary-hover block truncate text-lg font-bold hover:underline"
                         >
                           <Highlight text={result.title} query={query} />
                         </Link>
@@ -273,7 +272,7 @@ function SearchResults() {
                       </span>
                       <Link
                         href={result.url}
-                        className="text-primary hover:text-primary-hover text-xs font-medium"
+                        className="text-primary hover:text-primary-hover text-xs font-bold"
                       >
                         詳細を見る →
                       </Link>

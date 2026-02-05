@@ -81,7 +81,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
         <div className="sticky top-24 space-y-8">
           {/* カテゴリフィルター */}
           <div className="border-border bg-card rounded-2xl border p-6">
-            <h3 className="text-foreground mb-4 text-sm font-semibold">
+            <h3 className="text-foreground mb-4 text-sm font-bold">
               {isJa ? 'カテゴリ' : 'Category'}
             </h3>
             <div className="space-y-2">
@@ -107,7 +107,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
           <div className="border-border bg-card rounded-2xl border p-6">
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp className="text-muted-foreground size-4" />
-              <h3 className="text-foreground text-sm font-semibold">
+              <h3 className="text-foreground text-sm font-bold">
                 {isJa ? '人気のタグ' : 'Popular Tags'}
               </h3>
             </div>
@@ -116,7 +116,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium transition-colors ${getTagColor(tag.tag)}`}
+                  className={`inline-flex items-center rounded-lg px-2 py-1 text-xs font-bold transition-colors ${getTagColor(tag.tag)}`}
                 >
                   #{tag.tag}
                 </Link>
@@ -203,7 +203,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 >
                   <div className="flex items-center gap-2">
                     <Hash className="size-4" />
-                    <span className="font-medium">{tag.tag}</span>
+                    <span className="font-bold">{tag.tag}</span>
                   </div>
                   <span className="text-sm opacity-75">{tag.count}</span>
                 </Link>
@@ -224,7 +224,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                       <Hash className="size-5" />
                     </div>
                     <div>
-                      <div className="text-foreground font-medium">#{tag.tag}</div>
+                      <div className="text-foreground font-bold">#{tag.tag}</div>
                       <div className="text-muted-foreground flex items-center gap-4 text-sm">
                         {tag.blogCount > 0 && (
                           <span className="flex items-center gap-1">
@@ -247,7 +247,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                       </div>
                     </div>
                   </div>
-                  <div className="bg-muted text-foreground flex size-8 items-center justify-center rounded-lg text-sm font-semibold">
+                  <div className="bg-muted text-foreground flex size-8 items-center justify-center rounded-lg text-sm font-bold">
                     {tag.count}
                   </div>
                 </Link>
@@ -270,7 +270,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 setSearchQuery('');
                 setCategoryFilter('all');
               }}
-              className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
+              className="bg-muted text-primary border-primary hover:bg-state-hover inline-flex items-center rounded-lg border px-4 py-2 text-sm font-bold transition-colors"
             >
               {isJa ? 'フィルターをクリア' : 'Clear filters'}
             </button>
