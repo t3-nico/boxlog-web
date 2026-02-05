@@ -22,19 +22,16 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
       name: 'Twitter',
       icon: Twitter,
       url: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
-      color: 'hover:text-blue-400',
     },
     {
       name: 'Facebook',
       icon: Facebook,
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      color: 'hover:text-blue-600',
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      color: 'hover:text-blue-700',
     },
   ];
 

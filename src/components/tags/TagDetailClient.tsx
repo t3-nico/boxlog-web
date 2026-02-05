@@ -305,7 +305,7 @@ export function TagDetailClient({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {unifiedContent.map((item) => (
                 <Link key={`${item.type}-${item.slug}`} href={item.href} className="block">
-                  <Card className="h-full transition-colors hover:bg-[var(--state-hover)]">
+                  <Card className="hover:bg-state-hover h-full transition-colors">
                     <CardHeader className="gap-2">
                       <div className="flex items-center gap-2">
                         <div className="bg-muted text-muted-foreground flex size-8 items-center justify-center rounded-lg">

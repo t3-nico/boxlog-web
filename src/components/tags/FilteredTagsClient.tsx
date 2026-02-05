@@ -215,7 +215,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
                 <Link
                   key={tag.tag}
                   href={`/tags/${encodeURIComponent(tag.tag)}`}
-                  className="group flex items-center justify-between py-4 transition-colors hover:opacity-80"
+                  className="group hover:bg-state-hover flex items-center justify-between py-4 transition-colors"
                 >
                   <div className="flex items-center gap-4">
                     <div
