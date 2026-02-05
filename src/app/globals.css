@@ -31,7 +31,7 @@
   /* Surface（意味ベース4段階・GAFA準拠の明度差） */
   --overlay: oklch(0.96 0 0);
   --container: oklch(0.93 0 0);
-  --card: oklch(0.90 0 0);
+  --card: oklch(0.9 0 0);
 
   /* 互換性エイリアス（shadcn/ui用） */
   --card-foreground: oklch(0.25 0 0);
@@ -60,7 +60,7 @@
   --warning-foreground: oklch(1 0 0);
   --success: oklch(0.5859 0.1684 149.2);
   --success-foreground: oklch(1 0 0);
-  --info: oklch(0.40 0 0);
+  --info: oklch(0.4 0 0);
   --info-foreground: oklch(1 0 0);
 
   /* Tooltip（反転デザイン） */
@@ -90,7 +90,7 @@
   --tag-violet: oklch(0.55 0.24 293);
   --tag-pink: oklch(0.64 0.22 350);
   --tag-cyan: oklch(0.68 0.14 203);
-  --tag-orange: oklch(0.70 0.20 45);
+  --tag-orange: oklch(0.7 0.2 45);
   --tag-gray: oklch(0.52 0.02 256);
   --tag-indigo: oklch(0.54 0.24 275);
 }
@@ -108,7 +108,7 @@
   --foreground: oklch(0.9219 0 0);
 
   /* Surface（意味ベース4段階・GAFA準拠の明度差） */
-  --overlay: oklch(0.30 0 0);
+  --overlay: oklch(0.3 0 0);
   --container: oklch(0.18 0 0);
   --card: oklch(0.12 0 0);
 
@@ -139,7 +139,7 @@
   --warning-foreground: oklch(1 0 0);
   --success: oklch(0.5859 0.1684 149.2);
   --success-foreground: oklch(1 0 0);
-  --info: oklch(0.40 0 0);
+  --info: oklch(0.4 0 0);
   --info-foreground: oklch(1 0 0);
 
   /* Tooltip（反転デザイン - ダークモードでは明るい背景） */
@@ -165,14 +165,14 @@
    * ============================================ */
   --tag-blue: oklch(0.75 0.18 257);
   --tag-green: oklch(0.78 0.15 162);
-  --tag-red: oklch(0.75 0.20 25);
+  --tag-red: oklch(0.75 0.2 25);
   --tag-amber: oklch(0.85 0.16 75);
-  --tag-violet: oklch(0.72 0.20 293);
+  --tag-violet: oklch(0.72 0.2 293);
   --tag-pink: oklch(0.76 0.18 350);
   --tag-cyan: oklch(0.78 0.12 203);
-  --tag-orange: oklch(0.80 0.17 45);
-  --tag-gray: oklch(0.70 0.02 256);
-  --tag-indigo: oklch(0.72 0.20 275);
+  --tag-orange: oklch(0.8 0.17 45);
+  --tag-gray: oklch(0.7 0.02 256);
+  --tag-indigo: oklch(0.72 0.2 275);
 }
 
 /* Tailwindへのマッピング（@theme inline） */
@@ -547,12 +547,7 @@ button:focus-visible {
 }
 
 .dark .animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--container) 0%,
-    var(--card) 50%,
-    var(--container) 100%
-  );
+  background: linear-gradient(90deg, var(--container) 0%, var(--card) 50%, var(--container) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
 }
