@@ -3,6 +3,7 @@ import type { AIMetadata } from '@/types/content';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import { cache } from 'react';
 import { calculateReadingTime } from './utils';
 
 export interface BlogPostFrontMatter {
@@ -60,8 +61,10 @@ export function generateExcerpt(content: string, maxLength: number = 160): strin
   return cleanContent.slice(0, maxLength).trim() + '...';
 }
 
-// Get all blog post metadata
-export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
+// Get all blog post metadata（cache()で同一リクエスト内の重複呼び出しを排除）
+export const getAllBlogPostMetas = cache(async function getAllBlogPostMetasImpl(): Promise<
+  BlogPostMeta[]
+> {
   try {
     if (!fs.existsSync(BLOG_DIR)) {
       console.warn(`[Blog] Blog directory not found: ${BLOG_DIR}`);
@@ -167,7 +170,7 @@ export async function getAllBlogPostMetas(): Promise<BlogPostMeta[]> {
     );
     return [];
   }
-}
+});
 
 // Get individual article
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
