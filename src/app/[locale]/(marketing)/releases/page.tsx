@@ -42,10 +42,13 @@ export default async function ReleasesPage({ params }: PageProps) {
   // Fetch data server-side
   const [allReleases, allTags] = await Promise.all([getAllReleaseMetas(), getAllReleaseTags()]);
 
+  // クライアントに不要なMDXコンテンツを転送しない
+  const clientReleases = allReleases.map(({ content: _, ...rest }) => rest);
+
   return (
     <div className="bg-background min-h-screen">
       <Container>
-        <ReleasesClient initialReleases={allReleases} initialTags={allTags} locale={locale} />
+        <ReleasesClient initialReleases={clientReleases} initialTags={allTags} locale={locale} />
       </Container>
     </div>
   );
