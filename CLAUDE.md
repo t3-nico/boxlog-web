@@ -96,6 +96,27 @@ npm run prepare:production  # 本番準備（lint + 型チェック + ビルド�
 
 ## Component Development Guidelines
 
+### デザイン判断の原則: app Storybook を参照
+
+UIコンポーネントのデザイン判断に迷ったら **dayopt-app の Storybook を正として参照**する。
+app リポジトリは `~/Desktop/app` にある。
+
+```
+# 参照先
+~/Desktop/app/src/components/ui/*.stories.tsx  # コンポーネントのストーリー
+~/Desktop/app/src/components/ui/*.tsx          # コンポーネントの実装
+~/Desktop/app/src/stories/tokens/              # デザイントークン
+```
+
+**具体的なアクション:**
+
+- コンポーネントの実装・修正時 → app側の同名コンポーネント + ストーリーを読んで合わせる
+- バリアント・サイズ・Props の追加/変更 → app側の定義を正とする
+- デザインパターンの判断（ダイアログ内のボタン配置等） → app側のストーリーの使い分けガイドに従う
+- web固有の拡張（`asChild`, i18n対応など）は web 側で追加してOK
+
+詳細: [docs/design-system/CLAUDE.md](docs/design-system/CLAUDE.md)
+
 ### Component Priority (必須)
 
 1. **shadcn/ui (第一選択)**: Button, Dialog, Command, Select, Input

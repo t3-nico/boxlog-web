@@ -14,13 +14,13 @@ import { cn } from '@/lib/utils';
  * | primary     | 強調、主要なラベル                           | NEW、注目                    |
  * | secondary   | 控えめ、カウント表示                         | +3件、5個                    |
  * | outline     | 軽量、タグ・ステータス                       | ステータス、カテゴリ         |
- * | success     | 成功、プラス、完了                           | 完了、+10%、有効             |
- * | warning     | 警告、注意                                   | 要確認、期限切れ間近         |
- * | info        | 情報、ニュートラル                           | ベータ、更新あり             |
+ * | success     | 成功、プラス、完了（アウトライン）           | 完了、+10%、有効             |
+ * | warning     | 警告、注意（アウトライン）                   | 要確認、期限切れ間近         |
+ * | info        | 情報、ニュートラル（アウトライン）           | ベータ、更新あり             |
  * | destructive | エラー、マイナス、削除                       | エラー、-5%、無効            |
  */
 const badgeVariants = cva(
-  'inline-flex items-center justify-center rounded-lg border px-2 py-1 text-xs font-bold w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] overflow-hidden',
+  'inline-flex items-center justify-center rounded-lg border px-2 py-1 text-xs font-normal w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
   {
     variants: {
       variant: {
@@ -28,18 +28,19 @@ const badgeVariants = cva(
         primary:
           'border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary-hover',
         // 控えめ - カウント表示など
-        secondary: 'border-transparent bg-muted text-muted-foreground [a&]:hover:bg-state-hover',
+        secondary:
+          'border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-state-hover',
         // 軽量 - ボーダー付き
         outline: 'border-border bg-background text-foreground [a&]:hover:bg-state-hover',
-        // 成功 - 完了、プラス
-        success: 'border-success bg-muted text-success',
-        // 警告 - 注意
-        warning: 'border-warning bg-muted text-warning',
-        // 情報 - ニュートラル
-        info: 'border-info bg-muted text-info',
+        // 成功 - 完了、プラス（アウトライン）
+        success: 'border-success text-success [a&]:hover:bg-state-hover',
+        // 警告 - 注意（アウトライン）
+        warning: 'border-warning text-warning [a&]:hover:bg-state-hover',
+        // 情報 - ニュートラル（アウトライン）
+        info: 'border-info text-info [a&]:hover:bg-state-hover',
         // エラー - マイナス、削除
         destructive:
-          'border-transparent bg-destructive text-destructive-foreground [a&]:hover:bg-destructive-hover',
+          'border-transparent bg-destructive text-destructive-foreground [a&]:hover:bg-destructive-hover focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
       },
     },
     defaultVariants: {

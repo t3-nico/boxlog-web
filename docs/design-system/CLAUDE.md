@@ -3,8 +3,10 @@
 ## 概要
 
 dayopt-web のデザインシステムは **dayopt-app と共通化** されています。
-共通トークンは app が正（ソースオブトゥルース）です。
-Storybook（`dayopt-app/src/stories/tokens/`）が各トークンの定義元です。
+共通トークンおよび共通UIコンポーネントは app が正（ソースオブトゥルース）です。
+
+- **デザイントークン**: Storybook（`dayopt-app/src/stories/tokens/`）が定義元
+- **UIコンポーネント**: Storybook（`dayopt-app/src/components/ui/*.stories.tsx`）が定義元
 
 ## カラーシステム
 
@@ -209,6 +211,16 @@ Tailwindデフォルト: `text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`
 1. **app で変更**（app が正）
 2. **web に反映**（globals.css の共通トークンセクション）
 
+### 共通UIコンポーネント更新時
+
+1. **app の Storybook を参照**（`dayopt-app/src/components/ui/*.stories.tsx`）
+2. **app のコンポーネント実装を確認**（`dayopt-app/src/components/ui/*.tsx`）
+3. **web に反映**（`src/components/ui/` 配下の該当コンポーネント）
+
+- バリアント、サイズ、Props、振る舞いは app の定義に合わせる
+- web固有の要件（例: `asChild` でのLink対応など）がある場合は web 側で拡張可
+- app の Storybook で定義されたパターン（使い分け・状態・組み合わせ例）を正とする
+
 ### web固有トークン更新時
 
 1. web の globals.css を直接編集
@@ -216,7 +228,8 @@ Tailwindデフォルト: `text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`
 
 ## 参照
 
-- **app Storybook**: `dayopt-app/src/stories/tokens/` （Colors, Typography, ZIndex, Motion, Shadows, etc.）
+- **app Storybook（トークン）**: `dayopt-app/src/stories/tokens/` （Colors, Typography, ZIndex, Motion, Shadows, etc.）
+- **app Storybook（UIコンポーネント）**: `dayopt-app/src/components/ui/*.stories.tsx` （Button, Input, Dialog, etc.）
 - **globals.css**: `src/app/globals.css`
 
 ---
