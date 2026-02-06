@@ -3,7 +3,21 @@ import { routing } from '@/i18n/routing';
 import { generateSEOMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ContactForm } from './contact-form';
+import dynamic from 'next/dynamic';
+
+const ContactForm = dynamic(
+  () => import('./contact-form').then((mod) => ({ default: mod.ContactForm })),
+  {
+    loading: () => (
+      <div className="space-y-6">
+        <div className="bg-muted animate-shimmer h-10 w-full rounded-lg" />
+        <div className="bg-muted animate-shimmer h-10 w-full rounded-lg" />
+        <div className="bg-muted animate-shimmer h-32 w-full rounded-lg" />
+        <div className="bg-muted animate-shimmer h-10 w-32 rounded-lg" />
+      </div>
+    ),
+  },
+);
 
 interface PageProps {
   params: Promise<{ locale: string }>;

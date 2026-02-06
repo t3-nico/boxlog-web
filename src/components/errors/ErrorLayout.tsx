@@ -37,7 +37,7 @@ export function ErrorLayout({
       {/* Main Content */}
       <main className="mx-auto w-full max-w-7xl px-6 py-24 sm:py-32 lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:px-8">
         <div className="max-w-lg">
-          {code && <p className="text-muted-foreground text-base font-bold">{code}</p>}
+          {code ? <p className="text-muted-foreground text-base font-bold">{code}</p> : null}
           <h1 className="text-foreground mt-4 text-5xl font-bold tracking-tight sm:text-6xl">
             {title}
           </h1>

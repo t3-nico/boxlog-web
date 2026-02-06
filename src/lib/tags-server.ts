@@ -1,6 +1,7 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import { cache } from 'react';
 import { getAllBlogPostMetas } from './blog';
 import { getAllReleaseMetas } from './releases';
 
@@ -30,8 +31,8 @@ export interface UnifiedTagData {
   docs: TaggedContent[];
 }
 
-// Get document metadata
-async function getAllDocMetas(): Promise<TaggedContent[]> {
+// Get document metadata（cache()で同一リクエスト内の重複呼び出しを排除）
+const getAllDocMetas = cache(async function getAllDocMetasImpl(): Promise<TaggedContent[]> {
   const docsDirectory = path.join(process.cwd(), 'content/docs');
 
   try {
@@ -112,7 +113,7 @@ async function getAllDocMetas(): Promise<TaggedContent[]> {
     console.error('[Tags] Unexpected error in getAllDocMetas:', error);
     return [];
   }
-}
+});
 
 // Get tags and usage counts from all content types
 export async function getAllTags(): Promise<TagCount[]> {

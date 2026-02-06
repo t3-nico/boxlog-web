@@ -2,6 +2,7 @@ import type { AIMetadata } from '@/types/content';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import { cache } from 'react';
 import { calculateReadingTime } from './utils';
 
 export interface ReleaseFrontMatter {
@@ -26,6 +27,8 @@ export interface ReleasePostMeta {
   content: string;
   readingTime: number;
 }
+
+export type ReleasePostMetaClient = Omit<ReleasePostMeta, 'content'>;
 
 export interface ReleasePost {
   frontMatter: ReleaseFrontMatter;
@@ -111,8 +114,10 @@ export function calculateReleaseTime(content: string): number {
   return calculateReadingTime(content);
 }
 
-// 全てのリリースノートメタデータを取得
-export async function getAllReleaseMetas(): Promise<ReleasePostMeta[]> {
+// 全てのリリースノートメタデータを取得（cache()で同一リクエスト内の重複呼び出しを排除）
+export const getAllReleaseMetas = cache(async function getAllReleaseMetasImpl(): Promise<
+  ReleasePostMeta[]
+> {
   const releasesDirectory = path.join(process.cwd(), 'content', 'releases');
 
   try {
@@ -185,7 +190,7 @@ export async function getAllReleaseMetas(): Promise<ReleasePostMeta[]> {
     console.error('[Releases] Unexpected error in getAllReleaseMetas:', error);
     return [];
   }
-}
+});
 
 // 個別リリースノート取得
 export async function getRelease(version: string): Promise<ReleasePost | null> {

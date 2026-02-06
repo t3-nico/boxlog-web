@@ -3,9 +3,3 @@
 // import { Button } from '@/components/ui/button'
 // import { Container } from '@/components/ui/Container'
 // etc.
-
-export type { BadgeProps } from './badge';
-export type { ButtonProps } from './button';
-export type { ContainerProps } from './container';
-export type { InputProps } from './input';
-export type { HeadingProps, TextProps } from './typography';

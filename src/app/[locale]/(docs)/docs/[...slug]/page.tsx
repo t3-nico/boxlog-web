@@ -147,11 +147,11 @@ export default async function DocPage({ params }: DocPageProps) {
 
     const { content: mdxContent, frontMatter } = content;
 
-    // Get adjacent pages
-    const { previousPage, nextPage } = await getAdjacentPages(slug);
-
-    // Get related content
-    const relatedContent = await getRelatedContent(frontMatter.category, slug, 3);
+    // Get adjacent pages and related content in parallel
+    const [{ previousPage, nextPage }, relatedContent] = await Promise.all([
+      getAdjacentPages(slug),
+      getRelatedContent(frontMatter.category, slug, 3),
+    ]);
 
     return (
       <div className="flex">

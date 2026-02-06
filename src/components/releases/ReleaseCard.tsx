@@ -24,7 +24,6 @@ interface ReleaseFrontMatter {
 interface ReleasePostMeta {
   frontMatter: ReleaseFrontMatter;
   slug: string;
-  content: string;
   readingTime: number;
 }
 

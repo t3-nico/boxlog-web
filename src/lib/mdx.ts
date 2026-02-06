@@ -9,6 +9,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import path from 'path';
+import { cache } from 'react';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 
@@ -170,9 +171,9 @@ export async function getMDXContentForRSC(
 }
 
 /**
- * すべてのMDXファイルを取得
+ * すべてのMDXファイルを取得（cache()で同一リクエスト内の重複呼び出しを排除）
  */
-export async function getAllContent(): Promise<ContentData[]> {
+export const getAllContent = cache(async function getAllContentImpl(): Promise<ContentData[]> {
   const allContent: ContentData[] = [];
   const errors: { path: string; error: unknown }[] = [];
 
@@ -241,7 +242,7 @@ export async function getAllContent(): Promise<ContentData[]> {
     console.error('[MDX] Unexpected error in getAllContent:', error);
     return [];
   }
-}
+});
 
 /**
  * カテゴリー別にコンテンツを取得
