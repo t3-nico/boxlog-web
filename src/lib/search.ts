@@ -66,7 +66,6 @@ export async function generateSearchIndex(): Promise<SearchIndexItem[]> {
     }
 
     searchIndex = index;
-    console.log(`[Search] Successfully indexed ${index.length} document(s)`);
     return index;
   } catch (error) {
     console.error(

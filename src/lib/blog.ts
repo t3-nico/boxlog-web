@@ -39,9 +39,6 @@ export interface BlogPostMeta {
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog');
 
-// Re-export calculateReadingTime from utils for backward compatibility
-export { calculateReadingTime } from './utils';
-
 // Generate article excerpt
 export function generateExcerpt(content: string, maxLength: number = 160): string {
   // Remove Markdown syntax and HTML tags
