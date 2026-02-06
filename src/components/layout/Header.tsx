@@ -117,20 +117,20 @@ export function Header() {
         <div className="flex flex-1 items-center justify-end gap-x-2">
           {/* Desktop: Login + Signup */}
           <div className="hidden lg:flex lg:items-center lg:gap-x-2">
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="ghost" size="default" asChild>
               <Link href="/login">{t('actions.login')}</Link>
             </Button>
-            <Button variant="primary" size="lg" asChild>
+            <Button variant="primary" size="default" asChild>
               <Link href="/signup">{t('actions.signup')}</Link>
             </Button>
           </div>
 
           {/* Mobile: Login + Signup + Menu */}
           <div className="flex items-center gap-x-2 lg:hidden">
-            <Button variant="outline" size="default" asChild>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/login">{t('actions.login')}</Link>
             </Button>
-            <Button variant="primary" size="default" asChild>
+            <Button variant="primary" size="sm" asChild>
               <Link href="/signup">{t('actions.signup')}</Link>
             </Button>
             <Button

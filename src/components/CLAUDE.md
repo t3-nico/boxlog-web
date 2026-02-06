@@ -409,7 +409,6 @@ import { Button } from '@/components/ui/button'
 <Button variant="primary">Primary</Button>
 <Button variant="outline">Outline</Button>
 <Button variant="ghost">Ghost</Button>
-<Button variant="text">Text</Button>
 <Button variant="destructive">Destructive</Button>
 <Button size="sm">Small</Button>
 <Button size="default">Default</Button>
