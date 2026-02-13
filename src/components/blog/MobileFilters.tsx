@@ -126,7 +126,7 @@ export function MobileFilters({
                 {localFilters.searchQuery && (
                   <Button
                     variant="ghost"
-                    size="icon"
+                    icon
                     className="absolute top-1/2 right-1 size-8 -translate-y-1/2 transform"
                     onClick={() => handleSearchChange('')}
                     aria-label={t('clearSearch')}

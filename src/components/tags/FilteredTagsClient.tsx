@@ -143,7 +143,7 @@ export function FilteredTagsClient({ allTags, locale }: FilteredTagsClientProps)
               <Button
                 onClick={() => setSearchQuery('')}
                 variant="ghost"
-                size="icon"
+                icon
                 className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
                 aria-label={isJa ? '検索をクリア' : 'Clear search'}
               >

@@ -19,19 +19,22 @@ import { cn } from '@/lib/utils';
  *
  * ## サイズ設計（GAFA準拠）
  *
- * | size    | 高さ  | テキスト | 用途                           |
- * |---------|-------|----------|--------------------------------|
- * | sm      | 32px  | text-sm  | コンパクトUI、ツールバー       |
- * | default | 36px  | text-sm  | 標準的なアクション             |
- * | lg      | 44px  | text-base| CTA、モバイル主要アクション    |
+ * | size    | 高さ  | 根拠                              | 用途                           |
+ * |---------|-------|-----------------------------------|--------------------------------|
+ * | sm      | 32px  | M3 XS、shadcn/ui icon-sm          | コンパクトUI、ツールバー       |
+ * | default | 36px  | M3 Small（デフォルト）            | 標準的なアクション             |
+ * | lg      | 44px  | Apple HIG最小タップターゲット     | CTA、モバイル主要アクション    |
  *
- * ## アイコンボタンサイズ
+ * ## アイコンボタン（icon prop）
+ *
+ * `icon` prop を指定すると正方形のアイコンボタンになる。
+ * サイズは `size` prop との組み合わせで決定。
  *
  * | size    | サイズ | 用途                                         |
  * |---------|--------|----------------------------------------------|
- * | icon-sm | 32px   | コンパクトなアイコン操作                     |
- * | icon    | 36px   | 標準的なアイコンボタン                       |
- * | icon-lg | 44px   | ナビゲーション、モバイル主要                 |
+ * | sm      | 32px   | コンパクトなアイコン操作                     |
+ * | default | 36px   | 標準的なアイコンボタン                       |
+ * | lg      | 44px   | ナビゲーション、モバイル主要                 |
  *
  * ## スペック詳細
  *
@@ -93,20 +96,20 @@ const buttonVariants = cva(
           'h-11 px-4 text-base',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 [&_svg]:shrink-0",
         ].join(' '),
-        // icon-sm: 32x32px、タップターゲット44px確保
-        'icon-sm': [
+        // _square-sm: 32x32px、タップターゲット44px確保
+        '_square-sm': [
           'size-8',
           'relative after:absolute after:inset-0 after:m-auto after:size-11 after:content-[""]',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
         ].join(' '),
-        // icon: 36x36px（M3準拠）、タップターゲット44px確保
-        icon: [
+        // _square-default: 36x36px（M3準拠）、タップターゲット44px確保
+        '_square-default': [
           'size-9',
           'relative after:absolute after:inset-0 after:m-auto after:size-11 after:content-[""]',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
         ].join(' '),
-        // icon-lg: 44x44px（Apple HIG準拠）
-        'icon-lg': [
+        // _square-lg: 44x44px（Apple HIG準拠）
+        '_square-lg': [
           'size-11',
           "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 [&_svg]:shrink-0",
         ].join(' '),
@@ -119,14 +122,21 @@ const buttonVariants = cva(
   },
 );
 
+/** 外部に公開するサイズ型（_square-* は内部用） */
+type ButtonSize = 'sm' | 'default' | 'lg';
+
 export interface ButtonProps
-  extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
+  extends React.ComponentProps<'button'>, Omit<VariantProps<typeof buttonVariants>, 'size'> {
   /** 子要素にスタイルを委譲する（Linkなどで使用） */
   asChild?: boolean;
   /** ローディング状態 */
   isLoading?: boolean;
   /** ローディング中に表示するテキスト（省略時は children を表示） */
   loadingText?: string;
+  /** ボタンサイズ */
+  size?: ButtonSize | null;
+  /** true にすると正方形のアイコンボタンになる */
+  icon?: boolean;
 }
 
 /**
@@ -142,8 +152,8 @@ export interface ButtonProps
  * <Button variant="outline">キャンセル</Button>
  *
  * @example
- * // アイコンボタン（ghost）
- * <Button variant="ghost" size="icon" aria-label="設定を開く">
+ * // アイコンボタン（ghost + icon）
+ * <Button variant="ghost" icon aria-label="設定を開く">
  *   <Settings className="size-4" />
  * </Button>
  *
@@ -161,6 +171,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant,
       size,
+      icon,
       asChild = false,
       isLoading = false,
       loadingText,
@@ -172,6 +183,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const Comp = asChild ? Slot : 'button';
+
+    // icon prop で _square-{size} に解決
+    const resolvedSize = icon ? (`_square-${size ?? 'sm'}` as const) : (size ?? undefined);
 
     // aria-disabled または isLoading 時はクリックを無効化
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -195,7 +209,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Comp
         data-slot="button"
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size: resolvedSize, className }))}
         onClick={asChild ? onClick : handleClick}
         disabled={isLoading || disabled}
         aria-busy={isLoading || undefined}
