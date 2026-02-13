@@ -238,7 +238,7 @@ export function SearchDialog({ open, onOpenChange, locale }: SearchDialogProps) 
           <Button
             onClick={() => onOpenChange(false)}
             variant="ghost"
-            size="icon"
+            icon
             aria-label={t('close')}
             className="size-5 flex-shrink-0"
           >

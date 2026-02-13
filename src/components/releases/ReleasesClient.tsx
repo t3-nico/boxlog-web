@@ -146,7 +146,7 @@ export function ReleasesClient({ initialReleases, initialTags, locale }: Release
                   <Button
                     onClick={() => handleSearchChange('')}
                     variant="ghost"
-                    size="icon"
+                    icon
                     className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
                     aria-label={t('filters.clearSearch')}
                   >

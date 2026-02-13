@@ -55,7 +55,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
   return (
     <div className="flex items-center gap-2">
       {shareLinks.map((social) => (
-        <Button key={social.name} variant="ghost" size="icon" className="size-8" asChild>
+        <Button key={social.name} variant="ghost" icon className="size-8" asChild>
           <a
             href={social.url}
             target="_blank"
@@ -69,7 +69,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
       ))}
       <Button
         variant="ghost"
-        size="icon"
+        icon
         className="size-8"
         onClick={handleCopyLink}
         title={t('copyLink')}
@@ -80,7 +80,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
       {typeof window !== 'undefined' && 'share' in navigator && (
         <Button
           variant="ghost"
-          size="icon"
+          icon
           className="size-8"
           onClick={handleNativeShare}
           title={t('share')}

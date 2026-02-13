@@ -43,7 +43,7 @@ export function DocsHeader({ onMobileMenuToggle, mobileMenuOpen }: DocsHeaderPro
           {/* Mobile menu toggle */}
           <Button
             variant="ghost"
-            size="icon"
+            icon
             onClick={onMobileMenuToggle}
             className="lg:hidden"
             aria-label={mobileMenuOpen ? t('aria.closeMenu') : t('aria.openMenu')}
